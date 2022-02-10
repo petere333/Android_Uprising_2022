@@ -300,22 +300,7 @@ D3D12_INPUT_LAYOUT_DESC CTexturedShader::CreateInputLayout()
 
 	return(d3dInputLayoutDesc);
 }
-/*
-D3D12_SHADER_BYTECODE CTexturedShader::CreateVertexShader(ID3DBlob** ppd3dShaderBlob)
-{
-	return(CShader::CompileShaderFromFile(L"Shaders.hlsl", "VSTextured", "vs_5_1", ppd3dShaderBlob));
-}
 
-D3D12_SHADER_BYTECODE CTexturedShader::CreatePixelShader(ID3DBlob** ppd3dShaderBlob)
-{
-	return(CShader::CompileShaderFromFile(L"Shaders.hlsl", "PSTextured", "ps_5_1", ppd3dShaderBlob));
-}
-
-void CTexturedShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature* pd3dGraphicsRootSignature)
-{
-	CShader::CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
-}
-*/
 ////////////////////////////////////////////////////////////////////////////
 
 CGroundShader::CGroundShader(int nobj) : CObjectsShader(nobj)
@@ -570,51 +555,7 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		CreateShaderResourceViews(pd3dDevice, ppTextures[i], 0, 4);
 	}
 
-	//실질적으로 객체 넣기
-	/*
-	ImageFile* heights = new ImageFile(L"HeightMap.raw", 257, 257, true);
-	ImageFile* objects = new ImageFile(L"ObjectsMap.raw", 257, 257, true);
-	CCubeMeshTextured* pCubeMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 1.0f);
-	pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 0, 0, 257, 257, XMFLOAT3(1.0f, 1.0f, 1.0f), heights);
-
 	
-	std::vector<CGameObject*> objList;
-	for (int z = 2; z <= 254; ++z)
-	{
-		for (int x = 2; x < 254; ++x)
-		{
-			byte b = objects->GetPixelInRaw(x, z);
-			if (b == 204)
-			{
-				CGameObject* temp = new CGameObject(1);
-				temp->SetMesh(0, pCubeMesh);
-				temp->SetMaterial(ppMaterials[0]);
-				temp->SetPosition(x, pGrid->getData(x, z), z);
-				temp->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (objList.size())));
-				objList.push_back(temp);
-			}
-		}
-	}
-	
-	m_ppObjects = new CGameObject * [m_nObjects];
-
-	/*
-	CGameObject* pRotatingObject = NULL;
-
-	pRotatingObject = new CGameObject(1);
-	pRotatingObject->SetMesh(0, pGrid);
-	pRotatingObject->SetMaterial(ppMaterials[0]);
-	pRotatingObject->SetPosition(0.0f, 0.0f, 0.0f);
-	pRotatingObject->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[0] = pRotatingObject;
-	*/
-	
-	/*
-	for (int i = 0; i < objList.size(); ++i)
-	{
-		m_ppObjects[i] = objList[i];
-	}
-	*/
 	m_ppObjects = new CGameObject * [m_nObjects];
 	
 	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "human.fbx");

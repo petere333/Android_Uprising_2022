@@ -107,63 +107,10 @@ public:
 };
 
 
-class CCubeMeshDiffused : public CMesh
-{
-
-	
-public:
-	
-	//직육면체의 가로, 세로, 깊이의 길이를 지정하여 직육면체 메쉬를 생성한다. 
-	CCubeMeshDiffused(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, float fWidth = 2.0f, float fHeight = 2.0f, float fDepth = 2.0f);
-	virtual ~CCubeMeshDiffused();
-};
 
 
 #define OBJECTS 1
 
-class CAngrybotMeshDiffused : public CMesh
-{
-public:
-	CDiffusedVertex* result;
-	int* indices;
-	CAngrybotMeshDiffused(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
-	void loadmesh(FbxNode* node, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
-
-	void InitScene(FbxManager* mngr, FbxScene* scene);
-	bool SetCurrentAnimStack(int n, FbxArray<FbxString*> arr);
-
-	void CAngrybotMeshDiffused::Render(ID3D12GraphicsCommandList* pd3dCommandList);
-	virtual ~CAngrybotMeshDiffused();
-public:
-	unsigned int GetFrameTimeByMilliSeconds() { return((unsigned int)m_fbxFrameTime.GetMilliSeconds()); }
-
-	FbxManager* m_pfbxSdkManager = NULL;
-	FbxScene* m_pfbxScene = NULL;
-	FbxImporter* m_pfbxImporter = NULL;
-	FbxAnimLayer* m_pfbxCurrentAnimLayer = NULL;
-
-	FbxArray<FbxString*> m_fbxAnimationStackNameArray;
-
-	FbxTime m_pfbxStartTimes[OBJECTS];
-	FbxTime m_pfbxStopTimes[OBJECTS];
-	FbxTime m_pfbxCurrentTimes[OBJECTS];
-	FbxTime m_fbxFrameTime;
-
-	int m_xPreviousMousePos;
-	int m_yPreviousMousePos;
-	FbxVector4 m_fbxv4CameraPosition;
-	FbxVector4 m_fbxv4CameraCenter;
-	double m_fCameraRoll;
-	int m_nCameraStatus = 1;
-	int m_nCameraZoomMode = 0;
-};
-
-class CTrifordMeshDiffused :public CMesh
-{
-public:
-	CTrifordMeshDiffused(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth = 2.0f, float fHeight = 2.0f, float fDepth = 2.0f);
-	virtual ~CTrifordMeshDiffused();
-};
 
 class CCubeMeshTextured : public CMesh
 {
