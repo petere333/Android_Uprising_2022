@@ -255,9 +255,10 @@ public:
 class CMonsterObject : public CGameObject
 {
 public:
-	CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, FbxManager* pfbxSdkManager, CFbxScene* pFbxScene, int nInstance);
+	CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, FbxManager* pfbxSdkManager, CFbxScene* pFbxScene, int nInstance, D3D12_GPU_DESCRIPTOR_HANDLE m_d3dSrvGPUDescriptorNextHandle);
 	virtual ~CMonsterObject();
 	void Animate(float fTimeElapsed);
 	void Render(ID3D12GraphicsCommandList* pd3dCommandList);
+	D3D12_GPU_DESCRIPTOR_HANDLE m_d3dSrvGPUDescriptorNextHandle;
 };
 

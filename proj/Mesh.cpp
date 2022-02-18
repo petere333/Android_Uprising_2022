@@ -247,17 +247,26 @@ ImageFile::~ImageFile()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
-CMeshFromFbx::CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, XMFLOAT4* pxmf4Positions, int nIndices, int* pnIndices, int(*pnSkinningIndices)[4], float(*pfSkinningWeights)[4], int nLinkNodes, XMFLOAT4X4* pxmf4x4VertextToLinkNodes)
+CMeshFromFbx::CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, 
+	XMFLOAT4* pxmf4Positions, XMFLOAT2* puvs, int nIndices, int* pnIndices, 
+	int(*pnSkinningIndices)[4], float(*pfSkinningWeights)[4], int nLinkNodes, XMFLOAT4X4* pxmf4x4VertextToLinkNodes)
 {
 	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 	m_nVertices = nVertices;
 
+	
 	m_pd3dPositionBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, pxmf4Positions, sizeof(XMFLOAT4) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
 
 	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
 	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT4);
 	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT4) * m_nVertices;
+
+	m_pd3dTextureBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, puvs, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
 
 	m_nLinkNodes = nLinkNodes;
 	if (pnSkinningIndices && pfSkinningWeights)
@@ -332,16 +341,20 @@ void CMeshFromFbx::Render(ID3D12GraphicsCommandList* pd3dCommandList)
 {
 	if (m_pd3dBoneIndexBuffer && m_pd3dBoneWeightBuffer)
 	{
-		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[3] = { m_d3dPositionBufferView, m_d3dBoneIndexBufferView, m_d3dBoneWeightBufferView };
-		pd3dCommandList->IASetVertexBuffers(m_nSlot, 3, pVertexBufferViews);
+		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[4] = { m_d3dPositionBufferView, m_d3dBoneIndexBufferView, m_d3dBoneWeightBufferView, m_d3dTextureBufferView };
+		pd3dCommandList->IASetVertexBuffers(m_nSlot, 4, pVertexBufferViews);
 	}
 	else
 	{
 		pd3dCommandList->IASetVertexBuffers(m_nSlot, 1, &m_d3dPositionBufferView);
 	}
+
 	pd3dCommandList->IASetPrimitiveTopology(m_d3dPrimitiveTopology);
 
 	pd3dCommandList->IASetIndexBuffer(&m_d3dIndexBufferView);
+
+	//pd3dCommandList->SetGraphicsRootDescriptorTable(4, handle);
+
 	pd3dCommandList->DrawIndexedInstanced(m_nIndices, 1, 0, 0, 0);
 }
 

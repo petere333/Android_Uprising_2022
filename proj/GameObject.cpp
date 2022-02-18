@@ -328,8 +328,23 @@ void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, int index)
 	*/
 	if (m_pFbxScene)
 	{
+
 		if (m_pFbxScene->m_pfbxScene)
 		{
+			if (m_pMaterial)
+			{
+				if (m_pMaterial->m_pShader)
+				{
+					m_pMaterial->m_pShader->Render(pd3dCommandList);
+					m_pMaterial->m_pShader->UpdateShaderVariables(pd3dCommandList);
+
+					UpdateShaderVariables(pd3dCommandList);
+				}
+				if (m_pMaterial->m_pTexture)
+				{
+					m_pMaterial->m_pTexture->UpdateShaderVariables(pd3dCommandList);
+				}
+			}
 			FbxAMatrix fbxf4x4World = ::XmFloat4x4MatrixToFbxMatrix(m_xmf4x4World);
 			FbxTime fbxCurrentTime = m_pAnimationController->GetCurrentTime();
 			::RenderFbxNodeHierarchy(pd3dCommandList, m_pFbxScene->m_pfbxScene->GetRootNode(), fbxCurrentTime, fbxf4x4World, m_nInstance);
@@ -473,7 +488,7 @@ void CRotatingObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, int ind
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CMonsterObject::CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, FbxManager* pfbxSdkManager, CFbxScene* pFbxScene, int nInstance)
+CMonsterObject::CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, FbxManager* pfbxSdkManager, CFbxScene* pFbxScene, int nInstance, D3D12_GPU_DESCRIPTOR_HANDLE handle)
 {
 	CFbxScene* pFbxMonsterModel = pFbxScene;
 	if (!pFbxMonsterModel)
@@ -483,7 +498,7 @@ CMonsterObject::CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		pFbxMonsterModel = new CFbxScene(pfbxAngrybotModel);
 	}
 	SetFbxScene(pFbxMonsterModel);
-
+	m_d3dSrvGPUDescriptorNextHandle = handle;
 	m_pAnimationController = new CAnimationController(m_pFbxScene->m_pfbxScene);
 
 	m_nInstance = nInstance;

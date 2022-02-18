@@ -10,7 +10,7 @@ ID3D12RootSignature* CScene::CreateGraphicsRootSignature(ID3D12Device* pd3dDevic
 {
 	ID3D12RootSignature* pd3dGraphicsRootSignature = NULL;
 
-	D3D12_DESCRIPTOR_RANGE pd3dDescriptorRanges[4];
+	D3D12_DESCRIPTOR_RANGE pd3dDescriptorRanges[5];
 
 	pd3dDescriptorRanges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 	pd3dDescriptorRanges[0].NumDescriptors = 1;
@@ -36,7 +36,13 @@ ID3D12RootSignature* CScene::CreateGraphicsRootSignature(ID3D12Device* pd3dDevic
 	pd3dDescriptorRanges[3].RegisterSpace = 0;
 	pd3dDescriptorRanges[3].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	D3D12_ROOT_PARAMETER pd3dRootParameters[7];
+	pd3dDescriptorRanges[4].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	pd3dDescriptorRanges[4].NumDescriptors = 1;
+	pd3dDescriptorRanges[4].BaseShaderRegister = 2; //t2: gtxtTexture(skinnedshader)
+	pd3dDescriptorRanges[4].RegisterSpace = 0;
+	pd3dDescriptorRanges[4].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_ROOT_PARAMETER pd3dRootParameters[8];
 
 /**/
 	pd3dRootParameters[0].ParameterType =  D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
@@ -74,6 +80,11 @@ ID3D12RootSignature* CScene::CreateGraphicsRootSignature(ID3D12Device* pd3dDevic
 	pd3dRootParameters[6].Descriptor.ShaderRegister = 7; //Skinned Bone Transforms
 	pd3dRootParameters[6].Descriptor.RegisterSpace = 0;
 	pd3dRootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+
+	pd3dRootParameters[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	pd3dRootParameters[7].DescriptorTable.NumDescriptorRanges = 1;
+	pd3dRootParameters[7].DescriptorTable.pDescriptorRanges = &pd3dDescriptorRanges[4];//skinned shader texture
+	pd3dRootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
 
 	D3D12_STATIC_SAMPLER_DESC d3dSamplerDesc;

@@ -30,7 +30,7 @@ void CFbxRenderInfo::CreateFbxModelShader(ID3D12Device *pd3dDevice, ID3D12Graphi
 	m_pFbxModelShader = new CFbxModelShader();
 	m_pFbxModelShader->CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
 
-	m_pFbxSkinnedModelShader = new CFbxSkinnedModelShader();
+	m_pFbxSkinnedModelShader = new CFbxSkinnedModelShader(pd3dDevice, pd3dCommandList);
 	m_pFbxSkinnedModelShader->CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
 }
 
@@ -135,6 +135,7 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 		FbxMesh *pfbxMesh = pfbxNode->GetMesh();
 		if (pfbxMesh)
 		{
+			//제어점 좌표 구하기
 			int nVertices = pfbxMesh->GetControlPointsCount();
 			FbxVector4 *pfbxv4Vertices = new FbxVector4[nVertices];
 			::memcpy(pfbxv4Vertices, pfbxMesh->GetControlPoints(), nVertices * sizeof(FbxVector4));
@@ -145,6 +146,8 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 				pxmf4Vertices[j] = XMFLOAT4((float)pfbxv4Vertices[j][0], (float)pfbxv4Vertices[j][1], (float)pfbxv4Vertices[j][2], 1.0f);
 			}
 
+			// 인덱스 구해오기
+
 			int nIndices = 0;
 			int nPolygons = pfbxMesh->GetPolygonCount();
 			for (int i = 0; i < nPolygons; i++)
@@ -152,12 +155,101 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 				nIndices += pfbxMesh->GetPolygonSize(i);
 			}//Triangle: 3, Triangulate(), nIndices = nPolygons * 3
 
+			
 			int *pnIndices = new int[nIndices];
+
 			for (int i = 0, k = 0; i < nPolygons; i++)
 			{
 				int nPolygonSize = pfbxMesh->GetPolygonSize(i); 
 				for (int j = 0; j < nPolygonSize; j++) pnIndices[k++] = pfbxMesh->GetPolygonVertex(i, j);
 			}
+
+			//텍스처 인덱스 구하기
+			int* uvIdx = new int[nIndices];
+			int t = 0;
+			for (int i = 0; i < nPolygons; ++i)
+			{
+				for (int j = 0; j < pfbxMesh->GetPolygonSize(i); ++j)
+				{
+					uvIdx[t] = pfbxMesh->GetTextureUVIndex(i, j);
+					t += 1;
+				}
+			}
+			
+			//텍스처 uv 값 구하기
+			XMFLOAT2* uvValue = new XMFLOAT2[nIndices];
+			FbxGeometryElementUV* uvData = pfbxMesh->GetElementUV(0);
+			XMFLOAT2 sample;
+			t = 0;
+			for (int i = 0; i < nPolygons; ++i)
+			{
+				for (int j = 0; j < pfbxMesh->GetPolygonSize(i); ++j)
+				{
+					//한 점의 인덱스
+					int temp = pfbxMesh->GetPolygonVertex(i, j);
+					int temp2 = pfbxMesh->GetTextureUVIndex(i, j);
+					
+					switch (uvData->GetMappingMode())
+					{
+					case FbxGeometryElement::eByControlPoint:
+						switch (uvData->GetReferenceMode())
+						{
+						case FbxGeometryElement::eDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp).mData[0]);
+							sample.y = static_cast<float>(uvData->GetDirectArray().GetAt(temp).mData[1]);
+						}
+						break;
+						case FbxGeometryElement::eIndexToDirect:
+						{
+							int t2 = uvData->GetIndexArray().GetAt(temp);
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(t2).mData[0]);
+							sample.y = static_cast<float>(uvData->GetDirectArray().GetAt(t2).mData[1]);
+						}
+						break;
+						default:
+							throw std::exception("Invalid Reference(eByControlPoint)");
+						}
+						break;
+					case FbxGeometryElement::eByPolygonVertex:
+						switch (uvData->GetReferenceMode())
+						{
+						case FbxGeometryElement::eDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[0]);
+							sample.y = 1.0f - static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[1]);
+						}
+						break;
+						case FbxGeometryElement::eIndexToDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[0]);
+							sample.y = 1.0f - static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[1]);
+						}
+						break;
+						default:
+							throw std::exception("invalid reference(eByPolygonVertex)");
+						}
+						break;
+					default:
+						throw std::exception("Invalid Reference");
+						break;
+					}
+					uvValue[t] = sample;
+					t += 1;
+				}
+			}
+			//인덱스가 아닌 고정된 점들의 형태로 변환
+			XMFLOAT2* uvs = new XMFLOAT2[nVertices];
+			for (int i = 0; i < nIndices; ++i)
+			{
+				if (uvIdx[i] < nVertices)
+				{
+					uvs[uvIdx[i]].x = uvValue[i].x;
+					uvs[uvIdx[i]].y = uvValue[i].y;
+				}
+			}
+
+
 
 			CFbxRenderInfo *pFbxRenderInfo = new CFbxRenderInfo();
 
@@ -284,7 +376,7 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 					pxmf4x4VertextToLinkNodes[j] = ::FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
 				}
 
-				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
+				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
 
 				pFbxRenderInfo->m_nLinkNodes = nClusters;
 				pFbxRenderInfo->m_nInstances = nInstances;
@@ -315,7 +407,7 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 			}
 			else
 			{
-				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, nIndices, pnIndices, NULL, NULL, 0, NULL);
+				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
 			}
 
 			pfbxMesh->SetUserDataPtr(pFbxRenderInfo);

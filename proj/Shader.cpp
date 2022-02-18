@@ -526,7 +526,7 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CTexture* ppTextures[TEXTURESBILL];
 
 	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Stone01.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"human.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal01.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -563,7 +563,8 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
 
-	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0);
+	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
+	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
 	m_ppObjects[0]->SetAnimationStack(0);
 	m_ppObjects[0]->m_pAnimationController->SetPosition(0, 0.0f);
 	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);
@@ -601,7 +602,7 @@ void CBillboardShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 	CTexturedShader::Render(pd3dCommandList);
 	/**/
 	UpdateShaderVariables(pd3dCommandList);
-
+	
 	for (int j = 0; j < m_nObjects; j++)
 	{
 		if (m_ppObjects[j])
@@ -701,8 +702,10 @@ D3D12_SHADER_BYTECODE CFbxModelShader::CreatePixelShader(ID3DBlob** ppd3dShaderB
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CFbxSkinnedModelShader::CFbxSkinnedModelShader()
+CFbxSkinnedModelShader::CFbxSkinnedModelShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
+
+
 }
 
 CFbxSkinnedModelShader::~CFbxSkinnedModelShader()
@@ -711,13 +714,13 @@ CFbxSkinnedModelShader::~CFbxSkinnedModelShader()
 
 D3D12_INPUT_LAYOUT_DESC CFbxSkinnedModelShader::CreateInputLayout()
 {
-	UINT nInputElementDescs = 3;
+	UINT nInputElementDescs = 4;
 	D3D12_INPUT_ELEMENT_DESC* pd3dInputElementDescs = new D3D12_INPUT_ELEMENT_DESC[nInputElementDescs];
 
 	pd3dInputElementDescs[0] = { "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
 	pd3dInputElementDescs[1] = { "BONEINDEX", 0, DXGI_FORMAT_R32G32B32A32_UINT, 1, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
 	pd3dInputElementDescs[2] = { "BONEWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 2, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
-
+	pd3dInputElementDescs[3] = { "UV", 0, DXGI_FORMAT_R32G32_FLOAT, 3, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
 	D3D12_INPUT_LAYOUT_DESC d3dInputLayoutDesc;
 	d3dInputLayoutDesc.pInputElementDescs = pd3dInputElementDescs;
 	d3dInputLayoutDesc.NumElements = nInputElementDescs;

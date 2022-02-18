@@ -152,6 +152,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GeometryUtility.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Game_Data.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />

@@ -158,11 +158,13 @@ struct VS_FBX_SKINNED_MODEL_INPUT
 	float4 position : POSITION;
 	uint4 indices : BONEINDEX;
 	float4 weights : BONEWEIGHT;
+	float2 uvs : UV;
 };
 
 struct VS_FBX_SKINNED_MODEL_OUTPUT
 {
 	float4	position : SV_POSITION;
+	float2 uvs : UV;
 };
 
 VS_FBX_SKINNED_MODEL_OUTPUT VSFbxSkinnedModel(VS_FBX_SKINNED_MODEL_INPUT input)
@@ -176,13 +178,14 @@ VS_FBX_SKINNED_MODEL_OUTPUT VSFbxSkinnedModel(VS_FBX_SKINNED_MODEL_INPUT input)
 	}
 	float3 positionW = mul(input.position, mtxVertexToBoneWorld).xyz;
 	output.position = mul(mul(float4(positionW, 1.0f), gmtxView), gmtxProjection);
+	output.uvs = input.uvs;
 
 	return(output);
 }
 
 float4 PSFbxSkinnedModel(VS_FBX_SKINNED_MODEL_OUTPUT input) : SV_TARGET
 {
-	float4 cColor = float4(input.position.x / 500.0f, input.position.y / 500.0f, input.position.z/500.0f, 1.0f);
-
+	//float4 cColor = float4(input.position.x / 500.0f, input.position.y / 500.0f, input.position.z/500.0f, 1.0f);
+	float4 cColor = billtex.Sample(samp1, input.uvs);
 	return(cColor);
 }

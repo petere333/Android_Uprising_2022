@@ -162,7 +162,7 @@ public:
 class CMeshFromFbx
 {
 public:
-	CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, XMFLOAT4* pPositions, int nIndices, int* pnIndices, int(*pnSkinningIndices)[4], float(*pfSkinningWeights)[4], int nLinkNodes, XMFLOAT4X4* pxmf4x4VertextToLinkNodes);
+	CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, XMFLOAT4* pPositions, XMFLOAT2* puvs, int nIndices, int* pnIndices, int(*pnSkinningIndices)[4], float(*pfSkinningWeights)[4], int nLinkNodes, XMFLOAT4X4* pxmf4x4VertextToLinkNodes);
 	virtual ~CMeshFromFbx();
 
 private:
@@ -183,6 +183,11 @@ protected:
 	ID3D12Resource* m_pd3dPositionBuffer = NULL;
 	ID3D12Resource* m_pd3dPositionUploadBuffer = NULL;
 	D3D12_VERTEX_BUFFER_VIEW		m_d3dPositionBufferView;
+
+	ID3D12Resource* m_pd3dTextureBuffer = NULL;
+	ID3D12Resource* m_pd3dTextureUploadBuffer = NULL;
+	D3D12_VERTEX_BUFFER_VIEW		m_d3dTextureBufferView;
+
 
 	ID3D12Resource* m_pd3dBoneIndexBuffer = NULL;
 	ID3D12Resource* m_pd3dBoneIndexUploadBuffer = NULL;

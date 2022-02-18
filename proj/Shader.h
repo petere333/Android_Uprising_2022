@@ -222,7 +222,7 @@ class CFbxSkinnedModelShader : public CShader
 public:
 	ID3DBlob* m_pd3dVertexShaderBlob = NULL;
 	ID3DBlob* m_pd3dPixelShaderBlob = NULL;
-	CFbxSkinnedModelShader();
+	CFbxSkinnedModelShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	virtual ~CFbxSkinnedModelShader();
 
 	virtual D3D12_INPUT_LAYOUT_DESC CreateInputLayout();
