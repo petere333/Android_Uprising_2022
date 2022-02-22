@@ -139,10 +139,14 @@ void CScene::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
-void CScene::movePlayer(float x, float y, float z)
+void CScene::movePlayer(int dir, float dist)
 {
-	bill->movePlayer(x, y, z);
+	bill->movePlayer(dir, dist);
 
+}
+void CScene::StopPlayer()
+{
+	bill->StopPlayer();
 }
 
 void CScene::ReleaseObjects()

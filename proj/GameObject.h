@@ -34,7 +34,7 @@ public:
 
 public:
 	float 							m_fTime = 0.0f;
-
+	
 	int 							m_nAnimationStacks = 0;
 	FbxAnimStack** m_ppfbxAnimationStacks = NULL;
 
@@ -174,6 +174,7 @@ public:
 	CAnimationController* m_pAnimationController = NULL;
 	CFbxScene* m_pFbxScene = NULL;
 	int m_nInstance = 0;
+	float currentRotationZ = 0.0f;
 
 	void SetFbxScene(CFbxScene* pFbxScene);
 	void SetAnimationStack(int nAnimationStack) { m_pAnimationController->SetAnimationStack(m_pFbxScene->m_pfbxScene, nAnimationStack); }

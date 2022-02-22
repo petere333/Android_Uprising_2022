@@ -353,19 +353,19 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			
 		case VK_UP:
 			m_pCamera->move(0.0f, 0.0f, 20.0f);
-			m_pScene->movePlayer(0.0f,0.0f,20.0f);
+			m_pScene->movePlayer(1, 20.0f);
 			break;
 		case VK_DOWN:
 			m_pCamera->move(0.0f, 0.0f, -20.0f);
-			m_pScene->movePlayer(0.0f, 0.0f, -20.0f);
+			m_pScene->movePlayer(2, 20.0f);
 			break;
 		case VK_LEFT:
 			m_pCamera->move(-20.0f, 0.0f, 0.0f);
-			m_pScene->movePlayer(-20.0f, 0.0f, 0.0f);
+			m_pScene->movePlayer(3, 20.0f);
 			break;
 		case VK_RIGHT:
 			m_pCamera->move(20.0f, 0.0f, 0.0f);
-			m_pScene->movePlayer(20.0f, 0.0f, 0.0f);
+			m_pScene->movePlayer(4, 20.0f);
 			break;
 			/*
 		case 'Q':
@@ -379,6 +379,24 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 		}
 		break;
+	case WM_KEYUP:
+		switch (wParam)
+		{
+		case VK_UP:
+			m_pScene->StopPlayer();
+			break;
+		case VK_DOWN:
+			m_pScene->StopPlayer();
+			break;
+		case VK_LEFT:
+			m_pScene->StopPlayer();
+			break;
+		case VK_RIGHT:
+			m_pScene->StopPlayer();
+			break;
+		default:
+			break;
+		}
 	default:
 		break;
 	}

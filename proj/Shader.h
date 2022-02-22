@@ -145,7 +145,7 @@ public:
 
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera);
 
-	void movePlayer(float, float, float);
+	void movePlayer(float, float,float);
 
 	
 
@@ -181,8 +181,8 @@ public:
 
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera);
 
-	void movePlayer(float, float, float);
-
+	void movePlayer(int, float);
+	void StopPlayer();
 
 
 	D3D12_SHADER_BYTECODE CreatePixelShader(ID3DBlob** ppd3dShaderBlob);

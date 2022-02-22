@@ -40,7 +40,8 @@ public:
 	ID3D12PipelineState *m_pd3dPipelineState = NULL;
 	//파이프라인 상태를 나타내는 인터페이스 포인터이다.
 	float								m_fElapsedTime = 0.0f;
-	void movePlayer(float,float,float);
+	void movePlayer(int direction, float dist);
+	void StopPlayer();
 protected:
 	//씬은 게임 객체들의 집합이다. 게임 객체는 셰이더를 포함한다.
 

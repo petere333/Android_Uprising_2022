@@ -558,15 +558,16 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	
 	m_ppObjects = new CGameObject * [m_nObjects];
 	
-	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "human.fbx");
+	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "sample.fbx");
 	CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3);
 
 	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
 
 	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
 	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
-	m_ppObjects[0]->SetAnimationStack(0);
-	m_ppObjects[0]->m_pAnimationController->SetPosition(0, 0.0f);
+	m_ppObjects[0]->SetAnimationStack(11);
+	//11이 서있기, 20이 걷기.
+	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
 	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);
 	m_ppObjects[0]->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (m_nObjects - 1)));
 
@@ -611,10 +612,44 @@ void CBillboardShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 		}
 	}
 }
-void CBillboardShader::movePlayer(float x, float y, float z)
+void CBillboardShader::movePlayer(int dir, float dist)
 {
-	m_ppObjects[m_nObjects - 1]->SetPosition(m_ppObjects[m_nObjects - 1]->GetPosition().x + x, 0,
-		m_ppObjects[m_nObjects - 1]->GetPosition().z + z);
+	if (dir == 1) // UP
+	{
+		m_ppObjects[m_nObjects - 1]->SetPosition(m_ppObjects[m_nObjects - 1]->GetPosition().x , 0,
+			m_ppObjects[m_nObjects - 1]->GetPosition().z + dist);
+
+		m_ppObjects[m_nObjects - 1]->Rotate(0.0f, 0.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ, 0.0f);
+		m_ppObjects[m_nObjects - 1]->currentRotationZ += 0.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ;
+	}
+	else if (dir == 2)//DOWN
+	{
+		m_ppObjects[m_nObjects - 1]->SetPosition(m_ppObjects[m_nObjects - 1]->GetPosition().x, 0,
+			m_ppObjects[m_nObjects - 1]->GetPosition().z - dist);
+		m_ppObjects[m_nObjects - 1]->Rotate(0.0f, 180.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ, 0.0f);
+		m_ppObjects[m_nObjects - 1]->currentRotationZ += 180.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ;
+	}
+	else if (dir == 3)//LEFT
+	{
+		m_ppObjects[m_nObjects - 1]->SetPosition(m_ppObjects[m_nObjects - 1]->GetPosition().x - dist, 0,
+			m_ppObjects[m_nObjects - 1]->GetPosition().z);
+		m_ppObjects[m_nObjects - 1]->Rotate(0.0f, 270.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ, 0.0f);
+		m_ppObjects[m_nObjects - 1]->currentRotationZ += 270.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ;
+	}
+	else if (dir == 4)//RIGHT
+	{
+		m_ppObjects[m_nObjects - 1]->SetPosition(m_ppObjects[m_nObjects - 1]->GetPosition().x + dist, 0,
+			m_ppObjects[m_nObjects - 1]->GetPosition().z);
+		m_ppObjects[m_nObjects - 1]->Rotate(0.0f, 90.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ, 0.0f);
+		m_ppObjects[m_nObjects - 1]->currentRotationZ += 90.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ;
+	}
+	
+	m_ppObjects[m_nObjects - 1]->SetAnimationStack(20);
+}
+void CBillboardShader::StopPlayer()
+{
+	m_ppObjects[m_nObjects - 1]->SetAnimationStack(11);
+	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
 }
 void CBillboardShader::CreateShaderVariables(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
