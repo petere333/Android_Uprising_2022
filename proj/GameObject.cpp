@@ -514,21 +514,35 @@ CAnimationController::CAnimationController(FbxScene* pfbxScene)
 	FbxArray<FbxString*> fbxAnimationStackNames;
 	pfbxScene->FillAnimStackNameArray(fbxAnimationStackNames);
 
+	//애니메이션 스택, 즉 애니메이션의 가짓수가 몇 개지?
 	m_nAnimationStacks = fbxAnimationStackNames.Size();
 
+
+	//각 애니메이션 정보
 	m_ppfbxAnimationStacks = new FbxAnimStack * [m_nAnimationStacks];
+
+	//각 애니메이션의 시작 시간. 보통 0초?
 	m_pfbxStartTimes = new FbxTime[m_nAnimationStacks];
+
+	//각 애니메이션이 끝나는 시간.
 	m_pfbxStopTimes = new FbxTime[m_nAnimationStacks];
+
+	//현재 어느 시각의 장면이지?
 	m_pfbxCurrentTimes = new FbxTime[m_nAnimationStacks];
 
 	for (int i = 0; i < m_nAnimationStacks; i++)
 	{
+		//i번째 애니메이션의 이름이 뭐지?
 		FbxString* pfbxStackName = fbxAnimationStackNames[i];
+
+		//i 번째 애니메이션 가져온다.
 		FbxAnimStack* pfbxAnimationStack = pfbxScene->FindMember<FbxAnimStack>(pfbxStackName->Buffer());
 		m_ppfbxAnimationStacks[i] = pfbxAnimationStack;
 
+		//뭔진몰라도, 애니메이션 동작 정보를 가져올라면 테이크인포라는 객체가 필요해.
 		FbxTakeInfo* pfbxTakeInfo = pfbxScene->GetTakeInfo(*pfbxStackName);
 		FbxTime fbxStartTime, fbxStopTime;
+
 		if (pfbxTakeInfo)
 		{
 			fbxStartTime = pfbxTakeInfo->mLocalTimeSpan.GetStart();
@@ -536,6 +550,7 @@ CAnimationController::CAnimationController(FbxScene* pfbxScene)
 		}
 		else
 		{
+			//이 테이크인포 객체가 없으면 그냥 fbx 파일에 설정된 기본 시간정보를 불러와.
 			FbxTimeSpan fbxTimeLineTimeSpan;
 			pfbxScene->GetGlobalSettings().GetTimelineDefaultTimeSpan(fbxTimeLineTimeSpan);
 			fbxStartTime = fbxTimeLineTimeSpan.GetStart();
@@ -546,7 +561,7 @@ CAnimationController::CAnimationController(FbxScene* pfbxScene)
 		m_pfbxStopTimes[i] = fbxStopTime;
 		m_pfbxCurrentTimes[i] = FbxTime(0);
 	}
-
+	//다불러왔으니까 배열 메모리 해제.
 	FbxArrayDelete(fbxAnimationStackNames);
 }
 

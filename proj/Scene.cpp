@@ -130,11 +130,11 @@ void CScene::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 	//씬을 그리기 위한 셰이더 객체를 생성한다.
 
-	ground = new CGroundShader(1);
+	//ground = new CGroundShader(1);
 	bill = new CBillboardShader(2861, pfbxSdkManager);
-	ground->CreateShader(pd3dDevice, m_pd3dGraphicsRootSignature);
+	//ground->CreateShader(pd3dDevice, m_pd3dGraphicsRootSignature);
 	bill->CreateShader(pd3dDevice, m_pd3dGraphicsRootSignature);
-	ground->BuildObjects(pd3dDevice, pd3dCommandList);
+	//ground->BuildObjects(pd3dDevice, pd3dCommandList);
 	bill->BuildObjects(pd3dDevice, pd3dCommandList);
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
@@ -153,8 +153,8 @@ void CScene::ReleaseObjects()
 {
 	if (m_pd3dGraphicsRootSignature) m_pd3dGraphicsRootSignature->Release();
 
-	ground->ReleaseShaderVariables();
-	ground->ReleaseObjects();
+	//ground->ReleaseShaderVariables();
+	//ground->ReleaseObjects();
 	bill->ReleaseShaderVariables();
 	bill->ReleaseObjects();
 
@@ -193,7 +193,7 @@ bool CScene::ProcessInput()
 void CScene::AnimateObjects(float fTimeElapsed)
 {
 	m_fElapsedTime = fTimeElapsed;
-	ground->AnimateObjects(fTimeElapsed);
+	//ground->AnimateObjects(fTimeElapsed);
 	bill->AnimateObjects(fTimeElapsed);
 }
 
@@ -206,14 +206,14 @@ void CScene::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera
 	UpdateShaderVariables(pd3dCommandList);
 	//씬을 렌더링하는 것은 씬을 구성하는 게임 객체(셰이더를 포함하는 객체)들을 렌더링하는 것이다. 
 
-	ground->Render(pd3dCommandList, pCamera);
+	//ground->Render(pd3dCommandList, pCamera);
 	bill->Render(pd3dCommandList, pCamera);
 }
 
 void CScene::ReleaseUploadBuffers()
 {
 	{
-		ground->ReleaseUploadBuffers();
+		//ground->ReleaseUploadBuffers();
 		bill->ReleaseUploadBuffers();
 	}
 }

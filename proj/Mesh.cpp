@@ -283,7 +283,7 @@ CMeshFromFbx::CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 		m_d3dBoneWeightBufferView.StrideInBytes = sizeof(float) * 4;
 		m_d3dBoneWeightBufferView.SizeInBytes = sizeof(float) * 4 * m_nVertices;
 
-		m_pxmf4x4VertextToLinkNodes = pxmf4x4VertextToLinkNodes; //Bone Offset Transforms
+		m_pxmf4x4VertextToLinkNodes = pxmf4x4VertextToLinkNodes; //Bone Offset Transforms 즉 쉐이더 코드의 b6으로 들어감
 		UINT ncbElementBytes = (((sizeof(XMFLOAT4X4) * 128) + 255) & ~255); //256의 배수
 		m_pd3dcbVertextToLinkNodes = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 		m_pd3dcbVertextToLinkNodes->Map(0, NULL, (void**)&m_pcbxmf4x4MappedVertextToLinkNodes);

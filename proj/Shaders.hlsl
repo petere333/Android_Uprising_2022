@@ -156,8 +156,8 @@ cbuffer cbBoneTransforms : register(b7)
 struct VS_FBX_SKINNED_MODEL_INPUT
 {
 	float4 position : POSITION;
-	uint4 indices : BONEINDEX;
-	float4 weights : BONEWEIGHT;
+	uint4 indices : BONEINDEX;//스킨인덱스
+	float4 weights : BONEWEIGHT;//스킨웨이트
 	float2 uvs : UV;
 };
 

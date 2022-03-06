@@ -117,6 +117,8 @@ void RenderFbxNodeHierarchy(ID3D12GraphicsCommandList *pd3dCommandList, FbxNode 
 			CFbxRenderInfo::m_pFbxModelShader->Render(pd3dCommandList);
 		}
 
+
+
 		if (pFbxRenderInfo->m_pMesh) pFbxRenderInfo->m_pMesh->Render(pd3dCommandList);
 	}
 
@@ -242,11 +244,9 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 			XMFLOAT2* uvs = new XMFLOAT2[nVertices];
 			for (int i = 0; i < nIndices; ++i)
 			{
-				if (uvIdx[i] < nVertices)
-				{
-					uvs[uvIdx[i]].x = uvValue[i].x;
-					uvs[uvIdx[i]].y = uvValue[i].y;
-				}
+				uvs[pnIndices[i]].x = uvValue[i].x;
+				uvs[pnIndices[i]].y = uvValue[i].y;
+				
 			}
 
 
@@ -280,11 +280,11 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 					}
 				}
 
-				int **ppnBoneIDs = new int*[nVertices];
-				float **ppnBoneWeights = new float*[nVertices];
+				int **ppnBoneIDs = new int*[nVertices];// 각 정점마다 영향을 받는 뼈의 번호
+				float **ppnBoneWeights = new float*[nVertices]; // 각 정점마다 그 뼈에 얼마나 영향을 받나?
 				for (int i = 0; i < nVertices; i++)
 				{
-					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]];
+					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]]; 
 					ppnBoneWeights[i] = new float[pnBonesPerVertex[i]];
 					::memset(ppnBoneIDs[i], 0, pnBonesPerVertex[i] * sizeof(int));
 					::memset(ppnBoneWeights[i], 0, pnBonesPerVertex[i] * sizeof(float));
@@ -375,6 +375,11 @@ void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsComm
 				{
 					pxmf4x4VertextToLinkNodes[j] = ::FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
 				}
+
+				// 위에 내용을 일일이 이해할 순 없어도
+				// 일단 확실한건, 제어점 좌표, 인덱스, uv, uv인덱스와 더불어
+				// 애니메이션이 포함된 모델은 스킨인덱스, 스킨웨이트, 클러스터수, 본오프셋변환이라는 네가지 값을 더가져.
+				// 그리고 메쉬를 만들 때 이 네가지 정보를 정점 버퍼에 추가해.
 
 				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
 
