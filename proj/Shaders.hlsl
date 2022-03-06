@@ -172,6 +172,12 @@ VS_FBX_SKINNED_MODEL_OUTPUT VSFbxSkinnedModel(VS_FBX_SKINNED_MODEL_INPUT input)
 	VS_FBX_SKINNED_MODEL_OUTPUT output;
 
 	float4x4 mtxVertexToBoneWorld = (float4x4)0.0f;
+
+	
+	//애니메이션 시 한 정점의 위치 변화에 영향을 미치는 뼈의 갯수는 최대 4개이다.
+
+	//각 정점의 최종 위치는 (원래위치)*(i번 뼈의 오프셋)*(i번 뼈의변환)*(i번 뼈가 행사하는 영향력의 정도, 즉 가중치)의 총합이다.
+	// 모든 경우, 4개의 뼈의 가중치의 총합은 1.0이다.
 	for (int i = 0; i < MAX_VERTEX_INFLUENCES; i++)
 	{
 		mtxVertexToBoneWorld += input.weights[i] * mul(gpmtxBoneOffsets[input.indices[i]], gpmtxBoneTransforms[input.indices[i]]);

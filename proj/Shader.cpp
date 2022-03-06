@@ -605,17 +605,18 @@ void CBillboardShader::ReleaseUploadBuffers()
 		for (int j = 0; j < m_nObjects; j++) m_ppObjects[j]->ReleaseUploadBuffers();
 	}
 }
-void CBillboardShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
+void CBillboardShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)//여기서부터 시작.
 {
 	CTexturedShader::Render(pd3dCommandList);
 	/**/
 	UpdateShaderVariables(pd3dCommandList);
+	// 각 게임 개체의 변환 행렬을 hlsl로 보낸다.
 	
 	for (int j = 0; j < m_nObjects; j++)
 	{
 		if (m_ppObjects[j])
 		{
-			m_ppObjects[j]->Render(pd3dCommandList, 3);
+			m_ppObjects[j]->Render(pd3dCommandList, 3);//CGameObject::Render() 함수 호출
 		}
 	}
 }
