@@ -3,6 +3,7 @@
 #include <fbxsdk.h>
 #include <vector>
 
+
 #pragma comment(lib, "libfbxsdk-md.lib")
 #pragma comment(lib, "libxml2-md.lib")
 #pragma comment(lib, "zlib-md.lib")
@@ -51,6 +52,9 @@ void getIndices(FbxNode *node);
 void getUVs(FbxNode *node);
 void getUVCoords(FbxNode* node);
 void getAnimationData(FbxScene* scene);
+void getBones(FbxNode* node);
+FbxAMatrix GetGeometricOffsetTransform(FbxNode* pfbxNode);
+
 
 typedef struct float2
 {
@@ -74,6 +78,16 @@ typedef struct AnimationData
 	long end;
 };
 
+typedef struct matrix4x4
+{
+	float m00, m01, m02, m03,
+		m10, m11, m12, m13,
+		m20, m21, m22, m23,
+		m30, m31, m32, m33;
+}matrix4x4;
+
+matrix4x4 FbxMatrixToXmFloat4x4Matrix(FbxAMatrix* pfbxmtxSource);
+
 vector<int> idx;//제어점 인덱스 리스트
 vector<int> uvIdx;//제어점 uv 인덱스 리스트
 int indexCount = 0;
@@ -85,6 +99,13 @@ vector<float3> posList;//제어점 좌표값 리스트
 
 vector<char*> animationNamesList;
 vector<AnimationData> animationDataList;
+
+int(*skinIndex)[4];
+float(*skinWeight)[4];
+matrix4x4* pxmf4x4VertextToLinkNodes;
+int nClust;
+
+int maxIndex;
 
 int main()
 {
@@ -105,6 +126,10 @@ int main()
 	getAnimationData(scene);
 	printf("애니메이션 정보 로딩 완료\n");
 
+	printf("스킨 정보 로딩 중\n");
+	getBones(root);
+	printf("스킨 정보 로딩 완료\n");
+
 	FILE* idxOut = fopen("indices.txt", "w");
 	FILE* uvOut = fopen("uvs.txt", "w");
 	FILE* coordOut = fopen("uvCoords.txt", "w");
@@ -112,6 +137,9 @@ int main()
 	FILE* vtxOut = fopen("vertices.txt", "w");
 
 	FILE* animOut = fopen("animations.txt", "w");
+
+	FILE* skinOut = fopen("skinData.txt", "w");
+
 	//1061
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)
@@ -190,12 +218,40 @@ int main()
 		fprintf(animOut, "애니메이션 이름 : %s      시작 시간 : %ld,     끝 시간 : %ld\n", animationNamesList[i], animationDataList[i].start, animationDataList[i].end);
 	}
 	printf("파일에 애니메이션 정보 기록 완료\n");
+
+	printf("파일에 스킨 정보 기록 중\n");
+	fprintf(skinOut, "클러스터 수 : %d\n", nClust);
+	fprintf(skinOut, "스킨 인덱스\n");
+	for (int i = 0; i < maxIndex + 1; ++i)
+	{
+		fprintf(skinOut, "(%d,  %d,  %d,  %d)\n", skinIndex[i][0], skinIndex[i][1], skinIndex[i][2], skinIndex[i][3]);
+	}
+	fprintf(skinOut, "스킨 가중치\n");
+	for (int i = 0; i < maxIndex + 1; ++i)
+	{
+		fprintf(skinOut, "(%f,  %f,  %f,  %f)\n", skinWeight[i][0], skinWeight[i][1], skinWeight[i][2], skinWeight[i][3]);
+	}
+	fprintf(skinOut, "본 오프셋 변환\n");
+	for (int i = 0; i < nClust; ++i)
+	{
+		fprintf(skinOut, "%f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f\n",
+			pxmf4x4VertextToLinkNodes[i].m00, pxmf4x4VertextToLinkNodes[i].m01, pxmf4x4VertextToLinkNodes[i].m02, pxmf4x4VertextToLinkNodes[i].m03,
+			pxmf4x4VertextToLinkNodes[i].m10, pxmf4x4VertextToLinkNodes[i].m11, pxmf4x4VertextToLinkNodes[i].m12, pxmf4x4VertextToLinkNodes[i].m13,
+			pxmf4x4VertextToLinkNodes[i].m20, pxmf4x4VertextToLinkNodes[i].m21, pxmf4x4VertextToLinkNodes[i].m22, pxmf4x4VertextToLinkNodes[i].m23,
+			pxmf4x4VertextToLinkNodes[i].m30, pxmf4x4VertextToLinkNodes[i].m31, pxmf4x4VertextToLinkNodes[i].m32, pxmf4x4VertextToLinkNodes[i].m33);
+	}
+	 
+	printf("파일에 스킨 정보 기록 완료\n");
+
+
+
 	fclose(idxOut);
 	fclose(coordOut);
 	fclose(uvOut);
 	fclose(posOut);
 	fclose(vtxOut);
 	fclose(animOut);
+	fclose(skinOut);
 	FbxArrayDelete(names);
 	return 0;
 }
@@ -241,6 +297,15 @@ void getIndices(FbxNode* node)
 	{
 		getIndices(node->GetChild(i));
 	}
+	int maxidx = 0;
+	for (int i = 0; i < idx.size(); ++i)
+	{
+		if (idx[i] > maxidx)
+		{
+			maxidx = idx[i];
+		}
+	}
+	maxIndex = maxidx;
 }
 
 void getUVs(FbxNode* node)
@@ -415,4 +480,208 @@ void getAnimationData(FbxScene* scene)
 		animationDataList.push_back(data);
 	}
 
+}
+
+void getBones(FbxNode* node)
+{
+	FbxNodeAttribute* pfbxNodeAttribute = node->GetNodeAttribute();
+
+	float2 sample;
+
+
+	if (pfbxNodeAttribute && (pfbxNodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh))
+	{
+		FbxMesh* pfbxMesh = node->GetMesh();
+		if (pfbxMesh)
+		{
+			int nDeform = pfbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+			if (nDeform > 0)
+			{
+				FbxSkin* pfbxSkinDeformer = (FbxSkin*)pfbxMesh->GetDeformer(0, FbxDeformer::eSkin);
+				int nClusters = pfbxSkinDeformer->GetClusterCount();
+
+				int* pnBonesPerVertex = new int[maxIndex + 1];
+				memset(pnBonesPerVertex, 0, maxIndex + 1 * sizeof(int));
+				for (int i = 0; i < maxIndex + 1; ++i)
+				{
+					pnBonesPerVertex[i] = 0;
+				}
+				for (int j = 0; j < nClusters; j++)
+				{
+					FbxCluster* pfbxCluster = pfbxSkinDeformer->GetCluster(j);
+					int nControlPointIndices = pfbxCluster->GetControlPointIndicesCount();
+					int* pnControlPointIndices = pfbxCluster->GetControlPointIndices();
+					for (int k = 0; k < nControlPointIndices; k++)
+					{
+						pnBonesPerVertex[pnControlPointIndices[k]]++;
+					}
+				}
+
+				int nMaxBonesPerVertex = 0;
+				for (int i = 0; i < maxIndex + 1; i++)
+				{
+					if (pnBonesPerVertex[i] > nMaxBonesPerVertex)
+					{
+						nMaxBonesPerVertex = pnBonesPerVertex[i];
+					}
+				}
+
+				int** ppnBoneIDs = new int* [maxIndex + 1];// 각 정점마다 영향을 받는 뼈의 번호
+				float** ppnBoneWeights = new float* [maxIndex + 1]; // 각 정점마다 그 뼈에 얼마나 영향을 받나?
+				for (int i = 0; i < maxIndex + 1; i++)
+				{
+					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]];
+					ppnBoneWeights[i] = new float[pnBonesPerVertex[i]];
+					::memset(ppnBoneIDs[i], 0, pnBonesPerVertex[i] * sizeof(int));
+					::memset(ppnBoneWeights[i], 0, pnBonesPerVertex[i] * sizeof(float));
+					for (int j = 0; j < pnBonesPerVertex[i]; ++j)
+					{
+						ppnBoneIDs[i][j] = 0;
+						ppnBoneWeights[i][j] = 0.0f;
+					}
+					
+				}
+
+				int* pnBones = new int[maxIndex + 1];
+				::memset(pnBones, 0, maxIndex + 1 * sizeof(int));
+				for (int i = 0; i < maxIndex + 1; ++i)
+				{
+					pnBones[i] = 0;
+				}
+
+				//				FbxAMatrix fbxmtxGeometryOffset = GetGeometricOffsetTransform(pfbxNode);
+				FbxAMatrix fbxmtxGeometryOffset = GetGeometricOffsetTransform(pfbxMesh->GetNode());
+
+				FbxAMatrix* pfbxmtxVertextToLinkNodes = new FbxAMatrix[nClusters];
+				for (int j = 0; j < nClusters; j++)
+				{
+					FbxCluster* pfbxCluster = pfbxSkinDeformer->GetCluster(j);
+
+					FbxAMatrix fbxmtxBindPoseMeshToRoot; //Cluster Transform
+					pfbxCluster->GetTransformMatrix(fbxmtxBindPoseMeshToRoot);
+					FbxAMatrix fbxmtxBindPoseBoneToRoot; //Cluster Link Transform
+					pfbxCluster->GetTransformLinkMatrix(fbxmtxBindPoseBoneToRoot);
+
+					pfbxmtxVertextToLinkNodes[j] = fbxmtxBindPoseBoneToRoot.Inverse() * fbxmtxBindPoseMeshToRoot * fbxmtxGeometryOffset;
+
+					int* pnControlPointIndices = pfbxCluster->GetControlPointIndices();
+					double* pfControlPointWeights = pfbxCluster->GetControlPointWeights();
+					int nControlPointIndices = pfbxCluster->GetControlPointIndicesCount();
+
+					for (int k = 0; k < nControlPointIndices; k++)
+					{
+						int nVertex = pnControlPointIndices[k];
+						ppnBoneIDs[nVertex][pnBones[nVertex]] = j;
+						ppnBoneWeights[nVertex][pnBones[nVertex]++] = (float)pfControlPointWeights[k];
+					}
+				}
+
+				float* pnSumOfBoneWeights = new float[maxIndex+1];
+				::memset(pnSumOfBoneWeights, 0, maxIndex+1 * sizeof(float));
+
+				for (int i = 0; i < maxIndex+1; i++)
+				{
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						pnSumOfBoneWeights[i] += ppnBoneWeights[i][j];
+					}
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						ppnBoneWeights[i][j] /= pnSumOfBoneWeights[i];
+					}
+				}
+
+				if (pnSumOfBoneWeights) delete[] pnSumOfBoneWeights;
+
+				for (int i = 0; i < maxIndex+1; i++)
+				{
+					for (int j = 0; j < pnBonesPerVertex[i] - 1; j++)
+					{
+						for (int k = j + 1; k < pnBonesPerVertex[i]; k++)
+						{
+							if (ppnBoneWeights[i][j] < ppnBoneWeights[i][k])
+							{
+								float fTemp = ppnBoneWeights[i][j];
+								ppnBoneWeights[i][j] = ppnBoneWeights[i][k];
+								ppnBoneWeights[i][k] = fTemp;
+								int nTemp = ppnBoneIDs[i][j];
+								ppnBoneIDs[i][j] = ppnBoneIDs[i][k];
+								ppnBoneIDs[i][k] = nTemp;
+							}
+						}
+					}
+				}
+
+				int(*pnSkinningIndices)[4] = new int[maxIndex+1][4];
+				float(*pfSkinningWeights)[4] = new float[maxIndex+1][4];
+
+				for (int i = 0; i < maxIndex+1; i++)
+				{
+					::memset(pnSkinningIndices[i], 0, 4 * sizeof(int));
+					::memset(pfSkinningWeights[i], 0, 4 * sizeof(float));
+
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						if (j < 4)
+						{
+							pnSkinningIndices[i][j] = ppnBoneIDs[i][j];
+							pfSkinningWeights[i][j] = ppnBoneWeights[i][j];
+						}
+					}
+				}
+
+				skinIndex = pnSkinningIndices;
+				skinWeight = pfSkinningWeights;
+
+				pxmf4x4VertextToLinkNodes = new matrix4x4[nClusters]; //Bone Offset Transforms
+				for (int j = 0; j < nClusters; j++)
+				{
+					pxmf4x4VertextToLinkNodes[j] = FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
+				}
+				nClust = nClusters;
+			}
+		}
+	}
+	int nchild = node->GetChildCount();
+	for (int i = 0; i < nchild; ++i)
+	{
+		getBones(node->GetChild(i));
+	}
+}
+
+FbxAMatrix GetGeometricOffsetTransform(FbxNode* pfbxNode)
+{
+	const FbxVector4 T = pfbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	const FbxVector4 R = pfbxNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	const FbxVector4 S = pfbxNode->GetGeometricScaling(FbxNode::eSourcePivot);
+
+	return(FbxAMatrix(T, R, S));
+}
+
+matrix4x4 FbxMatrixToXmFloat4x4Matrix(FbxAMatrix* pfbxmtxSource)
+{
+	matrix4x4 xmf4x4Result;
+
+	xmf4x4Result.m00 = (float)(*pfbxmtxSource)[0][0];
+	xmf4x4Result.m10 = (float)(*pfbxmtxSource)[0][1];
+	xmf4x4Result.m20 = (float)(*pfbxmtxSource)[0][2];
+	xmf4x4Result.m30 = (float)(*pfbxmtxSource)[0][3];
+
+	xmf4x4Result.m01 = (float)(*pfbxmtxSource)[1][0];
+	xmf4x4Result.m11 = (float)(*pfbxmtxSource)[1][1];
+	xmf4x4Result.m21 = (float)(*pfbxmtxSource)[1][2];
+	xmf4x4Result.m31 = (float)(*pfbxmtxSource)[1][3];
+
+	xmf4x4Result.m02 = (float)(*pfbxmtxSource)[2][0];
+	xmf4x4Result.m12 = (float)(*pfbxmtxSource)[2][1];
+	xmf4x4Result.m22 = (float)(*pfbxmtxSource)[2][2];
+	xmf4x4Result.m32 = (float)(*pfbxmtxSource)[2][3];
+
+	xmf4x4Result.m03 = (float)(*pfbxmtxSource)[3][0];
+	xmf4x4Result.m13 = (float)(*pfbxmtxSource)[3][1];
+	xmf4x4Result.m23 = (float)(*pfbxmtxSource)[3][2];
+	xmf4x4Result.m33 = (float)(*pfbxmtxSource)[3][3];
+
+
+	return(xmf4x4Result);
 }
