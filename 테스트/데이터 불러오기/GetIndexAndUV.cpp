@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fbxsdk.h>
-#include <vector>
-
-
-#pragma comment(lib, "libfbxsdk-md.lib")
-#pragma comment(lib, "libxml2-md.lib")
-#pragma comment(lib, "zlib-md.lib")
+#include "mat.h"
 
 using namespace std;
 
@@ -48,43 +40,16 @@ FbxScene* LoadFbxSceneFromFile(FbxManager* pfbxSdkManager, const char* pstrFbxFi
 	return(pfbxScene);
 }
 
-void getIndices(FbxNode *node);
-void getUVs(FbxNode *node);
+void getIndices(FbxNode* node);
+void getUVs(FbxNode* node);
 void getUVCoords(FbxNode* node);
 void getAnimationData(FbxScene* scene);
 void getBones(FbxNode* node);
 FbxAMatrix GetGeometricOffsetTransform(FbxNode* pfbxNode);
 
+void getMeshVertexAtTime();
+void getBoneTransAtTime(FbxNode* node, int ms);
 
-typedef struct float2
-{
-	float x, y;
-}float2;
-
-typedef struct float3
-{
-	float x, y, z;
-}float3;
-
-typedef struct VertexUV
-{
-	float3 position;
-	float2 uv;
-};
-
-typedef struct AnimationData
-{
-	long start;
-	long end;
-};
-
-typedef struct matrix4x4
-{
-	float m00, m01, m02, m03,
-		m10, m11, m12, m13,
-		m20, m21, m22, m23,
-		m30, m31, m32, m33;
-}matrix4x4;
 
 matrix4x4 FbxMatrixToXmFloat4x4Matrix(FbxAMatrix* pfbxmtxSource);
 
@@ -107,6 +72,11 @@ int nClust;
 
 int maxIndex;
 
+VertexUV vertices[1060];
+vector<float3> mesh0; // 애니메이션 시간이 0ms일때 모양
+vector<float3> mesh1; // 애니메이션 시간이 33ms일때 모양
+
+vector<matrix4x4> boneTrans;
 int main()
 {
 	printf("FBX 파일 로딩 중\n");
@@ -130,6 +100,11 @@ int main()
 	getBones(root);
 	printf("스킨 정보 로딩 완료\n");
 
+	printf("0.5초후 형태 로딩 중");
+	getBoneTransAtTime(root, 500);
+	getMeshVertexAtTime();
+	printf("0.5초후 형태 로딩 완료");
+
 	FILE* idxOut = fopen("indices.txt", "w");
 	FILE* uvOut = fopen("uvs.txt", "w");
 	FILE* coordOut = fopen("uvCoords.txt", "w");
@@ -139,7 +114,8 @@ int main()
 	FILE* animOut = fopen("animations.txt", "w");
 
 	FILE* skinOut = fopen("skinData.txt", "w");
-
+	FILE * frameOut = fopen("frame0.txt", "w");
+	FILE* boneTrans0Out = fopen("boneTrans0.txt", "w");
 	//1061
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)
@@ -152,7 +128,7 @@ int main()
 	printf("가장 큰 정점 인덱스 = %d\n", maxidx);
 
 	int maxuvidx = 0;
-	
+
 	for (int i = 0; i < uvIdx.size(); ++i)
 	{
 		if (uvIdx[i] > maxuvidx)
@@ -162,14 +138,14 @@ int main()
 	}
 	printf("가장 큰 정점 uv 인덱스 = %d\n", maxuvidx);
 
-	VertexUV vertices[1060];
+	
 	for (int i = 0; i < idx.size(); ++i)
 	{
 		vertices[idx[i]].position = posList[i];
-		
-		
+
+
 		vertices[idx[i]].uv = uvList[i];
-		
+
 	}
 
 	printf("파일에 정점 좌표 기록 중\n");
@@ -182,24 +158,24 @@ int main()
 
 
 	printf("파일에 정점 인덱스 기록 중\n");
-	for (int i = 0; i < idx.size(); i+=3)
+	for (int i = 0; i < idx.size(); i += 3)
 	{
-		fprintf(idxOut, "(%d, %d, %d)\n", idx[i],idx[i+1],idx[i+2]);
+		fprintf(idxOut, "(%d, %d, %d)\n", idx[i], idx[i + 1], idx[i + 2]);
 	}
 	printf("파일에 정점 인덱스 기록 완료\n");
 
 	printf("파일에 정점 uv 인덱스 기록 중\n");
-	for (int i = 0; i < uvIdx.size(); i+=3)
+	for (int i = 0; i < uvIdx.size(); i += 3)
 	{
-		fprintf(uvOut, "(%d, %d, %d)\n", uvIdx[i],uvIdx[i+1],uvIdx[i+2]);
+		fprintf(uvOut, "(%d, %d, %d)\n", uvIdx[i], uvIdx[i + 1], uvIdx[i + 2]);
 	}
 	printf("파일에 정점 uv 인덱스 기록 완료\n");
 
 	printf("파일에 정점 uv 값 기록 중\n");
-	for (int i = 0; i < uvList.size(); i+=3)
+	for (int i = 0; i < uvList.size(); i += 3)
 	{
-		fprintf(coordOut, "(%f, %f),  (%f, %f),  (%f, %f)\n", uvList[i].x, uvList[i].y, uvList[i + 1].x, uvList[i + 1].y, 
-				uvList[i + 2].x, uvList[i + 2].y);
+		fprintf(coordOut, "(%f, %f),  (%f, %f),  (%f, %f)\n", uvList[i].x, uvList[i].y, uvList[i + 1].x, uvList[i + 1].y,
+			uvList[i + 2].x, uvList[i + 2].y);
 	}
 	printf("파일에 정점 uv 값 기록 완료\n");
 
@@ -240,9 +216,26 @@ int main()
 			pxmf4x4VertextToLinkNodes[i].m20, pxmf4x4VertextToLinkNodes[i].m21, pxmf4x4VertextToLinkNodes[i].m22, pxmf4x4VertextToLinkNodes[i].m23,
 			pxmf4x4VertextToLinkNodes[i].m30, pxmf4x4VertextToLinkNodes[i].m31, pxmf4x4VertextToLinkNodes[i].m32, pxmf4x4VertextToLinkNodes[i].m33);
 	}
-	 
+
 	printf("파일에 스킨 정보 기록 완료\n");
 
+	printf("파일에 0.5초후 뼈들의 변환 상태 기록 중\n");
+	for (int i = 0; i < boneTrans.size(); ++i)
+	{
+		fprintf(boneTrans0Out, "%f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f\n",
+			boneTrans[i].m00, boneTrans[i].m01, boneTrans[i].m02, boneTrans[i].m03,
+			boneTrans[i].m10, boneTrans[i].m11, boneTrans[i].m12, boneTrans[i].m13,
+			boneTrans[i].m20, boneTrans[i].m21, boneTrans[i].m22, boneTrans[i].m23,
+			boneTrans[i].m30, boneTrans[i].m31, boneTrans[i].m32, boneTrans[i].m33);
+	}
+	printf("파일에 0.5초후 뼈들의 변환 상태 기록 완료\n");
+
+	printf("파일에 0.5초후 정점의 위치 기록 중\n");
+	for (int i = 0; i < mesh0.size(); ++i)
+	{
+		fprintf(frameOut, "(%f,  %f,  %f)\n", mesh0[i].x, mesh0[i].y, mesh0[i].z);
+	}
+	printf("파일에 0.5초후 정점의 위치 기록 완료\n");
 
 
 	fclose(idxOut);
@@ -252,6 +245,8 @@ int main()
 	fclose(vtxOut);
 	fclose(animOut);
 	fclose(skinOut);
+	fclose(boneTrans0Out);
+	fclose(frameOut);
 	FbxArrayDelete(names);
 	return 0;
 }
@@ -268,7 +263,7 @@ void getIndices(FbxNode* node)
 			int cnt = mesh->GetControlPointsCount();
 			printf("제어점갯수 : %d\n", cnt);
 			//인덱스 수=폴리곤에 포함된 모든 정점의 갯수
-			
+
 			int polygonCount = mesh->GetPolygonCount();
 			for (int i = 0; i < polygonCount; ++i)
 			{
@@ -338,7 +333,7 @@ void getUVs(FbxNode* node)
 void getUVCoords(FbxNode* node)
 {
 	FbxNodeAttribute* pfbxNodeAttribute = node->GetNodeAttribute();
-	
+
 	float2 sample;
 
 
@@ -348,8 +343,8 @@ void getUVCoords(FbxNode* node)
 		if (mesh)
 		{
 			FbxGeometryElementUV* uvData = mesh->GetElementUV(0);
-			
-			
+
+
 			//모든 정점에 대하여
 			int polygonCount = mesh->GetPolygonCount();
 			for (int i = 0; i < polygonCount; ++i)
@@ -421,7 +416,7 @@ void getUVCoords(FbxNode* node)
 
 void getAnimationData(FbxScene* scene)
 {
-	 // 애니메이션 스택, 즉 각각의 애니메이션 이름. (걷기, 뛰기 등등)
+	// 애니메이션 스택, 즉 각각의 애니메이션 이름. (걷기, 뛰기 등등)
 	scene->FillAnimStackNameArray(names);
 
 	//애니메이션 스택, 즉 애니메이션의 가짓수가 몇 개지?
@@ -454,7 +449,7 @@ void getAnimationData(FbxScene* scene)
 		FbxTakeInfo* takeInfo = scene->GetTakeInfo(*currentName);
 		FbxTime fbxStartTime, fbxStopTime;
 
-		
+
 		if (takeInfo)
 		{
 			//테이크 인포가 존재하면 얘한테서 가져와.
@@ -539,7 +534,7 @@ void getBones(FbxNode* node)
 						ppnBoneIDs[i][j] = 0;
 						ppnBoneWeights[i][j] = 0.0f;
 					}
-					
+
 				}
 
 				int* pnBones = new int[maxIndex + 1];
@@ -576,10 +571,10 @@ void getBones(FbxNode* node)
 					}
 				}
 
-				float* pnSumOfBoneWeights = new float[maxIndex+1];
-				::memset(pnSumOfBoneWeights, 0, maxIndex+1 * sizeof(float));
+				float* pnSumOfBoneWeights = new float[maxIndex + 1];
+				::memset(pnSumOfBoneWeights, 0, maxIndex + 1 * sizeof(float));
 
-				for (int i = 0; i < maxIndex+1; i++)
+				for (int i = 0; i < maxIndex + 1; i++)
 				{
 					for (int j = 0; j < pnBonesPerVertex[i]; j++)
 					{
@@ -593,7 +588,7 @@ void getBones(FbxNode* node)
 
 				if (pnSumOfBoneWeights) delete[] pnSumOfBoneWeights;
 
-				for (int i = 0; i < maxIndex+1; i++)
+				for (int i = 0; i < maxIndex + 1; i++)
 				{
 					for (int j = 0; j < pnBonesPerVertex[i] - 1; j++)
 					{
@@ -612,10 +607,10 @@ void getBones(FbxNode* node)
 					}
 				}
 
-				int(*pnSkinningIndices)[4] = new int[maxIndex+1][4];
-				float(*pfSkinningWeights)[4] = new float[maxIndex+1][4];
+				int(*pnSkinningIndices)[4] = new int[maxIndex + 1][4];
+				float(*pfSkinningWeights)[4] = new float[maxIndex + 1][4];
 
-				for (int i = 0; i < maxIndex+1; i++)
+				for (int i = 0; i < maxIndex + 1; i++)
 				{
 					::memset(pnSkinningIndices[i], 0, 4 * sizeof(int));
 					::memset(pfSkinningWeights[i], 0, 4 * sizeof(float));
@@ -685,3 +680,57 @@ matrix4x4 FbxMatrixToXmFloat4x4Matrix(FbxAMatrix* pfbxmtxSource)
 
 	return(xmf4x4Result);
 }
+
+void getBoneTransAtTime(FbxNode* node, int ms)
+{
+	FbxNodeAttribute* pfbxNodeAttribute = node->GetNodeAttribute();
+
+	
+	FbxTime time = FbxTime(ms);
+	time.SetMilliSeconds(ms);
+
+	if (pfbxNodeAttribute && (pfbxNodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh))
+	{
+		FbxMesh* pfbxMesh = node->GetMesh();
+		int t = pfbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+		if (t > 0)
+		{
+			FbxSkin* skin = (FbxSkin*)pfbxMesh->GetDeformer(0, FbxDeformer::eSkin);
+			for (int i = 0; i < nClust; ++i)
+			{
+				
+				FbxCluster* pfbxCluster = skin->GetCluster(i);
+				FbxAMatrix boneWorld = pfbxCluster->GetLink()->EvaluateGlobalTransform(time);
+				matrix4x4 bones = FbxMatrixToXmFloat4x4Matrix(&boneWorld);
+				boneTrans.push_back(bones);
+
+
+			}
+		}
+	}
+	int childs = node->GetChildCount();
+	for (int i = 0; i < childs; ++i)
+	{
+		getBoneTransAtTime(node->GetChild(i), ms);
+	}
+}
+void getMeshVertexAtTime()
+{
+	for (int i = 0; i < maxIndex+1; ++i)
+	{
+		matrix4x4 temp;
+		temp.m00 = 0; temp.m01 = 0; temp.m02 = 0; temp.m03 = 0;
+		temp.m10 = 0; temp.m11 = 0; temp.m12 = 0; temp.m13 = 0;
+		temp.m20 = 0; temp.m21 = 0; temp.m22 = 0; temp.m23 = 0;
+		temp.m30 = 0; temp.m31 = 0; temp.m32 = 0; temp.m33 = 0;
+
+		for (int j = 0; j < 4; ++j)
+		{
+			temp = matAdd(temp, matMulFloat(skinWeight[i][j], matMul(pxmf4x4VertextToLinkNodes[skinIndex[i][j]], boneTrans[skinIndex[i][j]])));
+		}
+		float3 tpos = Multiply(temp, vertices[i].position);
+		mesh0.push_back(tpos);
+	}
+}
+
+
