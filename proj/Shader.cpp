@@ -352,7 +352,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	*/
 
 	// 뷰 생성
-	m_nObjects = 5;
+	m_nObjects = 6;
 
 	CMaterial* ppMaterials[TEXTURES];
 	for (int i = 0; i < TEXTURES; i++)
@@ -373,11 +373,11 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	//실질적으로 객체 넣기
 
 	ImageFile* heights = new ImageFile(L"HeightMap.raw", 257, 257, true);
-	//ImageFile* objects = new ImageFile(L"ObjectsMap.raw", 257, 257, true);
-	//CCubeMeshTextured* pCubeMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 1.0f);
-	//GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 0, 0, 257, 257, XMFLOAT3(1.0f, 1.0f, 1.0f), heights);
+	ImageFile* objects = new ImageFile(L"ObjectsMap.raw", 257, 257, true);
+	CCubeMeshTextured* pCubeMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 0, 0, 257, 257, XMFLOAT3(1.0f, 1.0f, 1.0f), heights);
 
-	/*
+	
 	std::vector<CGameObject*> objList;
 	for (int z = 2; z <= 254; ++z)
 	{
@@ -388,19 +388,20 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			{
 				CGameObject* temp = new CGameObject(1);
 				temp->SetMesh(0, pCubeMesh);
-				temp->SetMaterial(ppMaterials[1]);
+				temp->SetMaterial(ppMaterials[0]);
 				temp->SetPosition(x, pGrid->getData(x, z), z);
 				temp->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (objList.size() + 1)));
 				objList.push_back(temp);
 			}
 		}
 	}
-	*/
-	CCubeMeshTextured* terrain = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 0.5f, 2000.0f);
-	CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 120.0f, 2000.0f);
-	CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 120.0f, -2000.0f);
-	CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 120.0f, 30.0f);
-	CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -2000.0f, 120.0f, 30.0f);
+	
+	CCubeMeshTextured* terrain = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 0.0f);
+	CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 2000.0f, 1000.0f, 0.0f, 0.0f);
+	CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -2000.0f, -1000.0f, 0.0f, 0.0f);
+	CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 1000.0f, 30.0f, 0.0f, 0.0f, 1000.0f);
+	CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -2000.0f, 1000.0f, 30.0f, 0.0f, 0.0f, -1000.0f);
+	CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 500.0f, 0.0f);
 
 	m_ppObjects = new CGameObject * [m_nObjects];
 
@@ -418,8 +419,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	Wall_Obj = new CGameObject(2);
 	Wall_Obj->SetMesh(0, terrain2);
 	Wall_Obj->SetMaterial(ppMaterials[0]);
-	Wall_Obj->GetPosition();
-	Wall_Obj->SetPosition(XMFLOAT3(2000.0f, 0.0f, 0.0f));
+	Wall_Obj->SetPosition(0.0f, 0.0f, 0.0f);
 	Wall_Obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[1] = Wall_Obj;
 
@@ -429,10 +429,10 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	Wall_Obj2 = new CGameObject(3);
 	Wall_Obj2->SetMesh(0, terrain3);
 	Wall_Obj2->SetMaterial(ppMaterials[0]);
-	Wall_Obj2->GetPosition();
-	Wall_Obj2->SetPosition(XMFLOAT3(2000.0f, 0.0f, 0.0f));
+	Wall_Obj2->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[2] = Wall_Obj2;
+
 
 
 
@@ -441,7 +441,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	Wall_Obj3->SetMesh(0, terrain4);
 	Wall_Obj3->SetMaterial(ppMaterials[0]);
 	Wall_Obj3->GetPosition();
-	Wall_Obj3->SetPosition(XMFLOAT3(2000.0f, 0.0f, 0.0f));
+	Wall_Obj3->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[3] = Wall_Obj3;
 
@@ -451,9 +451,20 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	Wall_Obj4->SetMesh(0, terrain5);
 	Wall_Obj4->SetMaterial(ppMaterials[0]);
 	Wall_Obj4->GetPosition();
-	Wall_Obj4->SetPosition(XMFLOAT3(2000.0f, 0.0f, 0.0f));
+	Wall_Obj4->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[4] = Wall_Obj4;
+
+
+	CGameObject* Wall_Obj5 = NULL;
+	Wall_Obj5 = new CGameObject(6);
+	Wall_Obj5->SetMesh(0, terrain6);
+	Wall_Obj5->SetMaterial(ppMaterials[0]);
+	Wall_Obj5->GetPosition();
+	Wall_Obj5->SetPosition(0.0f, 0.0f, 0.0f);
+	Wall_Obj5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[5] = Wall_Obj5;
+
 
 
 	/*
