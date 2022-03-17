@@ -43,13 +43,15 @@ FbxScene* LoadFbxSceneFromFile(FbxManager* pfbxSdkManager, const char* pstrFbxFi
 void getIndices(FbxNode* node);
 void getUVs(FbxNode* node);
 void getUVCoords(FbxNode* node);
-void getAnimationData(FbxScene* scene);
 void getBones(FbxNode* node);
+
+void getAnimationData(FbxScene* scene);
 FbxAMatrix GetGeometricOffsetTransform(FbxNode* pfbxNode);
 
 void getMeshVertexAtTime();
 void getBoneTransAtTime(FbxNode* node, int ms);
 
+void CreateMeshFromFbxNodeHierarchy(FbxNode* pfbxNode);
 
 matrix4x4 FbxMatrixToXmFloat4x4Matrix(FbxAMatrix* pfbxmtxSource);
 
@@ -61,13 +63,16 @@ int indexCount = 0;
 
 vector<float2> uvList;//제어점 uv 좌표값 리스트
 vector<float3> posList;//제어점 좌표값 리스트
-
+vector<float3> ctrlPoints;
 vector<char*> animationNamesList;
 vector<AnimationData> animationDataList;
 
-int(*skinIndex)[4];
-float(*skinWeight)[4];
-matrix4x4* pxmf4x4VertextToLinkNodes;
+
+vector<int4> skinIdx;// 본 인덱스
+vector<float4> skinWeit;// 본 웨이트
+
+
+vector<matrix4x4> pxmf4x4VertextToLinkNodes;//스킨 트랜스폼
 int nClust;
 
 int maxIndex;
@@ -87,6 +92,8 @@ int main()
 
 
 	printf("정점들의 정보 로딩 중\n");
+	CreateMeshFromFbxNodeHierarchy(root);
+
 	getIndices(root);
 	getUVs(root);
 	getUVCoords(root);
@@ -95,27 +102,38 @@ int main()
 	printf("애니메이션 정보 로딩 중\n");
 	getAnimationData(scene);
 	printf("애니메이션 정보 로딩 완료\n");
+	
 
+
+	
+
+
+	/*
 	printf("스킨 정보 로딩 중\n");
 	getBones(root);
 	printf("스킨 정보 로딩 완료\n");
-
+	*/
 	printf("0.5초후 형태 로딩 중");
 	getBoneTransAtTime(root, 500);
 	getMeshVertexAtTime();
 	printf("0.5초후 형태 로딩 완료");
 
-	FILE* idxOut = fopen("indices.txt", "w");
-	FILE* uvOut = fopen("uvs.txt", "w");
-	FILE* coordOut = fopen("uvCoords.txt", "w");
-	FILE* posOut = fopen("positions.txt", "w");
-	FILE* vtxOut = fopen("vertices.txt", "w");
+	FILE* ctrlOut = fopen("고정된 위치.txt", "w");
+	FILE* posOut = fopen("제어점 위치.txt", "w");
+	FILE* idxOut = fopen("제어점 인덱스.txt", "w");
+	FILE* uvOut = fopen("uv 인덱스.txt", "w");
+	
+	
+	FILE* coordOut = fopen("uv 위치.txt", "w");
 
-	FILE* animOut = fopen("animations.txt", "w");
 
-	FILE* skinOut = fopen("skinData.txt", "w");
-	FILE * frameOut = fopen("frame0.txt", "w");
-	FILE* boneTrans0Out = fopen("boneTrans0.txt", "w");
+	FILE* vtxOut = fopen("종합된 정점 정보.txt", "w");
+
+	FILE* animOut = fopen("애니메이션 스택.txt", "w");
+
+	FILE* skinOut = fopen("스킨 정보.txt", "w");
+	FILE * frameOut = fopen("0.5초 정점 위치.txt", "w");
+	FILE* boneTrans0Out = fopen("0.5초 뼈 변환.txt", "w");
 	//1061
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)
@@ -138,16 +156,14 @@ int main()
 	}
 	printf("가장 큰 정점 uv 인덱스 = %d\n", maxuvidx);
 
-	
-	for (int i = 0; i < idx.size(); ++i)
+	for (int i = 0; i < posList.size(); ++i)
 	{
-		vertices[idx[i]].position = posList[i];
-
-
+		vertices[idx[i]].position = ctrlPoints[idx[i]];
 		vertices[idx[i]].uv = uvList[i];
-
 	}
 
+
+	
 	printf("파일에 정점 좌표 기록 중\n");
 	for (int i = 0; i < posList.size(); i += 3)
 	{
@@ -164,6 +180,13 @@ int main()
 	}
 	printf("파일에 정점 인덱스 기록 완료\n");
 
+	printf("파일에 고정된 위치 기록 중\n");
+	for (int i = 0; i < ctrlPoints.size(); ++i)
+	{
+		fprintf(ctrlOut, "(%f, %f, %f)\n", ctrlPoints[i].x, ctrlPoints[i].y, ctrlPoints[i].z);
+	}
+	printf("파일에 고정된 위치 기록 완료\n");
+
 	printf("파일에 정점 uv 인덱스 기록 중\n");
 	for (int i = 0; i < uvIdx.size(); i += 3)
 	{
@@ -178,6 +201,9 @@ int main()
 			uvList[i + 2].x, uvList[i + 2].y);
 	}
 	printf("파일에 정점 uv 값 기록 완료\n");
+	
+
+
 
 	printf("파일에 제어점들 기록 중\n");
 	for (int i = 0; i < 1060; ++i)
@@ -198,17 +224,17 @@ int main()
 	printf("파일에 스킨 정보 기록 중\n");
 	fprintf(skinOut, "클러스터 수 : %d\n", nClust);
 	fprintf(skinOut, "스킨 인덱스\n");
-	for (int i = 0; i < maxIndex + 1; ++i)
+	for (int i = 0; i < skinIdx.size(); ++i)
 	{
-		fprintf(skinOut, "(%d,  %d,  %d,  %d)\n", skinIndex[i][0], skinIndex[i][1], skinIndex[i][2], skinIndex[i][3]);
+		fprintf(skinOut, "(%d,  %d,  %d,  %d)\n", skinIdx[i].x, skinIdx[i].y, skinIdx[i].z, skinIdx[i].a);
 	}
 	fprintf(skinOut, "스킨 가중치\n");
-	for (int i = 0; i < maxIndex + 1; ++i)
+	for (int i = 0; i < skinWeit.size(); ++i)
 	{
-		fprintf(skinOut, "(%f,  %f,  %f,  %f)\n", skinWeight[i][0], skinWeight[i][1], skinWeight[i][2], skinWeight[i][3]);
+		fprintf(skinOut, "(%f,  %f,  %f,  %f)\n", skinWeit[i].x, skinWeit[i].y, skinWeit[i].z, skinWeit[i].a);
 	}
 	fprintf(skinOut, "본 오프셋 변환\n");
-	for (int i = 0; i < nClust; ++i)
+	for (int i = 0; i < pxmf4x4VertextToLinkNodes.size(); ++i)
 	{
 		fprintf(skinOut, "%f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f,  %f\n",
 			pxmf4x4VertextToLinkNodes[i].m00, pxmf4x4VertextToLinkNodes[i].m01, pxmf4x4VertextToLinkNodes[i].m02, pxmf4x4VertextToLinkNodes[i].m03,
@@ -237,11 +263,11 @@ int main()
 	}
 	printf("파일에 0.5초후 정점의 위치 기록 완료\n");
 
-
-	fclose(idxOut);
-	fclose(coordOut);
-	fclose(uvOut);
+	fclose(ctrlOut);
 	fclose(posOut);
+	fclose(idxOut);
+	fclose(uvOut);
+	fclose(coordOut);
 	fclose(vtxOut);
 	fclose(animOut);
 	fclose(skinOut);
@@ -284,7 +310,17 @@ void getIndices(FbxNode* node)
 					posList.push_back(pos);
 				}
 			}
-
+			if (cnt > 1059)
+			{
+				for (int i = 0; i < cnt; ++i)
+				{
+					float3 tmp;
+					tmp.x = static_cast<float>(pVertices[i].mData[0]);
+					tmp.y = static_cast<float>(pVertices[i].mData[1]);
+					tmp.z = static_cast<float>(pVertices[i].mData[2]);
+					ctrlPoints.push_back(tmp);
+				}
+			}
 		}
 	}
 	int childs = node->GetChildCount();
@@ -476,7 +512,7 @@ void getAnimationData(FbxScene* scene)
 	}
 
 }
-
+/*
 void getBones(FbxNode* node)
 {
 	FbxNodeAttribute* pfbxNodeAttribute = node->GetNodeAttribute();
@@ -624,14 +660,29 @@ void getBones(FbxNode* node)
 						}
 					}
 				}
+				for (int i = 0; i < maxIndex + 1; ++i)
+				{
+					int4 ti;
+					float4 tf;
 
-				skinIndex = pnSkinningIndices;
-				skinWeight = pfSkinningWeights;
+					ti.x = pnSkinningIndices[i][0];
+					ti.y = pnSkinningIndices[i][1];
+					ti.z = pnSkinningIndices[i][2];
+					ti.a = pnSkinningIndices[i][3];
 
-				pxmf4x4VertextToLinkNodes = new matrix4x4[nClusters]; //Bone Offset Transforms
+					tf.x = pfSkinningWeights[i][0];
+					tf.y = pfSkinningWeights[i][1];
+					tf.z = pfSkinningWeights[i][2];
+					tf.a = pfSkinningWeights[i][3];
+
+					skinIdx.push_back(ti);
+					skinWeit.push_back(tf);
+				}
+				
+
 				for (int j = 0; j < nClusters; j++)
 				{
-					pxmf4x4VertextToLinkNodes[j] = FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
+					pxmf4x4VertextToLinkNodes.push_back(FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]));
 				}
 				nClust = nClusters;
 			}
@@ -643,7 +694,7 @@ void getBones(FbxNode* node)
 		getBones(node->GetChild(i));
 	}
 }
-
+*/
 FbxAMatrix GetGeometricOffsetTransform(FbxNode* pfbxNode)
 {
 	const FbxVector4 T = pfbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
@@ -724,13 +775,330 @@ void getMeshVertexAtTime()
 		temp.m20 = 0; temp.m21 = 0; temp.m22 = 0; temp.m23 = 0;
 		temp.m30 = 0; temp.m31 = 0; temp.m32 = 0; temp.m33 = 0;
 
-		for (int j = 0; j < 4; ++j)
-		{
-			temp = matAdd(temp, matMulFloat(skinWeight[i][j], matMul(pxmf4x4VertextToLinkNodes[skinIndex[i][j]], boneTrans[skinIndex[i][j]])));
-		}
+		temp = matAdd(temp, matMulFloat(skinWeit[i].x, matMul(pxmf4x4VertextToLinkNodes[skinIdx[i].x], boneTrans[skinIdx[i].x])));
+		temp = matAdd(temp, matMulFloat(skinWeit[i].y, matMul(pxmf4x4VertextToLinkNodes[skinIdx[i].y], boneTrans[skinIdx[i].y])));
+		temp = matAdd(temp, matMulFloat(skinWeit[i].z, matMul(pxmf4x4VertextToLinkNodes[skinIdx[i].z], boneTrans[skinIdx[i].z])));
+		temp = matAdd(temp, matMulFloat(skinWeit[i].a, matMul(pxmf4x4VertextToLinkNodes[skinIdx[i].a], boneTrans[skinIdx[i].a])));
+
+
 		float3 tpos = Multiply(temp, vertices[i].position);
 		mesh0.push_back(tpos);
 	}
 }
 
 
+void CreateMeshFromFbxNodeHierarchy(FbxNode* pfbxNode)
+{
+	FbxNodeAttribute* pfbxNodeAttribute = pfbxNode->GetNodeAttribute();
+	if (pfbxNodeAttribute && (pfbxNodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh))
+	{
+		FbxMesh* pfbxMesh = pfbxNode->GetMesh();
+		if (pfbxMesh)
+		{
+			//제어점 좌표 구하기
+			int nVertices = pfbxMesh->GetControlPointsCount();
+			FbxVector4* pfbxv4Vertices = new FbxVector4[nVertices];
+			::memcpy(pfbxv4Vertices, pfbxMesh->GetControlPoints(), nVertices * sizeof(FbxVector4));
+
+			//float4* pxmf4Vertices = new float4[nVertices];
+			for (int j = 0; j < nVertices; j++)
+			{
+				float3 sample;
+				sample.x = (float)pfbxv4Vertices[j][0];
+				sample.y = (float)pfbxv4Vertices[j][1];
+				sample.z = (float)pfbxv4Vertices[j][2];
+				
+				//posList.push_back(sample);
+			}
+
+			// 인덱스 구해오기
+
+			int nIndices = 0;
+			int nPolygons = pfbxMesh->GetPolygonCount();
+			for (int i = 0; i < nPolygons; i++)
+			{
+				nIndices += pfbxMesh->GetPolygonSize(i);
+			}//Triangle: 3, Triangulate(), nIndices = nPolygons * 3
+
+
+			int* pnIndices = new int[nIndices];
+
+			for (int i = 0, k = 0; i < nPolygons; i++)
+			{
+				int nPolygonSize = pfbxMesh->GetPolygonSize(i);
+				for (int j = 0; j < nPolygonSize; j++)
+				{
+					float3 pos;
+					pnIndices[k++] = pfbxMesh->GetPolygonVertex(i, j);
+					
+					pos.x = static_cast<float>(pfbxv4Vertices[pfbxMesh->GetPolygonVertex(i, j)].mData[0]);
+					pos.y = static_cast<float>(pfbxv4Vertices[pfbxMesh->GetPolygonVertex(i, j)].mData[1]);
+					pos.z = static_cast<float>(pfbxv4Vertices[pfbxMesh->GetPolygonVertex(i, j)].mData[2]);
+
+					//posList.push_back(pos);
+					//idx.push_back(pfbxMesh->GetPolygonVertex(i, j));
+				}
+			}
+
+			//텍스처 인덱스 구하기
+			int* uvIdxs = new int[nIndices];
+			int t = 0;
+			for (int i = 0; i < nPolygons; ++i)
+			{
+				for (int j = 0; j < pfbxMesh->GetPolygonSize(i); ++j)
+				{
+					uvIdxs[t] = pfbxMesh->GetTextureUVIndex(i, j);
+					t += 1;
+				}
+			}
+			//for (int i = 0; i < nIndices; ++i)
+			//{
+				//uvIdx.push_back(uvIdxs[i]);
+			//}
+			//텍스처 uv 값 구하기
+			float2* uvValue = new float2[nIndices];
+			FbxGeometryElementUV* uvData = pfbxMesh->GetElementUV(0);
+			float2 sample;
+			t = 0;
+			for (int i = 0; i < nPolygons; ++i)
+			{
+				for (int j = 0; j < pfbxMesh->GetPolygonSize(i); ++j)
+				{
+					//한 점의 인덱스
+					int temp = pfbxMesh->GetPolygonVertex(i, j);
+					int temp2 = pfbxMesh->GetTextureUVIndex(i, j);
+
+					switch (uvData->GetMappingMode())
+					{
+					case FbxGeometryElement::eByControlPoint:
+						switch (uvData->GetReferenceMode())
+						{
+						case FbxGeometryElement::eDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp).mData[0]);
+							sample.y = static_cast<float>(uvData->GetDirectArray().GetAt(temp).mData[1]);
+						}
+						break;
+						case FbxGeometryElement::eIndexToDirect:
+						{
+							int t2 = uvData->GetIndexArray().GetAt(temp);
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(t2).mData[0]);
+							sample.y = static_cast<float>(uvData->GetDirectArray().GetAt(t2).mData[1]);
+						}
+						break;
+						default:
+							throw std::exception("Invalid Reference(eByControlPoint)");
+						}
+						break;
+					case FbxGeometryElement::eByPolygonVertex:
+						switch (uvData->GetReferenceMode())
+						{
+						case FbxGeometryElement::eDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[0]);
+							sample.y = 1.0f - static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[1]);
+						}
+						break;
+						case FbxGeometryElement::eIndexToDirect:
+						{
+							sample.x = static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[0]);
+							sample.y = 1.0f - static_cast<float>(uvData->GetDirectArray().GetAt(temp2).mData[1]);
+						}
+						break;
+						default:
+							throw std::exception("invalid reference(eByPolygonVertex)");
+						}
+						break;
+					default:
+						throw std::exception("Invalid Reference");
+						break;
+					}
+					//uvList.push_back(sample);
+					t += 1;
+				}
+			}
+			//인덱스가 아닌 고정된 점들의 형태로 변환
+
+
+
+
+			
+
+			int nSkinDeformers = pfbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+			if (nSkinDeformers > 0)
+			{
+				FbxSkin* pfbxSkinDeformer = (FbxSkin*)pfbxMesh->GetDeformer(0, FbxDeformer::eSkin);
+				int nClusters = pfbxSkinDeformer->GetClusterCount();
+				nClust = nClusters;
+				int* pnBonesPerVertex = new int[nVertices];
+				::memset(pnBonesPerVertex, 0, nVertices * sizeof(int));
+				for (int j = 0; j < nClusters; j++)
+				{
+					FbxCluster* pfbxCluster = pfbxSkinDeformer->GetCluster(j);
+					int nControlPointIndices = pfbxCluster->GetControlPointIndicesCount();
+					int* pnControlPointIndices = pfbxCluster->GetControlPointIndices();
+					for (int k = 0; k < nControlPointIndices; k++)
+					{
+						pnBonesPerVertex[pnControlPointIndices[k]]++;
+					}
+				}
+				int nMaxBonesPerVertex = 0;
+				for (int i = 0; i < nVertices; i++)
+				{
+					if (pnBonesPerVertex[i] > nMaxBonesPerVertex)
+					{
+						nMaxBonesPerVertex = pnBonesPerVertex[i];
+					}
+				}
+
+				int** ppnBoneIDs = new int* [nVertices];// 각 정점마다 영향을 받는 뼈의 번호
+				float** ppnBoneWeights = new float* [nVertices]; // 각 정점마다 그 뼈에 얼마나 영향을 받나?
+				for (int i = 0; i < nVertices; i++)
+				{
+					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]];
+					ppnBoneWeights[i] = new float[pnBonesPerVertex[i]];
+					::memset(ppnBoneIDs[i], 0, pnBonesPerVertex[i] * sizeof(int));
+					::memset(ppnBoneWeights[i], 0, pnBonesPerVertex[i] * sizeof(float));
+				}
+
+				int* pnBones = new int[nVertices];
+				::memset(pnBones, 0, nVertices * sizeof(int));
+
+				//				FbxAMatrix fbxmtxGeometryOffset = GetGeometricOffsetTransform(pfbxNode);
+				FbxAMatrix fbxmtxGeometryOffset = GetGeometricOffsetTransform(pfbxMesh->GetNode());
+
+				FbxAMatrix* pfbxmtxVertextToLinkNodes = new FbxAMatrix[nClusters];
+				
+				for (int j = 0; j < nClusters; j++)
+				{
+					FbxCluster* pfbxCluster = pfbxSkinDeformer->GetCluster(j);
+
+					FbxAMatrix fbxmtxBindPoseMeshToRoot; //Cluster Transform
+					pfbxCluster->GetTransformMatrix(fbxmtxBindPoseMeshToRoot);
+					FbxAMatrix fbxmtxBindPoseBoneToRoot; //Cluster Link Transform
+					pfbxCluster->GetTransformLinkMatrix(fbxmtxBindPoseBoneToRoot);
+
+					pfbxmtxVertextToLinkNodes[j] = fbxmtxBindPoseBoneToRoot.Inverse() * fbxmtxBindPoseMeshToRoot * fbxmtxGeometryOffset;
+
+					int* pnControlPointIndices = pfbxCluster->GetControlPointIndices();
+					double* pfControlPointWeights = pfbxCluster->GetControlPointWeights();
+					int nControlPointIndices = pfbxCluster->GetControlPointIndicesCount();
+
+					for (int k = 0; k < nControlPointIndices; k++)
+					{
+						int nVertex = pnControlPointIndices[k];
+						ppnBoneIDs[nVertex][pnBones[nVertex]] = j;
+						ppnBoneWeights[nVertex][pnBones[nVertex]++] = (float)pfControlPointWeights[k];
+					}
+				}
+
+				float* pnSumOfBoneWeights = new float[nVertices];
+				::memset(pnSumOfBoneWeights, 0, nVertices * sizeof(float));
+
+				for (int i = 0; i < nVertices; i++)
+				{
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						pnSumOfBoneWeights[i] += ppnBoneWeights[i][j];
+					}
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						ppnBoneWeights[i][j] /= pnSumOfBoneWeights[i];
+					}
+				}
+
+				if (pnSumOfBoneWeights) delete[] pnSumOfBoneWeights;
+
+				for (int i = 0; i < nVertices; i++)
+				{
+					for (int j = 0; j < pnBonesPerVertex[i] - 1; j++)
+					{
+						for (int k = j + 1; k < pnBonesPerVertex[i]; k++)
+						{
+							if (ppnBoneWeights[i][j] < ppnBoneWeights[i][k])
+							{
+								float fTemp = ppnBoneWeights[i][j];
+								ppnBoneWeights[i][j] = ppnBoneWeights[i][k];
+								ppnBoneWeights[i][k] = fTemp;
+								int nTemp = ppnBoneIDs[i][j];
+								ppnBoneIDs[i][j] = ppnBoneIDs[i][k];
+								ppnBoneIDs[i][k] = nTemp;
+							}
+						}
+					}
+				}
+
+				int(*pnSkinningIndices)[4] = new int[nVertices][4];
+				float(*pfSkinningWeights)[4] = new float[nVertices][4];
+
+				for (int i = 0; i < nVertices; i++)
+				{
+					::memset(pnSkinningIndices[i], 0, 4 * sizeof(int));
+					::memset(pfSkinningWeights[i], 0, 4 * sizeof(float));
+
+					for (int j = 0; j < pnBonesPerVertex[i]; j++)
+					{
+						if (j < 4)
+						{
+							pnSkinningIndices[i][j] = ppnBoneIDs[i][j];
+							pfSkinningWeights[i][j] = ppnBoneWeights[i][j];
+						}
+					}
+				}
+				for (int i = 0; i < nVertices; ++i)
+				{
+					int4 ti;
+					float4 tf;
+
+					ti.x = pnSkinningIndices[i][0];
+					ti.y = pnSkinningIndices[i][1];
+					ti.z = pnSkinningIndices[i][2];
+					ti.a = pnSkinningIndices[i][3];
+
+					tf.x = pfSkinningWeights[i][0];
+					tf.y = pfSkinningWeights[i][1];
+					tf.z = pfSkinningWeights[i][2];
+					tf.a = pfSkinningWeights[i][3];
+
+					skinIdx.push_back(ti);
+					skinWeit.push_back(tf);
+				}
+				
+				for (int j = 0; j < nClusters; j++)
+				{
+					pxmf4x4VertextToLinkNodes.push_back(FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]));
+				}
+
+
+
+				for (int i = 0; i < nVertices; i++)
+				{
+					if (ppnBoneIDs[i]) delete[] ppnBoneIDs[i];
+					if (ppnBoneWeights[i]) delete[] ppnBoneWeights[i];
+				}
+				if (ppnBoneIDs) delete[] ppnBoneIDs;
+				if (ppnBoneWeights) delete[] ppnBoneWeights;
+
+				if (pnBones) delete[] pnBones;
+				if (pnBonesPerVertex) delete[] pnBonesPerVertex;
+				if (pnSkinningIndices) delete[] pnSkinningIndices;
+				if (pfSkinningWeights) delete[] pfSkinningWeights;
+
+				if (pfbxmtxVertextToLinkNodes) delete[] pfbxmtxVertextToLinkNodes;
+			}
+			
+
+			
+
+			if (pfbxv4Vertices) delete[] pfbxv4Vertices;
+			
+			if (pnIndices) delete[] pnIndices;
+		}
+	}
+
+	int nChilds = pfbxNode->GetChildCount();
+	for (int i = 0; i < nChilds; i++)
+	{
+		CreateMeshFromFbxNodeHierarchy(pfbxNode->GetChild(i));
+	}
+}
