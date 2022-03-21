@@ -319,7 +319,7 @@ void CGroundShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature* 
 	CShader::CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
 }
 
-#define TEXTURES		1
+#define TEXTURES		3
 
 D3D12_SHADER_BYTECODE CGroundShader::CreateVertexShader(ID3DBlob** ppd3dShaderBlob)
 {
@@ -338,6 +338,11 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CTexture* ppTextures[TEXTURES];
 	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"wall_text.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"DoorTexture.dds", RESOURCE_TEXTURE2D, 0);
+
 	/*
 	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Stone01.dds", RESOURCE_TEXTURE2D, 0);
@@ -352,7 +357,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	*/
 
 	// 뷰 생성
-	m_nObjects = 6;
+	m_nObjects = 13;
 
 	CMaterial* ppMaterials[TEXTURES];
 	for (int i = 0; i < TEXTURES; i++)
@@ -397,11 +402,20 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	}
 	
 	CCubeMeshTextured* terrain = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 2000.0f, 1000.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -2000.0f, -1000.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 1000.0f, 30.0f, 0.0f, 0.0f, 1000.0f);
-	CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -2000.0f, 1000.0f, 30.0f, 0.0f, 0.0f, -1000.0f);
-	CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 500.0f, 0.0f);
+	CCubeMeshTextured* terrain_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 0.0f);
+	CCubeMeshTextured* terrain_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 2000.0f);
+	CCubeMeshTextured* terrain_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 2000.0f);
+
+	CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
+	CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
+	CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
+	CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
+	CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 50.0f, 2000.0f, 1000.0f, 500.0f, 0.0f);
+	CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 50.0f, 2000.0f, -1000.0f, 500.0f, 0.0f);
+	CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f);
+
+	CCubeMeshTextured* terrain_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 200.0f, -1000.0f, 0.0f, 1500.0f);
+	CCubeMeshTextured* terrain_door2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 200.0f, -1000.0f, 0.0f, 2500.0f);
 
 	m_ppObjects = new CGameObject * [m_nObjects];
 
@@ -415,10 +429,12 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	pRotatingObject->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[0] = pRotatingObject;
 
+
+
 	CGameObject* Wall_Obj = NULL;
 	Wall_Obj = new CGameObject(2);
 	Wall_Obj->SetMesh(0, terrain2);
-	Wall_Obj->SetMaterial(ppMaterials[0]);
+	Wall_Obj->SetMaterial(ppMaterials[1]);
 	Wall_Obj->SetPosition(0.0f, 0.0f, 0.0f);
 	Wall_Obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[1] = Wall_Obj;
@@ -428,7 +444,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CGameObject* Wall_Obj2 = NULL;
 	Wall_Obj2 = new CGameObject(3);
 	Wall_Obj2->SetMesh(0, terrain3);
-	Wall_Obj2->SetMaterial(ppMaterials[0]);
+	Wall_Obj2->SetMaterial(ppMaterials[1]);
 	Wall_Obj2->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[2] = Wall_Obj2;
@@ -439,7 +455,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CGameObject* Wall_Obj3 = NULL;
 	Wall_Obj3 = new CGameObject(4);
 	Wall_Obj3->SetMesh(0, terrain4);
-	Wall_Obj3->SetMaterial(ppMaterials[0]);
+	Wall_Obj3->SetMaterial(ppMaterials[1]);
 	Wall_Obj3->GetPosition();
 	Wall_Obj3->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
@@ -449,7 +465,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CGameObject* Wall_Obj4 = NULL;
 	Wall_Obj4 = new CGameObject(5);
 	Wall_Obj4->SetMesh(0, terrain5);
-	Wall_Obj4->SetMaterial(ppMaterials[0]);
+	Wall_Obj4->SetMaterial(ppMaterials[1]);
 	Wall_Obj4->GetPosition();
 	Wall_Obj4->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	Wall_Obj4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
@@ -459,13 +475,65 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CGameObject* Wall_Obj5 = NULL;
 	Wall_Obj5 = new CGameObject(6);
 	Wall_Obj5->SetMesh(0, terrain6);
-	Wall_Obj5->SetMaterial(ppMaterials[0]);
+	Wall_Obj5->SetMaterial(ppMaterials[1]);
 	Wall_Obj5->GetPosition();
 	Wall_Obj5->SetPosition(0.0f, 0.0f, 0.0f);
 	Wall_Obj5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 	m_ppObjects[5] = Wall_Obj5;
 
+	CGameObject* Wall_Obj6 = NULL;
+	Wall_Obj6 = new CGameObject(7);
+	Wall_Obj6->SetMesh(0, terrain7);
+	Wall_Obj6->SetMaterial(ppMaterials[1]);
+	Wall_Obj6->GetPosition();
+	Wall_Obj6->SetPosition(0.0f, 0.0f, 0.0f);
+	Wall_Obj6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[6] = Wall_Obj6;
 
+	CGameObject* Wall_Obj7 = NULL;
+	Wall_Obj7 = new CGameObject(8);
+	Wall_Obj7->SetMesh(0, terrain8);
+	Wall_Obj7->SetMaterial(ppMaterials[1]);
+	Wall_Obj7->GetPosition();
+	Wall_Obj7->SetPosition(0.0f, 0.0f, 0.0f);
+	Wall_Obj7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[7] = Wall_Obj7;
+
+	// 바닥들
+	CGameObject* Plate_1 = new CGameObject(9);
+	Plate_1->SetMesh(0, terrain_1);
+	Plate_1->SetMaterial(ppMaterials[0]);
+	Plate_1->SetPosition(0.0f, 0.0f, 0.0f);
+	Plate_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[8] = Plate_1;
+
+	CGameObject* Plate_2 = new CGameObject(10);
+	Plate_2->SetMesh(0, terrain_2);
+	Plate_2->SetMaterial(ppMaterials[0]);
+	Plate_2->SetPosition(0.0f, 0.0f, 0.0f);
+	Plate_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[9] = Plate_2;
+
+	CGameObject* Plate_3 = new CGameObject(11);
+	Plate_3->SetMesh(0, terrain_3);
+	Plate_3->SetMaterial(ppMaterials[0]);
+	Plate_3->SetPosition(0.0f, 0.0f, 0.0f);
+	Plate_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[10] = Plate_3;
+
+	CGameObject* Door = new CGameObject(11);
+	Door->SetMesh(0, terrain_door);
+	Door->SetMaterial(ppMaterials[2]);
+	Door->SetPosition(0.0f, 0.0f, 0.0f);
+	Door->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[11] = Door;
+
+	CGameObject* Door_2 = new CGameObject(12);
+	Door_2->SetMesh(0, terrain_door2);
+	Door_2->SetMaterial(ppMaterials[2]);
+	Door_2->SetPosition(0.0f, 0.0f, 0.0f);
+	Door_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+	m_ppObjects[12] = Door_2;
 
 	/*
 	for (int i = 0; i < objList.size(); ++i)
@@ -621,9 +689,12 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "sample.fbx");
 	CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3);
 
+
+
 	//애니메이션 정보 불러오는 방법
 
 	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
+
 
 
 	// 이 게임 객체에 fbx 씬과 애니메이션 컨트롤러 객체가 들어감.
@@ -633,8 +704,10 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	m_ppObjects[0]->SetAnimationStack(11);
 	//11이 서있기, 20이 걷기.
 	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
-	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);
+	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);   
 	m_ppObjects[0]->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (m_nObjects - 1)));
+
+
 
 	
 }
