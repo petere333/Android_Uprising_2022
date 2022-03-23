@@ -1,9 +1,6 @@
 #include "Mesh.h"
 
-CMesh::CMesh()
-{
 
-}
 CMesh::CMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
 }
@@ -71,37 +68,6 @@ CTriangleMesh::CTriangleMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 
 ////////////////////////////////////////////////////////////////////////
-CLoadedMesh::CLoadedMesh():CMesh()
-{
-}
-CLoadedMesh::CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, XMFLOAT4* pVertices, int nIndices, int* pnindices, XMFLOAT2* uvs) :CMesh(pd3dDevice, pd3dCommandList)
-{
-	m_nVertices = nVertices;
-	m_nStride = sizeof(CTexturedVertex);
-	m_nOffset = 0;
-	m_nSlot = 0;
-	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-
-	CTexturedVertex* vtx = new CTexturedVertex[m_nVertices];
-	for (int i = 0; i < m_nVertices; ++i)
-	{
-		vtx[i] = CTexturedVertex(XMFLOAT3(pVertices[i].x, pVertices[i].y, pVertices[i].z), XMFLOAT2(uvs[i].x, uvs[i].y));
-	}
-
-	m_pd3dVertexBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, vtx, m_nStride * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dVertexUploadBuffer);
-	m_d3dVertexBufferView.BufferLocation = m_pd3dVertexBuffer->GetGPUVirtualAddress();
-	m_d3dVertexBufferView.StrideInBytes = m_nStride;
-	m_d3dVertexBufferView.SizeInBytes = m_nStride * m_nVertices;
-
-	m_nIndices = nIndices;
-
-	m_pd3dIndexBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, pnindices, sizeof(UINT) * m_nIndices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_INDEX_BUFFER, &m_pd3dIndexUploadBuffer);
-
-	m_d3dIndexBufferView.BufferLocation = m_pd3dIndexBuffer->GetGPUVirtualAddress();
-	m_d3dIndexBufferView.Format = DXGI_FORMAT_R32_UINT;
-	m_d3dIndexBufferView.SizeInBytes = sizeof(UINT) * m_nIndices;
-}
-CLoadedMesh::~CLoadedMesh(){}
 
 CCubeMeshTextured::CCubeMeshTextured(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth) : CMesh(pd3dDevice, pd3dCommandList)
 {
@@ -317,7 +283,7 @@ CMeshFromFbx::CMeshFromFbx(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 		m_d3dBoneWeightBufferView.StrideInBytes = sizeof(float) * 4;
 		m_d3dBoneWeightBufferView.SizeInBytes = sizeof(float) * 4 * m_nVertices;
 
-		m_pxmf4x4VertextToLinkNodes = pxmf4x4VertextToLinkNodes; //Bone Offset Transforms
+		m_pxmf4x4VertextToLinkNodes = pxmf4x4VertextToLinkNodes; //Bone Offset Transforms 즉 쉐이더 코드의 b6으로 들어감
 		UINT ncbElementBytes = (((sizeof(XMFLOAT4X4) * 128) + 255) & ~255); //256의 배수
 		m_pd3dcbVertextToLinkNodes = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 		m_pd3dcbVertextToLinkNodes->Map(0, NULL, (void**)&m_pcbxmf4x4MappedVertextToLinkNodes);

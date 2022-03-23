@@ -1,6 +1,8 @@
 #include "Shader.h"
 
 
+CTexture* ppTextures[5];
+CMaterial* ppMaterials[5];
 
 CShader::CShader()
 {
@@ -523,10 +525,10 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	* pd3dCommandList, void* pContext)
 {
 	//ÅØ½ºÃ³ »ý¼º
-	CTexture* ppTextures[TEXTURESBILL];
+	//CTexture* ppTextures[TEXTURESBILL];
 
 	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"human.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"sample.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal01.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -557,44 +559,22 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 	
 	m_ppObjects = new CGameObject * [m_nObjects];
-	CLoadedMesh *mesh=NULL;
+	
 	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "sample.fbx");
-	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
-	CAnimationController* cont = new CAnimationController(pFbxMonsterModel->m_pfbxScene);
-	cont->SetAnimationStack(pFbxMonsterModel->m_pfbxScene, 11);
-	FbxTime time = cont->GetCurrentTime();
+	CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3);
 
-	mesh = CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3, time);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//¾Ö´Ï¸ÞÀÌ¼Ç Á¤º¸ ºÒ·¯¿À´Â ¹æ¹ý
 
-	
+	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
 
 
 	// ÀÌ °ÔÀÓ °´Ã¼¿¡ fbx ¾À°ú ¾Ö´Ï¸ÞÀÌ¼Ç ÄÁÆ®·Ñ·¯ °´Ã¼°¡ µé¾î°¨.
-	//m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
-	m_ppObjects[0] = new CGameObject();
-	m_ppObjects[0]->SetMesh(0, mesh);
+	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
 	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
 	m_ppObjects[0]->currentMaterial = 0;
-	//m_ppObjects[0]->SetAnimationStack(11);
-=======
-	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
-
-	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
-	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
-=======
-	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
-
-	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
-	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
->>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 	m_ppObjects[0]->SetAnimationStack(11);
->>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 	//11ÀÌ ¼­ÀÖ±â, 20ÀÌ °È±â.
-	//m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
+	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
 	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);
 	m_ppObjects[0]->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (m_nObjects - 1)));
 
@@ -670,13 +650,39 @@ void CBillboardShader::movePlayer(int dir, float dist)
 		m_ppObjects[m_nObjects - 1]->Rotate(0.0f, 90.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ, 0.0f);
 		m_ppObjects[m_nObjects - 1]->currentRotationZ += 90.0f - m_ppObjects[m_nObjects - 1]->currentRotationZ;
 	}
-	
+	CMaterial* ppMaterials[TEXTURESBILL];
+	for (int i = 0; i < TEXTURESBILL; i++)
+	{
+		ppMaterials[i] = new CMaterial();
+		ppMaterials[i]->SetTexture(ppTextures[i]);
+	}
 	m_ppObjects[m_nObjects - 1]->SetAnimationStack(20);
+	if (m_ppObjects[0]->currentMaterial == 0)
+	{
+		m_ppObjects[0]->SetMaterial(ppMaterials[1]);
+		m_ppObjects[0]->currentMaterial = 1;
+	}
 }
 void CBillboardShader::StopPlayer()
 {
+
+	CMaterial* ppMaterials[TEXTURESBILL];
+	for (int i = 0; i < TEXTURESBILL; i++)
+	{
+		ppMaterials[i] = new CMaterial();
+		ppMaterials[i]->SetTexture(ppTextures[i]);
+
+	}
+
 	m_ppObjects[m_nObjects - 1]->SetAnimationStack(11);
 	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
+
+	if (m_ppObjects[0]->currentMaterial == 1)
+	{
+		m_ppObjects[0]->SetMaterial(ppMaterials[0]);
+		m_ppObjects[0]->currentMaterial = 0;
+	}
+	
 }
 void CBillboardShader::CreateShaderVariables(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
@@ -796,7 +802,7 @@ D3D12_RASTERIZER_DESC CFbxSkinnedModelShader::CreateRasterizerState()
 	::ZeroMemory(&d3dRasterizerDesc, sizeof(D3D12_RASTERIZER_DESC));
 	//	d3dRasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 	d3dRasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
-	d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
+	d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
 #ifdef _WITH_LEFT_HAND_COORDINATES
 	d3dRasterizerDesc.FrontCounterClockwise = FALSE;
 #else

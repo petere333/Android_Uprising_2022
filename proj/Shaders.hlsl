@@ -100,9 +100,11 @@ VS_TEXTURED_OUTPUT VSBill(VS_TEXTURED_INPUT input)
 }
 float4 PSBill(VS_TEXTURED_OUTPUT input) : SV_TARGET
 {
-	float4 cColor = billtex.Sample(samp1, input.uv);
+	//float4 cColor = billtex.Sample(samp1, input.uv);
 
-	
+	float4 cColor = float4(input.position.y / 1000.0f+input.position.x/1000.0f,
+	input.position.y / 1000.0f + input.position.x / 1000.0f,
+	input.position.y / 1000.0f + input.position.x / 1000.0f, 1.0f);
 
 	return(cColor);
 }
@@ -154,8 +156,8 @@ cbuffer cbBoneTransforms : register(b7)
 struct VS_FBX_SKINNED_MODEL_INPUT
 {
 	float4 position : POSITION;
-	uint4 indices : BONEINDEX;
-	float4 weights : BONEWEIGHT;
+	uint4 indices : BONEINDEX;//스킨인덱스
+	float4 weights : BONEWEIGHT;//스킨웨이트
 	float2 uvs : UV;
 };
 

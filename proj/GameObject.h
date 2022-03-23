@@ -79,7 +79,7 @@ class CTexture
 public:
 	CTexture(int nTextureResources, UINT nResourceType, int nSamplers, int nRootParameters);
 	virtual ~CTexture();
-
+	
 private:
 	int								m_nReferences = 0;
 
@@ -175,6 +175,7 @@ public:
 	CFbxScene* m_pFbxScene = NULL;
 	int m_nInstance = 0;
 	float currentRotationZ = 0.0f;
+	int currentMaterial = 0;
 
 	void SetFbxScene(CFbxScene* pFbxScene);
 	void SetAnimationStack(int nAnimationStack) { m_pAnimationController->SetAnimationStack(m_pFbxScene->m_pfbxScene, nAnimationStack); }

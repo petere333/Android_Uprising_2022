@@ -117,6 +117,8 @@ void RenderFbxNodeHierarchy(ID3D12GraphicsCommandList *pd3dCommandList, FbxNode 
 			CFbxRenderInfo::m_pFbxModelShader->Render(pd3dCommandList);
 		}
 
+
+
 		if (pFbxRenderInfo->m_pMesh) pFbxRenderInfo->m_pMesh->Render(pd3dCommandList);
 	}
 
@@ -127,9 +129,8 @@ void RenderFbxNodeHierarchy(ID3D12GraphicsCommandList *pd3dCommandList, FbxNode 
 	}
 }
 
-CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FbxNode *pfbxNode, int nInstances, FbxTime time)
+void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FbxNode *pfbxNode, int nInstances)
 {
-	CLoadedMesh* result=NULL;
 	FbxNodeAttribute *pfbxNodeAttribute = pfbxNode->GetNodeAttribute();
 	if (pfbxNodeAttribute && (pfbxNodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh))
 	{
@@ -243,11 +244,9 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 			XMFLOAT2* uvs = new XMFLOAT2[nVertices];
 			for (int i = 0; i < nIndices; ++i)
 			{
-				if (uvIdx[i] < nVertices)
-				{
-					uvs[uvIdx[i]].x = uvValue[i].x;
-					uvs[uvIdx[i]].y = uvValue[i].y;
-				}
+				uvs[pnIndices[i]].x = uvValue[i].x;
+				uvs[pnIndices[i]].y = uvValue[i].y;
+				
 			}
 
 
@@ -281,11 +280,11 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 					}
 				}
 
-				int **ppnBoneIDs = new int*[nVertices];
-				float **ppnBoneWeights = new float*[nVertices];
+				int **ppnBoneIDs = new int*[nVertices];// °¢ Á¤Á¡¸¶´Ù ¿µÇâÀ» ¹Þ´Â »ÀÀÇ ¹øÈ£
+				float **ppnBoneWeights = new float*[nVertices]; // °¢ Á¤Á¡¸¶´Ù ±× »À¿¡ ¾ó¸¶³ª ¿µÇâÀ» ¹Þ³ª?
 				for (int i = 0; i < nVertices; i++)
 				{
-					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]];
+					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]]; 
 					ppnBoneWeights[i] = new float[pnBonesPerVertex[i]];
 					::memset(ppnBoneIDs[i], 0, pnBonesPerVertex[i] * sizeof(int));
 					::memset(ppnBoneWeights[i], 0, pnBonesPerVertex[i] * sizeof(float));
@@ -377,75 +376,13 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 					pxmf4x4VertextToLinkNodes[j] = ::FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
 				}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 				// À§¿¡ ³»¿ëÀ» ÀÏÀÏÀÌ ÀÌÇØÇÒ ¼ø ¾ø¾îµµ
 				// ÀÏ´Ü È®½ÇÇÑ°Ç, Á¦¾îÁ¡ ÁÂÇ¥, ÀÎµ¦½º, uv, uvÀÎµ¦½º¿Í ´õºÒ¾î
 				// ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Æ÷ÇÔµÈ ¸ðµ¨Àº ½ºÅ²ÀÎµ¦½º, ½ºÅ²¿þÀÌÆ®, Å¬·¯½ºÅÍ¼ö, º»¿ÀÇÁ¼Âº¯È¯ÀÌ¶ó´Â ³×°¡Áö °ªÀ» ´õ°¡Á®.
 				// ±×¸®°í ¸Þ½¬¸¦ ¸¸µé ¶§ ÀÌ ³×°¡Áö Á¤º¸¸¦ Á¤Á¡ ¹öÆÛ¿¡ Ãß°¡ÇØ.
 
-				FbxSkin* def = (FbxSkin*)pfbxMesh->GetDeformer(0, FbxDeformer::eSkin);
-				
-				XMFLOAT4* animVert = new XMFLOAT4[nVertices];
-				XMFLOAT4X4* boneTrans = new XMFLOAT4X4[nClusters];
-				for (int i = 0; i < nClusters; ++i)
-				{
-					FbxCluster* c = def->GetCluster(i);
-					FbxAMatrix mtx = c->GetLink()->EvaluateGlobalTransform(time);
-					boneTrans[i] = ::FbxMatrixToXmFloat4x4Matrix(&mtx);
-				}
-				
-				for (int i = 0; i < nVertices; ++i)
-				{
-					XMFLOAT4X4 tmp;
-					tmp._11 = 0.0f; tmp._12 = 0.0f; tmp._13 = 0.0f; tmp._14 = 0.0f;
-					tmp._21 = 0.0f; tmp._22 = 0.0f; tmp._23 = 0.0f; tmp._24 = 0.0f;
-					tmp._31 = 0.0f; tmp._32 = 0.0f; tmp._33 = 0.0f; tmp._34 = 0.0f;
-					tmp._41 = 0.0f; tmp._42 = 0.0f; tmp._43 = 0.0f; tmp._44 = 0.0f;
-					for (int j = 0; j < 4; ++j)
-					{
-						XMFLOAT4X4 temp = Matrix4x4::Multiply(pxmf4x4VertextToLinkNodes[pnSkinningIndices[i][j]], boneTrans[pnSkinningIndices[i][j]]);
-						temp._11 *= pfSkinningWeights[i][j];
-						temp._12 *= pfSkinningWeights[i][j];
-						temp._13 *= pfSkinningWeights[i][j];
-						temp._14 *= pfSkinningWeights[i][j];
-
-						temp._21 *= pfSkinningWeights[i][j];
-						temp._22 *= pfSkinningWeights[i][j];
-						temp._23 *= pfSkinningWeights[i][j];
-						temp._24 *= pfSkinningWeights[i][j];
-
-						temp._31 *= pfSkinningWeights[i][j];
-						temp._32 *= pfSkinningWeights[i][j];
-						temp._33 *= pfSkinningWeights[i][j];
-						temp._34 *= pfSkinningWeights[i][j];
-
-						temp._41 *= pfSkinningWeights[i][j];
-						temp._42 *= pfSkinningWeights[i][j];
-						temp._43 *= pfSkinningWeights[i][j];
-						temp._44 *= pfSkinningWeights[i][j];
-
-						tmp._11 += temp._11; tmp._12 += temp._12; tmp._13 += temp._13; tmp._14 += temp._14;
-						tmp._21 += temp._21; tmp._22 += temp._22; tmp._23 += temp._23; tmp._24 += temp._24;
-						tmp._31 += temp._31; tmp._32 += temp._32; tmp._33 += temp._33; tmp._34 += temp._34;
-						tmp._41 += temp._41; tmp._42 += temp._42; tmp._43 += temp._43; tmp._44 += temp._44;
-					}
-					XMVECTOR v = XMLoadFloat4(&pxmf4Vertices[i]);
-					XMMATRIX m = XMLoadFloat4x4(&tmp);
-					XMVECTOR transV = XMVector4Transform(v, m);
-					XMStoreFloat4(&animVert[i], transV);
-				}
-				result = new CLoadedMesh(pd3dDevice, pd3dCommandList, nVertices, animVert, nIndices, pnIndices, uvs);
-				//return result;
-				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
-				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
-				/*
-=======
-=======
->>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
 
->>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 				pFbxRenderInfo->m_nLinkNodes = nClusters;
 				pFbxRenderInfo->m_nInstances = nInstances;
 				pFbxRenderInfo->m_ppd3dcbLinkNodeTransforms = new ID3D12Resource*[nInstances]; //Bone Transforms
@@ -457,7 +394,7 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 					pFbxRenderInfo->m_ppd3dcbLinkNodeTransforms[i] = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 					pFbxRenderInfo->m_ppd3dcbLinkNodeTransforms[i]->Map(0, NULL, (void **)&pFbxRenderInfo->m_ppcbxmf4x4MappedLinkNodeTransforms[i]);
 				}
-				*/
+
 				for (int i = 0; i < nVertices; i++)
 				{
 					if (ppnBoneIDs[i]) delete[] ppnBoneIDs[i];
@@ -472,14 +409,10 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 				if (pfSkinningWeights) delete[] pfSkinningWeights;
 
 				if (pfbxmtxVertextToLinkNodes) delete[] pfbxmtxVertextToLinkNodes;
-				
 			}
 			else
 			{
-				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
-				//result = new CLoadedMesh(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, nIndices, pnIndices, uvs);
-				//return result;
-				
+				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
 			}
 
 			pfbxMesh->SetUserDataPtr(pFbxRenderInfo);
@@ -487,20 +420,14 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 			if (pfbxv4Vertices) delete[] pfbxv4Vertices;
 			if (pxmf4Vertices) delete[] pxmf4Vertices;
 			if (pnIndices) delete[] pnIndices;
-			
 		}
 	}
 
 	int nChilds = pfbxNode->GetChildCount();
 	for (int i = 0; i < nChilds; i++)
 	{
-		if(result!=NULL)
-		{
-			break;
-		}
-		result = CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxNode->GetChild(i), nInstances, time);
+		CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxNode->GetChild(i), nInstances);
 	}
-	return result;
 }
 
 void ReleaseRenderInfoFromFbxNodeHierarchy(FbxNode *pfbxNode)
