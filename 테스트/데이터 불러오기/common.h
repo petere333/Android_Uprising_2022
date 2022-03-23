@@ -26,11 +26,6 @@ typedef struct float4
 	float x, y, z, a;
 }float4;
 
-typedef struct int4
-{
-	int x, y, z, a;
-}int4;
-
 
 typedef struct VertexUV
 {
