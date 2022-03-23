@@ -5,6 +5,7 @@
 class CMesh
 {
 public:
+	CMesh();
 	CMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	virtual ~CMesh();
 private:
@@ -117,6 +118,14 @@ class CCubeMeshTextured : public CMesh
 public:
 	CCubeMeshTextured(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth = 2.0f, float fHeight = 2.0f, float fDepth = 2.0f);
 	virtual ~CCubeMeshTextured();
+};
+
+class CLoadedMesh : public CMesh
+{
+public:
+	CLoadedMesh();
+	CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int nVertices, XMFLOAT4* pVertices, int nIndices, int* pnindices, XMFLOAT2* uvs);
+	virtual ~CLoadedMesh();
 };
 
 class ImageFile

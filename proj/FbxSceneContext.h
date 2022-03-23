@@ -33,7 +33,7 @@ public:
 
 extern void RenderFbxNodeHierarchy(ID3D12GraphicsCommandList *pd3dCommandList, FbxNode *pfbxNode, FbxTime& fbxCurrentTime, FbxAMatrix& fbxmtxWorld, int nInstance);
 
-extern void CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FbxNode *pfbxNode, int nInstances);
+extern CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, FbxNode *pfbxNode, int nInstances, FbxTime time);
 extern void ReleaseRenderInfoFromFbxNodeHierarchy(FbxNode *pfbxNode);
 extern void ReleaseUploadBufferFromFbxNodeHierarchy(FbxNode *pfbxNode);
 

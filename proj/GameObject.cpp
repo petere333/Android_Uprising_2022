@@ -500,8 +500,9 @@ CMonsterObject::CMonsterObject(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	CFbxScene* pFbxMonsterModel = pFbxScene;
 	if (!pFbxMonsterModel)
 	{
+		FbxTime t;
 		FbxScene* pfbxAngrybotModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, pfbxSdkManager, "Model/Angrybot.fbx");
-		::CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxAngrybotModel->GetRootNode(), 1);
+		::CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxAngrybotModel->GetRootNode(), 1, t);
 		pFbxMonsterModel = new CFbxScene(pfbxAngrybotModel);
 	}
 	SetFbxScene(pFbxMonsterModel);

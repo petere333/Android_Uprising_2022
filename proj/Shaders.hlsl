@@ -100,11 +100,9 @@ VS_TEXTURED_OUTPUT VSBill(VS_TEXTURED_INPUT input)
 }
 float4 PSBill(VS_TEXTURED_OUTPUT input) : SV_TARGET
 {
-	//float4 cColor = billtex.Sample(samp1, input.uv);
+	float4 cColor = billtex.Sample(samp1, input.uv);
 
-	float4 cColor = float4(input.position.y / 1000.0f+input.position.x/1000.0f,
-	input.position.y / 1000.0f + input.position.x / 1000.0f,
-	input.position.y / 1000.0f + input.position.x / 1000.0f, 1.0f);
+	
 
 	return(cColor);
 }

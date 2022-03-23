@@ -559,22 +559,29 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 	
 	m_ppObjects = new CGameObject * [m_nObjects];
-	
+	CLoadedMesh *mesh=NULL;
 	FbxScene* pfbxMonsterModel = ::LoadFbxSceneFromFile(pd3dDevice, pd3dCommandList, manager, "sample.fbx");
-	CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3);
+	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
+	CAnimationController* cont = new CAnimationController(pFbxMonsterModel->m_pfbxScene);
+	cont->SetAnimationStack(pFbxMonsterModel->m_pfbxScene, 11);
+	FbxTime time = cont->GetCurrentTime();
+
+	mesh = CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3, time);
 
 	//애니메이션 정보 불러오는 방법
 
-	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
+	
 
 
 	// 이 게임 객체에 fbx 씬과 애니메이션 컨트롤러 객체가 들어감.
-	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
+	//m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
+	m_ppObjects[0] = new CGameObject();
+	m_ppObjects[0]->SetMesh(0, mesh);
 	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
 	m_ppObjects[0]->currentMaterial = 0;
-	m_ppObjects[0]->SetAnimationStack(11);
+	//m_ppObjects[0]->SetAnimationStack(11);
 	//11이 서있기, 20이 걷기.
-	m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
+	//m_ppObjects[0]->m_pAnimationController->SetPosition(11, 0.0f);
 	m_ppObjects[0]->SetPosition(0.0f, 0.0f, 0.0f);
 	m_ppObjects[0]->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (m_nObjects - 1)));
 
