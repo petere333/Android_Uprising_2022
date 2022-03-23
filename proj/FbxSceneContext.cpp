@@ -378,6 +378,7 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 				}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				// À§¿¡ ³»¿ëÀ» ÀÏÀÏÀÌ ÀÌÇØÇÒ ¼ø ¾ø¾îµµ
 				// ÀÏ´Ü È®½ÇÇÑ°Ç, Á¦¾îÁ¡ ÁÂÇ¥, ÀÎµ¦½º, uv, uvÀÎµ¦½º¿Í ´õºÒ¾î
 				// ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Æ÷ÇÔµÈ ¸ğµ¨Àº ½ºÅ²ÀÎµ¦½º, ½ºÅ²¿şÀÌÆ®, Å¬·¯½ºÅÍ¼ö, º»¿ÀÇÁ¼Âº¯È¯ÀÌ¶ó´Â ³×°¡Áö °ªÀ» ´õ°¡Á®.
@@ -440,6 +441,8 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
 				/*
 =======
+=======
+>>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
 
 >>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)

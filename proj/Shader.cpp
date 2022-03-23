@@ -567,6 +567,7 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	mesh = CreateMeshFromFbxNodeHierarchy(pd3dDevice, pd3dCommandList, pfbxMonsterModel->GetRootNode(), 3, time);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//¾Ö´Ï¸ŞÀÌ¼Ç Á¤º¸ ºÒ·¯¿À´Â ¹æ¹ı
 
 	
@@ -584,6 +585,12 @@ void CBillboardShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
 	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
+=======
+	CFbxScene* pFbxMonsterModel = new CFbxScene(pfbxMonsterModel);
+
+	m_ppObjects[0] = new CMonsterObject(pd3dDevice, pd3dCommandList, manager, pFbxMonsterModel, 0, m_d3dSrvGPUDescriptorNextHandle);
+	m_ppObjects[0]->SetMaterial(ppMaterials[0]);
+>>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 	m_ppObjects[0]->SetAnimationStack(11);
 >>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 	//11ÀÌ ¼­ÀÖ±â, 20ÀÌ °È±â.
