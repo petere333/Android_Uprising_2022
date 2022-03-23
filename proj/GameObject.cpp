@@ -326,37 +326,30 @@ void CGameObject::Render(ID3D12GraphicsCommandList* pd3dCommandList, int index)
 		}
 	}
 	*/
-	if (m_pFbxScene)// FBX 파일로 불러온 정보가 들어있는 오브젝트의 경우
+	if (m_pFbxScene)
 	{
 
 		if (m_pFbxScene->m_pfbxScene)
 		{
-			//머티리얼 정보가 포함된 객체인 경우
 			if (m_pMaterial)
 			{
-				if (m_pMaterial->m_pShader)//머티리얼에 쉐이더가 연결된 경우, 본 프로젝트에서 쓰지 않는다.
+				if (m_pMaterial->m_pShader)
 				{
 					m_pMaterial->m_pShader->Render(pd3dCommandList);
 					m_pMaterial->m_pShader->UpdateShaderVariables(pd3dCommandList);
 
 					UpdateShaderVariables(pd3dCommandList);
 				}
-				if (m_pMaterial->m_pTexture)//머티리얼에 텍스쳐가 연결된 경우. 실제로 사용할 부분이다.
+				if (m_pMaterial->m_pTexture)
 				{
-					m_pMaterial->m_pTexture->UpdateShaderVariables(pd3dCommandList);//텍스처 리소스를 srv를 통해 hlsl로 보낸다.
+					m_pMaterial->m_pTexture->UpdateShaderVariables(pd3dCommandList);
 				}
 			}
-			FbxAMatrix fbxf4x4World = ::XmFloat4x4MatrixToFbxMatrix(m_xmf4x4World);//이 객체의 월드 변환 행렬
+			FbxAMatrix fbxf4x4World = ::XmFloat4x4MatrixToFbxMatrix(m_xmf4x4World);
 			FbxTime fbxCurrentTime = m_pAnimationController->GetCurrentTime();
 			::RenderFbxNodeHierarchy(pd3dCommandList, m_pFbxScene->m_pfbxScene->GetRootNode(), fbxCurrentTime, fbxf4x4World, m_nInstance);
-			// 현재 시간에 따른 bone들의 변환을 애니메이션 스택으로부터 얻어와서 그리기.
-			//결국 CMeshFromFBX::Render함수로 귀결.
-			//FBX SDK에 관한 내용이라 신경쓰지않아도된다.
-			//뭔진 몰라도 FBX파일로부터 얻어온 모델을 그리는 애구나 라고 생각하면 된다.
 		}
 	}
-	//FBX를 써서 만든 객체가 아닌경우
-	//간단한 사각형 등은 FBX파일이 필요가 없으므로 이 곳을 사용한다. 형식은 둘이 거의 똑같다.
 	else
 	{
 		if (m_pMaterial)

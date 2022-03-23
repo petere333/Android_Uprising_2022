@@ -373,25 +373,22 @@ void CMeshFromFbx::UpdateShaderVariables(ID3D12GraphicsCommandList* pd3dCommandL
 
 void CMeshFromFbx::Render(ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	//뼈 정보가 들어있을 경우, 즉 애니메이션이 포함된 FBX 모델인 경우
-	// 위치, 텍스처 외에도 뼈의 인덱스 및 가중치까지도 정점 버퍼에 포함
 	if (m_pd3dBoneIndexBuffer && m_pd3dBoneWeightBuffer)
 	{
 		D3D12_VERTEX_BUFFER_VIEW pVertexBufferViews[4] = { m_d3dPositionBufferView, m_d3dBoneIndexBufferView, m_d3dBoneWeightBufferView, m_d3dTextureBufferView };
 		pd3dCommandList->IASetVertexBuffers(m_nSlot, 4, pVertexBufferViews);
 	}
-	//아닌경우 일단 위치만
 	else
 	{
 		pd3dCommandList->IASetVertexBuffers(m_nSlot, 1, &m_d3dPositionBufferView);
 	}
 
-	pd3dCommandList->IASetPrimitiveTopology(m_d3dPrimitiveTopology);//삼각형 리스트 형태
+	pd3dCommandList->IASetPrimitiveTopology(m_d3dPrimitiveTopology);
 
-	pd3dCommandList->IASetIndexBuffer(&m_d3dIndexBufferView);//인덱스 설정
+	pd3dCommandList->IASetIndexBuffer(&m_d3dIndexBufferView);
 
 	//pd3dCommandList->SetGraphicsRootDescriptorTable(4, handle);
 
-	pd3dCommandList->DrawIndexedInstanced(m_nIndices, 1, 0, 0, 0);//실제로 그린다.
+	pd3dCommandList->DrawIndexedInstanced(m_nIndices, 1, 0, 0, 0);
 }
 
