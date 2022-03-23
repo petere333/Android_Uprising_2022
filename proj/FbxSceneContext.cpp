@@ -117,8 +117,6 @@ void RenderFbxNodeHierarchy(ID3D12GraphicsCommandList *pd3dCommandList, FbxNode 
 			CFbxRenderInfo::m_pFbxModelShader->Render(pd3dCommandList);
 		}
 
-
-
 		if (pFbxRenderInfo->m_pMesh) pFbxRenderInfo->m_pMesh->Render(pd3dCommandList);
 	}
 
@@ -245,9 +243,11 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 			XMFLOAT2* uvs = new XMFLOAT2[nVertices];
 			for (int i = 0; i < nIndices; ++i)
 			{
-				uvs[pnIndices[i]].x = uvValue[i].x;
-				uvs[pnIndices[i]].y = uvValue[i].y;
-				
+				if (uvIdx[i] < nVertices)
+				{
+					uvs[uvIdx[i]].x = uvValue[i].x;
+					uvs[uvIdx[i]].y = uvValue[i].y;
+				}
 			}
 
 
@@ -281,11 +281,11 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 					}
 				}
 
-				int **ppnBoneIDs = new int*[nVertices];// °¢ Á¤Á¡¸¶´Ù ¿µÇâÀ» ¹Þ´Â »ÀÀÇ ¹øÈ£
-				float **ppnBoneWeights = new float*[nVertices]; // °¢ Á¤Á¡¸¶´Ù ±× »À¿¡ ¾ó¸¶³ª ¿µÇâÀ» ¹Þ³ª?
+				int **ppnBoneIDs = new int*[nVertices];
+				float **ppnBoneWeights = new float*[nVertices];
 				for (int i = 0; i < nVertices; i++)
 				{
-					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]]; 
+					ppnBoneIDs[i] = new int[pnBonesPerVertex[i]];
 					ppnBoneWeights[i] = new float[pnBonesPerVertex[i]];
 					::memset(ppnBoneIDs[i], 0, pnBonesPerVertex[i] * sizeof(int));
 					::memset(ppnBoneWeights[i], 0, pnBonesPerVertex[i] * sizeof(float));
@@ -377,6 +377,7 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 					pxmf4x4VertextToLinkNodes[j] = ::FbxMatrixToXmFloat4x4Matrix(&pfbxmtxVertextToLinkNodes[j]);
 				}
 
+<<<<<<< HEAD
 				// À§¿¡ ³»¿ëÀ» ÀÏÀÏÀÌ ÀÌÇØÇÒ ¼ø ¾ø¾îµµ
 				// ÀÏ´Ü È®½ÇÇÑ°Ç, Á¦¾îÁ¡ ÁÂÇ¥, ÀÎµ¦½º, uv, uvÀÎµ¦½º¿Í ´õºÒ¾î
 				// ¾Ö´Ï¸ÞÀÌ¼ÇÀÌ Æ÷ÇÔµÈ ¸ðµ¨Àº ½ºÅ²ÀÎµ¦½º, ½ºÅ²¿þÀÌÆ®, Å¬·¯½ºÅÍ¼ö, º»¿ÀÇÁ¼Âº¯È¯ÀÌ¶ó´Â ³×°¡Áö °ªÀ» ´õ°¡Á®.
@@ -438,6 +439,10 @@ CLoadedMesh* CreateMeshFromFbxNodeHierarchy(ID3D12Device *pd3dDevice, ID3D12Grap
 				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
 				//pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, NULL, NULL, 0, NULL);
 				/*
+=======
+				pFbxRenderInfo->m_pMesh = new CMeshFromFbx(pd3dDevice, pd3dCommandList, nVertices, pxmf4Vertices, uvs, nIndices, pnIndices, pnSkinningIndices, pfSkinningWeights, nClusters, pxmf4x4VertextToLinkNodes);
+
+>>>>>>> parent of 83f8937 (ìƒí•˜ì¢Œìš°ì´ë™ ë° ì£¼ì„)
 				pFbxRenderInfo->m_nLinkNodes = nClusters;
 				pFbxRenderInfo->m_nInstances = nInstances;
 				pFbxRenderInfo->m_ppd3dcbLinkNodeTransforms = new ID3D12Resource*[nInstances]; //Bone Transforms
