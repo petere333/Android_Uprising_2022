@@ -377,7 +377,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		if (data[i].type == 2)//container
 		{
 			obj->SetMesh(0, pContainerMesh);
-			obj->SetMaterial(ppMaterials[1]);
+			obj->SetMaterial(ppMaterials[5]);
 		}
 		else if(data[i].type==1)
 		{
