@@ -192,3 +192,8 @@ ID3D12RootSignature* CScene::GetGraphicsRootSignature()
 {
 	return(m_pd3dGraphicsRootSignature);
 }
+
+void CScene::playerMeleeAttack()
+{
+	m_pShaders[0].playerMeleeAttack();
+}

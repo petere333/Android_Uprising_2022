@@ -357,8 +357,8 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	//CRectMeshTextured* pTileMesh = new CRectMeshTextured(pd3dDevice, pd3dCommandList, 2.5f, 2.5f);
 
 	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 800.0f, 600.0f);
-	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 500.0f);
-	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 800.0f, 500.0f);
+	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 5.0f);
+	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 800.0f, 5.0f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "vertices.txt", "indices.txt");
 	CLoadedMesh* player = new CLoadedMesh(pd3dDevice, pd3dCommandList, "vertices_player.txt", "indices_player.txt");
@@ -373,31 +373,43 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 	for (int i = 0; i < data.size(); ++i)
 	{
-		CGameObject* obj = new CGameObject(1);
-		if (data[i].type == 2)//container
+		CGameObject* obj;
+
+		if (data[i].type == 1)//player
 		{
-			obj->SetMesh(0, pContainerMesh);
-			obj->SetMaterial(ppMaterials[5]);
-		}
-		else if(data[i].type==1)
-		{
+			obj = new CPlayerObject(1);
 			obj->SetMesh(0, pPlayerMesh);
+			obj->SetMaterial(ppMaterials[0]);
+		}
+		else if (data[i].type == 2)//container
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, container);
 			obj->SetMaterial(ppMaterials[0]);
 		}
 		else if (data[i].type == 800600)
 		{
+			obj = new CTerrainObject(1);
 			obj->SetMesh(0, pGrid);
 			obj->SetMaterial(ppMaterials[2]);
 		}
 		else if (data[i].type == 600500 * 2)
 		{
+			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall);
 			obj->SetMaterial(ppMaterials[3]);
 		}
 		else if (data[i].type == 800500 * 3)
 		{
+			obj = new CTerrainObject(1);
 			obj->SetMesh(0, hWall);
 			obj->SetMaterial(ppMaterials[4]);
+		}
+		else if (data[i].type == -1)
+		{
+			obj = new CEnemyObject(1);
+			obj->SetMesh(0, pPlayerMesh);
+			obj->SetMaterial(ppMaterials[1]);
 		}
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * i));
@@ -410,7 +422,7 @@ void CObjectsShader::ReleaseObjects()
 	if (m_ppObjects)
 	{
 		for (int j = 0; j < m_nObjects; j++) 
-			if (m_ppObjects[j]) 
+			if (m_ppObjects[j])
 				delete m_ppObjects[j];
 		delete[] m_ppObjects;
 	}
@@ -458,8 +470,13 @@ void CObjectsShader::AnimateObjects(float fTimeElapsed)
 			}
 		}
 	}
+
+	
+
+
 	for (int j = 0; j < m_nObjects; j++)
 	{
+
 		m_ppObjects[j]->Animate(fTimeElapsed);
 	}
 }
@@ -521,6 +538,33 @@ void CObjectsShader::addPlayerYSpeed(float delta)
 bool CObjectsShader::playerInAir()
 {
 	return m_ppObjects[0]->isAir;
+}
+
+void CObjectsShader::playerMeleeAttack()
+{
+	BoundBox bx;//공격 범위의 충돌 박스
+	XMFLOAT3 pos = m_ppObjects[0]->GetPosition();
+	bx.start = XMFLOAT3(pos.x-0.5f, pos.y, pos.z+0.2f);
+	bx.end = XMFLOAT3(pos.x + 0.5f, pos.y + 0.5, pos.z + 1.0f);
+
+	for (int i = 0; i < boxesWorld.size(); ++i)
+	{
+		if (isOverlapped(bx, boxesWorld[i]) == true)
+		{
+			if (m_ppObjects[i + 1]->isEnemy == true)
+			{
+				m_ppObjects[i + 1]->hp -= 1;
+				if (m_ppObjects[i + 1]->hp <= 0)
+				{
+					m_ppObjects[i + 1]->SetMesh(0, NULL);
+					boxesWorld[i].start = XMFLOAT3(-99.99f, -99.99f, -99.99f);
+					boxesWorld[i].end = XMFLOAT3(-99.9f, -99.9f, -99.9f);
+				}
+			}
+		}
+	}
+
+
 }
 /////////////////////////////////////////////////////////////////////////
 
@@ -613,6 +657,31 @@ void CTexturedShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature
 		 sphere.center = XMFLOAT3(x1, y1, z1);
 		 sphere.dist = dist;
 		 result.push_back(sphere);
+	 }
+	 return result;
+ }
+
+ bool isOverlapped(BoundBox b1, BoundBox b2)
+ {
+	 XMFLOAT3 pos[8];
+	 bool result = false;
+
+	 pos[0] = XMFLOAT3(b1.start.x, b1.start.y, b1.start.z);
+	 pos[1] = XMFLOAT3(b1.start.x, b1.end.y, b1.start.z);
+	 pos[2] = XMFLOAT3(b1.start.x, b1.start.y, b1.end.z);
+	 pos[3] = XMFLOAT3(b1.start.x, b1.end.y, b1.end.z);
+	 
+	 pos[4] = XMFLOAT3(b1.end.x, b1.start.y, b1.start.z);
+	 pos[5] = XMFLOAT3(b1.end.x, b1.end.y, b1.start.z);
+	 pos[6] = XMFLOAT3(b1.end.x, b1.start.y, b1.end.z);
+	 pos[7] = XMFLOAT3(b1.end.x, b1.end.y, b1.end.z);
+
+	 for (int i = 0; i < 8; ++i)
+	 {
+		 if (pos[i].x > b2.start.x && pos[i].x<b2.end.x && pos[i].y>b2.start.y && pos[i].y<b2.end.y && pos[i].z>b2.start.z && pos[i].z < b2.end.z)
+		 {
+			 result = true;
+		 }
 	 }
 	 return result;
  }

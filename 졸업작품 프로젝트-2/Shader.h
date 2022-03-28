@@ -150,10 +150,13 @@ public:
 	bool playerInAir();
 	void setAir(bool air);
 
+	void playerMeleeAttack();
+
 	std::vector<BoundBox> LoadBoxes(const char* filename);
 	std::vector<BoundSphere> LoadSphere(const char* filename);
 
 protected:
+	
 	CGameObject** m_ppObjects = NULL;
 	int m_nObjects = 0;
 
@@ -164,5 +167,4 @@ protected:
 	std::vector<BoundSphere> spheresWorld;
 };
 
-
-
+bool isOverlapped(BoundBox b1, BoundBox b2);

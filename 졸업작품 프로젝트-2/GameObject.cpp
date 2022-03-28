@@ -415,3 +415,25 @@ void CRotatingObject::Render(ID3D12GraphicsCommandList* pd3dCommandList)
 {
 	CGameObject::Render(pd3dCommandList);
 }
+
+CPlayerObject::CPlayerObject(int meshes) : CGameObject(meshes)
+{
+	isPlayer = true;
+}
+CPlayerObject::~CPlayerObject()
+{}
+
+CEnemyObject::CEnemyObject(int meshes) :CGameObject(meshes)
+{
+	isEnemy = true;
+	hp = 1;
+}
+
+CEnemyObject::~CEnemyObject(){}
+
+CTerrainObject::CTerrainObject(int m) : CGameObject(m)
+{
+	isTerrain = true;
+}
+
+CTerrainObject::~CTerrainObject(){}

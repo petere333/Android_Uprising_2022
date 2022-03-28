@@ -39,9 +39,14 @@ public:
 	//루트 시그너쳐를 나타내는 인터페이스 포인터이다. 
 	ID3D12PipelineState *m_pd3dPipelineState = NULL;
 	//파이프라인 상태를 나타내는 인터페이스 포인터이다.
-	bool movePlayer(float,float,float);
-	void addPlayerYSpeed(float);
-	bool playerInAir();
+	
+	bool movePlayer(float,float,float);//플레이어 이동
+	void addPlayerYSpeed(float);// 플레이어 y축방향 가속
+	bool playerInAir();//플레이어가 공중에 뜬 상태인가?
+	void playerMeleeAttack();//플레이어 근접공격
+
+
+
 protected:
 	//씬은 게임 객체들의 집합이다. 게임 객체는 셰이더를 포함한다.
 	CObjectsShader* m_pShaders = NULL;

@@ -468,3 +468,24 @@ WallMeshHorizontal::WallMeshHorizontal(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	m_d3dVertexBufferView.SizeInBytes = m_nStride * m_nVertices;
 }
 WallMeshHorizontal::~WallMeshHorizontal(){}
+
+CDummyMesh::CDummyMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList) :CMesh(pd3dDevice, pd3dCommandList)
+{
+	CTexturedVertex vtx[3];
+	vtx[0] = CTexturedVertex(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
+	vtx[1] = CTexturedVertex(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
+	vtx[2] = CTexturedVertex(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
+
+	m_nVertices = 3;
+	m_nStride = sizeof(CTexturedVertex);
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	m_pd3dVertexBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, vtx, m_nStride * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dVertexUploadBuffer);
+
+	m_d3dVertexBufferView.BufferLocation = m_pd3dVertexBuffer->GetGPUVirtualAddress();
+	m_d3dVertexBufferView.StrideInBytes = m_nStride;
+	m_d3dVertexBufferView.SizeInBytes = m_nStride * m_nVertices;
+}
+CDummyMesh::~CDummyMesh(){}

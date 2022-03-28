@@ -343,6 +343,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->addPlayerYSpeed(0.3f);
 			}
 			break;
+		case 'F':
+			m_pScene->playerMeleeAttack();
+			break;
 		case VK_UP:
 			zspeed = 0.5f;
 			break;

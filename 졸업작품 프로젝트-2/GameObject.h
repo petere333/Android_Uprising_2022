@@ -174,9 +174,22 @@ public:
 	float yspeed = 0.0f;
 	float zspeed = 0.0f;
 	bool isAir = false;
+
+	bool isEnemy = false;
+	bool isPlayer = false;
+	bool isTerrain = false;
+
+	int hp = 0.0f;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class CPlayerObject:public CGameObject
+{
+public:
+	CPlayerObject(int meshes);
+	virtual ~CPlayerObject();
+
+};
 
 class CRotatingObject : public CGameObject
 {
@@ -194,4 +207,20 @@ public:
 	}
 	virtual void Animate(float fTimeElapsed);
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList);
+};
+
+class CEnemyObject :public CGameObject
+{
+public:
+	CEnemyObject(int meshes);
+	virtual ~CEnemyObject();
+
+	
+};
+
+class CTerrainObject :public CGameObject
+{
+public:
+	CTerrainObject(int m);
+	virtual ~CTerrainObject();
 };

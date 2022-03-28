@@ -128,6 +128,13 @@ public:
 	virtual ~CCubeMeshTextured();
 };
 
+class CDummyMesh : public CMesh
+{
+public: 
+	CDummyMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	virtual ~CDummyMesh();
+};
+
 class CRectMeshTextured : public CMesh
 {
 public:
