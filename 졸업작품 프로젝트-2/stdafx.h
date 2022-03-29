@@ -29,6 +29,8 @@
 #include <DXGIDebug.h>
 #include <vector>
 
+#include "variables.h"
+
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 using Microsoft::WRL::ComPtr;

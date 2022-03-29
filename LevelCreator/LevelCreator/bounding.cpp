@@ -2,9 +2,9 @@
 
 void writeBox(FILE* f, BoundingBox box)
 {
-	fprintf(f, "start : (%f,  %f,  %f)  end : (%f,  %f,  %f)\n", box.x1, box.y1, box.z1, box.x2, box.y2, box.z2);
+	fprintf(f, "start : (%f,  %f,  %f)  end : (%f,  %f,  %f)\n", box.start.x, box.start.y, box.start.z, box.end.x, box.end.y, box.end.z);
 }
 void writeSphere(FILE* f, BoundingSphere sphere)
 {
-	fprintf(f, "center : (%f,  %f,  %f)  range : %f\n", sphere.x, sphere.y, sphere.z, sphere.dist);
+	fprintf(f, "center : (%f,  %f,  %f)  range : %f\n", sphere.center.x, sphere.center.y, sphere.center.z, sphere.dist);
 }

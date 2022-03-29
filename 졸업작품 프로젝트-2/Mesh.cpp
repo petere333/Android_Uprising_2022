@@ -302,12 +302,41 @@ CRectMeshTextured::~CRectMeshTextured()
 
 CLoadedMesh::CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, const char* vfile, const char* ifile) : CMesh(pd3dDevice, pd3dCommandList)
 {
+	if (ifile != NULL)
+	{
+		FILE* pf2 = fopen(ifile, "r");
+		std::vector<int> indices;
+
+		while (!feof(pf2))
+		{
+			int idx;
+			fscanf(pf2, "%d, ", &idx);
+			indices.push_back(idx);
+		}
+		int* index = new int[indices.size()];
+
+		for (int i = 0; i < indices.size(); ++i)
+		{
+			index[i] = indices[i];
+		}
+
+		m_nIndices = indices.size();
+
+		m_pd3dIndexBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, index, sizeof(UINT) * m_nIndices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_INDEX_BUFFER, &m_pd3dIndexUploadBuffer);
+
+		m_d3dIndexBufferView.BufferLocation = m_pd3dIndexBuffer->GetGPUVirtualAddress();
+		m_d3dIndexBufferView.Format = DXGI_FORMAT_R32_UINT;
+		m_d3dIndexBufferView.SizeInBytes = sizeof(UINT) * m_nIndices;
+
+		fclose(pf2);
+	}
+
 	FILE* pf = fopen(vfile, "r");
-	FILE* pf2 = fopen(ifile, "r");
+	
 
 	std::vector<XMFLOAT3> pos;
 	std::vector<XMFLOAT2> uv;
-	std::vector<int> indices;
+	
 	while (!feof(pf))
 	{
 		float x, y, z;
@@ -316,25 +345,16 @@ CLoadedMesh::CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd
 		pos.push_back(XMFLOAT3(x, y, z));
 		uv.push_back(XMFLOAT2(u, v));
 	}
-	while (!feof(pf2))
-	{
-		int idx;
-		fscanf(pf2, "%d, ", &idx);
-		indices.push_back(idx);
-	}
-	int* index = new int[indices.size()];
+
 	CTexturedVertex* pVertices = new CTexturedVertex[pos.size()];
 	for (int i = 0; i < pos.size(); ++i)
 	{
 		pVertices[i] = CTexturedVertex(pos[i], uv[i]);
 	}
-	for (int i = 0; i < indices.size(); ++i)
-	{
-		index[i] = indices[i];
-	}
+
 
 	m_nVertices = pos.size();
-	m_nIndices = indices.size();
+	
 	m_nStride = sizeof(CTexturedVertex);
 	m_nOffset = 0;
 	m_nSlot = 0;
@@ -346,14 +366,10 @@ CLoadedMesh::CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd
 	m_d3dVertexBufferView.StrideInBytes = m_nStride;
 	m_d3dVertexBufferView.SizeInBytes = m_nStride * m_nVertices;
 
-	m_pd3dIndexBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, index, sizeof(UINT) * m_nIndices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_INDEX_BUFFER, &m_pd3dIndexUploadBuffer);
 
-	m_d3dIndexBufferView.BufferLocation = m_pd3dIndexBuffer->GetGPUVirtualAddress();
-	m_d3dIndexBufferView.Format = DXGI_FORMAT_R32_UINT;
-	m_d3dIndexBufferView.SizeInBytes = sizeof(UINT) * m_nIndices;
 
 	fclose(pf);
-	fclose(pf2);
+	
 }
 
 CLoadedMesh::~CLoadedMesh() {}

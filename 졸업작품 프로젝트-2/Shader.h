@@ -6,6 +6,7 @@
 typedef struct Obj
 {
 	XMFLOAT3 position;
+	XMFLOAT3 rotation;
 	int type;
 }Obj;
 

@@ -4,13 +4,13 @@
 
 typedef struct BoundingBox
 {
-	float x1, y1, z1;
-	float x2, y2, z2;
+	float3 start;
+	float3 end;
 }BoundingBox;
 
 typedef struct BoundingSphere
 {
-	float x, y, z;
+	float3 center;
 	float dist;
 }BoundingSphere;
 

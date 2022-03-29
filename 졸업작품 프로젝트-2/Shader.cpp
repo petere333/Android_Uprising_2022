@@ -314,7 +314,7 @@ void CObjectsShader::ReleaseShaderVariables()
 	CTexturedShader::ReleaseShaderVariables();
 }
 
-#define TEXTURES		6
+#define TEXTURES		11
 
 void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	* pd3dCommandList, void* pContext)
@@ -322,19 +322,28 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 	CTexture* ppTextures[TEXTURES];
 	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Container_Green_01.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"sample.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal01.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/WhitePaint.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/GreenPaint.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Rock01.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ceiling.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Lava(Emissive).dds", RESOURCE_TEXTURE2D, 0);
-
-	std::vector<Obj> data = LoadObjects("objects.txt");
+	ppTextures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/box.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[6] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/table.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PalletTruck.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/bin.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[9] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
+	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
 	m_nObjects = data.size();
 
@@ -360,10 +369,15 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 5.0f);
 	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 800.0f, 5.0f);
 
-	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "vertices.txt", "indices.txt");
-	CLoadedMesh* player = new CLoadedMesh(pd3dDevice, pd3dCommandList, "vertices_player.txt", "indices_player.txt");
-
-	boxesWorld = LoadBoxes("box.txt");
+	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
+	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
+	CLoadedMesh* tableMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_table.txt", "res/idx_table.txt");
+	CLoadedMesh* chairMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_chair3.txt", "res/idx_chair3.txt");
+	CLoadedMesh* cartMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_pallet.txt", "res/idx_pallet.txt");
+	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
+	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
+	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
+	boxesWorld = LoadBoxes("res/map/box.txt");
 	
 
 	m_ppObjects = new CGameObject * [m_nObjects];
@@ -375,43 +389,82 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	{
 		CGameObject* obj;
 
-		if (data[i].type == 1)//player
+		if (data[i].type == PLAYER)//player
 		{
 			obj = new CPlayerObject(1);
-			obj->SetMesh(0, pPlayerMesh);
-			obj->SetMaterial(ppMaterials[0]);
+			obj->SetMesh(0, barrelMesh);
+			obj->SetMaterial(ppMaterials[9]);
+			
 		}
-		else if (data[i].type == 2)//container
+		else if (data[i].type == CONTAINER)//container
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, container);
 			obj->SetMaterial(ppMaterials[0]);
+			
 		}
-		else if (data[i].type == 800600)
+		else if (data[i].type == f800x600)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, pGrid);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[3]);
 		}
-		else if (data[i].type == 600500 * 2)
+		else if (data[i].type == vWall600x500)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall);
-			obj->SetMaterial(ppMaterials[3]);
+			obj->SetMaterial(ppMaterials[2]);
 		}
-		else if (data[i].type == 800500 * 3)
+		else if (data[i].type == hWall800x500)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, hWall);
-			obj->SetMaterial(ppMaterials[4]);
+			obj->SetMaterial(ppMaterials[2]);
 		}
-		else if (data[i].type == -1)
+		else if (data[i].type == BOX)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, box);
+			obj->SetMaterial(ppMaterials[5]);
+		}
+		else if (data[i].type == PALLET)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, cartMesh);
+			obj->SetMaterial(ppMaterials[7]);
+		}
+		else if (data[i].type == TRASH)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, binMesh);
+			obj->SetMaterial(ppMaterials[8]);
+		}
+		else if (data[i].type == BARREL)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, barrelMesh);
+			obj->SetMaterial(ppMaterials[9]);
+		}
+		else if (data[i].type == TRUCK)
 		{
 			obj = new CEnemyObject(1);
-			obj->SetMesh(0, pPlayerMesh);
+			obj->SetMesh(0, truckMesh);
+			obj->SetMaterial(ppMaterials[10]);
+		}
+		else if (data[i].type == TABLE)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, tableMesh);
+			obj->SetMaterial(ppMaterials[6]);
+		}
+		else if (data[i].type == CHAIR)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, chairMesh);
 			obj->SetMaterial(ppMaterials[1]);
 		}
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
+		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * i));
 		m_ppObjects[i] = obj;
 	}
@@ -497,7 +550,10 @@ void CObjectsShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera*
 	{
 		if (m_ppObjects[j])
 		{
-			m_ppObjects[j]->Render(pd3dCommandList);
+			if (m_ppObjects[j]->isAlive == true)
+			{
+				m_ppObjects[j]->Render(pd3dCommandList);
+			}
 		}
 	}
 }
@@ -556,6 +612,7 @@ void CObjectsShader::playerMeleeAttack()
 				m_ppObjects[i + 1]->hp -= 1;
 				if (m_ppObjects[i + 1]->hp <= 0)
 				{
+					m_ppObjects[i + 1]->isAlive = false;
 					m_ppObjects[i + 1]->SetMesh(0, NULL);
 					boxesWorld[i].start = XMFLOAT3(-99.99f, -99.99f, -99.99f);
 					boxesWorld[i].end = XMFLOAT3(-99.9f, -99.9f, -99.9f);
@@ -615,11 +672,13 @@ void CTexturedShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature
 	while (!feof(f))
 	{
 		float f1, f2, f3;
+		float r1, r2, r3;
 		int t;
-		fscanf(f, "position : (%f,  %f,  %f)   type : %d\n", &f1, &f2, &f3, &t);
+		fscanf(f, "position : (%f,  %f,  %f)  rotation : (%f,  %f,  %f)  type : %d\n", &f1, &f2, &f3, &r1, &r2, &r3, &t);
 		
 		Obj o;
 		o.position = XMFLOAT3(f1, f2, f3);
+		o.rotation = XMFLOAT3(r1, r2, r3);
 		o.type = t;
 		
 		list.push_back(o);
