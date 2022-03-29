@@ -197,3 +197,7 @@ void CScene::playerMeleeAttack()
 {
 	m_pShaders[0].playerMeleeAttack();
 }
+XMFLOAT3 CScene::getPlayerPosition()
+{
+	return m_pShaders[0].getPlayerPosition();
+}

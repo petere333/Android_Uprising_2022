@@ -156,6 +156,8 @@ public:
 	std::vector<BoundBox> LoadBoxes(const char* filename);
 	std::vector<BoundSphere> LoadSphere(const char* filename);
 
+	XMFLOAT3 getPlayerPosition();
+
 protected:
 	
 	CGameObject** m_ppObjects = NULL;

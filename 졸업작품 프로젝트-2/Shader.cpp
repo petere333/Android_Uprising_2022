@@ -557,6 +557,10 @@ void CObjectsShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera*
 		}
 	}
 }
+XMFLOAT3 CObjectsShader::getPlayerPosition()
+{
+	return m_ppObjects[0]->GetPosition();
+}
 bool CObjectsShader::movePlayer(float x, float y, float z)
 {
 	float tx = m_ppObjects[0]->GetPosition().x + x;

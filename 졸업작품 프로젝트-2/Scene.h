@@ -44,7 +44,7 @@ public:
 	void addPlayerYSpeed(float);// 플레이어 y축방향 가속
 	bool playerInAir();//플레이어가 공중에 뜬 상태인가?
 	void playerMeleeAttack();//플레이어 근접공격
-
+	XMFLOAT3 getPlayerPosition();
 
 
 protected:
