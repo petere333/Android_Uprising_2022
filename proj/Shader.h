@@ -65,6 +65,7 @@ public:
 protected:
 	ID3D12PipelineState* m_ppd3dPipelineState = NULL;
 	int m_nPipelineStates = 0;
+	bool Changer = false;
 
 	ID3D12DescriptorHeap* m_pd3dCbvSrvDescriptorHeap = NULL;
 

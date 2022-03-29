@@ -335,367 +335,371 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	* pd3dCommandList, void* pContext)
 {
 	//텍스처 생성
-	CTexture* ppTextures[TEXTURES];
-	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"wall_text.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"DoorTexture.dds", RESOURCE_TEXTURE2D, 0);
-
-	/*
-	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Stone01.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal01.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Rock01.dds", RESOURCE_TEXTURE2D, 0);
-	ppTextures[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Lava(Emissive).dds", RESOURCE_TEXTURE2D, 0);
-	*/
-
-	// 뷰 생성
-	m_nObjects = 29;
-
-	CMaterial* ppMaterials[TEXTURES];
-	for (int i = 0; i < TEXTURES; i++)
-	{
-		ppMaterials[i] = new CMaterial();
-		ppMaterials[i]->SetTexture(ppTextures[i]);
-	}
-
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, TEXTURES);
-	CreateShaderVariables(pd3dDevice, pd3dCommandList);
-	CreateConstantBufferViews(pd3dDevice, m_nObjects, m_pd3dcbGameObjects, ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255));
-	/**/
-	for (int i = 0; i < TEXTURES; i++)
-	{
-		CreateShaderResourceViews(pd3dDevice, ppTextures[i], 0, 2);
-	}
-
-	//실질적으로 객체 넣기
-
-	ImageFile* heights = new ImageFile(L"HeightMap.raw", 257, 257, true);
-	ImageFile* objects = new ImageFile(L"ObjectsMap.raw", 257, 257, true);
-	CCubeMeshTextured* pCubeMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 0, 0, 257, 257, XMFLOAT3(1.0f, 1.0f, 1.0f), heights);
 
 	
-	std::vector<CGameObject*> objList;
-	for (int z = 2; z <= 254; ++z)
-	{
-		for (int x = 2; x < 254; ++x)
+		CTexture* ppTextures[TEXTURES];
+		ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"wall_text.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"DoorTexture.dds", RESOURCE_TEXTURE2D, 0);
+
+		/*
+		ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Stone01.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal01.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Metal02.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Rock01.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Lava(Emissive).dds", RESOURCE_TEXTURE2D, 0);
+		*/
+
+		// 뷰 생성
+		m_nObjects = 29;
+
+		CMaterial* ppMaterials[TEXTURES];
+		for (int i = 0; i < TEXTURES; i++)
 		{
-			byte b = objects->GetPixelInRaw(x, z);
-			if (b == 204)
+			ppMaterials[i] = new CMaterial();
+			ppMaterials[i]->SetTexture(ppTextures[i]);
+		}
+
+		CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, TEXTURES);
+		CreateShaderVariables(pd3dDevice, pd3dCommandList);
+		CreateConstantBufferViews(pd3dDevice, m_nObjects, m_pd3dcbGameObjects, ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255));
+		/**/
+		for (int i = 0; i < TEXTURES; i++)
+		{
+			CreateShaderResourceViews(pd3dDevice, ppTextures[i], 0, 2);
+		}
+
+		//실질적으로 객체 넣기
+
+		ImageFile* heights = new ImageFile(L"HeightMap.raw", 257, 257, true);
+		ImageFile* objects = new ImageFile(L"ObjectsMap.raw", 257, 257, true);
+		CCubeMeshTextured* pCubeMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+		GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 0, 0, 257, 257, XMFLOAT3(1.0f, 1.0f, 1.0f), heights);
+
+
+		std::vector<CGameObject*> objList;
+		for (int z = 2; z <= 254; ++z)
+		{
+			for (int x = 2; x < 254; ++x)
 			{
-				CGameObject* temp = new CGameObject(1);
-				temp->SetMesh(0, pCubeMesh);
-				temp->SetMaterial(ppMaterials[0]);
-				temp->SetPosition(x, pGrid->getData(x, z), z);
-				temp->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (objList.size() + 1)));
-				objList.push_back(temp);
+				byte b = objects->GetPixelInRaw(x, z);
+				if (b == 204)
+				{
+					CGameObject* temp = new CGameObject(1);
+					temp->SetMesh(0, pCubeMesh);
+					temp->SetMaterial(ppMaterials[0]);
+					temp->SetPosition(x, pGrid->getData(x, z), z);
+					temp->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * (objList.size() + 1)));
+					objList.push_back(temp);
+				}
 			}
 		}
-	}
+
+		// 시작지역 바닥
+		CCubeMeshTextured* terrain = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 0.0f);
+		CCubeMeshTextured* terrain_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 0.0f);
+		CCubeMeshTextured* terrain_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 2000.0f);
+		CCubeMeshTextured* terrain_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 2000.0f);
+
+
+		// 오른쪽 지역 바닥
+		CCubeMeshTextured* terrain_2_Plate1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 5200.0f, 0.0f, 0.0f);
+		CCubeMeshTextured* terrain_2_Plate2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 7200.0f, 0.0f, 0.0f);
+		CCubeMeshTextured* terrain_2_Plate3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 5200.0f, 0.0f, 2000.0f);
+		CCubeMeshTextured* terrain_2_Plate4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 7200.0f, 0.0f, 2000.0f);
+
+
+
+		// 시작지역 사방에 배치된 벽
+
+		CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
+		CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
+
+		// 시작지역 부속 벽
+		CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f);
+
+		// 오른쪽 지역 부속 벽
+		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 2700.0f, 6500.0f, 0.0f, 1650.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 800.0f, 5600.0f, 0.0f, 400.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 650.0f, 30.0f, 6915.0f, 0.0f, 15.0f);
+
+
+		// 시작지역 문
+		CCubeMeshTextured* terrain_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 2900.0f, 0.0f, 2600.0f);
+
+		// 통로 벽
+		CCubeMeshTextured* terrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 3000.0f);
+		CCubeMeshTextured* terrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 2400.0f);
+
+		// 통로 바닥
+		CCubeMeshTextured* terrain_tonglo_plate = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 20.0f, 600.0f, 3600.0f, 0.0f, 2700.0f);
+
+		// 오른쪽으로 향하는 문
+		CCubeMeshTextured* terrain_tonglo_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 4100.0f, 0.0f, 2600.0f);
+		CCubeMeshTextured* terrain_tonglo_door2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 4300.0f, 0.0f, 2600.0f);
+
+
+		// 오른쪽 지역 사방에 배치된 벽
+		CCubeMeshTextured* terrain_Second_room_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 8200.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain_Second_room_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 4200.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain_Second_room_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, -1000.0f);
+		CCubeMeshTextured* terrain_Second_room_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, 3000.0f);
+
+
+
+
+		m_ppObjects = new CGameObject * [m_nObjects];
+
+
+		CGameObject* pRotatingObject = NULL;
+
+		pRotatingObject = new CGameObject(1);
+		pRotatingObject->SetMesh(0, terrain);
+		pRotatingObject->SetMaterial(ppMaterials[0]);
+		pRotatingObject->SetPosition(0.0f, 0.0f, 0.0f);
+		pRotatingObject->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[0] = pRotatingObject;
+
+
+
+		CGameObject* Wall_Obj = NULL;
+		Wall_Obj = new CGameObject(2);
+		Wall_Obj->SetMesh(0, terrain2);
+		Wall_Obj->SetMaterial(ppMaterials[1]);
+		Wall_Obj->SetPosition(0.0f, 0.0f, 0.0f);
+		Wall_Obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[1] = Wall_Obj;
+
+
+
+		CGameObject* Wall_Obj2 = NULL;
+		Wall_Obj2 = new CGameObject(3);
+		Wall_Obj2->SetMesh(0, terrain3);
+		Wall_Obj2->SetMaterial(ppMaterials[1]);
+		Wall_Obj2->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
+		Wall_Obj2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[2] = Wall_Obj2;
+
+
+
+
+		CGameObject* Wall_Obj3 = NULL;
+		Wall_Obj3 = new CGameObject(4);
+		Wall_Obj3->SetMesh(0, terrain4);
+		Wall_Obj3->SetMaterial(ppMaterials[1]);
+		Wall_Obj3->GetPosition();
+		Wall_Obj3->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
+		Wall_Obj3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[3] = Wall_Obj3;
+
+
+		CGameObject* Wall_Obj4 = NULL;
+		Wall_Obj4 = new CGameObject(5);
+		Wall_Obj4->SetMesh(0, terrain5);
+		Wall_Obj4->SetMaterial(ppMaterials[1]);
+		Wall_Obj4->GetPosition();
+		Wall_Obj4->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
+		Wall_Obj4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[4] = Wall_Obj4;
+
+
+		CGameObject* Wall_Obj5 = NULL;
+		Wall_Obj5 = new CGameObject(6);
+		Wall_Obj5->SetMesh(0, terrain6);
+		Wall_Obj5->SetMaterial(ppMaterials[1]);
+		Wall_Obj5->GetPosition();
+		Wall_Obj5->SetPosition(0.0f, 0.0f, 0.0f);
+		Wall_Obj5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[5] = Wall_Obj5;
+
+		CGameObject* Wall_Obj6 = NULL;
+		Wall_Obj6 = new CGameObject(7);
+		Wall_Obj6->SetMesh(0, terrain7);
+		Wall_Obj6->SetMaterial(ppMaterials[1]);
+		Wall_Obj6->GetPosition();
+		Wall_Obj6->SetPosition(0.0f, 0.0f, 0.0f);
+		Wall_Obj6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[6] = Wall_Obj6;
+
+		CGameObject* Wall_Obj7 = NULL;
+		Wall_Obj7 = new CGameObject(8);
+		Wall_Obj7->SetMesh(0, terrain8);
+		Wall_Obj7->SetMaterial(ppMaterials[1]);
+		Wall_Obj7->GetPosition();
+		Wall_Obj7->SetPosition(0.0f, 0.0f, 0.0f);
+		Wall_Obj7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[7] = Wall_Obj7;
+
+		// 바닥들
+		CGameObject* Plate_1 = new CGameObject(9);
+		Plate_1->SetMesh(0, terrain_1);
+		Plate_1->SetMaterial(ppMaterials[0]);
+		Plate_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Plate_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[8] = Plate_1;
+
+		CGameObject* Plate_2 = new CGameObject(10);
+		Plate_2->SetMesh(0, terrain_2);
+		Plate_2->SetMaterial(ppMaterials[0]);
+		Plate_2->SetPosition(0.0f, 0.0f, 0.0f);
+		Plate_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[9] = Plate_2;
+
+		CGameObject* Plate_3 = new CGameObject(11);
+		Plate_3->SetMesh(0, terrain_3);
+		Plate_3->SetMaterial(ppMaterials[0]);
+		Plate_3->SetPosition(0.0f, 0.0f, 0.0f);
+		Plate_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[10] = Plate_3;
+
+		CGameObject* Door = new CGameObject(11);
+		Door->SetMesh(0, terrain_door);
+		Door->SetMaterial(ppMaterials[2]);
+		Door->SetPosition(0.0f, 0.0f, 0.0f);
+		Door->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[11] = Door;
+
+		CGameObject* Tonglo_Wall1 = new CGameObject(11);
+		Tonglo_Wall1->SetMesh(0, terrain_tonglo_wall1);
+		Tonglo_Wall1->SetMaterial(ppMaterials[1]);
+		Tonglo_Wall1->SetPosition(0.0f, 0.0f, 0.0f);
+		Tonglo_Wall1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[12] = Tonglo_Wall1;
+
+		CGameObject* Tonglo_Wall2 = new CGameObject(11);
+		Tonglo_Wall2->SetMesh(0, terrain_tonglo_wall2);
+		Tonglo_Wall2->SetMaterial(ppMaterials[1]);
+		Tonglo_Wall2->SetPosition(0.0f, 0.0f, 0.0f);
+		Tonglo_Wall2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[13] = Tonglo_Wall2;
+
+		CGameObject* Second_Room_1 = new CGameObject(11);
+		Second_Room_1->SetMesh(0, terrain_Second_room_1);
+		Second_Room_1->SetMaterial(ppMaterials[1]);
+		Second_Room_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Room_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[14] = Second_Room_1;
+
+		CGameObject* Second_Room_2 = new CGameObject(11);
+		Second_Room_2->SetMesh(0, terrain_Second_room_2);
+		Second_Room_2->SetMaterial(ppMaterials[1]);
+		Second_Room_2->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Room_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[15] = Second_Room_2;
+
+		CGameObject* Second_Room_3 = new CGameObject(11);
+		Second_Room_3->SetMesh(0, terrain_Second_room_3);
+		Second_Room_3->SetMaterial(ppMaterials[1]);
+		Second_Room_3->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Room_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[16] = Second_Room_3;
+
+		CGameObject* Second_Room_4 = new CGameObject(11);
+		Second_Room_4->SetMesh(0, terrain_Second_room_4);
+		Second_Room_4->SetMaterial(ppMaterials[1]);
+		Second_Room_4->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Room_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[17] = Second_Room_4;
+
+		CGameObject* Second_Plate_1 = new CGameObject(11);
+		Second_Plate_1->SetMesh(0, terrain_2_Plate1);
+		Second_Plate_1->SetMaterial(ppMaterials[0]);
+		Second_Plate_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Plate_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[18] = Second_Plate_1;
+
+		CGameObject* Second_Plate_2 = new CGameObject(11);
+		Second_Plate_2->SetMesh(0, terrain_2_Plate2);
+		Second_Plate_2->SetMaterial(ppMaterials[0]);
+		Second_Plate_2->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Plate_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[19] = Second_Plate_2;
+
+		CGameObject* Second_Plate_3 = new CGameObject(11);
+		Second_Plate_3->SetMesh(0, terrain_2_Plate3);
+		Second_Plate_3->SetMaterial(ppMaterials[0]);
+		Second_Plate_3->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Plate_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[20] = Second_Plate_3;
+
+		CGameObject* Second_Plate_4 = new CGameObject(11);
+		Second_Plate_4->SetMesh(0, terrain_2_Plate4);
+		Second_Plate_4->SetMaterial(ppMaterials[0]);
+		Second_Plate_4->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Plate_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[21] = Second_Plate_4;
+
+		CGameObject* Tonglo_Plate = new CGameObject(11);
+		Tonglo_Plate->SetMesh(0, terrain_tonglo_plate);
+		Tonglo_Plate->SetMaterial(ppMaterials[0]);
+		Tonglo_Plate->SetPosition(0.0f, 0.0f, 0.0f);
+		Tonglo_Plate->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[22] = Tonglo_Plate;
+
+		CGameObject* Tonglo_door = new CGameObject(11);
+		Tonglo_door->SetMesh(0, terrain_tonglo_door);
+		Tonglo_door->SetMaterial(ppMaterials[2]);
+		Tonglo_door->SetPosition(0.0f, 0.0f, 0.0f);
+		Tonglo_door->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[23] = Tonglo_door;
+
+		CGameObject* Second_Place_Wall_1 = new CGameObject(11);
+		Second_Place_Wall_1->SetMesh(0, Terrain_Right_Wall_1);
+		Second_Place_Wall_1->SetMaterial(ppMaterials[1]);
+		Second_Place_Wall_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Place_Wall_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[24] = Second_Place_Wall_1;
+
+		CGameObject* Second_Place_Wall_2 = new CGameObject(11);
+		Second_Place_Wall_2->SetMesh(0, Terrain_Right_Wall_2);
+		Second_Place_Wall_2->SetMaterial(ppMaterials[1]);
+		Second_Place_Wall_2->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Place_Wall_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[25] = Second_Place_Wall_2;
+
+		CGameObject* Second_Place_Wall_3 = new CGameObject(11);
+		Second_Place_Wall_3->SetMesh(0, Terrain_Right_Wall_3);
+		Second_Place_Wall_3->SetMaterial(ppMaterials[1]);
+		Second_Place_Wall_3->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Place_Wall_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[26] = Second_Place_Wall_3;
+
+		CGameObject* Second_Place_Wall_4 = new CGameObject(11);
+		Second_Place_Wall_4->SetMesh(0, Terrain_Right_Wall_4);
+		Second_Place_Wall_4->SetMaterial(ppMaterials[1]);
+		Second_Place_Wall_4->SetPosition(0.0f, 0.0f, 0.0f);
+		Second_Place_Wall_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[27] = Second_Place_Wall_4;
+
+		CGameObject* Tonglo_door2 = new CGameObject(11);
+		Tonglo_door2->SetMesh(0, terrain_tonglo_door2);
+		Tonglo_door2->SetMaterial(ppMaterials[2]);
+		Tonglo_door2->SetPosition(0.0f, 0.0f, 0.0f);
+		Tonglo_door2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[28] = Tonglo_door2;
+
+
+		/*
+		for (int i = 0; i < objList.size(); ++i)
+		{
+			m_ppObjects[i + 1] = objList[i];
+		}
+		*/
 	
-	// 시작지역 바닥
-	CCubeMeshTextured* terrain = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 0.0f, 0.0f, 2000.0f);
-	CCubeMeshTextured* terrain_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 2000.0f, 0.0f, 2000.0f);
-
-
-	// 오른쪽 지역 바닥
-	CCubeMeshTextured* terrain_2_Plate1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 5200.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain_2_Plate2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 7200.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* terrain_2_Plate3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 5200.0f, 0.0f, 2000.0f);
-	CCubeMeshTextured* terrain_2_Plate4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2000.0f, 20.0f, 2000.0f, 7200.0f, 0.0f, 2000.0f);
-
-
-
-	// 시작지역 사방에 배치된 벽
-
-	CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
-	CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
-	CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
-	CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
-
-	// 시작지역 부속 벽
-	CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
-	CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
-	CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f);
-
-	// 오른쪽 지역 부속 벽
-	CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
-	CCubeMeshTextured* Terrain_Right_Wall_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 2700.0f, 6500.0f, 0.0f, 1650.0f);
-	CCubeMeshTextured* Terrain_Right_Wall_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 800.0f, 5600.0f, 0.0f, 400.0f);
-	CCubeMeshTextured* Terrain_Right_Wall_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 650.0f, 30.0f, 6915.0f, 0.0f, 15.0f);
-
-
-	// 시작지역 문
-	CCubeMeshTextured* terrain_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 2900.0f, 0.0f, 2600.0f);
-
-	// 통로 벽
-	CCubeMeshTextured* terrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 3000.0f);
-	CCubeMeshTextured* terrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 2400.0f);
-
-	// 통로 바닥
-	CCubeMeshTextured* terrain_tonglo_plate = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 20.0f, 600.0f, 3600.0f, 0.0f, 2700.0f);
-
-	// 오른쪽으로 향하는 문
-	CCubeMeshTextured* terrain_tonglo_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 4100.0f, 0.0f, 2600.0f);
-	CCubeMeshTextured* terrain_tonglo_door2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 4300.0f, 0.0f, 2600.0f);
-
-
-	// 오른쪽 지역 사방에 배치된 벽
-	CCubeMeshTextured* terrain_Second_room_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 8200.0f, 0.0f, 1000.0f);
-	CCubeMeshTextured* terrain_Second_room_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 4200.0f, 0.0f, 1000.0f);
-	CCubeMeshTextured* terrain_Second_room_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, -1000.0f);
-	CCubeMeshTextured* terrain_Second_room_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, 3000.0f);
-
-
-
-
-	m_ppObjects = new CGameObject * [m_nObjects];
-
-
-	CGameObject* pRotatingObject = NULL;
-
-	pRotatingObject = new CGameObject(1);
-	pRotatingObject->SetMesh(0, terrain);
-	pRotatingObject->SetMaterial(ppMaterials[0]);
-	pRotatingObject->SetPosition(0.0f, 0.0f, 0.0f);
-	pRotatingObject->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[0] = pRotatingObject;
-
-
-
-	CGameObject* Wall_Obj = NULL;
-	Wall_Obj = new CGameObject(2);
-	Wall_Obj->SetMesh(0, terrain2);
-	Wall_Obj->SetMaterial(ppMaterials[1]);
-	Wall_Obj->SetPosition(0.0f, 0.0f, 0.0f);
-	Wall_Obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[1] = Wall_Obj;
-
-
-
-	CGameObject* Wall_Obj2 = NULL;
-	Wall_Obj2 = new CGameObject(3);
-	Wall_Obj2->SetMesh(0, terrain3);
-	Wall_Obj2->SetMaterial(ppMaterials[1]);
-	Wall_Obj2->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
-	Wall_Obj2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[2] = Wall_Obj2;
-
-
-
-
-	CGameObject* Wall_Obj3 = NULL;
-	Wall_Obj3 = new CGameObject(4);
-	Wall_Obj3->SetMesh(0, terrain4);
-	Wall_Obj3->SetMaterial(ppMaterials[1]);
-	Wall_Obj3->GetPosition();
-	Wall_Obj3->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
-	Wall_Obj3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[3] = Wall_Obj3;
-
-
-	CGameObject* Wall_Obj4 = NULL;
-	Wall_Obj4 = new CGameObject(5);
-	Wall_Obj4->SetMesh(0, terrain5);
-	Wall_Obj4->SetMaterial(ppMaterials[1]);
-	Wall_Obj4->GetPosition();
-	Wall_Obj4->SetPosition(XMFLOAT3(0.0f, 0.0f, 0.0f));
-	Wall_Obj4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[4] = Wall_Obj4;
-
-
-	CGameObject* Wall_Obj5 = NULL;
-	Wall_Obj5 = new CGameObject(6);
-	Wall_Obj5->SetMesh(0, terrain6);
-	Wall_Obj5->SetMaterial(ppMaterials[1]);
-	Wall_Obj5->GetPosition();
-	Wall_Obj5->SetPosition(0.0f, 0.0f, 0.0f);
-	Wall_Obj5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[5] = Wall_Obj5;
-
-	CGameObject* Wall_Obj6 = NULL;
-	Wall_Obj6 = new CGameObject(7);
-	Wall_Obj6->SetMesh(0, terrain7);
-	Wall_Obj6->SetMaterial(ppMaterials[1]);
-	Wall_Obj6->GetPosition();
-	Wall_Obj6->SetPosition(0.0f, 0.0f, 0.0f);
-	Wall_Obj6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[6] = Wall_Obj6;
-
-	CGameObject* Wall_Obj7 = NULL;
-	Wall_Obj7 = new CGameObject(8);
-	Wall_Obj7->SetMesh(0, terrain8);
-	Wall_Obj7->SetMaterial(ppMaterials[1]);
-	Wall_Obj7->GetPosition();
-	Wall_Obj7->SetPosition(0.0f, 0.0f, 0.0f);
-	Wall_Obj7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[7] = Wall_Obj7;
-
-	// 바닥들
-	CGameObject* Plate_1 = new CGameObject(9);
-	Plate_1->SetMesh(0, terrain_1);
-	Plate_1->SetMaterial(ppMaterials[0]);
-	Plate_1->SetPosition(0.0f, 0.0f, 0.0f);
-	Plate_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[8] = Plate_1;
-
-	CGameObject* Plate_2 = new CGameObject(10);
-	Plate_2->SetMesh(0, terrain_2);
-	Plate_2->SetMaterial(ppMaterials[0]);
-	Plate_2->SetPosition(0.0f, 0.0f, 0.0f);
-	Plate_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[9] = Plate_2;
-
-	CGameObject* Plate_3 = new CGameObject(11);
-	Plate_3->SetMesh(0, terrain_3);
-	Plate_3->SetMaterial(ppMaterials[0]);
-	Plate_3->SetPosition(0.0f, 0.0f, 0.0f);
-	Plate_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[10] = Plate_3;
-
-	CGameObject* Door = new CGameObject(11);
-	Door->SetMesh(0, terrain_door);
-	Door->SetMaterial(ppMaterials[2]);
-	Door->SetPosition(0.0f, 0.0f, 0.0f);
-	Door->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[11] = Door;
-
-	CGameObject* Tonglo_Wall1 = new CGameObject(11);
-	Tonglo_Wall1->SetMesh(0, terrain_tonglo_wall1);
-	Tonglo_Wall1->SetMaterial(ppMaterials[1]);
-	Tonglo_Wall1->SetPosition(0.0f, 0.0f, 0.0f);
-	Tonglo_Wall1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[12] = Tonglo_Wall1;
-
-	CGameObject* Tonglo_Wall2 = new CGameObject(11);
-	Tonglo_Wall2->SetMesh(0, terrain_tonglo_wall2);
-	Tonglo_Wall2->SetMaterial(ppMaterials[1]);
-	Tonglo_Wall2->SetPosition(0.0f, 0.0f, 0.0f);
-	Tonglo_Wall2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[13] = Tonglo_Wall2;
-
-	CGameObject* Second_Room_1 = new CGameObject(11);
-	Second_Room_1->SetMesh(0, terrain_Second_room_1);
-	Second_Room_1->SetMaterial(ppMaterials[1]);
-	Second_Room_1->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Room_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[14] = Second_Room_1;
-
-	CGameObject* Second_Room_2 = new CGameObject(11);
-	Second_Room_2->SetMesh(0, terrain_Second_room_2);
-	Second_Room_2->SetMaterial(ppMaterials[1]);
-	Second_Room_2->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Room_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[15] = Second_Room_2;
-
-	CGameObject* Second_Room_3 = new CGameObject(11);
-	Second_Room_3->SetMesh(0, terrain_Second_room_3);
-	Second_Room_3->SetMaterial(ppMaterials[1]);
-	Second_Room_3->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Room_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[16] = Second_Room_3;
-
-	CGameObject* Second_Room_4 = new CGameObject(11);
-	Second_Room_4->SetMesh(0, terrain_Second_room_4);
-	Second_Room_4->SetMaterial(ppMaterials[1]);
-	Second_Room_4->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Room_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[17] = Second_Room_4;
-
-	CGameObject* Second_Plate_1 = new CGameObject(11);
-	Second_Plate_1->SetMesh(0, terrain_2_Plate1);
-	Second_Plate_1->SetMaterial(ppMaterials[0]);
-	Second_Plate_1->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Plate_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[18] = Second_Plate_1;
-
-	CGameObject* Second_Plate_2 = new CGameObject(11);
-	Second_Plate_2->SetMesh(0, terrain_2_Plate2);
-	Second_Plate_2->SetMaterial(ppMaterials[0]);
-	Second_Plate_2->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Plate_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[19] = Second_Plate_2;
-
-	CGameObject* Second_Plate_3 = new CGameObject(11);
-	Second_Plate_3->SetMesh(0, terrain_2_Plate3);
-	Second_Plate_3->SetMaterial(ppMaterials[0]);
-	Second_Plate_3->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Plate_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[20] = Second_Plate_3;
-
-	CGameObject* Second_Plate_4 = new CGameObject(11);
-	Second_Plate_4->SetMesh(0, terrain_2_Plate4);
-	Second_Plate_4->SetMaterial(ppMaterials[0]);
-	Second_Plate_4->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Plate_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[21] = Second_Plate_4;
-
-	CGameObject* Tonglo_Plate = new CGameObject(11);
-	Tonglo_Plate->SetMesh(0, terrain_tonglo_plate);
-	Tonglo_Plate->SetMaterial(ppMaterials[0]);
-	Tonglo_Plate->SetPosition(0.0f, 0.0f, 0.0f);
-	Tonglo_Plate->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[22] = Tonglo_Plate;
-
-	CGameObject* Tonglo_door = new CGameObject(11);
-	Tonglo_door->SetMesh(0, terrain_tonglo_door);
-	Tonglo_door->SetMaterial(ppMaterials[2]);
-	Tonglo_door->SetPosition(0.0f, 0.0f, 0.0f);
-	Tonglo_door->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[23] = Tonglo_door;
-
-	CGameObject* Second_Place_Wall_1 = new CGameObject(11);
-	Second_Place_Wall_1->SetMesh(0, Terrain_Right_Wall_1);
-	Second_Place_Wall_1->SetMaterial(ppMaterials[1]);
-	Second_Place_Wall_1->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Place_Wall_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[24] = Second_Place_Wall_1;
-
-	CGameObject* Second_Place_Wall_2 = new CGameObject(11);
-	Second_Place_Wall_2->SetMesh(0, Terrain_Right_Wall_2);
-	Second_Place_Wall_2->SetMaterial(ppMaterials[1]);
-	Second_Place_Wall_2->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Place_Wall_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[25] = Second_Place_Wall_2;
-
-	CGameObject* Second_Place_Wall_3 = new CGameObject(11);
-	Second_Place_Wall_3->SetMesh(0, Terrain_Right_Wall_3);
-	Second_Place_Wall_3->SetMaterial(ppMaterials[1]);
-	Second_Place_Wall_3->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Place_Wall_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[26] = Second_Place_Wall_3;
-
-	CGameObject* Second_Place_Wall_4 = new CGameObject(11);
-	Second_Place_Wall_4->SetMesh(0, Terrain_Right_Wall_4);
-	Second_Place_Wall_4->SetMaterial(ppMaterials[1]);
-	Second_Place_Wall_4->SetPosition(0.0f, 0.0f, 0.0f);
-	Second_Place_Wall_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[27] = Second_Place_Wall_4;
-
-	CGameObject* Tonglo_door2 = new CGameObject(11);
-	Tonglo_door2->SetMesh(0, terrain_tonglo_door2);
-	Tonglo_door2->SetMaterial(ppMaterials[2]);
-	Tonglo_door2->SetPosition(0.0f, 0.0f, 0.0f);
-	Tonglo_door2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
-	m_ppObjects[28] = Tonglo_door2;
-
-
-	/*
-	for (int i = 0; i < objList.size(); ++i)
-	{
-		m_ppObjects[i + 1] = objList[i];
-	}
-	*/
+	
 }
 
 void CGroundShader::ReleaseObjects()

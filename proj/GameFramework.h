@@ -4,6 +4,7 @@
 #include "Scene.h"
 
 
+
 class CGameFramework
 {
 private:
@@ -14,6 +15,7 @@ private:
 	HWND m_hWnd;
 	int m_nWndClientWidth;
 	int m_nWndClientHeight;
+	bool Change = false;
 
 	IDXGIFactory4* m_pdxgiFactory;
 	//DXGI 팩토리 인터페이스에 대한 포인터이다. 
@@ -50,6 +52,7 @@ private:
 	//뷰포트와 씨저 사각형이다.
 
 	CScene* m_pScene;
+
 
 public:
 	CCamera* m_pCamera = NULL;

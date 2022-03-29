@@ -294,8 +294,15 @@ void CGameFramework::BuildObjects()
 		float(m_nWndClientHeight), 90.0f);
 	m_pCamera->GenerateViewMatrix();
 
-	m_pScene = new CScene();
-	m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pfbxSdkManager);
+
+
+
+		m_pScene = new CScene();
+		m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pfbxSdkManager);
+	
+	
+	
+	
 	CFbxRenderInfo::CreateFbxModelShader(m_pd3dDevice, m_pd3dCommandList, m_pScene->GetGraphicsRootSignature());
 	m_pd3dCommandList->Close();
 	ID3D12CommandList* ppd3dCommandLists[] = { m_pd3dCommandList };
@@ -349,8 +356,14 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case VK_F8:
 			break;
 		case VK_F9:
+
 			break;
-			
+		case 'A':
+			Change = true;
+			break;
+		case 'D':
+			Change = false;
+			break;
 		case VK_UP:
 			m_pCamera->move(0.0f, 0.0f, 20.0f);
 			m_pScene->movePlayer(1, 20.0f);
