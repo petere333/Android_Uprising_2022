@@ -16,6 +16,9 @@
 #define RESOURCE_TEXTURE_CUBE		0x04
 #define RESOURCE_BUFFER				0x05
 
+#define MAIN_TIMER			1	
+#define MAIN_TIEMR_FRAME	17 // 60FPS
+
 class CShader;
 
 struct CB_GAMEOBJECT_INFO
@@ -226,3 +229,31 @@ public:
 	CTerrainObject(int m);
 	virtual ~CTerrainObject();
 };
+
+enum PACKET_TYPE // 클라이언트의 상태를 나타냄
+{
+	NONE,
+	START,
+	READY,
+	MAIN,
+	END,
+};
+
+#pragma pack (push, 1)
+
+struct client_packet //보내는 패킷
+{
+	PACKET_TYPE pkType;
+	XMFLOAT3 myPos; 
+	bool crash;
+	UINT client_id;
+};
+
+struct recv_packet // 받는 패킷
+{
+	PACKET_TYPE pkType;
+	XMFLOAT3 plPos;
+	UINT player_id;
+};
+
+#pragma pack (pop)

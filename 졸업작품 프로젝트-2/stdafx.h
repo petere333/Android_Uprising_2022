@@ -5,15 +5,19 @@
 #pragma once
 
 #include "targetver.h"
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // Windows 헤더 파일
 #include <windows.h>
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>
+#include <iostream>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
 #include <timeapi.h>
+#include <WS2tcpip.h> //윈도우 소켓 관련 헤더
+#include <WinSock2.h>
 //direct
 
 #include <string>
@@ -31,17 +35,19 @@
 
 #include "variables.h"
 
+using namespace std;
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 using Microsoft::WRL::ComPtr;
 
-
+#pragma comment(lib, "ws2_32")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "winmm.lib")
 
+#define SERVER_PORT 9000
 #define FRAME_BUFFER_WIDTH 1200
 #define FRAME_BUFFER_HEIGHT 900
 

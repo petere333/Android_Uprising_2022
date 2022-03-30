@@ -416,19 +416,23 @@ void CGameFramework::ProcessInput()
 {
 }
 
-void CGameFramework::AnimateObjects()
+XMFLOAT3 CGameFramework::AnimateObjects()
 {
 	if (m_pScene->movePlayer(xspeed, yspeed, zspeed) == true&& (xspeed != 0.0f || yspeed != 0.0f || zspeed != 0.0f))
 	{
 		m_pCamera->move(xspeed, yspeed, zspeed);
 		//플레이어가 실질적으로 움직였을 경우 플레이어의 현재 위치를 얻어와서 서버에 전달하는 부분
 		XMFLOAT3 pos = m_pScene->getPlayerPosition();
+		
 		//여기서부터 전달
+		packet.myPos = pos;
 		//...
 		//...
 	}
 	
 	if (m_pScene) m_pScene->AnimateObjects(m_GameTimer.GetTimeElapsed());
+
+	return packet.myPos;
 }
 
 void CGameFramework::WaitForGpuComplete()
