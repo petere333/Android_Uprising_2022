@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 60;
+		m_nObjects = 62;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -425,12 +425,16 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 		// 시작지역 사방에 배치된 벽(하단)
 
-		CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3550.0f, 3000.0f, 0.0f, 775.0f);
+		CCubeMeshTextured* s_terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 350.0f, 3000.0f, 0.0f, 2825.0f);
+
 		CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
 		CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
 		CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
 		// 중단
-		CCubeMeshTextured* terrain2_middle = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 4000.0f, 3000.0f, 75.0f, 1000.0f);
+		CCubeMeshTextured* terrain2_middle = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 3550.0f, 3000.0f, 75.0f, 775.0f);
+		CCubeMeshTextured* s_terrain2_middle = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 350.0f, 3000.0f, 75.0f, 2825.0f);
+
 		CCubeMeshTextured* terrain2_middle2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, -4000.0f, -1000.0f, 75.0f, 1000.0f);
 		CCubeMeshTextured* terrain2_middle3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, 3000.0f);
 		CCubeMeshTextured* terrain2_middle4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, -1000.0f);
@@ -974,6 +978,21 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		S_end_9->SetPosition(0.0f, 0.0f, 0.0f);
 		S_end_9->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[59] = S_end_9;
+
+
+		CGameObject* S_Terrain2 = new CGameObject(11);
+		S_Terrain2->SetMesh(0, s_terrain2);
+		S_Terrain2->SetMaterial(ppMaterials[1]);
+		S_Terrain2->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Terrain2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[60] = S_Terrain2;
+
+		CGameObject* S_Terrain2_Middle = new CGameObject(11);
+		S_Terrain2_Middle->SetMesh(0, s_terrain2_middle);
+		S_Terrain2_Middle->SetMaterial(ppMaterials[3]);
+		S_Terrain2_Middle->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Terrain2_Middle->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[61] = S_Terrain2_Middle;
 
 
 		/*
