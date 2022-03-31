@@ -319,7 +319,7 @@ void CGroundShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature* 
 	CShader::CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
 }
 
-#define TEXTURES		4
+#define TEXTURES		5
 
 D3D12_SHADER_BYTECODE CGroundShader::CreateVertexShader(ID3DBlob** ppd3dShaderBlob)
 {
@@ -346,6 +346,8 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"DoorTexture.dds", RESOURCE_TEXTURE2D, 0);
 		ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 		ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"하단부품.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"상단벽.dds", RESOURCE_TEXTURE2D, 0);
 
 
 		/*
@@ -362,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 33;
+		m_nObjects = 60;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -427,11 +429,55 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
 		CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
 		CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
-		// 상단
+		// 중단
 		CCubeMeshTextured* terrain2_middle = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 4000.0f, 3000.0f, 75.0f, 1000.0f);
 		CCubeMeshTextured* terrain2_middle2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, -4000.0f, -1000.0f, 75.0f, 1000.0f);
 		CCubeMeshTextured* terrain2_middle3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, 3000.0f);
 		CCubeMeshTextured* terrain2_middle4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, -1000.0f);
+
+		// 상단 _ 왼쪽 벽 _ 1, 2, 3
+
+		CCubeMeshTextured* Sang_start_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, -741.75f);
+		CCubeMeshTextured* Sang_windows_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, -333.5f);
+		CCubeMeshTextured* Sang_end_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 74.75f);
+
+		CCubeMeshTextured* Sang_start_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 591.25f);
+		CCubeMeshTextured* Sang_windows_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, 999.5f);
+		CCubeMeshTextured* Sang_end_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 1407.75f);
+
+		CCubeMeshTextured* Sang_start_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 1924.25f);
+		CCubeMeshTextured* Sang_windows_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, 2332.5f);
+		CCubeMeshTextured* Sang_end_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 2740.75f);
+
+		// 상단 _ 하단 벽 (4, 5, 6)
+		
+		CCubeMeshTextured* Sang_start_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, -741.75f, 550.0f, -1000.0f);
+		CCubeMeshTextured* Sang_windows_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, -333.5f, 250.0f, -1000.0f);
+		CCubeMeshTextured* Sang_end_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 74.75f, 550.0f, -1000.0f);
+
+		CCubeMeshTextured* Sang_start_5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 591.25f, 550.0f, -1000.0f);
+		CCubeMeshTextured* Sang_windows_5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, 999.5f, 250.0f, -1000.0f);
+		CCubeMeshTextured* Sang_end_5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 1407.75f, 550.0f, -1000.0f);
+
+		CCubeMeshTextured* Sang_start_6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 1924.25f, 550.0f, -1000.0f);
+		CCubeMeshTextured* Sang_windows_6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, 2332.5f, 250.0f, -1000.0f);
+		CCubeMeshTextured* Sang_end_6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 2740.75f, 550.0f, -1000.0f);
+
+		// 상단 _ 위쪽 벽 7,8,9
+
+
+		CCubeMeshTextured* Sang_start_7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, -741.75f, 550.0f, 3000.0f);
+		CCubeMeshTextured* Sang_windows_7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, -333.5f, 250.0f, 3000.0f);
+		CCubeMeshTextured* Sang_end_7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 74.75f, 550.0f, 3000.0f);
+
+		CCubeMeshTextured* Sang_start_8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 591.25f, 550.0f, 3000.0f);
+		CCubeMeshTextured* Sang_windows_8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, 999.5f, 250.0f, 3000.0f);
+		CCubeMeshTextured* Sang_end_8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 1407.75f, 550.0f, 3000.0f);
+
+		CCubeMeshTextured* Sang_start_9 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 1924.25f, 550.0f, 3000.0f);
+		CCubeMeshTextured* Sang_windows_9 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 300.0f, 300.0f, 30.0f, 2332.5f, 250.0f, 3000.0f);
+		CCubeMeshTextured* Sang_end_9 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 516.5f, 900.0f, 30.0f, 2740.75f, 550.0f, 3000.0f);
+
 
 		///////////////////////////////////////////////
 
@@ -732,6 +778,203 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		M_Hadan4->SetPosition(0.0f, 0.0f, 0.0f);
 		M_Hadan4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[32] = M_Hadan4;
+
+		CGameObject* S_Start_1 = new CGameObject(11);
+		S_Start_1->SetMesh(0, Sang_start_1);
+		S_Start_1->SetMaterial(ppMaterials[4]);
+		S_Start_1->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[33] = S_Start_1;
+
+		CGameObject* S_Windows_1 = new CGameObject(11);
+		S_Windows_1->SetMesh(0, Sang_windows_1);
+		S_Windows_1->SetMaterial(ppMaterials[4]);
+		S_Windows_1->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[34] = S_Windows_1;
+
+		CGameObject* S_end_1 = new CGameObject(11);
+		S_end_1->SetMesh(0, Sang_end_1);
+		S_end_1->SetMaterial(ppMaterials[4]);
+		S_end_1->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[35] = S_end_1;
+
+
+		CGameObject* S_Start_2 = new CGameObject(11);
+		S_Start_2->SetMesh(0, Sang_start_2);
+		S_Start_2->SetMaterial(ppMaterials[4]);
+		S_Start_2->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[36] = S_Start_2;
+
+		CGameObject* S_Windows_2 = new CGameObject(11);
+		S_Windows_2->SetMesh(0, Sang_windows_2);
+		S_Windows_2->SetMaterial(ppMaterials[4]);
+		S_Windows_2->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[37] = S_Windows_2;
+
+		CGameObject* S_end_2 = new CGameObject(11);
+		S_end_2->SetMesh(0, Sang_end_2);
+		S_end_2->SetMaterial(ppMaterials[4]);
+		S_end_2->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[38] = S_end_2;
+		
+
+		CGameObject* S_Start_3 = new CGameObject(11);
+		S_Start_3->SetMesh(0, Sang_start_3);
+		S_Start_3->SetMaterial(ppMaterials[4]);
+		S_Start_3->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[39] = S_Start_3;
+
+		CGameObject* S_Windows_3 = new CGameObject(11);
+		S_Windows_3->SetMesh(0, Sang_windows_3);
+		S_Windows_3->SetMaterial(ppMaterials[4]);
+		S_Windows_3->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[40] = S_Windows_3;
+
+		CGameObject* S_end_3 = new CGameObject(11);
+		S_end_3->SetMesh(0, Sang_end_3);
+		S_end_3->SetMaterial(ppMaterials[4]);
+		S_end_3->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[41] = S_end_3;
+
+
+		CGameObject* S_Start_4 = new CGameObject(11);
+		S_Start_4->SetMesh(0, Sang_start_4);
+		S_Start_4->SetMaterial(ppMaterials[4]);
+		S_Start_4->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[42] = S_Start_4;
+
+		CGameObject* S_Windows_4 = new CGameObject(11);
+		S_Windows_4->SetMesh(0, Sang_windows_4);
+		S_Windows_4->SetMaterial(ppMaterials[4]);
+		S_Windows_4->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[43] = S_Windows_4;
+
+		CGameObject* S_end_4 = new CGameObject(11);
+		S_end_4->SetMesh(0, Sang_end_4);
+		S_end_4->SetMaterial(ppMaterials[4]);
+		S_end_4->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[44] = S_end_4;
+
+
+		CGameObject* S_Start_5 = new CGameObject(11);
+		S_Start_5->SetMesh(0, Sang_start_5);
+		S_Start_5->SetMaterial(ppMaterials[4]);
+		S_Start_5->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[45] = S_Start_5;
+
+		CGameObject* S_Windows_5 = new CGameObject(11);
+		S_Windows_5->SetMesh(0, Sang_windows_5);
+		S_Windows_5->SetMaterial(ppMaterials[4]);
+		S_Windows_5->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[46] = S_Windows_5;
+
+		CGameObject* S_end_5 = new CGameObject(11);
+		S_end_5->SetMesh(0, Sang_end_5);
+		S_end_5->SetMaterial(ppMaterials[4]);
+		S_end_5->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_5->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[47] = S_end_5;
+
+
+		CGameObject* S_Start_6 = new CGameObject(11);
+		S_Start_6->SetMesh(0, Sang_start_6);
+		S_Start_6->SetMaterial(ppMaterials[4]);
+		S_Start_6->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[48] = S_Start_6;
+
+		CGameObject* S_Windows_6 = new CGameObject(11);
+		S_Windows_6->SetMesh(0, Sang_windows_6);
+		S_Windows_6->SetMaterial(ppMaterials[4]);
+		S_Windows_6->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[49] = S_Windows_6;
+
+		CGameObject* S_end_6 = new CGameObject(11);
+		S_end_6->SetMesh(0, Sang_end_6);
+		S_end_6->SetMaterial(ppMaterials[4]);
+		S_end_6->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_6->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[50] = S_end_6;
+
+		CGameObject* S_Start_7 = new CGameObject(11);
+		S_Start_7->SetMesh(0, Sang_start_7);
+		S_Start_7->SetMaterial(ppMaterials[4]);
+		S_Start_7->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[51] = S_Start_7;
+
+		CGameObject* S_Windows_7 = new CGameObject(11);
+		S_Windows_7->SetMesh(0, Sang_windows_7);
+		S_Windows_7->SetMaterial(ppMaterials[4]);
+		S_Windows_7->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[52] = S_Windows_7;
+
+		CGameObject* S_end_7 = new CGameObject(11);
+		S_end_7->SetMesh(0, Sang_end_7);
+		S_end_7->SetMaterial(ppMaterials[4]);
+		S_end_7->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_7->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[53] = S_end_7;
+
+
+		CGameObject* S_Start_8 = new CGameObject(11);
+		S_Start_8->SetMesh(0, Sang_start_8);
+		S_Start_8->SetMaterial(ppMaterials[4]);
+		S_Start_8->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_8->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[54] = S_Start_8;
+
+		CGameObject* S_Windows_8 = new CGameObject(11);
+		S_Windows_8->SetMesh(0, Sang_windows_8);
+		S_Windows_8->SetMaterial(ppMaterials[4]);
+		S_Windows_8->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_8->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[55] = S_Windows_8;
+
+		CGameObject* S_end_8 = new CGameObject(11);
+		S_end_8->SetMesh(0, Sang_end_8);
+		S_end_8->SetMaterial(ppMaterials[4]);
+		S_end_8->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_8->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[56] = S_end_8;
+
+
+		CGameObject* S_Start_9 = new CGameObject(11);
+		S_Start_9->SetMesh(0, Sang_start_9);
+		S_Start_9->SetMaterial(ppMaterials[4]);
+		S_Start_9->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Start_9->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[57] = S_Start_9;
+
+		CGameObject* S_Windows_9 = new CGameObject(11);
+		S_Windows_9->SetMesh(0, Sang_windows_9);
+		S_Windows_9->SetMaterial(ppMaterials[4]);
+		S_Windows_9->SetPosition(0.0f, 0.0f, 0.0f);
+		S_Windows_9->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[58] = S_Windows_9;
+
+		CGameObject* S_end_9 = new CGameObject(11);
+		S_end_9->SetMesh(0, Sang_end_9);
+		S_end_9->SetMaterial(ppMaterials[4]);
+		S_end_9->SetPosition(0.0f, 0.0f, 0.0f);
+		S_end_9->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[59] = S_end_9;
+
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
