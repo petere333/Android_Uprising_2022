@@ -319,7 +319,7 @@ void CGroundShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature* 
 	CShader::CreateShader(pd3dDevice, pd3dGraphicsRootSignature);
 }
 
-#define TEXTURES		3
+#define TEXTURES		4
 
 D3D12_SHADER_BYTECODE CGroundShader::CreateVertexShader(ID3DBlob** ppd3dShaderBlob)
 {
@@ -344,6 +344,9 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"wall_text.dds", RESOURCE_TEXTURE2D, 0);
 		ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 		ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"DoorTexture.dds", RESOURCE_TEXTURE2D, 0);
+		ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+		ppTextures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"하단부품.dds", RESOURCE_TEXTURE2D, 0);
+
 
 		/*
 		ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -359,7 +362,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 29;
+		m_nObjects = 33;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -418,33 +421,40 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 
 
-		// 시작지역 사방에 배치된 벽
+		// 시작지역 사방에 배치된 벽(하단)
 
-		CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
-		CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
-		CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
-		CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 1000.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
+		CCubeMeshTextured* terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 4000.0f, 3000.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, -4000.0f, -1000.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, 3000.0f);
+		CCubeMeshTextured* terrain5 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 100.0f, 30.0f, 1000.0f, 0.0f, -1000.0f);
+		// 상단
+		CCubeMeshTextured* terrain2_middle = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 4000.0f, 3000.0f, 75.0f, 1000.0f);
+		CCubeMeshTextured* terrain2_middle2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, -4000.0f, -1000.0f, 75.0f, 1000.0f);
+		CCubeMeshTextured* terrain2_middle3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, 3000.0f);
+		CCubeMeshTextured* terrain2_middle4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, -4000.0f, 50.0f, 30.0f, 1000.0f, 75.0f, -1000.0f);
 
-		// 시작지역 부속 벽
-		CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
-		CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
+		///////////////////////////////////////////////
+
+		// 시작지역 부속 벽(하단)
+		CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
 		CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f);
 
-		// 오른쪽 지역 부속 벽
-		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
-		CCubeMeshTextured* Terrain_Right_Wall_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 2700.0f, 6500.0f, 0.0f, 1650.0f);
-		CCubeMeshTextured* Terrain_Right_Wall_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 650.0f, 800.0f, 5600.0f, 0.0f, 400.0f);
-		CCubeMeshTextured* Terrain_Right_Wall_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 650.0f, 30.0f, 6915.0f, 0.0f, 15.0f);
+		// 오른쪽 지역 부속 벽(하단)
+		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 2700.0f, 6500.0f, 0.0f, 1650.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 800.0f, 5600.0f, 0.0f, 400.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 100.0f, 30.0f, 6915.0f, 0.0f, 15.0f);
 
 
 		// 시작지역 문
 		CCubeMeshTextured* terrain_door = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 2900.0f, 0.0f, 2600.0f);
 
-		// 통로 벽
-		CCubeMeshTextured* terrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 3000.0f);
-		CCubeMeshTextured* terrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 1000.0f, 30.0f, 3600.0f, 0.0f, 2400.0f);
+		// 통로 벽(하단)
+		CCubeMeshTextured* terrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 100.0f, 30.0f, 3600.0f, 0.0f, 3000.0f);
+		CCubeMeshTextured* terrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 100.0f, 30.0f, 3600.0f, 0.0f, 2400.0f);
 
-		// 통로 바닥
+		// 통로 바닥(
 		CCubeMeshTextured* terrain_tonglo_plate = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 20.0f, 600.0f, 3600.0f, 0.0f, 2700.0f);
 
 		// 오른쪽으로 향하는 문
@@ -452,11 +462,11 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		CCubeMeshTextured* terrain_tonglo_door2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 200.0f, 450.0f, 100.0f, 4300.0f, 0.0f, 2600.0f);
 
 
-		// 오른쪽 지역 사방에 배치된 벽
-		CCubeMeshTextured* terrain_Second_room_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 8200.0f, 0.0f, 1000.0f);
-		CCubeMeshTextured* terrain_Second_room_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 1000.0f, 4000.0f, 4200.0f, 0.0f, 1000.0f);
-		CCubeMeshTextured* terrain_Second_room_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, -1000.0f);
-		CCubeMeshTextured* terrain_Second_room_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 1000.0f, 30.0f, 6200.0f, 0.0f, 3000.0f);
+		// 오른쪽 지역 사방에 배치된 벽(하단)
+		CCubeMeshTextured* terrain_Second_room_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 4000.0f, 8200.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain_Second_room_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 4000.0f, 4200.0f, 0.0f, 1000.0f);
+		CCubeMeshTextured* terrain_Second_room_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 6200.0f, 0.0f, -1000.0f);
+		CCubeMeshTextured* terrain_Second_room_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 6200.0f, 0.0f, 3000.0f);
 
 
 
@@ -691,6 +701,37 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		Tonglo_door2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[28] = Tonglo_door2;
 
+
+		CGameObject* M_Hadan1 = new CGameObject(11);
+		M_Hadan1->SetMesh(0, terrain2_middle);
+		M_Hadan1->SetMaterial(ppMaterials[3]);
+		M_Hadan1->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Hadan1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[29] = M_Hadan1;
+
+
+		CGameObject* M_Hadan2 = new CGameObject(11);
+		M_Hadan2->SetMesh(0, terrain2_middle2);
+		M_Hadan2->SetMaterial(ppMaterials[3]);
+		M_Hadan2->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Hadan2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[30] = M_Hadan2;
+
+
+		CGameObject* M_Hadan3 = new CGameObject(11);
+		M_Hadan3->SetMesh(0, terrain2_middle3);
+		M_Hadan3->SetMaterial(ppMaterials[3]);
+		M_Hadan3->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Hadan3->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[31] = M_Hadan3;
+
+
+		CGameObject* M_Hadan4 = new CGameObject(11);
+		M_Hadan4->SetMesh(0, terrain2_middle4);
+		M_Hadan4->SetMaterial(ppMaterials[3]);
+		M_Hadan4->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Hadan4->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[32] = M_Hadan4;
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
