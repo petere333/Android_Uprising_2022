@@ -491,7 +491,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		// 시작지역 부속 벽(하단)
 		CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
 		CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
-		CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 100.0f, 100.0f, 0.0f, 0.0f, 0.0f);
+		CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 0.001f, 0.001f, 0.001f, 0.0f, 0.0f, 0.0f);
 
 		// 오른쪽 지역 부속 벽(하단)
 		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
