@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 65;
+		m_nObjects = 66;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -492,6 +492,12 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		CCubeMeshTextured* terrain6 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
 		CCubeMeshTextured* terrain7 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 2500.0f, 0.0f, 1500.0f);
 		CCubeMeshTextured* terrain8 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 0.001f, 0.001f, 0.001f, 0.0f, 0.0f, 0.0f);
+
+		// 중단
+		CCubeMeshTextured* M_errain1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 3000.0f, 2500.0f, 75.0f, 1500.0f);
+
+
+		/////////////////////////////
 
 		// 오른쪽 지역 부속 벽(하단)
 		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
@@ -1019,7 +1025,12 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		Sang_Windows_3_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[64] = Sang_Windows_3_1;
 
-
+		CGameObject* M_Errain1 = new CGameObject(11);
+		M_Errain1->SetMesh(0, M_errain1);
+		M_Errain1->SetMaterial(ppMaterials[3]);
+		M_Errain1->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Errain1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[65] = M_Errain1;
 
 
 		/*
