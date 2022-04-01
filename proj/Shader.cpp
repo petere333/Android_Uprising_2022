@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// ºä »ý¼º
-		m_nObjects = 62;
+		m_nObjects = 63;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -443,6 +443,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 		CCubeMeshTextured* Sang_start_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, -741.75f);
 		CCubeMeshTextured* Sang_windows_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, -333.5f);
+		CCubeMeshTextured* Sang_windows_1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 850.0f, -333.5f);
 		CCubeMeshTextured* Sang_end_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 74.75f);
 
 		CCubeMeshTextured* Sang_start_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 591.25f);
@@ -993,6 +994,13 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		S_Terrain2_Middle->SetPosition(0.0f, 0.0f, 0.0f);
 		S_Terrain2_Middle->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[61] = S_Terrain2_Middle;
+
+		CGameObject* Sang_Windows_1_1 = new CGameObject(11);
+		Sang_Windows_1_1->SetMesh(0, Sang_windows_1_1);
+		Sang_Windows_1_1->SetMaterial(ppMaterials[4]);
+		Sang_Windows_1_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Sang_Windows_1_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[62] = Sang_Windows_1_1;
 
 
 		/*
