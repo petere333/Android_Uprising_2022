@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 72;
+		m_nObjects = 74;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -530,6 +530,11 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 		CCubeMeshTextured* Merrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 50.0f, 30.0f, 3600.0f, 75.0f, 3000.0f);
 		CCubeMeshTextured* Merrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 50.0f, 30.0f, 3600.0f, 75.0f, 2400.0f);
+
+		// 통로 벽 (상단)
+		
+		CCubeMeshTextured* Herrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 900.0f, 30.0f, 3600.0f, 550.0f, 3000.0f);
+		CCubeMeshTextured* Herrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 900.0f, 30.0f, 3600.0f, 550.0f, 2400.0f);
 
 		/////////////////////////////////////
 
@@ -1096,6 +1101,20 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		D_terrain2->SetPosition(0.0f, 0.0f, 0.0f);
 		D_terrain2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[71] = D_terrain2;
+
+		CGameObject* H_Tonglo_Wall1 = new CGameObject(11);
+		H_Tonglo_Wall1->SetMesh(0, Herrain_tonglo_wall1);
+		H_Tonglo_Wall1->SetMaterial(ppMaterials[4]);
+		H_Tonglo_Wall1->SetPosition(0.0f, 0.0f, 0.0f);
+		H_Tonglo_Wall1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[72] = H_Tonglo_Wall1;
+
+		CGameObject* H_Tonglo_Wall2 = new CGameObject(11);
+		H_Tonglo_Wall2->SetMesh(0, Herrain_tonglo_wall2);
+		H_Tonglo_Wall2->SetMaterial(ppMaterials[4]);
+		H_Tonglo_Wall2->SetPosition(0.0f, 0.0f, 0.0f);
+		H_Tonglo_Wall2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[73] = H_Tonglo_Wall2;
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
