@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 85;
+		m_nObjects = 93;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -514,9 +514,21 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 		// 오른쪽 지역 부속 벽(하단)
 		CCubeMeshTextured* Terrain_Right_Wall_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 3000.0f, 4700.0f, 0.0f, 1500.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_1_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 3000.0f, 4700.0f, 75.0f, 1500.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_1_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 3000.0f, 4700.0f, 550.0f, 1500.0f);
+
+
 		CCubeMeshTextured* Terrain_Right_Wall_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 2700.0f, 6500.0f, 0.0f, 1650.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_2_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 2700.0f, 6500.0f, 75.0f, 1650.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_2_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 2700.0f, 6500.0f, 550.0f, 1650.0f);
+
 		CCubeMeshTextured* Terrain_Right_Wall_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 100.0f, 800.0f, 5600.0f, 0.0f, 400.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_3_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 50.0f, 800.0f, 5600.0f, 75.0f, 400.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_3_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 800.0f, 5600.0f, 550.0f, 400.0f);
+
 		CCubeMeshTextured* Terrain_Right_Wall_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 100.0f, 30.0f, 6915.0f, 0.0f, 15.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_4_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 50.0f, 30.0f, 6915.0f, 75.0f, 15.0f);
+		CCubeMeshTextured* Terrain_Right_Wall_4_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2600.0f, 900.0f, 30.0f, 6915.0f, 550.0f, 15.0f);
 
 
 		// 시작지역 문
@@ -1216,6 +1228,68 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		S_room_4_H->SetPosition(0.0f, 0.0f, 0.0f);
 		S_room_4_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[84] = S_room_4_H;
+
+		CGameObject* S_R_1_M = new CGameObject(11);
+		S_R_1_M->SetMesh(0, Terrain_Right_Wall_1_M);
+		S_R_1_M->SetMaterial(ppMaterials[3]);
+		S_R_1_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_1_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[85] = S_R_1_M;
+
+
+		CGameObject* S_R_1_H = new CGameObject(11);
+		S_R_1_H->SetMesh(0, Terrain_Right_Wall_1_H);
+		S_R_1_H->SetMaterial(ppMaterials[4]);
+		S_R_1_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_1_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[86] = S_R_1_H;
+
+
+		CGameObject* S_R_2_M = new CGameObject(11);
+		S_R_2_M->SetMesh(0, Terrain_Right_Wall_2_M);
+		S_R_2_M->SetMaterial(ppMaterials[3]);
+		S_R_2_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_2_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[87] = S_R_2_M;
+
+
+		CGameObject* S_R_2_H = new CGameObject(11);
+		S_R_2_H->SetMesh(0, Terrain_Right_Wall_2_H);
+		S_R_2_H->SetMaterial(ppMaterials[4]);
+		S_R_2_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_2_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[88] = S_R_2_H;
+
+
+		CGameObject* S_R_3_M = new CGameObject(11);
+		S_R_3_M->SetMesh(0, Terrain_Right_Wall_3_M);
+		S_R_3_M->SetMaterial(ppMaterials[3]);
+		S_R_3_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_3_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[89] = S_R_3_M;
+
+		CGameObject* S_R_3_H = new CGameObject(11);
+		S_R_3_H->SetMesh(0, Terrain_Right_Wall_3_H);
+		S_R_3_H->SetMaterial(ppMaterials[4]);
+		S_R_3_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_3_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[90] = S_R_3_H;
+
+
+		CGameObject* S_R_4_M = new CGameObject(11);
+		S_R_4_M->SetMesh(0, Terrain_Right_Wall_4_M);
+		S_R_4_M->SetMaterial(ppMaterials[3]);
+		S_R_4_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_4_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[91] = S_R_4_M;
+
+
+		CGameObject* S_R_4_H = new CGameObject(11);
+		S_R_4_H->SetMesh(0, Terrain_Right_Wall_4_H);
+		S_R_4_H->SetMaterial(ppMaterials[4]);
+		S_R_4_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_R_4_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[92] = S_R_4_H;
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
