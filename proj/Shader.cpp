@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 63;
+		m_nObjects = 65;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -448,10 +448,12 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 		CCubeMeshTextured* Sang_start_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 591.25f);
 		CCubeMeshTextured* Sang_windows_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, 999.5f);
+		CCubeMeshTextured* Sang_windows_2_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 850.0f, 999.5f);
 		CCubeMeshTextured* Sang_end_2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 1407.75f);
 
 		CCubeMeshTextured* Sang_start_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 1924.25f);
 		CCubeMeshTextured* Sang_windows_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 250.0f, 2332.5f);
+		CCubeMeshTextured* Sang_windows_3_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 300.0f, 300.0f, -1000.0f, 850.0f, 2332.5f);
 		CCubeMeshTextured* Sang_end_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, 2740.75f);
 
 		// 상단 _ 하단 벽 (4, 5, 6)
@@ -1001,6 +1003,23 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		Sang_Windows_1_1->SetPosition(0.0f, 0.0f, 0.0f);
 		Sang_Windows_1_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[62] = Sang_Windows_1_1;
+
+
+		CGameObject* Sang_Windows_2_1 = new CGameObject(11);
+		Sang_Windows_2_1->SetMesh(0, Sang_windows_2_1);
+		Sang_Windows_2_1->SetMaterial(ppMaterials[4]);
+		Sang_Windows_2_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Sang_Windows_2_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[63] = Sang_Windows_2_1;
+
+		CGameObject* Sang_Windows_3_1 = new CGameObject(11);
+		Sang_Windows_3_1->SetMesh(0, Sang_windows_3_1);
+		Sang_Windows_3_1->SetMaterial(ppMaterials[4]);
+		Sang_Windows_3_1->SetPosition(0.0f, 0.0f, 0.0f);
+		Sang_Windows_3_1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[64] = Sang_Windows_3_1;
+
+
 
 
 		/*
