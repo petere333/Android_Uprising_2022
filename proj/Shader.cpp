@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// 뷰 생성
-		m_nObjects = 69;
+		m_nObjects = 72;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -445,6 +445,9 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		CCubeMeshTextured* terrain2_High = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 3550.0f, 3000.0f, 550.0f, 775.0f);
 		CCubeMeshTextured* s_terrain2_High = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 350.0f, 3000.0f, 550.0f, 2825.0f);
 
+		CCubeMeshTextured* d_terrain2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 600.0f, 100.0f, 3000.0f, 750.0f, 2600.0f);
+
+
 		// 상단 _ 왼쪽 벽 _ 1, 2, 3
 
 		CCubeMeshTextured* Sang_start_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 900.0f, 516.5f, -1000.0f, 550.0f, -741.75f);
@@ -523,7 +526,14 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		CCubeMeshTextured* terrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 100.0f, 30.0f, 3600.0f, 0.0f, 3000.0f);
 		CCubeMeshTextured* terrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 100.0f, 30.0f, 3600.0f, 0.0f, 2400.0f);
 
-		// 통로 바닥(
+		// 통로 벽 (중단)
+
+		CCubeMeshTextured* Merrain_tonglo_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 50.0f, 30.0f, 3600.0f, 75.0f, 3000.0f);
+		CCubeMeshTextured* Merrain_tonglo_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 50.0f, 30.0f, 3600.0f, 75.0f, 2400.0f);
+
+		/////////////////////////////////////
+
+		// 통로 바닥
 		CCubeMeshTextured* terrain_tonglo_plate = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1200.0f, 20.0f, 600.0f, 3600.0f, 0.0f, 2700.0f);
 
 		// 오른쪽으로 향하는 문
@@ -1064,6 +1074,28 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		S_Terrain2_High->SetPosition(0.0f, 0.0f, 0.0f);
 		S_Terrain2_High->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[68] = S_Terrain2_High;
+
+		CGameObject* M_Tonglo_Wall1 = new CGameObject(11);
+		M_Tonglo_Wall1->SetMesh(0, Merrain_tonglo_wall1);
+		M_Tonglo_Wall1->SetMaterial(ppMaterials[3]);
+		M_Tonglo_Wall1->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Tonglo_Wall1->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[69] = M_Tonglo_Wall1;
+
+		CGameObject* M_Tonglo_Wall2 = new CGameObject(11);
+		M_Tonglo_Wall2->SetMesh(0, Merrain_tonglo_wall2);
+		M_Tonglo_Wall2->SetMaterial(ppMaterials[3]);
+		M_Tonglo_Wall2->SetPosition(0.0f, 0.0f, 0.0f);
+		M_Tonglo_Wall2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[70] = M_Tonglo_Wall2;
+
+
+		CGameObject* D_terrain2 = new CGameObject(11);
+		D_terrain2->SetMesh(0, d_terrain2);
+		D_terrain2->SetMaterial(ppMaterials[4]);
+		D_terrain2->SetPosition(0.0f, 0.0f, 0.0f);
+		D_terrain2->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[71] = D_terrain2;
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
