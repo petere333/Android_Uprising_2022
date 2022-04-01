@@ -364,7 +364,7 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		*/
 
 		// ºä »ý¼º
-		m_nObjects = 81;
+		m_nObjects = 85;
 
 		CMaterial* ppMaterials[TEXTURES];
 		for (int i = 0; i < TEXTURES; i++)
@@ -564,7 +564,12 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 
 		CCubeMeshTextured* terrain_Second_room_3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 6200.0f, 0.0f, -1000.0f);
+		CCubeMeshTextured* terrain_Second_room_3_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 50.0f, 30.0f, 6200.0f, 75.0f, -1000.0f);
+		CCubeMeshTextured* terrain_Second_room_3_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 900.0f, 30.0f, 6200.0f, 550.0f, -1000.0f);
+
 		CCubeMeshTextured* terrain_Second_room_4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 100.0f, 30.0f, 6200.0f, 0.0f, 3000.0f);
+		CCubeMeshTextured* terrain_Second_room_4_M = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 50.0f, 30.0f, 6200.0f, 75.0f, 3000.0f);
+		CCubeMeshTextured* terrain_Second_room_4_H = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 4000.0f, 900.0f, 30.0f, 6200.0f, 550.0f, 3000.0f);
 
 
 
@@ -1181,6 +1186,36 @@ void CGroundShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		S_room_1_H->SetPosition(0.0f, 0.0f, 0.0f);
 		S_room_1_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
 		m_ppObjects[80] = S_room_1_H;
+
+		CGameObject* S_room_3_M = new CGameObject(11);
+		S_room_3_M->SetMesh(0, terrain_Second_room_3_M);
+		S_room_3_M->SetMaterial(ppMaterials[3]);
+		S_room_3_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_room_3_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[81] = S_room_3_M;
+
+
+		CGameObject* S_room_3_H = new CGameObject(11);
+		S_room_3_H->SetMesh(0, terrain_Second_room_3_H);
+		S_room_3_H->SetMaterial(ppMaterials[4]);
+		S_room_3_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_room_3_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[82] = S_room_3_H;
+
+
+		CGameObject* S_room_4_M = new CGameObject(11);
+		S_room_4_M->SetMesh(0, terrain_Second_room_4_M);
+		S_room_4_M->SetMaterial(ppMaterials[3]);
+		S_room_4_M->SetPosition(0.0f, 0.0f, 0.0f);
+		S_room_4_M->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[83] = S_room_4_M;
+
+		CGameObject* S_room_4_H = new CGameObject(11);
+		S_room_4_H->SetMesh(0, terrain_Second_room_4_H);
+		S_room_4_H->SetMaterial(ppMaterials[4]);
+		S_room_4_H->SetPosition(0.0f, 0.0f, 0.0f);
+		S_room_4_H->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * 0));
+		m_ppObjects[84] = S_room_4_H;
 
 		/*
 		for (int i = 0; i < objList.size(); ++i)
