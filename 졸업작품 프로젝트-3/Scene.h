@@ -5,7 +5,8 @@
 #pragma once
 
 #include "Shader.h"
-
+#include "LevelLoader.h"
+#include "stdafx.h"
 
 #define MAX_LIGHTS						16 
 
@@ -40,6 +41,7 @@ struct LIGHTS
 class CScene
 {
 public:
+
     CScene();
     ~CScene();
 
@@ -81,12 +83,19 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	CTexture* textures[1];
-	CMaterial* mats[1];
+	CTexture* textures[11];
+	CMaterial* ppMaterials[11];
 public:
 
+	std::vector<BoundBox> boxesWorld;
+
+	XMFLOAT3 playerSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	int currentPlayerAnim = 0;
 
 
+	void setPlayerDirection(float dx, float dy, float dz);
+	bool movePlayer(float x, float y, float z);
+	void setPlayerAnimation(int a);
 
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;

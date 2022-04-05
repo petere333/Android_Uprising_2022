@@ -87,5 +87,8 @@ private:
 	POINT						m_ptOldCursorPos;
 
 	_TCHAR						m_pszFrameRate[70];
+	
+public:
+	float dx=0.0f, dy=0.0f, dz=0.0f;
 };
 

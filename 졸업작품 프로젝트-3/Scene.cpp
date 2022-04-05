@@ -2,7 +2,7 @@
 // File: CScene.cpp
 //-----------------------------------------------------------------------------
 
-#include "stdafx.h"
+
 #include "Scene.h"
 
 
@@ -71,46 +71,152 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 	textures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"sample.dds", RESOURCE_TEXTURE2D, 0);
+	textures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
+	textures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/WhitePaint.dds", RESOURCE_TEXTURE2D, 0);
+	textures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/GreenPaint.dds", RESOURCE_TEXTURE2D, 0);
+	textures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
+	textures[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/box.dds", RESOURCE_TEXTURE2D, 0);
+	textures[6] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/table.dds", RESOURCE_TEXTURE2D, 0);
+	textures[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PalletTruck.dds", RESOURCE_TEXTURE2D, 0);
+	textures[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/bin.dds", RESOURCE_TEXTURE2D, 0);
+	textures[9] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
+	textures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 11);
 
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 1);
-	CreateShaderResourceViews(pd3dDevice, textures[0], 0, 3);
+	for (int i = 0; i < 11; ++i)
+	{
+		CreateShaderResourceViews(pd3dDevice, textures[i], 0, 3);
+	}
+	
+	
 	
 
-	mats[0] = new CMaterial(1);
-	mats[0]->SetTexture(textures[0], 0);
+	for (int i = 0; i < 11; ++i)
+	{
+		ppMaterials[i] = new CMaterial(1);
+		ppMaterials[i]->SetTexture(textures[i], 0);
+	}
+
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
 
 	BuildDefaultLightsAndMaterials();
 
-	
-	const int nobj = 50;
-	m_nGameObjects = nobj;
+	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
+	boxesWorld = LoadBoxes("res/map/box.txt");
+	m_nGameObjects = data.size();
 	m_ppGameObjects = new CGameObject*[m_nGameObjects];
 
-	CLoadedModelInfo* ppModels[nobj];
-	CLionObject* obj[nobj];
-	for (int i = 0; i < nobj; ++i)
+	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 800.0f, 600.0f);
+	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 5.0f);
+	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 800.0f, 5.0f);
+
+	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
+	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
+	CLoadedMesh* tableMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_table.txt", "res/idx_table.txt");
+	CLoadedMesh* chairMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_chair3.txt", "res/idx_chair3.txt");
+	CLoadedMesh* cartMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_pallet.txt", "res/idx_pallet.txt");
+	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
+	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
+	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
+
+
+	for (int i = 0; i < data.size(); ++i)
 	{
-		ppModels[i]= CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
-		obj[i] = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, ppModels[i], 1);
-		m_ppGameObjects[i] = obj[i];
-		if (ppModels[i]) delete ppModels[i];
+		CGameObject* obj;
+		if (data[i].type == PLAYER)//player
+		{
+			CLoadedModelInfo* model=CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
+			
+			obj = new CLionObject(pd3dDevice,pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
+			obj->type = 1;
+			
+			obj->SetTrackAnimationSet(0, 17);
+			currentPlayerAnim = 11;
+		}
+		else if (data[i].type == CONTAINER)//container
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(container);
+			obj->SetMaterial(0, ppMaterials[0]);
 
-		obj[i]->SetPosition(i * 0.1f-2.0f, 0.0f, 0.0f);
-		obj[i]->Rotate(-90.0f, 0.0f, 0.0f);
-		obj[i]->Rotate(0.0f, 180.0f, 0.0f);
-		
-		obj[i]->SetTrackAnimationSet(0, rand()%20);
+		}
+		else if (data[i].type == f800x600)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(pGrid);
+			obj->SetMaterial(0, ppMaterials[3]);
+		}
+		else if (data[i].type == vWall600x500)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(vWall);
+			obj->SetMaterial(0, ppMaterials[2]);
+		}
+		else if (data[i].type == hWall800x500)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(hWall);
+			obj->SetMaterial(0, ppMaterials[2]);
+		}
+		else if (data[i].type == BOX)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(box);
+			obj->SetMaterial(0, ppMaterials[5]);
+		}
+		else if (data[i].type == PALLET)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(cartMesh);
+			obj->SetMaterial(0, ppMaterials[7]);
+		}
+		else if (data[i].type == TRASH)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(binMesh);
+			obj->SetMaterial(0, ppMaterials[8]);
+		}
+		else if (data[i].type == BARREL)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(barrelMesh);
+			obj->SetMaterial(0, ppMaterials[9]);
+		}
+		else if (data[i].type == TRUCK)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(truckMesh);
+			obj->SetMaterial(0, ppMaterials[10]);
+		}
+		else if (data[i].type == TABLE)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(tableMesh);
+			obj->SetMaterial(0, ppMaterials[6]);
+		}
+		else if (data[i].type == CHAIR)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(chairMesh);
+			obj->SetMaterial(0, ppMaterials[1]);
+		}
+		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
+		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
+		obj->currentRotation = data[i].rotation;
+		m_ppGameObjects[i] = obj;
 	}
-
-
-
-	
-	
-
-
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
@@ -299,7 +405,6 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 void CScene::AnimateObjects(float fTimeElapsed)
 {
 	m_fElapsedTime = fTimeElapsed;
-
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 	
 	
@@ -330,7 +435,10 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			{
 				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 			}
-			mats[0]->UpdateShaderVariable(pd3dCommandList);
+			if (m_ppGameObjects[i]->type == 1)
+			{
+				ppMaterials[4]->UpdateShaderVariable(pd3dCommandList);
+			}
 			m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
@@ -390,4 +498,44 @@ void CScene::CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pText
 	}
 	int nRootParameters = pTexture->GetRootParameters();
 	for (int i = 0; i < nRootParameters; i++) pTexture->SetRootParameterIndex(i, nRootParameterStartIndex + i);
+}
+
+void CScene::setPlayerAnimation(int a)
+{
+	m_ppGameObjects[0]->SetTrackAnimationSet(0, a);
+	currentPlayerAnim = a;
+}
+
+bool CScene::movePlayer(float x, float y, float z)
+{
+	float tx = m_ppGameObjects[0]->GetPosition().x + x;
+	float ty = m_ppGameObjects[0]->GetPosition().y + y;
+	float tz = m_ppGameObjects[0]->GetPosition().z + z;
+	bool crash = false;
+	for (int i = 0; i < boxesWorld.size(); ++i)
+	{
+		if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 0.85f && tz > boxesWorld[i].start.z - 0.5f
+			&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.85f && tz < boxesWorld[i].end.z + 0.5f)
+		{
+			crash = true;
+		}
+	}
+	if (crash == false)
+	{
+		m_ppGameObjects[0]->SetPosition(tx, ty, tz);
+		return true;
+	}
+	else
+	{
+		printf("cannot move\n");
+		return false;
+	}
+}
+void CScene::setPlayerDirection(float dx, float dy, float dz)
+{
+	if (m_ppGameObjects[0]->currentRotation.y != dy)
+	{
+		m_ppGameObjects[0]->Rotate(0.0f, dy - m_ppGameObjects[0]->currentRotation.y, 0.0f);
+		m_ppGameObjects[0]->currentRotation.y = dy;
+	}
 }

@@ -33,7 +33,7 @@ VS_WIREFRAME_OUTPUT VSWireFrame(VS_WIREFRAME_INPUT input)
 	VS_WIREFRAME_OUTPUT output;
 
 	output.position = mul(mul(mul(float4(input.position, 1.0f), gmtxGameObject), gmtxView), gmtxProjection);
-
+	output.uvs = input.uvs;
 	return(output);
 }
 

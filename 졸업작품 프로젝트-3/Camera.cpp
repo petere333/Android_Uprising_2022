@@ -8,12 +8,12 @@ CCamera::CCamera()
 	m_d3dViewport = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT, 0.0f, 1.0f };
 	m_d3dScissorRect = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT };
 	//m_xmf3Position = XMFLOAT3(3.0f, 2.85f, 1.0f);
-	m_xmf3Position = XMFLOAT3(0.0f, 1.5f, 0.5f);
+	m_xmf3Position = XMFLOAT3(3.0f, 2.85f, 1.0f);
 
 
-	lx = 0.0f;
-	ly = 0.0f;
-	lz = 0.0f;
+	lx = 3.0f;
+	ly = 0.85f;
+	lz = 3.0f;
 }
 CCamera::~CCamera()
 {}

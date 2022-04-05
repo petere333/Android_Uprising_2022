@@ -291,12 +291,16 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	{
 		case WM_LBUTTONDOWN:
 		case WM_RBUTTONDOWN:
+			/*
 			::SetCapture(hWnd);
 			::GetCursorPos(&m_ptOldCursorPos);
+			*/
 			break;
 		case WM_LBUTTONUP:
 		case WM_RBUTTONUP:
+			/*
 			::ReleaseCapture();
+			*/
 			break;
 		case WM_MOUSEMOVE:
 			break;
@@ -310,6 +314,27 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	switch (nMessageID)
 	{
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_UP:
+			m_pScene->setPlayerDirection(0.0f, 0.0f, 0.0f);
+			dz = 0.3f;
+			break;
+		case VK_DOWN:
+			m_pScene->setPlayerDirection(0.0f, 180.0f, 0.0f);
+			dz = -0.3f;
+			break;
+		case VK_LEFT:
+			m_pScene->setPlayerDirection(0.0f, 270.0f, 0.0f);
+			dx = -0.3f;
+			break;
+		case VK_RIGHT:
+			m_pScene->setPlayerDirection(0.0f, 90.0f, 0.0f);
+			dx = 0.3f;
+			break;
+		}
+		break;
 		case WM_KEYUP:
 			switch (wParam)
 			{
@@ -321,10 +346,24 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				case VK_F1:
 				case VK_F2:
 				case VK_F3:
-					//m_pCamera = m_pPlayer->ChangeCamera((DWORD)(wParam - VK_F1 + 1), m_GameTimer.GetTimeElapsed());
-					//break;
 				case VK_F9:
 					ChangeSwapChainState();
+					break;
+				case VK_UP:
+					
+					dz = 0.0f;
+					break;
+				case VK_DOWN:
+					
+					dz = 0.0f;
+					break;
+				case VK_LEFT:
+					
+					dx = 0.0f;
+					break;
+				case VK_RIGHT:
+					
+					dx = 0.0f;
 					break;
 				default:
 					break;
@@ -482,7 +521,24 @@ void CGameFramework::ProcessInput()
 void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
-
+	if (dx != 0.0f || dy != 0.0f || dz != 0.0f)//실질적으로 이동을 시도한 경우
+	{
+		if (m_pScene->movePlayer(dx, dy, dz) == true)//실제로 이동에 성공한 경우 = 충돌이 없는 경우
+		{
+			m_pCamera->move(dx, dy, dz);
+			if (m_pScene->currentPlayerAnim != 20)
+			{
+				m_pScene->setPlayerAnimation(20);
+			}
+		}
+	}
+	else
+	{
+		if (m_pScene->currentPlayerAnim != 11)
+		{
+			m_pScene->setPlayerAnimation(11);
+		}
+	}
 	if (m_pScene) m_pScene->AnimateObjects(fTimeElapsed);
 
 	//m_pPlayer->Animate(fTimeElapsed);

@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
-
+#include "stdafx.h"
 class CGameObject;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,4 +222,32 @@ public:
 	virtual void ReleaseUploadBuffers();
 
 	virtual void OnPreRender(ID3D12GraphicsCommandList *pd3dCommandList, void *pContext);
+};
+
+class CLoadedMesh : public CMesh
+{
+public:
+	CLoadedMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, const char* file, const char* ifile);
+	virtual ~CLoadedMesh();
+};
+
+class GridMesh :public CMesh
+{
+public:
+	GridMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~GridMesh();
+};
+
+class WallMeshVertical :public CMesh
+{
+public:
+	WallMeshVertical(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~WallMeshVertical();
+};
+
+class WallMeshHorizontal :public CMesh
+{
+public:
+	WallMeshHorizontal(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~WallMeshHorizontal();
 };

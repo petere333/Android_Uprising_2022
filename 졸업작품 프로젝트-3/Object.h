@@ -388,6 +388,8 @@ public:
     virtual ~CGameObject();
 
 public:
+	int type = 0;
+
 	bool							m_bActive = true;
 
 	char							m_pstrFrameName[64];
@@ -474,6 +476,9 @@ public:
 	static CLoadedModelInfo *LoadGeometryAndAnimationFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, char *pstrFileName, CShader *pShader);
 
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
+
+public:
+	XMFLOAT3 currentRotation;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

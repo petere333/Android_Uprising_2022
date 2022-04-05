@@ -1297,12 +1297,12 @@ CLionObject::CLionObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd
 
 	strcpy_s(m_pstrFrameName, "Lion");
 
-	int ix = rand() % 5;
 	
-	float fx = ix * 0.1+0.3f;
+	
+	
 	
 
-	SetScale(fx,fx,fx);
+	
 
 	SetActive("SK_Lion_LOD1", false);
 	SetActive("SK_Lion_LOD2", false);
