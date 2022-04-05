@@ -1,3 +1,5 @@
+
+
 #include "Shader.h"
 CShader::CShader()
 {
@@ -100,50 +102,50 @@ D3D12_SHADER_BYTECODE CShader::CreatePixelShader(ID3DBlob** ppd3dShaderBlob)
 }
 
 //셰이더 소스 코드를 컴파일하여 바이트 코드 구조체를 반환한다.
-D3D12_SHADER_BYTECODE CShader::CompileShaderFromFile(WCHAR *pszFileName, LPCSTR
-pszShaderName, LPCSTR pszShaderProfile, ID3DBlob** ppd3dShaderBlob)
+D3D12_SHADER_BYTECODE CShader::CompileShaderFromFile(WCHAR* pszFileName, LPCSTR
+	pszShaderName, LPCSTR pszShaderProfile, ID3DBlob** ppd3dShaderBlob)
 {
-UINT nCompileFlags = 0;
+	UINT nCompileFlags = 0;
 #if defined(_DEBUG)
-nCompileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+	nCompileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
 #endif
-::D3DCompileFromFile(pszFileName, NULL, NULL, pszShaderName, pszShaderProfile,
-	nCompileFlags, 0, ppd3dShaderBlob, NULL);
-D3D12_SHADER_BYTECODE d3dShaderByteCode;
-d3dShaderByteCode.BytecodeLength = (*ppd3dShaderBlob)->GetBufferSize();
-d3dShaderByteCode.pShaderBytecode = (*ppd3dShaderBlob)->GetBufferPointer();
-return(d3dShaderByteCode);
+	::D3DCompileFromFile(pszFileName, NULL, NULL, pszShaderName, pszShaderProfile,
+		nCompileFlags, 0, ppd3dShaderBlob, NULL);
+	D3D12_SHADER_BYTECODE d3dShaderByteCode;
+	d3dShaderByteCode.BytecodeLength = (*ppd3dShaderBlob)->GetBufferSize();
+	d3dShaderByteCode.pShaderBytecode = (*ppd3dShaderBlob)->GetBufferPointer();
+	return(d3dShaderByteCode);
 }
 
 
 //그래픽스 파이프라인 상태 객체를 생성한다. 
-void CShader::CreateShader(ID3D12Device *pd3dDevice, ID3D12RootSignature
-*pd3dGraphicsRootSignature)
+void CShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature
+	* pd3dGraphicsRootSignature)
 {
-ID3DBlob* pd3dVertexShaderBlob = NULL, * pd3dPixelShaderBlob = NULL;
+	ID3DBlob* pd3dVertexShaderBlob = NULL, * pd3dPixelShaderBlob = NULL;
 
-D3D12_GRAPHICS_PIPELINE_STATE_DESC d3dPipelineStateDesc;
-::ZeroMemory(&d3dPipelineStateDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
-d3dPipelineStateDesc.pRootSignature = pd3dGraphicsRootSignature;
-d3dPipelineStateDesc.VS = CreateVertexShader(&pd3dVertexShaderBlob);
-d3dPipelineStateDesc.PS = CreatePixelShader(&pd3dPixelShaderBlob);
-d3dPipelineStateDesc.RasterizerState = CreateRasterizerState();
-d3dPipelineStateDesc.BlendState = CreateBlendState();
-d3dPipelineStateDesc.DepthStencilState = CreateDepthStencilState();
-d3dPipelineStateDesc.InputLayout = CreateInputLayout();
-d3dPipelineStateDesc.SampleMask = UINT_MAX;
-d3dPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-d3dPipelineStateDesc.NumRenderTargets = 1;
-d3dPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-d3dPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
-d3dPipelineStateDesc.SampleDesc.Count = 1;
-d3dPipelineStateDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
-pd3dDevice->CreateGraphicsPipelineState(&d3dPipelineStateDesc,
-	__uuidof(ID3D12PipelineState), (void**)&m_ppd3dPipelineStates[0]);
-if (pd3dVertexShaderBlob) pd3dVertexShaderBlob->Release();
-if (pd3dPixelShaderBlob) pd3dPixelShaderBlob->Release();
-if (d3dPipelineStateDesc.InputLayout.pInputElementDescs) delete[]
-d3dPipelineStateDesc.InputLayout.pInputElementDescs;
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC d3dPipelineStateDesc;
+	::ZeroMemory(&d3dPipelineStateDesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
+	d3dPipelineStateDesc.pRootSignature = pd3dGraphicsRootSignature;
+	d3dPipelineStateDesc.VS = CreateVertexShader(&pd3dVertexShaderBlob);
+	d3dPipelineStateDesc.PS = CreatePixelShader(&pd3dPixelShaderBlob);
+	d3dPipelineStateDesc.RasterizerState = CreateRasterizerState();
+	d3dPipelineStateDesc.BlendState = CreateBlendState();
+	d3dPipelineStateDesc.DepthStencilState = CreateDepthStencilState();
+	d3dPipelineStateDesc.InputLayout = CreateInputLayout();
+	d3dPipelineStateDesc.SampleMask = UINT_MAX;
+	d3dPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	d3dPipelineStateDesc.NumRenderTargets = 1;
+	d3dPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+	d3dPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	d3dPipelineStateDesc.SampleDesc.Count = 1;
+	d3dPipelineStateDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
+	pd3dDevice->CreateGraphicsPipelineState(&d3dPipelineStateDesc,
+		__uuidof(ID3D12PipelineState), (void**)&m_ppd3dPipelineStates[0]);
+	if (pd3dVertexShaderBlob) pd3dVertexShaderBlob->Release();
+	if (pd3dPixelShaderBlob) pd3dPixelShaderBlob->Release();
+	if (d3dPipelineStateDesc.InputLayout.pInputElementDescs) delete[]
+		d3dPipelineStateDesc.InputLayout.pInputElementDescs;
 }
 
 void CShader::CreateCbvSrvDescriptorHeaps(ID3D12Device* pd3dDevice, int nConstantBufferViews, int nShaderResourceViews)
@@ -206,7 +208,7 @@ void CShader::OnPrepareRender(ID3D12GraphicsCommandList* pd3dCommandList)
 void CShader::Render(ID3D12GraphicsCommandList* pd3dCommandList)
 {
 	OnPrepareRender(pd3dCommandList);
-	
+
 }
 
 
@@ -278,7 +280,7 @@ CObjectsShader::~CObjectsShader()
 }
 
 /**/
-void CObjectsShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature * pd3dGraphicsRootSignature)
+void CObjectsShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature* pd3dGraphicsRootSignature)
 {
 	m_nPipelineStates = 1;
 	m_ppd3dPipelineStates = new ID3D12PipelineState * [m_nPipelineStates];
@@ -350,7 +352,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, TEXTURES);
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	CreateConstantBufferViews(pd3dDevice, m_nObjects, m_pd3dcbGameObjects, ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255));
-/**/
+	/**/
 	for (int i = 0; i < TEXTURES; i++) CreateShaderResourceViews(pd3dDevice, ppTextures[i], 0, 2);
 
 	CMaterial* ppMaterials[TEXTURES];
@@ -365,9 +367,38 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 	//CRectMeshTextured* pTileMesh = new CRectMeshTextured(pd3dDevice, pd3dCommandList, 2.5f, 2.5f);
 
-	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 800.0f, 600.0f);
-	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 5.0f);
-	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 800.0f, 5.0f);
+	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
+	GridMesh* t_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 20.0f);
+	GridMesh* Se_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
+
+	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshHorizontal* hWall_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
+	WallMeshVertical* vWall_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshVertical* vWall_S = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
+	WallMeshVertical* vWall_SM = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
+	WallMeshVertical* vWall_1S = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
+	WallMeshVertical* vWall_1SM = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
+	WallMeshVertical* vWall_H = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
+	WallMeshHorizontal* hWall_H = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
+	WallMeshVertical* frooms = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 2.5f);
+	WallMeshVertical* frooms_H = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
+	WallMeshHorizontal* loadwall1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
+	WallMeshHorizontal* loadwall2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
+	WallMeshHorizontal* loadwall3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 7.5f);
+	WallMeshVertical* Se_room_l1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
+	WallMeshVertical* Se_room_l2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
+	WallMeshVertical* Se_room_l3= new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 7.5f);
+	WallMeshVertical* Se_room_r1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
+	WallMeshVertical* Se_room_r2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
+	WallMeshVertical* Se_room_r3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 7.5f);
+	WallMeshVertical* Se_rs1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshVertical* Se_rs2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshVertical* Se_rs3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
+	WallMeshHorizontal* Se_fb1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshHorizontal* Se_fb2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
+	WallMeshHorizontal* Se_fb3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
+
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -377,13 +408,14 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
 	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
+
 	boxesWorld = LoadBoxes("res/map/box.txt");
-	
+
 
 	m_ppObjects = new CGameObject * [m_nObjects];
 
 
-	
+
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -394,28 +426,28 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			obj = new CPlayerObject(1);
 			obj->SetMesh(0, barrelMesh);
 			obj->SetMaterial(ppMaterials[9]);
-			
+
 		}
 		else if (data[i].type == CONTAINER)//container
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, container);
 			obj->SetMaterial(ppMaterials[0]);
-			
+
 		}
-		else if (data[i].type == f800x600)
+		else if (data[i].type == floor)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, pGrid);
 			obj->SetMaterial(ppMaterials[3]);
 		}
-		else if (data[i].type == vWall600x500)
+		else if (data[i].type == vWalls)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall);
 			obj->SetMaterial(ppMaterials[2]);
 		}
-		else if (data[i].type == hWall800x500)
+		else if (data[i].type == hWalls)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, hWall);
@@ -463,6 +495,172 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			obj->SetMesh(0, chairMesh);
 			obj->SetMaterial(ppMaterials[1]);
 		}
+		else if (data[i].type == vWalls_1)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, vWall_1);
+			obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == hWalls_1)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, hWall_1);
+			obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == vWalls_S)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, vWall_S);
+			obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == vWalls_SM)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, vWall_SM);
+			obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == vWalls_1S)
+		{
+			obj = new CTerrainObject(1);
+			obj->SetMesh(0, vWall_1S);
+			obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == vWalls_1SM)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, vWall_1SM);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == vWalls_H)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, vWall_H);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == hWalls_H)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, hWall_H);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == froom_set)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, frooms);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == froom_set_H)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, frooms_H);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == floor_T)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, t_Grid);
+		obj->SetMaterial(ppMaterials[3]);
+		}
+		else if (data[i].type == loadwall_l)//container
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, loadwall1);
+		obj->SetMaterial(ppMaterials[2]);
+
+		}
+		else if (data[i].type == loadwall_m)//container
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, loadwall2);
+		obj->SetMaterial(ppMaterials[2]);
+
+		}
+		else if (data[i].type == loadwall_h)//container
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, loadwall3);
+		obj->SetMaterial(ppMaterials[2]);
+
+		}
+		else if (data[i].type == floor_Se)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_Grid);
+		obj->SetMaterial(ppMaterials[3]);
+		}
+		else if (data[i].type == Se_room_L1_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_l1);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_L1_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_l2);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_L1_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_l3);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_R1_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_r1);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_R1_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_r2);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_R1_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_room_r3);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_RSL)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_rs1);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_RSM)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_rs2);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_RSH)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_rs3);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_FBL)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_fb1);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_FBM)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_fb2);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+		else if (data[i].type == Se_room_FBH)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_fb3);
+		obj->SetMaterial(ppMaterials[2]);
+		}
+
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * i));
@@ -474,7 +672,7 @@ void CObjectsShader::ReleaseObjects()
 {
 	if (m_ppObjects)
 	{
-		for (int j = 0; j < m_nObjects; j++) 
+		for (int j = 0; j < m_nObjects; j++)
 			if (m_ppObjects[j])
 				delete m_ppObjects[j];
 		delete[] m_ppObjects;
@@ -524,7 +722,7 @@ void CObjectsShader::AnimateObjects(float fTimeElapsed)
 		}
 	}
 
-	
+
 
 
 	for (int j = 0; j < m_nObjects; j++)
@@ -543,7 +741,7 @@ void CObjectsShader::ReleaseUploadBuffers()
 void CObjectsShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
 	CTexturedShader::Render(pd3dCommandList);
-/**/
+	/**/
 	UpdateShaderVariables(pd3dCommandList);
 
 	for (int j = 0; j < m_nObjects; j++)
@@ -604,7 +802,7 @@ void CObjectsShader::playerMeleeAttack()
 {
 	BoundBox bx;//공격 범위의 충돌 박스
 	XMFLOAT3 pos = m_ppObjects[0]->GetPosition();
-	bx.start = XMFLOAT3(pos.x-0.5f, pos.y, pos.z+0.2f);
+	bx.start = XMFLOAT3(pos.x - 0.5f, pos.y, pos.z + 0.2f);
 	bx.end = XMFLOAT3(pos.x + 0.5f, pos.y + 0.5, pos.z + 1.0f);
 
 	for (int i = 0; i < boxesWorld.size(); ++i)
@@ -668,23 +866,23 @@ void CTexturedShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature
 }
 
 
- std::vector<Obj> LoadObjects(const char* filename)
+std::vector<Obj> LoadObjects(const char* filename)
 {
 	FILE* f = fopen(filename, "r");
 	std::vector<Obj> list;
-	
+
 	while (!feof(f))
 	{
 		float f1, f2, f3;
 		float r1, r2, r3;
 		int t;
 		fscanf(f, "position : (%f,  %f,  %f)  rotation : (%f,  %f,  %f)  type : %d\n", &f1, &f2, &f3, &r1, &r2, &r3, &t);
-		
+
 		Obj o;
 		o.position = XMFLOAT3(f1, f2, f3);
 		o.rotation = XMFLOAT3(r1, r2, r3);
 		o.type = t;
-		
+
 		list.push_back(o);
 	}
 	return list;
@@ -692,59 +890,59 @@ void CTexturedShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12RootSignature
 }
 
 
- std::vector<BoundBox> CObjectsShader::LoadBoxes(const char* filename)
- {
-	 std::vector<BoundBox> result;
-	 FILE* f = fopen(filename, "r");
-	 while (!feof(f))
-	 {
-		 float x1, y1, z1, x2, y2, z2;
-		 BoundBox box;
-		 fscanf(f, "start : (%f,  %f,  %f)  end : (%f,  %f,  %f)\n", &x1, &y1, &z1, &x2, &y2, &z2);
-		 box.start = XMFLOAT3(x1, y1, z1);
-		 box.end = XMFLOAT3(x2, y2, z2);
-		 result.push_back(box);
-	 }
-	 return result;
- }
+std::vector<BoundBox> CObjectsShader::LoadBoxes(const char* filename)
+{
+	std::vector<BoundBox> result;
+	FILE* f = fopen(filename, "r");
+	while (!feof(f))
+	{
+		float x1, y1, z1, x2, y2, z2;
+		BoundBox box;
+		fscanf(f, "start : (%f,  %f,  %f)  end : (%f,  %f,  %f)\n", &x1, &y1, &z1, &x2, &y2, &z2);
+		box.start = XMFLOAT3(x1, y1, z1);
+		box.end = XMFLOAT3(x2, y2, z2);
+		result.push_back(box);
+	}
+	return result;
+}
 
- std::vector<BoundSphere> CObjectsShader::LoadSphere(const char* filename)
- {
-	 std::vector<BoundSphere> result;
-	 FILE* f = fopen(filename, "r");
-	 while (!feof(f))
-	 {
-		 float x1, y1, z1, dist;
-		 BoundSphere sphere;
-		 fscanf(f, "center : (%f,  %f,  %f)  range : %f\n", &x1, &y1, &z1, &dist);
-		 sphere.center = XMFLOAT3(x1, y1, z1);
-		 sphere.dist = dist;
-		 result.push_back(sphere);
-	 }
-	 return result;
- }
+std::vector<BoundSphere> CObjectsShader::LoadSphere(const char* filename)
+{
+	std::vector<BoundSphere> result;
+	FILE* f = fopen(filename, "r");
+	while (!feof(f))
+	{
+		float x1, y1, z1, dist;
+		BoundSphere sphere;
+		fscanf(f, "center : (%f,  %f,  %f)  range : %f\n", &x1, &y1, &z1, &dist);
+		sphere.center = XMFLOAT3(x1, y1, z1);
+		sphere.dist = dist;
+		result.push_back(sphere);
+	}
+	return result;
+}
 
- bool isOverlapped(BoundBox b1, BoundBox b2)
- {
-	 XMFLOAT3 pos[8];
-	 bool result = false;
+bool isOverlapped(BoundBox b1, BoundBox b2)
+{
+	XMFLOAT3 pos[8];
+	bool result = false;
 
-	 pos[0] = XMFLOAT3(b1.start.x, b1.start.y, b1.start.z);
-	 pos[1] = XMFLOAT3(b1.start.x, b1.end.y, b1.start.z);
-	 pos[2] = XMFLOAT3(b1.start.x, b1.start.y, b1.end.z);
-	 pos[3] = XMFLOAT3(b1.start.x, b1.end.y, b1.end.z);
-	 
-	 pos[4] = XMFLOAT3(b1.end.x, b1.start.y, b1.start.z);
-	 pos[5] = XMFLOAT3(b1.end.x, b1.end.y, b1.start.z);
-	 pos[6] = XMFLOAT3(b1.end.x, b1.start.y, b1.end.z);
-	 pos[7] = XMFLOAT3(b1.end.x, b1.end.y, b1.end.z);
+	pos[0] = XMFLOAT3(b1.start.x, b1.start.y, b1.start.z);
+	pos[1] = XMFLOAT3(b1.start.x, b1.end.y, b1.start.z);
+	pos[2] = XMFLOAT3(b1.start.x, b1.start.y, b1.end.z);
+	pos[3] = XMFLOAT3(b1.start.x, b1.end.y, b1.end.z);
 
-	 for (int i = 0; i < 8; ++i)
-	 {
-		 if (pos[i].x > b2.start.x && pos[i].x<b2.end.x && pos[i].y>b2.start.y && pos[i].y<b2.end.y && pos[i].z>b2.start.z && pos[i].z < b2.end.z)
-		 {
-			 result = true;
-		 }
-	 }
-	 return result;
- }
+	pos[4] = XMFLOAT3(b1.end.x, b1.start.y, b1.start.z);
+	pos[5] = XMFLOAT3(b1.end.x, b1.end.y, b1.start.z);
+	pos[6] = XMFLOAT3(b1.end.x, b1.start.y, b1.end.z);
+	pos[7] = XMFLOAT3(b1.end.x, b1.end.y, b1.end.z);
+
+	for (int i = 0; i < 8; ++i)
+	{
+		if (pos[i].x > b2.start.x && pos[i].x<b2.end.x && pos[i].y>b2.start.y && pos[i].y<b2.end.y && pos[i].z>b2.start.z && pos[i].z < b2.end.z)
+		{
+			result = true;
+		}
+	}
+	return result;
+}
