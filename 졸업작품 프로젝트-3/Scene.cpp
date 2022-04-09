@@ -399,12 +399,14 @@ bool CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
+			/*
 		case 'W': m_ppGameObjects[0]->MoveForward(+3.0f); break;
 		case 'S': m_ppGameObjects[0]->MoveForward(-3.0f); break;
 		case 'A': m_ppGameObjects[0]->MoveStrafe(-3.0f); break;
 		case 'D': m_ppGameObjects[0]->MoveStrafe(+3.0f); break;
 		case 'Q': m_ppGameObjects[0]->MoveUp(+3.0f); break;
 		case 'R': m_ppGameObjects[0]->MoveUp(-3.0f); break;
+			*/
 		default:
 			break;
 		}
@@ -528,6 +530,8 @@ void CScene::setPlayerAnimation(int a)
 	currentPlayerAnim = a;
 }
 
+
+
 void CScene::moveObject(int idx)
 {
 	
@@ -568,18 +572,14 @@ void CScene::moveObject(int idx)
 }
 
 
-void CScene::setPlayerDirection(float dx, float dy, float dz)
-{
-	if (m_ppGameObjects[0]->currentRotation.y != dy)
-	{
-		m_ppGameObjects[0]->Rotate(0.0f, dy - m_ppGameObjects[0]->currentRotation.y, 0.0f);
-		m_ppGameObjects[0]->currentRotation.y = dy;
-	}
-}
-void CScene::setObjectSpeed(int idx, XMFLOAT3 spd, float size)
+
+void CScene::setObjectSpeed(int idx, float size)
 {
 	m_ppGameObjects[idx]->speed = size;
-	m_ppGameObjects[idx]->direction = Vector3::Normalize(spd);
+
+	float rad = XMConvertToRadians(m_ppGameObjects[idx]->currentRotation.y);
+
+	m_ppGameObjects[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
 }
 
 void CScene::setObjectState(int index, int state)
@@ -605,4 +605,47 @@ void CScene::setObjectState(int index, int state)
 bool CScene::moveSuccessed(int idx)
 {
 	return m_ppGameObjects[idx]->lastMoveSuccess;
+}
+
+void CScene::rotateObject(int idx, float x, float y, float z)
+{
+	m_ppGameObjects[idx]->Rotate(x, y, z);
+	m_ppGameObjects[idx]->currentRotation.x += x;
+	m_ppGameObjects[idx]->currentRotation.y += y;
+	m_ppGameObjects[idx]->currentRotation.z += z;
+
+	if (m_ppGameObjects[idx]->currentRotation.x >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.x -= 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.y >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.y -= 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.z >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.z -= 360.0f;
+	}
+
+	if (m_ppGameObjects[idx]->currentRotation.x < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.x += 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.y < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.y += 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.z < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.z += 360.0f;
+	}
+
+}
+void CScene::setPlayerDirection(float dx, float dy, float dz)
+{
+	if (m_ppGameObjects[0]->currentRotation.y != dy)
+	{
+		m_ppGameObjects[0]->Rotate(0.0f, dy - m_ppGameObjects[0]->currentRotation.y, 0.0f);
+		m_ppGameObjects[0]->currentRotation.y = dy;
+	}
 }

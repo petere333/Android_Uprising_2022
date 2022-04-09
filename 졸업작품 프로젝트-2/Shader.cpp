@@ -348,7 +348,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단벽1.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[12] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[12]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/중단벽2.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[12]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단벽2.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[13] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[13]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");

@@ -94,7 +94,7 @@ public:
 	int currentPlayerAnim = 0;
 
 
-	void setPlayerDirection(float dx, float dy, float dz);
+	
 	void moveObject(int);
 	
 	void setPlayerAnimation(int a);
@@ -118,7 +118,7 @@ public:
 	LIGHTS								*m_pcbMappedLights = NULL;
 
 public: 
-	void setObjectSpeed(int idx, XMFLOAT3 dir, float size);
+	void setObjectSpeed(int idx, float size);
 	void setObjectState(int index, int state);
 	bool moveSuccessed(int idx);
 
@@ -130,4 +130,12 @@ public:
 	{ 
 		m_ppGameObjects[idx]->lastMove = chrono::system_clock::now(); 
 	}
+
+	
+
+	void rotateObject(int idx, float, float, float);
+
+	void setPlayerDirection(float dx, float dy, float dz);
+
+	XMFLOAT3 getObjectRotation(int idx) { return m_ppGameObjects[idx]->currentRotation; }
 };

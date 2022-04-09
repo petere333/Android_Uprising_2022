@@ -11,9 +11,16 @@ CCamera::CCamera()
 	m_xmf3Position = XMFLOAT3(3.0f, 2.85f, 1.0f);
 
 
+	lookVec = XMFLOAT3(0.0f, -2.0f, 2.0f);
+
+
+	dist = 2.0f;
+	rightVec = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	lx = 3.0f;
 	ly = 0.85f;
 	lz = 3.0f;
+
+	angle = 270.0f;
 }
 CCamera::~CCamera()
 {}
@@ -80,8 +87,36 @@ void CCamera::move(float mx, float my, float mz)
 	m_xmf3Position.y = my;
 	m_xmf3Position.z = mz;
 
-	lx = mx;
-	ly = my-2.0f;
-	lz = mz+2.0f;
+	float rad = XMConvertToRadians(angle);
+
+	
+	lx = mx-static_cast<float>(cos(rad)) * dist;
+	//ly = my-2.0f;
+	lz = mz-static_cast<float>(sin(rad)) * dist;
 	GenerateViewMatrix();
 }
+void CCamera::moveRelative(float mx, float my, float mz)
+{
+	m_xmf3Position.x += mx;
+	m_xmf3Position.y += my;
+	m_xmf3Position.z += mz;
+
+	lx = mx;
+	ly = my - 2.0f;
+	lz = mz + 2.0f;
+	GenerateViewMatrix();
+}
+
+void CCamera::rotate(float degree, float originX, float originZ)
+{
+	angle += degree;
+	while (angle >= 360.0f)
+	{
+		angle -= 360.0f;
+	}
+	float rad = XMConvertToRadians(angle);
+	m_xmf3Position.x = static_cast<float>(cos(rad)) * dist+originX;
+	m_xmf3Position.z = static_cast<float>(sin(rad)) * dist+originZ;
+	GenerateViewMatrix();
+}
+

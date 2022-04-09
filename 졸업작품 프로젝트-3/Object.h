@@ -479,6 +479,8 @@ public:
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
 
 public:
+	
+
 	XMFLOAT3 currentRotation;
 	int objType;
 	PlayerState pState;
