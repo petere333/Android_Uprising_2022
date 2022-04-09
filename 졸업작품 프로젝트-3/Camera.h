@@ -25,9 +25,13 @@ protected:
 	ID3D12Resource* m_pd3dcbCamera = NULL;
 	VS_CB_CAMERA_INFO* m_pcbMappedCamera = NULL;
 private:
-	float x, y, z;
+	
 	XMFLOAT3 m_xmf3Position;
 	float lx, ly, lz;
+
+	XMFLOAT3 lookVec;
+	XMFLOAT3 rightVec;
+	XMFLOAT3 upVec;
 public:
 	CCamera();
 	virtual ~CCamera();
@@ -42,5 +46,28 @@ public:
 		0.0f, float fMaxZ = 1.0f);
 	void SetScissorRect(LONG xLeft, LONG yTop, LONG xRight, LONG yBottom);
 	virtual void SetViewportsAndScissorRects(ID3D12GraphicsCommandList* pd3dCommandList);
+	
+	
+	
 	void move(float, float, float);
+	void moveRelative(float, float, float);
+	void rotate(float delta, float, float);
+	void rotateUp(float y) 
+	{ 
+		if (ly >= -3.0 && y < 0) 
+		{
+			ly += y;
+		}
+		if (ly <= 3.0 && y >= 0)
+		{
+			ly += y;
+		}
+	}
+
+	
+	float angle;
+	float dist;
+
+
+	XMFLOAT3 getPosition() { return m_xmf3Position; }
 };

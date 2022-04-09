@@ -4,7 +4,7 @@
 #define FRAME_BUFFER_HEIGHT		900
 
 #include "Timer.h"
-
+#include "Game_Data.h"
 #include "Scene.h"
 
 class CGameFramework
@@ -90,5 +90,10 @@ private:
 	
 public:
 	float dx=0.0f, dy=0.0f, dz=0.0f;
+	int prevX=500, prevY=500;
+
+	int lastOrder = 0;
+	// 0 :up	 1 : down	 2 : left	3 : right
+	
 };
 

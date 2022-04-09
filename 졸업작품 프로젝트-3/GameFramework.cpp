@@ -1,6 +1,7 @@
 //-----------------------------------------------------------------------------
 // File: CGameFramework.cpp
 //-----------------------------------------------------------------------------
+#pragma once 
 
 #include "stdafx.h"
 #include "GameFramework.h"
@@ -45,14 +46,15 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 {
 	m_hInstance = hInstance;
 	m_hWnd = hMainWnd;
-
+	
 	CreateDirect3DDevice();
 	CreateCommandQueueAndList();
 	CreateRtvAndDsvDescriptorHeaps();
 	CreateSwapChain();
 	CreateDepthStencilView();
-
 	CoInitialize(NULL);
+	
+	SetCursorPos(500, 500);
 
 	BuildObjects();
 
@@ -291,10 +293,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	{
 		case WM_LBUTTONDOWN:
 		case WM_RBUTTONDOWN:
-			/*
-			::SetCapture(hWnd);
-			::GetCursorPos(&m_ptOldCursorPos);
-			*/
+			
+			//::SetCapture(hWnd);
+			//::GetCursorPos(&m_ptOldCursorPos);
+			
 			break;
 		case WM_LBUTTONUP:
 		case WM_RBUTTONUP:
@@ -312,27 +314,93 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
+	
 	switch (nMessageID)
 	{
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
 		case VK_UP:
-			m_pScene->setPlayerDirection(0.0f, 0.0f, 0.0f);
-			dz = 0.3f;
-			break;
+		{
+			if (lastOrder == 1)
+			{
+				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
+			}
+			else if(lastOrder == 2)
+			{
+				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
+			}
+			else if (lastOrder == 3)
+			{
+				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
+			}
+			lastOrder = 0;
+			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
+		}
+		break;
 		case VK_DOWN:
-			m_pScene->setPlayerDirection(0.0f, 180.0f, 0.0f);
-			dz = -0.3f;
-			break;
+		{
+			if (lastOrder == 0)
+			{
+				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
+			}
+			else if (lastOrder == 2)
+			{
+				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
+			}
+			else if (lastOrder == 3)
+			{
+				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
+			}
+			lastOrder = 1;
+			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
+		}
+		break;
 		case VK_LEFT:
-			m_pScene->setPlayerDirection(0.0f, 270.0f, 0.0f);
-			dx = -0.3f;
-			break;
+		{
+			if (lastOrder == 0)
+			{
+				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
+			}
+			else if (lastOrder == 1)
+			{
+				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
+			}
+			else if (lastOrder == 3)
+			{
+				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
+			}
+			lastOrder = 2;
+			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
+		}
+		break;
 		case VK_RIGHT:
-			m_pScene->setPlayerDirection(0.0f, 90.0f, 0.0f);
-			dx = 0.3f;
+		{
+			if (lastOrder == 0)
+			{
+				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
+			}
+			else if (lastOrder == 1)
+			{
+				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
+			}
+			else if (lastOrder == 2)
+			{
+				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
+			}
+			lastOrder = 3;
+			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
+		}
 			break;
+		case 'K':
+			XMFLOAT3 playerLocation = m_pScene->getPos(0);
+			m_pCamera->rotate(180.0f, playerLocation.x, playerLocation.z);
+			break;
+
 		}
 		break;
 		case WM_KEYUP:
@@ -350,20 +418,20 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					ChangeSwapChainState();
 					break;
 				case VK_UP:
-					
-					dz = 0.0f;
+					m_pScene->setObjectSpeed(0, 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_DOWN:
-					
-					dz = 0.0f;
+					m_pScene->setObjectSpeed(0, 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_LEFT:
-					
-					dx = 0.0f;
+					m_pScene->setObjectSpeed(0, 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_RIGHT:
-					
-					dx = 0.0f;
+					m_pScene->setObjectSpeed(0, 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				default:
 					break;
@@ -477,55 +545,38 @@ void CGameFramework::ReleaseObjects()
 
 void CGameFramework::ProcessInput()
 {
-	static UCHAR pKeysBuffer[256];
-	bool bProcessedByScene = false;
-	if (GetKeyboardState(pKeysBuffer) && m_pScene) bProcessedByScene = m_pScene->ProcessInput(pKeysBuffer);
-	if (!bProcessedByScene)
-	{
-		DWORD dwDirection = 0;
-		if (pKeysBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
-		if (pKeysBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
-		if (pKeysBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
-		if (pKeysBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
-		if (pKeysBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
-		if (pKeysBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
+	POINT pnt;
+	GetCursorPos(&pnt);
 
-		float cxDelta = 0.0f, cyDelta = 0.0f;
-		POINT ptCursorPos;
-		if (GetCapture() == m_hWnd)
-		{
-			SetCursor(NULL);
-			GetCursorPos(&ptCursorPos);
-			cxDelta = (float)(ptCursorPos.x - m_ptOldCursorPos.x) / 3.0f;
-			cyDelta = (float)(ptCursorPos.y - m_ptOldCursorPos.y) / 3.0f;
-			SetCursorPos(m_ptOldCursorPos.x, m_ptOldCursorPos.y);
-		}
+	XMFLOAT3 offset = m_pScene->getPos(0);
+	float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
+	float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+	m_pCamera->rotate(-deltaX, offset.x, offset.z);
+	m_pCamera->rotateUp(-deltaY);
+	m_pScene->rotateObject(0, 0.0f, deltaX, 0.0f);
+	
 
-		if ((dwDirection != 0) || (cxDelta != 0.0f) || (cyDelta != 0.0f))
-		{
-			if (cxDelta || cyDelta)
-			{
-				/*
-				if (pKeysBuffer[VK_RBUTTON] & 0xF0)
-					m_pPlayer->Rotate(cyDelta, 0.0f, -cxDelta);
-				else
-					m_pPlayer->Rotate(cyDelta, cxDelta, 0.0f);
-					*/
-			}
-			/*if (dwDirection) m_pPlayer->Move(dwDirection, 2.25f, true);*/
-		}
-	}
-	//m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
+
+	SetCursorPos(500, 500);
+	prevX = 500;
+	prevY = 500;
+
+
 }
 
 void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
-	if (dx != 0.0f || dy != 0.0f || dz != 0.0f)//실질적으로 이동을 시도한 경우
+	m_pScene->moveObject(0);
+	if (m_pScene->getSpeed(0)>0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
 	{
-		if (m_pScene->movePlayer(dx, dy, dz) == true)//실제로 이동에 성공한 경우 = 충돌이 없는 경우
+		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
 		{
-			m_pCamera->move(dx, dy, dz);
+			float angle = XMConvertToRadians(m_pCamera->angle);
+			XMFLOAT3 pos = m_pScene->getPos(0);
+			float spd = m_pScene->getSpeed(0);
+			
+			m_pCamera->move(cos(angle)*2.0f+pos.x, 2.85f, sin(angle)*2.0f+pos.z);
 			if (m_pScene->currentPlayerAnim != 20)
 			{
 				m_pScene->setPlayerAnimation(20);
@@ -541,7 +592,7 @@ void CGameFramework::AnimateObjects()
 	}
 	if (m_pScene) m_pScene->AnimateObjects(fTimeElapsed);
 
-	//m_pPlayer->Animate(fTimeElapsed);
+	
 }
 
 void CGameFramework::WaitForGpuComplete()
@@ -647,5 +698,7 @@ void CGameFramework::FrameAdvance()
 	//XMFLOAT3 xmf3Position = m_pPlayer->GetPosition();
 	//_stprintf_s(m_pszFrameRate + nLength, 70 - nLength, _T("(%4f, %4f, %4f)"), xmf3Position.x, xmf3Position.y, xmf3Position.z);
 	::SetWindowText(m_hWnd, m_pszFrameRate);
+
+	
 }
 

@@ -316,7 +316,7 @@ void CObjectsShader::ReleaseShaderVariables()
 	CTexturedShader::ReleaseShaderVariables();
 }
 
-#define TEXTURES		11
+#define TEXTURES		14
 
 void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	* pd3dCommandList, void* pContext)
@@ -326,7 +326,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/chons.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/WhitePaint.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -345,6 +345,12 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/»ó´Üº®1.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[12] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[12]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/»ó´Üº®2.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[13] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[13]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
 	m_nObjects = data.size();
@@ -363,7 +369,10 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	}
 
 	CCubeMeshTextured* pPlayerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.7f, 1.0f);
-	CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
+	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
+	CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
+
+
 
 	//CRectMeshTextured* pTileMesh = new CRectMeshTextured(pd3dDevice, pd3dCommandList, 2.5f, 2.5f);
 
@@ -398,7 +407,38 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	WallMeshHorizontal* Se_fb1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
 	WallMeshHorizontal* Se_fb2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
 	WallMeshHorizontal* Se_fb3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
+	WallMeshVertical* Se_BS1_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 2.5f);
+	WallMeshVertical* Se_BS1_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 2.5f);
+	WallMeshVertical* Se_BS1_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 7.5f);
+	WallMeshVertical* Se_BS2_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
+	WallMeshVertical* Se_BS2_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
+	WallMeshVertical* Se_BS2_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 7.5f);
+	WallMeshVertical* Se_BS3_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 2.5f);
+	WallMeshVertical* Se_BS3_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 2.5f);
+	WallMeshVertical* Se_BS3_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 7.5f);
+	WallMeshHorizontal* Se_BS4_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
+	WallMeshHorizontal* Se_BS4_2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
+	WallMeshHorizontal* Se_BS4_3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 7.5f);
+	WallMeshVertical* Frst_lh = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
 
+	WallMeshVertical* Bated_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* Bated_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* Bat_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
+	WallMeshVertical* Bat_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 20.0f, 200.0f);
+	WallMeshVertical* Bat_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
+	WallMeshHorizontal* Bat_FB1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* Bat_FB2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* Bat_FB_11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* Bat_FB_12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* SeBated_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* SeBated_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* SeBat_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
+	WallMeshVertical* SeBat_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 20.0f, 200.0f);
+	WallMeshVertical* SeBat_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
+	WallMeshHorizontal* SeBat_FB1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* SeBat_FB2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* SeBat_FB_11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshHorizontal* SeBat_FB_12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -408,6 +448,8 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
 	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
+
+	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
 
 	boxesWorld = LoadBoxes("res/map/box.txt");
 
@@ -445,13 +487,13 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == hWalls)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, hWall);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == BOX)
 		{
@@ -511,49 +553,49 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall_S);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == vWalls_SM)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall_SM);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == vWalls_1S)
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, vWall_1S);
-			obj->SetMaterial(ppMaterials[2]);
+			obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == vWalls_1SM)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, vWall_1SM);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == vWalls_H)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, vWall_H);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == hWalls_H)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, hWall_H);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == froom_set)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, frooms);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == froom_set_H)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, frooms_H);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == floor_T)
 		{
@@ -565,21 +607,21 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, loadwall1);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 
 		}
 		else if (data[i].type == loadwall_m)//container
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, loadwall2);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 
 		}
 		else if (data[i].type == loadwall_h)//container
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, loadwall3);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 
 		}
 		else if (data[i].type == floor_Se)
@@ -592,74 +634,281 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_l1);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_L1_2)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_l2);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_L1_3)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_l3);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == Se_room_R1_1)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_r1);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_R1_2)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_r2);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_R1_3)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_room_r3);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == Se_room_RSL)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_rs1);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_RSM)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_rs2);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_RSH)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_rs3);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
 		else if (data[i].type == Se_room_FBL)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_fb1);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_FBM)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_fb2);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[12]);
 		}
 		else if (data[i].type == Se_room_FBH)
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_fb3);
-		obj->SetMaterial(ppMaterials[2]);
+		obj->SetMaterial(ppMaterials[11]);
 		}
+		else if (data[i].type == Se_Busok1_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS1_1);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok1_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS1_2);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok1_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS1_3);
+		obj->SetMaterial(ppMaterials[11]);
+		}
+		else if (data[i].type == Se_Busok2_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS2_1);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok2_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS2_2);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok2_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS2_3);
+		obj->SetMaterial(ppMaterials[11]);
+		}
+		else if (data[i].type == Se_Busok3_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS3_1);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok3_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS3_2);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok3_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS3_3);
+		obj->SetMaterial(ppMaterials[11]);
+		}
+		else if (data[i].type == Se_Busok4_1)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS4_1);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok4_2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS4_2);
+		obj->SetMaterial(ppMaterials[12]);
+		}
+		else if (data[i].type == Se_Busok4_3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Se_BS4_3);
+		obj->SetMaterial(ppMaterials[11]);
+		}
+		else if (data[i].type == Cont1_1)//container
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Container1_1);
+		obj->Rotate(0.0f, 90.0f, 0.0f);
+		obj->SetMaterial(ppMaterials[0]);
+
+		}
+		else if (data[i].type == Frs_H)//container
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Frst_lh);
+		obj->SetMaterial(ppMaterials[11]);
+
+		}
+		else if (data[i].type == BatSet1)//ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == BatSet2)//ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_2);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == BatSet3)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_3);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == Bat_FB_set1)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_FB1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == Bat_FB_set2)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_FB2);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == BatSet_1)// ÁöºØ
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bated_1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == BatSet_2)// ÁöºØ
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bated_2);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == Bat_FB_101)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_FB_11);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == Bat_FB_102)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Bat_FB_12);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBatSet1)//ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBatSet3)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_3);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBat_FB_set1)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_FB1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBat_FB_set2)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_FB2);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBatSet_1)// ÁöºØ
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBated_1);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBatSet_2)// ÁöºØ
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBated_2);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBat_FB_101)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_FB_11);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+		else if (data[i].type == SeBat_FB_102)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, SeBat_FB_12);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+
 
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);

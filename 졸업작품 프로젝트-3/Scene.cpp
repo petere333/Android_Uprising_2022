@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // File: CScene.cpp
 //-----------------------------------------------------------------------------
-
+#pragma once
 
 #include "Scene.h"
 
@@ -141,13 +141,19 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			
 			obj = new CLionObject(pd3dDevice,pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
 			obj->type = 1;
-			
-			obj->SetTrackAnimationSet(0, 17);
+			obj->objType = 1;
+
+			obj->pState.currHP = 100;
+			obj->pState.id = IDLE_STATE;
+			obj->pState.timeElapsed = 0.0f;
+
+			obj->SetTrackAnimationSet(0, 11);
 			currentPlayerAnim = 11;
 		}
 		else if (data[i].type == CONTAINER)//container
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(container);
 			obj->SetMaterial(0, ppMaterials[0]);
 
@@ -155,12 +161,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		else if (data[i].type == f800x600)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(pGrid);
 			obj->SetMaterial(0, ppMaterials[3]);
 		}
 		else if (data[i].type == vWall600x500)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(vWall);
 			obj->SetMaterial(0, ppMaterials[2]);
 		}
@@ -173,48 +181,58 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		else if (data[i].type == BOX)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(box);
 			obj->SetMaterial(0, ppMaterials[5]);
 		}
 		else if (data[i].type == PALLET)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(cartMesh);
 			obj->SetMaterial(0, ppMaterials[7]);
 		}
 		else if (data[i].type == TRASH)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(binMesh);
 			obj->SetMaterial(0, ppMaterials[8]);
 		}
 		else if (data[i].type == BARREL)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(barrelMesh);
 			obj->SetMaterial(0, ppMaterials[9]);
 		}
 		else if (data[i].type == TRUCK)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(truckMesh);
 			obj->SetMaterial(0, ppMaterials[10]);
 		}
 		else if (data[i].type == TABLE)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(tableMesh);
 			obj->SetMaterial(0, ppMaterials[6]);
 		}
 		else if (data[i].type == CHAIR)
 		{
 			obj = new CGameObject(1);
+			obj->objType = 0;
 			obj->SetMesh(chairMesh);
 			obj->SetMaterial(0, ppMaterials[1]);
 		}
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		obj->currentRotation = data[i].rotation;
+		obj->speed = 0.0f;
+		obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		obj->lastMove = chrono::system_clock::now();
 		m_ppGameObjects[i] = obj;
 	}
 
@@ -381,12 +399,14 @@ bool CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
+			/*
 		case 'W': m_ppGameObjects[0]->MoveForward(+3.0f); break;
 		case 'S': m_ppGameObjects[0]->MoveForward(-3.0f); break;
 		case 'A': m_ppGameObjects[0]->MoveStrafe(-3.0f); break;
 		case 'D': m_ppGameObjects[0]->MoveStrafe(+3.0f); break;
 		case 'Q': m_ppGameObjects[0]->MoveUp(+3.0f); break;
 		case 'R': m_ppGameObjects[0]->MoveUp(-3.0f); break;
+			*/
 		default:
 			break;
 		}
@@ -406,12 +426,14 @@ void CScene::AnimateObjects(float fTimeElapsed)
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-	
+	setObjectLastMove(0);
 	
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
 {
+
+
 	if (m_pd3dGraphicsRootSignature) pd3dCommandList->SetGraphicsRootSignature(m_pd3dGraphicsRootSignature);
 	
 
@@ -444,6 +466,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	}
 
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
+
+	
 }
 
 
@@ -506,30 +530,116 @@ void CScene::setPlayerAnimation(int a)
 	currentPlayerAnim = a;
 }
 
-bool CScene::movePlayer(float x, float y, float z)
+
+
+void CScene::moveObject(int idx)
 {
-	float tx = m_ppGameObjects[0]->GetPosition().x + x;
-	float ty = m_ppGameObjects[0]->GetPosition().y + y;
-	float tz = m_ppGameObjects[0]->GetPosition().z + z;
-	bool crash = false;
-	for (int i = 0; i < boxesWorld.size(); ++i)
+	
+	chrono::duration<double> fromLastMove = chrono::system_clock::now() - m_ppGameObjects[idx]->lastMove;
+	double time = fromLastMove.count();
+	float fTime = static_cast<float>(time);
+	bool crash=false;
+	float tx, ty, tz;
+	if (m_ppGameObjects[idx]->speed > 0.0f)
 	{
-		if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 0.85f && tz > boxesWorld[i].start.z - 0.5f
-			&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.85f && tz < boxesWorld[i].end.z + 0.5f)
+		tx = m_ppGameObjects[idx]->GetPosition().x + fTime * m_ppGameObjects[idx]->speed * m_ppGameObjects[idx]->direction.x;
+		ty = m_ppGameObjects[idx]->GetPosition().y + fTime * m_ppGameObjects[idx]->speed * m_ppGameObjects[idx]->direction.y;
+		tz = m_ppGameObjects[idx]->GetPosition().z + fTime * m_ppGameObjects[idx]->speed * m_ppGameObjects[idx]->direction.z;
+
+		for (int i = 0; i < boxesWorld.size(); ++i)
 		{
-			crash = true;
+			if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 0.85f && tz > boxesWorld[i].start.z - 0.5f
+				&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.85f && tz < boxesWorld[i].end.z + 0.5f)
+			{
+				crash = true;
+			}
+		}
+
+
+		if (crash == false)
+		{
+			m_ppGameObjects[idx]->SetPosition(tx, ty, tz);
+			m_ppGameObjects[idx]->lastMoveSuccess = true;
+
+		}
+		else
+		{
+			m_ppGameObjects[idx]->lastMoveSuccess = false;
+
 		}
 	}
-	if (crash == false)
+	
+}
+
+
+
+void CScene::setObjectSpeed(int idx, float size)
+{
+	m_ppGameObjects[idx]->speed = size;
+
+	float rad = XMConvertToRadians(m_ppGameObjects[idx]->currentRotation.y);
+
+	m_ppGameObjects[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
+}
+
+void CScene::setObjectState(int index, int state)
+{
+	if (m_ppGameObjects[index]->objType == TYPE_PLAYER)
 	{
-		m_ppGameObjects[0]->SetPosition(tx, ty, tz);
-		return true;
+		if (m_ppGameObjects[index]->pState.id != state)
+		{
+			m_ppGameObjects[index]->pState.id = state;
+			m_ppGameObjects[index]->pState.timeElapsed = 0.0f;
+		}
 	}
-	else
+	else if (m_ppGameObjects[index]->objType == TYPE_ENEMY)
 	{
-		printf("cannot move\n");
-		return false;
+		if (m_ppGameObjects[index]->eState.id != state)
+		{
+			m_ppGameObjects[index]->eState.id = state;
+			m_ppGameObjects[index]->eState.timeElapsed = 0.0f;
+		}
 	}
+}
+
+bool CScene::moveSuccessed(int idx)
+{
+	return m_ppGameObjects[idx]->lastMoveSuccess;
+}
+
+void CScene::rotateObject(int idx, float x, float y, float z)
+{
+	m_ppGameObjects[idx]->Rotate(x, y, z);
+	m_ppGameObjects[idx]->currentRotation.x += x;
+	m_ppGameObjects[idx]->currentRotation.y += y;
+	m_ppGameObjects[idx]->currentRotation.z += z;
+
+	if (m_ppGameObjects[idx]->currentRotation.x >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.x -= 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.y >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.y -= 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.z >= 360.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.z -= 360.0f;
+	}
+
+	if (m_ppGameObjects[idx]->currentRotation.x < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.x += 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.y < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.y += 360.0f;
+	}
+	if (m_ppGameObjects[idx]->currentRotation.z < 0.0f)
+	{
+		m_ppGameObjects[idx]->currentRotation.z += 360.0f;
+	}
+
 }
 void CScene::setPlayerDirection(float dx, float dy, float dz)
 {

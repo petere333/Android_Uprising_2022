@@ -7,8 +7,8 @@ CCamera::CCamera()
 	m_d3dViewport = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT, 0.0f, 1.0f };
 	m_d3dScissorRect = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT };
 	x = 3.0f;
-	y = 2.85f;
-	z = 1.0f;
+	y = 2.85f; // 2.85
+	z = -1.0f; // -1
 	lx = 3.0f;
 	ly = 0.85f;
 	lz = 3.0f;
