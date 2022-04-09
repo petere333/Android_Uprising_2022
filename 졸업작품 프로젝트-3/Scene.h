@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "LevelLoader.h"
 #include "stdafx.h"
+#include "Game_Data.h"
 
 #define MAX_LIGHTS						16 
 
@@ -94,7 +95,8 @@ public:
 
 
 	void setPlayerDirection(float dx, float dy, float dz);
-	bool movePlayer(float x, float y, float z);
+	void moveObject(int);
+	
 	void setPlayerAnimation(int a);
 
 	int									m_nGameObjects = 0;
@@ -114,4 +116,18 @@ public:
 
 	ID3D12Resource						*m_pd3dcbLights = NULL;
 	LIGHTS								*m_pcbMappedLights = NULL;
+
+public: 
+	void setObjectSpeed(int idx, XMFLOAT3 dir, float size);
+	void setObjectState(int index, int state);
+	bool moveSuccessed(int idx);
+
+	float getSpeed(int idx) { return m_ppGameObjects[idx]->speed; }
+	XMFLOAT3 getDirection(int idx) { return m_ppGameObjects[idx]->direction; }
+
+	XMFLOAT3 getPos(int idx) { return m_ppGameObjects[idx]->GetPosition(); }
+	void setObjectLastMove(int idx) 
+	{ 
+		m_ppGameObjects[idx]->lastMove = chrono::system_clock::now(); 
+	}
 };

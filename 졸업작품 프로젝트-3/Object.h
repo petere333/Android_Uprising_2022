@@ -6,6 +6,7 @@
 
 #include "Mesh.h"
 #include "Camera.h"
+#include "Game_Data.h"
 
 #define DIR_FORWARD					0x01
 #define DIR_BACKWARD				0x02
@@ -479,6 +480,17 @@ public:
 
 public:
 	XMFLOAT3 currentRotation;
+	int objType;
+	PlayerState pState;
+	EnemyState eState;
+	float speed=0.0f;
+	XMFLOAT3 direction=XMFLOAT3(0.0f,0.0f,0.0f);
+
+	chrono::time_point<chrono::system_clock> lastMove;
+	bool lastMoveSuccess;
+
+	
+
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

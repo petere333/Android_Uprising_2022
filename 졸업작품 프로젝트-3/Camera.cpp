@@ -76,12 +76,12 @@ void CCamera::SetViewportsAndScissorRects(ID3D12GraphicsCommandList* pd3dCommand
 
 void CCamera::move(float mx, float my, float mz)
 {
-	m_xmf3Position.x += mx;
-	m_xmf3Position.y += my;
-	m_xmf3Position.z += mz;
+	m_xmf3Position.x = mx;
+	m_xmf3Position.y = my;
+	m_xmf3Position.z = mz;
 
-	lx += mx;
-	ly += my;
-	lz += mz;
+	lx = mx;
+	ly = my-2.0f;
+	lz = mz+2.0f;
 	GenerateViewMatrix();
 }

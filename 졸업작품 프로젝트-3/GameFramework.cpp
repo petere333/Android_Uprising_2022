@@ -1,6 +1,7 @@
 //-----------------------------------------------------------------------------
 // File: CGameFramework.cpp
 //-----------------------------------------------------------------------------
+#pragma once 
 
 #include "stdafx.h"
 #include "GameFramework.h"
@@ -319,19 +320,24 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 		case VK_UP:
 			m_pScene->setPlayerDirection(0.0f, 0.0f, 0.0f);
-			dz = 0.3f;
+			m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, 1.0f), PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
+			
 			break;
 		case VK_DOWN:
 			m_pScene->setPlayerDirection(0.0f, 180.0f, 0.0f);
-			dz = -0.3f;
+			m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, -1.0f), PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
 			break;
 		case VK_LEFT:
 			m_pScene->setPlayerDirection(0.0f, 270.0f, 0.0f);
-			dx = -0.3f;
+			m_pScene->setObjectSpeed(0, XMFLOAT3(-1.0f, 0.0f, 0.0f), PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
 			break;
 		case VK_RIGHT:
 			m_pScene->setPlayerDirection(0.0f, 90.0f, 0.0f);
-			dx = 0.3f;
+			m_pScene->setObjectSpeed(0, XMFLOAT3(1.0f, 0.0f, 0.0f), PLAYER_SPEED);
+			m_pScene->setObjectState(0, MOVE_STATE);
 			break;
 		}
 		break;
@@ -350,20 +356,20 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					ChangeSwapChainState();
 					break;
 				case VK_UP:
-					
-					dz = 0.0f;
+					m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, 0.0f), 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_DOWN:
-					
-					dz = 0.0f;
+					m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, 0.0f), 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_LEFT:
-					
-					dx = 0.0f;
+					m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, 0.0f), 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				case VK_RIGHT:
-					
-					dx = 0.0f;
+					m_pScene->setObjectSpeed(0, XMFLOAT3(0.0f, 0.0f, 0.0f), 0.0f);
+					m_pScene->setObjectState(0, IDLE_STATE);
 					break;
 				default:
 					break;
@@ -521,11 +527,12 @@ void CGameFramework::ProcessInput()
 void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
-	if (dx != 0.0f || dy != 0.0f || dz != 0.0f)//실질적으로 이동을 시도한 경우
+	m_pScene->moveObject(0);
+	if (m_pScene->getSpeed(0)>0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
 	{
-		if (m_pScene->movePlayer(dx, dy, dz) == true)//실제로 이동에 성공한 경우 = 충돌이 없는 경우
+		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
 		{
-			m_pCamera->move(dx, dy, dz);
+			m_pCamera->move(m_pScene->getPos(0).x, m_pScene->getPos(0).y+2.0f, m_pScene->getPos(0).z-2.0f);
 			if (m_pScene->currentPlayerAnim != 20)
 			{
 				m_pScene->setPlayerAnimation(20);
@@ -541,7 +548,7 @@ void CGameFramework::AnimateObjects()
 	}
 	if (m_pScene) m_pScene->AnimateObjects(fTimeElapsed);
 
-	//m_pPlayer->Animate(fTimeElapsed);
+	
 }
 
 void CGameFramework::WaitForGpuComplete()
@@ -647,5 +654,7 @@ void CGameFramework::FrameAdvance()
 	//XMFLOAT3 xmf3Position = m_pPlayer->GetPosition();
 	//_stprintf_s(m_pszFrameRate + nLength, 70 - nLength, _T("(%4f, %4f, %4f)"), xmf3Position.x, xmf3Position.y, xmf3Position.z);
 	::SetWindowText(m_hWnd, m_pszFrameRate);
+
+	
 }
 

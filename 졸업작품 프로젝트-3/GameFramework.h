@@ -4,7 +4,7 @@
 #define FRAME_BUFFER_HEIGHT		900
 
 #include "Timer.h"
-
+#include "Game_Data.h"
 #include "Scene.h"
 
 class CGameFramework
