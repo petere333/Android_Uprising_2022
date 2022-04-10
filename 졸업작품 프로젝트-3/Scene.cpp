@@ -17,74 +17,51 @@ CScene::~CScene()
 
 void CScene::BuildDefaultLightsAndMaterials()
 {
-	m_nLights = 2;
+	m_nLights = 4;
 	m_pLights = new LIGHT[m_nLights];
 	::ZeroMemory(m_pLights, sizeof(LIGHT) * m_nLights);
 
 	m_xmf4GlobalAmbient = XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f);
-	/*
-	m_pLights[1].m_bEnable = true;
-	m_pLights[1].m_nType = POINT_LIGHT;
-	m_pLights[1].m_fRange = 500.0f;
-	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.1f, 0.0f, 0.0f, 1.0f);
-	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
-	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 0.0f);
-	m_pLights[1].m_xmf3Position = XMFLOAT3(0.0f, 2.0f, 0.0f);
-	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
-	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.001f);
-	*/
+
 	m_pLights[0].m_bEnable = true;
-	m_pLights[0].m_nType = DIRECTIONAL_LIGHT;
-	m_pLights[0].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
-	m_pLights[0].m_xmf4Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
-	m_pLights[0].m_xmf4Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.0f);
-	m_pLights[0].m_xmf3Direction = XMFLOAT3(1.0f, 0.0f, 0.0f);
-	
-	
+	m_pLights[0].m_nType = POINT_LIGHT;
+	m_pLights[0].m_fRange = 1000.0f;
+	m_pLights[0].m_xmf4Ambient = XMFLOAT4(0.1f, 0.0f, 0.0f, 1.0f);
+	m_pLights[0].m_xmf4Diffuse = XMFLOAT4(0.8f, 0.0f, 0.0f, 1.0f);
+	m_pLights[0].m_xmf4Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 0.0f);
+	m_pLights[0].m_xmf3Position = XMFLOAT3(30.0f, 30.0f, 30.0f);
+	m_pLights[0].m_xmf3Direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_pLights[0].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.001f, 0.0001f);
 	m_pLights[1].m_bEnable = true;
 	m_pLights[1].m_nType = SPOT_LIGHT;
-	m_pLights[1].m_fRange = 600.0f;
-	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
-	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[1].m_fRange = 500.0f;
+	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.1f, 0.1f, 0.1f, 1.0f);
+	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
 	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.3f, 0.3f, 0.3f, 0.0f);
-	m_pLights[1].m_xmf3Position = XMFLOAT3(10.0f, 20.0f, 10.0f);
-	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
+	m_pLights[1].m_xmf3Position = XMFLOAT3(-50.0f, 20.0f, -5.0f);
+	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, 0.0f, 1.0f);
 	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.0001f);
-	m_pLights[1].m_fFalloff = 10.0f;
-	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
-	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
-	
-	m_pMaterials = new MATERIALS;
-	::ZeroMemory(m_pMaterials, sizeof(MATERIALS));
-
-	m_pMaterials->m_pReflections[0] = { XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 5.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[1] = { XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 10.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[2] = { XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 15.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[3] = { XMFLOAT4(0.5f, 0.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 0.5f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 20.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[4] = { XMFLOAT4(0.0f, 0.5f, 1.0f, 1.0f), XMFLOAT4(0.5f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 25.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[5] = { XMFLOAT4(0.0f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 30.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[6] = { XMFLOAT4(0.5f, 0.5f, 1.0f, 1.0f), XMFLOAT4(0.5f, 0.5f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 35.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	m_pMaterials->m_pReflections[7] = { XMFLOAT4(1.0f, 0.5f, 1.0f, 1.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 40.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	/*
-	shadowMtx = new XMMATRIX[m_nLights];
-
-	for (int i = 0; i < m_nLights; ++i)
-	{
-		if (m_pLights[i].m_nType == DIRECTIONAL_LIGHT)
-		{
-			XMFLOAT4 light = XMFLOAT4(-m_pLights[i].m_xmf3Direction.x, -m_pLights[i].m_xmf3Direction.y, -m_pLights[i].m_xmf3Direction.z, 0.0f);
-			XMFLOAT4 plane = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-			shadowMtx[i] = XMMatrixShadow(XMLoadFloat4(&plane), XMLoadFloat4(&light));
-		}
-		else if (m_pLights[i].m_nType == POINT_LIGHT)
-		{
-			XMFLOAT4 light = XMFLOAT4(m_pLights[i].m_xmf3Position.x, m_pLights[i].m_xmf3Position.y, m_pLights[i].m_xmf3Position.z, 1.0f);
-			XMFLOAT4 plane = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-			shadowMtx[i] = XMMatrixShadow(XMLoadFloat4(&plane), XMLoadFloat4(&light));
-		}
-	}
-	*/
-
+	m_pLights[1].m_fFalloff = 8.0f;
+	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(40.0f));
+	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(20.0f));
+	m_pLights[2].m_bEnable = true;
+	m_pLights[2].m_nType = DIRECTIONAL_LIGHT;
+	m_pLights[2].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[2].m_xmf4Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	m_pLights[2].m_xmf4Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.0f);
+	m_pLights[2].m_xmf3Direction = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	m_pLights[3].m_bEnable = true;
+	m_pLights[3].m_nType = SPOT_LIGHT;
+	m_pLights[3].m_fRange = 600.0f;
+	m_pLights[3].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[3].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.7f, 0.0f, 1.0f);
+	m_pLights[3].m_xmf4Specular = XMFLOAT4(0.3f, 0.3f, 0.3f, 0.0f);
+	m_pLights[3].m_xmf3Position = XMFLOAT3(50.0f, 30.0f, 30.0f);
+	m_pLights[3].m_xmf3Direction = XMFLOAT3(0.0f, 1.0f, 1.0f);
+	m_pLights[3].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.0001f);
+	m_pLights[3].m_fFalloff = 8.0f;
+	m_pLights[3].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
+	m_pLights[3].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
 }
 
 void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
@@ -115,37 +92,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	textures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
 	textures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
-
-	normalTex[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/cont_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/wood_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/WhitePaint_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/GreenPaint_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/sample100.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/box_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[6] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/table_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/PalletTruck_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/bin_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[9] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/barrel_norm.dds", RESOURCE_TEXTURE2D, 0);
-	normalTex[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/truck_norm.dds", RESOURCE_TEXTURE2D, 0);
-
-
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 22);
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 11);
 
 	for (int i = 0; i < 11; ++i)
 	{
 		CreateShaderResourceViews(pd3dDevice, textures[i], 0, 3);
-		CreateShaderResourceViews(pd3dDevice, normalTex[i], 0, 6);
 	}
 	
 	
@@ -155,7 +106,6 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	{
 		ppMaterials[i] = new CMaterial(1);
 		ppMaterials[i]->SetTexture(textures[i], 0);
-		ppMaterials[i]->SetNormalTex(normalTex[i]);
 	}
 
 
@@ -321,7 +271,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 {
 	ID3D12RootSignature *pd3dGraphicsRootSignature = NULL;
 
-	D3D12_DESCRIPTOR_RANGE pd3dDescriptorRanges[2];
+	D3D12_DESCRIPTOR_RANGE pd3dDescriptorRanges[1];
 
 	pd3dDescriptorRanges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	pd3dDescriptorRanges[0].NumDescriptors = 1;
@@ -329,14 +279,9 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dDescriptorRanges[0].RegisterSpace = 0;
 	pd3dDescriptorRanges[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	pd3dDescriptorRanges[1].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	pd3dDescriptorRanges[1].NumDescriptors = 1;
-	pd3dDescriptorRanges[1].BaseShaderRegister = 1; //t1: normal
-	pd3dDescriptorRanges[1].RegisterSpace = 0;
-	pd3dDescriptorRanges[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 	
 
-	D3D12_ROOT_PARAMETER pd3dRootParameters[8];
+	D3D12_ROOT_PARAMETER pd3dRootParameters[6];
 
 	pd3dRootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	pd3dRootParameters[0].Descriptor.ShaderRegister = 1; //Camera
@@ -344,7 +289,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dRootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
 	pd3dRootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-	pd3dRootParameters[1].Constants.Num32BitValues = 17;
+	pd3dRootParameters[1].Constants.Num32BitValues = 20;
 	pd3dRootParameters[1].Constants.ShaderRegister = 2; //GameObject
 	pd3dRootParameters[1].Constants.RegisterSpace = 0;
 	pd3dRootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
@@ -370,18 +315,6 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dRootParameters[5].Descriptor.ShaderRegister = 8; //Skinned Bone Transforms
 	pd3dRootParameters[5].Descriptor.RegisterSpace = 0;
 	pd3dRootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-
-
-	pd3dRootParameters[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	pd3dRootParameters[6].DescriptorTable.NumDescriptorRanges = 1;
-	pd3dRootParameters[6].DescriptorTable.pDescriptorRanges = &(pd3dDescriptorRanges[1]);// normal t1
-	pd3dRootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-
-	pd3dRootParameters[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	pd3dRootParameters[7].Descriptor.ShaderRegister = 3; //material
-	pd3dRootParameters[7].Descriptor.RegisterSpace = 0;
-	pd3dRootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-
 
 	D3D12_STATIC_SAMPLER_DESC d3dSamplerDesc; // gSamplerState
 	::ZeroMemory(&d3dSamplerDesc, sizeof(D3D12_STATIC_SAMPLER_DESC));
@@ -423,11 +356,6 @@ void CScene::CreateShaderVariables(ID3D12Device *pd3dDevice, ID3D12GraphicsComma
 	m_pd3dcbLights = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbElementBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
 
 	m_pd3dcbLights->Map(0, NULL, (void **)&m_pcbMappedLights);
-
-	UINT ncbMaterialBytes = ((sizeof(MATERIALS) + 255) & ~255); //256ÀÇ ¹è¼ö
-	m_pd3dcbMaterials = ::CreateBufferResource(pd3dDevice, pd3dCommandList, NULL, ncbMaterialBytes, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, NULL);
-
-	m_pd3dcbMaterials->Map(0, NULL, (void**)&m_pcbMappedMaterials);
 }
 
 void CScene::UpdateShaderVariables(ID3D12GraphicsCommandList *pd3dCommandList)
@@ -435,8 +363,6 @@ void CScene::UpdateShaderVariables(ID3D12GraphicsCommandList *pd3dCommandList)
 	::memcpy(m_pcbMappedLights->m_pLights, m_pLights, sizeof(LIGHT) * m_nLights);
 	::memcpy(&m_pcbMappedLights->m_xmf4GlobalAmbient, &m_xmf4GlobalAmbient, sizeof(XMFLOAT4));
 	::memcpy(&m_pcbMappedLights->m_nLights, &m_nLights, sizeof(int));
-
-	::memcpy(m_pcbMappedMaterials, m_pMaterials, sizeof(MATERIALS));
 }
 
 void CScene::ReleaseShaderVariables()
@@ -445,11 +371,6 @@ void CScene::ReleaseShaderVariables()
 	{
 		m_pd3dcbLights->Unmap(0, NULL);
 		m_pd3dcbLights->Release();
-	}
-	if (m_pd3dcbMaterials)
-	{
-		m_pd3dcbMaterials->Unmap(0, NULL);
-		m_pd3dcbMaterials->Release();
 	}
 }
 
@@ -523,9 +444,6 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	D3D12_GPU_VIRTUAL_ADDRESS d3dcbLightsGpuVirtualAddress = m_pd3dcbLights->GetGPUVirtualAddress();
 	pd3dCommandList->SetGraphicsRootConstantBufferView(2, d3dcbLightsGpuVirtualAddress); //Lights
-
-	D3D12_GPU_VIRTUAL_ADDRESS d3dcbMat = m_pd3dcbMaterials->GetGPUVirtualAddress();
-	pd3dCommandList->SetGraphicsRootConstantBufferView(7, d3dcbMat); // Materials
 
 
 
