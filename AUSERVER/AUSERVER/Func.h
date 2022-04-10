@@ -12,6 +12,3 @@ void RecvPacket(SOCKET sock, char* buf);
 void CALLBACK recv_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED over, DWORD flags);
 void CALLBACK send_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED over, DWORD flags);
 DWORD WINAPI MainServerThread(LPVOID arg);
-
-int SERVERPORT = 9000;
-const int BUFSIZE = 1024;
