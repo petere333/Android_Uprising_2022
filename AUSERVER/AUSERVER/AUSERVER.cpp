@@ -1,91 +1,69 @@
 #include "stdafx.h"
 #include "Func.h"
-#include "protocol.h"
 
-class SESSION {
-private:
-	int _id;
-	WSABUF _recv_wsabuf;
-	WSABUF _send_wsabuf;
-	WSAOVERLAPPED _recv_over;
-	SOCKET _socket;
-public:
-	char _recv_buf[BUFSIZE];
-	SESSION() {
-		cout << "Constructor Call Error\n";
-		exit(-1);
-	}
-	SESSION(int id, SOCKET s) : _id(id), _socket(s) {
-		_recv_wsabuf.buf = _recv_buf;		_recv_wsabuf.len = BUFSIZE;
-		_send_wsabuf.buf = _recv_buf;		_send_wsabuf.len = 0;
-	}
-	~SESSION() {
-		closesocket(_socket);
-	}
-	void do_recv() {
-		DWORD recv_flag = 0;
-		ZeroMemory(&_recv_over, sizeof(_recv_over));
-		_recv_over.hEvent = reinterpret_cast<HANDLE>(_id);
-		WSARecv(_socket, &_recv_wsabuf, 1, 0, &recv_flag, &_recv_over, recv_callback);
-	}
-	void do_send(int sender_id, int num_bytes, char* mess)
-	{
-		EXP_OVER* ex_over = new EXP_OVER(sender_id, num_bytes, mess);
-		WSASend(_socket, &ex_over->_wsa_buf, 1, 0, 0, &ex_over->_wsa_over, send_callback);
-	}
-};
+SOCKET client_s;
+WSABUF c_buf[1];
+CHAR c_pack[BUFSIZE];
 
-class EXP_OVER {
-public:
-	WSAOVERLAPPED _wsa_over;
-	int _s_id;
-	WSABUF _wsa_buf;
-	char _send_msg[BUFSIZE];
-public:
-	EXP_OVER(char s_id, char num_bytes, char* mess) : _s_id(s_id)
-	{
-		ZeroMemory(&_wsa_over, sizeof(_wsa_over));
-		_wsa_buf.buf = _send_msg;
-		_wsa_buf.len = num_bytes + 2;
-		memcpy(_send_msg + 2, mess, num_bytes);
-		_send_msg[0] = num_bytes + 2;
-		_send_msg[1] = s_id;
-	}
-	~EXP_OVER() {}
-};
-
-unordered_map <int, SESSION> clients;
-void CALLBACK send_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED send_over,
-	DWORD f)
-{
-	EXP_OVER* ex_over = reinterpret_cast<EXP_OVER*>(send_over);
-	delete ex_over;
-}
+WSAOVERLAPPED c_over;
 
 int main(int argc, char* argv[])
 {
 	std::wcout.imbue(std::locale("korean"));
 	
-	WSADATA WSAData;
-	WSAStartup(MAKEWORD(2, 2), &WSAData);
-	SOCKET s_socket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, 0, 0, WSA_FLAG_OVERLAPPED);
-	SOCKADDR_IN server_addr;
-	ZeroMemory(&server_addr, sizeof(server_addr));
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(SERVERPORT);
-	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	bind(s_socket, reinterpret_cast<sockaddr*>(&server_addr), sizeof(server_addr));
-	listen(s_socket, SOMAXCONN);
-	INT addr_size = sizeof(server_addr);
-	for (int i = 1; ; ++i) {
-		SOCKET c_socket = WSAAccept(s_socket, reinterpret_cast<sockaddr*>(&server_addr), &addr_size, 0, 0);
-		clients.try_emplace(i, i, c_socket);
-		clients[i].do_recv();
-	}
-	clients.clear();
-	closesocket(s_socket);
-	WSACleanup();
+	int retval;
 
+	//윈속 초기화
+	WSADATA wsa;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) return 1;
+
+	//socket()
+	SOCKET listen_s = WSASocket(AF_INET, SOCK_STREAM, 0, 0, 0, WSA_FLAG_OVERLAPPED);
+	if (listen_s == INVALID_SOCKET) error_quit("socket()");
+
+	//bind()
+	SOCKADDR_IN ServerAddr;
+	ZeroMemory(&ServerAddr, sizeof(ServerAddr));
+	ServerAddr.sin_family = AF_INET;
+	ServerAddr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+	ServerAddr.sin_port = htons(SERVERPORT);
+	retval = bind(listen_s, (SOCKADDR*)&ServerAddr, sizeof(ServerAddr));
+	if (retval == SOCKET_ERROR) error_quit("bind()");
+
+	//listen()
+	retval = listen(listen_s, SOMAXCONN);
+	if (retval == SOCKET_ERROR) error_quit("listen()");
+
+	cout << "Listening .. ";
+
+	SOCKADDR_IN ClientAddr;
+	HANDLE hThread;
+	int len;
+	int client_id;
+
+	while (1)
+	{
+		//accept()
+		len = sizeof(ClientAddr);
+		client_s = accept(listen_s, (sockaddr*)&ClientAddr, &len);
+
+		if (client_s == INVALID_SOCKET)
+		{
+			error_display("accept()");
+			break;
+		}
+
+		cout << "\n[SERVER] 클라이언트 접속 : IP주소 = " << inet_ntoa(ClientAddr.sin_addr)
+			<< ", 포트 번호 = " << ntohs(ClientAddr.sin_port) << endl;
+
+
+	}
+
+	closesocket(client_s);
+	closesocket(listen_s);
+
+	WSACleanup();
+	return 0;
 }
 
 void error_display(const char* msg)
