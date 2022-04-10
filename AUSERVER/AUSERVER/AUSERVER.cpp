@@ -212,8 +212,6 @@ void disconnect(int c_id)
 //	clients[client_id].do_recv();
 //}
 
-///
-
 int main(int argc, char* argv[])
 {
 	std::wcout.imbue(std::locale("korean")); //오류 출력을 한국어로
