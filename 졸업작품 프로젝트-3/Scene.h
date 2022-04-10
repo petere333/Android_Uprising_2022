@@ -38,18 +38,7 @@ struct LIGHTS
 	XMFLOAT4							m_xmf4GlobalAmbient;
 	int									m_nLights;
 };
-struct MATERIAL
-{
-	XMFLOAT4				m_xmf4Ambient;
-	XMFLOAT4				m_xmf4Diffuse;
-	XMFLOAT4				m_xmf4Specular; //(r,g,b,a=power)
-	XMFLOAT4				m_xmf4Emissive;
-};
 
-struct MATERIALS
-{
-	MATERIAL				m_pReflections[8];
-};
 class CScene
 {
 public:
@@ -97,7 +86,6 @@ protected:
 
 	CTexture* textures[11];
 	CMaterial* ppMaterials[11];
-	CTexture* normalTex[11];
 public:
 
 	std::vector<BoundBox> boxesWorld;
@@ -129,10 +117,6 @@ public:
 	ID3D12Resource						*m_pd3dcbLights = NULL;
 	LIGHTS								*m_pcbMappedLights = NULL;
 
-	MATERIALS* m_pMaterials = NULL;
-
-	ID3D12Resource* m_pd3dcbMaterials = NULL;
-	MATERIAL* m_pcbMappedMaterials = NULL;
 public: 
 	void setObjectSpeed(int idx, float size);
 	void setObjectState(int index, int state);
