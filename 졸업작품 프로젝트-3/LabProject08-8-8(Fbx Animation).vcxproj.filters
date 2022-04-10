@@ -1,132 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LabProject08-8-8(Fbx Animation).h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DDSTextureLoader12.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="WICTextureLoader12.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelLoader.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LabProject08-8-8(Fbx Animation).cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DDSTextureLoader12.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="WICTextureLoader12.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelLoader.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="LabProject08-8-8(Fbx Animation).rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="LabProject08-8-8(Fbx Animation).ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
->>>>>>> parent of 7c8f2bf (protocol 파일 및 세션 관리 추가)
-    <FxCompile Include="Light.hlsl" />
-    <FxCompile Include="Shaders.hlsl" />
-=======
     <FxCompile Include="Shaders.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Light.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -216,7 +96,6 @@
     <ClInclude Include="LevelLoader.h">
       <Filter>LevelLoader</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -268,59 +147,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-=======
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Project</Filter>
-    </Image>
-    <Image Include="LabProject08-8-8(Fbx Animation).ico">
-      <Filter>Project</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{f6f4f8d4-cce8-40ca-9d46-092f004cae82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="d3dx">
-      <UniqueIdentifier>{0e165988-5ba9-471f-8f68-9bd62e61c7bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{e90681a2-85d5-4a63-ac14-11e44ad1f08d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HLSL">
-      <UniqueIdentifier>{3ed194c8-f599-4c3d-bde7-4ca883f1b02f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameFramework">
-      <UniqueIdentifier>{9277d988-7472-4f78-8552-6128c5676354}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Project">
-      <UniqueIdentifier>{a20cdb28-b955-4167-8a08-914832ebcfe3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Timer">
-      <UniqueIdentifier>{707af939-95ba-40de-a487-05c1f44c68ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{44508e8c-6828-4bef-bcc7-229db2ca3751}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Mesh">
-      <UniqueIdentifier>{e94c1ccc-ef2f-496d-8f99-a577d035d2f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject">
-      <UniqueIdentifier>{57833012-98e3-437e-8b93-4fbc96e792d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network">
-      <UniqueIdentifier>{9ecd34cd-a4f0-4a5a-b1f0-41adfd23601f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameData">
-      <UniqueIdentifier>{70621587-01a0-43da-a88c-6f2e519007f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="LevelLoader">
-      <UniqueIdentifier>{90bc2b47-6e42-493c-8640-f13bb11e3cbb}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
->>>>>>> Stashed changes
     <ResourceCompile Include="LabProject08-8-8(Fbx Animation).rc">
       <Filter>Project</Filter>
     </ResourceCompile>

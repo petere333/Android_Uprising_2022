@@ -1,10 +1,12 @@
 #pragma once
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
-#pragma comment(lib, "ws2_32")
+#pragma comment(lib, "WS2_32.lib")
+#pragma comment(lib, "MSWSock.lib")
 
 #include <WS2tcpip.h>
 #include <WinSock2.h>
+#include <MSWSock.h>
 #include <iostream>
 #include <Windows.h>
 #include <stdio.h>
@@ -33,3 +35,4 @@ using namespace DirectX::PackedVector;
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "dxguid.lib")
+
