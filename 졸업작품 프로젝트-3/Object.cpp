@@ -202,7 +202,12 @@ void CMaterial::SetTexture(CTexture *pTexture, UINT nTexture)
 	m_ppTextures[nTexture] = pTexture; 
 	if (m_ppTextures[nTexture]) m_ppTextures[nTexture]->AddRef();  
 }
-
+void CMaterial::SetNormalTex(CTexture* pTexture)
+{
+	if (normalTex) normalTex->Release();
+	normalTex = pTexture;
+	if (normalTex) normalTex->AddRef();
+}
 void CMaterial::ReleaseUploadBuffers()
 {
 	for (int i = 0; i < m_nTextures; i++)
@@ -230,6 +235,10 @@ void CMaterial::UpdateShaderVariable(ID3D12GraphicsCommandList *pd3dCommandList)
 	for (int i = 0; i < m_nTextures; i++)
 	{
 		if (m_ppTextures[i]) m_ppTextures[i]->UpdateShaderVariables(pd3dCommandList);
+	}
+	if (normalTex)
+	{
+		normalTex->UpdateShaderVariables(pd3dCommandList);
 	}
 }
 
@@ -830,11 +839,8 @@ void CGameObject::UpdateShaderVariable(ID3D12GraphicsCommandList *pd3dCommandLis
 	XMFLOAT4X4 xmf4x4World;
 	XMStoreFloat4x4(&xmf4x4World, XMMatrixTranspose(XMLoadFloat4x4(pxmf4x4World)));
 	pd3dCommandList->SetGraphicsRoot32BitConstants(1, 16, &xmf4x4World, 0);
-/*
-	XMFLOAT4 xmf4Color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-	if (!strcmp(m_pstrFrameName, "L_shoulder")) xmf4Color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-	pd3dCommandList->SetGraphicsRoot32BitConstants(1, 4, &xmf4Color, 16);
-*/
+	
+	pd3dCommandList->SetGraphicsRoot32BitConstants(1, 1, &matID, 16);
 }
 
 void CGameObject::UpdateShaderVariable(ID3D12GraphicsCommandList *pd3dCommandList, CMaterial *pMaterial)
