@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "LabProject08-8-8(Fbx Animation).h"
 #include "GameFramework.h"
+#include "C:\Users\ziwon\OneDrive\Desktop\Android_Uprising_2022\AUSERVER\AUSERVER\protocol.h"
+
 
 #define MAX_LOADSTRING 100
 
@@ -20,6 +22,16 @@ INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+	// 편한 디버깅 환경을 위해, 디버그 모드일 때 콘솔창을 켜줍니다.
+#ifdef _DEBUG
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console") 
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console") 
+#endif
+#endif
+	std::wcout.imbue(std::locale("korean")); //에러 메세지를 한국어로 출력
+
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -103,6 +115,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_CREATE:
 	case WM_SIZE:
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:

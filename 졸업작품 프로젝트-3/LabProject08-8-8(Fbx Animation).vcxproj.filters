@@ -1,47 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Light.hlsl" />
-    <FxCompile Include="Shaders.hlsl" />
+    <FxCompile Include="Shaders.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Light.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DDSTextureLoader12.cpp" />
-    <ClCompile Include="GameFramework.cpp" />
-    <ClCompile Include="LabProject08-8-8(Fbx Animation).cpp" />
-    <ClCompile Include="LevelLoader.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="WICTextureLoader12.cpp" />
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="WICTextureLoader12.cpp">
+      <Filter>d3dx</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSTextureLoader12.cpp">
+      <Filter>d3dx</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework.cpp">
+      <Filter>GameFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="LabProject08-8-8(Fbx Animation).cpp">
+      <Filter>Project</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Project</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>LevelLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="DDSTextureLoader12.h" />
-    <ClInclude Include="GameFramework.h" />
-    <ClInclude Include="Game_Data.h" />
-    <ClInclude Include="LabProject08-8-8(Fbx Animation).h" />
-    <ClInclude Include="LevelLoader.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="WICTextureLoader12.h" />
-    <ClInclude Include="..\AUSERVER\AUSERVER\protocol.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="WICTextureLoader12.h">
+      <Filter>d3dx</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSTextureLoader12.h">
+      <Filter>d3dx</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>d3dx</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework.h">
+      <Filter>GameFramework</Filter>
+    </ClInclude>
+    <ClInclude Include="LabProject08-8-8(Fbx Animation).h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Project</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\AUSERVER\AUSERVER\protocol.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Data.h">
+      <Filter>GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>LevelLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="LabProject08-8-8(Fbx Animation).rc" />
+    <Image Include="small.ico">
+      <Filter>Project</Filter>
+    </Image>
+    <Image Include="LabProject08-8-8(Fbx Animation).ico">
+      <Filter>Project</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="LabProject08-8-8(Fbx Animation).ico" />
-    <Image Include="small.ico" />
+    <Filter Include="Camera">
+      <UniqueIdentifier>{f6f4f8d4-cce8-40ca-9d46-092f004cae82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="d3dx">
+      <UniqueIdentifier>{0e165988-5ba9-471f-8f68-9bd62e61c7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{e90681a2-85d5-4a63-ac14-11e44ad1f08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{3ed194c8-f599-4c3d-bde7-4ca883f1b02f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework">
+      <UniqueIdentifier>{9277d988-7472-4f78-8552-6128c5676354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project">
+      <UniqueIdentifier>{a20cdb28-b955-4167-8a08-914832ebcfe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{707af939-95ba-40de-a487-05c1f44c68ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{44508e8c-6828-4bef-bcc7-229db2ca3751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{e94c1ccc-ef2f-496d-8f99-a577d035d2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{57833012-98e3-437e-8b93-4fbc96e792d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{9ecd34cd-a4f0-4a5a-b1f0-41adfd23601f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameData">
+      <UniqueIdentifier>{70621587-01a0-43da-a88c-6f2e519007f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelLoader">
+      <UniqueIdentifier>{90bc2b47-6e42-493c-8640-f13bb11e3cbb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LabProject08-8-8(Fbx Animation).rc">
+      <Filter>Project</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

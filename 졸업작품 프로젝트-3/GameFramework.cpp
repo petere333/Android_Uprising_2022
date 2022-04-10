@@ -564,6 +564,7 @@ void CGameFramework::ProcessInput()
 
 }
 
+
 void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
@@ -701,4 +702,3 @@ void CGameFramework::FrameAdvance()
 
 	
 }
-

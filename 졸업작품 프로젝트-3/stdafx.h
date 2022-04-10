@@ -5,13 +5,20 @@
 
 #pragma once
 
+#pragma comment(lib, "WS2_32.lib") //winsock2 lib
+
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 // Windows 헤더 파일:
 #include <windows.h>
 
+//Winsock header
+#include <WS2tcpip.h>
+#include <WinSock2.h>
 
 // C의 런타임 헤더 파일입니다.
 #include <stdlib.h>
+#include <iostream>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
@@ -23,6 +30,11 @@
 
 #include <fstream>
 #include <vector>
+#include <algorithm>
+#include <thread>
+#include <map>
+#include <unordered_map>
+#include <array>
 
 using namespace std;
 
