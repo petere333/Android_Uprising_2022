@@ -31,14 +31,14 @@ struct SC_LOGIN_INFO_PACKET {
 	unsigned char size;
 	char	type;
 	short	id;
-	XMFLOAT3 dir;
+	short	x, y;
 };
 
 struct SC_ADD_PLAYER_PACKET {
 	unsigned char size;
 	char	type;
 	short	id;
-	XMFLOAT3 dir;
+	short	x, y;
 	char	name[NAMESIZE];
 };
 
@@ -52,7 +52,7 @@ struct SC_MOVE_PLAYER_PACKET {
 	unsigned char size;
 	char	type;
 	short	id;
-	XMFLOAT3 dir;
+	short	x, y;
 };
 
 #pragma pack (pop)
