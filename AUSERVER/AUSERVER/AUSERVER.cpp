@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Func.h"
-#include "protocol.h"
 
 constexpr int MAXUSER = 5; //최대 접속 유저
 

@@ -18,6 +18,12 @@
     <ClCompile Include="AUSERVER.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Func.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -26,7 +32,7 @@
     <ClInclude Include="Func.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="protocol.h">
+    <ClInclude Include="system.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
