@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "LabProject08-8-8(Fbx Animation).h"
 #include "GameFramework.h"
-#include "C:\Users\ziwon\OneDrive\Desktop\Android_Uprising_2022\AUSERVER\AUSERVER\protocol.h"
+#include "../AUSERVER/AUSERVER/protocol.h"
 
 
 #define MAX_LOADSTRING 100

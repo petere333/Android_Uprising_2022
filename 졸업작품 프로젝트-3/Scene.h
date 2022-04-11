@@ -114,6 +114,9 @@ public:
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;
 
+	int m_nDecos = 0;
+	CGameObject** m_ppDecos = NULL;
+
 	float								m_fElapsedTime = 0.0f;
 
 	int									m_nShaders = 0;

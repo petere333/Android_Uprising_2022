@@ -648,3 +648,92 @@ WallMeshHorizontal::WallMeshHorizontal(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
 }
 WallMeshHorizontal::~WallMeshHorizontal() {}
+
+WallDecorationMesh::WallDecorationMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, float wallW, float wallH, int direction, int nDecos, bool upper) : CMesh(pd3dDevice, pd3dCommandList)
+{
+	float ws = width * -0.5f;
+	float we = width * 0.5f;
+
+	float hs = height * -0.5f;
+	float he = height * 0.5f;
+
+	float weight;
+	if (upper == true)
+	{
+		weight = 0.001;
+	}
+	else
+	{
+		weight = -0.001;
+	}
+	m_nVertices = nDecos*6;
+
+	XMFLOAT3* pos = new XMFLOAT3[m_nVertices];
+	XMFLOAT2* uv = new XMFLOAT2[m_nVertices];
+
+	for (int i = 0; i < m_nVertices; i+=6)
+	{
+		float hor = static_cast<float>(rand() % 100) / 100.0f * wallW;
+		float ver = static_cast<float>(rand() % 100) / 100.0f * wallH;
+		float wstart = ws + hor;
+		float wend = we + hor;
+		float hstart = hs + ver;
+		float hend = he + ver;
+
+		if (direction == 1)//xz평면, 게임 시작 시 캐릭터 위치 기준 바닥면
+		{
+			
+			pos[i] = XMFLOAT3(wstart, weight, hstart);
+			pos[i + 1] = XMFLOAT3(wstart, weight, hend);
+			pos[i + 2] = XMFLOAT3(wend, weight, hend);
+
+			pos[i + 3] = XMFLOAT3(wstart, weight, hstart);
+			pos[i + 4] = XMFLOAT3(wend, weight, hend);
+			pos[i + 5] = XMFLOAT3(wend, weight, hstart);
+		}
+		else if (direction == 2)//xy평면, 게임 시작 시 캐릭터 위치 기준 앞뒷면
+		{
+			pos[i] = XMFLOAT3(wstart, hstart, weight);
+			pos[i + 1] = XMFLOAT3(wstart, hend, weight);
+			pos[i + 2] = XMFLOAT3(wend, hend, weight);
+
+			pos[i + 3] = XMFLOAT3(wstart, hstart, weight);
+			pos[i + 4] = XMFLOAT3(wend, hend, weight);
+			pos[i + 5] = XMFLOAT3(wend, hstart, weight);
+		}
+		else if (direction == 3) //yz평면, 게임 시작 시 캐릭터 위치 기준 옆면
+		{
+			pos[i] = XMFLOAT3(weight, wstart, hstart);
+			pos[i + 1] = XMFLOAT3(weight, wstart, hend);
+			pos[i + 2] = XMFLOAT3(weight, wend, hend);
+
+			pos[i + 3] = XMFLOAT3(weight, wstart, hstart);
+			pos[i + 4] = XMFLOAT3(weight, wend, hend);
+			pos[i + 5] = XMFLOAT3(weight, wend, hstart);
+		}
+		uv[i] = XMFLOAT2(0.0f, 0.0f);
+		uv[i + 1] = XMFLOAT2(0.0f, 1.0f);
+		uv[i + 2] = XMFLOAT2(1.0f, 1.0f);
+
+		uv[i + 3] = XMFLOAT2(0.0f, 0.0f);
+		uv[i + 4] = XMFLOAT2(1.0f, 1.0f);
+		uv[i + 5] = XMFLOAT2(1.0f, 0.0f);
+	}
+
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	m_pd3dPositionBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, pos, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+
+	m_pd3dTextureBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, uv, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
+}
+WallDecorationMesh::~WallDecorationMesh() {}
