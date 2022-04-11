@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/Cont1_1.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/계단임.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,8 +98,8 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/idx_Cont1_1.txt", "w");
-	FILE* frameOut = fopen("result/vtx_Cont1_1.txt", "w");
+	FILE* idxOut = fopen("result/idx_Stairsed2.txt", "w");
+	FILE* frameOut = fopen("result/vtx_Stairsed2.txt", "w");
 	
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)

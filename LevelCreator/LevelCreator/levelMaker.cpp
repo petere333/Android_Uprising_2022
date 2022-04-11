@@ -43,7 +43,7 @@ int main()
 void createPlayer(vector<Object>& list)
 {
 	Object player;
-	player.location = f3(3.0f, 0.85f, 3.0f);
+	player.location = f3(100.0f, 0.85f, 100.0f);
 	player.rotation = f3(0.0f, 0.0f, 0.0f);
 	player.type = 1;
 
@@ -105,6 +105,39 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object SeBatchim_FB1, SeBatchim_FB2;
 	Object SeBatchim1_1, SeBatchim3_1;
 	Object SeBatFBS_1, SeBatFBS_2;
+
+	Object Contain1, Contain2, Contain3, Contain4;
+	Object JobCont;
+	Object T_Cont1;
+	Object B_Cont1;
+
+	B_Cont1.location = f3(1010.0f, 6.25f, 435.0f);
+	B_Cont1.rotation = f3(0.0f, 0.0f, 0.0f);
+	B_Cont1.type = B_Contain;
+
+	T_Cont1.location = f3(360.0f, 2.5f, 450.0f);
+	T_Cont1.rotation = f3(0.0f, 0.0f, 0.0f);
+	T_Cont1.type = T_Contains;
+
+	JobCont.location = f3(25.0f, 3.75f, 60.0f);
+	JobCont.rotation = f3(0.0f, 0.0f, 0.0f);
+	JobCont.type = J_Contain;
+
+	Contain1.location = f3(50.0f, 0.0f, 425.0f);
+	Contain1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Contain1.type = M_Contain;
+
+	Contain2.location = f3(50.0f, 0.0f, 475.0f);
+	Contain2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Contain2.type = M_Contain;
+
+	Contain3.location = f3(50.0f, 0.0f, 525.0f);
+	Contain3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Contain3.type = M_Contain;
+
+	Contain4.location = f3(50.0f, 0.0f, 575.0f);
+	Contain4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Contain4.type = M_Contain;
 
 
 	SeBatchim1.location = f3(800.0f, 12.5f, 0.0f);
@@ -499,7 +532,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(SeBatchim3_1);
 	list.push_back(SeBatFBS_1);
 	list.push_back(SeBatFBS_2);
-
+	list.push_back(Contain1);
+	list.push_back(Contain2);
+	list.push_back(Contain3);
+	list.push_back(Contain4);
+	list.push_back(JobCont);
+	list.push_back(T_Cont1);
+	list.push_back(B_Cont1);
 
 
 	BoundingBox fl, v1, v2, h1, h2;
@@ -531,8 +570,36 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SeBat_FBS1, SeBat_FBS2;
 	BoundingBox SeBat_set1_1, SeBat_set3_1;
 	BoundingBox Sebfbs_1, Sebfbs_2;
+	BoundingBox Cons_1, Cons_2, Cons_3, Cons_4;
+	BoundingBox Jc1;
+	BoundingBox T_Co1;
+	BoundingBox B_Co1;
 
 	//////////////////////////////////////////
+	
+	B_Co1.start = f3(880.0f, 0.0f, 275.0f);
+	B_Co1.end = f3(1140.0f, 12.4f, 595.0f);
+
+	T_Co1.start = f3(340.0f, 0.0f, 350.0f);
+	T_Co1.end = f3(380.0f, 5.0f, 550.0f);
+
+	Jc1.start = f3(0.0f, 0.0f, 0.0f);
+	Jc1.end = f3(50.0f, 7.5f, 120.0f);
+
+
+	Cons_1.start = f3(0.0f, 0.0f, 400.0f);
+	Cons_1.end = f3(100.0f, 25.0f, 450.0f);
+
+
+	Cons_2.start = f3(0.0f, 0.0f, 450.0f);
+	Cons_2.end = f3(100.0f, 25.0f, 500.0f);
+
+	Cons_3.start = f3(0.0f, 0.0f, 500.0f);
+	Cons_3.end = f3(100.0f, 25.0f, 550.0f);
+
+	Cons_4.start = f3(0.0f, 0.0f, 550.0f);
+	Cons_4.end = f3(100.0f, 25.0f, 600.0f);
+
 
 	SeBat_set1.start = f3(800.0f, 12.5f, 0.0f);
 	SeBat_set1.end = f3(800.0f, 22.5f, 600.0f);
@@ -828,7 +895,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(SeBat_set3_1);
 	blist.push_back(Sebfbs_1);
 	blist.push_back(Sebfbs_2);
-
+	blist.push_back(Cons_1);
+	blist.push_back(Cons_2);
+	blist.push_back(Cons_3);
+	blist.push_back(Cons_4);
+	blist.push_back(Jc1);
+	blist.push_back(T_Co1);
+	blist.push_back(B_Co1);
 
 }
 
@@ -836,12 +909,25 @@ void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
 	createPlayer(list);
 	createSpace(list,blist);
-	createObstacles(list, blist);
+	 createObstacles(list, blist);
 }
 
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
+	Object Stars;
+	Stars.location = f3(281.3f, 1.2f, 251.2f);
+	Stars.rotation = f3(0.0f, 0.0f, 0.0f);
+	Stars.type = Stary;
+	list.push_back(Stars);
+
+	BoundingBox S_tair;
+	S_tair.start= f3(280.0f, 0.0f, 250.0f);
+	S_tair.end = f3(282.6f, 2.4f, 252.5f);
+	blist.push_back(S_tair);
+
+
+	/*
 	Object Container1_1;
 	BoundingBox Conts1_1;
 
@@ -854,7 +940,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	
 	list.push_back(Container1_1);
 	blist.push_back(Conts1_1);
-
+	*/
 
 	/*
 	Object container[10];

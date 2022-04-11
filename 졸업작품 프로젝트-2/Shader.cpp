@@ -316,7 +316,7 @@ void CObjectsShader::ReleaseShaderVariables()
 	CTexturedShader::ReleaseShaderVariables();
 }
 
-#define TEXTURES		14
+#define TEXTURES		16
 
 void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	* pd3dCommandList, void* pContext)
@@ -346,11 +346,15 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단벽1.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[12] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[12]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단벽2.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[13] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[13]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[14] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[14]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Cont3.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[15] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[15]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/녹슨컨테이너.dds", RESOURCE_TEXTURE2D, 0);
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
 	m_nObjects = data.size();
@@ -369,8 +373,12 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	}
 
 	CCubeMeshTextured* pPlayerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.7f, 1.0f);
+	CCubeMeshTextured* ContMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 25.0f, 50.0f);
+	CCubeMeshTextured* J_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 50.0f, 7.5f, 120.0f);
+	CCubeMeshTextured* T_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 5.0f, 200.0f);
+	CCubeMeshTextured* B_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 260.0f, 12.5f, 320.0f);
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
-	CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
+	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
 
 
 
@@ -450,6 +458,9 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
 
 	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
+	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Stairsed.txt", "res/idx_Stairsed.txt");
+
+
 
 	boxesWorld = LoadBoxes("res/map/box.txt");
 
@@ -494,6 +505,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, hWall);
 			obj->SetMaterial(ppMaterials[12]);
+		
 		}
 		else if (data[i].type == BOX)
 		{
@@ -908,7 +920,43 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		obj->SetMaterial(ppMaterials[1]);
 
 		}
+		else if (data[i].type == M_Contain)// 지붕의 시작점
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, ContMesh1);
+		obj->SetMaterial(ppMaterials[0]);
 
+		}
+		else if (data[i].type == J_Contain)// 지붕의 시작점
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, J_ConMesh1);
+		obj->SetMaterial(ppMaterials[14]);
+
+		}
+		else if (data[i].type == T_Contains)// 지붕의 시작점
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, T_ConMesh1);
+		obj->SetMaterial(ppMaterials[15]);
+
+		}
+		else if (data[i].type == B_Contain)// 지붕의 시작점
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, B_ConMesh1);
+		obj->SetMaterial(ppMaterials[15]);
+
+		}
+		else if (data[i].type == Stary)// 지붕의 시작점
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, GyeDan);
+		obj->SetMaterial(ppMaterials[1]);
+
+		}
+
+	
 
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);

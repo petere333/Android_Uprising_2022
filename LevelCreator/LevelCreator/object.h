@@ -100,7 +100,12 @@
 
 
 #define Frs_H 123456*3
+#define M_Contain 19409*1
+#define J_Contain 14488*1
+#define T_Contains 18824*1
+#define B_Contain 2391
 
+#define Stary 39120
 
 
 using namespace std;

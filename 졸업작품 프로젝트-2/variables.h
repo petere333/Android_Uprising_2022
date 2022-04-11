@@ -99,3 +99,13 @@
 
 #define SeBat_FB_101 4545*1
 #define SeBat_FB_102 4545*2
+
+
+#define M_Contain 19409*1
+#define J_Contain 14488*1
+#define T_Contains 18824*1
+
+#define B_Contain 2391
+#define Stairs1 3331
+
+#define Stary 39120

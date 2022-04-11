@@ -6,12 +6,12 @@ CCamera::CCamera()
 	m_xmf4x4Projection = Matrix4x4::Identity();
 	m_d3dViewport = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT, 0.0f, 1.0f };
 	m_d3dScissorRect = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT };
-	x = 3.0f;
+	x = 100.0f; // 3
 	y = 2.85f; // 2.85
-	z = -1.0f; // -1
-	lx = 3.0f;
-	ly = 0.85f;
-	lz = 3.0f;
+	z =96.0f; // -1
+	lx = 100.0f; //3
+	ly = 0.85f; // 0.85
+	lz = 100.0f; // 3
 }
 CCamera::~CCamera()
 {}
