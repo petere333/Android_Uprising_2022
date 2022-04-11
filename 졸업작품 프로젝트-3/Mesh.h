@@ -251,3 +251,10 @@ public:
 	WallMeshHorizontal(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
 	virtual ~WallMeshHorizontal();
 };
+
+class WallDecorationMesh : public CMesh
+{
+public:
+	WallDecorationMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, float wallW, float wallH, int dir, int nDecos, bool upper);
+	virtual ~WallDecorationMesh();
+};

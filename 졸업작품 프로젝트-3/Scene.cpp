@@ -285,7 +285,49 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->lastMove = chrono::system_clock::now();
 		m_ppGameObjects[i] = obj;
 	}
+	
+	WallDecorationMesh* floorDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 600.0f, 1, 1000, true);
+	WallDecorationMesh* horizonWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, true);
+	WallDecorationMesh* horizonWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, false);
+	WallDecorationMesh* verticalWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 2.0f, 3, 50, true);
+	WallDecorationMesh* verticalWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 3.0f, 3, 50, false);
+	
+	m_nDecos = 5;
 
+	m_ppDecos = new CGameObject * [5];
+	 
+	
+	m_ppDecos[0] = new CGameObject(1);
+	m_ppDecos[0]->objType = 0;
+	m_ppDecos[0]->SetMesh(floorDeco);
+	m_ppDecos[0]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[0]->SetPosition(0.0f, 0.0f, 0.0f);
+
+	m_ppDecos[1] = new CGameObject(1);
+	m_ppDecos[1]->objType = 0;
+	m_ppDecos[1]->SetMesh(horizonWallDeco);
+	m_ppDecos[1]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[1]->SetPosition(0.0f, 0.0f, 0.0f);
+
+	m_ppDecos[2] = new CGameObject(1);
+	m_ppDecos[2]->objType = 0;
+	m_ppDecos[2]->SetMesh(horizonWallDeco2);
+	m_ppDecos[2]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[2]->SetPosition(0.0f, 0.0f, 600.0f);
+
+	m_ppDecos[3] = new CGameObject(1);
+	m_ppDecos[3]->objType = 0;
+	m_ppDecos[3]->SetMesh(verticalWallDeco);
+	m_ppDecos[3]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[3]->SetPosition(0.0f, 0.0f, 0.0f);
+
+	m_ppDecos[4] = new CGameObject(1);
+	m_ppDecos[4]->objType = 0;
+	m_ppDecos[4]->SetMesh(verticalWallDeco2);
+	m_ppDecos[4]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[4]->SetPosition(800.0f, 0.0f, 0.0f);
+
+	
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 
@@ -544,6 +586,17 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				ppMaterials[4]->UpdateShaderVariable(pd3dCommandList);
 			}
 			m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+		}
+	}
+	for (int i = 0; i < m_nDecos; ++i)
+	{
+		if (m_ppDecos[i])
+		{
+			if (m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+			}
+			m_ppDecos[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
 
