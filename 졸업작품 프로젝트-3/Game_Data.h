@@ -42,7 +42,8 @@
 
 #define PLAYER_SPEED 3.15f
 
-
+//서버 IP 정보
+#define SERVERIP "127.0.0.1" // 루프백 주소
 
 /*
 	플레이어 세부정보 자료구조.

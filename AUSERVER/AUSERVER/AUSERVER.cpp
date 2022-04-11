@@ -77,12 +77,13 @@ public:
 	{
 		//Server to Client
 		SC_LOGIN_INFO_PACKET info;
+		PACKET_TYPE pt;
 		info.id = _id; //client id
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
-		info.type = SC_LOGIN_INFO; //packet type
-		info.dir.x = set.x;
-		info.dir.y = set.y;
-		info.dir.z = set.z;
+		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
+		info.x = set.x;
+		info.y = set.y;
+		info.z = set.z;
 		do_send(&info);
 	}
 	void send_move_info(int c_id); //send client move info
@@ -95,10 +96,10 @@ void SESSION::send_move_info(int c_id)
 	SC_MOVE_PLAYER_PACKET pl;
 	pl.id = c_id;
 	pl.size = sizeof(SC_MOVE_PLAYER_PACKET);
-	pl.type = SC_MOVE_PLAYER;
-	pl.dir.x = clients[c_id].set.x;
-	pl.dir.y = clients[c_id].set.y;
-	pl.dir.z = clients[c_id].set.z;
+	pl.type = PACKET_TYPE::SC_MOVE_PLAYER;
+	pl.x = clients[c_id].set.x;
+	pl.y = clients[c_id].set.y;
+	pl.z = clients[c_id].set.z;
 	do_send(&pl);
 
 }
@@ -111,69 +112,70 @@ int get_new_player_id()
 	return -1;
 }
 
-void process_packet(int c_id, char* packet)
-{
-	switch (packet[1]) {
-	case CS_LOGIN: {
-		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
-		strcpy_s(clients[c_id]._name, p->name);
-		clients[c_id].send_login_info();
-
-		for (auto pl : clients) { //새 클라이언트의 정보 전송
-			if (pl._use == false) continue;
-			if (pl._id == c_id) continue;
-
-			SC_ADD_PLAYER_PACKET add_packet;
-			add_packet.id = c_id;
-			strcpy_s(add_packet.name, p->name);
-			add_packet.size = sizeof(add_packet);
-			add_packet.type = SC_ADD_PLAYER;
-			add_packet.dir.x = clients[c_id].set.x;
-			add_packet.dir.y = clients[c_id].set.y;
-			add_packet.dir.z = clients[c_id].set.z;
-			pl.do_send(&add_packet);
-		}
-
-		for (auto pl : clients) { //기존 클라이언트의 정보 전송 (수정중)
-			if (pl._use == false) continue;
-			if (pl._id == c_id) continue;
-
-			SC_ADD_PLAYER_PACKET add_packet;
-			add_packet.id = pl._id;
-			strcpy_s(add_packet.name, p->name);
-			add_packet.size = sizeof(add_packet);
-			add_packet.type = SC_ADD_PLAYER;
-			add_packet.dir.x = pl.set.x;
-			add_packet.dir.y = pl.set.y;
-			add_packet.dir.z = pl.set.z;
-			clients[c_id].do_send(&add_packet);
-		}
-		break;
-	}
-	case CS_MOVE: {
-		CS_MOVE_PACKET* p = reinterpret_cast<CS_MOVE_PACKET*>(packet);
-		XMFLOAT3 pos;
-		pos.x = clients[c_id].set.x;
-		pos.y = clients[c_id].set.y;
-		pos.z = clients[c_id].set.z;
-
-		switch (p->direction) {
-		case 0: if (pos.y > 0) pos.y--; break;
-		case 1: if (pos.y < W_HEIGHT - 1) pos.y++; break;
-		case 2: if (pos.x > 0) pos.x--; break;
-		case 3: if (pos.x < W_WIDTH - 1) pos.x++; break;
-		}
-		clients[c_id].set.x = pos.x;
-		clients[c_id].set.y = pos.y;
-		clients[c_id].set.z = pos.z;
-
-		for (auto& pl : clients)
-			if (true == pl._use)
-				pl.send_move_info(c_id);
-		break;
-	}
-	}
-}
+//void process_packet(int c_id, char* packet)
+//{
+//	switch (packet[1]) {
+//	case PACKET_TYPE::CS_LOGIN: {
+//		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
+//		strcpy_s(clients[c_id]._name, p->name);
+//		clients[c_id].send_login_info();
+//
+//		for (auto pl : clients) { //새 클라이언트의 정보 전송
+//			if (pl._use == false) continue;
+//			if (pl._id == c_id) continue;
+//
+//			SC_ADD_PLAYER_PACKET add_packet;
+//			//PACKET_TYPE pt;
+//			add_packet.id = c_id;
+//			strcpy_s(add_packet.name, p->name);
+//			add_packet.size = sizeof(add_packet);
+//			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+//			add_packet.x = clients[c_id].set.x;
+//			add_packet.y = clients[c_id].set.y;
+//			add_packet.z = clients[c_id].set.z;
+//			pl.do_send(&add_packet);
+//		}
+//
+//		for (auto pl : clients) { //기존 클라이언트의 정보 전송 (수정중)
+//			if (pl._use == false) continue;
+//			if (pl._id == c_id) continue;
+//
+//			SC_ADD_PLAYER_PACKET add_packet;
+//			add_packet.id = pl._id;
+//			strcpy_s(add_packet.name, p->name);
+//			add_packet.size = sizeof(add_packet);
+//			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+//			add_packet.x = pl.set.x;
+//			add_packet.y = pl.set.y;
+//			add_packet.z = pl.set.z;
+//			clients[c_id].do_send(&add_packet);
+//		}
+//		break;
+//	}
+//	case PACKET_TYPE::CS_MOVE: {
+//		CS_MOVE_PACKET* p = reinterpret_cast<CS_MOVE_PACKET*>(packet);
+//		XMFLOAT3 pos;
+//		pos.x = clients[c_id].set.x;
+//		pos.y = clients[c_id].set.y;
+//		pos.z = clients[c_id].set.z;
+//
+//		switch (p->direction) {
+//		case 0: if (pos.y > 0) pos.y--; break;
+//		case 1: if (pos.y < W_HEIGHT - 1) pos.y++; break;
+//		case 2: if (pos.x > 0) pos.x--; break;
+//		case 3: if (pos.x < W_WIDTH - 1) pos.x++; break;
+//		}
+//		clients[c_id].set.x = pos.x;
+//		clients[c_id].set.y = pos.y;
+//		clients[c_id].set.z = pos.z;
+//
+//		for (auto& pl : clients)
+//			if (true == pl._use)
+//				pl.send_move_info(c_id);
+//		break;
+//	}
+//	}
+//}
 
 void disconnect(int c_id)
 {
@@ -184,7 +186,7 @@ void disconnect(int c_id)
 		SC_REMOVE_PLAYER_PACKET rm;
 		rm.id = c_id;
 		rm.size = sizeof(rm);
-		rm.type = SC_REMOVE_PLAYER;
+		rm.type = PACKET_TYPE::SC_REMOVE_PLAYER;
 		clients[c_id].do_send(&rm);
 	}
 	closesocket(clients[c_id]._socket);
@@ -238,7 +240,7 @@ int main(int argc, char* argv[])
 
 	HANDLE h_iocp;
 	h_iocp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0); //IOCP 핸들 생성
-	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 9999, 0); //핸들 초기화
+	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 1234, 0); //핸들 초기화
 
 	SOCKET c_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED); //통신 소켓 생성
 	OVER_EXP a_over;
@@ -259,6 +261,7 @@ int main(int argc, char* argv[])
 				if (ex_over->_comp_type == PL_SEND) delete ex_over;
 			}
 		}
+		else cout << "client ID ["<<key<<"] connected.\n";
 		switch (ex_over->_comp_type) {
 		case PL_ACCEPT: {
 			int client_id = get_new_player_id();
@@ -290,7 +293,7 @@ int main(int argc, char* argv[])
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					process_packet(client_id, p);
+					//process_packet(client_id, p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}

@@ -5,6 +5,7 @@
 
 #include "stdafx.h"
 #include "GameFramework.h"
+#include "CNet.h"
 
 CGameFramework::CGameFramework()
 {
@@ -701,4 +702,54 @@ void CGameFramework::FrameAdvance()
 	::SetWindowText(m_hWnd, m_pszFrameRate);
 
 	
+}
+
+
+void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
+{
+	if (WSAGETASYNCERROR(lParam)) {
+
+	}
+
+}
+
+void CGameFramework::Connection()
+{
+	int retval = 0;
+	UINT c_id = 1234;
+	// 윈속 초기화
+	if (WSAStartup(MAKEWORD(2, 2), &m_WSA) != 0) err_quit((const char*)"connect()");
+
+	// set serveraddr
+	SOCKADDR_IN serveraddr;
+	ZeroMemory(&serveraddr, sizeof(serveraddr));
+	serveraddr.sin_family = AF_INET;
+	//serveraddr.sin_addr.s_addr = inet_addr(SERVER_ROOP);
+	serveraddr.sin_addr.S_un.S_addr = inet_addr(SERVERIP);
+	serveraddr.sin_port = htons(SERVERPORT);
+
+	// socket()
+	m_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
+	if (m_socket == INVALID_SOCKET) err_quit((const char*)"socket()");
+	
+	retval = connect(m_socket, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
+	
+	WSAAsyncSelect(m_socket, m_hWnd, WM_SOCKET, FD_CLOSE | FD_READ);
+
+	g_client.m_sock = m_socket;
+	if (retval == SOCKET_ERROR)
+	{
+		int errorcode = WSAGetLastError();
+		if (errorcode != WSAEWOULDBLOCK) {
+			err_display("connect() failed");
+			cout << "서버 연결 실패\n";
+			return;
+		}
+	}
+
+	else {
+		cout << "서버 연결 성공\n";
+		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\nClient ID : " << c_id;
+	}
+
 }

@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="..\AUSERVER\AUSERVER\protocol.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CNet.h" />
     <ClInclude Include="DDSTextureLoader12.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="Game_Data.h" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CNet.cpp" />
     <ClCompile Include="DDSTextureLoader12.cpp" />
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="LabProject08-8-8(Fbx Animation).cpp" />

@@ -45,6 +45,9 @@
     <ClCompile Include="LevelLoader.cpp">
       <Filter>LevelLoader</Filter>
     </ClCompile>
+    <ClCompile Include="CNet.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>LevelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="CNet.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

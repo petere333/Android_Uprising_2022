@@ -41,6 +41,18 @@ public:
 	void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 
+public: // to server
+	void OnSocketHandel(WPARAM wParam, LPARAM lParam);
+	void Connection();
+	//void Disconnection();
+
+private:
+	WSADATA						m_WSA;
+	SOCKET						m_socket;
+	SOCKADDR					m_serveraddr;
+
+	CRITICAL_SECTION			m_cs;
+
 private:
 	HINSTANCE					m_hInstance;
 	HWND						m_hWnd; 
