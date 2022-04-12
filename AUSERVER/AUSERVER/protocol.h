@@ -35,7 +35,10 @@ struct CS_LOGIN_PACKET {
 struct CS_MOVE_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
-	char	direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
+	//char	direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
+	bool isKey;
+	short c_id;
+
 };
 
 //server to client packet

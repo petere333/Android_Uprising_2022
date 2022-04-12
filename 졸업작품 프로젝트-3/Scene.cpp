@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
+#include "stdafx.h"
 #include "Scene.h"
 
 
@@ -1025,5 +1026,39 @@ void CScene::setPlayerDirection(float dx, float dy, float dz)
 	{
 		m_ppGameObjects[0]->Rotate(0.0f, dy - m_ppGameObjects[0]->currentRotation.y, 0.0f);
 		m_ppGameObjects[0]->currentRotation.y = dy;
+	}
+}
+
+//client to server (received)
+void CScene::recv_packet()
+{
+	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
+	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
+
+	memset(&g_client.m_recv_over.m_over, 0, sizeof(g_client.m_recv_over.m_over));
+
+	DWORD iobyte, ioflag = 0;
+	int ret = WSARecv(g_client.m_sock, &g_client.m_recv_over.m_wsabuf, 1,
+		&iobyte, &ioflag, NULL, NULL);
+	if (0 != ret) {
+		auto errcode = WSAGetLastError();
+		if (WSA_IO_PENDING != errcode)
+			err_display("Error in RecvPacket: ");
+	}
+
+	char* packet_ptr = g_client.m_recv_over.m_sendbuf; //unsigned ?
+	int num_data = iobyte + g_client.m_prev_size;
+	int packet_size = packet_ptr[0];
+
+	while (num_data >= packet_size) {
+		//
+		num_data -= packet_size;
+		packet_ptr += packet_size;
+		if (0 >= num_data) break;
+		packet_size = packet_ptr[0];
+	}
+	g_client.m_prev_size = num_data;
+	if (0 != num_data) {
+		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
 	}
 }

@@ -8,6 +8,7 @@
 #include "LevelLoader.h"
 #include "stdafx.h"
 #include "Game_Data.h"
+#include "CNet.h"
 
 #define MAX_LIGHTS						16 
 
@@ -169,8 +170,6 @@ public:
 		m_ppGameObjects[idx]->lastMove = chrono::system_clock::now(); 
 	}
 
-	
-
 	void rotateObject(int idx, float, float, float);
 
 	void setPlayerDirection(float dx, float dy, float dz);
@@ -178,4 +177,9 @@ public:
 	XMFLOAT3 getObjectRotation(int idx) { return m_ppGameObjects[idx]->currentRotation; }
 
 	void createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+
+public: // client to server
+	virtual void recv_packet(); // (receive packet);
+	virtual void ClientNet(SOCKET& sock) {}
+
 };

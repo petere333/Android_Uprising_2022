@@ -316,6 +316,13 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 {
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
+	CS_MOVE_PACKET m_packet;
+	m_packet.c_id = 1;
+	m_packet.isKey = true;
+	m_packet.size = sizeof(CS_MOVE_PACKET);
+	m_packet.type = PACKET_TYPE::CS_MOVE;
+	SendPacket(&m_packet);
+
 	switch (nMessageID)
 	{
 	case WM_KEYDOWN:
@@ -445,6 +452,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 
 LRESULT CALLBACK CGameFramework::OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
+
 	switch (nMessageID)
 	{
 		case WM_ACTIVATE:
@@ -467,6 +475,7 @@ LRESULT CALLBACK CGameFramework::OnProcessingWindowMessage(HWND hWnd, UINT nMess
         case WM_KEYDOWN:
         case WM_KEYUP:
 			OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
+
 			break;
 	}
 	return(0);
@@ -708,7 +717,19 @@ void CGameFramework::FrameAdvance()
 void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
 {
 	if (WSAGETASYNCERROR(lParam)) {
+		closesocket((SOCKET)wParam);
+		err_display("WSAGETSELECTERROR");
+	}
 
+	switch (WSAGETSELECTEVENT(lParam))
+	{
+	case FD_READ:
+		m_pScene->recv_packet();
+		break;
+	
+	case FD_CLOSE:
+		closesocket((SOCKET)wParam);
+		err_display("CLOSE SOCKET");
 	}
 
 }
@@ -752,4 +773,9 @@ void CGameFramework::Connection()
 		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\nClient ID : " << c_id;
 	}
 
+}
+
+void CGameFramework::ClientNet()
+{
+	if (m_pScene) m_pScene->ClientNet(m_socket);
 }

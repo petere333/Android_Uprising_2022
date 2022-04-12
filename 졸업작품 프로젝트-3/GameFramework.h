@@ -45,6 +45,7 @@ public: // to server
 	void OnSocketHandel(WPARAM wParam, LPARAM lParam);
 	void Connection();
 	//void Disconnection();
+	void ClientNet();
 
 private:
 	WSADATA						m_WSA;
