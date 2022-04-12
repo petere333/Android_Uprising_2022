@@ -288,8 +288,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->pState.currHP = 100;
 			obj->pState.id = IDLE_STATE;
 			obj->pState.timeElapsed = 0.0f;
+			int sets = rand() % 22;
 
-			obj->SetTrackAnimationSet(0, 11);
+			obj->SetTrackAnimationSet(0, sets);
 			currentPlayerAnim = 11;
 
 			if (shadowRect[0] == NULL)
@@ -471,11 +472,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		if (shd != NULL)
 		{
 			shadowMove += data[i].position.y;
-			shd->SetPosition(data[i].position.x+shadowMove, 0.002f, data[i].position.z+shadowUp);
+			shd->SetPosition(data[i].position.x+shadowMove, 0.0f, data[i].position.z+shadowUp);
 			shd->Rotate(0.0f, data[i].rotation.y, 0.0f);
 			shd->currentRotation = XMFLOAT3(0.0f, data[i].rotation.y, 0.0f);
+			if (data[i].type == PLAYER)
+			{
+				shd->SetPosition(data[i].position.x + shadowMove, -0.01f, data[i].position.z + shadowUp);
+			}
 			m_ppShadows[i] = shd;
 		}
+		
 	}
 	
 	WallDecorationMesh* floor_paint = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 800.0f, 600.0f, 1, 300, true);
@@ -919,8 +925,8 @@ void CScene::moveObject(int idx)
 
 		for (int i = 0; i < boxesWorld.size(); ++i)
 		{
-			if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 0.85f && tz > boxesWorld[i].start.z - 0.5f
-				&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.85f && tz < boxesWorld[i].end.z + 0.5f)
+			if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 0.65f && tz > boxesWorld[i].start.z - 0.5f
+				&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.0f && tz < boxesWorld[i].end.z + 0.5f)
 			{
 				crash = true;
 			}
@@ -930,7 +936,7 @@ void CScene::moveObject(int idx)
 		if (crash == false)
 		{
 			m_ppGameObjects[idx]->SetPosition(tx, ty, tz);
-			m_ppShadows[idx]->SetPosition(tx, ty, tz);
+			m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 			m_ppGameObjects[idx]->lastMoveSuccess = true;
 
 		}

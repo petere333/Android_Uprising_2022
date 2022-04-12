@@ -751,13 +751,13 @@ RectMesh::RectMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 	XMFLOAT3* pos = new XMFLOAT3[6];
 	XMFLOAT2* uv = new XMFLOAT2[6];
 
-	pos[0] = XMFLOAT3(ws, 0.002f, hs);
-	pos[1] = XMFLOAT3(ws, 0.002f, he);
-	pos[2] = XMFLOAT3(we, 0.002f, he);
+	pos[0] = XMFLOAT3(ws, 0.02f, hs);
+	pos[1] = XMFLOAT3(ws, 0.02f, he);
+	pos[2] = XMFLOAT3(we, 0.02f, he);
 
-	pos[3] = XMFLOAT3(ws, 0.002f, hs);
-	pos[4] = XMFLOAT3(we, 0.002f, he);
-	pos[5] = XMFLOAT3(we, 0.002f, hs);
+	pos[3] = XMFLOAT3(ws, 0.02f, hs);
+	pos[4] = XMFLOAT3(we, 0.02f, he);
+	pos[5] = XMFLOAT3(we, 0.02f, hs);
 
 	uv[0] = XMFLOAT2(0.0f, 0.0f);
 	uv[1] = XMFLOAT2(0.0f, 1.0f);
