@@ -258,3 +258,9 @@ public:
 	WallDecorationMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, float wallW, float wallH, int dir, int nDecos, bool upper);
 	virtual ~WallDecorationMesh();
 };
+class RectMesh :public CMesh
+{
+public: 
+	RectMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~RectMesh();
+};

@@ -11,6 +11,11 @@ cbuffer cbGameObjectInfo : register(b2)
 	uint					matID : packoffset(c4);
 };
 
+cbuffer transparent : register(b6)
+{
+	float alpha : packoffset(c0);
+}
+
 #include "Light.hlsl"
 Texture2D tex : register(t0);
 Texture2D normTex : register(t1);
@@ -51,7 +56,10 @@ float4 PSWireFrame(VS_WIREFRAME_OUTPUT input) : SV_TARGET
 
 	float4 cLight = Lighting(input.positionW, norm);
 
-	return color* cLight;
+	float4 result = color * cLight;
+	result.a = result.a*alpha;
+
+	return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

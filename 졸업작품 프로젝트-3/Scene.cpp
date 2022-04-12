@@ -87,12 +87,8 @@ void CScene::BuildDefaultLightsAndMaterials()
 
 }
 
-void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
+void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
-
-
-
 	textures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -115,6 +111,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	textures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
 	textures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
+	textures[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/entrance.dds", RESOURCE_TEXTURE2D, 0);
+
+
 
 	normalTex[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/cont_norm.dds", RESOURCE_TEXTURE2D, 0);
@@ -138,25 +138,89 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	normalTex[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/barrel_norm.dds", RESOURCE_TEXTURE2D, 0);
 	normalTex[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/truck_norm.dds", RESOURCE_TEXTURE2D, 0);
+	normalTex[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	normalTex[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 
+	dirtTex[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/crack1.dds", RESOURCE_TEXTURE2D, 0);
+	dirtTex[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/crack2.dds", RESOURCE_TEXTURE2D, 0);
+	dirtTex[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	//dirtTex[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/melted1.dds", RESOURCE_TEXTURE2D, 0);
+	dirtTex[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/melt.dds", RESOURCE_TEXTURE2D, 0);
+	dirtTex[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/melted2.dds", RESOURCE_TEXTURE2D, 0);
 
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 22);
+	dirtTex[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/old.dds", RESOURCE_TEXTURE2D, 0);
 
-	for (int i = 0; i < 11; ++i)
+	dirtTex[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/old2.dds", RESOURCE_TEXTURE2D, 0);
+
+	dirtTex[6] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/paint_spill1.dds", RESOURCE_TEXTURE2D, 0);
+
+	dirtTex[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/paint_spill2.dds", RESOURCE_TEXTURE2D, 0);
+
+	dirtTex[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	dirtTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/scratch1.dds", RESOURCE_TEXTURE2D, 0);
+
+	shadowTex[0]= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	shadowTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/player_shadow.dds", RESOURCE_TEXTURE2D, 0);
+	shadowTex[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	shadowTex[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_cont.dds", RESOURCE_TEXTURE2D, 0);
+	shadowTex[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	shadowTex[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_box.dds", RESOURCE_TEXTURE2D, 0);
+
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex+nNormal+nDirt+nShadows);
+
+	for (int i = 0; i < nTex; ++i)
 	{
 		CreateShaderResourceViews(pd3dDevice, textures[i], 0, 3);
+	}
+	for (int i = 0; i < nNormal; ++i)
+	{
 		CreateShaderResourceViews(pd3dDevice, normalTex[i], 0, 6);
 	}
 	
-	
-	
+	for (int i = 0; i < nDirt; ++i)
+	{
+		CreateShaderResourceViews(pd3dDevice, dirtTex[i], 0, 3);
+	}
+	for (int i = 0; i < nShadows; ++i)
+	{
+		CreateShaderResourceViews(pd3dDevice, shadowTex[i], 0, 3);
+	}
 
-	for (int i = 0; i < 11; ++i)
+	for (int i = 0; i < nTex; ++i)
 	{
 		ppMaterials[i] = new CMaterial(1);
 		ppMaterials[i]->SetTexture(textures[i], 0);
 		ppMaterials[i]->SetNormalTex(normalTex[i]);
 	}
+	for (int i = 0; i < 9; ++i)
+	{
+		dirtMaterials[i] = new CMaterial(1);
+		dirtMaterials[i]->SetTexture(dirtTex[i], 0);
+		dirtMaterials[i]->SetNormalTex(normalTex[11]);
+	}
+	for (int i = 0; i < nShadows; ++i)
+	{
+		shadowMats[i] = new CMaterial(1);
+		shadowMats[i]->SetTexture(shadowTex[i], 0);
+		shadowMats[i]->SetNormalTex(normalTex[11]);
+	}
+
+}
+
+void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
+{
+	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
+
+	createTextureData(pd3dDevice, pd3dCommandList);
+
+	
 
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
@@ -180,11 +244,24 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
 	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
+	CLoadedMesh* enterMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_entrance.txt", NULL);
 
+	RectMesh** shadowRect = new RectMesh * [nShadows];
+	m_ppShadows = new CGameObject * [m_nGameObjects];
+
+	for (int i = 0; i < nShadows; ++i)
+	{
+		shadowRect[i] = NULL;
+	}
+	for (int i = 0; i < m_nGameObjects; ++i)
+	{
+		m_ppShadows[i] = NULL;
+	}
 
 	for (int i = 0; i < data.size(); ++i)
 	{
-		CGameObject* obj;
+		CGameObject* obj=NULL, *shd=NULL;
+		float shadowMove = 0.0f;
 		if (data[i].type == PLAYER)//player
 		{
 			CLoadedModelInfo* model=CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
@@ -199,6 +276,15 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			obj->SetTrackAnimationSet(0, 11);
 			currentPlayerAnim = 11;
+
+			if (shadowRect[0] == NULL)
+			{
+				shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
+			}
+			shd = new CGameObject(1);
+			shd->SetMesh(shadowRect[0]);
+			shd->SetMaterial(0, shadowMats[0]);
+
 		}
 		else if (data[i].type == CONTAINER)//container
 		{
@@ -206,6 +292,15 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->objType = 0;
 			obj->SetMesh(container);
 			obj->SetMaterial(0, ppMaterials[0]);
+
+			if (shadowRect[1] == NULL)
+			{
+				shadowRect[1] = new RectMesh(pd3dDevice, pd3dCommandList, 10.0f, 6.0f);
+			}
+			shd = new CGameObject(1);
+			shd->SetMesh(shadowRect[1]);
+			shd->SetMaterial(0, shadowMats[1]);
+			shadowMove = 3.0f;
 
 		}
 		else if (data[i].type == f800x600)
@@ -234,6 +329,15 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->objType = 0;
 			obj->SetMesh(box);
 			obj->SetMaterial(0, ppMaterials[5]);
+
+			if (shadowRect[2] == NULL)
+			{
+				shadowRect[2] = new RectMesh(pd3dDevice, pd3dCommandList, 0.5f, 0.5f);
+			}
+			shd = new CGameObject(1);
+			shd->SetMesh(shadowRect[2]);
+			shd->SetMaterial(0, shadowMats[2]);
+			shadowMove = 0.15f;
 		}
 		else if (data[i].type == PALLET)
 		{
@@ -277,6 +381,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->SetMesh(chairMesh);
 			obj->SetMaterial(0, ppMaterials[1]);
 		}
+		else if (data[i].type == 10)
+		{
+			obj = new CGameObject(1);
+			obj->objType = 0;
+			obj->SetMesh(enterMesh);
+			obj->SetMaterial(0, ppMaterials[11]);
+		}
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		obj->currentRotation = data[i].rotation;
@@ -284,25 +395,50 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
 		obj->lastMove = chrono::system_clock::now();
 		m_ppGameObjects[i] = obj;
+
+		if (shd != NULL)
+		{
+			shadowMove += data[i].position.y;
+			shd->SetPosition(data[i].position.x+shadowMove, 0.002f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y, 0.0f);
+			shd->currentRotation = XMFLOAT3(0.0f, data[i].rotation.y, 0.0f);
+			m_ppShadows[i] = shd;
+		}
 	}
 	
-	WallDecorationMesh* floorDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 600.0f, 1, 1000, true);
+	WallDecorationMesh* floor_paint = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 800.0f, 600.0f, 1, 300, true);
+	WallDecorationMesh* floor_crack1 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 4.0f, 4.0f, 800.0f, 600.0f, 1, 300, true);
+	WallDecorationMesh* floor_old2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 2.0f, 2.0f, 800.0f, 600.0f, 1, 1000, true);
+
+	/*
 	WallDecorationMesh* horizonWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, true);
 	WallDecorationMesh* horizonWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, false);
 	WallDecorationMesh* verticalWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 2.0f, 3, 50, true);
 	WallDecorationMesh* verticalWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 3.0f, 3, 50, false);
-	
-	m_nDecos = 5;
-
-	m_ppDecos = new CGameObject * [5];
+	*/
+//	m_nDecos = 5;
+	m_nDecos = 1;
+	m_ppDecos = new CGameObject * [1];
 	 
 	
 	m_ppDecos[0] = new CGameObject(1);
-	m_ppDecos[0]->objType = 0;
-	m_ppDecos[0]->SetMesh(floorDeco);
-	m_ppDecos[0]->SetMaterial(0, ppMaterials[4]);
+	m_ppDecos[0]->SetMesh(floor_crack1);
+	m_ppDecos[0]->SetMaterial(0, dirtMaterials[2]);
 	m_ppDecos[0]->SetPosition(0.0f, 0.0f, 0.0f);
+	/*
+	m_ppDecos[1] = new CGameObject(1);
+	m_ppDecos[1]->bgTransparent = true;
+	m_ppDecos[1]->SetMesh(floor_crack1);
+	m_ppDecos[1]->SetMaterial(0, dirtMaterials[0]);
+	m_ppDecos[1]->SetPosition(0.0f, 0.0f, 0.0f);
 
+	m_ppDecos[2] = new CGameObject(1);
+	m_ppDecos[2]->bgTransparent = true;
+	m_ppDecos[2]->SetMesh(floor_old2);
+	m_ppDecos[2]->SetMaterial(0, dirtMaterials[5]);
+	m_ppDecos[2]->SetPosition(0.0f, 0.0f, 0.0f);
+	*/
+	/*
 	m_ppDecos[1] = new CGameObject(1);
 	m_ppDecos[1]->objType = 0;
 	m_ppDecos[1]->SetMesh(horizonWallDeco);
@@ -326,8 +462,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_ppDecos[4]->SetMesh(verticalWallDeco2);
 	m_ppDecos[4]->SetMaterial(0, ppMaterials[4]);
 	m_ppDecos[4]->SetPosition(800.0f, 0.0f, 0.0f);
-
+	*/
 	
+	
+
+
+
+
+
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 
@@ -378,7 +520,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dDescriptorRanges[1].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 	
 
-	D3D12_ROOT_PARAMETER pd3dRootParameters[8];
+	D3D12_ROOT_PARAMETER pd3dRootParameters[9];
 
 	pd3dRootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	pd3dRootParameters[0].Descriptor.ShaderRegister = 1; //Camera
@@ -423,6 +565,12 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dRootParameters[7].Descriptor.ShaderRegister = 3; //material
 	pd3dRootParameters[7].Descriptor.RegisterSpace = 0;
 	pd3dRootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	pd3dRootParameters[8].ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+	pd3dRootParameters[8].Constants.Num32BitValues = 1;
+	pd3dRootParameters[8].Constants.ShaderRegister = 6; //alpha
+	pd3dRootParameters[8].Constants.RegisterSpace = 0;
+	pd3dRootParameters[8].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
 
 	D3D12_STATIC_SAMPLER_DESC d3dSamplerDesc; // gSamplerState
@@ -570,7 +718,9 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	pd3dCommandList->SetGraphicsRootConstantBufferView(7, d3dcbMat); // Materials
 
 
+	float alpha = 1.0f;
 
+	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
 	for (int i = 0; i < m_nGameObjects; i++)
 	{
 		if (m_ppGameObjects[i])
@@ -597,6 +747,20 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 			}
 			m_ppDecos[i]->Render(pd3dCommandList, pCamera);
+		}
+	}
+	alpha = 0.5f;
+	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
+
+	for (int i = 0; i < m_nGameObjects; ++i)
+	{
+		if (m_ppShadows[i]!=NULL)
+		{
+			if (m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+			}
+			m_ppShadows[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
 
@@ -694,6 +858,7 @@ void CScene::moveObject(int idx)
 		if (crash == false)
 		{
 			m_ppGameObjects[idx]->SetPosition(tx, ty, tz);
+			m_ppShadows[idx]->SetPosition(tx, ty, tz);
 			m_ppGameObjects[idx]->lastMoveSuccess = true;
 
 		}

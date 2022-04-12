@@ -737,3 +737,51 @@ WallDecorationMesh::WallDecorationMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
 }
 WallDecorationMesh::~WallDecorationMesh() {}
+
+RectMesh::RectMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height) : CMesh(pd3dDevice, pd3dCommandList)
+{
+	m_nVertices = 6;
+
+	float ws = width * -0.5f;
+	float we = width * 0.5f;
+
+	float hs = height * -0.5f;
+	float he = height * 0.5f;
+
+	XMFLOAT3* pos = new XMFLOAT3[6];
+	XMFLOAT2* uv = new XMFLOAT2[6];
+
+	pos[0] = XMFLOAT3(ws, 0.002f, hs);
+	pos[1] = XMFLOAT3(ws, 0.002f, he);
+	pos[2] = XMFLOAT3(we, 0.002f, he);
+
+	pos[3] = XMFLOAT3(ws, 0.002f, hs);
+	pos[4] = XMFLOAT3(we, 0.002f, he);
+	pos[5] = XMFLOAT3(we, 0.002f, hs);
+
+	uv[0] = XMFLOAT2(0.0f, 0.0f);
+	uv[1] = XMFLOAT2(0.0f, 1.0f);
+	uv[2] = XMFLOAT2(1.0f, 1.0f);
+
+	uv[3] = XMFLOAT2(0.0f, 0.0f);
+	uv[4] = XMFLOAT2(1.0f, 1.0f);
+	uv[5] = XMFLOAT2(1.0f, 0.0f);
+
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	m_pd3dPositionBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, pos, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+
+	m_pd3dTextureBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, uv, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
+}
+
+RectMesh::~RectMesh(){}

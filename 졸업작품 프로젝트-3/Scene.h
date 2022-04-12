@@ -95,9 +95,27 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	CTexture* textures[11];
-	CMaterial* ppMaterials[11];
-	CTexture* normalTex[11];
+	#define nTex  12
+	#define nNormal  12
+	
+	#define nDirt  9
+	
+	#define nMat 12
+	#define nDirMat 9
+
+#define nShadows 3
+
+
+
+	CTexture* textures[nTex];
+	CMaterial* ppMaterials[nMat];
+
+	CTexture* normalTex[nNormal];
+	CTexture* dirtTex[nDirt];
+	CMaterial* dirtMaterials[nDirMat];
+
+	CTexture* shadowTex[nShadows];
+	CMaterial* shadowMats[nShadows];
 public:
 
 	std::vector<BoundBox> boxesWorld;
@@ -116,6 +134,7 @@ public:
 
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
+	CGameObject** m_ppShadows = NULL;
 
 	float								m_fElapsedTime = 0.0f;
 
@@ -157,4 +176,6 @@ public:
 	void setPlayerDirection(float dx, float dy, float dz);
 
 	XMFLOAT3 getObjectRotation(int idx) { return m_ppGameObjects[idx]->currentRotation; }
+
+	void createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 };
