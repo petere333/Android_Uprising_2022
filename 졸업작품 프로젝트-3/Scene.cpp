@@ -161,7 +161,7 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	dirtTex[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/paint_spill1.dds", RESOURCE_TEXTURE2D, 0);
 
 	dirtTex[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	dirtTex[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/paint_spill2.dds", RESOURCE_TEXTURE2D, 0);
+	dirtTex[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/paint_spill3.dds", RESOURCE_TEXTURE2D, 0);
 
 	dirtTex[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	dirtTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/dirt/scratch1.dds", RESOURCE_TEXTURE2D, 0);
@@ -184,7 +184,7 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	shadowTex[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	shadowTex[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_table.dds", RESOURCE_TEXTURE2D, 0);
 	shadowTex[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	shadowTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_chair.dds", RESOURCE_TEXTURE2D, 0);
+	shadowTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_chair_topview.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex+nNormal+nDirt+nShadows);
@@ -363,13 +363,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			if (shadowRect[3] == NULL)
 			{
-				shadowRect[3] = new RectMesh(pd3dDevice, pd3dCommandList, 1.5f, 1.5f);
+				shadowRect[3] = new RectMesh(pd3dDevice, pd3dCommandList, 2.0f, 2.3f);
 			}
 
 			shd = new CGameObject(1);
 			shd->SetMesh(shadowRect[3]);
 			shd->SetMaterial(0, shadowMats[3]);
-			shadowMove = 0.85f;
+			shadowMove = 1.5f;
+			shadowUp = 0.1f;
 		}
 		else if (data[i].type == TRASH)
 		{
@@ -396,12 +397,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			if (shadowRect[5] == NULL)
 			{
-				shadowRect[5] = new RectMesh(pd3dDevice, pd3dCommandList, 0.5f, 1.0f);
+				shadowRect[5] = new RectMesh(pd3dDevice, pd3dCommandList, 2.0f, 2.6f);
 			}
 			shd = new CGameObject(1);
 			shd->SetMesh(shadowRect[5]);
 			shd->SetMaterial(0, shadowMats[5]);
-			shadowMove = 0.7f;
+			shadowMove = 0.15f;
 		}
 		else if (data[i].type == TRUCK)
 		{
@@ -412,12 +413,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			if (shadowRect[6] == NULL)
 			{
-				shadowRect[6] = new RectMesh(pd3dDevice, pd3dCommandList, 0.5f, 1.0f);
+				shadowRect[6] = new RectMesh(pd3dDevice, pd3dCommandList, 6.5f, 7.0f);
 			}
 			shd = new CGameObject(1);
-			shd->SetMesh(shadowRect[7]);
-			shd->SetMaterial(0, shadowMats[7]);
-			shadowMove = 1.35;
+			shd->SetMesh(shadowRect[6]);
+			shd->SetMaterial(0, shadowMats[6]);
+			shadowMove = 0.85f;
+			shadowUp = -0.65f;
 		}
 		else if (data[i].type == TABLE)
 		{
@@ -428,12 +430,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			if (shadowRect[7] == NULL)
 			{
-				shadowRect[7] = new RectMesh(pd3dDevice, pd3dCommandList, 0.5f, 1.0f);
+				shadowRect[7] = new RectMesh(pd3dDevice, pd3dCommandList, 1.6f, 2.0f);
 			}
 			shd = new CGameObject(1);
 			shd->SetMesh(shadowRect[7]);
 			shd->SetMaterial(0, shadowMats[7]);
-			shadowMove = 0.35;
+			shadowMove = 0.55;
 		}
 		else if (data[i].type == CHAIR)
 		{
@@ -444,12 +446,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 			if (shadowRect[8] == NULL)
 			{
-				shadowRect[8] = new RectMesh(pd3dDevice, pd3dCommandList, 0.5f, 1.0f);
+				shadowRect[8] = new RectMesh(pd3dDevice, pd3dCommandList, 1.5f, 2.0f);
 			}
 			shd = new CGameObject(1);
 			shd->SetMesh(shadowRect[8]);
 			shd->SetMaterial(0, shadowMats[8]);
-			shadowMove = 0.25;
+			shadowMove = 0.75;
 		}
 		else if (data[i].type == 10)
 		{
@@ -469,7 +471,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		if (shd != NULL)
 		{
 			shadowMove += data[i].position.y;
-			shd->SetPosition(data[i].position.x+shadowMove, 0.002f, data[i].position.z);
+			shd->SetPosition(data[i].position.x+shadowMove, 0.002f, data[i].position.z+shadowUp);
 			shd->Rotate(0.0f, data[i].rotation.y, 0.0f);
 			shd->currentRotation = XMFLOAT3(0.0f, data[i].rotation.y, 0.0f);
 			m_ppShadows[i] = shd;
@@ -493,7 +495,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	
 	m_ppDecos[0] = new CGameObject(1);
 	m_ppDecos[0]->SetMesh(floor_crack1);
-	m_ppDecos[0]->SetMaterial(0, dirtMaterials[2]);
+	m_ppDecos[0]->SetMaterial(0, dirtMaterials[7]);
 	m_ppDecos[0]->SetPosition(0.0f, 0.0f, 0.0f);
 	/*
 	m_ppDecos[1] = new CGameObject(1);
