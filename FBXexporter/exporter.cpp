@@ -189,8 +189,7 @@ int main()
 			zmin = ctrlPoints[i].z;
 		}
 	}
-	//float xscale = (xmax - xmin) /100;
-	float xscale = 100/(xmax - xmin);
+	float xscale = (xmax - xmin) /100;
 	float yscale = (max - min)/100;
 	float zscale = (zmax - zmin)/200;
 	//for (int i = 0; i < maxidx + 1; ++i)

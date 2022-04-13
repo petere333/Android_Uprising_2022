@@ -104,7 +104,7 @@ protected:
 	#define nMat 12
 	#define nDirMat 9
 
-	#define nShadows 9
+#define nShadows 3
 
 
 
