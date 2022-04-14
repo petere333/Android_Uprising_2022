@@ -174,6 +174,7 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	shadowTex[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	shadowTex[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_box.dds", RESOURCE_TEXTURE2D, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	shadowTex[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	shadowTex[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_pallet.dds", RESOURCE_TEXTURE2D, 0);
 	shadowTex[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -189,7 +190,9 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	shadowTex[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/shadow_chair_topview.dds", RESOURCE_TEXTURE2D, 0);
 
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex+nNormal+nDirt+nShadows);
 
@@ -365,6 +368,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->SetMesh(cartMesh);
 			obj->SetMaterial(0, ppMaterials[7]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (shadowRect[3] == NULL)
 			{
@@ -377,7 +381,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			shadowMove = 1.5f;
 			shadowUp = 0.1f;
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 		}
 		else if (data[i].type == TRASH)
 		{
@@ -393,6 +399,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->SetMesh(barrelMesh);
 			obj->SetMaterial(0, ppMaterials[9]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 			if (shadowRect[5] == NULL)
 			{
@@ -403,7 +410,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			shd->SetMaterial(0, shadowMats[5]);
 			shadowMove = 0.15f;
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 		}
 		else if (data[i].type == TRUCK)
 		{
@@ -411,6 +420,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->objType = 0;
 			obj->SetMesh(truckMesh);
 			obj->SetMaterial(0, ppMaterials[10]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 			if (shadowRect[6] == NULL)
@@ -423,7 +433,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			shadowMove = 0.85f;
 			shadowUp = -0.65f;
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 		}
 		else if (data[i].type == TABLE)
 		{
@@ -431,6 +443,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->objType = 0;
 			obj->SetMesh(tableMesh);
 			obj->SetMaterial(0, ppMaterials[6]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 			if (shadowRect[7] == NULL)
@@ -442,7 +455,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			shd->SetMaterial(0, shadowMats[7]);
 			shadowMove = 0.55;
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 		}
 		else if (data[i].type == CHAIR)
 		{
@@ -450,6 +465,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->objType = 0;
 			obj->SetMesh(chairMesh);
 			obj->SetMaterial(0, ppMaterials[1]);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 			if (shadowRect[8] == NULL)
@@ -461,7 +477,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			shd->SetMaterial(0, shadowMats[8]);
 			shadowMove = 0.75;
 =======
->>>>>>> parent of 39a0378 (나머지 물체의 그림자)
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
+=======
+>>>>>>> parent of 39a0378 (?�머지 물체??그림??
 		}
 		else if (data[i].type == 10)
 		{

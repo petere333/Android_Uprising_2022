@@ -316,7 +316,7 @@ void CObjectsShader::ReleaseShaderVariables()
 	CTexturedShader::ReleaseShaderVariables();
 }
 
-#define TEXTURES		16
+#define TEXTURES		19
 
 void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	* pd3dCommandList, void* pContext)
@@ -355,6 +355,12 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[14]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Cont3.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[15] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[15]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³ì½¼ÄÁÅ×ÀÌ³Ê.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[16] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[16]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Real_Contain.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[17] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[17]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PlateTexture.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[18] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[18]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ceiling.dds", RESOURCE_TEXTURE2D, 0);
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
 	m_nObjects = data.size();
@@ -377,6 +383,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CCubeMeshTextured* J_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 50.0f, 7.5f, 120.0f);
 	CCubeMeshTextured* T_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 5.0f, 200.0f);
 	CCubeMeshTextured* B_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 260.0f, 12.5f, 320.0f);
+	CCubeMeshTextured* ChonJang = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 620.0f, 3.0f, 620.0f);
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
 	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
 
@@ -447,6 +454,11 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	WallMeshHorizontal* SeBat_FB2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
 	WallMeshHorizontal* SeBat_FB_11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
 	WallMeshHorizontal* SeBat_FB_12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
+	WallMeshVertical* add_wall1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
+	WallMeshVertical* add_wall2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
+
+	WallMeshHorizontal* Add_Bak1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 150.0f, 5.0f);
+	WallMeshHorizontal* Add_Bak2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 150.0f, 7.5f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -458,10 +470,10 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
 
 	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
-	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Stairsed.txt", "res/idx_Stairsed.txt");
-
-
-
+	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
+	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
+	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan2.txt", NULL);
+	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
 	boxesWorld = LoadBoxes("res/map/box.txt");
 
 
@@ -492,7 +504,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, pGrid);
-			obj->SetMaterial(ppMaterials[3]);
+			obj->SetMaterial(ppMaterials[17]);
 		}
 		else if (data[i].type == vWalls)
 		{
@@ -613,7 +625,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, t_Grid);
-		obj->SetMaterial(ppMaterials[3]);
+		obj->SetMaterial(ppMaterials[17]);
 		}
 		else if (data[i].type == loadwall_l)//container
 		{
@@ -640,7 +652,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, Se_Grid);
-		obj->SetMaterial(ppMaterials[3]);
+		obj->SetMaterial(ppMaterials[17]);
 		}
 		else if (data[i].type == Se_room_L1_1)
 		{
@@ -945,18 +957,73 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, B_ConMesh1);
-		obj->SetMaterial(ppMaterials[15]);
+		obj->SetMaterial(ppMaterials[16]);
 
 		}
-		else if (data[i].type == Stary)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		else if (data[i].type == Shell)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, ChonJang);
+		obj->SetMaterial(ppMaterials[18]);
+
+		}
+		else if (data[i].type == GyeDans1)// ÁöºØÀÇ ½ÃÀÛÁ¡
 		{
 		obj = new CTerrainObject(1);
 		obj->SetMesh(0, GyeDan);
-		obj->SetMaterial(ppMaterials[1]);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == Frs_Pons1)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, add_wall1);
+		obj->SetMaterial(ppMaterials[12]);
 
-	
+		}
+		else if (data[i].type == Frs_Pons2)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, add_wall2);
+		obj->SetMaterial(ppMaterials[11]);
+
+		}
+		else if (data[i].type == GyeDans2)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, GyeDan_1);
+		 obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == R_GyeDan1)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, R_GyeDan_1);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == adds_beok1)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Add_Bak1);
+		obj->SetMaterial(ppMaterials[12]);
+
+		}
+		else if (data[i].type == adds_beok2)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Add_Bak2);
+		obj->SetMaterial(ppMaterials[11]);
+
+		}
+		else if (data[i].type == B_Door)// ÁöºØÀÇ ½ÃÀÛÁ¡
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, P_Doors);
+	//	obj->SetMaterial(ppMaterials[1]);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
 
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);

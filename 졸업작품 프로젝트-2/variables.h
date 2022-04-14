@@ -107,5 +107,15 @@
 
 #define B_Contain 2391
 #define Stairs1 3331
+#define Shell 100391
 
-#define Stary 39120
+
+#define GyeDans1 17182
+#define GyeDans2 15930
+#define R_GyeDan1 31484
+
+#define Frs_Pons1 14829*1
+#define Frs_Pons2 14829*2
+#define adds_beok1 23052*1
+#define adds_beok2 23052*2
+#define B_Door 77190

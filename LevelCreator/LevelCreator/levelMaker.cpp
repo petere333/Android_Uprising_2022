@@ -110,6 +110,41 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object JobCont;
 	Object T_Cont1;
 	Object B_Cont1;
+	Object Celing, Celing2;
+	Object Frs_WL1, Frs_WL2;
+	Object added_wall_1, added_wall_2, added_wall_3, added_wall_4;
+
+	added_wall_1.location = f3(450.0f, 0.0f, 300.0f);
+	added_wall_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	added_wall_1.type = adds_beok1;
+
+	added_wall_2.location = f3(450.0f, 5.0f, 300.0f);
+	added_wall_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	added_wall_2.type = adds_beok2;
+
+	added_wall_3.location = f3(400.0f, 0.0f, 500.0f);
+	added_wall_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	added_wall_3.type = adds_beok1;
+
+	added_wall_4.location = f3(400.0f, 5.0f, 500.0f);
+	added_wall_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	added_wall_4.type = adds_beok2;
+
+	Frs_WL1.location = f3(200.0f, 0.0f, 200.0f);
+	Frs_WL1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Frs_WL1.type = Frs_Pons1;
+
+	Frs_WL2.location = f3(200.0f, 5.0f, 200.0f);
+	Frs_WL2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Frs_WL2.type = Frs_Pons2;
+
+	Celing2.location = f3(1100.0f, 24.0f, 300.0f);
+	Celing2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Celing2.type = Shell;
+
+	Celing.location = f3(300.0f, 24.0f, 300.0f);
+	Celing.rotation = f3(0.0f, 0.0f, 0.0f);
+	Celing.type = Shell;
 
 	B_Cont1.location = f3(1010.0f, 6.25f, 435.0f);
 	B_Cont1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -539,6 +574,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(JobCont);
 	list.push_back(T_Cont1);
 	list.push_back(B_Cont1);
+	list.push_back(Celing);
+	list.push_back(Celing2);
+	list.push_back(Frs_WL1);
+	list.push_back(Frs_WL2);
+	list.push_back(added_wall_1);
+	list.push_back(added_wall_2);
+	list.push_back(added_wall_3);
+	list.push_back(added_wall_4);
+
 
 
 	BoundingBox fl, v1, v2, h1, h2;
@@ -574,9 +618,39 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Jc1;
 	BoundingBox T_Co1;
 	BoundingBox B_Co1;
+	BoundingBox Cel, Cel2;
+	BoundingBox Frs_WLs1, Frs_WLs2;
+	BoundingBox added_W1, added_W2, added_W3, added_W4;
+
+
 
 	//////////////////////////////////////////
+
+	added_W1.start = f3(450.0f, 0.0f, 300.0f);
+	added_W1.end = f3(550.0f, 5.0f, 300.0f);
+
+	added_W2.start = f3(450.0f, 5.0f, 300.0f);
+	added_W2.end = f3(600.0f, 12.5f, 300.0f);
+
+	added_W3.start = f3(400.0f, 0.0f, 500.0f);
+	added_W3.end = f3(550.0f, 5.0f, 500.0f);
+
+	added_W4.start = f3(400.0f, 5.0f, 500.0f);
+	added_W4.end = f3(550.0f, 12.5f, 500.0f);
+
+	Frs_WLs1.start = f3(200.0f, 0.0f, 200.0f);
+	Frs_WLs1.end = f3(200.0f, 5.0f, 600.0f);
+
+	Frs_WLs2.start = f3(200.0f, 5.0f, 200.0f);
+	Frs_WLs2.end = f3(200.0f, 12.5f, 600.0f);
+
 	
+	Cel2.start = f3(1100.0f, 22.5f, 300.0f);
+	Cel2.end = f3(1420.0f, 25.5f, 620.0f);
+
+	Cel.start = f3(300.0f, 22.5f, 300.0f);
+	Cel.end = f3(620.0f, 25.5f, 620.0f);
+
 	B_Co1.start = f3(880.0f, 0.0f, 275.0f);
 	B_Co1.end = f3(1140.0f, 12.4f, 595.0f);
 
@@ -902,6 +976,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Jc1);
 	blist.push_back(T_Co1);
 	blist.push_back(B_Co1);
+	blist.push_back(Cel);
+	blist.push_back(Cel2);
+	blist.push_back(Frs_WLs1);
+	blist.push_back(Frs_WLs2);
+	blist.push_back(added_W1);
+	blist.push_back(added_W2);
+	blist.push_back(added_W3);
+	blist.push_back(added_W4);
+
 
 }
 
@@ -915,16 +998,98 @@ void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
-	Object Stars;
-	Stars.location = f3(281.3f, 1.2f, 251.2f);
-	Stars.rotation = f3(0.0f, 0.0f, 0.0f);
-	Stars.type = Stary;
-	list.push_back(Stars);
+	Object GyoDan;
+	GyoDan.location = f3(387.5f, 2.5f, 440.0f);
+	GyoDan.rotation = f3(0.0f, 0.0f, 0.0f);
+	GyoDan.type = GyeDans1;
 
-	BoundingBox S_tair;
-	S_tair.start= f3(280.0f, 0.0f, 250.0f);
-	S_tair.end = f3(282.6f, 2.4f, 252.5f);
-	blist.push_back(S_tair);
+	Object GyoDan2;
+	GyoDan2.location = f3(360.0f, 2.5f, 340.0f);
+	GyoDan2.rotation = f3(0.0f, 0.0f, 0.0f);
+	GyoDan2.type = GyeDans2;
+
+	Object R_stair1;
+	R_stair1.location = f3(940.0f, 6.25f, 262.5f);
+	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair1.type = R_GyeDan1;
+
+	Object R_stair2;
+	R_stair2.location = f3(1080.0f, 6.25f, 262.5f);
+	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair2.type = R_GyeDan1;
+
+	Object R_stair3;
+	R_stair3.location = f3(50.0f, 6.25f, 387.5f);
+	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair3.type = R_GyeDan1;
+
+	Object B_doorlock1;
+	B_doorlock1.location = f3(600.0f, 1.25f, 560.0f);
+	B_doorlock1.rotation = f3(0.0f, 0.0f, 0.0f);
+	B_doorlock1.type = B_Door;
+
+	Object B_doorlock2;
+	B_doorlock2.location = f3(800.0f, 1.25f, 560.0f);
+	B_doorlock2.rotation = f3(0.0f, 0.0f, 0.0f);
+	B_doorlock2.type = B_Door;
+
+	Object B_doorlock3;
+	B_doorlock3.location = f3(1400.0f, 1.25f, 560.0f);
+	B_doorlock3.rotation = f3(0.0f, 0.0f, 0.0f);
+	B_doorlock3.type = B_Door;
+
+	list.push_back(GyoDan);
+	list.push_back(GyoDan2);
+	list.push_back(R_stair1);
+	list.push_back(R_stair2);
+	list.push_back(R_stair3);
+	list.push_back(B_doorlock1);
+	list.push_back(B_doorlock2);
+	list.push_back(B_doorlock3);
+
+	BoundingBox GyoDa1;
+	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
+	GyoDa1.end = f3(395.0f, 5.0f, 450.0f);
+
+	BoundingBox GyoDa2;
+	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
+	GyoDa2.end = f3(367.5f, 5.0f, 350.0f);
+
+	BoundingBox R_sta1;
+	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
+	R_sta1.end = f3(990.0f, 12.5f, 275.0f);
+
+	BoundingBox R_sta2;
+	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
+	R_sta2.end = f3(1130.0f, 12.5f, 275.0f);
+
+	BoundingBox R_sta3;
+	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
+	R_sta3.end = f3(100.0f, 12.5f, 400.0f);
+
+	BoundingBox B_lock1;
+	B_lock1.start = f3(599.0f, 0.0f, 550.0f);
+	B_lock1.end = f3(601.0f, 2.5f, 570.0f);
+
+	BoundingBox B_lock2;
+	B_lock2.start = f3(799.0f, 0.0f, 550.0f);
+	B_lock2.end = f3(801.0f, 2.5f, 570.0f);
+
+	BoundingBox B_lock3;
+	B_lock3.start = f3(1399.0f, 0.0f, 550.0f);
+	B_lock3.end = f3(1401.0f, 2.5f, 570.0f);
+
+
+
+
+	blist.push_back(GyoDa1);
+	blist.push_back(GyoDa2);
+	blist.push_back(R_sta1);
+	blist.push_back(R_sta2);
+	blist.push_back(R_sta3);
+	blist.push_back(B_lock1);
+	blist.push_back(B_lock2);
+	blist.push_back(B_lock3);
 
 
 	/*

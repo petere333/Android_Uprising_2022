@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/계단임.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/Door.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,8 +98,8 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/idx_Stairsed2.txt", "w");
-	FILE* frameOut = fopen("result/vtx_Stairsed2.txt", "w");
+	FILE* idxOut = fopen("result/idx_Doors.txt", "w");
+	FILE* frameOut = fopen("result/vtx_Doors.txt", "w");
 	
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)
@@ -189,13 +189,15 @@ int main()
 			zmin = ctrlPoints[i].z;
 		}
 	}
-	float xscale = (xmax - xmin) /100;
-	float yscale = (max - min)/100;
-	float zscale = (zmax - zmin)/200;
+	float xscale = 2.0f/ (xmax - xmin);
+	float yscale = 5.0f/(max - min);
+	float zscale = 20.0f/(zmax - zmin);
 	//for (int i = 0; i < maxidx + 1; ++i)
 	for (int i = 0; i < posList.size(); ++i)
 	{
-		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x*xscale, vertices[i].position.y*yscale, vertices[i].position.z*zscale, vertices[i].uv.x, vertices[i].uv.y);
+		// fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x*xscale, vertices[i].position.y*yscale, vertices[i].position.z*zscale, vertices[i].uv.x, vertices[i].uv.y);
+
+		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x * xscale, vertices[i].position.z * zscale, vertices[i].position.y * yscale, vertices[i].uv.x, vertices[i].uv.y);
 	}
 	printf("max : %f, min : %f, y size : %f\n",max,min,max-min);
 	printf("xmax : %f, xmin : %f, x size : %f\n", xmax, xmin, xmax - xmin);
