@@ -18,8 +18,8 @@ float truckX = 1.8f, truckY = 2.0f, truckZ = 6.0f;
 
 int main()
 {
-	createObjects(list,bList);
-	
+	createObjects(list, bList);
+
 	file = fopen("result/objects.txt", "w");
 	FILE* bf = fopen("result/box.txt", "w");
 	//FILE* sf = fopen("result/sphere.txt", "w");
@@ -98,7 +98,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Batchim1, Batchim2, Batchim3;
 	Object Batchim_FB1, Batchim_FB2;
 
-	Object Batchim1_1,Batchim3_1;
+	Object Batchim1_1, Batchim3_1;
 	Object BatFBS_1, BatFBS_2;
 
 	Object SeBatchim1, SeBatchim3;
@@ -113,6 +113,61 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Celing, Celing2;
 	Object Frs_WL1, Frs_WL2;
 	Object added_wall_1, added_wall_2, added_wall_3, added_wall_4;
+	Object Add_sector1_1, Add_sector1_2, Add_sector1_3;
+	Object Add_sector2_1, Add_sector2_2, Add_sector2_3;
+	Object Se_Addings1_1, Se_Addings1_2;
+	Object Se_Addings2_1, Se_Addings2_2;
+	Object Se_Addings3_1, Se_Addings3_2;
+
+	Se_Addings1_1.location = f3(1210.0f, 0.0f, 350.0f);
+	Se_Addings1_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings1_1.type = SeAddings1;
+
+	Se_Addings1_2.location = f3(1210.0f, 5.0f, 350.0f);
+	Se_Addings1_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings1_2.type = SeAddings2;
+
+	Se_Addings2_1.location = f3(1165.0f, 0.0f, 430.0f);
+	Se_Addings2_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings2_1.type = SeAddings1;
+
+	Se_Addings2_2.location = f3(1165.0f, 5.0f, 430.0f);
+	Se_Addings2_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings2_2.type = SeAddings2;
+
+	Se_Addings3_1.location = f3(1300.0f, 0.0f, 290.0f);
+	Se_Addings3_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings3_1.type = SeAddings1;
+
+	Se_Addings3_2.location = f3(1300.0f, 5.0f, 290.0f);
+	Se_Addings3_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Addings3_2.type = SeAddings2;
+
+
+
+	Add_sector1_1.location = f3(595.0f, 8.75f, 560.0f);
+	Add_sector1_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector1_1.type = Add_squre1;
+
+	Add_sector1_2.location = f3(595.0f, 2.5f, 571.25f);
+	Add_sector1_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector1_2.type = Add_squre2;
+
+	Add_sector1_3.location = f3(595.0f, 2.5f, 548.75f);
+	Add_sector1_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector1_3.type = Add_squre2;
+
+	Add_sector2_1.location = f3(805.0f, 8.75f, 560.0f);
+	Add_sector2_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector2_1.type = Add_squre1;
+
+	Add_sector2_2.location = f3(805.0f, 2.5f, 571.25f);
+	Add_sector2_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector2_2.type = Add_squre2;
+
+	Add_sector2_3.location = f3(805.0f, 2.5f, 548.75f);
+	Add_sector2_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Add_sector2_3.type = Add_squre2;
 
 	added_wall_1.location = f3(450.0f, 0.0f, 300.0f);
 	added_wall_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -427,7 +482,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	vWall1.location = f3(0.0f, 0.0f, 0.0f);
 	vWall1.rotation = f3(0.0f, 0.0f, 0.0f);
 	vWall1.type = vWalls;
-	
+
 	vWall_H.location = f3(0.0f, 5.0f, 0.0f);
 	vWall_H.rotation = f3(0.0f, 0.0f, 0.0f);
 	vWall_H.type = vWalls_H;
@@ -582,8 +637,18 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(added_wall_2);
 	list.push_back(added_wall_3);
 	list.push_back(added_wall_4);
-
-
+	list.push_back(Add_sector1_1);
+	list.push_back(Add_sector1_2);
+	list.push_back(Add_sector1_3);
+	list.push_back(Add_sector2_1);
+	list.push_back(Add_sector2_2);
+	list.push_back(Add_sector2_3);
+	list.push_back(Se_Addings1_1);
+	list.push_back(Se_Addings1_2);
+	list.push_back(Se_Addings2_1);
+	list.push_back(Se_Addings2_2);
+	list.push_back(Se_Addings3_1);
+	list.push_back(Se_Addings3_2);
 
 	BoundingBox fl, v1, v2, h1, h2;
 	BoundingBox v1_1, v2_1, h1_1, h2_1;
@@ -621,10 +686,50 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Cel, Cel2;
 	BoundingBox Frs_WLs1, Frs_WLs2;
 	BoundingBox added_W1, added_W2, added_W3, added_W4;
+	BoundingBox Adder_se1_1, Adder_se1_2, Adder_se1_3;
+	BoundingBox Adder_se2_1, Adder_se2_2, Adder_se2_3;
+	BoundingBox SeAo1_1, SeAo1_2, SeAo2_1, SeAo2_2, SeAo3_1, SeAo3_2;
+
 
 
 
 	//////////////////////////////////////////
+
+	SeAo1_1.start = f3(1210.0f, 0.0f, 350.0f);
+	SeAo1_1.end = f3(1310.0f, 5.0f, 350.0f);
+
+	SeAo1_2.start = f3(1210.0f, 5.0f, 350.0f);
+	SeAo1_2.end = f3(1310.0f, 12.5f, 350.0f);
+
+	SeAo2_1.start = f3(1165.0f, 0.0f, 430.0f);
+	SeAo2_1.end = f3(1265.0f, 5.0f, 430.0f);
+
+	SeAo2_2.start = f3(1165.0f, 5.0f, 430.0f);
+	SeAo2_2.end = f3(1265.0f, 12.5f, 430.0f);
+
+	SeAo3_1.start = f3(1300.0f, 0.0f, 290.0f);
+	SeAo3_1.end = f3(1400.0f, 5.0f, 290.0f);
+
+	SeAo3_2.start = f3(1300.0f, 5.0f, 290.0f);
+	SeAo3_2.end = f3(1400.0f, 12.5f, 290.0f);
+
+	Adder_se1_1.start = f3(590.0f, 5.0f, 550.0f);
+	Adder_se1_1.end = f3(600.0f, 12.5f, 570.0f);
+
+	Adder_se1_2.start = f3(590.0f, 0.0f, 570.0f);
+	Adder_se1_2.end = f3(600.0f, 5.0f, 572.5f);
+
+	Adder_se1_3.start = f3(590.0f, 0.0f, 547.5f);
+	Adder_se1_3.end = f3(600.0f, 5.0f, 550.0f);
+
+	Adder_se2_1.start = f3(800.0f, 5.0f, 550.0f);
+	Adder_se2_1.end = f3(810.0f, 12.5f, 570.0f);
+
+	Adder_se2_2.start = f3(800.0f, 0.0f, 570.0f);
+	Adder_se2_2.end = f3(810.0f, 5.0f, 572.5f);
+
+	Adder_se2_3.start = f3(800.0f, 0.0f, 547.5f);
+	Adder_se2_3.end = f3(810.0f, 5.0f, 550.0f);
 
 	added_W1.start = f3(450.0f, 0.0f, 300.0f);
 	added_W1.end = f3(550.0f, 5.0f, 300.0f);
@@ -644,7 +749,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Frs_WLs2.start = f3(200.0f, 5.0f, 200.0f);
 	Frs_WLs2.end = f3(200.0f, 12.5f, 600.0f);
 
-	
+
 	Cel2.start = f3(1100.0f, 22.5f, 300.0f);
 	Cel2.end = f3(1420.0f, 25.5f, 620.0f);
 
@@ -716,7 +821,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Bat_FBS1.start = f3(-10.0f, 12.5f, 0.0f);
 	Bat_FBS1.end = f3(610.0f, 22.5f, 0.0f);
-	
+
 	Bat_FBS2.start = f3(-10.0f, 12.5f, 600.0f);
 	Bat_FBS2.end = f3(610.0f, 22.5f, 600.0f);
 
@@ -773,7 +878,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_bs1_3.start = f3(875.0f, 5.0f, 150.0f);
 	Se_bs1_3.end = f3(878.0f, 12.5f, 600.0f);
 
-	
+
 
 
 	Se_rs1.start = f3(1400.0f, 0.0f, 0.0f);
@@ -828,7 +933,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	lwall3_r.end = f3(800.0f, 12.5f, 550.0f);
 
 	lwall1_l.start = f3(600.0f, 0.0f, 570.0f);
-	lwall1_l .end = f3(800.0f, 2.5f, 570.0f);
+	lwall1_l.end = f3(800.0f, 2.5f, 570.0f);
 
 	lwall2_l.start = f3(600.0f, 2.5f, 570.0f);
 	lwall2_l.end = f3(800.0f, 5.0f, 570.0f);
@@ -866,7 +971,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	h1.start = f3(0.0f, 0.0f, 0.0f);
 	h1.end = f3(600.0f, 2.5f, 0.0f);
-	
+
 	h_H.start = f3(0.0f, 5.0f, 0.0f);
 	h_H.end = f3(600.0f, 12.5f, 0.0f);
 
@@ -984,6 +1089,19 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(added_W2);
 	blist.push_back(added_W3);
 	blist.push_back(added_W4);
+	blist.push_back(Adder_se1_1);
+	blist.push_back(Adder_se1_2);
+	blist.push_back(Adder_se1_3);
+	blist.push_back(Adder_se2_1);
+	blist.push_back(Adder_se2_2);
+	blist.push_back(Adder_se2_3);
+	blist.push_back(SeAo1_1);
+	blist.push_back(SeAo1_2);
+	blist.push_back(SeAo2_1);
+	blist.push_back(SeAo2_2);
+	blist.push_back(SeAo3_1);
+	blist.push_back(SeAo3_2);
+
 
 
 }
@@ -991,8 +1109,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
 	createPlayer(list);
-	createSpace(list,blist);
-	 createObstacles(list, blist);
+	createSpace(list, blist);
+	createObstacles(list, blist);
 }
 
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
@@ -1023,29 +1141,150 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair3.type = R_GyeDan1;
 
-	Object B_doorlock1;
-	B_doorlock1.location = f3(600.0f, 1.25f, 560.0f);
-	B_doorlock1.rotation = f3(0.0f, 0.0f, 0.0f);
-	B_doorlock1.type = B_Door;
-
-	Object B_doorlock2;
-	B_doorlock2.location = f3(800.0f, 1.25f, 560.0f);
-	B_doorlock2.rotation = f3(0.0f, 0.0f, 0.0f);
-	B_doorlock2.type = B_Door;
 
 	Object B_doorlock3;
-	B_doorlock3.location = f3(1400.0f, 1.25f, 560.0f);
+	B_doorlock3.location = f3(1399.0f, 2.5f, 560.0f);
 	B_doorlock3.rotation = f3(0.0f, 0.0f, 0.0f);
 	B_doorlock3.type = B_Door;
+
+	Object H_heater1;
+	H_heater1.location = f3(195.0f, 0.0f, 295.0f);
+	H_heater1.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater1.type = Heaters1;
+
+	Object H_heater2;
+	H_heater2.location = f3(195.0f, 0.0f, 345.0f);
+	H_heater2.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater2.type = Heaters1;
+
+	Object H_heater3;
+	H_heater3.location = f3(195.0f, 0.0f, 395.0f);
+	H_heater3.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater3.type = Heaters1;
+
+	Object H_heater4;
+	H_heater4.location = f3(195.0f, 0.0f, 445.0f);
+	H_heater4.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater4.type = Heaters1;
+
+	Object H_heater5;
+	H_heater5.location = f3(195.0f, 0.0f, 495.0f);
+	H_heater5.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater5.type = Heaters1;
+
+	Object H_heater6;
+	H_heater6.location = f3(145.0f, 0.0f, 295.0f);
+	H_heater6.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater6.type = Heaters1;
+
+	Object H_heater7;
+	H_heater7.location = f3(145.0f, 0.0f, 345.0f);
+	H_heater7.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater7.type = Heaters1;
+
+	Object H_heater8;
+	H_heater8.location = f3(145.0f, 0.0f, 395.0f);
+	H_heater8.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater8.type = Heaters1;
+
+	Object H_heater9;
+	H_heater9.location = f3(145.0f, 0.0f, 445.0f);
+	H_heater9.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater9.type = Heaters1;
+
+	Object H_heater10;
+	H_heater10.location = f3(145.0f, 0.0f, 495.0f);
+	H_heater10.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater10.type = Heaters1;
+
+	Object H_heater11;
+	H_heater11.location = f3(205.0f, 0.0f, 295.0f);
+	H_heater11.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater11.type = Heaters1;
+
+	Object H_heater12;
+	H_heater12.location = f3(205.0f, 0.0f, 345.0f);
+	H_heater12.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater12.type = Heaters1;
+
+	Object H_heater13;
+	H_heater13.location = f3(205.0f, 0.0f, 395.0f);
+	H_heater13.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater13.type = Heaters1;
+
+	Object H_heater14;
+	H_heater14.location = f3(205.0f, 0.0f, 445.0f);
+	H_heater14.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater14.type = Heaters1;
+
+	Object H_heater15;
+	H_heater15.location = f3(205.0f, 0.0f, 495.0f);
+	H_heater15.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater15.type = Heaters1;
+
+	Object H_heater16;
+	H_heater16.location = f3(255.0f, 0.0f, 295.0f);
+	H_heater16.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater16.type = Heaters1;
+
+	Object H_heater17;
+	H_heater17.location = f3(255.0f, 0.0f, 345.0f);
+	H_heater17.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater17.type = Heaters1;
+
+	Object H_heater18;
+	H_heater18.location = f3(255.0f, 0.0f, 395.0f);
+	H_heater18.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater18.type = Heaters1;
+
+	Object H_heater19;
+	H_heater19.location = f3(255.0f, 0.0f, 445.0f);
+	H_heater19.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater19.type = Heaters1;
+
+	Object H_heater20;
+	H_heater20.location = f3(255.0f, 0.0f, 495.0f);
+	H_heater20.rotation = f3(0.0f, 0.0f, 0.0f);
+	H_heater20.type = Heaters1;
+
+	Object BoBox;
+	BoBox.location = f3(360.0f, 0.0f, 565.0f);
+	BoBox.rotation = f3(0.0f, 0.0f, 0.0f);
+	BoBox.type = F_Stages;
+
+
+
+
+
 
 	list.push_back(GyoDan);
 	list.push_back(GyoDan2);
 	list.push_back(R_stair1);
 	list.push_back(R_stair2);
 	list.push_back(R_stair3);
-	list.push_back(B_doorlock1);
-	list.push_back(B_doorlock2);
 	list.push_back(B_doorlock3);
+	list.push_back(H_heater1);
+	list.push_back(H_heater2);
+	list.push_back(H_heater3);
+	list.push_back(H_heater4);
+	list.push_back(H_heater5);
+	list.push_back(H_heater6);
+	list.push_back(H_heater7);
+	list.push_back(H_heater8);
+	list.push_back(H_heater9);
+	list.push_back(H_heater10);
+	list.push_back(H_heater11);
+	list.push_back(H_heater12);
+	list.push_back(H_heater13);
+	list.push_back(H_heater14);
+	list.push_back(H_heater15);
+	list.push_back(H_heater16);
+	list.push_back(H_heater17);
+	list.push_back(H_heater18);
+	list.push_back(H_heater19);
+	list.push_back(H_heater20);
+	list.push_back(BoBox);
+
 
 	BoundingBox GyoDa1;
 	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
@@ -1067,17 +1306,91 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
 	R_sta3.end = f3(100.0f, 12.5f, 400.0f);
 
-	BoundingBox B_lock1;
-	B_lock1.start = f3(599.0f, 0.0f, 550.0f);
-	B_lock1.end = f3(601.0f, 2.5f, 570.0f);
-
-	BoundingBox B_lock2;
-	B_lock2.start = f3(799.0f, 0.0f, 550.0f);
-	B_lock2.end = f3(801.0f, 2.5f, 570.0f);
 
 	BoundingBox B_lock3;
-	B_lock3.start = f3(1399.0f, 0.0f, 550.0f);
-	B_lock3.end = f3(1401.0f, 2.5f, 570.0f);
+	B_lock3.start = f3(1398.0f, 0.0f, 550.0f);
+	B_lock3.end = f3(1400.0f, 5.0f, 570.0f);
+
+	BoundingBox Hiter1;
+	Hiter1.start = f3(190.0f, 0.0f, 290.0f);
+	Hiter1.end = f3(200.0f, 5.0f, 300.0f);
+
+	BoundingBox Hiter2;
+	Hiter2.start = f3(190.0f, 0.0f, 340.0f);
+	Hiter2.end = f3(200.0f, 5.0f, 350.0f);
+
+	BoundingBox Hiter3;
+	Hiter3.start = f3(190.0f, 0.0f, 390.0f);
+	Hiter3.end = f3(200.0f, 5.0f, 400.0f);
+
+	BoundingBox Hiter4;
+	Hiter4.start = f3(190.0f, 0.0f, 440.0f);
+	Hiter4.end = f3(200.0f, 5.0f, 450.0f);
+
+	BoundingBox Hiter5;
+	Hiter5.start = f3(190.0f, 0.0f, 490.0f);
+	Hiter5.end = f3(200.0f, 5.0f, 500.0f);
+
+	BoundingBox Hiter6;
+	Hiter6.start = f3(140.0f, 0.0f, 290.0f);
+	Hiter6.end = f3(150.0f, 5.0f, 300.0f);
+
+	BoundingBox Hiter7;
+	Hiter7.start = f3(140.0f, 0.0f, 340.0f);
+	Hiter7.end = f3(150.0f, 5.0f, 350.0f);
+
+	BoundingBox Hiter8;
+	Hiter8.start = f3(140.0f, 0.0f, 390.0f);
+	Hiter8.end = f3(150.0f, 5.0f, 400.0f);
+
+	BoundingBox Hiter9;
+	Hiter9.start = f3(140.0f, 0.0f, 440.0f);
+	Hiter9.end = f3(150.0f, 5.0f, 450.0f);
+
+	BoundingBox Hiter10;
+	Hiter10.start = f3(140.0f, 0.0f, 490.0f);
+	Hiter10.end = f3(150.0f, 5.0f, 500.0f);
+
+	BoundingBox Hiter11;
+	Hiter11.start = f3(200.0f, 0.0f, 290.0f);
+	Hiter11.end = f3(210.0f, 5.0f, 300.0f);
+
+	BoundingBox Hiter12;
+	Hiter12.start = f3(200.0f, 0.0f, 340.0f);
+	Hiter12.end = f3(210.0f, 5.0f, 350.0f);
+
+	BoundingBox Hiter13;
+	Hiter13.start = f3(200.0f, 0.0f, 390.0f);
+	Hiter13.end = f3(210.0f, 5.0f, 400.0f);
+
+	BoundingBox Hiter14;
+	Hiter14.start = f3(200.0f, 0.0f, 440.0f);
+	Hiter14.end = f3(210.0f, 5.0f, 450.0f);
+
+	BoundingBox Hiter15;
+	Hiter15.start = f3(200.0f, 0.0f, 490.0f);
+	Hiter15.end = f3(210.0f, 5.0f, 500.0f);
+
+	BoundingBox Hiter16;
+	Hiter16.start = f3(250.0f, 0.0f, 290.0f);
+	Hiter16.end = f3(260.0f, 5.0f, 300.0f);
+
+	BoundingBox Hiter17;
+	Hiter17.start = f3(250.0f, 0.0f, 340.0f);
+	Hiter17.end = f3(260.0f, 5.0f, 350.0f);
+
+	BoundingBox Hiter18;
+	Hiter18.start = f3(250.0f, 0.0f, 390.0f);
+	Hiter18.end = f3(260.0f, 5.0f, 400.0f);
+
+	BoundingBox Hiter19;
+	Hiter19.start = f3(250.0f, 0.0f, 440.0f);
+	Hiter19.end = f3(260.0f, 5.0f, 450.0f);
+
+	BoundingBox Hiter20;
+	Hiter20.start = f3(250.0f, 0.0f, 490.0f);
+	Hiter20.end = f3(260.0f, 5.0f, 500.0f);
+
 
 
 
@@ -1087,9 +1400,27 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(R_sta1);
 	blist.push_back(R_sta2);
 	blist.push_back(R_sta3);
-	blist.push_back(B_lock1);
-	blist.push_back(B_lock2);
 	blist.push_back(B_lock3);
+	blist.push_back(Hiter1);
+	blist.push_back(Hiter2);
+	blist.push_back(Hiter3);
+	blist.push_back(Hiter4);
+	blist.push_back(Hiter5);
+	blist.push_back(Hiter6);
+	blist.push_back(Hiter7);
+	blist.push_back(Hiter8);
+	blist.push_back(Hiter9);
+	blist.push_back(Hiter10);
+	blist.push_back(Hiter11);
+	blist.push_back(Hiter12);
+	blist.push_back(Hiter13);
+	blist.push_back(Hiter14);
+	blist.push_back(Hiter15);
+	blist.push_back(Hiter16);
+	blist.push_back(Hiter17);
+	blist.push_back(Hiter18);
+	blist.push_back(Hiter19);
+	blist.push_back(Hiter20);
 
 
 	/*
@@ -1102,7 +1433,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Conts1_1.start = f3(0.0f, 0.0f, 500.0f);
 	Conts1_1.end = f3(100.0f, 25.0f, 600.0f);
-	
+
 	list.push_back(Container1_1);
 	blist.push_back(Conts1_1);
 	*/

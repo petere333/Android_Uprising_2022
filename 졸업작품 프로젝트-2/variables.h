@@ -119,3 +119,11 @@
 #define adds_beok1 23052*1
 #define adds_beok2 23052*2
 #define B_Door 77190
+
+#define Add_squre1 31139*1
+
+#define Add_squre2 31139*2
+#define SeAddings1 558193*1
+#define SeAddings2 558193*2
+#define Heaters1 133012
+#define F_Stages 599921
