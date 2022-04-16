@@ -489,12 +489,17 @@ public:
 	PlayerState pState;
 	EnemyState eState;
 	float speed=0.0f;
+	float yspeed = 0.0f;
 	XMFLOAT3 direction=XMFLOAT3(0.0f,0.0f,0.0f);
 
 	chrono::time_point<chrono::system_clock> lastMove;
 	bool lastMoveSuccess;
 
-	
+	bool isInAir = false;
+
+public:
+	void jump() { if (isInAir == false) { yspeed = 3.0f; isInAir = true; } }
+
 
 };
 

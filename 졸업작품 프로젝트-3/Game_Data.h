@@ -40,7 +40,10 @@
 #define TYPE_ENEMY 2
 
 
-#define PLAYER_SPEED 3.15f
+
+//플레이어 이동속도
+#define PLAYER_SPEED 33.15f
+
 
 //서버 IP 정보
 #define SERVERIP "127.0.0.1" // 루프백 주소

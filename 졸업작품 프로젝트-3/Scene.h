@@ -96,15 +96,15 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	#define nTex  12
+	#define nTex  25
 	#define nNormal  12
 	
 	#define nDirt  9
 	
-	#define nMat 12
+	#define nMat 25
 	#define nDirMat 9
 
-#define nShadows 3
+#define nShadows 9
 
 
 
@@ -119,7 +119,8 @@ protected:
 	CMaterial* shadowMats[nShadows];
 public:
 
-	std::vector<BoundBox> boxesWorld;
+	BoundBox* boxesWorld;
+	int nBox = 0;
 
 	XMFLOAT3 playerSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	int currentPlayerAnim = 0;
@@ -160,6 +161,8 @@ public:
 	void setObjectSpeed(int idx, float size);
 	void setObjectState(int index, int state);
 	bool moveSuccessed(int idx);
+	void jumpObject(int idx) { m_ppGameObjects[idx]->jump(); }
+
 
 	float getSpeed(int idx) { return m_ppGameObjects[idx]->speed; }
 	XMFLOAT3 getDirection(int idx) { return m_ppGameObjects[idx]->direction; }

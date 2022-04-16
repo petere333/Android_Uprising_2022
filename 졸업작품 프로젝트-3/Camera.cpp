@@ -8,7 +8,7 @@ CCamera::CCamera()
 	m_d3dViewport = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT, 0.0f, 1.0f };
 	m_d3dScissorRect = { 0, 0, FRAME_BUFFER_WIDTH , FRAME_BUFFER_HEIGHT };
 	//m_xmf3Position = XMFLOAT3(3.0f, 2.85f, 1.0f);
-	m_xmf3Position = XMFLOAT3(3.0f, 2.85f, 1.0f);
+	m_xmf3Position = XMFLOAT3(100.0f, 2.85f, 98.0f);
 
 
 	lookVec = XMFLOAT3(0.0f, -2.0f, 2.0f);
@@ -16,9 +16,9 @@ CCamera::CCamera()
 
 	dist = 2.0f;
 	rightVec = XMFLOAT3(1.0f, 0.0f, 0.0f);
-	lx = 3.0f;
+	lx = 100.0f;
 	ly = 0.85f;
-	lz = 3.0f;
+	lz = 100.0f;
 
 	angle = 270.0f;
 }

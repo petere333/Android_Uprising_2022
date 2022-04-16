@@ -785,3 +785,134 @@ RectMesh::RectMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dComm
 }
 
 RectMesh::~RectMesh(){}
+
+CCubeMeshTextured::CCubeMeshTextured(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth) : CMesh(pd3dDevice, pd3dCommandList)
+{
+	m_nVertices = 36;
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	float fx = fWidth * 0.5f, fy = fHeight * 0.5f, fz = fDepth * 0.5f;
+
+	XMFLOAT3* pos = new XMFLOAT3[36];
+	XMFLOAT2* uv = new XMFLOAT2[36];
+
+	
+	int i = 0;
+	//¾Õ¸é
+	pos[i++]= XMFLOAT3(-fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, -fz);
+						 
+	pos[i++]= XMFLOAT3(-fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, -fz);
+	pos[i++]= XMFLOAT3(-fx, -fy, -fz);
+	
+	pos[i++]= XMFLOAT3(-fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, -fz);
+	
+	pos[i++]= XMFLOAT3(-fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(-fx, +fy, -fz);
+						 
+	pos[i++]= XMFLOAT3(-fx, -fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, +fz);
+	
+	pos[i++]= XMFLOAT3(-fx, -fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(-fx, +fy, +fz);
+	
+	pos[i++]= XMFLOAT3(-fx, -fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, +fz);
+	
+	pos[i++]= XMFLOAT3(-fx, -fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, +fz);
+	pos[i++]= XMFLOAT3(-fx, -fy, +fz);
+	
+	pos[i++]= XMFLOAT3(-fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(-fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(-fx, -fy, -fz);
+	
+	pos[i++]= XMFLOAT3(-fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(-fx, -fy, -fz);
+	pos[i++]= XMFLOAT3(-fx, -fy, +fz);
+	
+	pos[i++]= XMFLOAT3(+fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, +fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, +fz);
+	
+	pos[i++]= XMFLOAT3(+fx, +fy, -fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, +fz);
+	pos[i++]= XMFLOAT3(+fx, -fy, -fz);
+
+	i = 0;
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+	
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	
+
+	uv[i++] = XMFLOAT2(0.0f, 0.0f);
+	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+
+	m_pd3dPositionBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, pos, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+
+	m_pd3dTextureBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, uv, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
+}
+
+CCubeMeshTextured::~CCubeMeshTextured()
+{
+}
