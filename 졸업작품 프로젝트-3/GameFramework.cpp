@@ -404,10 +404,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			m_pScene->setObjectState(0, MOVE_STATE);
 		}
 			break;
-		case 'K':
-			XMFLOAT3 playerLocation = m_pScene->getPos(0);
-			m_pCamera->rotate(180.0f, playerLocation.x, playerLocation.z);
+		case VK_SPACE:
+		{
+			m_pScene->jumpObject(0);
 			break;
+		}
 
 		}
 		break;

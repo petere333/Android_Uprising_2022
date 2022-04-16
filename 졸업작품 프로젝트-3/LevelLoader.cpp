@@ -25,8 +25,9 @@ std::vector<Obj> LoadObjects(const char* filename)
 
 }
 
-std::vector<BoundBox> LoadBoxes(const char* filename)
+BoundBox* LoadBoxes(const char* filename, int* n)
 {
+	BoundBox* bx;
 	std::vector<BoundBox> result;
 	FILE* f = fopen(filename, "r");
 	while (!feof(f))
@@ -38,5 +39,11 @@ std::vector<BoundBox> LoadBoxes(const char* filename)
 		box.end = XMFLOAT3(x2, y2, z2);
 		result.push_back(box);
 	}
-	return result;
+	bx = (BoundBox*)malloc(sizeof(BoundBox) * result.size());
+	for (int i = 0; i < result.size(); ++i)
+	{
+		bx[i] = result[i];
+	}
+	*n = result.size();
+	return bx;
 }
