@@ -47,3 +47,29 @@ BoundBox* LoadBoxes(const char* filename, int* n)
 	*n = result.size();
 	return bx;
 }
+
+BoundingStair* LoadStair(const char* filename, int* n)
+{
+	BoundingStair* bs;
+	std::vector<BoundingStair> result;
+	FILE* f = fopen(filename, "r");
+	while(!feof(f))
+	{
+		float x1, x2, z1, z2, h;
+		BoundingStair stair;
+		fscanf(f, "xstart / xend : %f, %f\n zstart / zend : %f, %f \n height : %f \n\n", &x1, &x2, &z1, &z2, &h);
+		stair.xstart = x1;
+		stair.xend = x2;
+		stair.zstart = z1;
+		stair.zend = z2;
+		stair.height = h;
+		result.push_back(stair);
+	}
+	bs = (BoundingStair*)malloc(sizeof(BoundingStair) * result.size());
+	for (int i = 0; i < result.size(); ++i)
+	{
+		bs[i] = result[i];
+	}
+	*n = result.size();
+	return bs;
+}

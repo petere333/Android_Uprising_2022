@@ -4,6 +4,7 @@ vector<Object> list;
 
 vector<BoundingBox> bList;
 vector<BoundingSphere> sList;
+vector<BoundingStair> gList;
 
 FILE* file;
 
@@ -18,10 +19,11 @@ float truckX = 1.8f, truckY = 2.0f, truckZ = 6.0f;
 
 int main()
 {
-	createObjects(list, bList);
+	createObjects(list, bList, gList);
 
 	file = fopen("result/objects.txt", "w");
 	FILE* bf = fopen("result/box.txt", "w");
+	FILE* sf = fopen("result/stair.txt", "w");
 	//FILE* sf = fopen("result/sphere.txt", "w");
 
 
@@ -35,8 +37,14 @@ int main()
 		writeBox(bf, bList[i]);
 	}
 
+	for (int i = 0; i < gList.size(); ++i)
+	{
+		writeStair(sf, gList[i]);
+	}
+
 	fclose(file);
 	fclose(bf);
+	fclose(sf);
 	return 0;
 }
 
@@ -1106,16 +1114,16 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 }
 
-void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
+void createObjects(vector<Object>& list, vector<BoundingBox>& blist, vector<BoundingStair>& slist)
 {
 	createPlayer(list);
 	createSpace(list, blist);
 	createObstacles(list, blist);
+	createStairBox(list, blist, slist);
 }
 
-void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
+void createStairBox(vector<Object>& list, vector<BoundingBox>& blist, vector<BoundingStair>& slist)
 {
-
 	Object GyoDan;
 	GyoDan.location = f3(387.5f, 2.5f, 440.0f);
 	GyoDan.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -1140,6 +1148,86 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	R_stair3.location = f3(50.0f, 6.25f, 387.5f);
 	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair3.type = R_GyeDan1;
+
+
+	list.push_back(GyoDan);
+	list.push_back(GyoDan2);
+	list.push_back(R_stair1);
+	list.push_back(R_stair2);
+	list.push_back(R_stair3);
+
+	BoundingBox GyoDa1;
+	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
+	GyoDa1.end = f3(395.0f, 5.0f, 431.0f);
+
+	BoundingBox GyoDa2;
+	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
+	GyoDa2.end = f3(367.5f, 5.0f, 331.0f);
+
+	BoundingBox R_sta1;
+	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
+	R_sta1.end = f3(990.0f, 12.5f, 251.0f);
+
+	BoundingBox R_sta2;
+	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
+	R_sta2.end = f3(1130.0f, 12.5f, 251.0f);
+
+	BoundingBox R_sta3;
+	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
+	R_sta3.end = f3(100.0f, 12.5f, 376.0f);
+
+	blist.push_back(GyoDa1);
+	blist.push_back(GyoDa2);
+	blist.push_back(R_sta1);
+	blist.push_back(R_sta2);
+	blist.push_back(R_sta3);
+
+	BoundingStair Rtair1;
+	Rtair1.xstart = 380.0f;
+	Rtair1.xend = 395.0f;
+	Rtair1.zstart = 430.0f;
+	Rtair1.zend = 450.0f;
+	Rtair1.height = 5.0f;
+
+	BoundingStair Rstair2;
+	Rstair2.xstart = 352.5f;
+	Rstair2.xend = 367.5f;
+	Rstair2.zstart = 330.0f;
+	Rstair2.zend = 350.0f;
+	Rstair2.height = 5.0f;
+
+	BoundingStair Rstair3;
+	Rstair3.xstart = 890.0f;
+	Rstair3.xend = 990.0f;
+	Rstair3.zstart = 250.0f;
+	Rstair3.zend = 275.0f;
+	Rstair3.height = 12.5f;
+
+	BoundingStair Rstair4;
+	Rstair4.xstart = 1030.0f;
+	Rstair4.xend = 1130.0f;
+	Rstair4.zstart = 250.0f;
+	Rstair4.zend = 275.0f;
+	Rstair4.height = 12.5f;
+
+	BoundingStair Rstair5;
+	Rstair5.xstart = 0.0f;
+	Rstair5.xend = 100.0f;
+	Rstair5.zstart = 375.0f;
+	Rstair5.zend = 400.0f;
+	Rstair5.height = 12.5f;
+
+
+	slist.push_back(Rtair1);
+	slist.push_back(Rstair2);
+	slist.push_back(Rstair3);
+	slist.push_back(Rstair4);
+	slist.push_back(Rstair5);
+}
+
+void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
+{
+
 
 
 	Object B_doorlock3;
@@ -1257,11 +1345,6 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 
-	list.push_back(GyoDan);
-	list.push_back(GyoDan2);
-	list.push_back(R_stair1);
-	list.push_back(R_stair2);
-	list.push_back(R_stair3);
 	list.push_back(B_doorlock3);
 	list.push_back(H_heater1);
 	list.push_back(H_heater2);
@@ -1286,26 +1369,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(BoBox);
 
 
-	BoundingBox GyoDa1;
-	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
-	GyoDa1.end = f3(395.0f, 5.0f, 450.0f);
-
-	BoundingBox GyoDa2;
-	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
-	GyoDa2.end = f3(367.5f, 5.0f, 350.0f);
-
-	BoundingBox R_sta1;
-	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
-	R_sta1.end = f3(990.0f, 12.5f, 275.0f);
-
-	BoundingBox R_sta2;
-	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
-	R_sta2.end = f3(1130.0f, 12.5f, 275.0f);
-
-	BoundingBox R_sta3;
-	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
-	R_sta3.end = f3(100.0f, 12.5f, 400.0f);
-
+	
 
 	BoundingBox B_lock3;
 	B_lock3.start = f3(1398.0f, 0.0f, 550.0f);
@@ -1395,11 +1459,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 
-	blist.push_back(GyoDa1);
-	blist.push_back(GyoDa2);
-	blist.push_back(R_sta1);
-	blist.push_back(R_sta2);
-	blist.push_back(R_sta3);
+
 	blist.push_back(B_lock3);
 	blist.push_back(Hiter1);
 	blist.push_back(Hiter2);
