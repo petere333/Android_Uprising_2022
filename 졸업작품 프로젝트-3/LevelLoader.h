@@ -3,10 +3,6 @@
 #include "stdafx.h"
 
 
-
-
-#pragma once
-
 #define PLAYER 1
 #define CONTAINER 2
 #define BOX 3
@@ -135,6 +131,13 @@
 #define Heaters1 90000
 #define F_Stages 95001
 
+// 정리
+// 2000대 숫자들 : 벽종류 (위치 무관)
+// 5000대 숫자들 : 컨테이너
+// 12000대 숫자들 : 바닥
+// 그외는 컨테이너가 아닌 바닥이거나, 속성이 다른 모델, 천장 등 단일이거나, 모델 종류가 엄연히 달라 일부러 분리한 것들
+
+
 
 typedef struct Obj
 {
@@ -157,12 +160,5 @@ typedef struct BoundingSphere
 	float dist;
 }BoundSphere;
 
-typedef struct BoundingStair {
-	float xstart, xend;
-	float zstart, zend;
-	float height;
-}BoundingStair;
-
 std::vector<Obj> LoadObjects(const char* filename);
 BoundBox* LoadBoxes(const char* filename, int*);
-BoundingStair* LoadStair(const char* filename, int*);

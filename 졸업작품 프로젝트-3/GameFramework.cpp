@@ -300,6 +300,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			
 			break;
 		case WM_LBUTTONUP:
+			m_pScene->attack(0);
+
+			break;
 		case WM_RBUTTONUP:
 			/*
 			::ReleaseCapture();

@@ -323,41 +323,52 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		m_ppShadows[i] = NULL;
 	}
 	*/
+	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
+
+	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
+	obj->type = 1;
+	obj->objType = 1;
+
+	obj->SetPosition(100.0f, 0.0f, 100.0f);
+	obj->Rotate(0.0f,0.0f,0.0f);
+	obj->currentRotation = XMFLOAT3(0.0f,0.0f,0.0f);
+	
+	obj->speed = 0.0f;
+	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	obj->lastMove = chrono::system_clock::now();
+
+	obj->pState.currHP = 100;
+	obj->pState.id = IDLE_STATE;
+	obj->pState.timeElapsed = 0.0f;
+	int sets = rand() % 22;
+
+	obj->SetTrackAnimationSet(0, sets);
+	currentPlayerAnim = 11;
+
+	
+
+	/*
+	if (shadowRect[0] == NULL)
+	{
+		shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
+	}
+	shd = new CGameObject(1);
+	shd->SetMesh(shadowRect[0]);
+	shd->SetMaterial(0, shadowMats[0]);
+	*/
+	obj->SetMaterial(0, ppMaterials[24]);
+	players.push_back(obj);
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
 		//CGameObject *shd = NULL;
 		float shadowMove = 0.0f;
 		float shadowUp = 0.0f;
-		if (data[i].type == PLAYER)//player
-		{
-			CLoadedModelInfo* model=CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
-			
-			obj = new CLionObject(pd3dDevice,pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
-			obj->type = 1;
-			obj->objType = 1;
 
-			obj->pState.currHP = 100;
-			obj->pState.id = IDLE_STATE;
-			obj->pState.timeElapsed = 0.0f;
-			int sets = rand() % 22;
-
-			obj->SetTrackAnimationSet(0, sets);
-			currentPlayerAnim = 11;
-			/*
-			if (shadowRect[0] == NULL)
-			{
-				shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
-			}
-			shd = new CGameObject(1);
-			shd->SetMesh(shadowRect[0]);
-			shd->SetMaterial(0, shadowMats[0]);
-			*/
-			obj->SetMaterial(0, ppMaterials[24]);
-		}
 		
 
-		else if (data[i].type == CONTAINER)//container
+		if (data[i].type == CONTAINER)//container
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(container);
@@ -1276,6 +1287,21 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	float alpha = 1.0f;
 
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
+	for (int i = 0; i < players.size(); ++i)
+	{
+		players[i]->Animate(m_fElapsedTime);
+		if (players[i]->m_pSkinnedAnimationController)
+		{
+			players[i]->UpdateTransform(NULL);
+		}
+		if (m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+		}
+		ppMaterials[24]->UpdateShaderVariable(pd3dCommandList);
+		players[i]->Render(pd3dCommandList, pCamera);
+	}
+
 	for (int i = 0; i < m_nGameObjects; i++)
 	{
 		if (m_ppGameObjects[i])
@@ -1292,9 +1318,19 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			//	2. 객체의 유형이 xyz 크기가 3m 이상인 대형 물체인 경우 카메라의 방향 벡터로부터 양쪽 70도 내에 있는 경우에만 그린다.
 			//	3. 객체의 유형이 소형 물체, 혹은 움직이는 캐릭터인 경우 양쪽 55도 내에 있는 경우에만 그린다.
 			*/
-
+			int tp = m_ppGameObjects[i]->type;
+			if ((tp >= 2000 && tp < 3000) || (tp >= 12000 && tp < 13000) || tp==50000)
+			{
+				//m_ppGameObjects[i]->Animate(m_fElapsedTime);
+				//if (!m_ppGameObjects[i]->m_pSkinnedAnimationController) m_ppGameObjects[i]->UpdateTransform(NULL);
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+			}
 			// 일단은 타입에 관계없이 카메라의 방향으로부터 55도 안쪽에 위치한 물체만 그린다.
-			if (cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(55.0f)))
+			else if (cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(55.0f)))
 			{
 
 				m_ppGameObjects[i]->Animate(m_fElapsedTime);
@@ -1303,10 +1339,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 				}
-				if (m_ppGameObjects[i]->type == 1)
-				{
-					ppMaterials[24]->UpdateShaderVariable(pd3dCommandList);
-				}
+
 				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
@@ -1399,7 +1432,7 @@ void CScene::CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pText
 
 void CScene::setPlayerAnimation(int a)
 {
-	m_ppGameObjects[0]->SetTrackAnimationSet(0, a);
+	players[0]->SetTrackAnimationSet(0, a);
 	currentPlayerAnim = a;
 }
 
@@ -1408,18 +1441,18 @@ void CScene::setPlayerAnimation(int a)
 void CScene::moveObject(int idx)
 {
 	
-	chrono::duration<double> fromLastMove = chrono::system_clock::now() - m_ppGameObjects[idx]->lastMove;
+	chrono::duration<double> fromLastMove = chrono::system_clock::now() - players[idx]->lastMove;
 	double time = fromLastMove.count();
 	float fTime = static_cast<float>(time);
 	bool crash=false;
 	float tx, ty, tz;
 
 	
-	if (m_ppGameObjects[idx]->speed > 0.0f|| m_ppGameObjects[idx]->yspeed!=0.0f)
+	if (players[idx]->speed > 0.0f|| players[idx]->yspeed!=0.0f)
 	{
-		tx = m_ppGameObjects[idx]->GetPosition().x + fTime * m_ppGameObjects[idx]->speed * m_ppGameObjects[idx]->direction.x;
-		ty = m_ppGameObjects[idx]->GetPosition().y + fTime * m_ppGameObjects[idx]->yspeed;
-		tz = m_ppGameObjects[idx]->GetPosition().z + fTime * m_ppGameObjects[idx]->speed * m_ppGameObjects[idx]->direction.z;
+		tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
+		ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
+		tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
 
 		for (int i = 0; i < nBox; ++i)
 		{
@@ -1428,52 +1461,52 @@ void CScene::moveObject(int idx)
 			{
 				
 				
-				if (m_ppGameObjects[idx]->GetPosition().x > boxesWorld[i].end.x || m_ppGameObjects[idx]->GetPosition().x < boxesWorld[i].start.x)
+				if (players[idx]->GetPosition().x > boxesWorld[i].end.x || players[idx]->GetPosition().x < boxesWorld[i].start.x)
 				{
-					if (m_ppGameObjects[idx]->direction.x > 0.0f)
+					if (players[idx]->direction.x > 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, m_ppGameObjects[idx]->GetPosition().y, m_ppGameObjects[idx]->GetPosition().z);
-						m_ppGameObjects[idx]->direction.x = 0.0f;
-						m_ppGameObjects[idx]->direction.z = 0.0f;
+						players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+						players[idx]->direction.x = 0.0f;
+						players[idx]->direction.z = 0.0f;
 					}
-					else if (m_ppGameObjects[idx]->direction.x < 0.0f)
+					else if (players[idx]->direction.x < 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, m_ppGameObjects[idx]->GetPosition().y, m_ppGameObjects[idx]->GetPosition().z);
-						m_ppGameObjects[idx]->direction.x = 0.0f;
-						m_ppGameObjects[idx]->direction.z = 0.0f;
+						players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+						players[idx]->direction.x = 0.0f;
+						players[idx]->direction.z = 0.0f;
 					}
 					crash = true;
 					
 				}
-				else if (m_ppGameObjects[idx]->GetPosition().z > boxesWorld[i].end.z || m_ppGameObjects[idx]->GetPosition().z < boxesWorld[i].start.z)
+				else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
 				{
-					if (m_ppGameObjects[idx]->direction.z > 0.0f)
+					if (players[idx]->direction.z > 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(m_ppGameObjects[idx]->GetPosition().x, m_ppGameObjects[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
-						m_ppGameObjects[idx]->direction.z = 0.0f;
-						m_ppGameObjects[idx]->direction.x = 0.0f;
+						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
+						players[idx]->direction.z = 0.0f;
+						players[idx]->direction.x = 0.0f;
 					}
-					else if (m_ppGameObjects[idx]->direction.z < 0.0f)
+					else if (players[idx]->direction.z < 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(m_ppGameObjects[idx]->GetPosition().x, m_ppGameObjects[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
-						m_ppGameObjects[idx]->direction.z = 0.0f;
-						m_ppGameObjects[idx]->direction.x = 0.0f;
+						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
+						players[idx]->direction.z = 0.0f;
+						players[idx]->direction.x = 0.0f;
 					}
 					crash = true;
 				
 				}
-				else if (m_ppGameObjects[idx]->isInAir == true)
+				else if (players[idx]->isInAir == true)
 				{
-					if (m_ppGameObjects[idx]->yspeed > 0.0f)
+					if (players[idx]->yspeed > 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(m_ppGameObjects[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, m_ppGameObjects[idx]->GetPosition().z);
-						m_ppGameObjects[idx]->yspeed = 0.0f;
+						players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+						players[idx]->yspeed = 0.0f;
 					}
-					else if (m_ppGameObjects[idx]->yspeed < 0.0f)
+					else if (players[idx]->yspeed < 0.0f)
 					{
-						m_ppGameObjects[idx]->SetPosition(m_ppGameObjects[idx]->GetPosition().x, boxesWorld[i].end.y, m_ppGameObjects[idx]->GetPosition().z);
-						m_ppGameObjects[idx]->yspeed = 0.0f;
-						m_ppGameObjects[idx]->isInAir = false;
+						players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+						players[idx]->yspeed = 0.0f;
+						players[idx]->isInAir = false;
 					}
 					
 					crash = true;
@@ -1487,27 +1520,27 @@ void CScene::moveObject(int idx)
 
 		if (crash == false)
 		{
-			m_ppGameObjects[idx]->SetPosition(tx, ty, tz);
+			players[idx]->SetPosition(tx, ty, tz);
 			//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
-			m_ppGameObjects[idx]->lastMoveSuccess = true;
+			players[idx]->lastMoveSuccess = true;
 
 			// y축 이동이 존재할 경우 중력가속도 적용
-			if (m_ppGameObjects[idx]->yspeed != 0.0f)
+			if (players[idx]->yspeed != 0.0f)
 			{
-				m_ppGameObjects[idx]->yspeed -= 9.8f * fTime;
+				players[idx]->yspeed -= 9.8f * fTime;
 			}
 		}
 		else
 		{
-			m_ppGameObjects[idx]->lastMoveSuccess = false;
-			if (m_ppGameObjects[idx]->isInAir == true)
+			players[idx]->lastMoveSuccess = false;
+			if (players[idx]->isInAir == true)
 			{
-				m_ppGameObjects[idx]->SetPosition(m_ppGameObjects[idx]->GetPosition().x, ty, m_ppGameObjects[idx]->GetPosition().z);
-				m_ppGameObjects[idx]->lastMoveSuccess = true;
+				players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
+				players[idx]->lastMoveSuccess = true;
 				
-				if (m_ppGameObjects[idx]->yspeed != 0.0f)
+				if (players[idx]->yspeed != 0.0f)
 				{
-					m_ppGameObjects[idx]->yspeed -= 9.8f * fTime;
+					players[idx]->yspeed -= 9.8f * fTime;
 				}
 			}
 
@@ -1520,79 +1553,79 @@ void CScene::moveObject(int idx)
 
 void CScene::setObjectSpeed(int idx, float size)
 {
-	m_ppGameObjects[idx]->speed = size;
+	players[idx]->speed = size;
 
-	float rad = XMConvertToRadians(m_ppGameObjects[idx]->currentRotation.y);
+	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
 
-	m_ppGameObjects[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
+	players[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
 }
 
 void CScene::setObjectState(int index, int state)
 {
-	if (m_ppGameObjects[index]->objType == TYPE_PLAYER)
+	if (players[index]->objType == TYPE_PLAYER)
 	{
-		if (m_ppGameObjects[index]->pState.id != state)
+		if (players[index]->pState.id != state)
 		{
-			m_ppGameObjects[index]->pState.id = state;
-			m_ppGameObjects[index]->pState.timeElapsed = 0.0f;
+			players[index]->pState.id = state;
+			players[index]->pState.timeElapsed = 0.0f;
 		}
 	}
-	else if (m_ppGameObjects[index]->objType == TYPE_ENEMY)
+	else if (players[index]->objType == TYPE_ENEMY)
 	{
-		if (m_ppGameObjects[index]->eState.id != state)
+		if (players[index]->eState.id != state)
 		{
-			m_ppGameObjects[index]->eState.id = state;
-			m_ppGameObjects[index]->eState.timeElapsed = 0.0f;
+			players[index]->eState.id = state;
+			players[index]->eState.timeElapsed = 0.0f;
 		}
 	}
 }
 
 bool CScene::moveSuccessed(int idx)
 {
-	return m_ppGameObjects[idx]->lastMoveSuccess;
+	return players[idx]->lastMoveSuccess;
 }
 
 void CScene::rotateObject(int idx, float x, float y, float z)
 {
-	m_ppGameObjects[idx]->Rotate(x, y, z);
-	m_ppGameObjects[idx]->currentRotation.x += x;
-	m_ppGameObjects[idx]->currentRotation.y += y;
-	m_ppGameObjects[idx]->currentRotation.z += z;
+	players[idx]->Rotate(x, y, z);
+	players[idx]->currentRotation.x += x;
+	players[idx]->currentRotation.y += y;
+	players[idx]->currentRotation.z += z;
 
-	if (m_ppGameObjects[idx]->currentRotation.x >= 360.0f)
+	if (players[idx]->currentRotation.x >= 360.0f)
 	{
-		m_ppGameObjects[idx]->currentRotation.x -= 360.0f;
+		players[idx]->currentRotation.x -= 360.0f;
 	}
-	if (m_ppGameObjects[idx]->currentRotation.y >= 360.0f)
+	if (players[idx]->currentRotation.y >= 360.0f)
 	{
-		m_ppGameObjects[idx]->currentRotation.y -= 360.0f;
+		players[idx]->currentRotation.y -= 360.0f;
 	}
-	if (m_ppGameObjects[idx]->currentRotation.z >= 360.0f)
+	if (players[idx]->currentRotation.z >= 360.0f)
 	{
-		m_ppGameObjects[idx]->currentRotation.z -= 360.0f;
+		players[idx]->currentRotation.z -= 360.0f;
 	}
 
-	if (m_ppGameObjects[idx]->currentRotation.x < 0.0f)
+	if (players[idx]->currentRotation.x < 0.0f)
 
 	{
-		m_ppGameObjects[idx]->currentRotation.x += 360.0f;
+		players[idx]->currentRotation.x += 360.0f;
 	}
-	if (m_ppGameObjects[idx]->currentRotation.y < 0.0f)
+	if (players[idx]->currentRotation.y < 0.0f)
 	{
-		m_ppGameObjects[idx]->currentRotation.y += 360.0f;
+		players[idx]->currentRotation.y += 360.0f;
 	}
-	if (m_ppGameObjects[idx]->currentRotation.z < 0.0f)
+	if (players[idx]->currentRotation.z < 0.0f)
 	{
-		m_ppGameObjects[idx]->currentRotation.z += 360.0f;
+		players[idx]->currentRotation.z += 360.0f;
 	}
 
 }
 void CScene::setPlayerDirection(float dx, float dy, float dz)
 {
-	if (m_ppGameObjects[0]->currentRotation.y != dy)
+	if (players[0]->currentRotation.y != dy)
 	{
-		m_ppGameObjects[0]->Rotate(0.0f, dy - m_ppGameObjects[0]->currentRotation.y, 0.0f);
-		m_ppGameObjects[0]->currentRotation.y = dy;
+		players[0]->Rotate(0.0f, dy - players[0]->currentRotation.y, 0.0f);
+		players[0]->currentRotation.y = dy;
 	}
 }
 
@@ -1628,4 +1661,154 @@ void CScene::recv_packet()
 	if (0 != num_data) {
 		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
 	}
+}
+
+void CScene::attack(int idx)
+{
+	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
+
+	XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
+
+	Line line;
+	line.start = players[idx]->GetPosition(); // 사격 위치
+	line.start.y += 1.0f;
+	line.end = XMFLOAT3(line.start.x + dir.x * 1000.0f, line.start.y + dir.y * 1000.0f, line.start.z + dir.z * 1000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
+
+	float minDist = 1000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
+	int target = -1;  // 대상 객체
+	XMFLOAT3 targetPos; // 타격 발생 지점
+
+	XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
+
+	for (int i = 0; i < nBox; ++i)
+	{
+		// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+		std::vector<XYZPlane> checkList;
+
+
+
+		if (n.x > 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+			p.pos = boxesWorld[i].start.x;
+			checkList.push_back(p);
+		}
+		else if (n.x < 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+			p.pos = boxesWorld[i].end.x;
+			checkList.push_back(p);
+		}
+
+		if (n.z > 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+			p.pos = boxesWorld[i].start.z;
+			checkList.push_back(p);
+		}
+		else if (n.z < 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+			p.pos = boxesWorld[i].end.z;
+			checkList.push_back(p);
+		}
+
+		if (n.y > 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+			p.pos = boxesWorld[i].start.y;
+			checkList.push_back(p);
+		}
+		else if (n.y < 0.0f)
+		{
+			XYZPlane p;
+			p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+			p.pos = boxesWorld[i].end.y;
+			checkList.push_back(p);
+		}
+		XMFLOAT3 d;
+		float dist;
+		XMFLOAT3 temp;
+
+		//체크리스트에 들어있는 모든 평면들에 대해
+
+		for (int j = 0; j < checkList.size(); ++j)
+		{
+			// 충돌 지점을 확보한다.
+			temp = getIntersectPoint(line, checkList[j]);
+
+			
+			//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+			if ((temp.x <= boxesWorld[i].end.x && temp.x >= boxesWorld[i].start.x) &&
+				(temp.y <= boxesWorld[i].end.y && temp.y >= boxesWorld[i].start.y) &&
+				(temp.z <= boxesWorld[i].end.z && temp.z >= boxesWorld[i].start.z))
+			{
+				//그 지점과의 거리를 구한 후,
+				// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+				d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+				dist = Vector3::Length(d);
+				break;
+			}
+			else
+			{
+				dist = 1000.0f;
+			}
+		}
+		// 총알은 관통 기능이 없다. 즉,
+		// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+		// 그 지점이 새로운 충돌지점이다.
+
+		if (dist < minDist)
+		{
+			minDist = dist;
+			targetPos = temp;
+			target = i;
+		}
+
+	}
+	// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
+	// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
+	printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
+	if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
+	{ printf("(Building Wall)\n"); }
+	else if (m_ppGameObjects[target]->type <6000 && m_ppGameObjects[target]->type>=5000)
+	{ printf("(Container)\n"); }
+
+	else if (m_ppGameObjects[target]->type == 90000)
+	{
+		printf("(Heater)\n");
+	}
+
+	else 
+	{
+		printf("(Something)\n");
+	}
+	
+
+
+
+}
+
+XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
+{
+	float u1 = plane.normal.x * line.start.x + plane.normal.y * line.start.y + plane.normal.z * line.start.z - plane.pos;
+
+	float u2 = plane.normal.x * (line.start.x - line.end.x) + plane.normal.y * (line.start.y - line.end.y) + plane.normal.z * (line.start.z - line.end.z);
+
+	XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
+	lineNorm.x *= u1 / u2;
+	lineNorm.y *= u1 / u2;
+	lineNorm.z *= u1 / u2;
+
+	lineNorm.x += line.start.x;
+	lineNorm.y += line.start.y;
+	lineNorm.z += line.start.z;
+
+	return lineNorm;
 }
