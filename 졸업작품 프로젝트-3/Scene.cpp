@@ -340,9 +340,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	obj->pState.currHP = 100;
 	obj->pState.id = IDLE_STATE;
 	obj->pState.timeElapsed = 0.0f;
-	int sets = rand() % 22;
+	
 
-	obj->SetTrackAnimationSet(0, sets);
+	obj->SetTrackAnimationSet(0, 11);
 	currentPlayerAnim = 11;
 
 	
@@ -1262,6 +1262,24 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 	setObjectLastMove(0);
+	for (int i = 0; i < players.size(); ++i)
+	{
+		if (players[i]->pState.id == ATTACK_STATE)
+		{
+			if (currentPlayerAnim != 2)
+			{
+				setPlayerAnimation(2);
+			}
+			attack(i);
+		}
+		else if (players[i]->pState.id == IDLE_STATE)
+		{
+			if (currentPlayerAnim != 11)
+			{
+				setPlayerAnimation(11);
+			}
+		}
+	}
 	
 }
 
@@ -1665,132 +1683,144 @@ void CScene::recv_packet()
 
 void CScene::attack(int idx)
 {
-	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
-
-	XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
-
-	Line line;
-	line.start = players[idx]->GetPosition(); // 사격 위치
-	line.start.y += 1.0f;
-	line.end = XMFLOAT3(line.start.x + dir.x * 1000.0f, line.start.y + dir.y * 1000.0f, line.start.z + dir.z * 1000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
-
-	float minDist = 1000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
-	int target = -1;  // 대상 객체
-	XMFLOAT3 targetPos; // 타격 발생 지점
-
-	XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
-
-	for (int i = 0; i < nBox; ++i)
-	{
-		// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
-
-		std::vector<XYZPlane> checkList;
-
-
-
-		if (n.x > 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-			p.pos = boxesWorld[i].start.x;
-			checkList.push_back(p);
-		}
-		else if (n.x < 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-			p.pos = boxesWorld[i].end.x;
-			checkList.push_back(p);
-		}
-
-		if (n.z > 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-			p.pos = boxesWorld[i].start.z;
-			checkList.push_back(p);
-		}
-		else if (n.z < 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-			p.pos = boxesWorld[i].end.z;
-			checkList.push_back(p);
-		}
-
-		if (n.y > 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-			p.pos = boxesWorld[i].start.y;
-			checkList.push_back(p);
-		}
-		else if (n.y < 0.0f)
-		{
-			XYZPlane p;
-			p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-			p.pos = boxesWorld[i].end.y;
-			checkList.push_back(p);
-		}
-		XMFLOAT3 d;
-		float dist;
-		XMFLOAT3 temp;
-
-		//체크리스트에 들어있는 모든 평면들에 대해
-
-		for (int j = 0; j < checkList.size(); ++j)
-		{
-			// 충돌 지점을 확보한다.
-			temp = getIntersectPoint(line, checkList[j]);
-
-			
-			//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-			if ((temp.x <= boxesWorld[i].end.x && temp.x >= boxesWorld[i].start.x) &&
-				(temp.y <= boxesWorld[i].end.y && temp.y >= boxesWorld[i].start.y) &&
-				(temp.z <= boxesWorld[i].end.z && temp.z >= boxesWorld[i].start.z))
-			{
-				//그 지점과의 거리를 구한 후,
-				// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
-				d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
-				dist = Vector3::Length(d);
-				break;
-			}
-			else
-			{
-				dist = 1000.0f;
-			}
-		}
-		// 총알은 관통 기능이 없다. 즉,
-		// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
-		// 그 지점이 새로운 충돌지점이다.
-
-		if (dist < minDist)
-		{
-			minDist = dist;
-			targetPos = temp;
-			target = i;
-		}
-
-	}
-	// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
-	// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
-	printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-	if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
-	{ printf("(Building Wall)\n"); }
-	else if (m_ppGameObjects[target]->type <6000 && m_ppGameObjects[target]->type>=5000)
-	{ printf("(Container)\n"); }
-
-	else if (m_ppGameObjects[target]->type == 90000)
-	{
-		printf("(Heater)\n");
-	}
-
-	else 
-	{
-		printf("(Something)\n");
-	}
+	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
+	float fTime = static_cast<float>(fromLastAttack.count());
 	
+	if (fTime >= 1.0f / 6.0f)
+	{
+		printf("time elapsed from last shot : %f\n", fTime);
+		setObjectLastAttack(idx);
 
+		float rad = XMConvertToRadians(players[idx]->currentRotation.y);
+
+		XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
+
+		Line line;
+		line.start = players[idx]->GetPosition(); // 사격 위치
+		line.start.y += 1.0f;
+		line.end = XMFLOAT3(line.start.x + dir.x * 1000.0f, line.start.y + dir.y * 1000.0f, line.start.z + dir.z * 1000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
+
+		float minDist = 1000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
+		int target = -1;  // 대상 객체
+		XMFLOAT3 targetPos; // 타격 발생 지점
+
+		XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
+
+		for (int i = 0; i < nBox; ++i)
+		{
+			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+			std::vector<XYZPlane> checkList;
+
+
+
+			if (n.x > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = boxesWorld[i].start.x;
+				checkList.push_back(p);
+			}
+			else if (n.x < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = boxesWorld[i].end.x;
+				checkList.push_back(p);
+			}
+
+			if (n.z > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = boxesWorld[i].start.z;
+				checkList.push_back(p);
+			}
+			else if (n.z < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = boxesWorld[i].end.z;
+				checkList.push_back(p);
+			}
+
+			if (n.y > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = boxesWorld[i].start.y;
+				checkList.push_back(p);
+			}
+			else if (n.y < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = boxesWorld[i].end.y;
+				checkList.push_back(p);
+			}
+			XMFLOAT3 d;
+			float dist;
+			XMFLOAT3 temp;
+
+			//체크리스트에 들어있는 모든 평면들에 대해
+
+			for (int j = 0; j < checkList.size(); ++j)
+			{
+				// 충돌 지점을 확보한다.
+				temp = getIntersectPoint(line, checkList[j]);
+
+
+				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+				if ((temp.x <= boxesWorld[i].end.x && temp.x >= boxesWorld[i].start.x) &&
+					(temp.y <= boxesWorld[i].end.y && temp.y >= boxesWorld[i].start.y) &&
+					(temp.z <= boxesWorld[i].end.z && temp.z >= boxesWorld[i].start.z) && temp.x != -9999.9999f && temp.y != -9999.9999f && temp.z != -9999.9999f)
+				{
+					//그 지점과의 거리를 구한 후,
+					// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+					d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+					dist = Vector3::Length(d);
+					break;
+				}
+				else
+				{
+					dist = 1000.0f;
+				}
+			}
+			// 총알은 관통 기능이 없다. 즉,
+			// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+			// 그 지점이 새로운 충돌지점이다.
+
+			if (dist < minDist)
+			{
+				minDist = dist;
+				targetPos = temp;
+				target = i;
+			}
+
+		}
+		// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
+		// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
+		printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
+		if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
+		{
+			printf("(Building Wall)\n");
+		}
+		else if (m_ppGameObjects[target]->type < 6000 && m_ppGameObjects[target]->type >= 5000)
+		{
+			printf("(Container)\n");
+		}
+
+		else if (m_ppGameObjects[target]->type == 90000)
+		{
+			printf("(Heater)\n");
+		}
+
+		else
+		{
+			printf("(Something)\n");
+		}
+
+	}
 
 
 }
@@ -1801,14 +1831,22 @@ XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
 
 	float u2 = plane.normal.x * (line.start.x - line.end.x) + plane.normal.y * (line.start.y - line.end.y) + plane.normal.z * (line.start.z - line.end.z);
 
-	XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
-	lineNorm.x *= u1 / u2;
-	lineNorm.y *= u1 / u2;
-	lineNorm.z *= u1 / u2;
+	if (u1 / u2 <= 1.0f && u1 / u2 >= 0.0f)
+	{
 
-	lineNorm.x += line.start.x;
-	lineNorm.y += line.start.y;
-	lineNorm.z += line.start.z;
+		XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
+		lineNorm.x *= u1 / u2;
+		lineNorm.y *= u1 / u2;
+		lineNorm.z *= u1 / u2;
 
-	return lineNorm;
+		lineNorm.x += line.start.x;
+		lineNorm.y += line.start.y;
+		lineNorm.z += line.start.z;
+
+		return lineNorm;
+	}
+	else
+	{
+		return XMFLOAT3(-9999.9999f, -9999.9999f, -9999.9999f);
+	}
 }

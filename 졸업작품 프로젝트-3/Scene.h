@@ -174,6 +174,10 @@ public:
 	{ 
 		players[idx]->lastMove = chrono::system_clock::now(); 
 	}
+	void setObjectLastAttack(int idx)
+	{
+		players[idx]->lastAttack = chrono::system_clock::now();
+	}
 
 	void rotateObject(int idx, float, float, float);
 

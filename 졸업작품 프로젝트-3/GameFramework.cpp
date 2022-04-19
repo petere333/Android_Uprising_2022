@@ -293,6 +293,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	switch (nMessageID)
 	{
 		case WM_LBUTTONDOWN:
+			m_pScene->setObjectState(0, ATTACK_STATE);
+
+			break;
 		case WM_RBUTTONDOWN:
 			
 			//::SetCapture(hWnd);
@@ -300,8 +303,11 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			
 			break;
 		case WM_LBUTTONUP:
-			m_pScene->attack(0);
-
+			m_pScene->setObjectState(0, IDLE_STATE);
+			if (m_pScene->currentPlayerAnim != 11)
+			{
+				m_pScene->setPlayerAnimation(11);
+			}
 			break;
 		case WM_RBUTTONUP:
 			/*

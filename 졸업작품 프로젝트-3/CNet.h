@@ -2,7 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS         // 최신 VC++ 컴파일 시 경고 방지
 #define _WINSOCK_DEPRECATED_NO_WARNINGS // 최신 VC++ 컴파일 시 경고 방지
 
-#include "../../Android_Uprising_2022/AUSERVER/AUSERVER/protocol.h"
+#include "../AUSERVER/AUSERVER/protocol.h"
 
 #pragma comment(lib, "ws2_32")
 #include <WinSock2.h>  
