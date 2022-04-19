@@ -619,6 +619,7 @@ CGameObject::CGameObject()
 	m_xmf4x4ToParent = Matrix4x4::Identity();
 	m_xmf4x4World = Matrix4x4::Identity();
 	
+	timeCreated = chrono::system_clock::now();
 }
 
 CGameObject::CGameObject(int nMaterials) : CGameObject()

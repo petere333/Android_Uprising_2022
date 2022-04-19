@@ -271,3 +271,10 @@ public:
 	CCubeMeshTextured(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth);
 	virtual ~CCubeMeshTextured();
 };
+
+class ParticleMesh : public CMesh
+{
+public:
+	ParticleMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	virtual ~ParticleMesh();
+};

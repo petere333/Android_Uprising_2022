@@ -96,12 +96,12 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	#define nTex  25
+	#define nTex  26
 	#define nNormal  12
 	
 	#define nDirt  9
 	
-	#define nMat 25
+	#define nMat 26
 	#define nDirMat 9
 
 #define nShadows 9
@@ -114,6 +114,8 @@ protected:
 	CTexture* normalTex[nNormal];
 	CTexture* dirtTex[nDirt];
 	CMaterial* dirtMaterials[nDirMat];
+
+	ParticleMesh* partMesh=NULL;
 
 	CTexture* shadowTex[nShadows];
 	CMaterial* shadowMats[nShadows];
@@ -134,7 +136,7 @@ public:
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;
 	std::vector<CGameObject*>			players;
-
+	std::vector<CGameObject*>			particles;
 
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
@@ -188,6 +190,9 @@ public:
 	void createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 
 	void attack(int idx);
+
+	void createParticles(int n, XMFLOAT3 pos);
+
 
 public: // client to server
 	virtual void recv_packet(); // (receive packet);

@@ -498,7 +498,7 @@ public:
 	bool isInAir = false;
 
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
-
+	chrono::time_point<chrono::system_clock> timeCreated;
 public:
 	void jump() { if (isInAir == false) { yspeed = 3.0f; isInAir = true; } }
 

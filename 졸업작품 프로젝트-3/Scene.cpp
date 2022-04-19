@@ -140,7 +140,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[23]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Metal_txt.dds", RESOURCE_TEXTURE2D, 0);
 	textures[24] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
-
+	textures[25] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
 
 
 
@@ -194,6 +195,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	createTextureData(pd3dDevice, pd3dCommandList);
 
+	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
 
 
@@ -1280,7 +1282,26 @@ void CScene::AnimateObjects(float fTimeElapsed)
 			}
 		}
 	}
-	
+	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+	for (int i = 0; i < particles.size(); ++i)
+	{
+		chrono::duration<double> fromCreated = moment - particles[i]->timeCreated;
+		float fTime = static_cast<float>(fromCreated.count());
+		if (fTime > 0.5f)
+		{
+			//delete particles[i];
+			particles.erase(particles.begin() + i);
+			i -= 1;
+		}
+		else
+		{
+			XMFLOAT3 tmp = particles[i]->GetPosition();
+			particles[i]->SetPosition(tmp.x + particles[i]->direction.x * particles[i]->speed * fTime,
+				tmp.y + particles[i]->direction.y * particles[i]->speed * fTime,
+				tmp.z + particles[i]->direction.z * particles[i]->speed * fTime);
+		}
+	}
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -1389,7 +1410,24 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 	}
 	*/
-	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
+
+	for (int i = 0; i < particles.size(); ++i)
+	{
+		XMFLOAT3 pos = particles[i]->GetPosition();
+		XMFLOAT3 camPos = pCamera->getPosition();
+		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
+		XMFLOAT3 look = pCamera->getLook();
+
+		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
+
+		if (cosAngle >= cos(XMConvertToRadians(45.0f)) && cosAngle <= 1.0f)
+		{
+			particles[i]->Render(pd3dCommandList, pCamera);
+		}
+
+	}
+
+	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
 
 	
 }
@@ -1692,26 +1730,33 @@ void CScene::attack(int idx)
 		setObjectLastAttack(idx);
 
 		float rad = XMConvertToRadians(players[idx]->currentRotation.y);
-
+		//printf("발사 각도 %f  ", players[idx]->currentRotation.y);
 		XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
 
 		Line line;
 		line.start = players[idx]->GetPosition(); // 사격 위치
 		line.start.y += 1.0f;
-		line.end = XMFLOAT3(line.start.x + dir.x * 1000.0f, line.start.y + dir.y * 1000.0f, line.start.z + dir.z * 1000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
+		line.end = XMFLOAT3(line.start.x + dir.x * 3000.0f, line.start.y + dir.y * 3000.0f, line.start.z + dir.z * 3000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
 
-		float minDist = 1000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
+		printf("(%f, %f, %f) - (%f, %f, %f)\n", line.start.x, line.start.y, line.start.z, line.end.x, line.end.y, line.end.z);
+
+		float minDist = 3000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
+
+		XMFLOAT3 d;
+		float dist;
+		XMFLOAT3 temp;
+
 		int target = -1;  // 대상 객체
 		XMFLOAT3 targetPos; // 타격 발생 지점
 
 		XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
+		//printf("발사 방향 : %f, %f, %f\n", n.x, n.y, n.z);
 
 		for (int i = 0; i < nBox; ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
 
 			std::vector<XYZPlane> checkList;
-
 
 
 			if (n.x > 0.0f)
@@ -1758,34 +1803,48 @@ void CScene::attack(int idx)
 				p.pos = boxesWorld[i].end.y;
 				checkList.push_back(p);
 			}
-			XMFLOAT3 d;
-			float dist;
-			XMFLOAT3 temp;
 
+			
 			//체크리스트에 들어있는 모든 평면들에 대해
 
 			for (int j = 0; j < checkList.size(); ++j)
 			{
 				// 충돌 지점을 확보한다.
 				temp = getIntersectPoint(line, checkList[j]);
-
+				
 
 				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-				if ((temp.x <= boxesWorld[i].end.x && temp.x >= boxesWorld[i].start.x) &&
-					(temp.y <= boxesWorld[i].end.y && temp.y >= boxesWorld[i].start.y) &&
-					(temp.z <= boxesWorld[i].end.z && temp.z >= boxesWorld[i].start.z) && temp.x != -9999.9999f && temp.y != -9999.9999f && temp.z != -9999.9999f)
+				if ((temp.x <= boxesWorld[i].end.x+0.001f && temp.x >= boxesWorld[i].start.x-0.001f) &&
+					(temp.y <= boxesWorld[i].end.y + 0.001f && temp.y >= boxesWorld[i].start.y-0.001f) &&
+					(temp.z <= boxesWorld[i].end.z + 0.001f && temp.z >= boxesWorld[i].start.z-0.001f))
 				{
-					//그 지점과의 거리를 구한 후,
-					// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
-					d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
-					dist = Vector3::Length(d);
-					break;
+					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+					{
+						//그 지점과의 거리를 구한 후,
+						// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+						d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+						dist = Vector3::Length(d);
+						printf("사거리 내에 위치, 거리 %f\n", dist);
+						break;
+					}
+					else
+					{
+						printf("직선 앞 혹은 뒤에 위치\n");
+						dist = 3000.0f;
+					}
 				}
 				else
 				{
-					dist = 1000.0f;
+					dist = 3000.0f;
 				}
 			}
+			/*
+			if (dist != 3000.0f)
+			{
+				printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+				printf("%d번째 박스와 거리 %f\n", i, dist);
+			}
+			*/
 			// 총알은 관통 기능이 없다. 즉,
 			// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
 			// 그 지점이 새로운 충돌지점이다.
@@ -1819,19 +1878,20 @@ void CScene::attack(int idx)
 		{
 			printf("(Something)\n");
 		}
+		createParticles(100, targetPos);
 
 	}
 
 
 }
-
+//평면의 법선벡터가 무조건 양수라서 그런가?
 XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
 {
 	float u1 = plane.normal.x * line.start.x + plane.normal.y * line.start.y + plane.normal.z * line.start.z - plane.pos;
 
 	float u2 = plane.normal.x * (line.start.x - line.end.x) + plane.normal.y * (line.start.y - line.end.y) + plane.normal.z * (line.start.z - line.end.z);
 
-	if (u1 / u2 <= 1.0f && u1 / u2 >= 0.0f)
+	if (u1 / u2 < 1.0f && u1 / u2 > 0.0f)
 	{
 
 		XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
@@ -1847,6 +1907,30 @@ XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
 	}
 	else
 	{
-		return XMFLOAT3(-9999.9999f, -9999.9999f, -9999.9999f);
+		return XMFLOAT3(-9999.0f, -9999.0f, -9999.0f);
+	}
+}
+
+void CScene::createParticles(int n, XMFLOAT3 pos)
+{
+	
+	//랜덤한 방향으로 나아가는 조그마한 입자를 해당 위치에 n개 생성
+	for (int i = 0; i < n; ++i)
+	{
+		float x = static_cast<float>(rand() % 10000)/10000.0f-0.5f;
+		float y = static_cast<float>(rand() % 10000)/10000.0f-0.5f;
+		float z = static_cast<float>(rand() % 10000)/10000.0f-0.5f;
+
+
+		XMFLOAT3 direct = XMFLOAT3(x, y, z);
+		direct = Vector3::Normalize(direct);
+		
+		CGameObject* obj = new CGameObject(1);
+		obj->SetMaterial(0, ppMaterials[25]);
+		obj->speed = 0.1f;
+		obj->direction = direct;
+		obj->SetPosition(pos);
+		obj->SetMesh(partMesh);
+		particles.push_back(obj);
 	}
 }
