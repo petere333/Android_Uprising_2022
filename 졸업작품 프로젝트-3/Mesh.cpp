@@ -125,18 +125,23 @@ void CMesh::LoadMeshFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList
 			int nuv = ::ReadUnsignedIntegerFromFile(pInFile);
 			int n2 = ::ReadUnsignedIntegerFromFile(pInFile);
 			char s1[30] = {'\0'};
-			n2= ::ReadStringFromFile(pInFile, s1);
-			n2 = ::ReadUnsignedIntegerFromFile(pInFile);
-			if (nuv > 0)
+
+			for (int i = 0; i < n2; ++i)
 			{
+				int n4 = ::ReadStringFromFile(pInFile, s1);
+				int n3 = ::ReadUnsignedIntegerFromFile(pInFile);
 				m_nType |= VERTEXT_TEXTURE;
 				m_pxmf2UVs = new XMFLOAT2[nuv];
 				nReads = (UINT)::fread(m_pxmf2UVs, sizeof(XMFLOAT2), nuv, pInFile);
-				m_pd3dTextureBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf2UVs, sizeof(XMFLOAT2) * nuv, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
 
-				m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
-				m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
-				m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * nuv;
+				if (i == 0 && nuv > 0)
+				{
+					m_pd3dTextureBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf2UVs, sizeof(XMFLOAT2) * nuv, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+					m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+					m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+					m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * nuv;
+				}
 			}
 		}
 		else if (!strcmp(pstrToken, "<Normals>:"))
@@ -234,6 +239,7 @@ void CMesh::LoadMeshFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList
 //
 CSkinnedMesh::CSkinnedMesh(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList) : CMesh(pd3dDevice, pd3dCommandList)
 {
+	m_d3dPrimitiveTopology = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 }
 
 CSkinnedMesh::~CSkinnedMesh()
