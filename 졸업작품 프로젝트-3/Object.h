@@ -499,6 +499,9 @@ public:
 
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
 	chrono::time_point<chrono::system_clock> timeCreated;
+	chrono::time_point<chrono::system_clock> timeFromDie;
+	bool isDead = false;
+
 public:
 	void jump() { if (isInAir == false) { yspeed = 3.0f; isInAir = true; } }
 

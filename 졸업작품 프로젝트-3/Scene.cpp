@@ -142,7 +142,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
 	textures[25] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
-
+	textures[26] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
 
 
 
@@ -189,6 +190,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	*/
 }
 
+
+
 void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList)
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
@@ -202,7 +205,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
 
 	BuildDefaultLightsAndMaterials();
-
+	createEnemies(pd3dDevice, pd3dCommandList);
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 	boxesWorld = LoadBoxes("res/map/box.txt", &nBox);
@@ -1301,7 +1304,39 @@ void CScene::AnimateObjects(float fTimeElapsed)
 				tmp.z + particles[i]->direction.z * particles[i]->speed * fTime);
 		}
 	}
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		if (enemies[i]->eState.currHP <= 0)
+		{
+			enemies[i]->eState.id = DEATH_STATE;
+		}
+		if (enemies[i]->eState.id == IDLE_STATE)
+		{
+			enemies[i]->SetTrackAnimationSet(0, 5);
+		}
+		else if (enemies[i]->eState.id == DEATH_STATE)
+		{
+			
+			if (enemies[i]->isDead == false)
+			{
+				enemies[i]->SetTrackAnimationSet(0, 27);
+				enemies[i]->timeFromDie = chrono::system_clock::now();
+				enemies[i]->isDead = true;
+			}
+			else
+			{
+				chrono::duration<double> fromDie = chrono::system_clock::now() - enemies[i]->timeFromDie;
+				float fTime = static_cast<float>(fromDie.count());
 
+				if (fTime >= 0.8f)
+				{
+					enemies.erase(enemies.begin() + i);
+					enemyBoxes.erase(enemyBoxes.begin() + i);
+				}
+			}
+		}
+	}
+	
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -1425,6 +1460,20 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			particles[i]->Render(pd3dCommandList, pCamera);
 		}
 
+	}
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		enemies[i]->Animate(m_fElapsedTime);
+		if (enemies[i]->m_pSkinnedAnimationController)
+		{
+			enemies[i]->UpdateTransform(NULL);
+		}
+		if (m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+		}
+		ppMaterials[26]->UpdateShaderVariable(pd3dCommandList);
+		enemies[i]->Render(pd3dCommandList, pCamera);
 	}
 
 	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
@@ -1570,6 +1619,68 @@ void CScene::moveObject(int idx)
 
 			}
 			
+		}
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			if (tx > enemyBoxes[i].start.x - 0.5f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.5f
+				&& tx < enemyBoxes[i].end.x + 0.5f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.5f)
+			{
+
+
+				if (players[idx]->GetPosition().x > enemyBoxes[i].end.x || players[idx]->GetPosition().x < enemyBoxes[i].start.x)
+				{
+					if (players[idx]->direction.x > 0.0f)
+					{
+						players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+						players[idx]->direction.x = 0.0f;
+						players[idx]->direction.z = 0.0f;
+					}
+					else if (players[idx]->direction.x < 0.0f)
+					{
+						players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+						players[idx]->direction.x = 0.0f;
+						players[idx]->direction.z = 0.0f;
+					}
+					crash = true;
+
+				}
+				else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
+				{
+					if (players[idx]->direction.z > 0.0f)
+					{
+						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
+						players[idx]->direction.z = 0.0f;
+						players[idx]->direction.x = 0.0f;
+					}
+					else if (players[idx]->direction.z < 0.0f)
+					{
+						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
+						players[idx]->direction.z = 0.0f;
+						players[idx]->direction.x = 0.0f;
+					}
+					crash = true;
+
+				}
+				else if (players[idx]->isInAir == true)
+				{
+					if (players[idx]->yspeed > 0.0f)
+					{
+						players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
+						players[idx]->yspeed = 0.0f;
+					}
+					else if (players[idx]->yspeed < 0.0f)
+					{
+						players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
+						players[idx]->yspeed = 0.0f;
+						players[idx]->isInAir = false;
+					}
+
+					crash = true;
+				}
+
+			}
+
 		}
 
 
@@ -1748,7 +1859,7 @@ void CScene::attack(int idx)
 
 		int target = -1;  // 대상 객체
 		XMFLOAT3 targetPos; // 타격 발생 지점
-
+		int type = 0;
 		XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
 		//printf("발사 방향 : %f, %f, %f\n", n.x, n.y, n.z);
 
@@ -1854,29 +1965,147 @@ void CScene::attack(int idx)
 				minDist = dist;
 				targetPos = temp;
 				target = i;
+				type = 1;
 			}
 
 		}
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+			std::vector<XYZPlane> checkList;
+
+
+			if (n.x > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = enemyBoxes[i].start.x;
+				checkList.push_back(p);
+			}
+			else if (n.x < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = enemyBoxes[i].end.x;
+				checkList.push_back(p);
+			}
+
+			if (n.z > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = enemyBoxes[i].start.z;
+				checkList.push_back(p);
+			}
+			else if (n.z < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = enemyBoxes[i].end.z;
+				checkList.push_back(p);
+			}
+
+			if (n.y > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = enemyBoxes[i].start.y;
+				checkList.push_back(p);
+			}
+			else if (n.y < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = enemyBoxes[i].end.y;
+				checkList.push_back(p);
+			}
+
+
+			//체크리스트에 들어있는 모든 평면들에 대해
+
+			for (int j = 0; j < checkList.size(); ++j)
+			{
+				// 충돌 지점을 확보한다.
+				temp = getIntersectPoint(line, checkList[j]);
+
+
+				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+				if ((temp.x <= enemyBoxes[i].end.x + 0.001f && temp.x >= enemyBoxes[i].start.x - 0.001f) &&
+					(temp.y <= enemyBoxes[i].end.y + 0.001f && temp.y >= enemyBoxes[i].start.y - 0.001f) &&
+					(temp.z <= enemyBoxes[i].end.z + 0.001f && temp.z >= enemyBoxes[i].start.z - 0.001f))
+				{
+					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+					{
+						//그 지점과의 거리를 구한 후,
+						// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+						d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+						dist = Vector3::Length(d);
+						printf("사거리 내에 위치, 거리 %f\n", dist);
+						break;
+					}
+					else
+					{
+						printf("직선 앞 혹은 뒤에 위치\n");
+						dist = 3000.0f;
+					}
+				}
+				else
+				{
+					dist = 3000.0f;
+				}
+			}
+			/*
+			if (dist != 3000.0f)
+			{
+				printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+				printf("%d번째 박스와 거리 %f\n", i, dist);
+			}
+			*/
+			// 총알은 관통 기능이 없다. 즉,
+			// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+			// 그 지점이 새로운 충돌지점이다.
+
+			if (dist < minDist)
+			{
+				minDist = dist;
+				targetPos = temp;
+				target = i;
+				type = 2;
+			}
+
+		}
+
 		// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
 		// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
-		printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-		if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
+		if (type == 1)
 		{
-			printf("(Building Wall)\n");
-		}
-		else if (m_ppGameObjects[target]->type < 6000 && m_ppGameObjects[target]->type >= 5000)
-		{
-			printf("(Container)\n");
-		}
 
-		else if (m_ppGameObjects[target]->type == 90000)
-		{
-			printf("(Heater)\n");
-		}
 
-		else
+			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
+			if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
+			{
+				printf("(Building Wall)\n");
+			}
+			else if (m_ppGameObjects[target]->type < 6000 && m_ppGameObjects[target]->type >= 5000)
+			{
+				printf("(Container)\n");
+			}
+
+			else if (m_ppGameObjects[target]->type == 90000)
+			{
+				printf("(Heater)\n");
+			}
+
+			else
+			{
+				printf("(Something)\n");
+			}
+		}
+		else if (type == 2)
 		{
-			printf("(Something)\n");
+			enemies[target]->eState.currHP -= 1;
 		}
 		createParticles(100, targetPos);
 
@@ -1933,4 +2162,33 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		obj->SetMesh(partMesh);
 		particles.push_back(obj);
 	}
+}
+
+void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+{
+	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/enemy2.bin", NULL);
+
+	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
+	obj->SetPosition(100.0f, 0.0f, 150.0f);
+	obj->type = -10;
+	obj->SetTrackAnimationSet(0, 9);
+	obj->eState.id = IDLE_STATE;
+	obj->eState.currHP = 10;
+	enemies.push_back(obj);
+
+	
+
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		//x,y=-0.25~0.25 z=0.0~1.7
+
+		XMFLOAT3 pos = enemies[i]->GetPosition();
+		
+		BoundBox box;
+		box.start = XMFLOAT3(pos.x - 0.25f, pos.y, pos.z - 0.25f);
+		box.end = XMFLOAT3(pos.x + 0.25f, pos.y + 1.75f, pos.z + 0.25f);
+
+		enemyBoxes.push_back(box);
+	}
+
 }

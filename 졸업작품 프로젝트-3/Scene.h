@@ -96,12 +96,12 @@ protected:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	#define nTex  26
+	#define nTex  27
 	#define nNormal  12
 	
 	#define nDirt  9
 	
-	#define nMat 26
+	#define nMat 27
 	#define nDirMat 9
 
 #define nShadows 9
@@ -122,6 +122,7 @@ protected:
 public:
 
 	BoundBox* boxesWorld;
+	std::vector<BoundBox> enemyBoxes;
 	int nBox = 0;
 
 	XMFLOAT3 playerSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -137,6 +138,7 @@ public:
 	CGameObject							**m_ppGameObjects = NULL;
 	std::vector<CGameObject*>			players;
 	std::vector<CGameObject*>			particles;
+	std::vector<CGameObject*>			enemies;
 
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
@@ -192,7 +194,7 @@ public:
 	void attack(int idx);
 
 	void createParticles(int n, XMFLOAT3 pos);
-
+	void createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 
 public: // client to server
 	virtual void recv_packet(); // (receive packet);
