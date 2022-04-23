@@ -1275,7 +1275,9 @@ void CScene::AnimateObjects(float fTimeElapsed)
 			{
 				setPlayerAnimation(2);
 			}
-			attack(i);
+			// 이 클라이언트의 플레이어가 어느 방향으로 총을 쐈는지 서버로 전송하는 기능을 이곳에 추가해야 함.
+
+			attack(i);// 캐릭터가 당시 바라봤던 방향으로 3km이내의 직선상에 총알이 발사됨. 이걸 서버가 처리.
 		}
 		else if (players[i]->pState.id == IDLE_STATE)
 		{
@@ -1304,8 +1306,12 @@ void CScene::AnimateObjects(float fTimeElapsed)
 				tmp.z + particles[i]->direction.z * particles[i]->speed * fTime);
 		}
 	}
+
+	//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
+	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
 	for (int i = 0; i < enemies.size(); ++i)
 	{
+		
 		if (enemies[i]->eState.currHP <= 0)
 		{
 			enemies[i]->eState.id = DEATH_STATE;
@@ -1714,23 +1720,31 @@ void CScene::moveObject(int idx)
 			}
 
 		}
+		
 	}
-	
+	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
+	// 변경 완료된 위치 값을 클라로 전송.
+	// moveObject 함수는 매 프레임마다 호출되므로 서버에서도 약 0.016초(초당 60프레임 기준)마다 전송해주는게 좋음.
 }
 
 
 
 void CScene::setObjectSpeed(int idx, float size)
 {
+	//플레이어의 속도 크기 및 방향 벡터를 서버가 계산해줘야 한다.
 	players[idx]->speed = size;
 
 	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
 
 	players[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
+	// speed, direction값을 클라에게 전달하자.
 }
 
 void CScene::setObjectState(int index, int state)
 {
+	// 플레이어의 상태가 변하면 서버가 id값, 몇 번째 플레이어인지 index값을 전해준다.
+	// 어차피 timeElapsed는 클라가 상태 변화를 나타내는 패킷을 수신받은
+	// 시점을 기준으로 시간을 측정하면 되므로 서버가 전해줄 필요가 없다.
 	if (players[index]->objType == TYPE_PLAYER)
 	{
 		if (players[index]->pState.id != state)
@@ -1739,6 +1753,7 @@ void CScene::setObjectState(int index, int state)
 			players[index]->pState.timeElapsed = 0.0f;
 		}
 	}
+	// 적의 경우에도 id, index값만 전해주면 된다.
 	else if (players[index]->objType == TYPE_ENEMY)
 	{
 		if (players[index]->eState.id != state)
@@ -1756,6 +1771,8 @@ bool CScene::moveSuccessed(int idx)
 
 void CScene::rotateObject(int idx, float x, float y, float z)
 {
+	//플레이어가 현재 바라보는 방향을 계산한다.
+	//이걸 서버가 해야 된다.
 	players[idx]->Rotate(x, y, z);
 	players[idx]->currentRotation.x += x;
 	players[idx]->currentRotation.y += y;
@@ -1787,7 +1804,7 @@ void CScene::rotateObject(int idx, float x, float y, float z)
 	{
 		players[idx]->currentRotation.z += 360.0f;
 	}
-
+	//이런 다음, currentRotation값을 클라에 넘겨주면 된다.
 }
 void CScene::setPlayerDirection(float dx, float dy, float dz)
 {
@@ -2085,6 +2102,9 @@ void CScene::attack(int idx)
 
 		// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
 		// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
+
+		// 이제, 서버는  총알의 충돌 지점을 나타내는 targetPos, 맞은 객체의 유형을 나타내는 type, 몇 번째 객체에 맞았는지 나타내는 target값을 전송해야 한다.
+	
 		if (type == 1)
 		{
 
@@ -2111,15 +2131,21 @@ void CScene::attack(int idx)
 		}
 		else if (type == 2)
 		{
+			//또한 서버는 총알이 적에 맞았을 경우 target번째 적의 체력이 n 만큼 감소했다고 클라한테 알려줘야한다.
+			//여기서도 패킷 하나 더만들어 보내자.
 			enemies[target]->eState.currHP -= 1;
 		}
-		createParticles(100, targetPos);
 
+		// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
+		// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
+		createParticles(100, targetPos);
+		// 그니까, createParticles 함수는 서버의 전담이 아니다.
 	}
 
 
 }
-//평면의 법선벡터가 무조건 양수라서 그런가?
+// 서버 프로그램에 구현해야 할 함수이다.
+// 바운딩박스의 한 평면과 총알의 진행 경로의 직선이 겹치는 부분을 찾아냄으로써, 총알이 맞은 지점을 알아내는 함수이다.
 XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
 {
 	float u1 = plane.normal.x * line.start.x + plane.normal.y * line.start.y + plane.normal.z * line.start.z - plane.pos;

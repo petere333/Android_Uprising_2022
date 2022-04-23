@@ -293,6 +293,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	switch (nMessageID)
 	{
 		case WM_LBUTTONDOWN:
+			// 마우스 좌클릭 시 공격 상태로 변화.
 			m_pScene->setObjectState(0, ATTACK_STATE);
 
 			break;
@@ -303,11 +304,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			
 			break;
 		case WM_LBUTTONUP:
+			//좌클릭 해제 시 정지 상태로 변화.
 			m_pScene->setObjectState(0, IDLE_STATE);
-			if (m_pScene->currentPlayerAnim != 11)
-			{
-				m_pScene->setPlayerAnimation(11);
-			}
+			
 			break;
 		case WM_RBUTTONUP:
 			/*
@@ -326,12 +325,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
+
+	// 패킷 전송 예시
 	CS_MOVE_PACKET m_packet;
 	m_packet.c_id = 1;
 	m_packet.isKey = true;
 	m_packet.size = sizeof(CS_MOVE_PACKET);
 	m_packet.type = PACKET_TYPE::CS_MOVE;
 	SendPacket(&m_packet);
+
+
+	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
+	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
 
 	switch (nMessageID)
 	{
@@ -342,18 +347,21 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 			if (lastOrder == 1)
 			{
-
+				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
 				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
 			}
 			else if(lastOrder == 2)
 			{
+				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
 				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
 			}
 			else if (lastOrder == 3)
 			{
+				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
 				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
 			}
 			lastOrder = 0;
+			// 플레이어의 속도, 상태 설정
 			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 			m_pScene->setObjectState(0, MOVE_STATE);
 		}
@@ -417,6 +425,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 		case VK_SPACE:
 		{
+			// 플레이어에 대한 점프 명령
 			m_pScene->jumpObject(0);
 			break;
 		}
@@ -437,6 +446,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				case VK_F9:
 					ChangeSwapChainState();
 					break;
+				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
 				case VK_UP:
 					m_pScene->setObjectSpeed(0, 0.0f);
 					m_pScene->setObjectState(0, IDLE_STATE);
@@ -567,12 +577,16 @@ void CGameFramework::ReleaseObjects()
 
 void CGameFramework::ProcessInput()
 {
+	//마우스 이동 시 플레이어의 위치 변경.
 	POINT pnt;
 	GetCursorPos(&pnt);
 
 	XMFLOAT3 offset = m_pScene->getPos(0);
 	float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
 	float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+
+
+	//여기서부터 서버에서 처리
 	m_pCamera->rotate(-deltaX, offset.x, offset.z);
 	m_pCamera->rotateUp(-deltaY);
 	m_pScene->rotateObject(0, 0.0f, deltaX, 0.0f);
@@ -582,7 +596,7 @@ void CGameFramework::ProcessInput()
 	SetCursorPos(500, 500);
 	prevX = 500;
 	prevY = 500;
-
+	//서버 처리 끝
 
 }
 
@@ -590,7 +604,13 @@ void CGameFramework::ProcessInput()
 void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
-	m_pScene->moveObject(0);
+
+	//여기에, 객체를 이동시킨다는 패킷을 서버로 보내는 내용 추가하기.
+
+	m_pScene->moveObject(0);//이걸 서버가 처리한다.
+
+
+	// 이 이후로는 클라가 처리
 	if (m_pScene->getSpeed(0)>0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
 	{
 		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
