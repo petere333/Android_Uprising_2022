@@ -323,6 +323,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
+
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
 	CS_MOVE_PACKET m_packet;
@@ -341,6 +342,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 			if (lastOrder == 1)
 			{
+
 				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
 			}
 			else if(lastOrder == 2)

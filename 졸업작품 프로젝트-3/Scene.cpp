@@ -1461,6 +1461,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 
 	}
+
+	//적 그리기
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 		enemies[i]->Animate(m_fElapsedTime);
@@ -1558,7 +1560,7 @@ void CScene::moveObject(int idx)
 		tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
 		ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
 		tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
-
+		// 물체가 있는곳에 이동했는가?
 		for (int i = 0; i < nBox; ++i)
 		{
 			if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.5f
@@ -1620,7 +1622,7 @@ void CScene::moveObject(int idx)
 			}
 			
 		}
-
+		// 적이 있는곳에 이동했는가?
 		for (int i = 0; i < enemies.size(); ++i)
 		{
 			if (tx > enemyBoxes[i].start.x - 0.5f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.5f
@@ -1863,6 +1865,8 @@ void CScene::attack(int idx)
 		XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
 		//printf("발사 방향 : %f, %f, %f\n", n.x, n.y, n.z);
 
+
+		// 고정된 물체에 총알이 박혔나?
 		for (int i = 0; i < nBox; ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
@@ -1970,6 +1974,8 @@ void CScene::attack(int idx)
 
 		}
 
+
+		// 적한테 총알이 박혔나?
 		for (int i = 0; i < enemies.size(); ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
@@ -2164,6 +2170,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 	}
 }
 
+// 적 만드는 함수
 void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
 	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/enemy2.bin", NULL);
@@ -2177,7 +2184,7 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	enemies.push_back(obj);
 
 	
-
+	// 각 적들의 위치에 바운딩 박스 생성
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 		//x,y=-0.25~0.25 z=0.0~1.7
