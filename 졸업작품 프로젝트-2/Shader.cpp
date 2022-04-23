@@ -316,7 +316,7 @@ void CObjectsShader::ReleaseShaderVariables()
 	CTexturedShader::ReleaseShaderVariables();
 }
 
-#define TEXTURES		24
+#define TEXTURES		32
 
 void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	* pd3dCommandList, void* pContext)
@@ -371,6 +371,24 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[22]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/BaseColor_txt.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[23] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[23]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Metal_txt.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[24] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상자커버.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[25] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Convels.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[26] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Paperbox.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[27] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[27]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Machine_txt.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[28] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[28]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Conl.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[29] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[29]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Tank.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[30] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[30]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/drum_t.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[31] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	ppTextures[31]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/짐덩이_txt.dds", RESOURCE_TEXTURE2D, 0);
+
+
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
 	m_nObjects = data.size();
@@ -490,6 +508,14 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
 	CLoadedMesh* H_Heat = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_공장_히터.txt", NULL);
 	CLoadedMesh* B_box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_1Stage_Box.txt", NULL);
+	CLoadedMesh* Gongjang_tool1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Covers.txt", NULL);
+	CLoadedMesh* Gongjang_tool2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Convel.txt", NULL);
+	CLoadedMesh* Gongjang_tool3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_종이박스.txt", NULL);
+	CLoadedMesh* Gongjang_tool4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전기.txt", NULL);
+	CLoadedMesh* Gongjang_tool5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_케비넷.txt", NULL);
+	CLoadedMesh* Gongjang_tool6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느기계.txt", NULL);
+	CLoadedMesh* Gongjang_tool7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_드럼통.txt", NULL);
+	CLoadedMesh* Gongjang_tool8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_짐덩이.txt", NULL);
 	boxesWorld = LoadBoxes("res/map/box.txt");
 
 
@@ -1084,6 +1110,67 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			obj->SetMaterial(ppMaterials[22]);
 			//obj->SetMaterial(ppMaterials[23]);
 		}
+		else if (data[i].type == Factory_tool1)// 여기서부터 새로 만든거
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool1);
+		obj->SetMaterial(ppMaterials[24]);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool2)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool2);
+		obj->SetMaterial(ppMaterials[25]);
+
+		}
+		else if (data[i].type == Factory_tool3)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool3);
+		obj->SetMaterial(ppMaterials[26]);
+
+		}
+		else if (data[i].type == Factory_tool4)
+		{ 
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool4);
+		obj->SetMaterial(ppMaterials[27]);
+
+		}
+		else if (data[i].type == Factory_tool5)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool5);
+		 obj->SetMaterial(ppMaterials[28]);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool6)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool6);
+		obj->SetMaterial(ppMaterials[29]);
+		obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool7)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool7);
+		obj->SetMaterial(ppMaterials[30]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool8)
+		{
+		obj = new CTerrainObject(1);
+		obj->SetMesh(0, Gongjang_tool8);
+		obj->SetMaterial(ppMaterials[31]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+
 
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);

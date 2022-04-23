@@ -340,7 +340,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case VK_SPACE:
 			if (m_pScene->playerInAir() == false)
 			{
-				m_pScene->addPlayerYSpeed(0.3f);
+				m_pScene->addPlayerYSpeed(15.0f);
 			}
 			break;
 		case 'F':

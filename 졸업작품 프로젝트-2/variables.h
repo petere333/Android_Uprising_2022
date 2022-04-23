@@ -131,6 +131,15 @@
 #define SeAddings2 2300
 #define Heaters1 90000
 #define F_Stages 95001
+#define Factory_tool1 505
+#define Factory_tool2 510
+#define Factory_tool3 515
+#define Factory_tool4 520
+#define Factory_tool5 525
+#define Factory_tool6 530
+#define Factory_tool7 535
+#define Factory_tool8 540
+
 
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)

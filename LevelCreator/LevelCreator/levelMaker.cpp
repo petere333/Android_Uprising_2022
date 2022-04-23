@@ -23,7 +23,7 @@ int main()
 
 	file = fopen("result/objects.txt", "w");
 	FILE* bf = fopen("result/box.txt", "w");
-	FILE* sf = fopen("result/stair.txt", "w");
+	//FILE* sf = fopen("result/stair.txt", "w");
 	//FILE* sf = fopen("result/sphere.txt", "w");
 
 
@@ -39,12 +39,12 @@ int main()
 
 	for (int i = 0; i < gList.size(); ++i)
 	{
-		writeStair(sf, gList[i]);
+//		writeStair(sf, gList[i]);
 	}
 
 	fclose(file);
 	fclose(bf);
-	fclose(sf);
+//	fclose(sf);
 	return 0;
 }
 
@@ -1124,111 +1124,823 @@ void createObjects(vector<Object>& list, vector<BoundingBox>& blist, vector<Boun
 
 void createStairBox(vector<Object>& list, vector<BoundingBox>& blist, vector<BoundingStair>& slist)
 {
-	Object GyoDan;
-	GyoDan.location = f3(387.5f, 2.5f, 440.0f);
-	GyoDan.rotation = f3(0.0f, 0.0f, 0.0f);
-	GyoDan.type = GyeDans1;
-
-	Object GyoDan2;
-	GyoDan2.location = f3(360.0f, 2.5f, 340.0f);
-	GyoDan2.rotation = f3(0.0f, 0.0f, 0.0f);
-	GyoDan2.type = GyeDans2;
-
-	Object R_stair1;
-	R_stair1.location = f3(940.0f, 6.25f, 262.5f);
-	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
-	R_stair1.type = R_GyeDan1;
-
-	Object R_stair2;
-	R_stair2.location = f3(1080.0f, 6.25f, 262.5f);
-	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
-	R_stair2.type = R_GyeDan1;
-
-	Object R_stair3;
-	R_stair3.location = f3(50.0f, 6.25f, 387.5f);
-	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
-	R_stair3.type = R_GyeDan1;
 
 
-	list.push_back(GyoDan);
-	list.push_back(GyoDan2);
-	list.push_back(R_stair1);
-	list.push_back(R_stair2);
-	list.push_back(R_stair3);
-
-	BoundingBox GyoDa1;
-	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
-	GyoDa1.end = f3(395.0f, 5.0f, 431.0f);
-
-	BoundingBox GyoDa2;
-	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
-	GyoDa2.end = f3(367.5f, 5.0f, 331.0f);
-
-	BoundingBox R_sta1;
-	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
-	R_sta1.end = f3(990.0f, 12.5f, 251.0f);
-
-	BoundingBox R_sta2;
-	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
-	R_sta2.end = f3(1130.0f, 12.5f, 251.0f);
-
-	BoundingBox R_sta3;
-	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
-	R_sta3.end = f3(100.0f, 12.5f, 376.0f);
-
-	blist.push_back(GyoDa1);
-	blist.push_back(GyoDa2);
-	blist.push_back(R_sta1);
-	blist.push_back(R_sta2);
-	blist.push_back(R_sta3);
-
-	BoundingStair Rtair1;
-	Rtair1.xstart = 380.0f;
-	Rtair1.xend = 395.0f;
-	Rtair1.zstart = 430.0f;
-	Rtair1.zend = 450.0f;
-	Rtair1.height = 5.0f;
-
-	BoundingStair Rstair2;
-	Rstair2.xstart = 352.5f;
-	Rstair2.xend = 367.5f;
-	Rstair2.zstart = 330.0f;
-	Rstair2.zend = 350.0f;
-	Rstair2.height = 5.0f;
-
-	BoundingStair Rstair3;
-	Rstair3.xstart = 890.0f;
-	Rstair3.xend = 990.0f;
-	Rstair3.zstart = 250.0f;
-	Rstair3.zend = 275.0f;
-	Rstair3.height = 12.5f;
-
-	BoundingStair Rstair4;
-	Rstair4.xstart = 1030.0f;
-	Rstair4.xend = 1130.0f;
-	Rstair4.zstart = 250.0f;
-	Rstair4.zend = 275.0f;
-	Rstair4.height = 12.5f;
-
-	BoundingStair Rstair5;
-	Rstair5.xstart = 0.0f;
-	Rstair5.xend = 100.0f;
-	Rstair5.zstart = 375.0f;
-	Rstair5.zend = 400.0f;
-	Rstair5.height = 12.5f;
 
 
-	slist.push_back(Rtair1);
-	slist.push_back(Rstair2);
-	slist.push_back(Rstair3);
-	slist.push_back(Rstair4);
-	slist.push_back(Rstair5);
+
+
+
+
+
 }
 
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
+	Object Tims1[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims1[i].location = f3(1225.0f + (5.0f * i), 0.0f, 30.0f);
+		Tims1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims1[i].type = Factory_tool8;
+		list.push_back(Tims1[i]);
 
+	}
+
+	Object Tims2[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims2[i].location = f3(1225.0f + (5.0f * i), 0.0f, 39.0f);
+		Tims2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims2[i].type = Factory_tool8;
+		list.push_back(Tims2[i]);
+
+	}
+
+	Object Tims3[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims3[i].location = f3(1225.0f + (5.0f * i), 0.0f, 48.0f);
+		Tims3[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims3[i].type = Factory_tool8;
+		list.push_back(Tims3[i]);
+
+	}
+
+	Object Tims4[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims4[i].location = f3(1225.0f + (5.0f * i), 0.0f, 57.0f);
+		Tims4[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims4[i].type = Factory_tool8;
+		list.push_back(Tims4[i]);
+
+	}
+
+	Object Tims5[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims5[i].location = f3(1225.0f + (5.0f * i), 0.0f, 66.0f);
+		Tims5[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims5[i].type = Factory_tool8;
+		list.push_back(Tims5[i]);
+
+	}
+
+	Object Tims6[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims6[i].location = f3(1225.0f + (5.0f * i), 0.0f, 75.0f);
+		Tims6[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims6[i].type = Factory_tool8;
+		list.push_back(Tims6[i]);
+
+	}
+
+	Object Tims7[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims7[i].location = f3(1225.0f + (5.0f * i), 0.0f, 84.0f);
+		Tims7[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims7[i].type = Factory_tool8;
+		list.push_back(Tims7[i]);
+
+	}
+
+	Object Tims8[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims8[i].location = f3(1225.0f + (5.0f * i), 0.0f, 93.0f);
+		Tims8[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims8[i].type = Factory_tool8;
+		list.push_back(Tims8[i]);
+
+	}
+
+	Object Tims9[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims9[i].location = f3(1225.0f + (5.0f * i), 0.0f, 102.0f);
+		Tims9[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims9[i].type = Factory_tool8;
+		list.push_back(Tims9[i]);
+
+	}
+
+	Object Tims10[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Tims10[i].location = f3(1225.0f + (5.0f * i), 0.0f, 111.0f);
+		Tims10[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tims10[i].type = Factory_tool8;
+		list.push_back(Tims10[i]);
+
+	}
+
+
+
+	Object Jims1[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims1[i].location = f3(1225.0f + (5.0f * i), 0.0f, 545.0f);
+		Jims1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims1[i].type = Factory_tool8;
+		list.push_back(Jims1[i]);
+
+	}
+
+
+	Object Jims2[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims2[i].location = f3(1225.0f + (5.0f * i), 0.0f, 550.0f);
+		Jims2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims2[i].type = Factory_tool8;
+		list.push_back(Jims2[i]);
+
+	}
+
+	Object Jims3[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims3[i].location = f3(1225.0f + (5.0f * i), 0.0f, 555.0f);
+		Jims3[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims3[i].type = Factory_tool8;
+		list.push_back(Jims3[i]);
+
+	}
+
+
+	Object Jims4[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims4[i].location = f3(1225.0f + (5.0f * i), 0.0f, 560.0f);
+		Jims4[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims4[i].type = Factory_tool8;
+		list.push_back(Jims4[i]);
+
+	}
+
+	Object Jims5[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims5[i].location = f3(1225.0f + (5.0f * i), 0.0f, 565.0f);
+		Jims5[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims5[i].type = Factory_tool8;
+		list.push_back(Jims5[i]);
+
+	}
+
+	Object Jims6[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims6[i].location = f3(1225.0f + (5.0f * i), 0.0f, 570.0f);
+		Jims6[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims6[i].type = Factory_tool8;
+		list.push_back(Jims6[i]);
+
+	}
+
+	Object Jims7[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims7[i].location = f3(1225.0f + (5.0f * i), 0.0f, 480.0f);
+		Jims7[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims7[i].type = Factory_tool8;
+		list.push_back(Jims1[i]);
+
+	}
+
+
+	Object Jims8[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims8[i].location = f3(1225.0f + (5.0f * i), 0.0f, 485.0f);
+		Jims8[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims8[i].type = Factory_tool8;
+		list.push_back(Jims8[i]);
+
+	}
+
+	Object Jims9[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims9[i].location = f3(1225.0f + (5.0f * i), 0.0f, 490.0f);
+		Jims9[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims9[i].type = Factory_tool8;
+		list.push_back(Jims9[i]);
+
+	}
+
+
+	Object Jims10[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims10[i].location = f3(1225.0f + (5.0f * i), 0.0f, 495.0f);
+		Jims10[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims10[i].type = Factory_tool8;
+		list.push_back(Jims10[i]);
+
+	}
+
+	Object Jims11[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims11[i].location = f3(1225.0f + (5.0f * i), 0.0f, 500.0f);
+		Jims11[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims11[i].type = Factory_tool8;
+		list.push_back(Jims11[i]);
+
+	}
+
+	Object Jims12[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Jims12[i].location = f3(1225.0f + (5.0f * i), 0.0f, 505.0f);
+		Jims12[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Jims12[i].type = Factory_tool8;
+		list.push_back(Jims12[i]);
+
+	}
+
+
+
+	Object Edin1[20];
+
+	for (int i = 0; i < 20; ++i)
+	{
+		Edin1[i].location = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
+		Edin1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Edin1[i].type = Factory_tool6;
+
+		list.push_back(Edin1[i]);
+	}
+
+	Object Cabi1[30];
+
+	for (int i = 0; i < 30; ++i)
+	{
+		Cabi1[i].location = f3(401.5f, 0.0f, 300.0f + (3.0f * i));
+		Cabi1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Cabi1[i].type = Factory_tool5;
+
+		list.push_back(Cabi1[i]);
+	}
+
+	Object Drums1[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums1[i].location = f3(420.0f + (5.0f * i), 0.0f, 565.0f);
+		Drums1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums1[i].type = Factory_tool7;
+
+		list.push_back(Drums1[i]);
+	}
+
+	Object Drums2[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums2[i].location = f3(420.0f + (5.0f * i), 0.0f, 570.0f);
+		Drums2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums2[i].type = Factory_tool7;
+		list.push_back(Drums2[i]);
+	}
+
+	Object Drums3[2];
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums3[i].location = f3(450.0f + (5.0f * i), 0.0f, 565.0f);
+		Drums3[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums3[i].type = Factory_tool7;
+		list.push_back(Drums3[i]);
+	}
+
+	Object Drums4[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums4[i].location = f3(450.0f + (5.0f * i), 0.0f, 570.0f);
+		Drums4[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums4[i].type = Factory_tool7;
+		list.push_back(Drums4[i]);
+	}
+
+	Object Drums5[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums5[i].location = f3(420.0f + (5.0f * i), 0.0f, 535.0f);
+		Drums5[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums5[i].type = Factory_tool7;
+
+		list.push_back(Drums5[i]);
+	}
+
+	Object Drums6[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums6[i].location = f3(420.0f + (5.0f * i), 0.0f, 540.0f);
+		Drums6[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums6[i].type = Factory_tool7;
+		list.push_back(Drums6[i]);
+	}
+
+	Object Drums7[2];
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums7[i].location = f3(450.0f + (5.0f * i), 0.0f, 535.0f);
+		Drums7[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums7[i].type = Factory_tool7;
+		list.push_back(Drums7[i]);
+	}
+
+	Object Drums8[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums8[i].location = f3(450.0f + (5.0f * i), 0.0f, 540.0f);
+		Drums8[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums8[i].type = Factory_tool7;
+		list.push_back(Drums8[i]);
+	}
+
+
+
+
+
+	Object Drums9[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums9[i].location = f3(480.0f + (5.0f * i), 0.0f, 565.0f);
+		Drums9[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums9[i].type = Factory_tool7;
+
+		list.push_back(Drums9[i]);
+	}
+
+	Object Drums10[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums10[i].location = f3(480.0f + (5.0f * i), 0.0f, 570.0f);
+		Drums10[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums10[i].type = Factory_tool7;
+		list.push_back(Drums10[i]);
+	}
+
+	Object Drums11[2];
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums11[i].location = f3(510.0f + (5.0f * i), 0.0f, 565.0f);
+		Drums11[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums11[i].type = Factory_tool7;
+		list.push_back(Drums11[i]);
+	}
+
+	Object Drums12[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums12[i].location = f3(510.0f + (5.0f * i), 0.0f, 570.0f);
+		Drums12[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums12[i].type = Factory_tool7;
+		list.push_back(Drums12[i]);
+	}
+
+	Object Drums13[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums13[i].location = f3(480.0f + (5.0f * i), 0.0f, 535.0f);
+		Drums13[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums13[i].type = Factory_tool7;
+
+		list.push_back(Drums13[i]);
+	}
+
+	Object Drums14[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums14[i].location = f3(480.0f + (5.0f * i), 0.0f, 540.0f);
+		Drums14[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums14[i].type = Factory_tool7;
+		list.push_back(Drums14[i]);
+	}
+
+	Object Drums15[2];
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums15[i].location = f3(510.0f + (5.0f * i), 0.0f, 535.0f);
+		Drums15[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums15[i].type = Factory_tool7;
+		list.push_back(Drums15[i]);
+	}
+
+	Object Drums16[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Drums16[i].location = f3(510.0f + (5.0f * i), 0.0f, 540.0f);
+		Drums16[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Drums16[i].type = Factory_tool7;
+		list.push_back(Drums16[i]);
+	}
+
+
+	Object Engine1;
+	Engine1.location = f3(802.0f, 0.0f, 375.0f);
+	Engine1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine1.type = Factory_tool4;
+
+	Object Engine2;
+	Engine2.location = f3(802.0f, 0.0f, 400.0f);
+	Engine2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine2.type = Factory_tool4;
+
+	Object Engine3;
+	Engine3.location = f3(802.0f, 0.0f, 425.0f);
+	Engine3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine3.type = Factory_tool4;
+
+	Object Engine4;
+	Engine4.location = f3(802.0f, 0.0f, 450.0f);
+	Engine4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine4.type = Factory_tool4;
+
+	Object Engine5;
+	Engine5.location = f3(802.0f, 0.0f, 475.0f);
+	Engine5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine5.type = Factory_tool4;
+
+	Object Engine6;
+	Engine6.location = f3(802.0f, 0.0f, 500.0f);
+	Engine6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine6.type = Factory_tool4;
+
+	Object Engine7;
+	Engine7.location = f3(802.0f, 0.0f, 525.0f);
+	Engine7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Engine7.type = Factory_tool4;
+
+
+
+
+	Object Pbox1;
+	Pbox1.location = f3(1000.0f, 12.5f, 500.0f);
+	Pbox1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox1.type = Factory_tool3;
+
+	Object Pbox2;
+	Pbox2.location = f3(1003.0f, 12.5f, 500.0f);
+	Pbox2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox2.type = Factory_tool3;
+
+	Object Pbox3;
+	Pbox3.location = f3(1006.0f, 12.5f, 500.0f);
+	Pbox3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox3.type = Factory_tool3;
+
+	Object Pbox4;
+	Pbox4.location = f3(1009.0f, 12.5f, 500.0f);
+	Pbox4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox4.type = Factory_tool3;
+
+	Object Pbox5;
+	Pbox5.location = f3(1012.0f, 12.5f, 500.0f);
+	Pbox5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox5.type = Factory_tool3;
+
+	Object Pbox6;
+	Pbox6.location = f3(1015.0f, 12.5f, 500.0f);
+	Pbox6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox6.type = Factory_tool3;
+
+	Object Pbox7;
+	Pbox7.location = f3(1018.0f, 12.5f, 500.0f);
+	Pbox7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox7.type = Factory_tool3;
+
+	Object Pbox8;
+	Pbox8.location = f3(1021.0f, 12.5f, 500.0f);
+	Pbox8.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox8.type = Factory_tool3;
+
+	Object Pbox9;
+	Pbox9.location = f3(1024.0f, 12.5f, 500.0f);
+	Pbox9.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox9.type = Factory_tool3;
+
+	Object Pbox10;
+	Pbox10.location = f3(1027.0f, 12.5f, 500.0f);
+	Pbox10.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox10.type = Factory_tool3;
+
+	Object Pbox11;
+	Pbox11.location = f3(1030.0f, 12.5f, 500.0f);
+	Pbox11.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox11.type = Factory_tool3;
+
+
+	Object Pbox12;
+	Pbox12.location = f3(1060.0f, 12.5f, 500.0f);
+	Pbox12.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox12.type = Factory_tool3;
+
+
+	Object Pbox13;
+	Pbox13.location = f3(1063.0f, 12.5f, 500.0f);
+	Pbox13.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox13.type = Factory_tool3;
+
+	Object Pbox14;
+	Pbox14.location = f3(1066.0f, 12.5f, 500.0f);
+	Pbox14.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox14.type = Factory_tool3;
+
+
+	Object Pbox15;
+	Pbox15.location = f3(1069.0f, 12.5f, 500.0f);
+	Pbox15.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox15.type = Factory_tool3;
+
+	Object Pbox16;
+	Pbox16.location = f3(1072.0f, 12.5f, 500.0f);
+	Pbox16.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox16.type = Factory_tool3;
+
+	Object Pbox17;
+	Pbox17.location = f3(1075.0f, 12.5f, 500.0f);
+	Pbox17.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox17.type = Factory_tool3;
+
+
+	Object Pbox18;
+	Pbox18.location = f3(1078.0f, 12.5f, 500.0f);
+	Pbox18.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox18.type = Factory_tool3;
+
+	Object Pbox19;
+	Pbox19.location = f3(1081.0f, 12.5f, 500.0f);
+	Pbox19.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox19.type = Factory_tool3;
+
+	Object Pbox20;
+	Pbox20.location = f3(1084.0f, 12.5f, 500.0f);
+	Pbox20.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox20.type = Factory_tool3;
+
+	Object Pbox21;
+	Pbox21.location = f3(1087.0f, 12.5f, 500.0f);
+	Pbox21.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox21.type = Factory_tool3;
+
+	Object Pbox22;
+	Pbox22.location = f3(1090.0f, 12.5f, 500.0f);
+	Pbox22.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pbox22.type = Factory_tool3;
+
+	Object Conv_1;
+	Conv_1.location = f3(910.0f, 12.5f, 300.0f);
+	Conv_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_1.type = Factory_tool2;
+
+	Object Conv_2;
+	Conv_2.location = f3(910.0f, 12.5f, 315.0f);
+	Conv_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_2.type = Factory_tool2;
+
+	Object Conv_3;
+	Conv_3.location = f3(910.0f, 12.5f, 330.0f);
+	Conv_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_3.type = Factory_tool2;
+
+	Object Conv_4;
+	Conv_4.location = f3(910.0f, 12.5f, 345.0f);
+	Conv_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_4.type = Factory_tool2;
+
+	Object Conv_5;
+	Conv_5.location = f3(910.0f, 12.5f, 360.0f);
+	Conv_5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_5.type = Factory_tool2;
+
+	Object Conv_6;
+	Conv_6.location = f3(910.0f, 12.5f, 375.0f);
+	Conv_6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_6.type = Factory_tool2;
+
+	Object Conv_7;
+	Conv_7.location = f3(910.0f, 12.5f, 390.0f);
+	Conv_7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_7.type = Factory_tool2;
+
+	Object Conv_8;
+	Conv_8.location = f3(910.0f, 12.5f, 405.0f);
+	Conv_8.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_8.type = Factory_tool2;
+
+	Object Conv_9;
+	Conv_9.location = f3(910.0f, 12.5f, 420.0f);
+	Conv_9.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_9.type = Factory_tool2;
+
+	Object Conv_10;
+	Conv_10.location = f3(910.0f, 12.5f, 435.0f);
+	Conv_10.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_10.type = Factory_tool2;
+
+	Object Conv_11;
+	Conv_11.location = f3(910.0f, 12.5f, 450.0f);
+	Conv_11.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_11.type = Factory_tool2;
+
+	Object Conv_12;
+	Conv_12.location = f3(1020.0f, 12.5f, 300.0f);
+	Conv_12.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_12.type = Factory_tool2;
+
+	Object Conv_13;
+	Conv_13.location = f3(1020.0f, 12.5f, 315.0f);
+	Conv_13.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_13.type = Factory_tool2;
+
+	Object Conv_14;
+	Conv_14.location = f3(1020.0f, 12.5f, 330.0f);
+	Conv_14.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_14.type = Factory_tool2;
+
+	Object Conv_15;
+	Conv_15.location = f3(1020.0f, 12.5f, 345.0f);
+	Conv_15.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_15.type = Factory_tool2;
+
+	Object Conv_16;
+	Conv_16.location = f3(1020.0f, 12.5f, 360.0f);
+	Conv_16.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_16.type = Factory_tool2;
+
+	Object Conv_17;
+	Conv_17.location = f3(1020.0f, 12.5f, 375.0f);
+	Conv_17.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_17.type = Factory_tool2;
+
+	Object Conv_18;
+	Conv_18.location = f3(1020.0f, 12.5f, 390.0f);
+	Conv_18.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_18.type = Factory_tool2;
+
+	Object Conv_19;
+	Conv_19.location = f3(1020.0f, 12.5f, 405.0f);
+	Conv_19.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_19.type = Factory_tool2;
+
+	Object Conv_20;
+	Conv_20.location = f3(1020.0f, 12.5f, 420.0f);
+	Conv_20.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_20.type = Factory_tool2;
+
+	Object Conv_21;
+	Conv_21.location = f3(1020.0f, 12.5f, 435.0f);
+	Conv_21.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_21.type = Factory_tool2;
+
+	Object Conv_22;
+	Conv_22.location = f3(1020.0f, 12.5f, 450.0f);
+	Conv_22.rotation = f3(0.0f, 0.0f, 0.0f);
+	Conv_22.type = Factory_tool2;
+
+	Object Fact_1;
+	Fact_1.location = f3(40.0f, 5.0f, 450.0f);
+	Fact_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_1.type = Factory_tool1;
+
+	Object Fact_2;
+	Fact_2.location = f3(46.0f, 5.0f, 450.0f);
+	Fact_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_2.type = Factory_tool1;
+
+	Object Fact_3;
+	Fact_3.location = f3(52.0f, 5.0f, 450.0f);
+	Fact_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_3.type = Factory_tool1;
+
+	Object Fact_4;
+	Fact_4.location = f3(869.0f, 0.0f, 600.0f);
+	Fact_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_4.type = Factory_tool1;
+
+	Object Fact_5;
+	Fact_5.location = f3(869.0f, 0.0f, 594.0f);
+	Fact_5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_5.type = Factory_tool1;
+
+	Object Fact_6;
+	Fact_6.location = f3(869.0f, 0.0f, 588.0f);
+	Fact_6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_6.type = Factory_tool1;
+	
+	Object Fact_7;
+	Fact_7.location = f3(869.0f, 0.0f, 582.0f);
+	Fact_7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_7.type = Factory_tool1;
+	
+	Object Fact_8;
+	Fact_8.location = f3(869.0f, 0.0f, 576.0f);
+	Fact_8.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_8.type = Factory_tool1;
+
+	Object Fact_9;
+	Fact_9.location = f3(869.0f, 0.0f, 570.0f);
+	Fact_9.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_9.type = Factory_tool1;
+
+	Object Fact_10;
+	Fact_10.location = f3(869.0f, 0.0f, 564.0f);
+	Fact_10.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_10.type = Factory_tool1;
+
+	Object Fact_11;
+	Fact_11.location = f3(869.0f, 0.0f, 558.0f);
+	Fact_11.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_11.type = Factory_tool1;
+
+	Object Fact_12;
+	Fact_12.location = f3(869.0f, 0.0f, 552.0f);
+	Fact_12.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_12.type = Factory_tool1;
+
+	Object Fact_13;
+	Fact_13.location = f3(869.0f, 0.0f, 546.0f);
+	Fact_13.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_13.type = Factory_tool1;
+
+	Object Fact_14;
+	Fact_14.location = f3(869.0f, 0.0f, 540.0f);
+	Fact_14.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_14.type = Factory_tool1;
+
+	Object Fact_15;
+	Fact_15.location = f3(869.0f, 2.0f, 600.0f);
+	Fact_15.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_15.type = Factory_tool1;
+
+	Object Fact_16;
+	Fact_16.location = f3(869.0f, 2.0f, 594.0f);
+	Fact_16.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_16.type = Factory_tool1;
+
+	Object Fact_17;
+	Fact_17.location = f3(869.0f, 2.0f, 588.0f);
+	Fact_17.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_17.type = Factory_tool1;
+
+	Object Fact_18;
+	Fact_18.location = f3(869.0f, 2.0f, 582.0f);
+	Fact_18.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_18.type = Factory_tool1;
+
+	Object Fact_19;
+	Fact_19.location = f3(869.0f, 2.0f, 576.0f);
+	Fact_19.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_19.type = Factory_tool1;
+
+	Object Fact_20;
+	Fact_20.location = f3(869.0f, 2.0f, 570.0f);
+	Fact_20.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_20.type = Factory_tool1;
+
+	Object Fact_21;
+	Fact_21.location = f3(869.0f, 2.0f, 564.0f);
+	Fact_21.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_21.type = Factory_tool1;
+
+	Object Fact_22;
+	Fact_22.location = f3(869.0f, 2.0f, 558.0f);
+	Fact_22.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_22.type = Factory_tool1;
+	
+	Object Fact_23;
+	Fact_23.location = f3(869.0f, 2.0f, 552.0f);
+	Fact_23.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_23.type = Factory_tool1;
+
+	Object Fact_24;
+	Fact_24.location = f3(869.0f, 2.0f, 546.0f);
+	Fact_24.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_24.type = Factory_tool1;
+
+	Object Fact_25;
+	Fact_25.location = f3(869.0f, 2.0f, 540.0f);
+	Fact_25.rotation = f3(0.0f, 0.0f, 0.0f);
+	Fact_25.type = Factory_tool1;
+
+////////////////////////////////////////////
 
 	Object B_doorlock3;
 	B_doorlock3.location = f3(1399.0f, 2.5f, 560.0f);
@@ -1344,6 +2056,36 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 
+	Object GyoDan;
+	GyoDan.location = f3(387.5f, 2.5f, 440.0f);
+	GyoDan.rotation = f3(0.0f, 0.0f, 0.0f);
+	GyoDan.type = GyeDans1;
+
+	Object GyoDan2;
+	GyoDan2.location = f3(360.0f, 2.5f, 340.0f);
+	GyoDan2.rotation = f3(0.0f, 0.0f, 0.0f);
+	GyoDan2.type = GyeDans2;
+
+	Object R_stair1;
+	R_stair1.location = f3(940.0f, 6.25f, 262.5f);
+	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair1.type = R_GyeDan1;
+
+	Object R_stair2;
+	R_stair2.location = f3(1080.0f, 6.25f, 262.5f);
+	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair2.type = R_GyeDan1;
+
+	Object R_stair3;
+	R_stair3.location = f3(50.0f, 6.25f, 387.5f);
+	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
+	R_stair3.type = R_GyeDan1;
+
+	list.push_back(GyoDan);
+	list.push_back(GyoDan2);
+	list.push_back(R_stair1);
+	list.push_back(R_stair2);
+	list.push_back(R_stair3);
 
 	list.push_back(B_doorlock3);
 	list.push_back(H_heater1);
@@ -1369,7 +2111,740 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(BoBox);
 
 
+	list.push_back(Fact_1);
+	list.push_back(Fact_2);
+	list.push_back(Fact_3);
+	list.push_back(Fact_4);
+	list.push_back(Fact_5);
+	list.push_back(Fact_6);
+	list.push_back(Fact_7);
+	list.push_back(Fact_8);
+	list.push_back(Fact_9);
+	list.push_back(Fact_10);
+	list.push_back(Fact_11);
+	list.push_back(Fact_12);
+	list.push_back(Fact_13);
+	list.push_back(Fact_14);
+	list.push_back(Fact_15);
+	list.push_back(Fact_16);
+	list.push_back(Fact_17);
+	list.push_back(Fact_18);
+	list.push_back(Fact_19);
+	list.push_back(Fact_20);
+	list.push_back(Fact_21);
+	list.push_back(Fact_22);
+	list.push_back(Fact_23);
+	list.push_back(Fact_24);
+	list.push_back(Fact_25);
+	list.push_back(Conv_1);
+	list.push_back(Conv_2);
+	list.push_back(Conv_3);
+	list.push_back(Conv_4);
+	list.push_back(Conv_5);
+	list.push_back(Conv_6);
+	list.push_back(Conv_7);
+	list.push_back(Conv_8);
+	list.push_back(Conv_9);
+	list.push_back(Conv_10);
+	list.push_back(Conv_11);
+	list.push_back(Conv_12);
+	list.push_back(Conv_13);
+	list.push_back(Conv_14);
+	list.push_back(Conv_15);
+	list.push_back(Conv_16);
+	list.push_back(Conv_17);
+	list.push_back(Conv_18);
+	list.push_back(Conv_19);
+	list.push_back(Conv_20);
+	list.push_back(Conv_21);
+	list.push_back(Conv_22);
+	list.push_back(Pbox1);
+	list.push_back(Pbox2);
+	list.push_back(Pbox3);
+	list.push_back(Pbox4);
+	list.push_back(Pbox5);
+	list.push_back(Pbox6);
+	list.push_back(Pbox7);
+	list.push_back(Pbox8);
+	list.push_back(Pbox9);
+	list.push_back(Pbox10);
+	list.push_back(Pbox11);
+	list.push_back(Pbox12);
+	list.push_back(Pbox13);
+	list.push_back(Pbox14);
+	list.push_back(Pbox15);
+	list.push_back(Pbox16);
+	list.push_back(Pbox17);
+	list.push_back(Pbox18);
+	list.push_back(Pbox19);
+	list.push_back(Pbox20);
+	list.push_back(Pbox21);
+	list.push_back(Pbox22);
+	list.push_back(Engine1);
+	list.push_back(Engine2);
+	list.push_back(Engine3);
+	list.push_back(Engine4);
+	list.push_back(Engine5);
+	list.push_back(Engine6);
+	list.push_back(Engine7);
+
+
+	BoundingBox Cov_tim1[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim1[i].start = f3(1220.0f + (5.0f * i), 0.0f, 30.0f);
+		Cov_tim1[i].end = f3(1225.0f + (5.0f * i), 5.0f, 35.0f);
+		blist.push_back(Cov_tim1[i]);
+	}
+
+	BoundingBox Cov_tim2[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim2[i].start = f3(1220.0f + (5.0f * i), 0.0f, 39.0f);
+		Cov_tim2[i].end = f3(1225.0f + (5.0f * i), 5.0f, 44.0f);
+		blist.push_back(Cov_tim2[i]);
+	}
+
+	BoundingBox Cov_tim3[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim3[i].start = f3(1220.0f + (5.0f * i), 0.0f, 48.0f);
+		Cov_tim3[i].end = f3(1225.0f + (5.0f * i), 5.0f, 53.0f);
+		blist.push_back(Cov_tim3[i]);
+	}
+
+	BoundingBox Cov_tim4[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim4[i].start = f3(1220.0f + (5.0f * i), 0.0f, 57.0f);
+		Cov_tim4[i].end = f3(1225.0f + (5.0f * i), 5.0f, 62.0f);
+		blist.push_back(Cov_tim4[i]);
+	}
+
+	BoundingBox Cov_tim5[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim5[i].start = f3(1220.0f + (5.0f * i), 0.0f, 66.0f);
+		Cov_tim5[i].end = f3(1225.0f + (5.0f * i), 5.0f, 71.0f);
+		blist.push_back(Cov_tim5[i]);
+	}
+
+	BoundingBox Cov_tim6[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim6[i].start = f3(1220.0f + (5.0f * i), 0.0f, 75.0f);
+		Cov_tim6[i].end = f3(1225.0f + (5.0f * i), 5.0f, 80.0f);
+		blist.push_back(Cov_tim6[i]);
+	}
+
+	BoundingBox Cov_tim7[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim7[i].start = f3(1220.0f + (5.0f * i), 0.0f, 84.0f);
+		Cov_tim7[i].end = f3(1225.0f + (5.0f * i), 5.0f, 89.0f);
+		blist.push_back(Cov_tim7[i]);
+	}
+
+	BoundingBox Cov_tim8[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim8[i].start = f3(1220.0f + (5.0f * i), 0.0f, 93.0f);
+		Cov_tim8[i].end = f3(1225.0f + (5.0f * i), 5.0f, 98.0f);
+		blist.push_back(Cov_tim8[i]);
+	}
+
+	BoundingBox Cov_tim9[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim9[i].start = f3(1220.0f + (5.0f * i), 0.0f, 102.0f);
+		Cov_tim9[i].end = f3(1225.0f + (5.0f * i), 5.0f, 107.0f);
+		blist.push_back(Cov_tim9[i]);
+	}
+
+	BoundingBox Cov_tim10[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_tim10[i].start = f3(1220.0f + (5.0f * i), 0.0f, 111.0f);
+		Cov_tim10[i].end = f3(1225.0f + (5.0f * i), 5.0f, 116.0f);
+		blist.push_back(Cov_tim10[i]);
+	}
+
+
+
+
+
+	BoundingBox Cov_jim1[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim1[i].start = f3(1220.0f + (5.0f * i), 0.0f, 545.0f);
+		Cov_jim1[i].end = f3(1225.0f + (5.0f * i), 5.0f, 550.0f);
+		blist.push_back(Cov_jim1[i]);
+	}
+
+	BoundingBox Cov_jim2[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim2[i].start = f3(1220.0f + (5.0f * i), 0.0f, 550.0f);
+		Cov_jim2[i].end = f3(1225.0f + (5.0f * i), 5.0f, 555.0f);
+		blist.push_back(Cov_jim2[i]);
+	}
+
+	BoundingBox Cov_jim3[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim3[i].start = f3(1220.0f + (5.0f * i), 0.0f, 555.0f);
+		Cov_jim3[i].end = f3(1225.0f + (5.0f * i), 5.0f, 560.0f);
+		blist.push_back(Cov_jim3[i]);
+	}
+
+	BoundingBox Cov_jim4[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim4[i].start = f3(1220.0f + (5.0f * i), 0.0f, 560.0f);
+		Cov_jim4[i].end = f3(1225.0f + (5.0f * i), 5.0f, 565.0f);
+		blist.push_back(Cov_jim4[i]);
+	}
+
+	BoundingBox Cov_jim5[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim5[i].start = f3(1220.0f + (5.0f * i), 0.0f, 565.0f);
+		Cov_jim5[i].end = f3(1225.0f + (5.0f * i), 5.0f, 570.0f);
+		blist.push_back(Cov_jim5[i]);
+	}
+
+	BoundingBox Cov_jim6[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim6[i].start = f3(1220.0f + (5.0f * i), 0.0f, 570.0f);
+		Cov_jim6[i].end = f3(1225.0f + (5.0f * i), 5.0f, 575.0f);
+		blist.push_back(Cov_jim6[i]);
+	}
+
+	BoundingBox Cov_jim7[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim7[i].start = f3(1220.0f + (5.0f * i), 0.0f, 480.0f);
+		Cov_jim7[i].end = f3(1225.0f + (5.0f * i), 5.0f, 485.0f);
+		blist.push_back(Cov_jim7[i]);
+	}
+
+	BoundingBox Cov_jim8[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim8[i].start = f3(1220.0f + (5.0f * i), 0.0f, 485.0f);
+		Cov_jim8[i].end = f3(1225.0f + (5.0f * i), 5.0f, 490.0f);
+		blist.push_back(Cov_jim8[i]);
+	}
+
+	BoundingBox Cov_jim9[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim9[i].start = f3(1220.0f + (5.0f * i), 0.0f, 490.0f);
+		Cov_jim9[i].end = f3(1225.0f + (5.0f * i), 5.0f, 495.0f);
+		blist.push_back(Cov_jim9[i]);
+	}
+
+	BoundingBox Cov_jim10[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim10[i].start = f3(1220.0f + (5.0f * i), 0.0f, 495.0f);
+		Cov_jim10[i].end = f3(1225.0f + (5.0f * i), 5.0f, 500.0f);
+		blist.push_back(Cov_jim10[i]);
+	}
+
+	BoundingBox Cov_jim11[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim11[i].start = f3(1220.0f + (5.0f * i), 0.0f, 500.0f);
+		Cov_jim11[i].end = f3(1225.0f + (5.0f * i), 5.0f, 505.0f);
+		blist.push_back(Cov_jim11[i]);
+	}
+
+	BoundingBox Cov_jim12[20];
+	for (int i = 0; i < 20; ++i)
+	{
+		Cov_jim12[i].start = f3(1220.0f + (5.0f * i), 0.0f, 505.0f);
+		Cov_jim12[i].end = f3(1225.0f + (5.0f * i), 5.0f, 510.0f);
+		blist.push_back(Cov_jim12[i]);
+	}
 	
+
+	BoundingBox Dom1[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom1[i].start = f3(420.0f + (5.0f * i), 0.0f, 560.0f);
+		Dom1[i].end = f3(425.0f + (5.0f * i), 5.0f, 565.0f);
+		blist.push_back(Dom1[i]);
+	}
+
+	BoundingBox Dom2[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom2[i].start = f3(420.0f + (5.0f * i), 0.0f, 565.0f);
+		Dom2[i].end = f3(425.0f + (5.0f * i), 5.0f, 570.0f);
+		blist.push_back(Dom2[i]);
+	}
+
+	BoundingBox Dom3[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom3[i].start = f3(450.0f + (5.0f * i), 0.0f, 560.0f);
+		Dom3[i].end = f3(455.0f + (5.0f * i), 5.0f, 565.0f);
+		blist.push_back(Dom3[i]);
+	}
+
+	BoundingBox Dom4[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom4[i].start = f3(450.0f + (5.0f * i), 0.0f, 565.0f);
+		Dom4[i].end = f3(455.0f + (5.0f * i), 5.0f, 570.0f);
+		blist.push_back(Dom4[i]);
+	}
+
+	BoundingBox Dom5[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom5[i].start = f3(420.0f + (5.0f * i), 0.0f, 530.0f);
+		Dom5[i].end = f3(425.0f + (5.0f * i), 5.0f, 535.0f);
+		blist.push_back(Dom5[i]);
+	}
+
+	BoundingBox Dom6[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom6[i].start = f3(420.0f + (5.0f * i), 0.0f, 535.0f);
+		Dom6[i].end = f3(425.0f + (5.0f * i), 5.0f, 540.0f);
+		blist.push_back(Dom6[i]);
+	}
+
+	BoundingBox Dom7[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom7[i].start = f3(450.0f + (5.0f * i), 0.0f, 530.0f);
+		Dom7[i].end = f3(455.0f + (5.0f * i), 5.0f, 535.0f);
+		blist.push_back(Dom7[i]);
+	}
+
+	BoundingBox Dom8[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom8[i].start = f3(450.0f + (5.0f * i), 0.0f, 535.0f);
+		Dom8[i].end = f3(455.0f + (5.0f * i), 5.0f, 540.0f);
+		blist.push_back(Dom8[i]);
+	}
+
+
+
+	BoundingBox Dom9[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom9[i].start = f3(480.0f + (5.0f * i), 0.0f, 560.0f);
+		Dom9[i].end = f3(485.0f + (5.0f * i), 5.0f, 565.0f);
+		blist.push_back(Dom9[i]);
+	}
+
+	BoundingBox Dom10[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom10[i].start = f3(480.0f + (5.0f * i), 0.0f, 565.0f);
+		Dom10[i].end = f3(485.0f + (5.0f * i), 5.0f, 570.0f);
+		blist.push_back(Dom10[i]);
+	}
+
+	BoundingBox Dom11[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom11[i].start = f3(510.0f + (5.0f * i), 0.0f, 560.0f);
+		Dom11[i].end = f3(515.0f + (5.0f * i), 5.0f, 565.0f);
+		blist.push_back(Dom11[i]);
+	}
+
+	BoundingBox Dom12[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom12[i].start = f3(510.0f + (5.0f * i), 0.0f, 565.0f);
+		Dom12[i].end = f3(515.0f + (5.0f * i), 5.0f, 570.0f);
+		blist.push_back(Dom12[i]);
+	}
+
+	BoundingBox Dom13[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom13[i].start = f3(480.0f + (5.0f * i), 0.0f, 530.0f);
+		Dom13[i].end = f3(485.0f + (5.0f * i), 5.0f, 535.0f);
+		blist.push_back(Dom13[i]);
+	}
+
+	BoundingBox Dom14[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom14[i].start = f3(480.0f + (5.0f * i), 0.0f, 535.0f);
+		Dom14[i].end = f3(485.0f + (5.0f * i), 5.0f, 540.0f);
+		blist.push_back(Dom14[i]);
+	}
+
+	BoundingBox Dom15[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom15[i].start = f3(510.0f + (5.0f * i), 0.0f, 530.0f);
+		Dom15[i].end = f3(515.0f + (5.0f * i), 5.0f, 535.0f);
+		blist.push_back(Dom15[i]);
+	}
+
+	BoundingBox Dom16[2];
+
+	for (int i = 0; i < 2; ++i)
+	{
+		Dom16[i].start = f3(510.0f + (5.0f * i), 0.0f, 535.0f);
+		Dom16[i].end = f3(515.0f + (5.0f * i), 5.0f, 540.0f);
+		blist.push_back(Dom16[i]);
+	}
+
+
+	BoundingBox Edi[20];
+
+	for (int i = 0; i < 20; ++i)
+	{
+		Edi[i].start = f3(250.0f+(5.0f*i), 0.0f, 2.5f);
+		Edi[i].end = f3(255.0f+(5.0f*i), 5.0f, 12.5f);
+
+		blist.push_back(Edi[i]);
+	}
+
+	BoundingBox binet1[30];
+
+	for (int i = 0; i < 30; ++i)
+	{
+		binet1[i].start = f3(401.5f, 0.0f, 300.0f + (3.0f * i));
+		binet1[i].end = f3(404.5f, 7.0f, 303.0f + (3.0f * i));
+
+		blist.push_back(binet1[i]);
+	}
+
+	BoundingBox Egin1;
+	Egin1.start = f3(802.0f, 0.0f, 375.0f);
+	Egin1.end = f3(812.0f, 6.0f, 385.0f);
+
+	BoundingBox Egin2;
+	Egin2.start = f3(802.0f, 0.0f, 400.0f);
+	Egin2.end = f3(812.0f, 6.0f, 410.0f);
+
+	BoundingBox Egin3;
+	Egin3.start = f3(802.0f, 0.0f, 425.0f);
+	Egin3.end = f3(812.0f, 6.0f, 435.0f);
+
+	BoundingBox Egin4;
+	Egin4.start = f3(802.0f, 0.0f, 450.0f);
+	Egin4.end = f3(812.0f, 6.0f, 460.0f);
+
+	BoundingBox Egin5;
+	Egin5.start = f3(802.0f, 0.0f, 475.0f);
+	Egin5.end = f3(812.0f, 6.0f, 485.0f);
+
+	BoundingBox Egin6;
+	Egin6.start = f3(802.0f, 0.0f, 500.0f);
+	Egin6.end = f3(812.0f, 6.0f, 510.0f);
+
+	BoundingBox Egin7;
+	Egin7.start = f3(802.0f, 0.0f, 525.0f);
+	Egin7.end = f3(812.0f, 6.0f, 535.0f);
+
+
+
+	BoundingBox Pox1;
+	Pox1.start = f3(1000.0f, 12.5f, 500.0f);
+	Pox1.end = f3(1003.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox2;
+	Pox2.start = f3(1003.0f, 12.5f, 500.0f);
+	Pox2.end = f3(1006.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox3;
+	Pox3.start = f3(1006.0f, 12.5f, 500.0f);
+	Pox3.end = f3(1009.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox4;
+	Pox4.start = f3(1009.0f, 12.5f, 500.0f);
+	Pox4.end = f3(1012.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox5;
+	Pox5.start = f3(1012.0f, 12.5f, 500.0f);
+	Pox5.end = f3(1015.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox6;
+	Pox6.start = f3(1015.0f, 12.5f, 500.0f);
+	Pox6.end = f3(1018.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox7;
+	Pox7.start = f3(1018.0f, 12.5f, 500.0f);
+	Pox7.end = f3(1021.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox8;
+	Pox8.start = f3(1021.0f, 12.5f, 500.0f);
+	Pox8.end = f3(1024.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox9;
+	Pox9.start = f3(1024.0f, 12.5f, 500.0f);
+	Pox9.end = f3(1027.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox10;
+	Pox10.start = f3(1027.0f, 12.5f, 500.0f);
+	Pox10.end = f3(1030.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox11;
+	Pox11.start = f3(1030.0f, 12.5f, 500.0f);
+	Pox11.end = f3(1033.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox12;
+	Pox12.start = f3(1060.0f, 12.5f, 500.0f);
+	Pox12.end = f3(1063.0f, 15.5f, 503.0f);
+	
+	BoundingBox Pox13;
+	Pox13.start = f3(1063.0f, 12.5f, 500.0f);
+	Pox13.end = f3(1066.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox14;
+	Pox14.start = f3(1066.0f, 12.5f, 500.0f);
+	Pox14.end = f3(1069.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox15;
+	Pox15.start = f3(1069.0f, 12.5f, 500.0f);
+	Pox15.end = f3(1072.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox16;
+	Pox16.start = f3(1072.0f, 12.5f, 500.0f);
+	Pox16.end = f3(1075.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox17;
+	Pox17.start = f3(1075.0f, 12.5f, 500.0f);
+	Pox17.end = f3(1078.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox18;
+	Pox18.start = f3(1078.0f, 12.5f, 500.0f);
+	Pox18.end = f3(1081.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox19;
+	Pox19.start = f3(1081.0f, 12.5f, 500.0f);
+	Pox19.end = f3(1084.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox20;
+	Pox20.start = f3(1084.0f, 12.5f, 500.0f);
+	Pox20.end = f3(1087.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox21;
+	Pox21.start = f3(1087.0f, 12.5f, 500.0f);
+	Pox21.end = f3(1090.0f, 15.5f, 503.0f);
+
+	BoundingBox Pox22;
+	Pox22.start = f3(1090.0f, 12.5f, 500.0f);
+	Pox22.end = f3(1093.0f, 15.5f, 503.0f);
+	
+	BoundingBox Coned_1;
+	Coned_1.start = f3(910.0f, 12.5f, 300.0f);
+	Coned_1.end = f3(1000.0f, 14.5f, 307.0f);
+
+	BoundingBox Coned_2;
+	Coned_2.start = f3(910.0f, 12.5f, 315.0f);
+	Coned_2.end = f3(1000.0f, 14.5f, 322.0f);
+	
+	BoundingBox Coned_3;
+	Coned_3.start = f3(910.0f, 12.5f, 330.0f);
+	Coned_3.end = f3(1000.0f, 14.5f, 337.0f);
+
+	BoundingBox Coned_4;
+	Coned_4.start = f3(910.0f, 12.5f, 345.0f);
+	Coned_4.end = f3(1000.0f, 14.5f, 352.0f);
+
+	BoundingBox Coned_5;
+	Coned_5.start = f3(910.0f, 12.5f, 360.0f);
+	Coned_5.end = f3(1000.0f, 14.5f, 367.0f);
+
+	BoundingBox Coned_6;
+	Coned_6.start = f3(910.0f, 12.5f, 375.0f);
+	Coned_6.end = f3(1000.0f, 14.5f, 382.0f);
+
+	BoundingBox Coned_7;
+	Coned_7.start = f3(910.0f, 12.5f, 390.0f);
+	Coned_7.end = f3(1000.0f, 14.5f, 397.0f);
+
+	BoundingBox Coned_8;
+	Coned_8.start = f3(910.0f, 12.5f, 405.0f);
+	Coned_8.end = f3(1000.0f, 14.5f, 412.0f);
+
+	BoundingBox Coned_9;
+	Coned_9.start = f3(910.0f, 12.5f, 420.0f);
+	Coned_9.end = f3(1000.0f, 14.5f, 427.0f);
+
+	BoundingBox Coned_10;
+	Coned_10.start = f3(910.0f, 12.5f, 435.0f);
+	Coned_10.end = f3(1000.0f, 14.5f, 442.0f);
+
+	BoundingBox Coned_11;
+	Coned_11.start = f3(910.0f, 12.5f, 450.0f);
+	Coned_11.end = f3(1000.0f, 14.5f, 457.0f);
+
+	BoundingBox Coned_12;
+	Coned_12.start = f3(1020.0f, 12.5f, 300.0f);
+	Coned_12.end = f3(1110.0f, 14.5f, 307.0f);
+
+	BoundingBox Coned_13;
+	Coned_13.start = f3(1020.0f, 12.5f, 315.0f);
+	Coned_13.end = f3(1110.0f, 14.5f, 322.0f);
+
+	BoundingBox Coned_14;
+	Coned_14.start = f3(1020.0f, 12.5f, 330.0f);
+	Coned_14.end = f3(1110.0f, 14.5f, 337.0f);
+	
+	BoundingBox Coned_15;
+	Coned_15.start = f3(1020.0f, 12.5f, 345.0f);
+	Coned_15.end = f3(1110.0f, 14.5f, 352.0f);
+
+	BoundingBox Coned_16;
+	Coned_16.start = f3(1020.0f, 12.5f, 360.0f);
+	Coned_16.end = f3(1110.0f, 14.5f, 367.0f);
+
+	BoundingBox Coned_17;
+	Coned_17.start = f3(1020.0f, 12.5f, 375.0f);
+	Coned_17.end = f3(1110.0f, 14.5f, 382.0f);
+
+	BoundingBox Coned_18;
+	Coned_18.start = f3(1020.0f, 12.5f, 390.0f);
+	Coned_18.end = f3(1110.0f, 14.5f, 397.0f);
+
+	BoundingBox Coned_19;
+	Coned_19.start = f3(1020.0f, 12.5f, 405.0f);
+	Coned_19.end = f3(1110.0f, 14.5f, 412.0f);
+
+	BoundingBox Coned_20;
+	Coned_20.start = f3(1020.0f, 12.5f, 420.0f);
+	Coned_20.end = f3(1110.0f, 14.5f, 427.0f);
+
+	BoundingBox Coned_21;
+	Coned_21.start = f3(1020.0f, 12.5f, 435.0f);
+	Coned_21.end = f3(1110.0f, 14.5f, 442.0f);
+
+	BoundingBox Coned_22;
+	Coned_22.start = f3(1020.0f, 12.5f, 450.0f);
+	Coned_22.end = f3(1110.0f, 14.5f, 457.0f);
+
+	BoundingBox Fa_1;
+	Fa_1.start = f3(40.0f, 5.0f, 450.0f);
+	Fa_1.end = f3(46.0f, 8.0f, 456.0f);
+
+	BoundingBox Fa_2;
+	Fa_2.start = f3(46.0f, 5.0f, 450.0f);
+	Fa_2.end = f3(52.0f, 8.0f, 456.0f);
+
+	BoundingBox Fa_3;
+	Fa_3.start = f3(52.0f, 5.0f, 450.0f);
+	Fa_3.end = f3(58.0f, 8.0f, 456.0f);
+
+	BoundingBox Fa_4;
+	Fa_4.start = f3(869.0f, 0.0f, 594.0f);
+	Fa_4.end = f3(875.0f, 3.0f, 600.0f);
+
+	BoundingBox Fa_5;
+	Fa_5.start = f3(869.0f, 0.0f, 588.0f);
+	Fa_5.end = f3(875.0f, 3.0f, 594.0f);
+
+	BoundingBox Fa_6;
+	Fa_6.start = f3(869.0f, 0.0f, 582.0f);
+	Fa_6.end = f3(875.0f, 3.0f, 588.0f);
+	
+	BoundingBox Fa_7;
+	Fa_7.start = f3(869.0f, 0.0f, 576.0f);
+	Fa_7.end = f3(875.0f, 3.0f, 582.0f);
+
+	BoundingBox Fa_8;
+	Fa_8.start = f3(869.0f, 0.0f, 570.0f);
+	Fa_8.end = f3(875.0f, 3.0f, 576.0f);
+	
+	BoundingBox Fa_9;
+	Fa_9.start = f3(869.0f, 0.0f, 564.0f);
+	Fa_9.end = f3(875.0f, 3.0f, 570.0f);
+
+	BoundingBox Fa_10;
+	Fa_10.start = f3(869.0f, 0.0f, 558.0f);
+	Fa_10.end = f3(875.0f, 3.0f, 564.0f);
+
+	BoundingBox Fa_11;
+	Fa_11.start = f3(869.0f, 0.0f, 552.0f);
+	Fa_11.end = f3(875.0f, 3.0f, 558.0f);
+
+	BoundingBox Fa_12;
+	Fa_12.start = f3(869.0f, 0.0f, 546.0f);
+	Fa_12.end = f3(875.0f, 3.0f, 552.0f);
+
+	BoundingBox Fa_13;
+	Fa_13.start = f3(869.0f, 0.0f, 540.0f);
+	Fa_13.end = f3(875.0f, 3.0f, 546.0f);
+	
+	BoundingBox Fa_14;
+	Fa_14.start = f3(869.0f, 0.0f, 534.0f);
+	Fa_14.end = f3(875.0f, 3.0f, 540.0f);
+
+	BoundingBox Fa_15;
+	Fa_15.start = f3(869.0f, 2.0f, 594.0f);
+	Fa_15.end = f3(875.0f, 5.0f, 600.0f);
+
+	BoundingBox Fa_16;
+	Fa_16.start = f3(869.0f, 2.0f, 588.0f);
+	Fa_16.end = f3(875.0f, 5.0f, 594.0f);
+
+	BoundingBox Fa_17;
+	Fa_17.start = f3(869.0f, 2.0f, 582.0f);
+	Fa_17.end = f3(875.0f, 5.0f, 588.0f);
+
+	BoundingBox Fa_18;
+	Fa_18.start = f3(869.0f, 2.0f, 576.0f);
+	Fa_18.end = f3(875.0f, 5.0f, 582.0f);
+
+	BoundingBox Fa_19;
+	Fa_19.start = f3(869.0f, 2.0f, 570.0f);
+	Fa_19.end = f3(875.0f, 5.0f, 576.0f);
+
+	BoundingBox Fa_20;
+	Fa_20.start = f3(869.0f, 2.0f, 564.0f);
+	Fa_20.end = f3(875.0f, 5.0f, 570.0f);
+
+	BoundingBox Fa_21;
+	Fa_21.start = f3(869.0f, 2.0f, 558.0f);
+	Fa_21.end = f3(875.0f, 5.0f, 564.0f);
+
+	BoundingBox Fa_22;
+	Fa_22.start = f3(869.0f, 2.0f, 552.0f);
+	Fa_22.end = f3(875.0f, 5.0f, 558.0f);
+
+	BoundingBox Fa_23;
+	Fa_23.start = f3(869.0f, 2.0f, 546.0f);
+	Fa_23.end = f3(875.0f, 5.0f, 552.0f);
+
+	BoundingBox Fa_24;
+	Fa_24.start = f3(869.0f, 2.0f, 540.0f);
+	Fa_24.end = f3(875.0f, 5.0f, 546.0f);
+
+	BoundingBox Fa_25;
+	Fa_25.start = f3(869.0f, 2.0f, 534.0f);
+	Fa_25.end = f3(875.0f, 5.0f, 540.0f);
+
+
+	///////////////////////////////
 
 	BoundingBox B_lock3;
 	B_lock3.start = f3(1398.0f, 0.0f, 550.0f);
@@ -1455,11 +2930,34 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Hiter20.start = f3(250.0f, 0.0f, 490.0f);
 	Hiter20.end = f3(260.0f, 5.0f, 500.0f);
 
+	BoundingBox GyoDa1;
+	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
+	GyoDa1.end = f3(395.0f, 5.0f, 431.0f);
+
+	BoundingBox GyoDa2;
+	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
+	GyoDa2.end = f3(367.5f, 5.0f, 331.0f);
+
+	BoundingBox R_sta1;
+	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
+	R_sta1.end = f3(990.0f, 12.5f, 251.0f);
+
+	BoundingBox R_sta2;
+	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
+	R_sta2.end = f3(1130.0f, 12.5f, 251.0f);
+
+	BoundingBox R_sta3;
+	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
+	R_sta3.end = f3(100.0f, 12.5f, 376.0f);
 
 
 
 
-
+	blist.push_back(GyoDa1);
+	blist.push_back(GyoDa2);
+	blist.push_back(R_sta1);
+	blist.push_back(R_sta2);
+	blist.push_back(R_sta3);
 	blist.push_back(B_lock3);
 	blist.push_back(Hiter1);
 	blist.push_back(Hiter2);
@@ -1481,6 +2979,84 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Hiter18);
 	blist.push_back(Hiter19);
 	blist.push_back(Hiter20);
+
+	blist.push_back(Fa_1);
+	blist.push_back(Fa_2);
+	blist.push_back(Fa_3);
+	blist.push_back(Fa_4);
+	blist.push_back(Fa_5);
+	blist.push_back(Fa_6);
+	blist.push_back(Fa_7);
+	blist.push_back(Fa_8);
+	blist.push_back(Fa_9);
+	blist.push_back(Fa_10);
+	blist.push_back(Fa_11);
+	blist.push_back(Fa_12);
+	blist.push_back(Fa_13);
+	blist.push_back(Fa_14);
+	blist.push_back(Fa_15);
+	blist.push_back(Fa_16);
+	blist.push_back(Fa_17);
+	blist.push_back(Fa_18);
+	blist.push_back(Fa_19);
+	blist.push_back(Fa_20);
+	blist.push_back(Fa_21);
+	blist.push_back(Fa_22);
+	blist.push_back(Fa_23);
+	blist.push_back(Fa_24);
+	blist.push_back(Fa_25);
+	blist.push_back(Coned_1);
+	blist.push_back(Coned_2);
+	blist.push_back(Coned_3);
+	blist.push_back(Coned_4);
+	blist.push_back(Coned_5);
+	blist.push_back(Coned_6);
+	blist.push_back(Coned_7);
+	blist.push_back(Coned_8);
+	blist.push_back(Coned_9);
+	blist.push_back(Coned_10);
+	blist.push_back(Coned_11);
+	blist.push_back(Coned_12);
+	blist.push_back(Coned_13);
+	blist.push_back(Coned_14);
+	blist.push_back(Coned_15);
+	blist.push_back(Coned_16);
+	blist.push_back(Coned_17);
+	blist.push_back(Coned_18);
+	blist.push_back(Coned_19);
+	blist.push_back(Coned_20);
+	blist.push_back(Coned_21);
+	blist.push_back(Coned_22);
+	blist.push_back(Pox1);
+	blist.push_back(Pox2);
+	blist.push_back(Pox3);
+	blist.push_back(Pox4);
+	blist.push_back(Pox5);
+	blist.push_back(Pox6);
+	blist.push_back(Pox7);
+	blist.push_back(Pox8);
+	blist.push_back(Pox9);
+	blist.push_back(Pox10);
+	blist.push_back(Pox11);
+	blist.push_back(Pox12);
+	blist.push_back(Pox13);
+	blist.push_back(Pox14);
+	blist.push_back(Pox15);
+	blist.push_back(Pox16);
+	blist.push_back(Pox17);
+	blist.push_back(Pox18);
+	blist.push_back(Pox19);
+	blist.push_back(Pox20);
+	blist.push_back(Pox21);
+	blist.push_back(Pox22);
+	blist.push_back(Egin1);
+	blist.push_back(Egin2);
+	blist.push_back(Egin3);
+	blist.push_back(Egin4);
+	blist.push_back(Egin5);
+	blist.push_back(Egin6);
+	blist.push_back(Egin7);
+
 
 
 	/*
