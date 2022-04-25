@@ -681,6 +681,15 @@ void CGameObject::SetChild(CGameObject *pChild, bool bReferenceUpdate)
 		m_pChild = pChild;
 	}
 }
+void CGameObject::setRoot(CGameObject* pChild, bool update)
+{
+	if (pChild)
+	{
+		pChild->m_pParent = this;
+		if (update) pChild->AddRef();
+	}
+	m_pChild = pChild;
+}
 
 void CGameObject::SetMesh(CMesh *pMesh)
 {

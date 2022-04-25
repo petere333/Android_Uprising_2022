@@ -55,6 +55,8 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateDepthStencilView();
 	CoInitialize(NULL);
 	
+	CSound::Init();
+
 	SetCursorPos(500, 500);
 
 	BuildObjects();
@@ -330,6 +332,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	CS_MOVE_PACKET m_packet;
 	m_packet.c_id = 1;
 	m_packet.isKey = true;
+	float spd = m_pScene->getSpeed(0);
+	m_packet.tx = m_pScene->getDirection(0).x * spd;
+	m_packet.ty = m_pScene->getDirection(0).y * spd;
+	m_packet.tz = m_pScene->getDirection(0).z * spd;
+
+
 	m_packet.size = sizeof(CS_MOVE_PACKET);
 	m_packet.type = PACKET_TYPE::CS_MOVE;
 	SendPacket(&m_packet);
@@ -362,8 +370,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			}
 			lastOrder = 0;
 			// 플레이어의 속도, 상태 설정
-			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-			m_pScene->setObjectState(0, MOVE_STATE);
+			
+			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+			{
+				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+				m_pScene->setObjectState(0, MOVE_STATE);
+			}
 		}
 		break;
 		case VK_DOWN:
@@ -381,8 +393,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
 			}
 			lastOrder = 1;
-			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-			m_pScene->setObjectState(0, MOVE_STATE);
+			
+			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+			{
+				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+				m_pScene->setObjectState(0, MOVE_STATE);
+			}
 		}
 		break;
 		case VK_LEFT:
@@ -400,8 +416,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
 			}
 			lastOrder = 2;
-			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-			m_pScene->setObjectState(0, MOVE_STATE);
+			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+			{
+				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+				m_pScene->setObjectState(0, MOVE_STATE);
+			}
 		}
 		break;
 		case VK_RIGHT:
@@ -419,8 +438,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
 			}
 			lastOrder = 3;
-			m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-			m_pScene->setObjectState(0, MOVE_STATE);
+			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+			{
+				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
+				m_pScene->setObjectState(0, MOVE_STATE);
+			}
 		}
 			break;
 		case VK_SPACE:
@@ -428,6 +450,31 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			// 플레이어에 대한 점프 명령
 			m_pScene->jumpObject(0);
 			break;
+		}
+		case '2':
+		{
+			PlayerState state = m_pScene->getPlayerState(0);
+
+
+			//원거리 공격하는 상태가 아닌 경우 총기든 모델 객체로 변경
+			if (state.attType != TYPE_RANGED)
+			{
+				m_pScene->players[0]->setRoot(models[0]->m_pModelRootObject, true);
+				m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, models[0]);
+				m_pScene->players[0]->pState.attType = TYPE_RANGED;
+			}
+			break;
+		}
+		case '1':
+		{
+			PlayerState state = m_pScene->getPlayerState(0);
+			if (state.attType != TYPE_MELEE)
+			{
+				m_pScene->players[0]->setRoot(models[1]->m_pModelRootObject, true);
+				m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, models[1]);
+				m_pScene->players[0]->pState.attType = TYPE_MELEE;
+				m_pScene->setPlayerAnimation(0);
+			}
 		}
 
 		}
@@ -448,20 +495,32 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					break;
 				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
 				case VK_UP:
-					m_pScene->setObjectSpeed(0, 0.0f);
-					m_pScene->setObjectState(0, IDLE_STATE);
+					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+					{
+						m_pScene->setObjectSpeed(0, 0.0f);
+						m_pScene->setObjectState(0, IDLE_STATE);
+					}
 					break;
 				case VK_DOWN:
-					m_pScene->setObjectSpeed(0, 0.0f);
-					m_pScene->setObjectState(0, IDLE_STATE);
+					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+					{
+						m_pScene->setObjectSpeed(0, 0.0f);
+						m_pScene->setObjectState(0, IDLE_STATE);
+					}
 					break;
 				case VK_LEFT:
-					m_pScene->setObjectSpeed(0, 0.0f);
-					m_pScene->setObjectState(0, IDLE_STATE);
+					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+					{
+						m_pScene->setObjectSpeed(0, 0.0f);
+						m_pScene->setObjectState(0, IDLE_STATE);
+					}
 					break;
 				case VK_RIGHT:
-					m_pScene->setObjectSpeed(0, 0.0f);
-					m_pScene->setObjectState(0, IDLE_STATE);
+					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
+					{
+						m_pScene->setObjectSpeed(0, 0.0f);
+						m_pScene->setObjectState(0, IDLE_STATE);
+					}
 					break;
 				default:
 					break;
@@ -506,7 +565,7 @@ LRESULT CALLBACK CGameFramework::OnProcessingWindowMessage(HWND hWnd, UINT nMess
 void CGameFramework::OnDestroy()
 {
     ReleaseObjects();
-
+	CSound::Release();
 	::CloseHandle(m_hFenceEvent);
 
 	if (m_pd3dDepthStencilBuffer) m_pd3dDepthStencilBuffer->Release();
@@ -540,11 +599,16 @@ void CGameFramework::BuildObjects()
 {
 	m_pd3dCommandList->Reset(m_pd3dCommandAllocator, NULL);
 
-	m_pScene = new CScene();
-	if (m_pScene) m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList);
+	models = new CLoadedModelInfo * [2];
 
 	
 
+	m_pScene = new CScene();
+	if (m_pScene) m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList);
+
+	models[0] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
+	models[1] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/blunt_Idle.bin", NULL);
+	
 	
 	m_pCamera = new CCamera();
 	m_pCamera->SetViewport(0, 0, m_nWndClientWidth, m_nWndClientHeight, 0.0f, 1.0f);
@@ -609,30 +673,67 @@ void CGameFramework::AnimateObjects()
 
 	m_pScene->moveObject(0);//이걸 서버가 처리한다.
 
-
+	
 	// 이 이후로는 클라가 처리
-	if (m_pScene->getSpeed(0)>0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
+
+	
+	if (m_pScene->getSpeed(0) > 0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
 	{
 		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
 		{
+			if (m_pScene->isWalking == false)
+			{
+				m_pScene->soundEffect[2]->play();
+				m_pScene->isWalking = true;
+			}
 			float angle = XMConvertToRadians(m_pCamera->angle);
 			XMFLOAT3 pos = m_pScene->getPos(0);
 			float spd = m_pScene->getSpeed(0);
-			
-			m_pCamera->move(cos(angle)*2.0f+pos.x, 2.85f, sin(angle)*2.0f+pos.z);
-			if (m_pScene->currentPlayerAnim != 20)
+			m_pCamera->move(cos(angle) * 2.0f + pos.x, 2.85f, sin(angle) * 2.0f + pos.z);
+
+			if (m_pScene->players[0]->pState.attType == TYPE_RANGED)
 			{
-				m_pScene->setPlayerAnimation(20);
+				if (m_pScene->currentPlayerAnim != 20)
+				{
+					m_pScene->setPlayerAnimation(20);
+				}
+			}
+			else if (m_pScene->players[0]->pState.attType == TYPE_MELEE)
+			{
+				m_pScene->setPlayerAnimation(0);
+			}
+		}
+		else
+		{
+			if (m_pScene->isWalking == true)
+			{
+				m_pScene->soundEffect[2]->stop();
+				m_pScene->isWalking = false;
 			}
 		}
 	}
 	else
 	{
-		if (m_pScene->currentPlayerAnim != 11)
+		if (m_pScene->isWalking == true)
 		{
-			m_pScene->setPlayerAnimation(11);
+			m_pScene->soundEffect[2]->stop();
+			m_pScene->isWalking = false;
+		}
+		if (m_pScene->players[0]->pState.attType == TYPE_RANGED)
+		{
+			if (m_pScene->currentPlayerAnim != 11)
+			{
+				m_pScene->setPlayerAnimation(11);
+			}
+		}
+		else if (m_pScene->players[0]->pState.attType == TYPE_MELEE)
+		{
+			m_pScene->setPlayerAnimation(0);
 		}
 	}
+	
+	
+
 	if (m_pScene) m_pScene->AnimateObjects(fTimeElapsed);
 
 	
@@ -757,6 +858,7 @@ void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
 	{
 	case FD_READ:
 		m_pScene->recv_packet();
+		m_pScene->process_packet();
 		break;
 	
 	case FD_CLOSE:

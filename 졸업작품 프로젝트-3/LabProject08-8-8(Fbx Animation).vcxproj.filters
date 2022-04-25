@@ -48,6 +48,9 @@
     <ClCompile Include="CNet.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>CSound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -102,6 +105,9 @@
     <ClInclude Include="CNet.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>CSound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -150,6 +156,9 @@
     </Filter>
     <Filter Include="LevelLoader">
       <UniqueIdentifier>{90bc2b47-6e42-493c-8640-f13bb11e3cbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSound">
+      <UniqueIdentifier>{ae07d54f-3bef-4bb8-b891-37429517b7c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

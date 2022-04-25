@@ -14,6 +14,7 @@ CScene::CScene()
 
 CScene::~CScene()
 {
+	
 }
 
 void CScene::BuildDefaultLightsAndMaterials()
@@ -197,7 +198,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
 
 	createTextureData(pd3dDevice, pd3dCommandList);
-
+	createSounds();
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
 
@@ -205,6 +206,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
 
 	BuildDefaultLightsAndMaterials();
+	createPlayers(pd3dDevice, pd3dCommandList);
 	createEnemies(pd3dDevice, pd3dCommandList);
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
@@ -328,41 +330,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		m_ppShadows[i] = NULL;
 	}
 	*/
-	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "sample.bin", NULL);
-
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
-	obj->type = 1;
-	obj->objType = 1;
-
-	obj->SetPosition(100.0f, 0.0f, 100.0f);
-	obj->Rotate(0.0f,0.0f,0.0f);
-	obj->currentRotation = XMFLOAT3(0.0f,0.0f,0.0f);
 	
-	obj->speed = 0.0f;
-	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	obj->lastMove = chrono::system_clock::now();
-
-	obj->pState.currHP = 100;
-	obj->pState.id = IDLE_STATE;
-	obj->pState.timeElapsed = 0.0f;
-	
-
-	obj->SetTrackAnimationSet(0, 11);
-	currentPlayerAnim = 11;
-
-	
-
-	/*
-	if (shadowRect[0] == NULL)
-	{
-		shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
-	}
-	shd = new CGameObject(1);
-	shd->SetMesh(shadowRect[0]);
-	shd->SetMaterial(0, shadowMats[0]);
-	*/
-	obj->SetMaterial(0, ppMaterials[24]);
-	players.push_back(obj);
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -1046,6 +1014,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 void CScene::ReleaseObjects()
 {
+	delSounds();
 	if (m_pd3dGraphicsRootSignature) m_pd3dGraphicsRootSignature->Release();
 	
 
@@ -1269,22 +1238,30 @@ void CScene::AnimateObjects(float fTimeElapsed)
 	setObjectLastMove(0);
 	for (int i = 0; i < players.size(); ++i)
 	{
-		if (players[i]->pState.id == ATTACK_STATE)
+		if (players[i]->pState.attType == TYPE_RANGED)
 		{
-			if (currentPlayerAnim != 2)
+			if (players[i]->pState.id == ATTACK_STATE)
 			{
-				setPlayerAnimation(2);
-			}
-			// 이 클라이언트의 플레이어가 어느 방향으로 총을 쐈는지 서버로 전송하는 기능을 이곳에 추가해야 함.
+				players[i]->speed = 0.0f;
+				if (currentPlayerAnim != 2)
+				{
+					setPlayerAnimation(2);
+				}
+				// 이 클라이언트의 플레이어가 어느 방향으로 총을 쐈는지 서버로 전송하는 기능을 이곳에 추가해야 함.
 
-			attack(i);// 캐릭터가 당시 바라봤던 방향으로 3km이내의 직선상에 총알이 발사됨. 이걸 서버가 처리.
-		}
-		else if (players[i]->pState.id == IDLE_STATE)
-		{
-			if (currentPlayerAnim != 11)
-			{
-				setPlayerAnimation(11);
+				attack(i);// 캐릭터가 당시 바라봤던 방향으로 3km이내의 직선상에 총알이 발사됨. 이걸 서버가 처리.
 			}
+			else if (players[i]->pState.id == IDLE_STATE)
+			{
+				if (currentPlayerAnim != 11)
+				{
+					setPlayerAnimation(11);
+				}
+			}
+		}
+		else if (players[i]->pState.attType == TYPE_MELEE)
+		{
+			setPlayerAnimation(0);
 		}
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
@@ -1465,7 +1442,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			particles[i]->Render(pd3dCommandList, pCamera);
 		}
-
+		
 	}
 
 	//적 그리기
@@ -1563,6 +1540,7 @@ void CScene::moveObject(int idx)
 	
 	if (players[idx]->speed > 0.0f|| players[idx]->yspeed!=0.0f)
 	{
+		
 		tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
 		ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
 		tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
@@ -1849,6 +1827,21 @@ void CScene::recv_packet()
 	}
 }
 
+void CScene::process_packet()
+{
+	char* packet = g_client.m_recv_over.m_sendbuf;
+	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
+	switch (packet[1])
+	{
+	case type_move:
+		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
+		players[0]->SetPosition(p->x, p->y, p->z);
+		printf("client player move complete\n");
+		break;
+	}
+}
+
+
 void CScene::attack(int idx)
 {
 	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
@@ -1856,6 +1849,8 @@ void CScene::attack(int idx)
 	
 	if (fTime >= 1.0f / 6.0f)
 	{
+		soundEffect[0]->play();
+		soundEffect[0]->Update();
 		printf("time elapsed from last shot : %f\n", fTime);
 		setObjectLastAttack(idx);
 
@@ -1991,7 +1986,8 @@ void CScene::attack(int idx)
 
 		}
 
-
+		soundEffect[1]->play();
+		soundEffect[1]->Update();
 		// 적한테 총알이 박혔나?
 		for (int i = 0; i < enemies.size(); ++i)
 		{
@@ -2199,7 +2195,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 // 적 만드는 함수
 void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/enemy2.bin", NULL);
+	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy2.bin", NULL);
 
 	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
 	obj->SetPosition(100.0f, 0.0f, 150.0f);
@@ -2224,4 +2220,88 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 		enemyBoxes.push_back(box);
 	}
 
+}
+
+void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+{
+	binModels = new CLoadedModelInfo*[nSkinMesh];
+	playerTypes = new CGameObject * [nSkinMesh];
+
+	binModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
+	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_Idle.bin", NULL);
+	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[0], 1);
+	obj->type = 1;
+	obj->objType = 1;
+
+	obj->SetPosition(100.0f, 0.0f, 100.0f);
+	obj->Rotate(0.0f, 0.0f, 0.0f);
+	obj->currentRotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	
+	obj->speed = 0.0f;
+	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	obj->lastMove = chrono::system_clock::now();
+
+	obj->pState.currHP = 100;
+	obj->pState.id = IDLE_STATE;
+	obj->pState.timeElapsed = 0.0f;
+	obj->pState.attType = TYPE_RANGED;
+
+	obj->SetTrackAnimationSet(0, 11);
+	currentPlayerAnim = 11;
+	
+	
+
+
+	/*
+	if (shadowRect[0] == NULL)
+	{
+		shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
+	}
+	shd = new CGameObject(1);
+	shd->SetMesh(shadowRect[0]);
+	shd->SetMaterial(0, shadowMats[0]);
+	*/
+	obj->SetMaterial(0, ppMaterials[24]);
+
+	playerTypes[0] = obj;
+
+	playerTypes[1]= new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[1], 1);
+	playerTypes[1]->type = 1;
+	playerTypes[1]->objType = 1;
+	
+	playerTypes[1]->speed = 0.0f;
+	playerTypes[1]->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	playerTypes[1]->lastMove = chrono::system_clock::now();
+	
+	playerTypes[1]->pState.currHP = 100;
+	playerTypes[1]->pState.id = IDLE_STATE;
+	playerTypes[1]->pState.timeElapsed = 0.0f;
+	playerTypes[1]->pState.attType = TYPE_RANGED;
+
+	players.push_back(playerTypes[0]);
+}
+void CScene::createSounds()
+{
+	bgm = new CSound * [nBGM];
+	bgm[0] = new CSound("res/sound/bgm/yugioh.mp3", true);
+	
+	soundEffect = new CSound * [nSoundEffect];
+
+	soundEffect[0] = new CSound("res/sound/effect/rifle_shot.mp3", false);
+	soundEffect[1] = new CSound("res/sound/effect/rifle_crash.ogg", false);
+	soundEffect[2] = new CSound("res/sound/effect/step_steel.mp3", true);
+	bgm[0]->setVolume(0.3f);
+	bgm[0]->play();
+	bgm[0]->Update();
+}
+void CScene::delSounds()
+{
+	for (int i = 0; i < nBGM; ++i)
+	{
+		delete bgm[i];
+	}
+	for (int i = 0; i < nSoundEffect; ++i)
+	{
+		delete soundEffect[i];
+	}
 }

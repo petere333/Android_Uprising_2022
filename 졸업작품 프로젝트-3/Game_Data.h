@@ -14,7 +14,7 @@
 #define MOVE_ATTACK_STATE 4
 #define DEATH_STATE 5
 
-//적의 유형 아이디값.
+//적, 플레이어의 공격 유형 아이디값.
 #define TYPE_MELEE 1
 #define TYPE_RANGED 2
 #define TYPE_MICROWAVE 3
@@ -83,6 +83,7 @@ typedef struct PlayerState
 
 	int id = -1;								// 상태 아이디값
 	int currHP;									// 현재 내구도
+	int attType;								// 현재 공격 유형
 	float timeElapsed=0.0f;						// 이 상태로 변경된 지 얼마나 지났나?
 
 }PlayerState;

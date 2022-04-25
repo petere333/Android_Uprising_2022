@@ -83,7 +83,7 @@ public:
 	void CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pTexture, UINT nDescriptorHeapIndex, UINT nRootParameterStartIndex);
 	
 
-protected:
+public:
 	ID3D12RootSignature					*m_pd3dGraphicsRootSignature = NULL;
 
 	ID3D12DescriptorHeap* m_pd3dCbvSrvDescriptorHeap = NULL;
@@ -104,6 +104,8 @@ protected:
 	#define nMat 27
 	#define nDirMat 9
 
+#define nSkinMesh 2
+
 #define nShadows 9
 
 
@@ -119,6 +121,16 @@ protected:
 
 	CTexture* shadowTex[nShadows];
 	CMaterial* shadowMats[nShadows];
+
+public:
+#define nBGM 1
+#define nSoundEffect 3
+
+	CSound** bgm = NULL;
+	CSound** soundEffect = NULL;
+
+	bool isWalking = false;
+
 public:
 
 	BoundBox* boxesWorld;
@@ -143,6 +155,11 @@ public:
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
 	CGameObject** m_ppShadows = NULL;
+
+	CLoadedModelInfo** binModels=NULL;
+	CGameObject** playerTypes = NULL;
+	
+
 
 	float								m_fElapsedTime = 0.0f;
 
@@ -172,7 +189,7 @@ public:
 
 	float getSpeed(int idx) { return players[idx]->speed; }
 	XMFLOAT3 getDirection(int idx) { return players[idx]->direction; }
-
+	PlayerState getPlayerState(int idx) { return players[idx]->pState; }
 	XMFLOAT3 getPos(int idx) { return players[idx]->GetPosition(); }
 	void setObjectLastMove(int idx) 
 	{ 
@@ -194,12 +211,15 @@ public:
 	void attack(int idx);
 
 	void createParticles(int n, XMFLOAT3 pos);
+	void createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	void createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	void createSounds();
+	void delSounds();
 
 public: // client to server
 	virtual void recv_packet(); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}
-
+	virtual void process_packet();
 };
 typedef struct Line
 {
