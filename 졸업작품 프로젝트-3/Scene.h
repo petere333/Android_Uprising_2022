@@ -220,6 +220,8 @@ public: // client to server
 	virtual void recv_packet(); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}
 
+	virtual void process_packet();
+
 public:
 	void ProcessPacket(unsigned char* p_buf);
 

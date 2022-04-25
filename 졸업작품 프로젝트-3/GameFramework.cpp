@@ -7,6 +7,8 @@
 #include "GameFramework.h"
 #include "CNet.h"
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -333,9 +335,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	m_packet.c_id = 1;
 	m_packet.isKey = true;
 	float spd = m_pScene->getSpeed(0);
-	m_packet.tx = m_pScene->getDirection(0).x * spd;
+	/*m_packet.tx = m_pScene->getDirection(0).x * spd;
 	m_packet.ty = m_pScene->getDirection(0).y * spd;
-	m_packet.tz = m_pScene->getDirection(0).z * spd;
+	m_packet.tz = m_pScene->getDirection(0).z * spd;*/
 
 
 	m_packet.size = sizeof(CS_MOVE_PACKET);
