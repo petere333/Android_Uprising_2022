@@ -140,9 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AUSERVER.cpp" />
+    <ClCompile Include="ProcessPacket.cpp" />
+    <ClCompile Include="SNet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Func.h" />
+    <ClInclude Include="ProcessPacket.h" />
+    <ClInclude Include="SNet.h" />
     <ClInclude Include="protocol.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

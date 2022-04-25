@@ -1793,55 +1793,6 @@ void CScene::setPlayerDirection(float dx, float dy, float dz)
 	}
 }
 
-//client to server (received)
-void CScene::recv_packet()
-{
-	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
-	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
-
-	memset(&g_client.m_recv_over.m_over, 0, sizeof(g_client.m_recv_over.m_over));
-
-	DWORD iobyte, ioflag = 0;
-	int ret = WSARecv(g_client.m_sock, &g_client.m_recv_over.m_wsabuf, 1,
-		&iobyte, &ioflag, NULL, NULL);
-	if (0 != ret) {
-		auto errcode = WSAGetLastError();
-		if (WSA_IO_PENDING != errcode)
-			err_display("Error in RecvPacket: ");
-	}
-
-	char* packet_ptr = g_client.m_recv_over.m_sendbuf; //unsigned ?
-	int num_data = iobyte + g_client.m_prev_size;
-	int packet_size = packet_ptr[0];
-
-	while (num_data >= packet_size) {
-		//
-		num_data -= packet_size;
-		packet_ptr += packet_size;
-		if (0 >= num_data) break;
-		packet_size = packet_ptr[0];
-	}
-	g_client.m_prev_size = num_data;
-	if (0 != num_data) {
-		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
-	}
-}
-
-void CScene::process_packet()
-{
-	char* packet = g_client.m_recv_over.m_sendbuf;
-	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
-	switch (packet[1])
-	{
-	case type_move:
-		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
-		players[0]->SetPosition(p->x, p->y, p->z);
-		printf("client player move complete\n");
-		break;
-	}
-}
-
-
 void CScene::attack(int idx)
 {
 	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
@@ -2304,4 +2255,77 @@ void CScene::delSounds()
 	{
 		delete soundEffect[i];
 	}
+}
+}
+
+//client to server (received)
+void CScene::recv_packet()
+{
+	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
+	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
+
+	memset(&g_client.m_recv_over.m_over, 0, sizeof(g_client.m_recv_over.m_over));
+
+	DWORD iobyte, flag = 0;
+	int ret = WSARecv(g_client.m_sock, &g_client.m_recv_over.m_wsabuf, 1,
+		&iobyte, &flag, NULL, NULL);
+	if (0 != ret) {
+		auto errcode = WSAGetLastError();
+		if (WSA_IO_PENDING != errcode)
+			err_display("Error in RecvPacket: ");
+	}
+
+	char* packet_ptr = g_client.m_recv_over.m_sendbuf; 
+	int num_data = iobyte + g_client.m_prev_size;
+	int packet_size = packet_ptr[0];
+
+	while (num_data >= packet_size) {
+		num_data -= packet_size;
+		packet_ptr += packet_size;
+		if (0 >= num_data) break;
+		packet_size = packet_ptr[0];
+	}
+	g_client.m_prev_size = num_data;
+	if (0 != num_data) {
+		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
+	}
+}
+
+void CScene::ProcessPacket(unsigned char* p_buf)
+{
+	char buf[1000];
+	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
+
+	switch (type)
+	{
+	case PACKET_TYPE::SC_LOGIN_INFO:
+		SC_LOGIN_INFO_PACKET p_login;
+		memcpy(&p_login, p_buf, p_buf[0]);
+		if (p_login.isLogin)
+		{
+			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+
+			//SetplayerID(p_login.id);
+
+			cout << "Player ID : " << p_login.id << "\n" << endl;
+		}
+		break;
+	case PACKET_TYPE::SC_ADD_PLAYER:
+		cout << "New Player Connected.\n";
+		SC_ADD_PLAYER_PACKET p_new;
+		memcpy(&p_new, p_buf, p_buf[0]);
+
+		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+		players[p_new.id]->SetPosition(pos);
+		break;
+	case PACKET_TYPE::SC_REMOVE_PLAYER:
+		SC_REMOVE_PLAYER_PACKET p_remove;
+		cout << p_remove.id << "Player REMOVED.\n";
+		memcpy(&p_remove, p_buf, p_buf[0]);
+		//player remove
+		break;
+		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
+
+	}
+
 }

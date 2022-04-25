@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Func.h"
+#include "SNet.h"
 #include "protocol.h"
 
 constexpr int MAXUSER = 5; //최대 접속 유저
@@ -32,9 +32,9 @@ public:
 };
 
 class SESSION {
-	OVER_EXP _recv_over;
 
 public:
+	OVER_EXP _recv_over;
 	bool _use;
 	int _id;
 	SOCKET _socket;
@@ -192,21 +192,23 @@ void disconnect(int c_id)
 	closesocket(clients[c_id]._socket);
 	clients[c_id]._use = false;
 }
-
-//void CALLBACK send_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED send_over,
-//	DWORD f)
+//
+//void CALLBACK send_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED send_over, DWORD flag)
 //{
-//	EXP_OVER* ex_over = reinterpret_cast<EXP_OVER*>(send_over);
+//	OVER_EXP* ex_over = reinterpret_cast<OVER_EXP*>(send_over);
 //	delete ex_over;
 //}
-
+//
 //void CALLBACK recv_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED over, DWORD flags)
 //{
-//	int  client_id = over_to_session[over];
-//	if (0 == num_bytes) {
+//	auto client = reinterpret_cast<SESSION*>(over);
+//	int client_id = client->_id;
+//	SOCKET client_s = client->_socket;
+//	auto ex_over = &client->_recv_over;
+//
+//	if (num_bytes == 0) {
 //		cout << "Client disconnected\n";
-//		clients.erase(client_id);
-//		over_to_session.erase(over);
+//		disconnect(client_id);
 //		return;
 //	};
 //	cout << "Client " << client_id << " sent: " << clients[client_id]._c_mess << endl;
@@ -269,9 +271,9 @@ int main(int argc, char* argv[])
 			int client_id = get_new_player_id();
 			if (client_id != -1) {
 				clients[client_id]._use = true;
-				clients[client_id].set.x = 1;
-				clients[client_id].set.y = 2;
-				clients[client_id].set.z = 3;
+				clients[client_id].set.x = 0;
+				clients[client_id].set.y = 0;
+				clients[client_id].set.z = 0;
 				clients[client_id]._id = client_id;
 				clients[client_id]._name[0] = 0;
 				clients[client_id]._prev_remain = 0;
@@ -309,6 +311,8 @@ int main(int argc, char* argv[])
 			}
 			clients[client_id].do_recv();
 			cout << "Recv Success.\n";
+			cout << clients[client_id].set.x << "\n";
+			cout << clients[client_id].set.y << "\n";
 
 			break;
 		}
@@ -321,51 +325,3 @@ int main(int argc, char* argv[])
 	WSACleanup();
 
 }
-
-void error_display(const char* msg)
-{
-	WCHAR* lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
-	std::cout << msg;
-	std::wcout << L"에러 " << lpMsgBuf << std::endl;
-	while (true);
-	LocalFree(lpMsgBuf);
-}
-
-void error_quit(const char* msg)
-{
-	wchar_t wMsg[20];
-	LPVOID lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
-
-	MessageBox(NULL, (LPCTSTR)lpMsgBuf, wMsg, MB_ICONERROR);
-	LocalFree(lpMsgBuf);
-	exit(1);
-
-}
-//
-//int recvn(SOCKET s, char* buf, int len, int flags)
-//{
-//	int received;
-//	char* ptr = buf;
-//	int left = len;
-//
-//	while (left > 0) {
-//		received = recv(s, ptr, left, flags);
-//
-//		if (received == SOCKET_ERROR) { return SOCKET_ERROR; }
-//		else if (received == 0) { break; }
-//
-//		left -= received;
-//		ptr += received;
-//	}
-//
-//	return (len - left);
-//}

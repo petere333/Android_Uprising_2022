@@ -46,14 +46,15 @@ struct SC_LOGIN_INFO_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	int x, y, z;
+	bool isLogin;
+	float x, y, z;
 };
 
 struct SC_ADD_PLAYER_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	int x, y, z;
+	float x, y, z;
 	char	name[NAMESIZE];
 };
 
@@ -67,7 +68,31 @@ struct SC_MOVE_PLAYER_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	int x, y, z;
+	float x, y, z;
+};
+
+struct SC_MOUSE_PACKET {
+	unsigned char size;
+	PACKET_TYPE type;
+
+	int p_RotateY;
+	int C_RotateY;
+	int CameraOffset;
+};
+
+struct SC_UPDATE_PACKET { // ¼öÁ¤Áß
+	unsigned char size;
+	PACKET_TYPE type;
+	int player;
+	short id[MAX_PLAYER];
+	
+	int X[MAX_PLAYER];
+	int Y[MAX_PLAYER];
+	int Z[MAX_PLAYER];
+	
+	int CX[MAX_PLAYER];
+	int CY[MAX_PLAYER];
+	int CZ[MAX_PLAYER];
 };
 
 #pragma pack (pop)
