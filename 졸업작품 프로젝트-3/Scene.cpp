@@ -120,6 +120,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 
 void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
+	
 	textures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -161,7 +162,7 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[19] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[19]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/blockTexture.dds", RESOURCE_TEXTURE2D, 0);
 	textures[20] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[20]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/GyeDanTexture.dds", RESOURCE_TEXTURE2D, 0);
+	textures[20]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Stair_txt.dds", RESOURCE_TEXTURE2D, 0);
 	textures[21] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[21]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Heater_Texture.dds", RESOURCE_TEXTURE2D, 0);
 	textures[22] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -169,11 +170,27 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[23] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[23]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Metal_txt.dds", RESOURCE_TEXTURE2D, 0);
 	textures[24] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
+	textures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상자커버.dds", RESOURCE_TEXTURE2D, 0);
 	textures[25] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
+	textures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Convels.dds", RESOURCE_TEXTURE2D, 0);
 	textures[26] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
+	textures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Paperbox.dds", RESOURCE_TEXTURE2D, 0);
+	textures[27] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[27]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Machine_txt.dds", RESOURCE_TEXTURE2D, 0);
+	textures[28] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[28]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Conl.dds", RESOURCE_TEXTURE2D, 0);
+	textures[29] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[29]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Tank.dds", RESOURCE_TEXTURE2D, 0);
+	textures[30] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[30]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/drum_t.dds", RESOURCE_TEXTURE2D, 0);
+	textures[31] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[31]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/짐덩이_txt.dds", RESOURCE_TEXTURE2D, 0);
+	textures[32] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[32]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
+	textures[33] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
+	textures[34] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -341,12 +358,20 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
 
 	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
-	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
-	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
-	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan2.txt", NULL);
+	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
+	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
+	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단2.txt", NULL);
 	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
 	CLoadedMesh* H_Heat = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_공장_히터.txt", NULL);
 	CLoadedMesh* B_box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_1Stage_Box.txt", NULL);
+	CLoadedMesh* Gongjang_tool1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Covers.txt", NULL);
+	CLoadedMesh* Gongjang_tool2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Convel.txt", NULL);
+	CLoadedMesh* Gongjang_tool3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_종이박스.txt", NULL);
+	CLoadedMesh* Gongjang_tool4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전기.txt", NULL);
+	CLoadedMesh* Gongjang_tool5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_케비넷.txt", NULL);
+	CLoadedMesh* Gongjang_tool6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느기계.txt", NULL);
+	CLoadedMesh* Gongjang_tool7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_드럼통.txt", NULL);
+	CLoadedMesh* Gongjang_tool8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_짐덩이.txt", NULL);
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -365,14 +390,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	for (int i = 0; i < data.size(); ++i)
 	{
-		CGameObject* obj = NULL;
-		//CGameObject *shd = NULL;
-		float shadowMove = 0.0f;
-		float shadowUp = 0.0f;
+		CGameObject* obj;
 
-		
+		if (data[i].type == PLAYER)//player
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(barrelMesh);
+			obj->SetMaterial(0, ppMaterials[9]);
 
-		if (data[i].type == CONTAINER)//container
+		}
+		else if (data[i].type == CONTAINER)//container
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(container);
@@ -850,7 +877,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(GyeDan);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(0, ppMaterials[20]);
 		}
 		else if (data[i].type == Frs_Pons1)// 지붕의 시작점
@@ -871,7 +898,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(GyeDan_1);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+			//	obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(0, ppMaterials[20]);
 
 		}
@@ -879,7 +906,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(R_GyeDan_1);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+			//	obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(0, ppMaterials[20]);
 
 		}
@@ -945,34 +972,74 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj = new CGameObject(1);
 			obj->SetMesh(B_box);
 			obj->SetMaterial(0, ppMaterials[22]);
-			//obj->SetMaterial(ppMaterials[23]);
+			//obj->SetMaterial(0, ppMaterials[23]);
+		}
+		else if (data[i].type == Factory_tool1)// 여기서부터 새로 만든거
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool1);
+			obj->SetMaterial(0, ppMaterials[24]);
+			obj->Rotate(270.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool2);
+			obj->SetMaterial(0, ppMaterials[25]);
+
+		}
+		else if (data[i].type == Factory_tool3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool3);
+			obj->SetMaterial(0, ppMaterials[26]);
+
+		}
+		else if (data[i].type == Factory_tool4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool4);
+			obj->SetMaterial(0, ppMaterials[27]);
+
+		}
+		else if (data[i].type == Factory_tool5)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool5);
+			obj->SetMaterial(0, ppMaterials[28]);
+			obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool6)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool6);
+			obj->SetMaterial(0, ppMaterials[29]);
+			obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool7)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool7);
+			obj->SetMaterial(0, ppMaterials[30]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool8)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Gongjang_tool8);
+			obj->SetMaterial(0, ppMaterials[31]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
 		}
 
-		
+		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
-		obj->currentRotation = data[i].rotation;
-		obj->type = data[i].type;
-		obj->speed = 0.0f;
-		obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		obj->lastMove = chrono::system_clock::now();
+		//obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * i));
 		m_ppGameObjects[i] = obj;
-
-		/*
-		if (shd != NULL)
-		{
-			shadowMove += data[i].position.y;
-			shd->SetPosition(data[i].position.x+shadowMove, 0.0f, data[i].position.z+shadowUp);
-			shd->Rotate(0.0f, data[i].rotation.y, 0.0f);
-			shd->currentRotation = XMFLOAT3(0.0f, data[i].rotation.y, 0.0f);
-			if (data[i].type == PLAYER)
-			{
-				shd->SetPosition(data[i].position.x + shadowMove, -0.01f, data[i].position.z + shadowUp);
-			}
-			m_ppShadows[i] = shd;
-		}
-		*/
-		
 	}
 	/*
 	WallDecorationMesh* floor_paint = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 800.0f, 600.0f, 1, 300, true);
@@ -1367,16 +1434,26 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		if (enemies[i]->eState.id == IDLE_STATE)
 		{
-			enemies[i]->SetTrackAnimationSet(0, 5);
+			if (enemies[i]->m_pChild != enemyModels[0]->m_pModelRootObject)
+			{
+				enemies[i]->setRoot(enemyModels[0]->m_pModelRootObject, true);
+				enemies[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[0]);
+				enemies[i]->SetTrackAnimationSet(0, 0);
+			}
 		}
 		else if (enemies[i]->eState.id == DEATH_STATE)
 		{
 			
 			if (enemies[i]->isDead == false)
 			{
-				enemies[i]->SetTrackAnimationSet(0, 27);
-				enemies[i]->timeFromDie = chrono::system_clock::now();
-				enemies[i]->isDead = true;
+				if (enemies[i]->m_pChild != enemyModels[1]->m_pModelRootObject)
+				{
+					enemies[i]->setRoot(enemyModels[1]->m_pModelRootObject, true);
+					enemies[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[1]);
+					enemies[i]->SetTrackAnimationSet(0, 0);
+					enemies[i]->timeFromDie = chrono::system_clock::now();
+					enemies[i]->isDead = true;
+				}
 			}
 			else
 			{
@@ -1427,7 +1504,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 		}
-		ppMaterials[24]->UpdateShaderVariable(pd3dCommandList);
+		ppMaterials[32]->UpdateShaderVariable(pd3dCommandList);
 		players[i]->Render(pd3dCommandList, pCamera);
 	}
 
@@ -1448,7 +1525,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			//	3. 객체의 유형이 소형 물체, 혹은 움직이는 캐릭터인 경우 양쪽 55도 내에 있는 경우에만 그린다.
 			*/
 			int tp = m_ppGameObjects[i]->type;
-			if ((tp >= 2000 && tp < 3000) || (tp >= 12000 && tp < 13000) || tp==50000)
+			if ((tp >= 2000 && tp < 3000) || (tp >= 10000) || (tp<6000 && tp>=5000) )
 			{
 				//m_ppGameObjects[i]->Animate(m_fElapsedTime);
 				//if (!m_ppGameObjects[i]->m_pSkinnedAnimationController) m_ppGameObjects[i]->UpdateTransform(NULL);
@@ -1529,7 +1606,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 		}
-		ppMaterials[26]->UpdateShaderVariable(pd3dCommandList);
+		ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
 		enemies[i]->Render(pd3dCommandList, pCamera);
 	}
 
@@ -2468,6 +2545,8 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
+		soundEffect[3]->play();
+		soundEffect[3]->Update();
 
 		int r = rand() % 2;
 
@@ -2487,6 +2566,39 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				players[idx]->setRoot(binModels[4]->m_pModelRootObject, true);
 				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[4]);
 				setPlayerAnimation(0);
+			}
+		}
+	}
+
+	else if (fTime >= 0.233333f && fTime <= 0.266666f)
+	{
+		for (int i = 0; i < enemyBoxes.size(); ++i)
+		{
+			BoundBox bx;
+			XMFLOAT3 ps = players[idx]->GetPosition();
+
+			if (players[idx]->currentRotation.y <= 45.0f || players[idx]->currentRotation.y > 315)
+			{
+				bx.start = XMFLOAT3(ps.x - 0.2f, ps.y + 0.6f, ps.z + 0.4f);
+				bx.end = XMFLOAT3(ps.x + 0.2f, ps.y + 1.0f, ps.z + 1.0f);
+			}
+			else if (players[idx]->currentRotation.y <= 135 && players[idx]->currentRotation.y > 45)//오른쪽 보고있는경우
+			{
+				bx.start = XMFLOAT3(ps.x + 0.4f, ps.y + 0.6f, ps.z - 0.2f);
+				bx.end = XMFLOAT3(ps.x + 0.6f, ps.y + 1.0f, ps.z + 0.2f);
+			}
+			else if (players[idx]->currentRotation.y <= 225 && players[idx]->currentRotation.y > 135)
+			{
+
+			}
+			XMFLOAT3 pnt = getBoxOverlapPoint(bx, enemyBoxes[i], players[idx]->currentRotation.y);
+			
+			if (pnt.x != -9999.0f && pnt.y != -9999.0f && pnt.z != -9999.0f)
+			{
+				soundEffect[4]->play();
+				soundEffect[4]->Update();
+				enemies[i]->eState.currHP -= 2.0f;
+				createParticles(50, pnt);
 			}
 		}
 	}
@@ -2545,7 +2657,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		direct = Vector3::Normalize(direct);
 		
 		CGameObject* obj = new CGameObject(1);
-		obj->SetMaterial(0, ppMaterials[25]);
+		obj->SetMaterial(0, ppMaterials[33]);
 		obj->speed = 0.1f;
 		obj->direction = direct;
 		obj->SetPosition(pos);
@@ -2557,28 +2669,31 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 // 적 만드는 함수
 void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	CLoadedModelInfo* model = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy2.bin", NULL);
+	enemyModels = new CLoadedModelInfo * [nEnemyMesh];
+	enemyModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
+	enemyModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_die.bin", NULL);
 
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, model, 1);
+
+	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
 	obj->SetPosition(100.0f, 0.0f, 150.0f);
 	obj->type = -10;
-	obj->SetTrackAnimationSet(0, 9);
-	
+	obj->SetTrackAnimationSet(0, 0);
+
 	obj->eState.id = IDLE_STATE;
 	obj->eState.currHP = 10;
 	enemies.push_back(obj);
 
-	
+
 	// 각 적들의 위치에 바운딩 박스 생성
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 		//x,y=-0.25~0.25 z=0.0~1.7
 
 		XMFLOAT3 pos = enemies[i]->GetPosition();
-		
+
 		BoundBox box;
-		box.start = XMFLOAT3(pos.x - 0.25f, pos.y, pos.z - 0.25f);
-		box.end = XMFLOAT3(pos.x + 0.25f, pos.y + 1.75f, pos.z + 0.25f);
+		box.start = XMFLOAT3(pos.x - 0.5f, pos.y, pos.z - 0.5f);
+		box.end = XMFLOAT3(pos.x + 0.5f, pos.y + 1.75f, pos.z + 0.5f);
 
 		enemyBoxes.push_back(box);
 	}
@@ -2627,7 +2742,7 @@ void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	shd->SetMesh(shadowRect[0]);
 	shd->SetMaterial(0, shadowMats[0]);
 	*/
-	obj->SetMaterial(0, ppMaterials[24]);
+	obj->SetMaterial(0, ppMaterials[32]);
 
 	playerTypes[0] = obj;
 
@@ -2656,9 +2771,17 @@ void CScene::createSounds()
 	soundEffect[0] = new CSound("res/sound/effect/rifle_shot.mp3", false);
 	soundEffect[1] = new CSound("res/sound/effect/rifle_crash.ogg", false);
 	soundEffect[2] = new CSound("res/sound/effect/step_steel.mp3", true);
-	bgm[0]->setVolume(0.3f);
+	soundEffect[3] = new CSound("res/sound/effect/hammer_swing.mp3", false);
+	soundEffect[4] = new CSound("res/sound/effect/hammer_hit.mp3", false);
+	bgm[0]->setVolume(0.1f);
 	bgm[0]->play();
 	bgm[0]->Update();
+
+	for (int i = 0; i < nSoundEffect; ++i)
+	{
+		soundEffect[i]->setVolume(0.8f);
+		soundEffect[i]->Update();
+	}
 }
 void CScene::delSounds()
 {
@@ -2670,4 +2793,57 @@ void CScene::delSounds()
 	{
 		delete soundEffect[i];
 	}
+}
+
+XMFLOAT3 getBoxOverlapPoint(BoundBox b1, BoundBox b2, float angle)
+{
+	bool crash = false;
+	std::vector<XMFLOAT3> vec;
+
+	XMFLOAT3 result;
+
+	vec.push_back(XMFLOAT3(b1.start.x, b1.start.y, b1.start.z));
+	vec.push_back(XMFLOAT3(b1.start.x, b1.start.y, b1.end.z));
+	vec.push_back(XMFLOAT3(b1.end.x, b1.start.y, b1.start.z));
+	vec.push_back(XMFLOAT3(b1.end.x, b1.start.y, b1.end.z));
+
+	vec.push_back(XMFLOAT3(b1.start.x, b1.end.y, b1.start.z));
+	vec.push_back(XMFLOAT3(b1.start.x, b1.end.y, b1.end.z));
+	vec.push_back(XMFLOAT3(b1.end.x, b1.end.y, b1.start.z));
+	vec.push_back(XMFLOAT3(b1.end.x, b1.end.y, b1.end.z));
+
+	for (int i = 0; i < 8; ++i)
+	{
+		if ((vec[i].x > b2.start.x && vec[i].x < b2.end.x) &&
+			(vec[i].y > b2.start.y && vec[i].y < b2.end.y) &&
+			(vec[i].z > b2.start.z && vec[i].z < b2.end.z))
+		{
+			crash = true;
+		}
+	}
+	if (crash == true)
+	{
+		if (angle <= 45.0f || angle > 315.0f)//전방 - 후면 반환
+		{
+			result = XMFLOAT3((b2.end.x - b2.start.x) * 0.5f + b2.start.x, (b2.end.y - b2.start.y) * 0.5f + b2.start.y, b2.start.z);
+		}
+		else if (angle > 45.0f && angle <= 135.0f)//오른쪽 방향 - 왼면 반환
+		{
+			result = XMFLOAT3(b2.start.x, (b2.end.y - b2.start.y) * 0.5f + b2.start.y, (b2.end.z - b2.start.z) * 0.5f + b2.start.z);
+		}
+		else if (angle > 135.0f && angle <= 225.0f)//후방 - 전면 반환
+		{
+			result = XMFLOAT3((b2.end.x - b2.start.x) * 0.5f + b2.start.x, (b2.end.y - b2.start.y) * 0.5f + b2.start.y, b2.end.z);
+		}
+		else if (angle > 225.0f && angle <= 315.0f)
+		{
+			result = XMFLOAT3(b2.end.x, (b2.end.y - b2.start.y) * 0.5f + b2.start.y, (b2.end.z - b2.start.z) * 0.5f + b2.start.z);
+		}
+	}
+	else
+	{
+		result = XMFLOAT3(-9999.0f, -9999.0f, -9999.0f);
+	}
+	return result;
+
 }

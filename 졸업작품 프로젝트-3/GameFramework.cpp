@@ -656,8 +656,8 @@ void CGameFramework::BuildObjects()
 	m_pScene = new CScene();
 	if (m_pScene) m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList);
 
-	models[0] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
-	models[1] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/bluntIdle.bin", NULL);
+	//models[0] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
+	//models[1] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/bluntIdle.bin", NULL);
 	
 	
 	m_pCamera = new CCamera();

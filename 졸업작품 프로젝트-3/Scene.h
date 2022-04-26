@@ -96,16 +96,16 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	#define nTex  27
+	#define nTex  35
 	#define nNormal  1
 	
 	#define nDirt  9
 	
-	#define nMat 27
+	#define nMat 35
 	#define nDirMat 9
 
 #define nSkinMesh 5
-
+#define nEnemyMesh 2
 #define nShadows 9
 
 
@@ -124,7 +124,7 @@ public:
 
 public:
 #define nBGM 1
-#define nSoundEffect 3
+#define nSoundEffect 5
 
 	CSound** bgm = NULL;
 	CSound** soundEffect = NULL;
@@ -161,6 +161,7 @@ public:
 	CGameObject** m_ppShadows = NULL;
 
 	CLoadedModelInfo** binModels=NULL;
+	CLoadedModelInfo** enemyModels = NULL;
 	CGameObject** playerTypes = NULL;
 	
 
@@ -241,3 +242,5 @@ typedef struct XYZPlane
 }XYZPlane;
 
 XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane);
+
+XMFLOAT3 getBoxOverlapPoint(BoundBox b1, BoundBox b2, float angle);
