@@ -138,6 +138,8 @@
 #define Factory_tool6 530
 #define Factory_tool7 535
 #define Factory_tool8 540
+#define Factory_tool9 545
+#define Factory_tool10 550
 
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)

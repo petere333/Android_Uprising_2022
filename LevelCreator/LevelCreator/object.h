@@ -140,6 +140,8 @@
 #define Factory_tool6 530
 #define Factory_tool7 535
 #define Factory_tool8 540
+#define Factory_tool9 545
+#define Factory_tool10 550
 
 using namespace std;
 

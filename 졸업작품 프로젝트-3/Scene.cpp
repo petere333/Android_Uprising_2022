@@ -191,6 +191,10 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
 	textures[34] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
+	textures[35] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[35]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/선반.dds", RESOURCE_TEXTURE2D, 0);
+	textures[36] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/플라스틱빈.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -372,6 +376,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_tool6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느기계.txt", NULL);
 	CLoadedMesh* Gongjang_tool7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_드럼통.txt", NULL);
 	CLoadedMesh* Gongjang_tool8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_짐덩이.txt", NULL);
+	CLoadedMesh* Gongjang_tool9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느선반.txt", NULL);
+	CLoadedMesh* Gongjang_tool10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_그냥화물1.txt", NULL);
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1032,6 +1038,22 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj->SetMesh(Gongjang_tool8);
 			obj->SetMaterial(0, ppMaterials[31]);
 			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool9)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool9);
+		obj->SetMaterial(0, ppMaterials[35]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool10)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool10);
+		obj->SetMaterial(0, ppMaterials[36]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
 
