@@ -1541,6 +1541,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			XMFLOAT3 look = pCamera->getLook();
 			
 			float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
+
+			float dist = Vector3::Length(fromCamera);
 			/* 
 			//	1. 객체의 유형이 벽인 경우 그냥 그린다.
 			//	2. 객체의 유형이 xyz 크기가 3m 이상인 대형 물체인 경우 카메라의 방향 벡터로부터 양쪽 70도 내에 있는 경우에만 그린다.
@@ -1559,7 +1561,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 			
 				
-			else if (cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(90.0f)))
+			else if ((cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(60.0f))&& dist<=300.0f) || (dist<=50.0f && cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(120.0f))))
 			{
 
 				m_ppGameObjects[i]->Animate(m_fElapsedTime);
