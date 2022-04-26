@@ -2057,27 +2057,27 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	Object GyoDan;
-	GyoDan.location = f3(387.5f, 2.5f, 440.0f);
+	GyoDan.location = f3(382.0f, 0.0f, 430.0f);
 	GyoDan.rotation = f3(0.0f, 0.0f, 0.0f);
 	GyoDan.type = GyeDans1;
 
 	Object GyoDan2;
-	GyoDan2.location = f3(360.0f, 2.5f, 340.0f);
+	GyoDan2.location = f3(352.5f, 0.0f, 336.0f);
 	GyoDan2.rotation = f3(0.0f, 0.0f, 0.0f);
 	GyoDan2.type = GyeDans2;
 
 	Object R_stair1;
-	R_stair1.location = f3(940.0f, 6.25f, 262.5f);
+	R_stair1.location = f3(890.0f, 0.0f, 264.5f);
 	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair1.type = R_GyeDan1;
 
 	Object R_stair2;
-	R_stair2.location = f3(1080.0f, 6.25f, 262.5f);
+	R_stair2.location = f3(1030.0f, 0.0f, 264.5f);
 	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair2.type = R_GyeDan1;
 
 	Object R_stair3;
-	R_stair3.location = f3(50.0f, 6.25f, 387.5f);
+	R_stair3.location = f3(10.0f, 0.0f, 389.5f);
 	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair3.type = R_GyeDan1;
 
@@ -2931,24 +2931,24 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Hiter20.end = f3(260.0f, 5.0f, 500.0f);
 
 	BoundingBox GyoDa1;
-	GyoDa1.start = f3(380.0f, 0.0f, 430.0f);
-	GyoDa1.end = f3(395.0f, 5.0f, 431.0f);
+	GyoDa1.start = f3(380.0f, 0.0f, 449.0f);
+	GyoDa1.end = f3(395.0f, 2.5f, 450.0f);
 
 	BoundingBox GyoDa2;
-	GyoDa2.start = f3(352.5f, 0.0f, 330.0f);
-	GyoDa2.end = f3(367.5f, 5.0f, 331.0f);
+	GyoDa2.start = f3(352.5f, 0.0f, 349.0f);
+	GyoDa2.end = f3(367.5f, 2.5f, 350.0f);
 
 	BoundingBox R_sta1;
-	R_sta1.start = f3(890.0f, 0.0f, 250.0f);
-	R_sta1.end = f3(990.0f, 12.5f, 251.0f);
+	R_sta1.start = f3(890.0f, 0.0f, 274.0f);
+	R_sta1.end = f3(990.0f, 12.5f, 275.0f);
 
 	BoundingBox R_sta2;
-	R_sta2.start = f3(1030.0f, 0.0f, 250.0f);
-	R_sta2.end = f3(1130.0f, 12.5f, 251.0f);
+	R_sta2.start = f3(1030.0f, 0.0f, 274.0f);
+	R_sta2.end = f3(1130.0f, 12.5f, 275.0f);
 
 	BoundingBox R_sta3;
-	R_sta3.start = f3(0.0f, 0.0f, 375.0f);
-	R_sta3.end = f3(100.0f, 12.5f, 376.0f);
+	R_sta3.start = f3(0.0f, 0.0f, 399.0f);
+	R_sta3.end = f3(100.0f, 12.5f, 400.0f);
 
 
 

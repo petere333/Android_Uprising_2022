@@ -38,6 +38,9 @@ struct CS_MOVE_PACKET {
 	//char	direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
 	bool isKey;
 	short c_id;
+	int tx;
+	int ty;
+	int tz;
 
 };
 

@@ -364,7 +364,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	ppTextures[19] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[19]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/blockTexture.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[20] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	ppTextures[20]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/GyeDanTexture.dds", RESOURCE_TEXTURE2D, 0);
+	ppTextures[20]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Stair_txt.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[21] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	ppTextures[21]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Heater_Texture.dds", RESOURCE_TEXTURE2D, 0);
 	ppTextures[22] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -502,9 +502,9 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
 
 	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
-	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
-	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan1.txt", NULL);
-	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_GyeDan2.txt", NULL);
+	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
+	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
+	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단2.txt", NULL);
 	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
 	CLoadedMesh* H_Heat = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_공장_히터.txt", NULL);
 	CLoadedMesh* B_box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_1Stage_Box.txt", NULL);
@@ -1013,7 +1013,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, GyeDan);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(ppMaterials[20]);
 		}
 		else if (data[i].type == Frs_Pons1)// 지붕의 시작점
@@ -1034,7 +1034,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, GyeDan_1);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+		//	obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(ppMaterials[20]);
 
 		}
@@ -1042,7 +1042,7 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			obj = new CTerrainObject(1);
 			obj->SetMesh(0, R_GyeDan_1);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
+		//	obj->Rotate(270.0f, 0.0f, 0.0f);
 			obj->SetMaterial(ppMaterials[20]);
 
 		}
