@@ -688,6 +688,8 @@ void CGameObject::setRoot(CGameObject* pChild, bool update)
 		pChild->m_pParent = this;
 		if (update) pChild->AddRef();
 	}
+	//if (m_pChild)
+		//m_pChild->Release();
 	m_pChild = pChild;
 }
 

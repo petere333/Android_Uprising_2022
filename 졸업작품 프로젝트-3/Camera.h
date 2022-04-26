@@ -32,6 +32,8 @@ private:
 	XMFLOAT3 lookVec;
 	XMFLOAT3 rightVec;
 	XMFLOAT3 upVec;
+
+	float currentUp = 0.0f;
 public:
 	CCamera();
 	virtual ~CCamera();
@@ -54,13 +56,12 @@ public:
 	void rotate(float delta, float, float);
 	void rotateUp(float y) 
 	{ 
-		if (ly >= -3.0 && y < 0) 
+		float tly = currentUp + y;
+
+		if (tly >= -3.0f && tly <= 3.0f)
 		{
-			ly += y;
-		}
-		if (ly <= 3.0 && y >= 0)
-		{
-			ly += y;
+			currentUp = tly;
+			ly = tly + m_xmf3Position.y - 2.0f;
 		}
 	}
 

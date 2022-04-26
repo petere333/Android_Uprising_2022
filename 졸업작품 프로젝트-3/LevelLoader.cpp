@@ -25,6 +25,55 @@ std::vector<Obj> LoadObjects(const char* filename)
 
 }
 
+BoundBox* LoadStairs(const char* filename, int* n)
+{
+	int count = 0;
+	BoundBox* bx;
+	std::vector<Stair> str;
+	FILE* f = fopen(filename, "r");
+	while (!feof(f))
+	{
+		float sx, sz, ex, ez, h;
+
+		Stair st;
+		fscanf(f, "xstart / xend : %f, %f\n zstart / zend : %f, %f \n height : %f \n\n", &sx, &ex, &sz, &ez, &h);
+		st.start = XMFLOAT2(sx, sz);
+		st.end = XMFLOAT2(ex, ez);
+		st.height = h;
+		str.push_back(st);
+		count += static_cast<int>(h / 0.15f);
+	}
+	bx = new BoundBox[count];
+
+	int idx = 0;
+	for (int i = 0; i < str.size(); ++i)
+	{
+		int steps = static_cast<int>(str[i].height / 0.15f);
+
+		float dz = (str[i].end.y - str[i].start.y) / static_cast<float>(steps);
+		for (int j = 0; j < steps; ++j)
+		{
+			BoundBox box;
+			float sx, sy, sz;
+			float ex, ey, ez;
+
+			sx = str[i].start.x;
+			sy = 0.0f;
+			sz = str[i].start.y + dz * j;
+
+			ex = str[i].end.x;
+			ey = 0.15f * (static_cast<float>(j + 1));
+			ez = str[i].start.y + dz * (j + 1);
+			box.start = XMFLOAT3(sx, sy, sz);
+			box.end = XMFLOAT3(ex, ey, ez);
+			bx[idx] = box;
+			idx += 1;
+		}
+	}
+	*n = count;
+	return bx;
+}
+
 BoundBox* LoadBoxes(const char* filename, int* n)
 {
 	BoundBox* bx;

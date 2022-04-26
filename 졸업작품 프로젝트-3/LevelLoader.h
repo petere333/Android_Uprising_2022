@@ -160,5 +160,12 @@ typedef struct BoundingSphere
 	float dist;
 }BoundSphere;
 
+typedef struct Stair
+{
+	XMFLOAT2 start, end;
+	float height;
+}Stair;
+
 std::vector<Obj> LoadObjects(const char* filename);
 BoundBox* LoadBoxes(const char* filename, int*);
+BoundBox* LoadStairs(const char* filename, int* n);

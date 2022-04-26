@@ -503,7 +503,7 @@ public:
 	bool isDead = false;
 
 public:
-	void jump() { if (isInAir == false) { yspeed = 3.0f; isInAir = true; } }
+	void jump() { if (yspeed ==0.0f) { yspeed = 15.0f; isInAir = true; } }
 
 
 };

@@ -110,6 +110,57 @@ void CMesh::LoadMeshFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList
 				
 				nReads = (UINT)::fread(m_pxmf3Positions, sizeof(XMFLOAT3), m_nVertices, pInFile);
 
+				float xmax = -10000.0f, ymax = -10000.0f, zmax = -10000.0f;
+				float xmin = 10000.0f, ymin = 10000.0f, zmin = 10000.0f;
+
+				float xsize, ysize, zsize;
+
+				for (int i = 0; i < m_nVertices; ++i)
+				{
+					if (m_pxmf3Positions[i].x > xmax)
+					{
+						xmax = m_pxmf3Positions[i].x;
+					}
+					if (m_pxmf3Positions[i].x < xmin)
+					{
+						xmin = m_pxmf3Positions[i].x;
+					}
+
+					if (m_pxmf3Positions[i].y > ymax)
+					{
+						ymax = m_pxmf3Positions[i].y;
+					}
+					if (m_pxmf3Positions[i].y < ymin)
+					{
+						ymin = m_pxmf3Positions[i].y;
+					}
+
+					if (m_pxmf3Positions[i].z > zmax)
+					{
+						zmax = m_pxmf3Positions[i].z;
+					}
+					if (m_pxmf3Positions[i].z < zmin)
+					{
+						zmin = m_pxmf3Positions[i].z;
+					}
+				}
+				xsize = xmax - xmin;
+				ysize = ymax - ymin;
+				zsize = zmax - zmin;
+
+				float xscale = 1.5f;
+				float yscale = 1.7f;
+				float zscale = 0.7f;
+
+				for (int i = 0; i < m_nVertices; ++i)
+				{
+					//m_pxmf3Positions[i].x = m_pxmf3Positions[i].x / xsize * xscale;
+					//	m_pxmf3Positions[i].y = m_pxmf3Positions[i].y / ysize * yscale;
+					//m_pxmf3Positions[i].z = m_pxmf3Positions[i].z / zsize * zscale;
+
+
+				}
+
 				m_pd3dPositionBuffer = ::CreateBufferResource(pd3dDevice, pd3dCommandList, m_pxmf3Positions, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
 
 				m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();

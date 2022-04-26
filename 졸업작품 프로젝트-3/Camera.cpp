@@ -91,7 +91,7 @@ void CCamera::move(float mx, float my, float mz)
 
 	
 	lx = mx-static_cast<float>(cos(rad)) * dist;
-	//ly = my-2.0f;
+	ly = m_xmf3Position.y+currentUp-2.0f;
 	lz = mz-static_cast<float>(sin(rad)) * dist;
 	GenerateViewMatrix();
 }
@@ -102,7 +102,7 @@ void CCamera::moveRelative(float mx, float my, float mz)
 	m_xmf3Position.z += mz;
 
 	lx = mx;
-	ly = my - 2.0f;
+	ly = m_xmf3Position.y - 2.0f;
 	lz = mz + 2.0f;
 	GenerateViewMatrix();
 }

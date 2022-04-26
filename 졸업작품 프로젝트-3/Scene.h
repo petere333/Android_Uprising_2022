@@ -73,7 +73,7 @@ public:
 	ID3D12RootSignature *GetGraphicsRootSignature() { return(m_pd3dGraphicsRootSignature); }
 
 	bool ProcessInput(UCHAR *pKeysBuffer);
-    void AnimateObjects(float fTimeElapsed);
+    void AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed);
     void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera=NULL);
 
 	void ReleaseUploadBuffers();
@@ -104,7 +104,7 @@ public:
 	#define nMat 27
 	#define nDirMat 9
 
-#define nSkinMesh 2
+#define nSkinMesh 5
 
 #define nShadows 9
 
@@ -134,6 +134,10 @@ public:
 public:
 
 	BoundBox* boxesWorld;
+	BoundBox* stairsWorld;
+	int nStairs=0;
+
+
 	std::vector<BoundBox> enemyBoxes;
 	int nBox = 0;
 
@@ -209,13 +213,13 @@ public:
 	void createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 
 	void attack(int idx);
-
+	bool mouseDown = false;
 	void createParticles(int n, XMFLOAT3 pos);
 	void createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	void createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	void createSounds();
 	void delSounds();
-
+	void swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 public: // client to server
 	virtual void recv_packet(); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}
@@ -224,7 +228,6 @@ public: // client to server
 
 public:
 	void ProcessPacket(unsigned char* p_buf);
-
 };
 typedef struct Line
 {

@@ -211,6 +211,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 	boxesWorld = LoadBoxes("res/map/box.txt", &nBox);
+	stairsWorld = LoadStairs("res/map/stair.txt", &nStairs);
 	m_nGameObjects = data.size();
 	m_ppGameObjects = new CGameObject*[m_nGameObjects];
 
@@ -1231,13 +1232,27 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 	return(false);
 }
 
-void CScene::AnimateObjects(float fTimeElapsed)
+void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed)
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 	setObjectLastMove(0);
+	
 	for (int i = 0; i < players.size(); ++i)
 	{
+		if (mouseDown == true)
+		{
+			players[i]->pState.id = ATTACK_STATE;
+		}
+		else
+		{
+			std::chrono::duration<double> d = std::chrono::system_clock::now() - players[i]->lastAttack;
+			float ft = static_cast<float>(d.count());
+			if (ft >= 0.833333f && players[i]->pState.attType == TYPE_MELEE && players[i]->speed==0.0f)
+			{
+				players[i]->pState.id = IDLE_STATE;
+			}
+		}
 		if (players[i]->pState.attType == TYPE_RANGED)
 		{
 			if (players[i]->pState.id == ATTACK_STATE)
@@ -1245,6 +1260,7 @@ void CScene::AnimateObjects(float fTimeElapsed)
 				players[i]->speed = 0.0f;
 				if (currentPlayerAnim != 2)
 				{
+
 					setPlayerAnimation(2);
 				}
 				// 이 클라이언트의 플레이어가 어느 방향으로 총을 쐈는지 서버로 전송하는 기능을 이곳에 추가해야 함.
@@ -1255,13 +1271,39 @@ void CScene::AnimateObjects(float fTimeElapsed)
 			{
 				if (currentPlayerAnim != 11)
 				{
+
 					setPlayerAnimation(11);
 				}
 			}
 		}
 		else if (players[i]->pState.attType == TYPE_MELEE)
 		{
-			setPlayerAnimation(0);
+			if (players[i]->pState.id == IDLE_STATE)
+			{
+				if (players[0]->m_pChild != binModels[2]->m_pModelRootObject)
+				{
+
+					players[0]->setRoot(binModels[2]->m_pModelRootObject, true);
+					players[0]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
+
+					setPlayerAnimation(0);
+				}
+			}
+			else if (players[i]->pState.id == MOVE_STATE)
+			{
+				if (players[0]->m_pChild != binModels[1]->m_pModelRootObject)
+				{
+					players[0]->setRoot(binModels[1]->m_pModelRootObject, true);
+					players[0]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[1]);
+					setPlayerAnimation(0);
+				}
+			}
+			else if (players[i]->pState.id == ATTACK_STATE)
+			{
+				players[i]->speed = 0.0f;
+				swingHammer(i, pd3dDevice,pd3dCommandList);
+			
+			}
 		}
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
@@ -1536,170 +1578,265 @@ void CScene::moveObject(int idx)
 	float fTime = static_cast<float>(time);
 	bool crash=false;
 	float tx, ty, tz;
-
+	bool stepOn;
 	
-	if (players[idx]->speed > 0.0f|| players[idx]->yspeed!=0.0f)
-	{
-		
-		tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
-		ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
-		tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
-		// 물체가 있는곳에 이동했는가?
-		for (int i = 0; i < nBox; ++i)
+
+
+		if (players[idx]->speed > 0.0f || players[idx]->yspeed != 0.0f)
 		{
-			if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.5f
-				&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y + 0.0f && tz < boxesWorld[i].end.z + 0.5f)
+
+			tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
+			ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
+			tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
+			// 물체가 있는곳에 이동했는가?
+			for (int i = 0; i < nBox; ++i)
 			{
-				
-				
-				if (players[idx]->GetPosition().x > boxesWorld[i].end.x || players[idx]->GetPosition().x < boxesWorld[i].start.x)
+				if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.5f
+					&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y - 0.0f && tz < boxesWorld[i].end.z + 0.5f)
 				{
-					if (players[idx]->direction.x > 0.0f)
+
+
+					if (players[idx]->GetPosition().x > boxesWorld[i].end.x || players[idx]->GetPosition().x < boxesWorld[i].start.x)
 					{
-						players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-						players[idx]->direction.x = 0.0f;
-						players[idx]->direction.z = 0.0f;
+						if (players[idx]->direction.x > 0.0f)
+						{
+							players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						else if (players[idx]->direction.x < 0.0f)
+						{
+							players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						crash = true;
+
 					}
-					else if (players[idx]->direction.x < 0.0f)
+					else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
 					{
-						players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-						players[idx]->direction.x = 0.0f;
-						players[idx]->direction.z = 0.0f;
+						if (players[idx]->direction.z > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						else if (players[idx]->direction.z < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						crash = true;
+
 					}
-					crash = true;
-					
+					else if (players[idx]->yspeed != 0.0f)
+					{
+						if (players[idx]->yspeed > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+						}
+						else if (players[idx]->yspeed < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+							players[idx]->isInAir = false;
+						}
+
+						crash = true;
+					}
+
 				}
-				else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
+
+				else if (tx > boxesWorld[i].start.x - 0.5f && tz > boxesWorld[i].start.z - 0.5f
+					&& tx < boxesWorld[i].end.x + 0.5f && tz < boxesWorld[i].end.z + 0.5f && ty>boxesWorld[i].end.y)
 				{
-					if (players[idx]->direction.z > 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
-						players[idx]->direction.z = 0.0f;
-						players[idx]->direction.x = 0.0f;
-					}
-					else if (players[idx]->direction.z < 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
-						players[idx]->direction.z = 0.0f;
-						players[idx]->direction.x = 0.0f;
-					}
-					crash = true;
-				
+					players[idx]->isInAir = true;
+					players[idx]->yspeed -= 0.1f;
+					stepOn = false;
+					crash = false;
+
 				}
-				else if (players[idx]->isInAir == true)
+
+
+			}
+			// 적이 있는곳에 이동했는가?
+			for (int i = 0; i < enemies.size(); ++i)
+			{
+				if (tx > enemyBoxes[i].start.x - 0.5f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.5f
+					&& tx < enemyBoxes[i].end.x + 0.5f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.5f)
 				{
-					if (players[idx]->yspeed > 0.0f)
+
+
+					if (players[idx]->GetPosition().x > enemyBoxes[i].end.x || players[idx]->GetPosition().x < enemyBoxes[i].start.x)
 					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
-						players[idx]->yspeed = 0.0f;
+						if (players[idx]->direction.x > 0.0f)
+						{
+							players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						else if (players[idx]->direction.x < 0.0f)
+						{
+							players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						crash = true;
+
 					}
-					else if (players[idx]->yspeed < 0.0f)
+					else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
 					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
-						players[idx]->yspeed = 0.0f;
-						players[idx]->isInAir = false;
+						if (players[idx]->direction.z > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						else if (players[idx]->direction.z < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						crash = true;
+
 					}
-					
-					crash = true;
+					else if (players[idx]->yspeed != 0.0f)
+					{
+						if (players[idx]->yspeed > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+						}
+						else if (players[idx]->yspeed < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+							players[idx]->isInAir = false;
+						}
+
+						crash = true;
+					}
+
 				}
 
 			}
-			
-		}
-		// 적이 있는곳에 이동했는가?
-		for (int i = 0; i < enemies.size(); ++i)
-		{
-			if (tx > enemyBoxes[i].start.x - 0.5f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.5f
-				&& tx < enemyBoxes[i].end.x + 0.5f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.5f)
+
+			//계단이 있는 곳에 갔는가?
+			for (int i = 0; i < nStairs; ++i)
 			{
-
-
-				if (players[idx]->GetPosition().x > enemyBoxes[i].end.x || players[idx]->GetPosition().x < enemyBoxes[i].start.x)
+				if (tx > stairsWorld[i].start.x - 0.5f && ty > stairsWorld[i].start.y - 1.7f && tz > stairsWorld[i].start.z - 0.5f
+					&& tx < stairsWorld[i].end.x + 0.5f && ty < stairsWorld[i].end.y - 0.3f && tz < stairsWorld[i].end.z + 0.5f)
 				{
-					if (players[idx]->direction.x > 0.0f)
-					{
-						players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-						players[idx]->direction.x = 0.0f;
-						players[idx]->direction.z = 0.0f;
-					}
-					else if (players[idx]->direction.x < 0.0f)
-					{
-						players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-						players[idx]->direction.x = 0.0f;
-						players[idx]->direction.z = 0.0f;
-					}
-					crash = true;
 
+
+					if (players[idx]->GetPosition().x > stairsWorld[i].end.x || players[idx]->GetPosition().x < stairsWorld[i].start.x)
+					{
+						if (players[idx]->direction.x > 0.0f)
+						{
+							players[idx]->SetPosition(stairsWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						else if (players[idx]->direction.x < 0.0f)
+						{
+							players[idx]->SetPosition(stairsWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							players[idx]->direction.x = 0.0f;
+
+						}
+						crash = true;
+
+					}
+					else if (players[idx]->GetPosition().z > stairsWorld[i].end.z || players[idx]->GetPosition().z < stairsWorld[i].start.z)
+					{
+						if (players[idx]->direction.z > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].start.z - 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						else if (players[idx]->direction.z < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].end.z + 0.5f);
+							players[idx]->direction.z = 0.0f;
+
+						}
+						crash = true;
+
+					}
+					else if (players[idx]->isInAir == true)
+					{
+						if (players[idx]->yspeed > 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+						}
+						else if (players[idx]->yspeed < 0.0f)
+						{
+							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+							players[idx]->yspeed = 0.0f;
+							players[idx]->isInAir = false;
+						}
+
+						crash = true;
+					}
+					stepOn = false;
 				}
-				else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
-				{
-					if (players[idx]->direction.z > 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
-						players[idx]->direction.z = 0.0f;
-						players[idx]->direction.x = 0.0f;
-					}
-					else if (players[idx]->direction.z < 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
-						players[idx]->direction.z = 0.0f;
-						players[idx]->direction.x = 0.0f;
-					}
-					crash = true;
 
+				else if (tx > stairsWorld[i].start.x - 0.5f && ty >= stairsWorld[i].start.y - 0.3f && tz > stairsWorld[i].start.z - 0.5f
+					&& tx < stairsWorld[i].end.x + 0.5f && ty <= stairsWorld[i].end.y && tz < stairsWorld[i].end.z + 0.5f)
+				{
+					ty = stairsWorld[i].end.y;
+					players[idx]->yspeed = 0.0f;
+					players[idx]->isInAir = false;
+					crash = false;
+					stepOn = true;
 				}
-				else if (players[idx]->isInAir == true)
+				else if (tx > stairsWorld[i].start.x - 0.5f && tz > stairsWorld[i].start.z - 0.5f
+					&& tx < stairsWorld[i].end.x + 0.5f && tz < stairsWorld[i].end.z + 0.5f && ty > stairsWorld[i].end.y)
 				{
-					if (players[idx]->yspeed > 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
-						players[idx]->yspeed = 0.0f;
-					}
-					else if (players[idx]->yspeed < 0.0f)
-					{
-						players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
-						players[idx]->yspeed = 0.0f;
-						players[idx]->isInAir = false;
-					}
-
-					crash = true;
+					players[idx]->isInAir = true;
+					players[idx]->yspeed -= 0.1f;
+					stepOn = false;
+					crash = false;
 				}
 
 			}
 
-		}
-
-
-
-		if (crash == false)
-		{
-			players[idx]->SetPosition(tx, ty, tz);
-			//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
-			players[idx]->lastMoveSuccess = true;
-
-			// y축 이동이 존재할 경우 중력가속도 적용
-			if (players[idx]->yspeed != 0.0f)
+			if (crash == false)
 			{
-				players[idx]->yspeed -= 9.8f * fTime;
-			}
-		}
-		else
-		{
-			players[idx]->lastMoveSuccess = false;
-			if (players[idx]->isInAir == true)
-			{
-				players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
+				players[idx]->SetPosition(tx, ty, tz);
+				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 				players[idx]->lastMoveSuccess = true;
-				
-				if (players[idx]->yspeed != 0.0f)
+
+				// y축 이동이 존재할 경우 중력가속도 적용
+				if (players[idx]->isInAir == true)
 				{
-					players[idx]->yspeed -= 9.8f * fTime;
+					players[idx]->yspeed -= 9.8f * fTime * 5.0f;
 				}
 			}
 
+			else
+			{
+				players[idx]->lastMoveSuccess = false;
+				if (players[idx]->isInAir == true)
+				{
+					players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
+					players[idx]->lastMoveSuccess = true;
+
+					//if (players[idx]->yspeed != 0.0f)
+					//{
+					players[idx]->yspeed -= 9.8f * fTime * 5.0f;
+					//}
+				}
+
+			}
+
 		}
-		
-	}
+	
+
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
 	// 변경 완료된 위치 값을 클라로 전송.
 	// moveObject 함수는 매 프레임마다 호출되므로 서버에서도 약 0.016초(초당 60프레임 기준)마다 전송해주는게 좋음.
@@ -1792,6 +1929,95 @@ void CScene::setPlayerDirection(float dx, float dy, float dz)
 		players[0]->currentRotation.y = dy;
 	}
 }
+
+//client to server (received)
+//client to server (received)
+void CScene::recv_packet()
+{
+	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
+	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
+
+	memset(&g_client.m_recv_over.m_over, 0, sizeof(g_client.m_recv_over.m_over));
+
+	DWORD iobyte, flag = 0;
+	int ret = WSARecv(g_client.m_sock, &g_client.m_recv_over.m_wsabuf, 1,
+		&iobyte, &flag, NULL, NULL);
+	if (0 != ret) {
+		auto errcode = WSAGetLastError();
+		if (WSA_IO_PENDING != errcode)
+			err_display("Error in RecvPacket: ");
+	}
+
+	char* packet_ptr = g_client.m_recv_over.m_sendbuf;
+	int num_data = iobyte + g_client.m_prev_size;
+	int packet_size = packet_ptr[0];
+
+	while (num_data >= packet_size) {
+		num_data -= packet_size;
+		packet_ptr += packet_size;
+		if (0 >= num_data) break;
+		packet_size = packet_ptr[0];
+	}
+	g_client.m_prev_size = num_data;
+	if (0 != num_data) {
+		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
+	}
+}
+
+void CScene::process_packet()
+{
+	char* packet = g_client.m_recv_over.m_sendbuf;
+	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
+	switch (packet[1])
+	{
+	case type_move:
+		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
+		players[0]->SetPosition(p->x, p->y, p->z);
+		printf("client player move complete\n");
+		break;
+	}
+}
+//
+//void CScene::ProcessPacket(unsigned char* p_buf)
+//{
+//	char buf[1000];
+//	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
+//
+//	switch (type)
+//	{
+//	case PACKET_TYPE::SC_LOGIN_INFO:
+//		SC_LOGIN_INFO_PACKET p_login;
+//		memcpy(&p_login, p_buf, p_buf[0]);
+//		if (p_login.isLogin)
+//		{
+//			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+//
+//			//SetplayerID(p_login.id);
+//
+//			cout << "Player ID : " << p_login.id << "\n" << endl;
+//		}
+//		break;
+//	case PACKET_TYPE::SC_ADD_PLAYER:
+//		cout << "New Player Connected.\n";
+//		SC_ADD_PLAYER_PACKET p_new;
+//		memcpy(&p_new, p_buf, p_buf[0]);
+//
+//		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+//		players[p_new.id]->SetPosition(pos);
+//		break;
+//	case PACKET_TYPE::SC_REMOVE_PLAYER:
+//		SC_REMOVE_PLAYER_PACKET p_remove;
+//		memcpy(&p_remove, p_buf, p_buf[0]);
+//		cout << p_remove.id << "Player REMOVED.\n";
+//		
+//		//player remove
+//		break;
+//		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
+//
+//	}
+//
+//}
+
 
 void CScene::attack(int idx)
 {
@@ -2047,6 +2273,113 @@ void CScene::attack(int idx)
 
 		}
 
+		for (int i = 0; i < nStairs; ++i)
+		{
+			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+			std::vector<XYZPlane> checkList;
+
+
+			if (n.x > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = stairsWorld[i].start.x;
+				checkList.push_back(p);
+			}
+			else if (n.x < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = stairsWorld[i].end.x;
+				checkList.push_back(p);
+			}
+
+			if (n.z > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = stairsWorld[i].start.z;
+				checkList.push_back(p);
+			}
+			else if (n.z < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = stairsWorld[i].end.z;
+				checkList.push_back(p);
+			}
+
+			if (n.y > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = stairsWorld[i].start.y;
+				checkList.push_back(p);
+			}
+			else if (n.y < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = stairsWorld[i].end.y;
+				checkList.push_back(p);
+			}
+
+
+			//체크리스트에 들어있는 모든 평면들에 대해
+
+			for (int j = 0; j < checkList.size(); ++j)
+			{
+				// 충돌 지점을 확보한다.
+				temp = getIntersectPoint(line, checkList[j]);
+
+
+				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+				if ((temp.x <= stairsWorld[i].end.x + 0.001f && temp.x >= stairsWorld[i].start.x - 0.001f) &&
+					(temp.y <= stairsWorld[i].end.y + 0.001f && temp.y >= stairsWorld[i].start.y - 0.001f) &&
+					(temp.z <= stairsWorld[i].end.z + 0.001f && temp.z >= stairsWorld[i].start.z - 0.001f))
+				{
+					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+					{
+						//그 지점과의 거리를 구한 후,
+						// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+						d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+						dist = Vector3::Length(d);
+						printf("사거리 내에 위치, 거리 %f\n", dist);
+						break;
+					}
+					else
+					{
+						printf("직선 앞 혹은 뒤에 위치\n");
+						dist = 3000.0f;
+					}
+				}
+				else
+				{
+					dist = 3000.0f;
+				}
+			}
+			/*
+			if (dist != 3000.0f)
+			{
+				printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+				printf("%d번째 박스와 거리 %f\n", i, dist);
+			}
+			*/
+			// 총알은 관통 기능이 없다. 즉,
+			// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+			// 그 지점이 새로운 충돌지점이다.
+
+			if (dist < minDist)
+			{
+				minDist = dist;
+				targetPos = temp;
+				target = i;
+				type = 1;
+			}
+
+		}
+
 		// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
 		// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
 
@@ -2057,6 +2390,7 @@ void CScene::attack(int idx)
 
 
 			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
+			/*
 			if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
 			{
 				printf("(Building Wall)\n");
@@ -2074,7 +2408,7 @@ void CScene::attack(int idx)
 			else
 			{
 				printf("(Something)\n");
-			}
+			}*/
 		}
 		else if (type == 2)
 		{
@@ -2090,6 +2424,53 @@ void CScene::attack(int idx)
 	}
 
 
+}
+
+
+void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+{
+	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
+	float fTime = static_cast<float>(fromLastAttack.count());
+
+	if (fTime >= 1.0f)
+	{
+		
+
+		printf("Time elapsed from last swing : %f\n", fTime);
+		setObjectLastAttack(idx);
+
+		int r = rand() % 2;
+
+		if (r)
+		{
+			if (players[idx]->m_pChild != binModels[3]->m_pModelRootObject)
+			{
+				players[idx]->setRoot(binModels[3]->m_pModelRootObject, true);
+				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[3]);
+				setPlayerAnimation(0);
+			}
+		}
+		else
+		{
+			if (players[idx]->m_pChild != binModels[4]->m_pModelRootObject)
+			{
+				players[idx]->setRoot(binModels[4]->m_pModelRootObject, true);
+				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[4]);
+				setPlayerAnimation(0);
+			}
+		}
+	}
+	else if (fTime >= 0.833333f && fTime < 1.0f)
+	{
+		if (players[idx]->m_pChild != binModels[2]->m_pModelRootObject)
+		{
+			players[idx]->setRoot(binModels[2]->m_pModelRootObject, true);
+			players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
+			setPlayerAnimation(0);
+			
+		}
+		
+	}
 }
 // 서버 프로그램에 구현해야 할 함수이다.
 // 바운딩박스의 한 평면과 총알의 진행 경로의 직선이 겹치는 부분을 찾아냄으로써, 총알이 맞은 지점을 알아내는 함수이다.
@@ -2152,6 +2533,7 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	obj->SetPosition(100.0f, 0.0f, 150.0f);
 	obj->type = -10;
 	obj->SetTrackAnimationSet(0, 9);
+	
 	obj->eState.id = IDLE_STATE;
 	obj->eState.currHP = 10;
 	enemies.push_back(obj);
@@ -2179,7 +2561,10 @@ void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	playerTypes = new CGameObject * [nSkinMesh];
 
 	binModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
-	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_Idle.bin", NULL);
+	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_walk.bin", NULL);
+	binModels[2] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
+	binModels[3] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing1.bin", NULL);
+	binModels[4] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
 	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[0], 1);
 	obj->type = 1;
 	obj->objType = 1;
@@ -2231,7 +2616,6 @@ void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 
 	players.push_back(playerTypes[0]);
 }
-
 void CScene::createSounds()
 {
 	bgm = new CSound * [nBGM];
@@ -2246,7 +2630,6 @@ void CScene::createSounds()
 	bgm[0]->play();
 	bgm[0]->Update();
 }
-
 void CScene::delSounds()
 {
 	for (int i = 0; i < nBGM; ++i)
@@ -2258,90 +2641,3 @@ void CScene::delSounds()
 		delete soundEffect[i];
 	}
 }
-
-//client to server (received)
-void CScene::recv_packet()
-{
-	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
-	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
-
-	memset(&g_client.m_recv_over.m_over, 0, sizeof(g_client.m_recv_over.m_over));
-
-	DWORD iobyte, flag = 0;
-	int ret = WSARecv(g_client.m_sock, &g_client.m_recv_over.m_wsabuf, 1,
-		&iobyte, &flag, NULL, NULL);
-	if (0 != ret) {
-		auto errcode = WSAGetLastError();
-		if (WSA_IO_PENDING != errcode)
-			err_display("Error in RecvPacket: ");
-	}
-
-	char* packet_ptr = g_client.m_recv_over.m_sendbuf; 
-	int num_data = iobyte + g_client.m_prev_size;
-	int packet_size = packet_ptr[0];
-
-	while (num_data >= packet_size) {
-		num_data -= packet_size;
-		packet_ptr += packet_size;
-		if (0 >= num_data) break;
-		packet_size = packet_ptr[0];
-	}
-	g_client.m_prev_size = num_data;
-	if (0 != num_data) {
-		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
-	}
-}
-
-void CScene::process_packet()
-{
-	char* packet = g_client.m_recv_over.m_sendbuf;
-	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
-	switch (packet[1])
-	{
-	case type_move:
-		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
-		players[0]->SetPosition(p->x, p->y, p->z);
-		printf("client player move complete\n");
-		break;
-	}
-}
-//
-//void CScene::ProcessPacket(unsigned char* p_buf)
-//{
-//	char buf[1000];
-//	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
-//
-//	switch (type)
-//	{
-//	case PACKET_TYPE::SC_LOGIN_INFO:
-//		SC_LOGIN_INFO_PACKET p_login;
-//		memcpy(&p_login, p_buf, p_buf[0]);
-//		if (p_login.isLogin)
-//		{
-//			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//
-//			//SetplayerID(p_login.id);
-//
-//			cout << "Player ID : " << p_login.id << "\n" << endl;
-//		}
-//		break;
-//	case PACKET_TYPE::SC_ADD_PLAYER:
-//		cout << "New Player Connected.\n";
-//		SC_ADD_PLAYER_PACKET p_new;
-//		memcpy(&p_new, p_buf, p_buf[0]);
-//
-//		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//		players[p_new.id]->SetPosition(pos);
-//		break;
-//	case PACKET_TYPE::SC_REMOVE_PLAYER:
-//		SC_REMOVE_PLAYER_PACKET p_remove;
-//		memcpy(&p_remove, p_buf, p_buf[0]);
-//		cout << p_remove.id << "Player REMOVED.\n";
-//		
-//		//player remove
-//		break;
-//		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
-//
-//	}
-//
-//}
