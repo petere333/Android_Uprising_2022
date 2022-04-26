@@ -492,8 +492,12 @@ public:
 	float yspeed = 0.0f;
 	XMFLOAT3 direction=XMFLOAT3(0.0f,0.0f,0.0f);
 
+
+
 	chrono::time_point<chrono::system_clock> lastMove;
 	bool lastMoveSuccess;
+
+	bool hammerHit = false;
 
 	bool isInAir = false;
 

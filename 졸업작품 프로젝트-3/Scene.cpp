@@ -1698,8 +1698,8 @@ void CScene::moveObject(int idx)
 			// 물체가 있는곳에 이동했는가?
 			for (int i = 0; i < nBox; ++i)
 			{
-				if (tx > boxesWorld[i].start.x - 0.5f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.5f
-					&& tx < boxesWorld[i].end.x + 0.5f && ty < boxesWorld[i].end.y - 0.0f && tz < boxesWorld[i].end.z + 0.5f)
+				if (tx > boxesWorld[i].start.x - 0.4f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.4f
+					&& tx < boxesWorld[i].end.x + 0.4f && ty < boxesWorld[i].end.y - 0.0f && tz < boxesWorld[i].end.z + 0.4f)
 				{
 
 
@@ -1771,8 +1771,8 @@ void CScene::moveObject(int idx)
 			// 적이 있는곳에 이동했는가?
 			for (int i = 0; i < enemies.size(); ++i)
 			{
-				if (tx > enemyBoxes[i].start.x - 0.5f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.5f
-					&& tx < enemyBoxes[i].end.x + 0.5f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.5f)
+				if (tx > enemyBoxes[i].start.x - 0.4f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.4f
+					&& tx < enemyBoxes[i].end.x + 0.4f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.4f)
 				{
 
 
@@ -1834,8 +1834,8 @@ void CScene::moveObject(int idx)
 			//계단이 있는 곳에 갔는가?
 			for (int i = 0; i < nStairs; ++i)
 			{
-				if (tx > stairsWorld[i].start.x - 0.5f && ty > stairsWorld[i].start.y - 1.7f && tz > stairsWorld[i].start.z - 0.5f
-					&& tx < stairsWorld[i].end.x + 0.5f && ty < stairsWorld[i].end.y - 0.3f && tz < stairsWorld[i].end.z + 0.5f)
+				if (tx > stairsWorld[i].start.x - 0.4f && ty > stairsWorld[i].start.y - 1.7f && tz > stairsWorld[i].start.z - 0.4f
+					&& tx < stairsWorld[i].end.x + 0.4f && ty < stairsWorld[i].end.y - 0.3f && tz < stairsWorld[i].end.z + 0.4f)
 				{
 
 
@@ -2545,6 +2545,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
+		players[idx]->hammerHit = false;
 		soundEffect[3]->play();
 		soundEffect[3]->Update();
 
@@ -2577,28 +2578,57 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			BoundBox bx;
 			XMFLOAT3 ps = players[idx]->GetPosition();
 
-			if (players[idx]->currentRotation.y <= 45.0f || players[idx]->currentRotation.y > 315)
+			if (players[idx]->currentRotation.y <= 22.5f || players[idx]->currentRotation.y > 337.5f) //북향
 			{
-				bx.start = XMFLOAT3(ps.x - 0.2f, ps.y + 0.6f, ps.z + 0.4f);
-				bx.end = XMFLOAT3(ps.x + 0.2f, ps.y + 1.0f, ps.z + 1.0f);
+				bx.start = XMFLOAT3(ps.x - 0.3f, ps.y + 0.6f, ps.z + 0.4f);
+				bx.end = XMFLOAT3(ps.x + 0.3f, ps.y + 1.0f, ps.z + 1.0f);
 			}
-			else if (players[idx]->currentRotation.y <= 135 && players[idx]->currentRotation.y > 45)//오른쪽 보고있는경우
+			else if (players[idx]->currentRotation.y <= 67.5f && players[idx]->currentRotation.y > 22.5f)//동북향
 			{
-				bx.start = XMFLOAT3(ps.x + 0.4f, ps.y + 0.6f, ps.z - 0.2f);
-				bx.end = XMFLOAT3(ps.x + 0.6f, ps.y + 1.0f, ps.z + 0.2f);
+				bx.start = XMFLOAT3(ps.x + 0.2f, ps.y + 0.6f, ps.z+0.2f);
+				bx.end = XMFLOAT3(ps.x + 0.8f, ps.y + 1.0f, ps.z + 0.8f);
 			}
-			else if (players[idx]->currentRotation.y <= 225 && players[idx]->currentRotation.y > 135)
+			else if (players[idx]->currentRotation.y <= 112.5f && players[idx]->currentRotation.y > 67.5f) //동향
 			{
+				bx.start = XMFLOAT3(ps.x + 0.4f, ps.y + 0.6f, ps.z - 0.3f);
+				bx.end = XMFLOAT3(ps.x + 1.0f, ps.y + 1.0f, ps.z + 0.3f);
+			}
+			else if (players[idx]->currentRotation.y <= 157.5f && players[idx]->currentRotation.y > 112.5f) //동남향
+			{
+				bx.start = XMFLOAT3(ps.x+0.2f, ps.y + 0.6f, ps.z-0.8f);
+				bx.end = XMFLOAT3(ps.x + 0.8f, ps.y + 1.0f, ps.z - 0.2f);
+			}
+			else if (players[idx]->currentRotation.y <= 202.5f && players[idx]->currentRotation.y > 157.5f) //남향
+			{
+				bx.start = XMFLOAT3(ps.x - 0.3f, ps.y + 0.6f, ps.z - 1.0f);
+				bx.end = XMFLOAT3(ps.x + 0.3f, ps.y + 1.0f, ps.z - 0.4f);
+			}
+			else if (players[idx]->currentRotation.y <= 247.5f && players[idx]->currentRotation.y > 202.5f)//서남향
+			{
+				bx.start = XMFLOAT3(ps.x-0.8f, ps.y + 0.6f, ps.z-0.8f);
+				bx.end = XMFLOAT3(ps.x - 0.2f, ps.y + 1.0f, ps.z - 0.2f);
+			}
+			else if (players[idx]->currentRotation.y <= 292.5f && players[idx]->currentRotation.y > 247.5f) //서향
+			{
+				bx.start = XMFLOAT3(ps.x - 1.0f, ps.y + 0.6f, ps.z - 0.3f);
+				bx.end = XMFLOAT3(ps.x - 0.4f, ps.y + 1.0f, ps.z + 0.3f);
+			}
+			else if (players[idx]->currentRotation.y <= 337.5f && players[idx]->currentRotation.y > 292.5f) //북서향
+			{
+				bx.start = XMFLOAT3(ps.x-0.8f, ps.y + 0.6f, ps.z+0.2f);
+				bx.end = XMFLOAT3(ps.x - 0.2f, ps.y + 1.0f, ps.z + 0.8f);
+			}
 
-			}
 			XMFLOAT3 pnt = getBoxOverlapPoint(bx, enemyBoxes[i], players[idx]->currentRotation.y);
 			
-			if (pnt.x != -9999.0f && pnt.y != -9999.0f && pnt.z != -9999.0f)
+			if (pnt.x != -9999.0f && pnt.y != -9999.0f && pnt.z != -9999.0f && players[idx]->hammerHit==false)
 			{
+				printf("Enemy [%d] hit\n", i);
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
-				enemies[i]->eState.currHP -= 2.0f;
+				players[idx]->hammerHit = true;
 				createParticles(50, pnt);
+				enemies[i]->eState.currHP -= 1.0f;
 			}
 		}
 	}
@@ -2692,8 +2722,8 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 		XMFLOAT3 pos = enemies[i]->GetPosition();
 
 		BoundBox box;
-		box.start = XMFLOAT3(pos.x - 0.5f, pos.y, pos.z - 0.5f);
-		box.end = XMFLOAT3(pos.x + 0.5f, pos.y + 1.75f, pos.z + 0.5f);
+		box.start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
+		box.end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
 
 		enemyBoxes.push_back(box);
 	}
