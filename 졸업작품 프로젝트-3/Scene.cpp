@@ -19,43 +19,72 @@ CScene::~CScene()
 
 void CScene::BuildDefaultLightsAndMaterials()
 {
-	m_nLights = 2;
+	m_nLights = 4;
 	m_pLights = new LIGHT[m_nLights];
 	::ZeroMemory(m_pLights, sizeof(LIGHT) * m_nLights);
 
-	m_xmf4GlobalAmbient = XMFLOAT4(0.15f, 0.15f, 0.15f, 1.0f);
-	/*
+	m_xmf4GlobalAmbient = XMFLOAT4(0.05f, 0.05f, 0.05f, 1.0f);
+	
+	m_pLights[3].m_bEnable = true;
+	m_pLights[3].m_nType = SPOT_LIGHT;
+	m_pLights[3].m_fRange = 200.0f;
+	m_pLights[3].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[3].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
+	m_pLights[3].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
+	m_pLights[3].m_xmf3Position = XMFLOAT3(300.0f, 25.0f, 300.0f);
+	m_pLights[3].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
+	m_pLights[3].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.00001f);
+	m_pLights[3].m_fFalloff = 15.0f;
+	m_pLights[3].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
+	m_pLights[3].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
+
+	m_pLights[2].m_bEnable = true;
+	m_pLights[2].m_nType = SPOT_LIGHT;
+	m_pLights[2].m_fRange = 200.0f;
+	m_pLights[2].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[2].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
+	m_pLights[2].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
+	m_pLights[2].m_xmf3Position = XMFLOAT3(0.0f, 2.0f, 250.0f);
+	m_pLights[2].m_xmf3Direction = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	m_pLights[2].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.00001f);
+	m_pLights[2].m_fFalloff = 15.0f;
+	m_pLights[2].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
+	m_pLights[2].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
+
 	m_pLights[1].m_bEnable = true;
-	m_pLights[1].m_nType = POINT_LIGHT;
-	m_pLights[1].m_fRange = 500.0f;
-	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.1f, 0.0f, 0.0f, 1.0f);
-	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
-	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 0.0f);
-	m_pLights[1].m_xmf3Position = XMFLOAT3(0.0f, 2.0f, 0.0f);
+	m_pLights[1].m_nType = SPOT_LIGHT;
+	m_pLights[1].m_fRange = 200.0f;
+	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
+	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
+	m_pLights[1].m_xmf3Position = XMFLOAT3(100.0f, 25.0f, 100.0f);
 	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
-	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.001f);
-	*/
+	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.00001f);
+	m_pLights[1].m_fFalloff = 15.0f;
+	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
+	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
+
 	m_pLights[0].m_bEnable = true;
 	m_pLights[0].m_nType = DIRECTIONAL_LIGHT;
-	m_pLights[0].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	m_pLights[0].m_xmf4Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
 	m_pLights[0].m_xmf4Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
 	m_pLights[0].m_xmf4Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.0f);
 	m_pLights[0].m_xmf3Direction = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	
-	
+	/*
 	m_pLights[1].m_bEnable = true;
 	m_pLights[1].m_nType = SPOT_LIGHT;
 	m_pLights[1].m_fRange = 600.0f;
 	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
 	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
 	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.3f, 0.3f, 0.3f, 0.0f);
-	m_pLights[1].m_xmf3Position = XMFLOAT3(10.0f, 20.0f, 10.0f);
+	m_pLights[1].m_xmf3Position = XMFLOAT3(300.0f, 20.0f, 300.0f);
 	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
 	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.0001f);
 	m_pLights[1].m_fFalloff = 10.0f;
 	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
 	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
-	
+	*/
 	m_pMaterials = new MATERIALS;
 	::ZeroMemory(m_pMaterials, sizeof(MATERIALS));
 
@@ -146,20 +175,21 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[26] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
 
+	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 
-
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex);
+	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex+nNormal);
 
 	for (int i = 0; i < nTex; ++i)
 	{
 		CreateShaderResourceViews(pd3dDevice, textures[i], 0, 3);
 	}
-	/*
+	
 	for (int i = 0; i < nNormal; ++i)
 	{
 		CreateShaderResourceViews(pd3dDevice, normalTex[i], 0, 6);
 	}
-	
+	/*
 	for (int i = 0; i < nDirt; ++i)
 	{
 		CreateShaderResourceViews(pd3dDevice, dirtTex[i], 0, 3);
@@ -173,7 +203,7 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	{
 		ppMaterials[i] = new CMaterial(1);
 		ppMaterials[i]->SetTexture(textures[i], 0);
-		//ppMaterials[i]->SetNormalTex(normalTex[i]);
+		ppMaterials[i]->SetNormalTex(normalTex[0]);
 	}
 	/*
 	for (int i = 0; i < 9; ++i)

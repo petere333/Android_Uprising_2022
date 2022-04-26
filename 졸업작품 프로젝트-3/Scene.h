@@ -97,7 +97,7 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
 	#define nTex  27
-	#define nNormal  12
+	#define nNormal  1
 	
 	#define nDirt  9
 	
