@@ -1138,17 +1138,20 @@ void createStairBox(vector<Object>& list, vector<BoundingBox>& blist, vector<Bou
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
-	Object HwaMul1[6];
-	for (int i = 0; i < 6; ++i)
+	Object HwaMul1[7];
+	for (int i = 0; i < 7; ++i)
 	{
-		HwaMul1[i].location = f3(450.0f + (3.0f * i), 3.1f, 293.0f);
-		HwaMul1[i].rotation = f3(0.0f, 0.0f, 0.0f);
-		HwaMul1[i].type = Factory_tool10;
-		list.push_back(HwaMul1[i]);
+			HwaMul1[i].location = f3(450.0f + (3.0f * i), 3.1f, 293.0f);
+			HwaMul1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+			HwaMul1[i].type = Factory_tool10;
+			list.push_back(HwaMul1[i]);
 	}
 
-	Object HwaMul2[6];
-	for (int i = 0; i < 6; ++i)
+	
+
+	Object HwaMul2[7];
+	
+	for (int i = 0; i < 7; ++i)
 	{
 		HwaMul2[i].location = f3(450.0f + (3.0f * i), 3.1f, 291.5f);
 		HwaMul2[i].rotation = f3(0.0f, 0.0f, 0.0f);
@@ -1156,22 +1159,688 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		list.push_back(HwaMul2[i]);
 	}
 
-	Object HwaMul3[6];
-	for (int i = 0; i < 6; ++i)
+	Object HwaMul3[7];
+	for (int i = 0; i < 7; ++i)
 	{
 		HwaMul3[i].location = f3(450.0f + (3.0f * i), 3.1f, 290.0f);
 		HwaMul3[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		HwaMul3[i].type = Factory_tool10;
 		list.push_back(HwaMul3[i]);
 	}
-	Object HwaMul4[6];
-	for (int i = 0; i < 6; ++i)
+
+
+	Object HwaMul4[7];
+	for (int i = 0; i < 7; ++i)
 	{
 		HwaMul4[i].location = f3(450.0f + (3.0f * i), 3.1f, 288.5f);
 		HwaMul4[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		HwaMul4[i].type = Factory_tool10;
 		list.push_back(HwaMul4[i]);
 	}
+
+	Object HwaMul1_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_m[i].location = f3(450.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_m[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_m[i].type = Factory_tool10;
+		list.push_back(HwaMul1_m[i]);
+	}
+
+	Object HwaMul2_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_m[i].location = f3(450.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_m[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_m[i].type = Factory_tool10;
+		list.push_back(HwaMul2_m[i]);
+	}
+
+	Object HwaMul3_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_m[i].location = f3(450.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_m[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_m[i].type = Factory_tool10;
+		list.push_back(HwaMul3_m[i]);
+	}
+
+	Object HwaMul4_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_m[i].location = f3(450.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_m[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_m[i].type = Factory_tool10;
+		list.push_back(HwaMul4_m[i]);
+	}
+
+
+	///
+	Object HwaMul1_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_h[i].location = f3(450.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_h[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_h[i].type = Factory_tool10;
+		list.push_back(HwaMul1_h[i]);
+	}
+
+	Object HwaMul2_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_h[i].location = f3(450.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_h[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_h[i].type = Factory_tool10;
+		list.push_back(HwaMul2_h[i]);
+	}
+
+	Object HwaMul3_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_h[i].location = f3(450.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_h[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_h[i].type = Factory_tool10;
+		list.push_back(HwaMul3_h[i]);
+	}
+
+	Object HwaMul4_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_h[i].location = f3(450.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_h[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_h[i].type = Factory_tool10;
+		list.push_back(HwaMul4_h[i]);
+	}
+
+
+
+
+	///////////////////////////////////
+
+	Object HwaMul1a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1a[i].location = f3(475.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1a[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1a[i].type = Factory_tool10;
+		list.push_back(HwaMul1a[i]);
+	}
+
+	Object HwaMul2a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2a[i].location = f3(475.0f + (3.0f * i), 3.1f, 291.5f);
+		HwaMul2a[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2a[i].type = Factory_tool10;
+		list.push_back(HwaMul2a[i]);
+	}
+
+	Object HwaMul3a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3a[i].location = f3(475.0f + (3.0f * i), 3.1f, 290.0f);
+		HwaMul3a[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3a[i].type = Factory_tool10;
+		list.push_back(HwaMul3a[i]);
+	}
+
+
+	Object HwaMul4a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4a[i].location = f3(475.0f + (3.0f * i), 3.1f, 288.5f);
+		HwaMul4a[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4a[i].type = Factory_tool10;
+		list.push_back(HwaMul4a[i]);
+	}
+
+	Object HwaMul1_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_ma[i].location = f3(475.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_ma[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_ma[i].type = Factory_tool10;
+		list.push_back(HwaMul1_ma[i]);
+	}
+
+	Object HwaMul2_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_ma[i].location = f3(475.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_ma[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_ma[i].type = Factory_tool10;
+		list.push_back(HwaMul2_ma[i]);
+	}
+
+	Object HwaMul3_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_ma[i].location = f3(475.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_ma[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_ma[i].type = Factory_tool10;
+		list.push_back(HwaMul3_ma[i]);
+	}
+
+	Object HwaMul4_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_ma[i].location = f3(475.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_ma[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_ma[i].type = Factory_tool10;
+		list.push_back(HwaMul4_ma[i]);
+	}
+
+
+	///
+	Object HwaMul1_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_ha[i].location = f3(475.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_ha[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_ha[i].type = Factory_tool10;
+		list.push_back(HwaMul1_ha[i]);
+	}
+
+	Object HwaMul2_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_ha[i].location = f3(475.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_ha[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_ha[i].type = Factory_tool10;
+		list.push_back(HwaMul2_ha[i]);
+	}
+
+	Object HwaMul3_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_ha[i].location = f3(475.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_ha[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_ha[i].type = Factory_tool10;
+		list.push_back(HwaMul3_ha[i]);
+	}
+
+	Object HwaMul4_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_ha[i].location = f3(475.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_ha[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_ha[i].type = Factory_tool10;
+		list.push_back(HwaMul4_ha[i]);
+	}
+
+	////////////////////////////////////
+	Object HwaMul1b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1b[i].location = f3(500.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1b[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1b[i].type = Factory_tool10;
+		list.push_back(HwaMul1b[i]);
+	}
+
+
+
+	Object HwaMul2b[7];
+
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2b[i].location = f3(500.0f + (3.0f * i), 3.1f, 291.5f);
+		HwaMul2b[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2b[i].type = Factory_tool10;
+		list.push_back(HwaMul2b[i]);
+	}
+
+	Object HwaMul3b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3b[i].location = f3(500.0f + (3.0f * i), 3.1f, 290.0f);
+		HwaMul3b[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3b[i].type = Factory_tool10;
+		list.push_back(HwaMul3b[i]);
+	}
+
+
+	Object HwaMul4b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4b[i].location = f3(500.0f + (3.0f * i), 3.1f, 288.5f);
+		HwaMul4b[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4b[i].type = Factory_tool10;
+		list.push_back(HwaMul4b[i]);
+	}
+
+	Object HwaMul1_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_mb[i].location = f3(500.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_mb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_mb[i].type = Factory_tool10;
+		list.push_back(HwaMul1_mb[i]);
+	}
+
+	Object HwaMul2_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_mb[i].location = f3(500.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_mb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_mb[i].type = Factory_tool10;
+		list.push_back(HwaMul2_mb[i]);
+	}
+
+	Object HwaMul3_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_mb[i].location = f3(500.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_mb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_mb[i].type = Factory_tool10;
+		list.push_back(HwaMul3_mb[i]);
+	}
+
+	Object HwaMul4_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_mb[i].location = f3(500.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_mb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_mb[i].type = Factory_tool10;
+		list.push_back(HwaMul4_mb[i]);
+	}
+
+
+	///
+	Object HwaMul1_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_hb[i].location = f3(500.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_hb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_hb[i].type = Factory_tool10;
+		list.push_back(HwaMul1_hb[i]);
+	}
+
+	Object HwaMul2_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_hb[i].location = f3(500.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_hb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_hb[i].type = Factory_tool10;
+		list.push_back(HwaMul2_hb[i]);
+	}
+
+	Object HwaMul3_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_hb[i].location = f3(500.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_hb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_hb[i].type = Factory_tool10;
+		list.push_back(HwaMul3_hb[i]);
+	}
+
+	Object HwaMul4_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_hb[i].location = f3(500.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_hb[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_hb[i].type = Factory_tool10;
+		list.push_back(HwaMul4_hb[i]);
+	}
+
+
+
+	////////////////////////////
+
+	Object HwaMul1c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1c[i].location = f3(525.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1c[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1c[i].type = Factory_tool10;
+		list.push_back(HwaMul1c[i]);
+	}
+
+
+
+	Object HwaMul2c[7];
+
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2c[i].location = f3(525.0f + (3.0f * i), 3.1f, 291.5f);
+		HwaMul2c[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2c[i].type = Factory_tool10;
+		list.push_back(HwaMul2c[i]);
+	}
+
+	Object HwaMul3c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3c[i].location = f3(525.0f + (3.0f * i), 3.1f, 290.0f);
+		HwaMul3c[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3c[i].type = Factory_tool10;
+		list.push_back(HwaMul3c[i]);
+	}
+
+
+	Object HwaMul4c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4c[i].location = f3(525.0f + (3.0f * i), 3.1f, 288.5f);
+		HwaMul4c[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4c[i].type = Factory_tool10;
+		list.push_back(HwaMul4c[i]);
+	}
+
+	Object HwaMul1_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_mc[i].location = f3(525.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_mc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_mc[i].type = Factory_tool10;
+		list.push_back(HwaMul1_mc[i]);
+	}
+
+	Object HwaMul2_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_mc[i].location = f3(525.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_mc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_mc[i].type = Factory_tool10;
+		list.push_back(HwaMul2_mc[i]);
+	}
+
+	Object HwaMul3_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_mc[i].location = f3(525.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_mc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_mc[i].type = Factory_tool10;
+		list.push_back(HwaMul3_mc[i]);
+	}
+
+	Object HwaMul4_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_mc[i].location = f3(525.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_mc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_mc[i].type = Factory_tool10;
+		list.push_back(HwaMul4_mc[i]);
+	}
+
+
+	///
+	Object HwaMul1_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_hc[i].location = f3(525.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_hc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_hc[i].type = Factory_tool10;
+		list.push_back(HwaMul1_hc[i]);
+	}
+
+	Object HwaMul2_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_hc[i].location = f3(525.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_hc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_hc[i].type = Factory_tool10;
+		list.push_back(HwaMul2_hc[i]);
+	}
+
+	Object HwaMul3_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_hc[i].location = f3(525.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_hc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_hc[i].type = Factory_tool10;
+		list.push_back(HwaMul3_hc[i]);
+	}
+
+	Object HwaMul4_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_hc[i].location = f3(525.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_hc[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_hc[i].type = Factory_tool10;
+		list.push_back(HwaMul4_hc[i]);
+	}
+
+
+
+	///////////////////////////////
+
+
+	Object HwaMul1d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1d[i].location = f3(550.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1d[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1d[i].type = Factory_tool10;
+		list.push_back(HwaMul1d[i]);
+	}
+
+
+
+	Object HwaMul2d[7];
+
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2d[i].location = f3(550.0f + (3.0f * i), 3.1f, 291.5f);
+		HwaMul2d[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2d[i].type = Factory_tool10;
+		list.push_back(HwaMul2d[i]);
+	}
+
+	Object HwaMul3d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3d[i].location = f3(550.0f + (3.0f * i), 3.1f, 290.0f);
+		HwaMul3d[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3d[i].type = Factory_tool10;
+		list.push_back(HwaMul3d[i]);
+	}
+
+
+	Object HwaMul4d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4d[i].location = f3(550.0f + (3.0f * i), 3.1f, 288.5f);
+		HwaMul4d[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4d[i].type = Factory_tool10;
+		list.push_back(HwaMul4d[i]);
+	}
+
+	Object HwaMul1_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_md[i].location = f3(550.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_md[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_md[i].type = Factory_tool10;
+		list.push_back(HwaMul1_md[i]);
+	}
+
+	Object HwaMul2_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_md[i].location = f3(550.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_md[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_md[i].type = Factory_tool10;
+		list.push_back(HwaMul2_md[i]);
+	}
+
+	Object HwaMul3_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_md[i].location = f3(550.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_md[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_md[i].type = Factory_tool10;
+		list.push_back(HwaMul3_md[i]);
+	}
+
+	Object HwaMul4_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_md[i].location = f3(550.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_md[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_md[i].type = Factory_tool10;
+		list.push_back(HwaMul4_md[i]);
+	}
+
+
+	///
+	Object HwaMul1_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_hd[i].location = f3(550.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_hd[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_hd[i].type = Factory_tool10;
+		list.push_back(HwaMul1_hd[i]);
+	}
+
+	Object HwaMul2_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_hd[i].location = f3(550.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_hd[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_hd[i].type = Factory_tool10;
+		list.push_back(HwaMul2_hd[i]);
+	}
+
+	Object HwaMul3_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_hd[i].location = f3(550.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_hd[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_hd[i].type = Factory_tool10;
+		list.push_back(HwaMul3_hd[i]);
+	}
+
+	Object HwaMul4_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_hd[i].location = f3(550.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_hd[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_hd[i].type = Factory_tool10;
+		list.push_back(HwaMul4_hd[i]);
+	}
+
+
+
+	////////////////////////////////////
+
+	Object HwaMul1e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1e[i].location = f3(575.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1e[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1e[i].type = Factory_tool10;
+		list.push_back(HwaMul1e[i]);
+	}
+
+
+
+	Object HwaMul2e[7];
+
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2e[i].location = f3(575.0f + (3.0f * i), 3.1f, 291.5f);
+		HwaMul2e[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2e[i].type = Factory_tool10;
+		list.push_back(HwaMul2e[i]);
+	}
+
+	Object HwaMul3e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3e[i].location = f3(575.0f + (3.0f * i), 3.1f, 290.0f);
+		HwaMul3e[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3e[i].type = Factory_tool10;
+		list.push_back(HwaMul3e[i]);
+	}
+
+
+	Object HwaMul4e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4e[i].location = f3(575.0f + (3.0f * i), 3.1f, 288.5f);
+		HwaMul4e[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4e[i].type = Factory_tool10;
+		list.push_back(HwaMul4e[i]);
+	}
+
+	Object HwaMul1_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_me[i].location = f3(575.0f + (3.0f * i), 3.9f, 293.0f);
+		HwaMul1_me[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_me[i].type = Factory_tool10;
+		list.push_back(HwaMul1_me[i]);
+	}
+
+	Object HwaMul2_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_me[i].location = f3(575.0f + (3.0f * i), 3.9f, 291.5f);
+		HwaMul2_me[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_me[i].type = Factory_tool10;
+		list.push_back(HwaMul2_me[i]);
+	}
+
+	Object HwaMul3_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_me[i].location = f3(575.0f + (3.0f * i), 3.9f, 290.0f);
+		HwaMul3_me[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_me[i].type = Factory_tool10;
+		list.push_back(HwaMul3_me[i]);
+	}
+
+	Object HwaMul4_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_me[i].location = f3(575.0f + (3.0f * i), 3.9f, 288.5f);
+		HwaMul4_me[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_me[i].type = Factory_tool10;
+		list.push_back(HwaMul4_mc[i]);
+	}
+
+
+	///
+	Object HwaMul1_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul1_he[i].location = f3(575.0f + (3.0f * i), 4.7f, 293.0f);
+		HwaMul1_he[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1_he[i].type = Factory_tool10;
+		list.push_back(HwaMul1_he[i]);
+	}
+
+	Object HwaMul2_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul2_he[i].location = f3(575.0f + (3.0f * i), 4.7f, 291.5f);
+		HwaMul2_he[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul2_he[i].type = Factory_tool10;
+		list.push_back(HwaMul2_he[i]);
+	}
+
+	Object HwaMul3_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul3_he[i].location = f3(575.0f + (3.0f * i), 4.7f, 290.0f);
+		HwaMul3_he[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul3_he[i].type = Factory_tool10;
+		list.push_back(HwaMul3_he[i]);
+	}
+
+	Object HwaMul4_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		HwaMul4_he[i].location = f3(575.0f + (3.0f * i), 4.7f, 288.5f);
+		HwaMul4_he[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul4_he[i].type = Factory_tool10;
+		list.push_back(HwaMul4_he[i]);
+	}
+
+
+	//////////////////////////////////
+
 
 
 
@@ -2217,64 +2886,658 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Pbox1);
 	list.push_back(Pbox2);
 	list.push_back(Pbox3);
-	list.push_back(Pbox4);
-	list.push_back(Pbox5);
-	list.push_back(Pbox6);
-	list.push_back(Pbox7);
-	list.push_back(Pbox8);
-	list.push_back(Pbox9);
-	list.push_back(Pbox10);
-	list.push_back(Pbox11);
-	list.push_back(Pbox12);
-	list.push_back(Pbox13);
-	list.push_back(Pbox14);
-	list.push_back(Pbox15);
-	list.push_back(Pbox16);
-	list.push_back(Pbox17);
-	list.push_back(Pbox18);
-	list.push_back(Pbox19);
-	list.push_back(Pbox20);
-	list.push_back(Pbox21);
-	list.push_back(Pbox22);
-	list.push_back(Engine1);
-	list.push_back(Engine2);
-	list.push_back(Engine3);
-	list.push_back(Engine4);
-	list.push_back(Engine5);
-	list.push_back(Engine6);
-	list.push_back(Engine7);
 
-	BoundingBox SwaMul1[6];
-	for (int i = 0; i < 6; ++i)
+
+	BoundingBox SwaMul1[7];
+	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul1[i].start = f3(448.5f+(3.0f*i), 3.1f, 293.0f);
-		SwaMul1[i].end = f3(451.5f+(3.0f*i), 3.9f, 294.5f);
+		SwaMul1[i].start = f3(448.5f+(3.0f*i), 2.7f, 292.25f);
+		SwaMul1[i].end = f3(451.5f+(3.0f*i), 3.5f, 293.75f);
 		blist.push_back(SwaMul1[i]);
 	}
 
-	BoundingBox SwaMul2[6];
-	for (int i = 0; i < 6; ++i)
+
+	BoundingBox SwaMul2[7];
+	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul2[i].start = f3(448.5f + (3.0f * i), 3.1f, 291.5f);
-		SwaMul2[i].end = f3(451.5f + (3.0f * i), 3.9f, 293.0f);
+		SwaMul2[i].start = f3(448.5f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2[i].end = f3(451.5f + (3.0f * i), 3.5f, 292.25f);
 		blist.push_back(SwaMul2[i]);
 	}
 
-	BoundingBox SwaMul3[6];
-	for (int i = 0; i < 6; ++i)
+
+	BoundingBox SwaMul3[7];
+	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul3[i].start = f3(448.5f + (3.0f * i), 3.1f, 290.0f);
-		SwaMul3[i].end = f3(451.5f + (3.0f * i), 3.9f, 291.5f);
+		SwaMul3[i].start = f3(448.5f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3[i].end = f3(451.5f + (3.0f * i), 3.5f, 290.75f);
 		blist.push_back(SwaMul3[i]);
 	}
 
-	BoundingBox SwaMul4[6];
-	for (int i = 0; i < 6; ++i)
+
+	BoundingBox SwaMul4[7];
+	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul4[i].start = f3(448.5f + (3.0f * i), 3.1f, 288.5f);
-		SwaMul4[i].end = f3(451.5f + (3.0f * i), 3.9f, 290.0f);
+		SwaMul4[i].start = f3(448.5f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4[i].end = f3(451.5f + (3.0f * i), 3.5f, 289.25f);
 		blist.push_back(SwaMul4[i]);
 	}
+
+
+	BoundingBox SwaMul1_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_m[i].start = f3(448.5f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_m[i].end = f3(451.5f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_m[i]);
+	}
+
+	BoundingBox SwaMul2_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_m[i].start = f3(448.5f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_m[i].end = f3(451.5f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_m[i]);
+	}
+
+
+	BoundingBox SwaMul3_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_m[i].start = f3(448.5f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_m[i].end = f3(451.5f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_m[i]);
+	}
+
+
+	BoundingBox SwaMul4_m[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_m[i].start = f3(448.5f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_m[i].end = f3(451.5f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_m[i]);
+	}
+
+	BoundingBox SwaMul1_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_h[i].start = f3(448.5f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_h[i].end = f3(451.5f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_h[i]);
+	}
+
+	BoundingBox SwaMul2_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_h[i].start = f3(448.5f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_h[i].end = f3(451.5f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_h[i]);
+	}
+
+	BoundingBox SwaMul3_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_h[i].start = f3(448.5f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_h[i].end = f3(451.5f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_h[i]);
+	}
+
+
+	BoundingBox SwaMul4_h[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_h[i].start = f3(448.5f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_h[i].end = f3(451.5f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_h[i]);
+	}
+
+
+
+
+
+	//////////////////////////////////
+
+
+
+	BoundingBox SwaMul1a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1a[i].start = f3(448.5f + (3.0f * i)+25.0f, 2.7f, 292.25f);
+		SwaMul1a[i].end = f3(451.5f + (3.0f * i)+25.0f, 3.5f, 293.75f);
+		blist.push_back(SwaMul1a[i]);
+	}
+
+
+	BoundingBox SwaMul2a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 292.25f);
+		blist.push_back(SwaMul2a[i]);
+	}
+
+
+	BoundingBox SwaMul3a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 290.75f);
+		blist.push_back(SwaMul3a[i]);
+	}
+
+
+	BoundingBox SwaMul4a[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 289.25f);
+		blist.push_back(SwaMul4a[i]);
+	}
+
+
+	BoundingBox SwaMul1_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_ma[i]);
+	}
+
+	BoundingBox SwaMul2_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_ma[i]);
+	}
+
+
+	BoundingBox SwaMul3_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_ma[i]);
+	}
+
+
+	BoundingBox SwaMul4_ma[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_ma[i]);
+	}
+
+	BoundingBox SwaMul1_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_ha[i]);
+	}
+
+	BoundingBox SwaMul2_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_ha[i]);
+	}
+
+	BoundingBox SwaMul3_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_ha[i]);
+	}
+
+
+	BoundingBox SwaMul4_ha[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_ha[i]);
+	}
+
+
+
+
+	////////////////////////////////
+
+
+	BoundingBox SwaMul1b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1b[i].start = f3(448.5f + (3.0f * i) + 50.0f, 2.7f, 292.25f);
+		SwaMul1b[i].end = f3(451.5f + (3.0f * i) + 50.0f, 3.5f, 293.75f);
+		blist.push_back(SwaMul1b[i]);
+	}
+
+
+	BoundingBox SwaMul2b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2b[i].start = f3(448.5f + 50.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2b[i].end = f3(451.5f + 50.0f + (3.0f * i), 3.5f, 292.25f);
+		blist.push_back(SwaMul2b[i]);
+	}
+
+
+	BoundingBox SwaMul3b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3b[i].start = f3(448.5f + 50.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3b[i].end = f3(451.5f + 50.0f + (3.0f * i), 3.5f, 290.75f);
+		blist.push_back(SwaMul3b[i]);
+	}
+
+
+	BoundingBox SwaMul4b[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4b[i].start = f3(448.5f + 50.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4b[i].end = f3(451.5f + 50.0f + (3.0f * i), 3.5f, 289.25f);
+		blist.push_back(SwaMul4b[i]);
+	}
+
+
+	BoundingBox SwaMul1_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_mb[i].start = f3(448.5f + 50.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_mb[i].end = f3(451.5f + 50.0f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_mb[i]);
+	}
+
+	BoundingBox SwaMul2_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_mb[i].start = f3(448.5f + 50.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_mb[i].end = f3(451.5f + 50.0f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_mb[i]);
+	}
+
+
+	BoundingBox SwaMul3_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_mb[i].start = f3(448.5f + 50.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_mb[i].end = f3(451.5f + 50.0f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_mb[i]);
+	}
+
+
+	BoundingBox SwaMul4_mb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_mb[i].start = f3(448.5f + 50.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_mb[i].end = f3(451.5f + 50.0f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_mb[i]);
+	}
+
+	BoundingBox SwaMul1_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_hb[i].start = f3(448.5f + 50.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_hb[i].end = f3(451.5f + 50.0f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_hb[i]);
+	}
+
+	BoundingBox SwaMul2_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_hb[i].start = f3(448.5f + 50.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_hb[i].end = f3(451.5f + 50.0f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_hb[i]);
+	}
+
+	BoundingBox SwaMul3_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_hb[i].start = f3(448.5f + 50.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_hb[i].end = f3(451.5f + 50.0f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_hb[i]);
+	}
+
+
+	BoundingBox SwaMul4_hb[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_hb[i].start = f3(448.5f + 50.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_hb[i].end = f3(451.5f + 50.0f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_hb[i]);
+	}
+
+
+	//////////////////////////////////////////////////\\
+
+
+	BoundingBox SwaMul1c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1c[i].start = f3(448.5f + (3.0f * i) + 75.0f, 2.7f, 292.25f);
+		SwaMul1c[i].end = f3(451.5f + (3.0f * i) + 75.0f, 3.5f, 293.75f);
+		blist.push_back(SwaMul1c[i]);
+	}
+
+
+	BoundingBox SwaMul2c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2c[i].start = f3(448.5f + 75.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2c[i].end = f3(451.5f + 75.0f + (3.0f * i), 3.5f, 292.25f);
+		blist.push_back(SwaMul2c[i]);
+	}
+
+
+	BoundingBox SwaMul3c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3c[i].start = f3(448.5f + 75.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3c[i].end = f3(451.5f + 75.0f + (3.0f * i), 3.5f, 290.75f);
+		blist.push_back(SwaMul3c[i]);
+	}
+
+
+	BoundingBox SwaMul4c[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4c[i].start = f3(448.5f + 75.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4c[i].end = f3(451.5f + 75.0f + (3.0f * i), 3.5f, 289.25f);
+		blist.push_back(SwaMul4c[i]);
+	}
+
+
+	BoundingBox SwaMul1_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_mc[i].start = f3(448.5f + 75.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_mc[i].end = f3(451.5f + 75.0f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_mc[i]);
+	}
+
+	BoundingBox SwaMul2_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_mc[i].start = f3(448.5f + 75.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_mc[i].end = f3(451.5f + 75.0f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_mc[i]);
+	}
+
+
+	BoundingBox SwaMul3_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_mc[i].start = f3(448.5f + 75.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_mc[i].end = f3(451.5f + 75.0f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_mc[i]);
+	}
+
+
+	BoundingBox SwaMul4_mc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_mc[i].start = f3(448.5f + 75.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_mc[i].end = f3(451.5f + 75.0f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_mc[i]);
+	}
+
+	BoundingBox SwaMul1_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_hc[i].start = f3(448.5f + 75.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_hc[i].end = f3(451.5f + 75.0f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_hc[i]);
+	}
+
+	BoundingBox SwaMul2_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_hc[i].start = f3(448.5f + 75.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_hc[i].end = f3(451.5f + 75.0f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_hc[i]);
+	}
+
+	BoundingBox SwaMul3_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_hc[i].start = f3(448.5f + 75.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_hc[i].end = f3(451.5f + 75.0f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_hc[i]);
+	}
+
+
+	BoundingBox SwaMul4_hc[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_hc[i].start = f3(448.5f + 75.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_hc[i].end = f3(451.5f + 75.0f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_hc[i]);
+	}
+
+
+	//////////////////////////////////////////////////
+
+
+	BoundingBox SwaMul1d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1d[i].start = f3(448.5f + (3.0f * i) + 100.0f, 2.7f, 292.25f);
+		SwaMul1d[i].end = f3(451.5f + (3.0f * i) + 100.0f, 3.5f, 293.75f);
+		blist.push_back(SwaMul1d[i]);
+	}
+
+
+	BoundingBox SwaMul2d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2d[i].start = f3(448.5f +100.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2d[i].end = f3(451.5f + 100.0f + (3.0f * i), 3.5f, 292.25f);
+		blist.push_back(SwaMul2d[i]);
+	}
+
+
+	BoundingBox SwaMul3d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3d[i].start = f3(448.5f + 100.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3d[i].end = f3(451.5f + 100.0f + (3.0f * i), 3.5f, 290.75f);
+		blist.push_back(SwaMul3d[i]);
+	}
+
+
+	BoundingBox SwaMul4d[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4d[i].start = f3(448.5f + 100.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4d[i].end = f3(451.5f + 100.0f + (3.0f * i), 3.5f, 289.25f);
+		blist.push_back(SwaMul4d[i]);
+	}
+
+
+	BoundingBox SwaMul1_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_md[i].start = f3(448.5f + 100.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_md[i].end = f3(451.5f + 100.0f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_md[i]);
+	}
+
+	BoundingBox SwaMul2_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_md[i].start = f3(448.5f + 100.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_md[i].end = f3(451.5f + 100.0f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_md[i]);
+	}
+
+
+	BoundingBox SwaMul3_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_md[i].start = f3(448.5f + 100.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_md[i].end = f3(451.5f + 100.0f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_md[i]);
+	}
+
+
+	BoundingBox SwaMul4_md[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_md[i].start = f3(448.5f + 100.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_md[i].end = f3(451.5f + 100.0f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_md[i]);
+	}
+
+	BoundingBox SwaMul1_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_hd[i].start = f3(448.5f + 100.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_hd[i].end = f3(451.5f + 100.0f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_hd[i]);
+	}
+
+	BoundingBox SwaMul2_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_hd[i].start = f3(448.5f + 100.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_hd[i].end = f3(451.5f + 100.0f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_hd[i]);
+	}
+
+	BoundingBox SwaMul3_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_hd[i].start = f3(448.5f + 100.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_hd[i].end = f3(451.5f + 100.0f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_hd[i]);
+	}
+
+
+	BoundingBox SwaMul4_hd[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_hd[i].start = f3(448.5f + 100.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_hd[i].end = f3(451.5f + 100.0f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_hd[i]);
+	}
+
+
+
+	/////////////////////////////////////////////////
+
+
+
+	BoundingBox SwaMul1e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1e[i].start = f3(448.5f + (3.0f * i) + 125.0f, 2.7f, 292.25f);
+		SwaMul1e[i].end = f3(451.5f + (3.0f * i) + 125.0f, 3.5f, 293.75f);
+		blist.push_back(SwaMul1e[i]);
+	}
+
+
+	BoundingBox SwaMul2e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2e[i].start = f3(448.5f + 125.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2e[i].end = f3(451.5f + 125.0f + (3.0f * i), 3.5f, 292.25f);
+		blist.push_back(SwaMul2e[i]);
+	}
+
+
+	BoundingBox SwaMul3e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3e[i].start = f3(448.5f + 125.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3e[i].end = f3(451.5f + 125.0f + (3.0f * i), 3.5f, 290.75f);
+		blist.push_back(SwaMul3e[i]);
+	}
+
+
+	BoundingBox SwaMul4e[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4e[i].start = f3(448.5f + 125.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4e[i].end = f3(451.5f + 125.0f + (3.0f * i), 3.5f, 289.25f);
+		blist.push_back(SwaMul4e[i]);
+	}
+
+
+	BoundingBox SwaMul1_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_me[i].start = f3(448.5f + 125.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_me[i].end = f3(451.5f + 125.0f + (3.0f * i), 4.3f, 293.75f);
+		blist.push_back(SwaMul1_me[i]);
+	}
+
+	BoundingBox SwaMul2_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_me[i].start = f3(448.5f + 125.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_me[i].end = f3(451.5f + 125.0f + (3.0f * i), 4.3f, 292.25f);
+		blist.push_back(SwaMul2_me[i]);
+	}
+
+
+	BoundingBox SwaMul3_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_me[i].start = f3(448.5f + 125.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_me[i].end = f3(451.5f + 125.0f + (3.0f * i), 4.3f, 290.75f);
+		blist.push_back(SwaMul3_me[i]);
+	}
+
+
+	BoundingBox SwaMul4_me[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_me[i].start = f3(448.5f + 125.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_me[i].end = f3(451.5f + 125.0f + (3.0f * i), 4.3f, 289.25f);
+		blist.push_back(SwaMul4_me[i]);
+	}
+
+	BoundingBox SwaMul1_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul1_he[i].start = f3(448.5f + 125.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_he[i].end = f3(451.5f + 125.0f + (3.0f * i), 5.1f, 293.75f);
+		blist.push_back(SwaMul1_he[i]);
+	}
+
+	BoundingBox SwaMul2_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul2_he[i].start = f3(448.5f + 125.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_he[i].end = f3(451.5f + 125.0f + (3.0f * i), 5.1f, 292.25f);
+		blist.push_back(SwaMul2_he[i]);
+	}
+
+	BoundingBox SwaMul3_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul3_he[i].start = f3(448.5f +125.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_he[i].end = f3(451.5f + 125.0f + (3.0f * i), 5.1f, 290.75f);
+		blist.push_back(SwaMul3_he[i]);
+	}
+
+
+	BoundingBox SwaMul4_he[7];
+	for (int i = 0; i < 7; ++i)
+	{
+		SwaMul4_he[i].start = f3(448.5f + 125.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_he[i].end = f3(451.5f + 125.0f + (3.0f * i), 5.1f, 289.25f);
+		blist.push_back(SwaMul4_he[i]);
+	}
+
+
+
+	///////////////////////////////////////////////////
+
 
 	BoundingBox SSonVan2[5];
 	for (int i = 0; i < 5; ++i)
