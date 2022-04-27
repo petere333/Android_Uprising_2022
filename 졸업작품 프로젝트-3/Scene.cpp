@@ -378,6 +378,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_tool8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Áüµ¢ÀÌ.txt", NULL);
 	CLoadedMesh* Gongjang_tool9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_¾î´À¼±¹Ý.txt", NULL);
 	CLoadedMesh* Gongjang_tool10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_±×³ÉÈ­¹°1.txt", NULL);
+	CLoadedMesh* Gongjang_tool11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_¾²·¹±âºÀÅõ.txt", NULL);
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1052,6 +1053,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		{
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool10);
+		obj->SetMaterial(0, ppMaterials[36]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool11);
 		obj->SetMaterial(0, ppMaterials[36]);
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 

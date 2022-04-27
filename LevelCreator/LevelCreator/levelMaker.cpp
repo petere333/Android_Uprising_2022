@@ -1138,6 +1138,53 @@ void createStairBox(vector<Object>& list, vector<BoundingBox>& blist, vector<Bou
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
+	Object Bag1[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		Bag1[i].location = f3(416.0f+(5.0f*i), 3.5f, 495.5f);
+		Bag1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Bag1[i].type = Factory_tool11;
+		list.push_back(Bag1[i]);
+	}
+
+
+	Object Bag2[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		Bag2[i].location = f3(441.0f + (5.0f * i), 3.5f, 495.5f);
+		Bag2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Bag2[i].type = Factory_tool11;
+		list.push_back(Bag2[i]);
+	}
+
+
+	Object Bag3[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		Bag3[i].location = f3(466.0f + (5.0f * i), 3.5f, 495.5f);
+		Bag3[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Bag3[i].type = Factory_tool11;
+		list.push_back(Bag3[i]);
+	}
+
+	Object Bag4[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		Bag4[i].location = f3(491.0f + (5.0f * i), 3.5f, 495.5f);
+		Bag4[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Bag4[i].type = Factory_tool11;
+		list.push_back(Bag4[i]);
+	}
+
+	Object Bag5[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		Bag5[i].location = f3(516.0f + (5.0f * i), 3.5f, 495.5f);
+		Bag5[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Bag5[i].type = Factory_tool11;
+		list.push_back(Bag5[i]);
+	}
+
 	Object HwaMul1[7];
 	for (int i = 0; i < 7; ++i)
 	{
@@ -2888,6 +2935,53 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Pbox3);
 
 
+	BoundingBox TrashBag1[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		TrashBag1[i].start = f3(413.5f + (5.0f * i), 2.7f, 493.0f);
+		TrashBag1[i].end = f3(418.5f + (5.0f * i), 4.3f, 498.0f);
+		blist.push_back(TrashBag1[i]);
+
+	}
+
+	BoundingBox TrashBag2[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		TrashBag2[i].start = f3(438.5f + (5.0f * i), 2.7f, 493.0f);
+		TrashBag2[i].end = f3(443.5f + (5.0f * i), 4.3f, 498.0f);
+		blist.push_back(TrashBag2[i]);
+
+	}
+
+	BoundingBox TrashBag3[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		TrashBag3[i].start = f3(463.5f + (5.0f * i), 2.7f, 493.0f);
+		TrashBag3[i].end = f3(468.5f + (5.0f * i), 4.3f, 498.0f);
+		blist.push_back(TrashBag3[i]);
+
+	}
+
+	BoundingBox TrashBag4[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		TrashBag4[i].start = f3(488.5f + (5.0f * i), 2.7f, 493.0f);
+		TrashBag4[i].end = f3(493.5f + (5.0f * i), 4.3f, 498.0f);
+		blist.push_back(TrashBag4[i]);
+
+	}
+
+	BoundingBox TrashBag5[3];
+	for (int i = 0; i < 3; ++i)
+	{
+		TrashBag5[i].start = f3(513.5f + (5.0f * i), 2.7f, 493.0f);
+		TrashBag5[i].end = f3(518.5f + (5.0f * i), 4.3f, 498.0f);
+		blist.push_back(TrashBag5[i]);
+
+	}
+
+
+
 	BoundingBox SwaMul1[7];
 	for (int i = 0; i < 7; ++i)
 	{
@@ -4023,92 +4117,92 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Pox22.end = f3(1093.0f, 15.5f, 503.0f);
 	
 	BoundingBox Coned_1;
-	Coned_1.start = f3(910.0f, 12.5f, 300.0f);
-	Coned_1.end = f3(1000.0f, 13.5f, 307.0f);
+	Coned_1.start = f3(910.0f, 12.5f, 296.5f);
+	Coned_1.end = f3(1000.0f, 13.5f, 303.5f);
 
 	BoundingBox Coned_2;
-	Coned_2.start = f3(910.0f, 12.5f, 315.0f);
-	Coned_2.end = f3(1000.0f, 13.5f, 322.0f);
+	Coned_2.start = f3(910.0f, 12.5f, 311.5f);
+	Coned_2.end = f3(1000.0f, 13.5f, 318.5f);
 	
 	BoundingBox Coned_3;
-	Coned_3.start = f3(910.0f, 12.5f, 330.0f);
-	Coned_3.end = f3(1000.0f, 13.5f, 337.0f);
+	Coned_3.start = f3(910.0f, 12.5f, 326.5f);
+	Coned_3.end = f3(1000.0f, 13.5f, 333.5f);
 
 	BoundingBox Coned_4;
-	Coned_4.start = f3(910.0f, 12.5f, 345.0f);
-	Coned_4.end = f3(1000.0f, 13.5f, 352.0f);
+	Coned_4.start = f3(910.0f, 12.5f, 341.5f);
+	Coned_4.end = f3(1000.0f, 13.5f, 348.5f);
 
 	BoundingBox Coned_5;
-	Coned_5.start = f3(910.0f, 12.5f, 360.0f);
-	Coned_5.end = f3(1000.0f, 13.5f, 367.0f);
+	Coned_5.start = f3(910.0f, 12.5f, 356.5f);
+	Coned_5.end = f3(1000.0f, 13.5f, 363.5f);
 
 	BoundingBox Coned_6;
-	Coned_6.start = f3(910.0f, 12.5f, 375.0f);
-	Coned_6.end = f3(1000.0f, 13.5f, 382.0f);
+	Coned_6.start = f3(910.0f, 12.5f, 371.5f);
+	Coned_6.end = f3(1000.0f, 13.5f, 378.5f);
 
 	BoundingBox Coned_7;
-	Coned_7.start = f3(910.0f, 12.5f, 390.0f);
-	Coned_7.end = f3(1000.0f, 13.5f, 397.0f);
+	Coned_7.start = f3(910.0f, 12.5f, 386.5f);
+	Coned_7.end = f3(1000.0f, 13.5f, 393.5f);
 
 	BoundingBox Coned_8;
-	Coned_8.start = f3(910.0f, 12.5f, 405.0f);
-	Coned_8.end = f3(1000.0f, 13.5f, 412.0f);
+	Coned_8.start = f3(910.0f, 12.5f, 401.5f);
+	Coned_8.end = f3(1000.0f, 13.5f, 408.5f);
 
 	BoundingBox Coned_9;
-	Coned_9.start = f3(910.0f, 12.5f, 420.0f);
-	Coned_9.end = f3(1000.0f, 13.5f, 427.0f);
+	Coned_9.start = f3(910.0f, 12.5f, 416.5f);
+	Coned_9.end = f3(1000.0f, 13.5f, 423.5f);
 
 	BoundingBox Coned_10;
-	Coned_10.start = f3(910.0f, 12.5f, 435.0f);
-	Coned_10.end = f3(1000.0f, 13.5f, 442.0f);
+	Coned_10.start = f3(910.0f, 12.5f, 431.5f);
+	Coned_10.end = f3(1000.0f, 13.5f, 438.5f);
 
 	BoundingBox Coned_11;
-	Coned_11.start = f3(910.0f, 12.5f, 450.0f);
-	Coned_11.end = f3(1000.0f, 13.5f, 457.0f);
+	Coned_11.start = f3(910.0f, 12.5f, 446.5f);
+	Coned_11.end = f3(1000.0f, 13.5f, 453.5f);
 
 	BoundingBox Coned_12;
-	Coned_12.start = f3(1020.0f, 12.5f, 300.0f);
-	Coned_12.end = f3(1110.0f, 13.5f, 307.0f);
+	Coned_12.start = f3(1020.0f, 12.5f, 296.5f);
+	Coned_12.end = f3(1110.0f, 13.5f, 303.5f);
 
 	BoundingBox Coned_13;
-	Coned_13.start = f3(1020.0f, 12.5f, 315.0f);
-	Coned_13.end = f3(1110.0f, 13.5f, 322.0f);
+	Coned_13.start = f3(1020.0f, 12.5f, 311.5f);
+	Coned_13.end = f3(1110.0f, 13.5f, 318.5f);
 
 	BoundingBox Coned_14;
-	Coned_14.start = f3(1020.0f, 12.5f, 330.0f);
-	Coned_14.end = f3(1110.0f, 13.5f, 337.0f);
+	Coned_14.start = f3(1020.0f, 12.5f, 326.5f);
+	Coned_14.end = f3(1110.0f, 13.5f, 333.5f);
 	
 	BoundingBox Coned_15;
-	Coned_15.start = f3(1020.0f, 12.5f, 345.0f);
-	Coned_15.end = f3(1110.0f, 13.5f, 352.0f);
+	Coned_15.start = f3(1020.0f, 12.5f, 341.5f);
+	Coned_15.end = f3(1110.0f, 13.5f, 348.5f);
 
 	BoundingBox Coned_16;
-	Coned_16.start = f3(1020.0f, 12.5f, 360.0f);
-	Coned_16.end = f3(1110.0f, 13.5f, 367.0f);
+	Coned_16.start = f3(1020.0f, 12.5f, 356.5f);
+	Coned_16.end = f3(1110.0f, 13.5f, 363.5f);
 
 	BoundingBox Coned_17;
-	Coned_17.start = f3(1020.0f, 12.5f, 375.0f);
-	Coned_17.end = f3(1110.0f, 13.5f, 382.0f);
+	Coned_17.start = f3(1020.0f, 12.5f, 371.5f);
+	Coned_17.end = f3(1110.0f, 13.5f, 378.5f);
 
 	BoundingBox Coned_18;
-	Coned_18.start = f3(1020.0f, 12.5f, 390.0f);
-	Coned_18.end = f3(1110.0f, 13.5f, 397.0f);
+	Coned_18.start = f3(1020.0f, 12.5f, 386.5f);
+	Coned_18.end = f3(1110.0f, 13.5f, 393.5f);
 
 	BoundingBox Coned_19;
-	Coned_19.start = f3(1020.0f, 12.5f, 405.0f);
-	Coned_19.end = f3(1110.0f, 13.5f, 412.0f);
+	Coned_19.start = f3(1020.0f, 12.5f, 401.5f);
+	Coned_19.end = f3(1110.0f, 13.5f, 408.5f);
 
 	BoundingBox Coned_20;
-	Coned_20.start = f3(1020.0f, 12.5f, 420.0f);
-	Coned_20.end = f3(1110.0f, 13.5f, 427.0f);
+	Coned_20.start = f3(1020.0f, 12.5f, 416.5f);
+	Coned_20.end = f3(1110.0f, 13.5f, 423.5f);
 
 	BoundingBox Coned_21;
-	Coned_21.start = f3(1020.0f, 12.5f, 435.0f);
-	Coned_21.end = f3(1110.0f, 13.5f, 442.0f);
+	Coned_21.start = f3(1020.0f, 12.5f, 431.5f);
+	Coned_21.end = f3(1110.0f, 13.5f, 438.5f);
 
 	BoundingBox Coned_22;
-	Coned_22.start = f3(1020.0f, 12.5f, 450.0f);
-	Coned_22.end = f3(1110.0f, 13.5f, 457.0f);
+	Coned_22.start = f3(1020.0f, 12.5f, 446.5f);
+	Coned_22.end = f3(1110.0f, 13.5f, 453.5f);
 
 	BoundingBox Fa_1;
 	Fa_1.start = f3(40.0f, 5.0f, 450.0f);
@@ -4299,11 +4393,11 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox GyoDa1;
 	GyoDa1.start = f3(380.0f, 0.0f, 449.0f);
-	GyoDa1.end = f3(395.0f, 2.5f, 450.0f);
+	GyoDa1.end = f3(395.0f, 5.0f, 450.0f);
 
 	BoundingBox GyoDa2;
 	GyoDa2.start = f3(352.5f, 0.0f, 349.0f);
-	GyoDa2.end = f3(367.5f, 2.5f, 350.0f);
+	GyoDa2.end = f3(367.5f, 5.0f, 350.0f);
 
 	BoundingBox R_sta1;
 	R_sta1.start = f3(890.0f, 0.0f, 274.0f);
