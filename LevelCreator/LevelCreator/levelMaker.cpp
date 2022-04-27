@@ -151,7 +151,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_Addings3_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_Addings3_2.type = SeAddings2;
 
+	Celing.location = f3(-10.0f, 20.0f, -10.0f);
+	Celing.rotation = f3(0.0f, 0.0f, 0.0f);
+	Celing.type = Shell;
 
+	Celing2.location = f3(790.0f, 20.0f, -10.0f);
+	Celing2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Celing2.type = Shell;
 
 	Add_sector1_1.location = f3(595.0f, 8.75f, 560.0f);
 	Add_sector1_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -201,13 +207,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Frs_WL2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Frs_WL2.type = Frs_Pons2;
 
-	Celing2.location = f3(1100.0f, 24.0f, 300.0f);
-	Celing2.rotation = f3(0.0f, 0.0f, 0.0f);
-	Celing2.type = Shell;
 
-	Celing.location = f3(300.0f, 24.0f, 300.0f);
-	Celing.rotation = f3(0.0f, 0.0f, 0.0f);
-	Celing.type = Shell;
 
 	B_Cont1.location = f3(1010.0f, 6.25f, 435.0f);
 	B_Cont1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -637,8 +637,6 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(JobCont);
 	list.push_back(T_Cont1);
 	list.push_back(B_Cont1);
-	list.push_back(Celing);
-	list.push_back(Celing2);
 	list.push_back(Frs_WL1);
 	list.push_back(Frs_WL2);
 	list.push_back(added_wall_1);
@@ -657,6 +655,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Se_Addings2_2);
 	list.push_back(Se_Addings3_1);
 	list.push_back(Se_Addings3_2);
+	list.push_back(Celing);
+	list.push_back(Celing2);
 
 	BoundingBox fl, v1, v2, h1, h2;
 	BoundingBox v1_1, v2_1, h1_1, h2_1;
@@ -758,11 +758,12 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Frs_WLs2.end = f3(200.0f, 12.5f, 600.0f);
 
 
-	Cel2.start = f3(1100.0f, 22.5f, 300.0f);
-	Cel2.end = f3(1420.0f, 25.5f, 620.0f);
+	Cel.start = f3(-10.0f, 23.0f, -10.0f);
+	Cel.end = f3(610.0f, 24.0f, 610.0f);
 
-	Cel.start = f3(300.0f, 22.5f, 300.0f);
-	Cel.end = f3(620.0f, 25.5f, 620.0f);
+	Cel2.start = f3(790.0f, 23.0f, -10.0f);
+	Cel2.end = f3(1410.0f, 24.0f, 610.0f);
+
 
 	B_Co1.start = f3(880.0f, 0.0f, 275.0f);
 	B_Co1.end = f3(1140.0f, 12.4f, 595.0f);
@@ -1089,8 +1090,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Jc1);
 	blist.push_back(T_Co1);
 	blist.push_back(B_Co1);
-	blist.push_back(Cel);
-	blist.push_back(Cel2);
+
 	blist.push_back(Frs_WLs1);
 	blist.push_back(Frs_WLs2);
 	blist.push_back(added_W1);
@@ -1109,6 +1109,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(SeAo2_2);
 	blist.push_back(SeAo3_1);
 	blist.push_back(SeAo3_2);
+	blist.push_back(Cel);
+	blist.push_back(Cel2);
 
 
 
