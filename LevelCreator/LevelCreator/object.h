@@ -151,6 +151,13 @@
 #define Wallz5 2108
 #define Wallz6 2110
 #define Wallz7 2112
+#define Wallz8 2114
+#define Wallz9 2116
+#define Wallz10 2118
+#define Chagsal1 2120
+#define Chagsal2 2122
+#define Pyo 2124
+
 
 
 

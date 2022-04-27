@@ -195,6 +195,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[35]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼±¹Ý.dds", RESOURCE_TEXTURE2D, 0);
 	textures[36] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÇÃ¶ó½ºÆ½ºó.dds", RESOURCE_TEXTURE2D, 0);
+	textures[37] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[37]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¢»ì.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -274,8 +276,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
    // CCubeMeshTextured* ChonJang = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 620.0f, 3.0f, 620.0f);
 	CCubeMeshTextured* Add_block1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 7.5f, 25.0f);
 	CCubeMeshTextured* Add_block2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 5.0f, 2.5f);
+	CCubeMeshTextured* Pan1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 8.0f, 3.0f, 1.0f);
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
 	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
+
 
 
 
@@ -284,7 +288,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
 	GridMesh* t_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 20.0f);
 	GridMesh* Se_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
-	GridMesh* ChonJang = new GridMesh(pd3dDevice, pd3dCommandList, 620.0f, 620.0f);
+	GridMesh* ChonJang = new GridMesh(pd3dDevice, pd3dCommandList, 670.0f, 640.0f);
 
 
 
@@ -363,6 +367,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshVertical* Walz5 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
 	WallMeshHorizontal* Walz6 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 5.0f);
 	WallMeshHorizontal* Walz7 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 7.5f);
+	WallMeshHorizontal* Walz8 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 5.0f);
+	WallMeshHorizontal* Walz9 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 7.5f);
+	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshHorizontal* Walz11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 30.0f, 12.5f);
+	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -888,7 +897,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		else if (data[i].type == Shell)// ÁöºØÀÇ ½ÃÀÛÁ¡
 		{
 			obj = new CGameObject(1);
-			obj->SetMesh(pGrid);
+			obj->SetMesh(ChonJang);
 			obj->SetMaterial(0, ppMaterials[18]);
 
 		}
@@ -1133,8 +1142,54 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == Wallz8)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz8);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
+		else if (data[i].type == Wallz9)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz9);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
+		else if (data[i].type == Wallz10)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz10);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Chagsal1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz11);
+		obj->SetMaterial(0, ppMaterials[37]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Chagsal2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz12);
+		obj->SetMaterial(0, ppMaterials[37]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Pyo)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Pan1);
+		obj->SetMaterial(0, ppMaterials[13]);
+	//	obj->Rotate(0.0f, 0.0f, 90.0f);
+
+		}
 
 
 

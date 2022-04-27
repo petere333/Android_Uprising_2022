@@ -131,9 +131,53 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Wall_Beok1_1, Wall_Beok2_1;
 	Object Wall_Meok1; //첫방 0~200까지의 거리의 벽들 
 
-	Object Firse_Cross1, Firse_Cross2;
+	Object Firse_Cross1, Firse_Cross2; // 보일러방과 컨테이너, 계단 분리.
 
-	Object Hide_wall1, Hide_wall2; // 숨기 위한 벽
+	Object Hide_wall1, Hide_wall2; // 첫방 0~200방 숨기 위한 벽
+	Object Firse_Add1, Firse_Add2;
+	Object Firse_Add3, Firse_Add4;
+	Object Firse_Add5;
+
+	Object ChangSal1, ChangSal2, ChangSal3;
+	Object Pyoji1;
+
+	Pyoji1.location = f3(234.0f, 8.25f, 200.0f);
+	Pyoji1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Pyoji1.type = Pyo;
+
+	ChangSal1.location = f3(200.0f, 0.0f, 200.0f);
+	ChangSal1.rotation = f3(0.0f, 0.0f, 0.0f);
+	ChangSal1.type = Chagsal1;
+
+	ChangSal2.location = f3(235.0f, 0.0f, 200.0f);
+	ChangSal2.rotation = f3(0.0f, 0.0f, 0.0f);
+	ChangSal2.type = Chagsal1;
+
+	ChangSal3.location = f3(230.0f, 5.0f, 200.0f);
+	ChangSal3.rotation = f3(0.0f, 0.0f, 0.0f);
+	ChangSal3.type = Chagsal2;
+
+
+	Firse_Add1.location = f3(265.0f, 0.0f, 200.0f);
+	Firse_Add1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Add1.type = Wallz8;
+
+	Firse_Add2.location = f3(265.0f, 5.0f, 200.0f);
+	Firse_Add2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Add2.type = Wallz9;
+
+	Firse_Add3.location = f3(335.0f, 0.0f, 200.0f);
+	Firse_Add3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Add3.type = Wallz8;
+
+	Firse_Add4.location = f3(335.0f, 5.0f, 200.0f);
+	Firse_Add4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Add4.type = Wallz9;
+
+	Firse_Add5.location = f3(330.0f, 5.0f, 200.0f);
+	Firse_Add5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Add5.type = Wallz10;
+
 
 	Hide_wall1.location = f3(45.0f, 0.0f, 265.0f);
 	Hide_wall1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -197,11 +241,11 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_Addings3_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_Addings3_2.type = SeAddings2;
 
-	Celing.location = f3(-10.0f, 20.0f, -10.0f);
+	Celing.location = f3(-10.0f, 22.5f, -10.0f);
 	Celing.rotation = f3(0.0f, 0.0f, 0.0f);
 	Celing.type = Shell;
 
-	Celing2.location = f3(790.0f, 20.0f, -10.0f);
+	Celing2.location = f3(790.0f, 22.5f, -10.0f);
 	Celing2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Celing2.type = Shell;
 
@@ -712,6 +756,17 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Firse_Cross2);
 	list.push_back(Hide_wall1);
 	list.push_back(Hide_wall2);
+	list.push_back(Firse_Add1);
+	list.push_back(Firse_Add2);
+	list.push_back(Firse_Add3);
+	list.push_back(Firse_Add4);
+	list.push_back(Firse_Add5);
+	list.push_back(ChangSal1);
+	list.push_back(ChangSal2);
+	list.push_back(ChangSal3);
+	list.push_back(Pyoji1);
+
+
 
 	BoundingBox fl, v1, v2, h1, h2;
 	BoundingBox v1_1, v2_1, h1_1, h2_1;
@@ -755,6 +810,37 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox wb1, wb2, wb1_1, wb2_1, wm1;
 	BoundingBox Fcro1, Fcro2;
 	BoundingBox HideW1, HideW2;
+	BoundingBox Fadd1, Fadd2, Fadd3, Fadd4, Fadd5;
+	BoundingBox Ch_s1, Ch_s2, Ch_s3;
+	BoundingBox yoyoji1;
+
+	yoyoji1.start = f3(230.0f, 6.75f, 198.0f);
+	yoyoji1.end = f3(238.0f, 9.75f, 200.0f);
+
+	Ch_s1.start = f3(200.0f, 0.0f, 200.0f);
+	Ch_s1.end = f3(230.0f, 12.5f, 200.0f);
+
+	Ch_s2.start = f3(235.0f, 0.0f, 200.0f);
+	Ch_s2.end = f3(265.0f, 12.5f, 200.0f);
+
+	Ch_s3.start = f3(230.0f, 5.0f, 200.0f);
+	Ch_s3.end = f3(235.0f, 12.5f, 200.0f);
+
+	Fadd1.start = f3(265.0f, 0.0f, 200.0f);
+	Fadd1.end = f3(330.0f, 5.0f, 200.0f);
+
+	Fadd2.start = f3(265.0f, 5.0f, 200.0f);
+	Fadd2.end = f3(330.0f, 12.5f, 200.0f);
+
+	Fadd3.start = f3(335.0f, 0.0f, 200.0f);
+	Fadd3.end = f3(400.0f, 5.0f, 200.0f);
+
+	Fadd4.start = f3(335.0f, 5.0f, 200.0f);
+	Fadd4.end = f3(400.0f, 12.5f, 200.0f);
+
+	Fadd5.start = f3(330.0f, 5.0f, 200.0f);
+	Fadd5.end = f3(335.0f, 12.5f, 200.0f);
+
 
 	HideW1.start = f3(45.0f, 0.0f, 265.0f);
 	HideW1.end = f3(200.0f, 5.0f, 265.0f);
@@ -843,11 +929,11 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Frs_WLs2.end = f3(200.0f, 12.5f, 600.0f);
 
 
-	Cel.start = f3(-10.0f, 23.0f, -10.0f);
-	Cel.end = f3(610.0f, 24.0f, 610.0f);
+	Cel.start = f3(-10.0f, 22.5f, -10.0f);
+	Cel.end = f3(610.0f, 22.5f, 610.0f);
 
-	Cel2.start = f3(790.0f, 23.0f, -10.0f);
-	Cel2.end = f3(1410.0f, 24.0f, 610.0f);
+	Cel2.start = f3(790.0f, 22.5f, -10.0f);
+	Cel2.end = f3(1410.0f, 22.5f, 610.0f);
 
 
 	B_Co1.start = f3(880.0f, 0.0f, 275.0f);
@@ -1205,7 +1291,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Fcro2);
 	blist.push_back(HideW1);
 	blist.push_back(HideW2);
-
+	blist.push_back(Fadd1);
+	blist.push_back(Fadd2);
+	blist.push_back(Fadd3);
+	blist.push_back(Fadd4);
+	blist.push_back(Fadd5);
+	blist.push_back(Ch_s1);
+	blist.push_back(Ch_s2);
+	blist.push_back(Ch_s3);
+	blist.push_back(yoyoji1);
 
 
 }
