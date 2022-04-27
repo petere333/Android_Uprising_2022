@@ -888,7 +888,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		else if (data[i].type == Shell)// 지붕의 시작점
 		{
 			obj = new CGameObject(1);
-			obj->SetMesh(ChonJang);
+			obj->SetMesh(pGrid);
 			obj->SetMaterial(0, ppMaterials[18]);
 
 		}
@@ -1631,7 +1631,17 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			//	3. 객체의 유형이 소형 물체, 혹은 움직이는 캐릭터인 경우 양쪽 55도 내에 있는 경우에만 그린다.
 			*/
 			int tp = m_ppGameObjects[i]->type;
-			if ((tp >= 2000 && tp < 3000) || (tp >= 10000) || (tp<6000 && tp>=5000) )
+
+			if (tp == 50000)
+			{
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+			}
+
+			else if ((tp >= 2000 && tp < 3000) || (tp >= 10000) || (tp<6000 && tp>=5000))
 			{
 				//m_ppGameObjects[i]->Animate(m_fElapsedTime);
 				//if (!m_ppGameObjects[i]->m_pSkinnedAnimationController) m_ppGameObjects[i]->UpdateTransform(NULL);
@@ -1643,7 +1653,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 			
 				
-			else if ((cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(60.0f))&& dist<=300.0f) || (dist<=50.0f && cosAngle <= 1 && cosAngle >= cos(XMConvertToRadians(120.0f))))
+			else if ((cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f))&& dist<=300.0f) || (dist<=50.0f && cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(120.0f))))
 			{
 
 				m_ppGameObjects[i]->Animate(m_fElapsedTime);
