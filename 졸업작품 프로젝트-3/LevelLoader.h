@@ -142,6 +142,15 @@
 #define Factory_tool10 550
 #define Factory_tool11 555
 
+
+#define Wallz1 2100
+#define Wallz2 2102
+#define Wallz3 2104
+#define Wallz4 2106
+#define Wallz5 2108
+#define Wallz6 2110
+#define Wallz7 2112
+
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)
 // 5000대 숫자들 : 컨테이너

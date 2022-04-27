@@ -127,6 +127,52 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Se_Addings2_1, Se_Addings2_2;
 	Object Se_Addings3_1, Se_Addings3_2;
 
+	Object Wall_Beok1, Wall_Beok2;
+	Object Wall_Beok1_1, Wall_Beok2_1;
+	Object Wall_Meok1; //첫방 0~200까지의 거리의 벽들 
+
+	Object Firse_Cross1, Firse_Cross2;
+
+	Object Hide_wall1, Hide_wall2; // 숨기 위한 벽
+
+	Hide_wall1.location = f3(45.0f, 0.0f, 265.0f);
+	Hide_wall1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Hide_wall1.type = Wallz6;
+
+	Hide_wall2.location = f3(45.0f, 5.0f, 265.0f);
+	Hide_wall2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Hide_wall2.type = Wallz7;
+
+	Firse_Cross1.location = f3(280.0f, 0.0f, 200.0f);
+	Firse_Cross1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Cross1.type = Wallz4;
+
+	Firse_Cross2.location = f3(280.0f, 5.0f, 200.0f);
+	Firse_Cross2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Firse_Cross2.type = Wallz5;
+
+
+	Wall_Beok1.location = f3(0.0f, 0.0f, 200.0f);
+	Wall_Beok1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Wall_Beok1.type = Wallz1;
+
+	Wall_Beok2.location = f3(0.0f, 5.0f, 200.0f);
+	Wall_Beok2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Wall_Beok2.type = Wallz2;
+
+	Wall_Beok1_1.location = f3(102.5f, 0.0f, 200.0f);
+	Wall_Beok1_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Wall_Beok1_1.type = Wallz1;
+
+	Wall_Beok2_1.location = f3(102.5f, 5.0f, 200.0f);
+	Wall_Beok2_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Wall_Beok2_1.type = Wallz2;
+
+	Wall_Meok1.location = f3(97.5f, 5.0f, 200.0f);
+	Wall_Meok1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Wall_Meok1.type = Wallz3;
+
+
 	Se_Addings1_1.location = f3(1210.0f, 0.0f, 350.0f);
 	Se_Addings1_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_Addings1_1.type = SeAddings1;
@@ -205,7 +251,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Frs_WL2.location = f3(200.0f, 5.0f, 200.0f);
 	Frs_WL2.rotation = f3(0.0f, 0.0f, 0.0f);
-	Frs_WL2.type = Frs_Pons2;
+	Frs_WL2.type = Frs_Pons2; // 첫번째방 첫번째 부속 벽
 
 
 
@@ -657,6 +703,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Se_Addings3_2);
 	list.push_back(Celing);
 	list.push_back(Celing2);
+	list.push_back(Wall_Beok1);
+	list.push_back(Wall_Beok2);
+	list.push_back(Wall_Beok1_1);
+	list.push_back(Wall_Beok2_1);
+	list.push_back(Wall_Meok1);
+	list.push_back(Firse_Cross1);
+	list.push_back(Firse_Cross2);
+	list.push_back(Hide_wall1);
+	list.push_back(Hide_wall2);
 
 	BoundingBox fl, v1, v2, h1, h2;
 	BoundingBox v1_1, v2_1, h1_1, h2_1;
@@ -697,6 +752,36 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Adder_se1_1, Adder_se1_2, Adder_se1_3;
 	BoundingBox Adder_se2_1, Adder_se2_2, Adder_se2_3;
 	BoundingBox SeAo1_1, SeAo1_2, SeAo2_1, SeAo2_2, SeAo3_1, SeAo3_2;
+	BoundingBox wb1, wb2, wb1_1, wb2_1, wm1;
+	BoundingBox Fcro1, Fcro2;
+	BoundingBox HideW1, HideW2;
+
+	HideW1.start = f3(45.0f, 0.0f, 265.0f);
+	HideW1.end = f3(200.0f, 5.0f, 265.0f);
+
+	HideW2.start = f3(45.0f, 5.0f, 265.0f);
+	HideW2.end = f3(200.0f, 12.5f, 265.0f);
+
+	Fcro1.start = f3(280.0f, 0.0f, 200.0f);
+	Fcro1.end = f3(280.0f, 5.0f, 600.0f);
+
+	Fcro2.start = f3(280.0f, 5.0f, 200.0f);
+	Fcro2.end = f3(280.0f, 12.5f, 600.0f);
+
+	wb1.start = f3(0.0f, 0.0f, 200.0f);
+	wb1.end = f3(97.5f, 5.0f, 200.0f);
+
+	wb2.start = f3(0.0f, 5.0f, 200.0f);
+	wb2.end = f3(97.5f, 12.5f, 200.0f);
+
+	wb1_1.start = f3(102.5f, 0.0f, 200.0f);
+	wb1_1.end = f3(200.0f, 5.0f, 200.0f);
+
+	wb2_1.start = f3(102.5f, 5.0f, 200.0f);
+	wb2_1.end = f3(200.0f, 12.5f, 200.0f);
+
+	wm1.start = f3(97.5f, 5.0f, 200.0f);
+	wm1.end = f3(102.5f, 12.5f, 200.0f);
 
 
 
@@ -1111,6 +1196,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(SeAo3_2);
 	blist.push_back(Cel);
 	blist.push_back(Cel2);
+	blist.push_back(wb1);
+	blist.push_back(wb2);
+	blist.push_back(wb1_1);
+	blist.push_back(wb2_1);
+	blist.push_back(wm1);
+	blist.push_back(Fcro1);
+	blist.push_back(Fcro2);
+	blist.push_back(HideW1);
+	blist.push_back(HideW2);
 
 
 
@@ -2721,6 +2815,25 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	B_doorlock3.rotation = f3(0.0f, 0.0f, 0.0f);
 	B_doorlock3.type = B_Door;
 
+
+	Object Heaterz1[5];
+	for (int i = 0; i < 5; ++i)
+	{
+		Heaterz1[i].location = f3(170.0f, 0.0f, 295.0f + (50.0f * i));
+		Heaterz1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Heaterz1[i].type = Heaters1;
+		list.push_back(Heaterz1[i]);
+	}
+
+	Object Heaterz2[5];
+	for (int i = 0; i < 5; ++i)
+	{
+		Heaterz2[i].location = f3(230.0f, 0.0f, 295.0f + (50.0f * i));
+		Heaterz2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Heaterz2[i].type = Heaters1;
+		list.push_back(Heaterz2[i]);
+	}
+
 	Object H_heater1;
 	H_heater1.location = f3(195.0f, 0.0f, 295.0f);
 	H_heater1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -4312,6 +4425,22 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox B_lock3;
 	B_lock3.start = f3(1398.0f, 0.0f, 550.0f);
 	B_lock3.end = f3(1400.0f, 5.0f, 570.0f);
+
+	BoundingBox Hiterz1[5];
+	for (int i = 0; i < 5; ++i)
+	{
+		Hiterz1[i].start = f3(165.0f, 0.0f, 290.0f+(50.0f*i));
+		Hiterz1[i].end = f3(175.0f, 5.0f, 300.0f + (50.0f * i));
+		blist.push_back(Hiterz1[i]);
+	}
+
+	BoundingBox Hiterz2[5];
+	for (int i = 0; i < 5; ++i)
+	{
+		Hiterz2[i].start = f3(225.0f, 0.0f, 290.0f + (50.0f * i));
+		Hiterz2[i].end = f3(235.0f, 5.0f, 300.0f + (50.0f * i));
+		blist.push_back(Hiterz2[i]);
+	}
 
 	BoundingBox Hiter1;
 	Hiter1.start = f3(190.0f, 0.0f, 290.0f);

@@ -356,6 +356,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* SeAdders1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 100.0f, 5.0f);
 	WallMeshHorizontal* SeAdders2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 100.0f, 7.5f);
 
+	WallMeshHorizontal* Walz1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 5.0f);
+	WallMeshHorizontal* Walz2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 7.5f);
+	WallMeshHorizontal* Walz3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshVertical* Walz4 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
+	WallMeshVertical* Walz5 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
+	WallMeshHorizontal* Walz6 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 5.0f);
+	WallMeshHorizontal* Walz7 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 7.5f);
+
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
 	CLoadedMesh* tableMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_table.txt", "res/idx_table.txt");
@@ -1069,6 +1077,67 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == Wallz1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz1);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz2);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz3);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz4);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz5)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz5);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz6)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz6);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz7)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz7);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+
+
+
+
+
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
