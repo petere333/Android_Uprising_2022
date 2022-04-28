@@ -201,6 +201,12 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[38]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/감옥창살.dds", RESOURCE_TEXTURE2D, 0);
 	textures[39] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[39]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/감옥창살2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[40] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[40]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/돌기둥받침.dds", RESOURCE_TEXTURE2D, 0);
+	textures[41] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[41]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기둥본체.dds", RESOURCE_TEXTURE2D, 0);
+
+
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -283,6 +289,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CCubeMeshTextured* Add_block2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 5.0f, 2.5f);
 	CCubeMeshTextured* Pan1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 8.0f, 3.0f, 1.0f);
 	CCubeMeshTextured* Pan2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 120.0f, 2.0f, 60.0f);
+	CCubeMeshTextured* Pan3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 1.3f, 20.0f);
+	CCubeMeshTextured* Pan4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 16.0f, 19.9f, 16.0f);
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
 	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
 
@@ -380,6 +388,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 	WallMeshHorizontal* Walz13 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // 감옥창살
 	WallMeshVertical* Walz14 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 60.0f, 12.5f);
+	WallMeshVertical* Walz15 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 145.0f, 5.0f);
+	WallMeshVertical* Walz16 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 145.0f, 7.5f);
+	WallMeshHorizontal* Walz17 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 5.0f); // 시작지점 근처 벽
+	WallMeshHorizontal* Walz18 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshVertical* Walz19 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 115.0f, 5.0f);
+	WallMeshVertical* Walz20 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 115.0f, 7.5f);
+	WallMeshHorizontal* Walz21 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f); // 시작지점 근처 벽
+	WallMeshHorizontal* Walz22 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+
+
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -1220,6 +1238,87 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->SetMesh(Pan2);
 		obj->SetMaterial(0, ppMaterials[36]);
 		//obj->Rotate(0.0f, 90.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz15);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz16);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz13)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz17);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz14)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz18);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz15)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz19);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+	   
+		if (data[i].type == Wallz16)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz20);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz17)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz21);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz18)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz22);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Kidong)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Pan3);
+			obj->SetMaterial(0, ppMaterials[40]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == KidongMom)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Pan4);
+			obj->SetMaterial(0, ppMaterials[41]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
 

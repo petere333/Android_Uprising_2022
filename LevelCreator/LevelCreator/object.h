@@ -160,7 +160,17 @@
 #define GamOk 2126
 #define GamOk2 2128
 #define GamOk_Shell 2130
-
+#define Wallz11 2132
+#define Wallz12 2134
+#define Wallz13 2136
+#define Wallz14 2138
+#define Wallz15 2140
+#define Wallz16 2142
+#define Wallz17 2144
+#define Wallz18 2146
+#define Kidong 2148
+#define KidongMom 2150
+ 
 
 
 

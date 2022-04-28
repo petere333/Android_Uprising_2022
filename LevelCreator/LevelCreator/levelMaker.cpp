@@ -143,6 +143,76 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Prism1, Prism2, Prism3, Prism4;
 	Object Prism_l[4], Prism_r[4];
 	Object Gam_Shell1, Gam_Shell2;
+	Object F_de1, F_de2, F_des1, F_des2, F_dess1, F_dess2;
+	Object big_wall1, big_wall2, big_wall3, big_wall4, big_wall5, big_wall6;
+	Object Kidong_batchim1;
+	Object Kidongs_mom;
+	Object Kidong_batchim2;
+
+	Kidongs_mom.location = f3(240.0f, 11.25f, 110.0f);
+	Kidongs_mom.rotation = f3(0.0f, 0.0f, 0.0f);
+	Kidongs_mom.type = KidongMom;
+
+	Kidong_batchim1.location = f3(240.0f, 0.65f, 110.0f);
+	Kidong_batchim1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Kidong_batchim1.type = Kidong;
+	
+	Kidong_batchim2.location = f3(240.0f, 21.85f, 110.0f);
+	Kidong_batchim2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Kidong_batchim2.type = Kidong;
+
+	big_wall1.location = f3(420.0f, 0.0f, 0.0f);
+	big_wall1.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall1.type = Wallz15;
+
+	big_wall2.location = f3(420.0f, 5.0f, 0.0f);
+	big_wall2.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall2.type = Wallz16;
+
+	big_wall3.location = f3(430.0f, 0.0f, 0.0f);
+	big_wall3.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall3.type = Wallz15;
+
+	big_wall4.location = f3(430.0f, 5.0f, 0.0f);
+	big_wall4.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall4.type = Wallz16;
+
+	big_wall5.location = f3(420.0f, 0.0f, 115.0f);
+	big_wall5.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall5.type = Wallz17;
+
+	big_wall6.location = f3(420.0f, 5.0f, 115.0f);
+	big_wall6.rotation = f3(0.0f, 0.0f, 0.0f);
+	big_wall6.type = Wallz18;
+
+
+
+
+	F_de1.location = f3(125.0f, 0.0f, 55.0f);
+	F_de1.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_de1.type = Wallz11;
+
+	F_de2.location = f3(125.0f, 5.0f, 55.0f);
+	F_de2.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_de2.type = Wallz12;
+
+	F_des1.location = f3(130.0f, 0.0f, 55.0f);
+	F_des1.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_des1.type = Wallz11;
+
+	F_des2.location = f3(130.0f, 5.0f, 55.0f);
+	F_des2.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_des2.type = Wallz12;
+
+	F_dess1.location = f3(125.0f, 0.0f, 55.0f);
+	F_dess1.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_dess1.type = Wallz13;
+
+	F_dess2.location = f3(125.0f, 5.0f, 55.0f);
+	F_dess2.rotation = f3(0.0f, 0.0f, 0.0f);
+	F_dess2.type = Wallz14;
+
+
 
 	Gam_Shell1.location = f3(540.0f, 13.5f, 105.0f);
 	Gam_Shell1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -817,7 +887,21 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Prism4);
 	list.push_back(Gam_Shell1);
 	list.push_back(Gam_Shell2);
-
+	list.push_back(F_de1);
+	list.push_back(F_de2);
+	list.push_back(F_des1);
+	list.push_back(F_des2);
+	list.push_back(F_dess1);
+	list.push_back(F_dess2);
+	list.push_back(big_wall1);
+	list.push_back(big_wall2);
+	list.push_back(big_wall3);
+	list.push_back(big_wall4);
+	list.push_back(big_wall5);
+	list.push_back(big_wall6);
+	list.push_back(Kidong_batchim1);
+	list.push_back(Kidongs_mom);
+	list.push_back(Kidong_batchim2);
 
 
 	BoundingBox fl, v1, v2, h1, h2;
@@ -868,6 +952,59 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Prsm1, Prsm2, Prsm3, Prsm4;
 	BoundingBox Prsm_l[4], Prsm_r[4];
 	BoundingBox Gam_S1, Gam_S2;
+	BoundingBox des1, des2, des3, des4, des5, des6; // 시작지점 근처 벽
+	BoundingBox Ken_w1, Ken_w2, Ken_w3, Ken_w4, Ken_w5, Ken_w6; // 시작지점 근처 벽2
+	BoundingBox dongki; // 기둥 아랫받침
+	BoundingBox dongkimom;
+	BoundingBox dongki2; // 기둥 아랫받침
+
+	dongkimom.start = f3(232.0f, 1.3f, 102.0f);
+	dongkimom.end = f3(248.0f, 21.2f, 118.0f);
+
+	dongki.start = f3(230.0f, 0.0f, 100.0f);
+	dongki.end = f3(250.0f, 1.3f, 120.0f);
+
+	dongki2.start = f3(230.0f, 21.2f, 100.0f);
+	dongki2.end = f3(250.0f, 22.5f, 120.0f);
+
+	Ken_w1.start = f3(420.0f, 0.0f, 0.0f);
+	Ken_w1.end = f3(420.0f, 5.0f, 115.0f);
+
+	Ken_w2.start = f3(420.0f, 5.0f, 0.0f);
+	Ken_w2.end = f3(420.0f, 12.5f, 115.0f);
+
+	Ken_w3.start = f3(430.0f, 0.0f, 0.0f);
+	Ken_w3.end = f3(430.0f, 5.0f, 115.0f);
+	
+	Ken_w4.start = f3(430.0f, 5.0f, 0.0f);
+	Ken_w4.end = f3(430.0f, 12.5f, 115.0f);
+
+	Ken_w5.start = f3(420.0f, 0.0f, 115.0f);
+	Ken_w5.end = f3(430.0f, 5.0f, 115.0f);
+
+	Ken_w6.start = f3(420.0f, 5.0f, 115.0f);
+	Ken_w6.end = f3(430.0f, 12.5f, 115.0f);
+
+
+	des1.start = f3(125.0f, 0.0f, 55.0f);
+	des1.end = f3(125.0f, 5.0f, 200.0f);
+
+	des2.start = f3(125.0f, 5.0f, 55.0f);
+	des2.end = f3(125.0f, 12.5f, 200.0f);
+
+	des3.start = f3(130.0f, 0.0f, 55.0f);
+	des3.end = f3(130.0f, 5.0f, 200.0f);
+
+	des4.start = f3(130.0f, 5.0f, 55.0f);
+	des4.end = f3(130.0f, 12.5f, 200.0f);
+
+	des5.start = f3(125.0f, 0.0f, 55.0f);
+	des5.end = f3(130.0f, 5.0f, 55.0f);
+
+	des6.start = f3(125.0f, 5.0f, 55.0f);
+	des6.end = f3(130.0f, 12.5f, 55.0f);
+
+
 
 	Gam_S1.start = f3(480.0f, 12.5f, 75.0f);
 	Gam_S1.end = f3(600.0f, 14.5f, 135.0f);
@@ -1396,9 +1533,22 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Prsm4);
 	blist.push_back(Gam_S1);
 	blist.push_back(Gam_S2);
+	blist.push_back(des1);
+	blist.push_back(des2);
+	blist.push_back(des3);
+	blist.push_back(des4);
+	blist.push_back(des5);
+	blist.push_back(des6);
 
-
-
+	blist.push_back(Ken_w1);
+	blist.push_back(Ken_w2);
+	blist.push_back(Ken_w3);
+	blist.push_back(Ken_w4);
+	blist.push_back(Ken_w5);
+	blist.push_back(Ken_w6);
+	blist.push_back(dongki);
+	blist.push_back(dongkimom);
+	blist.push_back(dongki2);
 }
 
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist, vector<BoundingStair>& slist)
