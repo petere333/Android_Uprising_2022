@@ -157,6 +157,10 @@
 #define Chagsal1 2120
 #define Chagsal2 2122
 #define Pyo 2124
+#define GamOk 2126
+#define GamOk2 2128
+#define GamOk_Shell 2130
+
 
 
 

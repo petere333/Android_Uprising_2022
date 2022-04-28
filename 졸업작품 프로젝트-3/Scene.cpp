@@ -197,6 +197,11 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÇÃ¶ó½ºÆ½ºó.dds", RESOURCE_TEXTURE2D, 0);
 	textures[37] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[37]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¢»ì.dds", RESOURCE_TEXTURE2D, 0);
+	textures[38] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[38]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì.dds", RESOURCE_TEXTURE2D, 0);
+	textures[39] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[39]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì2.dds", RESOURCE_TEXTURE2D, 0);
+
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -277,6 +282,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CCubeMeshTextured* Add_block1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 7.5f, 25.0f);
 	CCubeMeshTextured* Add_block2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 5.0f, 2.5f);
 	CCubeMeshTextured* Pan1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 8.0f, 3.0f, 1.0f);
+	CCubeMeshTextured* Pan2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 120.0f, 2.0f, 60.0f);
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
 	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
 
@@ -372,6 +378,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 	WallMeshHorizontal* Walz11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 30.0f, 12.5f);
 	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshHorizontal* Walz13 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // °¨¿ÁÃ¢»ì
+	WallMeshVertical* Walz14 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 60.0f, 12.5f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -1188,6 +1196,30 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->SetMesh(Pan1);
 		obj->SetMaterial(0, ppMaterials[13]);
 	//	obj->Rotate(0.0f, 0.0f, 90.0f);
+
+		}
+		else if (data[i].type == GamOk)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz13);
+		obj->SetMaterial(0, ppMaterials[38]);
+		//	obj->Rotate(0.0f, 0.0f, 90.0f);
+
+		}
+		else if (data[i].type == GamOk2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz14);
+		obj->SetMaterial(0, ppMaterials[39]);
+		//obj->Rotate(0.0f, 90.0f, 0.0f);
+
+		}
+		else if (data[i].type == GamOk_Shell)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Pan2);
+		obj->SetMaterial(0, ppMaterials[36]);
+		//obj->Rotate(0.0f, 90.0f, 0.0f);
 
 		}
 

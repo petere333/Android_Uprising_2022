@@ -140,6 +140,52 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Object ChangSal1, ChangSal2, ChangSal3;
 	Object Pyoji1;
+	Object Prism1, Prism2, Prism3, Prism4;
+	Object Prism_l[4], Prism_r[4];
+	Object Gam_Shell1, Gam_Shell2;
+
+	Gam_Shell1.location = f3(540.0f, 13.5f, 105.0f);
+	Gam_Shell1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Gam_Shell1.type = GamOk_Shell;
+
+	Gam_Shell2.location = f3(540.0f, 13.5f, 30.0f);
+	Gam_Shell2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Gam_Shell2.type = GamOk_Shell;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Prism_l[i].location = f3(480.0f + (30.0f * i), 0.0f, 75.0f);
+		Prism_l[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Prism_l[i].type = GamOk2;
+		list.push_back(Prism_l[i]);
+	}
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Prism_r[i].location = f3(480.0f + (30.0f * i), 0.0f, 0.01f);
+		Prism_r[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Prism_r[i].type = GamOk2;
+		list.push_back(Prism_r[i]);
+	}
+
+	Prism1.location = f3(480.0f, 0.0f, 135.0f);
+	Prism1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Prism1.type = GamOk;
+
+	Prism2.location = f3(480.0f, 0.0f, 75.0f);
+	Prism2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Prism2.type = GamOk;
+
+	Prism3.location = f3(480.0f, 0.0f, 60.0f);
+	Prism3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Prism3.type = GamOk;
+
+	Prism4.location = f3(480.0f, 0.0f, 0.01f);
+	Prism4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Prism4.type = GamOk;
+
+
+
 
 	Pyoji1.location = f3(234.0f, 8.25f, 200.0f);
 	Pyoji1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -765,6 +811,12 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(ChangSal2);
 	list.push_back(ChangSal3);
 	list.push_back(Pyoji1);
+	list.push_back(Prism1);
+	list.push_back(Prism2);
+	list.push_back(Prism3);
+	list.push_back(Prism4);
+	list.push_back(Gam_Shell1);
+	list.push_back(Gam_Shell2);
 
 
 
@@ -813,6 +865,44 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Fadd1, Fadd2, Fadd3, Fadd4, Fadd5;
 	BoundingBox Ch_s1, Ch_s2, Ch_s3;
 	BoundingBox yoyoji1;
+	BoundingBox Prsm1, Prsm2, Prsm3, Prsm4;
+	BoundingBox Prsm_l[4], Prsm_r[4];
+	BoundingBox Gam_S1, Gam_S2;
+
+	Gam_S1.start = f3(480.0f, 12.5f, 75.0f);
+	Gam_S1.end = f3(600.0f, 14.5f, 135.0f);
+
+	Gam_S2.start = f3(480.0f, 12.5f, 0.01f);
+	Gam_S2.end = f3(600.0f, 14.5f, 60.0f);
+
+
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Prsm_l[i].start = f3(480.0f + (30.0f * i), 0.0f, 75.0f);
+		Prsm_l[i].end = f3(480.0f + (30.0f * i), 12.5f, 135.0f);
+		blist.push_back(Prsm_l[i]);
+
+	}
+
+	for (int i = 0; i < 4; ++i)
+	{
+		Prsm_r[i].start = f3(480.0f + (30.0f * i), 0.0f, 0.01f);
+		Prsm_r[i].end = f3(480.0f + (30.0f * i), 12.5f, 60.0f);
+		blist.push_back(Prsm_r[i]);
+	}
+
+	Prsm1.start = f3(480.0f, 0.0f, 135.0f);
+	Prsm1.end = f3(600.0f,12.5f, 135.0f);
+
+	Prsm2.start = f3(480.0f, 0.0f, 75.0f);
+	Prsm2.end = f3(600.0f, 12.5f, 75.0f);
+
+	Prsm3.start = f3(480.0f, 0.0f, 60.0f);
+	Prsm3.end = f3(600.0f, 12.5f, 60.0f);
+
+	Prsm4.start = f3(480.0f, 0.0f, 0.01f);
+	Prsm4.end = f3(600.0f, 12.5f, 0.01f);
 
 	yoyoji1.start = f3(230.0f, 6.75f, 198.0f);
 	yoyoji1.end = f3(238.0f, 9.75f, 200.0f);
@@ -1300,6 +1390,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Ch_s2);
 	blist.push_back(Ch_s3);
 	blist.push_back(yoyoji1);
+	blist.push_back(Prsm1);
+	blist.push_back(Prsm2);
+	blist.push_back(Prsm3);
+	blist.push_back(Prsm4);
+	blist.push_back(Gam_S1);
+	blist.push_back(Gam_S2);
+
 
 
 }
