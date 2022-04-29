@@ -169,6 +169,15 @@
 #define Wallz18 2146
 #define Kidong 2148
 #define KidongMom 2150
+#define Wallz19 2152
+#define Wallz20 2154
+#define Wallz21 2156
+#define Wallz22 2158
+#define A_Wallz1 2160
+#define A_Wallz2 2162
+#define A_Wallz3 2164
+#define A_Wallz4 2166
+
 
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)
