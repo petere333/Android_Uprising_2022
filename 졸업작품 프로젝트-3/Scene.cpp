@@ -2733,7 +2733,9 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 			cout << "Player ID : " << p_login.id << "\n" << endl;
 		}
 		break;
+
 	case PACKET_TYPE::SC_ADD_PLAYER:
+	{
 		cout << "New Player Connected.\n";
 		SC_ADD_PLAYER_PACKET p_new;
 		memcpy(&p_new, p_buf, p_buf[0]);
@@ -2741,6 +2743,7 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
 		players[p_new.id]->SetPosition(pos);
 		break;
+	}
 	case PACKET_TYPE::SC_REMOVE_PLAYER:
 		SC_REMOVE_PLAYER_PACKET p_remove;
 		memcpy(&p_remove, p_buf, p_buf[0]);

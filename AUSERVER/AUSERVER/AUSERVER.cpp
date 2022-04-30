@@ -136,7 +136,7 @@ int get_new_player_id()
 	return -1;
 }
 
-void process_packet(int c_id, char* packet)
+void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 {
 	switch ((PACKET_TYPE)packet[1]) {
 	case PACKET_TYPE::CS_LOGIN: {
@@ -321,27 +321,7 @@ void process_packet(int c_id, char* packet)
 		else if (p->key == '2')
 		{
 			cout << "Code: " << p->key << endl;
-	case PACKET_TYPE::CS_MOVE: {
-		CS_MOVE_PACKET* p_move = reinterpret_cast<CS_MOVE_PACKET*>(packet);
-		//XMFLOAT3 pos = clients[c_id].GetPosition();
-		if (p_move->isKey) {
-			switch (p_move->direction) {
-			case VK_W:
-				break;
-			case VK_S:
-				break;
-			case VK_A:
-				break;
-			case VK_D:
-				break;
-			}
 
-			//SC_MOVE_PLAYER_PACKET m_packet;
-			//m_packet.id = c_id;
-			//m_packet.size = sizeof(m_packet);
-			//m_packet.x = pos.x;
-			//m_packet.y = pos.y;
-			//m_packet.z = pos.z;
 			bs.attackID = TYPE_RANGED;
 			clients[c_id].bState.attackID = TYPE_RANGED;
 		}
