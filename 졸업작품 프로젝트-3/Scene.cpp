@@ -2462,7 +2462,8 @@ void CScene::recv_packet()
 
 void CScene::process_packet()
 {
-	char* packet = g_client.m_recv_over.m_sendbuf;
+	
+	/*char* packet = g_client.m_recv_over.m_sendbuf;
 	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
 	switch (packet[1])
 	{
@@ -2471,7 +2472,7 @@ void CScene::process_packet()
 		players[0]->SetPosition(p->x, p->y, p->z);
 		printf("client player move complete\n");
 		break;
-	}
+	}*/
 }
 //
 //void CScene::ProcessPacket(unsigned char* p_buf)

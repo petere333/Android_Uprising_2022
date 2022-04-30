@@ -338,19 +338,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	
 
 	// 패킷 전송 예시
-	CS_MOVE_PACKET m_packet;
-	m_packet.c_id = 1;
-	m_packet.isKey = true;
-	float spd = m_pScene->getSpeed(0);
-	//m_packet.tx = m_pScene->getDirection(0).x * spd;
-	//m_packet.ty = m_pScene->getDirection(0).y * spd;
-	//m_packet.tz = m_pScene->getDirection(0).z * spd;
+	
 
 
-	m_packet.size = sizeof(CS_MOVE_PACKET);
-	m_packet.type = PACKET_TYPE::CS_MOVE;
-	SendPacket(&m_packet);
-
+	KEYDOWN_PACKET packet;
+	packet.c_id = 1;
+	packet.size = sizeof(KEYDOWN_PACKET);
+	packet.type = PACKET_TYPE::CS_KEYDOWN;
+	
+	KEYUP_PACKET uppac;
+	uppac.c_id = 1;
+	uppac.size = sizeof(KEYUP_PACKET);
+	uppac.type = PACKET_TYPE::CS_KEYUP;
 
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
@@ -390,6 +389,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectState(0, MOVE_STATE);
 				
 			}
+			packet.key = VK_UP;
+			SendPacket(&packet);
 		}
 		break;
 		case VK_DOWN:
@@ -417,6 +418,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			packet.key = VK_DOWN;
+			SendPacket(&packet);
 		}
 		break;
 		case VK_LEFT:
@@ -443,6 +446,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			packet.key = VK_LEFT;
+			SendPacket(&packet);
 		}
 		break;
 		case VK_RIGHT:
@@ -469,6 +474,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			packet.key = VK_RIGHT;
+			SendPacket(&packet);
 		}
 			break;
 		case VK_SPACE:
@@ -479,6 +486,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			}
 			// 플레이어에 대한 점프 명령
 			m_pScene->jumpObject(0);
+			packet.key = VK_SPACE;
+			SendPacket(&packet);
 			break;
 		}
 		case '2':
@@ -502,6 +511,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 
 				m_pScene->players[0]->pState.attType = TYPE_RANGED;
 			}
+			packet.key = '2';
+			SendPacket(&packet);
 			break;
 		}
 		case '1':
@@ -525,6 +536,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				}
 				
 			}
+			packet.key = '1';
+			SendPacket(&packet);
 		}
 
 		}
@@ -550,6 +563,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
+					uppac.key = VK_UP;
+					SendPacket(&uppac);
 					break;
 				case VK_DOWN:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -557,6 +572,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
+					uppac.key = VK_DOWN;
+					SendPacket(&uppac);
 					break;
 				case VK_LEFT:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -564,6 +581,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
+					uppac.key = VK_LEFT;
+					SendPacket(&uppac);
 					break;
 				case VK_RIGHT:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -571,6 +590,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
+					uppac.key = VK_RIGHT;
+					SendPacket(&uppac);
 					break;
 				default:
 					break;

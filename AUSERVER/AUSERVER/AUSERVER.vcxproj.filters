@@ -1,51 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="SNet">
-      <UniqueIdentifier>{72ba9cab-54e8-405f-8d96-c3ae11d2a05d}</UniqueIdentifier>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="GameInfo">
-      <UniqueIdentifier>{d5045328-a344-4ee6-9d70-6ae2360c38f0}</UniqueIdentifier>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="GameState">
-      <UniqueIdentifier>{d2df6923-a587-4ef2-8801-c0f20d48631e}</UniqueIdentifier>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Server">
-      <UniqueIdentifier>{f1372b50-294f-4df5-a856-3e0b157f372c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{29f4324c-932c-4175-bd45-79443d6ca9ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameState\Enemy">
-      <UniqueIdentifier>{e7f76f37-3210-4eb3-8134-51fc5bd3935a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameState\Player">
-      <UniqueIdentifier>{a0929685-daf5-4e38-b7f9-192f5f29a68a}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="protocol.h">
-      <Filter>SNet</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="SNet.h">
-      <Filter>SNet</Filter>
-    </ClInclude>
-    <ClInclude Include="ProcessPacket.h">
-      <Filter>SNet</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AUSERVER.cpp">
-      <Filter>Server</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SNet.cpp">
-      <Filter>SNet</Filter>
-    </ClCompile>
-    <ClCompile Include="ProcessPacket.cpp">
-      <Filter>SNet</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Func.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "Game_Data.h"
+#include "../AUSERVER/AUSERVER/protocol.h"
 
 #define DIR_FORWARD					0x01
 #define DIR_BACKWARD				0x02
@@ -23,6 +24,9 @@ struct CB_GAMEOBJECT_INFO
 
 class CShader;
 class CStandardShader;
+
+struct BionicState;
+struct KineticState;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -483,6 +487,9 @@ public:
 
 public:
 	
+
+	BionicState bState;
+	KineticState kState;
 
 	XMFLOAT3 currentRotation;
 	int objType;

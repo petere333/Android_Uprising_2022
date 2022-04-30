@@ -10,21 +10,73 @@ constexpr int W_HEIGHT = 8;
 
 // Packet Type
 
+
+struct KineticState
+{
+	int isMobile;
+	float rotation;
+	float yspeed;
+	float xzspeed;
+	int isInAir;
+	std::chrono::system_clock::time_point lastMove;
+};
+
+struct BionicState
+{
+	int isIntelligent;
+	int stateID;
+	int attackID;
+	int hp;
+};
+
 enum class PACKET_TYPE : short
 {
 	//client to server
 	CS_LOGIN = 0,
-	CS_MOVE = 1,
+	CS_KEYDOWN = 1,
+	CS_KEYUP = 2,
 
 	//server to client
-	SC_LOGIN_INFO = 2,
-	SC_ADD_PLAYER = 3,
-	SC_REMOVE_PLAYER = 4,
-	SC_MOVE_PLAYER = 5,
+	SC_LOGIN_INFO = 3,
+	SC_ADD_PLAYER = 4,
+	SC_REMOVE_PLAYER = 5,
+	SC_KINETIC_CHANGE = 6,
+	SC_BIONIC_CHANGE=7,
+	
 };
 
 // client to server packet
 #pragma pack (push, 1)
+
+struct KEYDOWN_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	UINT key;
+	short c_id;
+};
+struct KEYUP_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	UINT key;
+	short c_id;
+};
+struct KINETIC_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+	KineticState kState;
+};
+
+struct BIONIC_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+	BionicState bState;
+};
 
 struct CS_LOGIN_PACKET {
 	unsigned char size;
@@ -35,12 +87,9 @@ struct CS_LOGIN_PACKET {
 struct CS_MOVE_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
-	//char	direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
+	float tx, ty, tz;
 	bool isKey;
 	short c_id;
-	int tx;
-	int ty;
-	int tz;
 
 };
 
@@ -49,16 +98,17 @@ struct SC_LOGIN_INFO_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	bool isLogin;
-	float x, y, z;
+	int x, y, z;
 };
 
 struct SC_ADD_PLAYER_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	float x, y, z;
 	char	name[NAMESIZE];
+	KineticState kState;
+	BionicState bState;
+	float cam;
 };
 
 struct SC_REMOVE_PLAYER_PACKET {
@@ -67,35 +117,18 @@ struct SC_REMOVE_PLAYER_PACKET {
 	short	id;
 };
 
-struct SC_MOVE_PLAYER_PACKET {
+struct SC_KEYDOWN_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	float x, y, z;
+	UINT key;
 };
-
-struct SC_MOUSE_PACKET {
+struct SC_KEYUP_PACKET {
 	unsigned char size;
-	PACKET_TYPE type;
-
-	int p_RotateY;
-	int C_RotateY;
-	int CameraOffset;
+	PACKET_TYPE	type;
+	short	id;
+	UINT key;
 };
 
-struct SC_UPDATE_PACKET { // ¼öÁ¤Áß
-	unsigned char size;
-	PACKET_TYPE type;
-	int player;
-	short id[MAX_PLAYER];
-	
-	int X[MAX_PLAYER];
-	int Y[MAX_PLAYER];
-	int Z[MAX_PLAYER];
-	
-	int CX[MAX_PLAYER];
-	int CY[MAX_PLAYER];
-	int CZ[MAX_PLAYER];
-};
 
 #pragma pack (pop)
