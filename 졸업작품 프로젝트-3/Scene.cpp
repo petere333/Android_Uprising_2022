@@ -401,10 +401,31 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshVertical* Walz25 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 5.0f);
 	WallMeshVertical* Walz26 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 7.5f);
 
+
 	WallMeshVertical* Walz27 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 5.0f);
 	WallMeshVertical* Walz28 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 	WallMeshVertical* Walz29 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
 	WallMeshVertical* Walz30 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz31 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 5.0f);
+	WallMeshVertical* Walz32 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 7.5f);
+	WallMeshHorizontal* Walz33 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 5.0f);
+	WallMeshHorizontal* Walz34 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 7.5f);
+	WallMeshHorizontal* Walz35 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 5.0f);
+	WallMeshHorizontal* Walz36 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 7.5f);
+	WallMeshVertical* Walz37 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 5.0f);
+	WallMeshVertical* Walz38 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 7.5f);
+	WallMeshVertical* Walz39 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 5.0f);
+	WallMeshVertical* Walz40 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 7.5f);
+	WallMeshHorizontal* Walz41 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshHorizontal* Walz42 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz43 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz44 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+
+	WallMeshVertical* Walz45 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz46 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz47 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz48 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -1393,8 +1414,151 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == S_Wallz1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz31);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
+		else if (data[i].type == S_Wallz2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz32);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
+		else if (data[i].type == S_Wallz3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz33);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz34);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz5)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz35);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz6)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz36);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz7)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz37);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz8)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz38);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz9)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz39);
+		obj->SetMaterial(0, ppMaterials[12]); // ¹Ù²Ü ¿¹Á¤
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz10)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz40);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz41);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz42);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz13)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz43);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz14)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz44);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+
+		else if (data[i].type == S_Wallz15)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz45);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz16)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz46);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz17)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz47);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz18)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz48);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);

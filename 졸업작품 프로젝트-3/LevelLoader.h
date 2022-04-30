@@ -177,8 +177,24 @@
 #define A_Wallz2 2162
 #define A_Wallz3 2164
 #define A_Wallz4 2166
-
-
+#define S_Wallz1 2168
+#define S_Wallz2 2170
+#define S_Wallz3 2172
+#define S_Wallz4 2174
+#define S_Wallz5 2176
+#define S_Wallz6 2178
+#define S_Wallz7 2180
+#define S_Wallz8 2182
+#define S_Wallz9 2184
+#define S_Wallz10 2186
+#define S_Wallz11 2188
+#define S_Wallz12 2190
+#define S_Wallz13 2192
+#define S_Wallz14 2194
+#define S_Wallz15 2196
+#define S_Wallz16 2198
+#define S_Wallz17 2201
+#define S_Wallz18 2203
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)
 // 5000대 숫자들 : 컨테이너

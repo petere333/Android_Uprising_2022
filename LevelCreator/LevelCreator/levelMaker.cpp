@@ -153,6 +153,111 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Dollp1, Dollp2, Dollp3, Dollp4, Dollp5, Dollp6;
 	Object addes_1, addes_2, addes_3, addes_4;
 	Object addes_5, addes_6, addes_7, addes_8;
+	Object Se_plus1, Se_plus2, Se_plus3, Se_plus4, Se_plus5, Se_plus6;
+	Object nanuki1, nanuki2, nanuki3, nanuki4, nanuki5, nanuki6;
+	Object nanuki1_1, nanuki2_1, nanuki3_1, nanuki4_1, nanuki5_1, nanuki6_1;
+	Object Se_Ado1, Se_Ado2, Se_Ado3, Se_Ado4, Se_Ado5, Se_Ado6;
+	Object Se_Dedo1, Se_Dedo2, Se_Dedo3, Se_Dedo4;
+	Object Se_Dedo5, Se_Dedo6, Se_Dedo7, Se_Dedo8, Se_Dedo9, Se_Dedo10;
+
+	Se_Dedo5.location = f3(1165.0f, 0.0f, 440.0f);
+	Se_Dedo5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo5.type = SeAddings1;
+
+	Se_Dedo6.location = f3(1165.0f, 5.0f, 440.0f);
+	Se_Dedo6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo6.type = SeAddings2;
+
+	Se_Dedo7.location = f3(1165.0f, 0.0f, 430.0f);
+	Se_Dedo7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo7.type = S_Wallz17;
+
+	Se_Dedo8.location = f3(1165.0f, 5.0f, 430.0f);
+	Se_Dedo8.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo8.type = S_Wallz18;
+
+	Se_Dedo9.location = f3(1265.0f, 0.0f, 430.0f);
+	Se_Dedo9.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo9.type = S_Wallz17;
+
+	Se_Dedo10.location = f3(1265.0f, 5.0f, 430.0f);
+	Se_Dedo10.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo10.type = S_Wallz18;
+	
+
+	nanuki1_1.location = f3(1050.0f, 0.0f, 5.0f);
+	nanuki1_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki1_1.type = Wallz9;
+
+	nanuki2_1.location = f3(1050.0f, 5.0f, 5.0f);
+	nanuki2_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki2_1.type = Wallz10;
+
+	nanuki3_1.location = f3(1060.0f, 0.0f, 5.0f);
+	nanuki3_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki3_1.type = Wallz9;
+
+	nanuki4_1.location = f3(1060.0f, 5.0f, 5.0f);
+	nanuki4_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki4_1.type = Wallz10;
+
+	nanuki5_1.location = f3(1050.0f, 0.0f, 5.0f);
+	nanuki5_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki5_1.type = Wallz11;
+
+	nanuki6_1.location = f3(1050.0f, 5.0f, 5.0f);
+	nanuki6_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki6_1.type = Wallz12;
+
+
+	nanuki1.location = f3(800.0f, 0.0f, 60.0f);
+	nanuki1.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki1.type = S_Wallz5;
+
+	nanuki2.location = f3(800.0f, 5.0f, 60.0f);
+	nanuki2.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki2.type = S_Wallz6;
+
+	nanuki3.location = f3(800.0f, 0.0f, 75.0f);
+	nanuki3.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki3.type = S_Wallz5;
+
+	nanuki4.location = f3(800.0f, 5.0f, 75.0f);
+	nanuki4.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki4.type = S_Wallz6;
+
+	nanuki5.location = f3(1050.0f, 0.0f, 60.0f);
+	nanuki5.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki5.type = S_Wallz7;
+
+	nanuki6.location = f3(1050.0f, 5.0f, 60.0f);
+	nanuki6.rotation = f3(0.0f, 0.0f, 0.0f);
+	nanuki6.type = S_Wallz8;
+
+
+	Se_plus1.location = f3(812.5f, 0.0f, 230.0f);
+	Se_plus1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus1.type = S_Wallz1;
+
+	Se_plus2.location = f3(812.5f, 5.0f, 230.0f);
+	Se_plus2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus2.type = S_Wallz2;
+
+	Se_plus3.location = f3(800.0f, 0.0f, 230.0f);
+	Se_plus3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus3.type = S_Wallz3;
+
+	Se_plus4.location = f3(800.0f, 5.0f, 230.0f);
+	Se_plus4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus4.type = S_Wallz4;
+
+	Se_plus5.location = f3(800.0f, 0.0f, 545.0f);
+	Se_plus5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus5.type = S_Wallz3;
+
+	Se_plus6.location = f3(800.0f, 5.0f, 545.0f);
+	Se_plus6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_plus6.type = S_Wallz4;
 
 	addes_5.location = f3(400.0f, 0.0f, 510.0f);
 	addes_5.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -418,6 +523,29 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Wall_Meok1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Wall_Meok1.type = Wallz3;
 
+	Se_Ado1.location = f3(1210.0f, 0.0f, 360.0f);
+	Se_Ado1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado1.type = SeAddings1;
+
+	Se_Ado2.location = f3(1210.0f, 5.0f, 360.0f);
+	Se_Ado2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado2.type = SeAddings2;
+
+	Se_Ado3.location = f3(1210.0f, 0.0f, 350.0f);
+	Se_Ado3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado3.type = S_Wallz13;
+
+	Se_Ado4.location = f3(1210.0f, 5.0f, 350.0f);
+	Se_Ado4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado4.type = S_Wallz14;
+
+	Se_Ado5.location = f3(1310.0f, 0.0f, 350.0f);
+	Se_Ado5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado5.type = S_Wallz13;
+
+	Se_Ado6.location = f3(1310.0f, 5.0f, 350.0f);
+	Se_Ado6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Ado6.type = S_Wallz14;
 
 	Se_Addings1_1.location = f3(1210.0f, 0.0f, 350.0f);
 	Se_Addings1_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -425,7 +553,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Se_Addings1_2.location = f3(1210.0f, 5.0f, 350.0f);
 	Se_Addings1_2.rotation = f3(0.0f, 0.0f, 0.0f);
-	Se_Addings1_2.type = SeAddings2;
+	Se_Addings1_2.type = SeAddings2; // 추가해야할 것
+
 
 	Se_Addings2_1.location = f3(1165.0f, 0.0f, 430.0f);
 	Se_Addings2_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -434,6 +563,24 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_Addings2_2.location = f3(1165.0f, 5.0f, 430.0f);
 	Se_Addings2_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_Addings2_2.type = SeAddings2;
+
+	Se_Dedo1.location = f3(1300.0f, 0.0f, 300.0f);
+	Se_Dedo1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo1.type = SeAddings1;
+
+	Se_Dedo2.location = f3(1300.0f, 5.0f, 300.0f);
+	Se_Dedo2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo2.type = SeAddings2;
+
+	Se_Dedo3.location = f3(1300.0f, 0.0f, 290.0f);
+	Se_Dedo3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo3.type = S_Wallz15;
+
+	Se_Dedo4.location = f3(1300.0f, 5.0f, 290.0f);
+	Se_Dedo4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_Dedo4.type = S_Wallz16;
+
+
 
 	Se_Addings3_1.location = f3(1300.0f, 0.0f, 290.0f);
 	Se_Addings3_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -1008,6 +1155,40 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(addes_6);
 	list.push_back(addes_7);
 	list.push_back(addes_8);
+	list.push_back(Se_plus1);
+	list.push_back(Se_plus2);
+	list.push_back(Se_plus3);
+	list.push_back(Se_plus4);
+	list.push_back(Se_plus5);
+	list.push_back(Se_plus6);
+	list.push_back(nanuki1);
+	list.push_back(nanuki2);
+	list.push_back(nanuki3);
+	list.push_back(nanuki4);
+	list.push_back(nanuki5);
+	list.push_back(nanuki6);
+	list.push_back(nanuki1_1);
+	list.push_back(nanuki2_1);
+	list.push_back(nanuki3_1);
+	list.push_back(nanuki4_1);
+	list.push_back(nanuki5_1);
+	list.push_back(nanuki6_1);
+	list.push_back(Se_Ado1);
+	list.push_back(Se_Ado2);
+	list.push_back(Se_Ado3);
+	list.push_back(Se_Ado4);
+	list.push_back(Se_Ado5);
+	list.push_back(Se_Ado6);
+	list.push_back(Se_Dedo1);
+	list.push_back(Se_Dedo2);
+	list.push_back(Se_Dedo3);
+	list.push_back(Se_Dedo4);
+	list.push_back(Se_Dedo5);
+	list.push_back(Se_Dedo6);
+	list.push_back(Se_Dedo7);
+	list.push_back(Se_Dedo8);
+	list.push_back(Se_Dedo9);
+	list.push_back(Se_Dedo10);
 
 
 
@@ -1069,6 +1250,118 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Dol_w1, Dol_w2, Dol_w3, Dol_w4, Dol_w5, Dol_w6;
 	BoundingBox ader1, ader2, ader3, ader4;
 	BoundingBox ader5, ader6, ader7, ader8;
+	BoundingBox S_plus1, S_plus2, S_plus3, S_plus4, S_plus5, S_plus6;
+	BoundingBox nanuk1, nanuk2, nanuk3, nanuk4, nanuk5, nanuk6;
+	BoundingBox nanuk1_1, nanuk2_1, nanuk3_1, nanuk4_1, nanuk5_1, nanuk6_1;
+	BoundingBox Aop1, Aop2, Aop3, Aop4, Aop5, Aop6;
+	BoundingBox Aader1, Aader2, Aader3, Aader4;
+	BoundingBox Aader5, Aader6, Aader7, Aader8, Aader9, Aader10;
+
+	Aader1.start = f3(1300.0f, 0.0f, 300.0f);
+	Aader1.end = f3(1400.0f, 5.0f, 300.0f);
+	
+	Aader2.start = f3(1300.0f, 5.0f, 300.0f);
+	Aader2.end = f3(1400.0f, 12.5f, 300.0f);
+
+	Aader3.start = f3(1300.0f, 0.0f, 290.0f);
+	Aader3.end = f3(1300.0f, 5.0f, 300.0f);
+
+	Aader4.start = f3(1300.0f, 5.0f, 290.0f);
+	Aader4.end = f3(1300.0f, 12.5f, 300.0f);
+
+	Aader5.start = f3(1165.0f, 0.0f, 440.0f);
+	Aader5.end = f3(1265.0f, 5.0f, 440.0f);
+
+	Aader6.start = f3(1165.0f, 5.0f, 440.0f);
+	Aader6.end = f3(1265.0f, 12.5f, 440.0f);
+
+	Aader7.start = f3(1165.0f, 0.0f, 430.0f);
+	Aader7.end = f3(1165.0f, 5.0f, 440.0f);
+
+	Aader8.start = f3(1165.0f, 5.0f, 430.0f);
+	Aader8.end = f3(1165.0f, 12.5f, 440.0f);
+
+	Aader9.start = f3(1265.0f, 0.0f, 430.0f);
+	Aader9.end = f3(1265.0f, 5.0f, 440.0f);
+
+	Aader10.start = f3(1265.0f, 5.0f, 430.0f);
+	Aader10.end = f3(1265.0f, 12.5f, 440.0f);
+
+
+	Aop1.start = f3(1210.0f, 0.0f, 360.0f);
+	Aop1.end = f3(1310.0f, 5.0f, 360.0f);
+
+	Aop2.start = f3(1210.0f, 5.0f, 360.0f);
+	Aop2.end = f3(1310.0f, 12.5f, 360.0f);
+
+	Aop3.start = f3(1210.0f, 0.0f, 350.0f);
+	Aop3.end = f3(1210.0f, 5.0f, 360.0f);
+
+	Aop4.start = f3(1210.0f, 5.0f, 350.0f);
+	Aop4.end = f3(1210.0f, 12.5f, 360.0f);
+
+	Aop5.start = f3(1310.0f, 0.0f, 350.0f);
+	Aop5.end = f3(1310.0f, 5.0f, 360.0f);
+
+	Aop6.start = f3(1310.0f, 5.0f, 350.0f);
+	Aop6.end = f3(1310.0f, 12.5f, 360.0f);
+
+
+	nanuk1_1.start = f3(1050.0f, 0.0f, 5.0f);
+	nanuk1_1.end = f3(1050.0f, 5.0f, 150.0f);
+
+	nanuk2_1.start = f3(1050.0f, 5.0f, 5.0f);
+	nanuk2_1.end = f3(1050.0f, 12.5f, 150.0f);
+
+	nanuk3_1.start = f3(1060.0f, 0.0f, 5.0f);
+	nanuk3_1.end = f3(1060.0f, 5.0f, 150.0f);
+
+	nanuk4_1.start = f3(1060.0f, 5.0f, 5.0f);
+	nanuk4_1.end = f3(1060.0f, 12.5f, 150.0f);
+
+	nanuk5_1.start = f3(1050.0f, 0.0f, 5.0f);
+	nanuk5_1.end = f3(1060.0f, 5.0f, 5.0f);
+
+	nanuk6_1.start = f3(1050.0f, 5.0f, 5.0f);
+	nanuk6_1.end = f3(1060.0f, 12.5f, 5.0f);
+
+
+	nanuk1.start = f3(800.0f, 0.0f, 60.0f);
+	nanuk1.end = f3(1050.0f, 5.0f, 60.0f);
+
+	nanuk2.start = f3(800.0f, 5.0f, 60.0f);
+	nanuk2.end = f3(1050.0f, 12.5f, 60.0f);
+
+	nanuk3.start = f3(800.0f, 0.0f, 75.0f);
+	nanuk3.end = f3(1050.0f, 5.0f, 75.0f);
+
+	nanuk4.start = f3(800.0f, 5.0f, 75.0f);
+	nanuk4.end = f3(1050.0f, 12.5f, 75.0f);
+
+	nanuk5.start = f3(1050.0f, 0.0f, 60.0f);
+	nanuk5.end = f3(1050.0f, 5.0f, 75.0f);
+
+	nanuk6.start = f3(1050.0f, 5.0f, 60.0f);
+	nanuk6.end = f3(1050.0f, 12.5f, 75.0f);
+
+
+	S_plus1.start = f3(812.5f, 0.0f, 230.0f);
+	S_plus1.end = f3(812.5f, 5.0f, 545.0f);
+
+	S_plus2.start = f3(812.5f, 5.0f, 230.0f);
+	S_plus2.end = f3(812.5f, 12.5f, 545.0f);
+
+	S_plus3.start = f3(800.0f, 0.0f, 230.0f);
+	S_plus3.end = f3(812.5f, 5.0f, 230.0f);
+
+	S_plus4.start = f3(800.0f, 5.0f, 230.0f);
+	S_plus4.end = f3(812.5f, 12.5f, 230.0f);
+
+	S_plus5.start = f3(800.0f, 0.0f, 545.0f);
+	S_plus5.end = f3(812.5f, 5.0f, 545.0f);
+
+	S_plus6.start = f3(800.0f, 5.0f, 545.0f);
+	S_plus6.end = f3(812.5f, 12.5f, 545.0f);
 
 	ader5.start = f3(400.0f, 0.0f, 510.0f);
 	ader5.end = f3(550.0f, 5.0f, 510.0f);
@@ -1743,6 +2036,42 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(ader6);
 	blist.push_back(ader7);
 	blist.push_back(ader8);
+	blist.push_back(S_plus1);
+	blist.push_back(S_plus2);
+	blist.push_back(S_plus3);
+	blist.push_back(S_plus4);
+	blist.push_back(S_plus5);
+	blist.push_back(S_plus6);
+	blist.push_back(nanuk1);
+	blist.push_back(nanuk2);
+	blist.push_back(nanuk3);
+	blist.push_back(nanuk4);
+	blist.push_back(nanuk5);
+	blist.push_back(nanuk6);
+	blist.push_back(nanuk1_1);
+	blist.push_back(nanuk2_1);
+	blist.push_back(nanuk3_1);
+	blist.push_back(nanuk4_1);
+	blist.push_back(nanuk5_1);
+	blist.push_back(nanuk6_1);
+
+	blist.push_back(Aop1);
+	blist.push_back(Aop2);
+	blist.push_back(Aop3);
+	blist.push_back(Aop4);
+	blist.push_back(Aop5);
+	blist.push_back(Aop6);
+
+	blist.push_back(Aader1);
+	blist.push_back(Aader2);
+	blist.push_back(Aader3);
+	blist.push_back(Aader4);
+	blist.push_back(Aader5);
+	blist.push_back(Aader6);
+	blist.push_back(Aader7);
+	blist.push_back(Aader8);
+	blist.push_back(Aader9);
+	blist.push_back(Aader10);
 
 }
 
