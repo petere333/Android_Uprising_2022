@@ -2626,15 +2626,58 @@ void CScene::recv_packet()
 
 void CScene::process_packet()
 {
+	
 	char* packet = g_client.m_recv_over.m_sendbuf;
-	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
+	const int type_kinetic = static_cast<int>(PACKET_TYPE::SC_KINETIC_CHANGE);
+	const int type_bionic = static_cast<int>(PACKET_TYPE::SC_BIONIC_CHANGE);
 	switch (packet[1])
 	{
-	case type_move:
-		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
-		players[0]->SetPosition(p->x, p->y, p->z);
-		printf("client player move complete\n");
+	case type_kinetic:
+	{
+		KINETIC_PACKET* p = reinterpret_cast<KINETIC_PACKET*>(packet);
+		if (p->kState.isInAir != -9999)
+		{
+			players[0]->kState.isInAir = p->kState.isInAir;
+		}
+		if (p->kState.isMobile != -9999)
+		{
+			players[0]->kState.isMobile = p->kState.isMobile;
+		}
+		if (p->kState.rotation != -9999.0f)
+		{
+			players[0]->kState.rotation = p->kState.rotation;
+		}
+		if (p->kState.yspeed != -9999.0f)
+		{
+			players[0]->kState.yspeed = p->kState.yspeed;
+		}
+		if (p->kState.xzspeed != -9999.0f)
+		{
+			players[0]->kState.xzspeed = p->kState.xzspeed;
+		}
+		printf("client player kinetic state change complete\n");
 		break;
+	}
+	case type_bionic:
+	{
+		BIONIC_PACKET* p = reinterpret_cast<BIONIC_PACKET*>(packet);
+		if (p->bState.attackID != -9999)
+		{
+			players[0]->bState.attackID = p->bState.attackID;
+		}
+		if (p->bState.stateID != -9999)
+		{
+			players[0]->bState.stateID = p->bState.stateID;
+		}
+		if (p->bState.isIntelligent != -9999)
+		{
+			players[0]->bState.isIntelligent = p->bState.isIntelligent;
+		}
+		if (p->bState.hp != -9999)
+		{
+			players[0]->bState.hp = p->bState.hp;
+		}
+	}
 	}
 }
 //
