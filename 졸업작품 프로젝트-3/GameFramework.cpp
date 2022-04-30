@@ -390,7 +390,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				
 			}
 			packet.key = VK_UP;
-			SendPacket(&packet);
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_DOWN:
@@ -419,7 +423,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
 			packet.key = VK_DOWN;
-			SendPacket(&packet);
+
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_LEFT:
@@ -447,7 +456,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
 			packet.key = VK_LEFT;
-			SendPacket(&packet);
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_RIGHT:
@@ -475,7 +488,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
 			packet.key = VK_RIGHT;
-			SendPacket(&packet);
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 			break;
 		case VK_SPACE:
@@ -487,7 +504,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			// 플레이어에 대한 점프 명령
 			m_pScene->jumpObject(0);
 			packet.key = VK_SPACE;
-			SendPacket(&packet);
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 			break;
 		}
 		case '2':
@@ -564,7 +585,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
 					uppac.key = VK_UP;
-					SendPacket(&uppac);
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
 					break;
 				case VK_DOWN:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -573,7 +598,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
 					uppac.key = VK_DOWN;
-					SendPacket(&uppac);
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
 					break;
 				case VK_LEFT:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -582,7 +611,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
 					uppac.key = VK_LEFT;
-					SendPacket(&uppac);
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
 					break;
 				case VK_RIGHT:
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
@@ -591,7 +624,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
 					uppac.key = VK_RIGHT;
-					SendPacket(&uppac);
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
 					break;
 				default:
 					break;
