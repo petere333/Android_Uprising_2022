@@ -10,21 +10,82 @@ constexpr int W_HEIGHT = 100;
 
 // Packet Type
 
+
+struct KineticState
+{
+	int isMobile;
+	float rotation;
+	float yspeed;
+	float xzspeed;
+	int isInAir;
+	std::chrono::system_clock::time_point lastMove;
+};
+
+struct BionicState
+{
+	int isIntelligent;
+	int stateID;
+	int attackID;
+	int hp;
+};
+
 enum class PACKET_TYPE : short
 {
 	//client to server
 	CS_LOGIN = 0,
-	CS_MOVE = 1,
+	CS_KEYDOWN = 1,
+	CS_KEYUP = 2,
+	CS_MOUSE = 3,
 
 	//server to client
-	SC_LOGIN_INFO = 2,
-	SC_ADD_PLAYER = 3,
-	SC_REMOVE_PLAYER = 4,
-	SC_MOVE_PLAYER = 5,
+	SC_LOGIN_INFO = 4,
+	SC_ADD_PLAYER = 5,
+	SC_REMOVE_PLAYER = 6,
+	SC_KINETIC_CHANGE = 7,
+	SC_BIONIC_CHANGE=8,
+	
 };
 
 // client to server packet
 #pragma pack (push, 1)
+
+struct KEYDOWN_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	UINT key;
+	short c_id;
+};
+struct KEYUP_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	UINT key;
+	short c_id;
+};
+
+struct MOUSE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	bool down;
+	short c_id;
+};
+struct KINETIC_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+	KineticState kState;
+};
+
+struct BIONIC_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+	BionicState bState;
+};
 
 struct CS_LOGIN_PACKET {
 	unsigned char size;
@@ -35,12 +96,10 @@ struct CS_LOGIN_PACKET {
 struct CS_MOVE_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
+	float tx, ty, tz;
 	short direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
 	bool isKey;
 	short c_id;
-	//int tx;
-	//int ty;
-	//int tz;
 
 };
 
@@ -57,8 +116,10 @@ struct SC_ADD_PLAYER_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	float x, y, z;
 	char	name[NAMESIZE];
+	KineticState kState;
+	BionicState bState;
+	float cam;
 };
 
 struct SC_REMOVE_PLAYER_PACKET {
@@ -67,7 +128,7 @@ struct SC_REMOVE_PLAYER_PACKET {
 	short	id;
 };
 
-struct SC_MOVE_PLAYER_PACKET {
+struct SC_KEYDOWN_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
@@ -76,15 +137,13 @@ struct SC_MOVE_PLAYER_PACKET {
 	//float cx, cy, cz; //camera
 
 	//weaponType
+	UINT key;
 };
-
-struct SC_MOUSE_PACKET {
+struct SC_KEYUP_PACKET {
 	unsigned char size;
-	PACKET_TYPE type;
-
-	int p_RotateY;
-	int C_RotateY;
-	int CameraOffset;
+	PACKET_TYPE	type;
+	short	id;
+	UINT key;
 };
 
 

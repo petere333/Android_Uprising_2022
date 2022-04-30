@@ -102,6 +102,8 @@ private:
 	_TCHAR						m_pszFrameRate[70];
 	
 public:
+	bool keydown=false;
+	bool mousedown = false;
 	float dx=0.0f, dy=0.0f, dz=0.0f;
 	int prevX=500, prevY=500;
 

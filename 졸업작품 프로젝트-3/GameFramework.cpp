@@ -55,7 +55,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateDepthStencilView();
 	CoInitialize(NULL);
 	
-	CSound::Init();
+	// CSound::Init();
 
 	SetCursorPos(500, 500);
 
@@ -296,8 +296,16 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	{
 		case WM_LBUTTONDOWN:
 			// 마우스 좌클릭 시 공격 상태로 변화.
-			m_pScene->setObjectState(0, ATTACK_STATE);
-			m_pScene->mouseDown = true;
+			if (mousedown == false)
+			{
+				MOUSE_PACKET p;
+				p.c_id = 1;
+				p.size = sizeof(MOUSE_PACKET);
+				p.down = true;
+				p.type = PACKET_TYPE::CS_MOUSE;
+				SendPacket(&p);
+				mousedown = true;
+			}
 			break;
 		case WM_RBUTTONDOWN:
 			
@@ -307,16 +315,17 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		case WM_LBUTTONUP:
 		{
-			//좌클릭 해제 시 정지 상태로 변화.
-			m_pScene->mouseDown = false;
-			std::chrono::duration<double> d = std::chrono::system_clock::now() - m_pScene->players[0]->lastAttack;
-			float fTime = static_cast<float>(d.count());
 
-			if (fTime < 0.833333 && m_pScene->players[0]->pState.attType == TYPE_MELEE)
+			if (mousedown == true)
 			{
-				break;
+				MOUSE_PACKET p;
+				p.c_id = 1;
+				p.size = sizeof(MOUSE_PACKET);
+				p.down = false;
+				p.type = PACKET_TYPE::CS_MOUSE;
+				SendPacket(&p);
+				mousedown = false;
 			}
-			m_pScene->setObjectState(0, IDLE_STATE);
 			break;
 		}
 		case WM_RBUTTONUP:
@@ -338,20 +347,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	
 
 	// 패킷 전송 예시
-	CS_MOVE_PACKET m_packet;
-	m_packet.c_id = 1;
-	m_packet.isKey = true;
-	float spd = m_pScene->getSpeed(0);
-	//m_packet.tx = m_pScene->getDirection(0).x * spd;
-	//m_packet.ty = m_pScene->getDirection(0).y * spd;
-	//m_packet.tz = m_pScene->getDirection(0).z * spd;
+	
 
 
-	m_packet.size = sizeof(CS_MOVE_PACKET);
-	m_packet.type = PACKET_TYPE::CS_MOVE;
-	SendPacket(&m_packet);
-
-
+	KEYDOWN_PACKET packet;
+	packet.c_id = 1;
+	packet.size = sizeof(KEYDOWN_PACKET);
+	packet.type = PACKET_TYPE::CS_KEYDOWN;
+	
+	KEYUP_PACKET uppac;
+	uppac.c_id = 1;
+	uppac.size = sizeof(KEYUP_PACKET);
+	uppac.type = PACKET_TYPE::CS_KEYUP;
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
 
@@ -366,6 +373,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			{
 				break;
 			}
+			/*
 			if (lastOrder == 1)
 			{
 				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
@@ -390,6 +398,13 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectState(0, MOVE_STATE);
 				
 			}
+			*/
+			packet.key = VK_UP;
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_DOWN:
@@ -398,6 +413,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			{
 				break;
 			}
+			/*
 			if (lastOrder == 0)
 			{
 				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
@@ -417,6 +433,14 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			*/
+			packet.key = VK_DOWN;
+			
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_LEFT:
@@ -425,6 +449,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			{
 				break;
 			}
+			/*
 			if (lastOrder == 0)
 			{
 				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
@@ -443,6 +468,13 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			*/
+			packet.key = VK_LEFT;
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 		break;
 		case VK_RIGHT:
@@ -451,6 +483,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			{
 				break;
 			}
+			/*
 			if (lastOrder == 0)
 			{
 				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
@@ -469,20 +502,35 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
 				m_pScene->setObjectState(0, MOVE_STATE);
 			}
+			*/
+			packet.key = VK_RIGHT;
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 		}
 			break;
 		case VK_SPACE:
 		{
+			
 			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
 			// 플레이어에 대한 점프 명령
-			m_pScene->jumpObject(0);
+			//m_pScene->jumpObject(0);
+			packet.key = VK_SPACE;
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 			break;
 		}
 		case '2':
 		{
+			/*
 			PlayerState state = m_pScene->getPlayerState(0);
 
 			XMFLOAT3 pos = m_pScene->getPos(0);
@@ -502,10 +550,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 
 				m_pScene->players[0]->pState.attType = TYPE_RANGED;
 			}
+			*/
+			packet.key = '2';
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
+			}
 			break;
 		}
 		case '1':
 		{
+			/*
 			PlayerState state = m_pScene->getPlayerState(0);
 
 		
@@ -524,6 +580,13 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					m_pScene->players[0]->pState.attType = TYPE_MELEE;
 				}
 				
+			}
+			*/
+			packet.key = '1';
+			if (keydown == false)
+			{
+				SendPacket(&packet);
+				keydown = true;
 			}
 		}
 
@@ -545,32 +608,85 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					break;
 				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
 				case VK_UP:
+					/*
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
 					{
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
+					}
+					*/
+					uppac.key = VK_UP;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
 					}
 					break;
 				case VK_DOWN:
+					/*
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
 					{
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
+					}
+					*/
+					uppac.key = VK_DOWN;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
 					}
 					break;
 				case VK_LEFT:
+					/*
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
 					{
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
+					}
+					*/
+					uppac.key = VK_LEFT;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
 					}
 					break;
 				case VK_RIGHT:
+					/*
 					if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
 					{
 						m_pScene->setObjectSpeed(0, 0.0f);
 						m_pScene->setObjectState(0, IDLE_STATE);
 					}
+					*/
+					uppac.key = VK_RIGHT;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				case '1':
+				{
+					uppac.key = '1';
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
+				case '2':
+				{
+					uppac.key = '2';
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
 					break;
 				default:
 					break;
@@ -719,14 +835,12 @@ void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
 
-	//여기에, 객체를 이동시킨다는 패킷을 서버로 보내는 내용 추가하기.
-
-	m_pScene->moveObject(0);//이걸 서버가 처리한다.
+	//m_pScene->moveObject(0);
 
 	
 	// 이 이후로는 클라가 처리
 
-	
+	/*
 	if (m_pScene->getSpeed(0) > 0.0f || m_pScene->players[0]->yspeed != 0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
 	{
 		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
@@ -785,7 +899,7 @@ void CGameFramework::AnimateObjects()
 			m_pScene->setPlayerAnimation(0);
 		}
 	}
-	
+	*/
 	
 
 	if (m_pScene) m_pScene->AnimateObjects(m_pd3dDevice, m_pd3dCommandList, fTimeElapsed);

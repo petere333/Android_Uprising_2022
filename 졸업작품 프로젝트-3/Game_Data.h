@@ -56,6 +56,9 @@
 	데미지, 레벨, 공격 속도 등은 공식을 통해 산출되는 
 	유도 애트리뷰트이므로 포함하지 않는다.
 */
+
+
+
 typedef struct PlayerData
 {
 	std::string nickname; // 닉네임

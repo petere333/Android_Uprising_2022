@@ -9,12 +9,14 @@ void Process_packet(SOCKET sock, char* packet, int packetSize, PACKET_TYPE packe
 	{
     //client to server
 	case PACKET_TYPE::CS_LOGIN:
-    case PACKET_TYPE::CS_MOVE:
+    case PACKET_TYPE::CS_KEYDOWN:
+    case PACKET_TYPE::CS_KEYUP:
 
     //server to client
     case PACKET_TYPE::SC_ADD_PLAYER:
     case PACKET_TYPE::SC_LOGIN_INFO:
-    case PACKET_TYPE::SC_MOVE_PLAYER:
+    case PACKET_TYPE::SC_KINETIC_CHANGE:
+    case PACKET_TYPE::SC_BIONIC_CHANGE:
     case PACKET_TYPE::SC_REMOVE_PLAYER:
     default:
         break;

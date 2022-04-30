@@ -396,7 +396,35 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshVertical* Walz20 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 115.0f, 7.5f);
 	WallMeshHorizontal* Walz21 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f); // 시작지점 근처 벽
 	WallMeshHorizontal* Walz22 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshHorizontal* Walz23 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 75.0f, 5.0f); // 시작지점 근처 벽
+	WallMeshHorizontal* Walz24 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 75.0f, 7.5f);
+	WallMeshVertical* Walz25 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 5.0f);
+	WallMeshVertical* Walz26 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 7.5f);
 
+
+	WallMeshVertical* Walz27 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 5.0f);
+	WallMeshVertical* Walz28 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshVertical* Walz29 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz30 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz31 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 5.0f);
+	WallMeshVertical* Walz32 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 7.5f);
+	WallMeshHorizontal* Walz33 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 5.0f);
+	WallMeshHorizontal* Walz34 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 7.5f);
+	WallMeshHorizontal* Walz35 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 5.0f);
+	WallMeshHorizontal* Walz36 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 7.5f);
+	WallMeshVertical* Walz37 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 5.0f);
+	WallMeshVertical* Walz38 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 7.5f);
+	WallMeshVertical* Walz39 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 5.0f);
+	WallMeshVertical* Walz40 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 7.5f);
+	WallMeshHorizontal* Walz41 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshHorizontal* Walz42 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz43 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz44 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+
+	WallMeshVertical* Walz45 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz46 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz47 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
+	WallMeshVertical* Walz48 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
 
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
@@ -1321,9 +1349,216 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == Wallz19)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz23);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
 
+		if (data[i].type == Wallz20)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz24);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
+		}
+		else if (data[i].type == Wallz21)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz25);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Wallz22)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz26);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == A_Wallz1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz27);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == A_Wallz2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz28);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == A_Wallz3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz29);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == A_Wallz4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz30);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz31);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz32);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz33);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz34);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz5)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz35);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz6)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz36);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz7)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz37);
+			obj->SetMaterial(0, ppMaterials[12]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz8)
+		{
+			obj = new CGameObject(1);
+			obj->SetMesh(Walz38);
+			obj->SetMaterial(0, ppMaterials[11]);
+			//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz9)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz39);
+		obj->SetMaterial(0, ppMaterials[12]); // 바꿀 예정
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz10)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz40);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz41);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz42);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz13)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz43);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz14)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz44);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+
+		else if (data[i].type == S_Wallz15)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz45);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz16)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz46);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz17)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz47);
+		obj->SetMaterial(0, ppMaterials[12]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz18)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz48);
+		obj->SetMaterial(0, ppMaterials[11]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
@@ -1623,10 +1858,41 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-	setObjectLastMove(0);
-	
+
+
 	for (int i = 0; i < players.size(); ++i)
 	{
+
+		if (players[i]->bState.stateID == IDLE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 11);
+			}
+		}
+		else if (players[i]->bState.stateID == MOVE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 20);
+				moveObject(i);
+			}
+		}
+		else if (players[i]->bState.stateID == ATTACK_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 2);
+				moveObject(i);
+			}
+		}
+		/*
 		if (mouseDown == true)
 		{
 			players[i]->pState.id = ATTACK_STATE;
@@ -1689,9 +1955,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				players[i]->speed = 0.0f;
 				swingHammer(i, pd3dDevice,pd3dCommandList);
-			
+
 			}
 		}
+		*/
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 	for (int i = 0; i < particles.size(); ++i)
@@ -1717,7 +1984,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		
+
 		if (enemies[i]->eState.currHP <= 0)
 		{
 			enemies[i]->eState.id = DEATH_STATE;
@@ -1733,7 +2000,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		else if (enemies[i]->eState.id == DEATH_STATE)
 		{
-			
+
 			if (enemies[i]->isDead == false)
 			{
 				if (enemies[i]->m_pChild != enemyModels[1]->m_pModelRootObject)
@@ -1758,7 +2025,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 		}
 	}
-	
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -2392,15 +2659,58 @@ void CScene::recv_packet()
 
 void CScene::process_packet()
 {
+	
 	char* packet = g_client.m_recv_over.m_sendbuf;
-	const int type_move = static_cast<int>(PACKET_TYPE::SC_MOVE_PLAYER);
+	const int type_kinetic = static_cast<int>(PACKET_TYPE::SC_KINETIC_CHANGE);
+	const int type_bionic = static_cast<int>(PACKET_TYPE::SC_BIONIC_CHANGE);
 	switch (packet[1])
 	{
-	case type_move:
-		SC_MOVE_PLAYER_PACKET* p = reinterpret_cast<SC_MOVE_PLAYER_PACKET*>(packet);
-		players[0]->SetPosition(p->x, p->y, p->z);
-		printf("client player move complete\n");
+	case type_kinetic:
+	{
+		KINETIC_PACKET* p = reinterpret_cast<KINETIC_PACKET*>(packet);
+		if (p->kState.isInAir != -9999)
+		{
+			players[0]->kState.isInAir = p->kState.isInAir;
+		}
+		if (p->kState.isMobile != -9999)
+		{
+			players[0]->kState.isMobile = p->kState.isMobile;
+		}
+		if (p->kState.rotation != -9999.0f)
+		{
+			players[0]->kState.rotation = p->kState.rotation;
+		}
+		if (p->kState.yspeed != -9999.0f)
+		{
+			players[0]->kState.yspeed = p->kState.yspeed;
+		}
+		if (p->kState.xzspeed != -9999.0f)
+		{
+			players[0]->kState.xzspeed = p->kState.xzspeed;
+		}
+		printf("client player kinetic state change complete\n");
 		break;
+	}
+	case type_bionic:
+	{
+		BIONIC_PACKET* p = reinterpret_cast<BIONIC_PACKET*>(packet);
+		if (p->bState.attackID != -9999)
+		{
+			players[0]->bState.attackID = p->bState.attackID;
+		}
+		if (p->bState.stateID != -9999)
+		{
+			players[0]->bState.stateID = p->bState.stateID;
+		}
+		if (p->bState.isIntelligent != -9999)
+		{
+			players[0]->bState.isIntelligent = p->bState.isIntelligent;
+		}
+		if (p->bState.hp != -9999)
+		{
+			players[0]->bState.hp = p->bState.hp;
+		}
+	}
 	}
 }
 
