@@ -139,7 +139,8 @@ int get_new_player_id()
 void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 {
 	switch (packetType) {
-	case PACKET_TYPE::CS_LOGIN: {
+	case PACKET_TYPE::CS_LOGIN: 
+	{
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
 		clients[c_id].send_login_info();
@@ -265,7 +266,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 	}
 	case PACKET_TYPE::CS_KEYUP:
 	{
-		cout << "Key up received" << endl;
+		
 		KEYUP_PACKET* p = reinterpret_cast<KEYUP_PACKET*>(packet);
 
 		KineticState ks;
@@ -279,9 +280,12 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		bs.hp = -9999;
 		bs.attackID = -9999;
 		bs.isIntelligent = -9999;
+		bs.stateID = -9999;
+		cout << "Key up received:  ";
 
 		if (p->key == VK_UP)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -290,6 +294,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_DOWN)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -298,6 +303,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_LEFT)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -306,17 +312,60 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_RIGHT)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
 			clients[c_id].bState.stateID = IDLE_STATE;
 		}
+		else if (p->key == '2')
+		{
+			cout << "Code: " << p->key << endl;
+
+			bs.attackID = TYPE_RANGED;
+			clients[c_id].bState.attackID = TYPE_RANGED;
+		}
+		else if (p->key == '1')
+		{
+			cout << "Code: " << p->key << endl;
+
+			bs.attackID = TYPE_MELEE;
+			clients[c_id].bState.attackID = TYPE_MELEE;
+		}
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
 				pl.send_kinetic_change(c_id, ks);
+				pl.send_bionic_change(c_id, bs);
+			}
+		}
+		break;
+	}
+	case PACKET_TYPE::CS_MOUSE:
+	{
+		cout << "mouse msg received" << endl;
+		MOUSE_PACKET* p = reinterpret_cast<MOUSE_PACKET*>(packet);
+		
+		BionicState bs;
+		bs.hp = -9999;
+		bs.attackID = -9999;
+		bs.isIntelligent = -9999;
+		if (p->down == true)
+		{
+			bs.stateID = ATTACK_STATE;
+			clients[c_id].bState.attackID = ATTACK_STATE;
+		}
+		else
+		{
+			bs.stateID = IDLE_STATE;
+			clients[c_id].bState.attackID = IDLE_STATE;
+		}
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
 				pl.send_bionic_change(c_id, bs);
 			}
 		}

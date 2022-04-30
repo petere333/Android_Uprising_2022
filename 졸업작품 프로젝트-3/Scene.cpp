@@ -1858,10 +1858,41 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-	setObjectLastMove(0);
-	
+
+
 	for (int i = 0; i < players.size(); ++i)
 	{
+
+		if (players[i]->bState.stateID == IDLE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 11);
+			}
+		}
+		else if (players[i]->bState.stateID == MOVE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 20);
+				moveObject(i);
+			}
+		}
+		else if (players[i]->bState.stateID == ATTACK_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 2);
+				moveObject(i);
+			}
+		}
+		/*
 		if (mouseDown == true)
 		{
 			players[i]->pState.id = ATTACK_STATE;
@@ -1924,9 +1955,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				players[i]->speed = 0.0f;
 				swingHammer(i, pd3dDevice,pd3dCommandList);
-			
+
 			}
 		}
+		*/
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 	for (int i = 0; i < particles.size(); ++i)
@@ -1952,7 +1984,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		
+
 		if (enemies[i]->eState.currHP <= 0)
 		{
 			enemies[i]->eState.id = DEATH_STATE;
@@ -1968,7 +2000,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		else if (enemies[i]->eState.id == DEATH_STATE)
 		{
-			
+
 			if (enemies[i]->isDead == false)
 			{
 				if (enemies[i]->m_pChild != enemyModels[1]->m_pModelRootObject)
@@ -1993,7 +2025,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 		}
 	}
-	
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)

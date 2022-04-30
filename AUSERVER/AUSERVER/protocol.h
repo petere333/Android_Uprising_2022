@@ -35,13 +35,14 @@ enum class PACKET_TYPE : short
 	CS_LOGIN = 0,
 	CS_KEYDOWN = 1,
 	CS_KEYUP = 2,
+	CS_MOUSE = 3,
 
 	//server to client
-	SC_LOGIN_INFO = 3,
-	SC_ADD_PLAYER = 4,
-	SC_REMOVE_PLAYER = 5,
-	SC_KINETIC_CHANGE = 6,
-	SC_BIONIC_CHANGE=7,
+	SC_LOGIN_INFO = 4,
+	SC_ADD_PLAYER = 5,
+	SC_REMOVE_PLAYER = 6,
+	SC_KINETIC_CHANGE = 7,
+	SC_BIONIC_CHANGE=8,
 	
 };
 
@@ -60,6 +61,14 @@ struct KEYUP_PACKET
 	unsigned char size;
 	PACKET_TYPE type;
 	UINT key;
+	short c_id;
+};
+
+struct MOUSE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	bool down;
 	short c_id;
 };
 struct KINETIC_PACKET
