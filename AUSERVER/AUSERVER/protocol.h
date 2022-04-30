@@ -5,8 +5,8 @@ constexpr int SERVERPORT = 9000;
 constexpr int BUFSIZE = 1024;
 constexpr int NAMESIZE = 20;
 
-constexpr int W_WIDTH = 8;
-constexpr int W_HEIGHT = 8;
+constexpr int W_WIDTH = 100;
+constexpr int W_HEIGHT = 100;
 
 // Packet Type
 
@@ -35,12 +35,12 @@ struct CS_LOGIN_PACKET {
 struct CS_MOVE_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
-	//char	direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
+	short direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
 	bool isKey;
 	short c_id;
-	int tx;
-	int ty;
-	int tz;
+	//int tx;
+	//int ty;
+	//int tz;
 
 };
 
@@ -72,6 +72,10 @@ struct SC_MOVE_PLAYER_PACKET {
 	PACKET_TYPE	type;
 	short	id;
 	float x, y, z;
+
+	//float cx, cy, cz; //camera
+
+	//weaponType
 };
 
 struct SC_MOUSE_PACKET {
@@ -82,6 +86,7 @@ struct SC_MOUSE_PACKET {
 	int C_RotateY;
 	int CameraOffset;
 };
+
 
 struct SC_UPDATE_PACKET { // ¼öÁ¤Áß
 	unsigned char size;

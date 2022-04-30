@@ -912,7 +912,7 @@ void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
 	{
 	case FD_READ:
 		m_pScene->recv_packet();
-		m_pScene->process_packet();
+		//m_pScene->process_packet();
 		break;
 	
 	case FD_CLOSE:

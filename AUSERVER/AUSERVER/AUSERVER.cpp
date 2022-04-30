@@ -112,9 +112,9 @@ int get_new_player_id()
 	return -1;
 }
 
-void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
+void process_packet(int c_id, char* packet)
 {
-	switch (packetType) {
+	switch ((PACKET_TYPE)packet[1]) {
 	case PACKET_TYPE::CS_LOGIN: {
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
@@ -153,26 +153,32 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		break;
 	}
 	case PACKET_TYPE::CS_MOVE: {
-		CS_MOVE_PACKET* p = reinterpret_cast<CS_MOVE_PACKET*>(packet);
-		XMFLOAT3 pos;
-		pos.x = clients[c_id].set.x;
-		pos.y = clients[c_id].set.y;
-		pos.z = clients[c_id].set.z;
+		CS_MOVE_PACKET* p_move = reinterpret_cast<CS_MOVE_PACKET*>(packet);
+		//XMFLOAT3 pos = clients[c_id].GetPosition();
+		if (p_move->isKey) {
+			switch (p_move->direction) {
+			case VK_W:
+				break;
+			case VK_S:
+				break;
+			case VK_A:
+				break;
+			case VK_D:
+				break;
+			}
 
-		/*switch (p->direction) {
-		case 0: if (pos.y > 0) pos.y--; break;
-		case 1: if (pos.y < W_HEIGHT - 1) pos.y++; break;
-		case 2: if (pos.x > 0) pos.x--; break;
-		case 3: if (pos.x < W_WIDTH - 1) pos.x++; break;
-			}*/
-		clients[c_id].set.x = pos.x;
-		clients[c_id].set.y = pos.y;
-		clients[c_id].set.z = pos.z;
+			//SC_MOVE_PLAYER_PACKET m_packet;
+			//m_packet.id = c_id;
+			//m_packet.size = sizeof(m_packet);
+			//m_packet.x = pos.x;
+			//m_packet.y = pos.y;
+			//m_packet.z = pos.z;
 
-		for (auto& pl : clients)
-			if (true == pl._use)
-				pl.send_move_info(c_id);
-		break;
+			for (auto& pl : clients)
+				if (true == pl._use)
+					pl.send_move_info(c_id);
+		}
+			break;
 	}
 	}
 }
@@ -299,7 +305,7 @@ int main(int argc, char* argv[])
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					//process_packet(client_id, p);
+					process_packet(client_id, p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}

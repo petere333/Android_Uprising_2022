@@ -36,6 +36,15 @@
     <ClInclude Include="ProcessPacket.h">
       <Filter>SNet</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>GameInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameState\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AUSERVER.cpp">

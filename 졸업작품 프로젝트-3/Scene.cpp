@@ -2387,6 +2387,7 @@ void CScene::recv_packet()
 	if (0 != num_data) {
 		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
 	}
+
 }
 
 void CScene::process_packet()
@@ -2402,46 +2403,46 @@ void CScene::process_packet()
 		break;
 	}
 }
-//
-//void CScene::ProcessPacket(unsigned char* p_buf)
-//{
-//	char buf[1000];
-//	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
-//
-//	switch (type)
-//	{
-//	case PACKET_TYPE::SC_LOGIN_INFO:
-//		SC_LOGIN_INFO_PACKET p_login;
-//		memcpy(&p_login, p_buf, p_buf[0]);
-//		if (p_login.isLogin)
-//		{
-//			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//
-//			//SetplayerID(p_login.id);
-//
-//			cout << "Player ID : " << p_login.id << "\n" << endl;
-//		}
-//		break;
-//	case PACKET_TYPE::SC_ADD_PLAYER:
-//		cout << "New Player Connected.\n";
-//		SC_ADD_PLAYER_PACKET p_new;
-//		memcpy(&p_new, p_buf, p_buf[0]);
-//
-//		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//		players[p_new.id]->SetPosition(pos);
-//		break;
-//	case PACKET_TYPE::SC_REMOVE_PLAYER:
-//		SC_REMOVE_PLAYER_PACKET p_remove;
-//		memcpy(&p_remove, p_buf, p_buf[0]);
-//		cout << p_remove.id << "Player REMOVED.\n";
-//		
-//		//player remove
-//		break;
-//		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
-//
-//	}
-//
-//}
+
+void CScene::ProcessPacket(unsigned char* p_buf)
+{
+	char buf[1000];
+	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
+
+	switch (type)
+	{
+	case PACKET_TYPE::SC_LOGIN_INFO:
+		SC_LOGIN_INFO_PACKET p_login;
+		memcpy(&p_login, p_buf, p_buf[0]);
+		if (p_login.isLogin)
+		{
+			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+
+			//SetplayerID(p_login.id);
+
+			cout << "Player ID : " << p_login.id << "\n" << endl;
+		}
+		break;
+	case PACKET_TYPE::SC_ADD_PLAYER:
+		cout << "New Player Connected.\n";
+		SC_ADD_PLAYER_PACKET p_new;
+		memcpy(&p_new, p_buf, p_buf[0]);
+
+		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+		players[p_new.id]->SetPosition(pos);
+		break;
+	case PACKET_TYPE::SC_REMOVE_PLAYER:
+		SC_REMOVE_PLAYER_PACKET p_remove;
+		memcpy(&p_remove, p_buf, p_buf[0]);
+		cout << p_remove.id << "Player REMOVED.\n";
+		
+		//player remove
+		break;
+		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
+
+	}
+
+}
 
 
 void CScene::attack(int idx)
