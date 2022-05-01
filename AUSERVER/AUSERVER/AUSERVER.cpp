@@ -39,6 +39,7 @@ public:
 	bool _use;
 	int _id;
 	SOCKET _socket;
+	XMFLOAT3 set;
 	KineticState kState;
 	BionicState bState;
 	float cameraAngle;
@@ -60,6 +61,7 @@ public:
 	void do_recv()
 	{
 		DWORD recv_flag = 0;
+
 		memset(&_recv_over._over, 0, sizeof(_recv_over._over));
 		_recv_over._wsabuf.len = BUFSIZE - _prev_remain;
 		_recv_over._wsabuf.buf = _recv_over._send_buf + _prev_remain;
@@ -81,6 +83,10 @@ public:
 		info.id = _id; //client id
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
+		info.x = info.y = info.z = 0;
+		info.isLogin = true;
+		
+
 		kState.xzspeed = 0.0f;
 		kState.yspeed = 0.0f;		
 		kState.isMobile = true;
@@ -107,9 +113,9 @@ public:
 
  void SESSION::send_kinetic_change(int c_id, KineticState state)
  {
-	KINETIC_PACKET pl;
+	SC_KINETIC_PACKET pl;
 	pl.c_id = c_id;
-	pl.size = sizeof(KINETIC_PACKET);
+	pl.size = sizeof(SC_KINETIC_PACKET);
 	pl.type = PACKET_TYPE::SC_KINETIC_CHANGE;
 	pl.kState = state;
 
@@ -118,9 +124,9 @@ public:
 }
  void SESSION::send_bionic_change(int c_id, BionicState state)
  {
-	 BIONIC_PACKET p;
+	 SC_BIONIC_PACKET p;
 	 p.c_id = c_id;
-	 p.size = sizeof(BIONIC_PACKET);
+	 p.size = sizeof(SC_BIONIC_PACKET);
 	 p.type = PACKET_TYPE::SC_BIONIC_CHANGE;
 	 p.bState = state;
 
@@ -201,7 +207,7 @@ void process_packet(int c_id, char* packet)
 	{
 		cout << "Key down received" << endl;
 
-		KEYDOWN_PACKET* p = reinterpret_cast<KEYDOWN_PACKET*>(packet);
+		CS_KEYDOWN_PACKET* p = reinterpret_cast<CS_KEYDOWN_PACKET*>(packet);
 		
 		KineticState ks;
 		BionicState bs;
@@ -266,7 +272,7 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_KEYUP:
 	{
 		
-		KEYUP_PACKET* p = reinterpret_cast<KEYUP_PACKET*>(packet);
+		CS_KEYUP_PACKET* p = reinterpret_cast<CS_KEYUP_PACKET*>(packet);
 
 		KineticState ks;
 		BionicState bs;
@@ -345,7 +351,7 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_MOUSE:
 	{
 		cout << "mouse msg received" << endl;
-		MOUSE_PACKET* p = reinterpret_cast<MOUSE_PACKET*>(packet);
+		CS_MOUSE_PACKET* p = reinterpret_cast<CS_MOUSE_PACKET*>(packet);
 		
 		BionicState bs;
 		bs.hp = -9999;
@@ -469,9 +475,9 @@ int main(int argc, char* argv[])
 			int client_id = get_new_player_id();
 			if (client_id != -1) {
 				clients[client_id]._use = true;
-				//clients[client_id].set.x = 1;
-				//clients[client_id].set.y = 2;
-				//clients[client_id].set.z = 3;
+				clients[client_id].set.x = 0;
+				clients[client_id].set.y = 0;
+				clients[client_id].set.z = 0;
 				clients[client_id]._id = client_id;
 				clients[client_id]._name[0] = 0;
 				clients[client_id]._prev_remain = 0;

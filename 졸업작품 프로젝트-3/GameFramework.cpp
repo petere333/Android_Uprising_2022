@@ -61,6 +61,9 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 
 	BuildObjects();
 
+	Connection();
+	LoginServer();
+
 	return(true);
 }
 
@@ -298,9 +301,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			// 마우스 좌클릭 시 공격 상태로 변화.
 			if (mousedown == false)
 			{
-				MOUSE_PACKET p;
+				CS_MOUSE_PACKET p;
 				p.c_id = 1;
-				p.size = sizeof(MOUSE_PACKET);
+				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = true;
 				p.type = PACKET_TYPE::CS_MOUSE;
 				SendPacket(&p);
@@ -318,9 +321,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 			if (mousedown == true)
 			{
-				MOUSE_PACKET p;
+				CS_MOUSE_PACKET p;
 				p.c_id = 1;
-				p.size = sizeof(MOUSE_PACKET);
+				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = false;
 				p.type = PACKET_TYPE::CS_MOUSE;
 				SendPacket(&p);
@@ -345,19 +348,14 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
-
-	// 패킷 전송 예시
-	
-
-
-	KEYDOWN_PACKET packet;
+	CS_KEYDOWN_PACKET packet;
 	packet.c_id = 1;
-	packet.size = sizeof(KEYDOWN_PACKET);
+	packet.size = sizeof(CS_KEYDOWN_PACKET);
 	packet.type = PACKET_TYPE::CS_KEYDOWN;
 	
-	KEYUP_PACKET uppac;
+	CS_KEYUP_PACKET uppac;
 	uppac.c_id = 1;
-	uppac.size = sizeof(KEYUP_PACKET);
+	uppac.size = sizeof(CS_KEYUP_PACKET);
 	uppac.type = PACKET_TYPE::CS_KEYUP;
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
@@ -1038,10 +1036,10 @@ void CGameFramework::FrameAdvance()
 //
 //}
 
-void CGameFramework::OnSocket(HWND hDlg, SOCKET m_sock, LPARAM lParam)
+void CGameFramework::OnSocket(WPARAM wParam, LPARAM lParam)
 {
 	if (WSAGETASYNCERROR(lParam)) {
-		closesocket(m_sock);
+		closesocket((SOCKET)wParam);
 		err_display("WSAGETSELECTERROR");
 	}
 
@@ -1049,11 +1047,10 @@ void CGameFramework::OnSocket(HWND hDlg, SOCKET m_sock, LPARAM lParam)
 	{
 	case FD_READ:
 		m_pScene->recv_packet();
-		//m_pScene->process_packet();
 		break;
 
 	case FD_CLOSE:
-		closesocket(m_sock);
+		closesocket((SOCKET)wParam);
 		err_display("CLOSE SOCKET");
 		break;
 	}
@@ -1099,5 +1096,16 @@ void CGameFramework::Connection()
 		cout << "서버 연결 성공\n";
 		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\nClient ID : " << c_id;
 	}
+
+}
+
+void CGameFramework::LoginServer()
+{
+	CS_LOGIN_PACKET p_login;
+	p_login.size = sizeof(CS_LOGIN_PACKET);
+	p_login.type = PACKET_TYPE::CS_LOGIN;
+	strcpy_s(p_login.name, "PLAYER");
+
+	SendPacket(&p_login);
 
 }

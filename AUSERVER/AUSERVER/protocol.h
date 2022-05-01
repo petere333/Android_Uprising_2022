@@ -49,14 +49,14 @@ enum class PACKET_TYPE : short
 // client to server packet
 #pragma pack (push, 1)
 
-struct KEYDOWN_PACKET
+struct CS_KEYDOWN_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
 	UINT key;
 	short c_id;
 };
-struct KEYUP_PACKET
+struct CS_KEYUP_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
@@ -64,14 +64,14 @@ struct KEYUP_PACKET
 	short c_id;
 };
 
-struct MOUSE_PACKET
+struct CS_MOUSE_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
 	bool down;
 	short c_id;
 };
-struct KINETIC_PACKET
+struct SC_KINETIC_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
@@ -79,7 +79,7 @@ struct KINETIC_PACKET
 	KineticState kState;
 };
 
-struct BIONIC_PACKET
+struct SC_BIONIC_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;

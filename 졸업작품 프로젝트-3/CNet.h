@@ -13,7 +13,7 @@ struct EX_OVER
 {
 	WSAOVERLAPPED	m_over;
 	WSABUF			m_wsabuf;
-	char			m_sendbuf[BUFSIZE];
+	unsigned char			m_sendbuf[BUFSIZE];
 };
 
 struct SESSION

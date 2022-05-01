@@ -2642,12 +2642,12 @@ void CScene::recv_packet()
 			cout << "received..\n";
 	}
 
-	char* packet_ptr = g_client.m_recv_over.m_sendbuf;
+	unsigned char* packet_ptr = g_client.m_recv_over.m_sendbuf;
 	int num_data = iobyte + g_client.m_prev_size;
 	int packet_size = packet_ptr[0];
 
 	while (num_data >= packet_size) {
-		//processpacket
+		ProcessPacket(packet_ptr);
 		num_data -= packet_size;
 		packet_ptr += packet_size;
 		if (0 >= num_data) break;
@@ -2663,14 +2663,14 @@ void CScene::recv_packet()
 void CScene::process_packet()
 {
 	
-	char* packet = g_client.m_recv_over.m_sendbuf;
+	unsigned char* packet = g_client.m_recv_over.m_sendbuf;
 	const int type_kinetic = static_cast<int>(PACKET_TYPE::SC_KINETIC_CHANGE);
 	const int type_bionic = static_cast<int>(PACKET_TYPE::SC_BIONIC_CHANGE);
 	switch (packet[1])
 	{
 	case type_kinetic:
 	{
-		KINETIC_PACKET* p = reinterpret_cast<KINETIC_PACKET*>(packet);
+		SC_KINETIC_PACKET* p = reinterpret_cast<SC_KINETIC_PACKET*>(packet);
 		if (p->kState.isInAir != -9999)
 		{
 			players[0]->kState.isInAir = p->kState.isInAir;
@@ -2696,7 +2696,7 @@ void CScene::process_packet()
 	}
 	case type_bionic:
 	{
-		BIONIC_PACKET* p = reinterpret_cast<BIONIC_PACKET*>(packet);
+		SC_BIONIC_PACKET* p = reinterpret_cast<SC_BIONIC_PACKET*>(packet);
 		if (p->bState.attackID != -9999)
 		{
 			players[0]->bState.attackID = p->bState.attackID;
@@ -2719,8 +2719,8 @@ void CScene::process_packet()
 
 void CScene::ProcessPacket(unsigned char* p_buf)
 {
-	char buf[1000];
-	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
+	char buf[10000];
+	PACKET_TYPE type = (PACKET_TYPE)p_buf[1];
 
 	switch (type)
 	{
@@ -2733,7 +2733,8 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 
 			//SetplayerID(p_login.id);
 
-			cout << "Player ID : " << p_login.id << "\n" << endl;
+			cout << "\nPlayer ID : " << p_login.id << "\n" << endl;
+			cout << "x,y,z = " << p_login.x << p_login.y << p_login.z << "\n" << endl;
 		}
 		break;
 

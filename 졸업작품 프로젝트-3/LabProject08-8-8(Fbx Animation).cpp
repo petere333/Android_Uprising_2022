@@ -115,8 +115,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-	case WM_CREATE:
-		gGameFramework.Connection();
 	case WM_SIZE:
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:
@@ -129,7 +127,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		gGameFramework.OnProcessingWindowMessage(hWnd, message, wParam, lParam);
 		break;
 	case WM_SOCKET:
-		gGameFramework.OnSocket(hWnd, g_client.m_sock, lParam);
+		gGameFramework.OnSocket(wParam, lParam);
 		break;
 	case WM_COMMAND:
 		wmId = LOWORD(wParam);
