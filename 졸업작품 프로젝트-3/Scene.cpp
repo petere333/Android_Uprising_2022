@@ -2638,6 +2638,8 @@ void CScene::recv_packet()
 		auto errcode = WSAGetLastError();
 		if (WSA_IO_PENDING != errcode)
 			err_display("Error in RecvPacket: ");
+		else if (WSA_IO_PENDING == errcode)
+			cout << "received..\n";
 	}
 
 	char* packet_ptr = g_client.m_recv_over.m_sendbuf;
@@ -2645,6 +2647,7 @@ void CScene::recv_packet()
 	int packet_size = packet_ptr[0];
 
 	while (num_data >= packet_size) {
+		//processpacket
 		num_data -= packet_size;
 		packet_ptr += packet_size;
 		if (0 >= num_data) break;

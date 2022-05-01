@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Func.h"
+#include "SNet.h"
 #include "protocol.h"
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
@@ -136,7 +136,7 @@ int get_new_player_id()
 	return -1;
 }
 
-void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
+void process_packet(int c_id, char* packet)
 {
 	switch ((PACKET_TYPE)packet[1]) {
 	case PACKET_TYPE::CS_LOGIN: {
@@ -440,7 +440,7 @@ int main(int argc, char* argv[])
 
 	HANDLE h_iocp;
 	h_iocp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0); //IOCP 핸들 생성
-	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 1234, 0); //핸들 초기화
+	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 0, 0); //핸들 초기화
 
 	SOCKET c_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED); //통신 소켓 생성
 	OVER_EXP a_over;
@@ -497,7 +497,7 @@ int main(int argc, char* argv[])
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					process_packet(client_id, p, static_cast<PACKET_TYPE>(p[1]));
+					process_packet(client_id, p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}

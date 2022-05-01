@@ -1015,10 +1015,33 @@ void CGameFramework::FrameAdvance()
 }
 
 
-void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
+//void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
+//{
+//	if (WSAGETASYNCERROR(lParam)) {
+//		closesocket((SOCKET)wParam);
+//		err_display("WSAGETSELECTERROR");
+//	}
+//
+//	switch (WSAGETSELECTEVENT(lParam))
+//	{
+//	case FD_READ:
+//		m_pScene->recv_packet();
+//		//m_pScene->process_packet();
+//		break;
+//	
+//	case FD_CLOSE:
+//		closesocket((SOCKET)wParam);
+//		err_display("CLOSE SOCKET");
+//	case FD_WRITE:
+//		break;
+//	}
+//
+//}
+
+void CGameFramework::OnSocket(HWND hDlg, SOCKET m_sock, LPARAM lParam)
 {
 	if (WSAGETASYNCERROR(lParam)) {
-		closesocket((SOCKET)wParam);
+		closesocket(m_sock);
 		err_display("WSAGETSELECTERROR");
 	}
 
@@ -1028,18 +1051,18 @@ void CGameFramework::OnSocketHandel(WPARAM wParam, LPARAM lParam)
 		m_pScene->recv_packet();
 		//m_pScene->process_packet();
 		break;
-	
-	case FD_CLOSE:
-		closesocket((SOCKET)wParam);
-		err_display("CLOSE SOCKET");
-	}
 
+	case FD_CLOSE:
+		closesocket(m_sock);
+		err_display("CLOSE SOCKET");
+		break;
+	}
 }
 
 void CGameFramework::Connection()
 {
 	int retval = 0;
-	UINT c_id = 1234;
+	UINT c_id = 0;
 	// 윈속 초기화
 	if (WSAStartup(MAKEWORD(2, 2), &m_WSA) != 0) err_quit((const char*)"connect()");
 
@@ -1055,16 +1078,18 @@ void CGameFramework::Connection()
 	m_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
 	if (m_socket == INVALID_SOCKET) err_quit((const char*)"socket()");
 	
-	retval = connect(m_socket, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
+	retval = WSAConnect(m_socket, (SOCKADDR*)&serveraddr, sizeof(serveraddr),0,0,0,0);
 	
-	WSAAsyncSelect(m_socket, m_hWnd, WM_SOCKET, FD_CLOSE | FD_READ);
+	WSAAsyncSelect(m_socket, m_hWnd, WM_SOCKET, FD_READ | FD_CLOSE);
+	if (retval == SOCKET_ERROR) err_quit("WSAAsyncSelect()");
 
 	g_client.m_sock = m_socket;
+
 	if (retval == SOCKET_ERROR)
 	{
 		int errorcode = WSAGetLastError();
 		if (errorcode != WSAEWOULDBLOCK) {
-			err_display("connect() failed");
+			err_display("connect() failed\n");
 			cout << "서버 연결 실패\n";
 			return;
 		}
@@ -1075,9 +1100,4 @@ void CGameFramework::Connection()
 		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\nClient ID : " << c_id;
 	}
 
-}
-
-void CGameFramework::ClientNet()
-{
-	if (m_pScene) m_pScene->ClientNet(m_socket);
 }

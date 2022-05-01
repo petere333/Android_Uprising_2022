@@ -43,6 +43,7 @@ public:
 
 public: // to server
 	void OnSocketHandel(WPARAM wParam, LPARAM lParam);
+	void OnSocket(HWND hDlg, SOCKET m_sock, LPARAM lParam);
 	void Connection();
 	//void Disconnection();
 	void ClientNet();

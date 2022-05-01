@@ -1,42 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="SNet">
+      <UniqueIdentifier>{e4e4638a-be82-4c37-b88a-d216fb9f67e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="GameInfo">
+      <UniqueIdentifier>{a4128116-1a95-4fc0-8669-a92571ec375c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Server">
+      <UniqueIdentifier>{7a0b1090-4ccc-4f78-b2d8-e073b76561ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameState">
+      <UniqueIdentifier>{9ab7bb3f-050b-49b1-8465-4db6b505d5b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameState\Player">
+      <UniqueIdentifier>{466f2be2-ba23-4c22-bb36-4a497d53f5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameState\Emeny">
+      <UniqueIdentifier>{b848b084-fe34-4f88-a957-1ccab95a9902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{00abb15b-f799-4dba-9cbb-318e7108f6d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{e8fab1a8-1bdc-473c-a742-857927febfb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AUSERVER.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Func.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>GameInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessPacket.h">
+      <Filter>SNet</Filter>
+    </ClInclude>
+    <ClInclude Include="SNet.h">
+      <Filter>SNet</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameState\Player</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AUSERVER.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
