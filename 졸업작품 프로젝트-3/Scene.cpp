@@ -2020,10 +2020,41 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-	setObjectLastMove(0);
-	
+
+
 	for (int i = 0; i < players.size(); ++i)
 	{
+
+		if (players[i]->bState.stateID == IDLE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 11);
+			}
+		}
+		else if (players[i]->bState.stateID == MOVE_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 20);
+				moveObject(i);
+			}
+		}
+		else if (players[i]->bState.stateID == ATTACK_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				players[i]->SetTrackAnimationSet(0, 2);
+				moveObject(i);
+			}
+		}
+		/*
 		if (mouseDown == true)
 		{
 			players[i]->pState.id = ATTACK_STATE;
@@ -2086,9 +2117,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				players[i]->speed = 0.0f;
 				swingHammer(i, pd3dDevice,pd3dCommandList);
-			
+
 			}
 		}
+		*/
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 	for (int i = 0; i < particles.size(); ++i)
@@ -2114,7 +2146,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		
+
 		if (enemies[i]->eState.currHP <= 0)
 		{
 			enemies[i]->eState.id = DEATH_STATE;
@@ -2130,7 +2162,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		else if (enemies[i]->eState.id == DEATH_STATE)
 		{
-			
+
 			if (enemies[i]->isDead == false)
 			{
 				if (enemies[i]->m_pChild != enemyModels[1]->m_pModelRootObject)
@@ -2155,7 +2187,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 		}
 	}
-	
+
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -2768,13 +2800,16 @@ void CScene::recv_packet()
 		auto errcode = WSAGetLastError();
 		if (WSA_IO_PENDING != errcode)
 			err_display("Error in RecvPacket: ");
+		else if (WSA_IO_PENDING == errcode)
+			cout << "received..\n";
 	}
 
-	char* packet_ptr = g_client.m_recv_over.m_sendbuf;
+	unsigned char* packet_ptr = g_client.m_recv_over.m_sendbuf;
 	int num_data = iobyte + g_client.m_prev_size;
 	int packet_size = packet_ptr[0];
 
 	while (num_data >= packet_size) {
+		ProcessPacket(packet_ptr);
 		num_data -= packet_size;
 		packet_ptr += packet_size;
 		if (0 >= num_data) break;
@@ -2784,19 +2819,20 @@ void CScene::recv_packet()
 	if (0 != num_data) {
 		memcpy(g_client.m_recv_over.m_sendbuf, packet_ptr, num_data);
 	}
+
 }
 
 void CScene::process_packet()
 {
 	
-	char* packet = g_client.m_recv_over.m_sendbuf;
+	unsigned char* packet = g_client.m_recv_over.m_sendbuf;
 	const int type_kinetic = static_cast<int>(PACKET_TYPE::SC_KINETIC_CHANGE);
 	const int type_bionic = static_cast<int>(PACKET_TYPE::SC_BIONIC_CHANGE);
 	switch (packet[1])
 	{
 	case type_kinetic:
 	{
-		KINETIC_PACKET* p = reinterpret_cast<KINETIC_PACKET*>(packet);
+		SC_KINETIC_PACKET* p = reinterpret_cast<SC_KINETIC_PACKET*>(packet);
 		if (p->kState.isInAir != -9999)
 		{
 			players[0]->kState.isInAir = p->kState.isInAir;
@@ -2822,7 +2858,7 @@ void CScene::process_packet()
 	}
 	case type_bionic:
 	{
-		BIONIC_PACKET* p = reinterpret_cast<BIONIC_PACKET*>(packet);
+		SC_BIONIC_PACKET* p = reinterpret_cast<SC_BIONIC_PACKET*>(packet);
 		if (p->bState.attackID != -9999)
 		{
 			players[0]->bState.attackID = p->bState.attackID;
@@ -2842,46 +2878,50 @@ void CScene::process_packet()
 	}
 	}
 }
-//
-//void CScene::ProcessPacket(unsigned char* p_buf)
-//{
-//	char buf[1000];
-//	PACKET_TYPE type = *reinterpret_cast<PACKET_TYPE*> (p_buf[1]);
-//
-//	switch (type)
-//	{
-//	case PACKET_TYPE::SC_LOGIN_INFO:
-//		SC_LOGIN_INFO_PACKET p_login;
-//		memcpy(&p_login, p_buf, p_buf[0]);
-//		if (p_login.isLogin)
-//		{
-//			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//
-//			//SetplayerID(p_login.id);
-//
-//			cout << "Player ID : " << p_login.id << "\n" << endl;
-//		}
-//		break;
-//	case PACKET_TYPE::SC_ADD_PLAYER:
-//		cout << "New Player Connected.\n";
-//		SC_ADD_PLAYER_PACKET p_new;
-//		memcpy(&p_new, p_buf, p_buf[0]);
-//
-//		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-//		players[p_new.id]->SetPosition(pos);
-//		break;
-//	case PACKET_TYPE::SC_REMOVE_PLAYER:
-//		SC_REMOVE_PLAYER_PACKET p_remove;
-//		memcpy(&p_remove, p_buf, p_buf[0]);
-//		cout << p_remove.id << "Player REMOVED.\n";
-//		
-//		//player remove
-//		break;
-//		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
-//
-//	}
-//
-//}
+
+void CScene::ProcessPacket(unsigned char* p_buf)
+{
+	char buf[10000];
+	PACKET_TYPE type = (PACKET_TYPE)p_buf[1];
+
+	switch (type)
+	{
+	case PACKET_TYPE::SC_LOGIN_INFO:
+		SC_LOGIN_INFO_PACKET p_login;
+		memcpy(&p_login, p_buf, p_buf[0]);
+		if (p_login.isLogin)
+		{
+			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+
+			//SetplayerID(p_login.id);
+
+			cout << "\nPlayer ID : " << p_login.id << "\n" << endl;
+			cout << "x,y,z = " << p_login.x << p_login.y << p_login.z << "\n" << endl;
+		}
+		break;
+
+	case PACKET_TYPE::SC_ADD_PLAYER:
+	{
+		cout << "New Player Connected.\n";
+		SC_ADD_PLAYER_PACKET p_new;
+		memcpy(&p_new, p_buf, p_buf[0]);
+
+		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+		players[p_new.id]->SetPosition(pos);
+		break;
+	}
+	case PACKET_TYPE::SC_REMOVE_PLAYER:
+		SC_REMOVE_PLAYER_PACKET p_remove;
+		memcpy(&p_remove, p_buf, p_buf[0]);
+		cout << p_remove.id << "Player REMOVED.\n";
+		
+		//player remove
+		break;
+		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
+
+	}
+
+}
 
 
 void CScene::attack(int idx)

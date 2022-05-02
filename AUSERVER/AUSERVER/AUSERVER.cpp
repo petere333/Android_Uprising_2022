@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Func.h"
+#include "SNet.h"
 #include "protocol.h"
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
@@ -39,6 +39,7 @@ public:
 	bool _use;
 	int _id;
 	SOCKET _socket;
+	XMFLOAT3 set;
 	KineticState kState;
 	BionicState bState;
 	float cameraAngle;
@@ -60,6 +61,7 @@ public:
 	void do_recv()
 	{
 		DWORD recv_flag = 0;
+
 		memset(&_recv_over._over, 0, sizeof(_recv_over._over));
 		_recv_over._wsabuf.len = BUFSIZE - _prev_remain;
 		_recv_over._wsabuf.buf = _recv_over._send_buf + _prev_remain;
@@ -81,6 +83,10 @@ public:
 		info.id = _id; //client id
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
+		info.x = info.y = info.z = 0;
+		info.isLogin = true;
+		
+
 		kState.xzspeed = 0.0f;
 		kState.yspeed = 0.0f;		
 		kState.isMobile = true;
@@ -107,9 +113,9 @@ public:
 
  void SESSION::send_kinetic_change(int c_id, KineticState state)
  {
-	KINETIC_PACKET pl;
+	SC_KINETIC_PACKET pl;
 	pl.c_id = c_id;
-	pl.size = sizeof(KINETIC_PACKET);
+	pl.size = sizeof(SC_KINETIC_PACKET);
 	pl.type = PACKET_TYPE::SC_KINETIC_CHANGE;
 	pl.kState = state;
 
@@ -118,9 +124,9 @@ public:
 }
  void SESSION::send_bionic_change(int c_id, BionicState state)
  {
-	 BIONIC_PACKET p;
+	 SC_BIONIC_PACKET p;
 	 p.c_id = c_id;
-	 p.size = sizeof(BIONIC_PACKET);
+	 p.size = sizeof(SC_BIONIC_PACKET);
 	 p.type = PACKET_TYPE::SC_BIONIC_CHANGE;
 	 p.bState = state;
 
@@ -136,9 +142,9 @@ int get_new_player_id()
 	return -1;
 }
 
-void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
+void process_packet(int c_id, char* packet)
 {
-	switch (packetType) {
+	switch ((PACKET_TYPE)packet[1]) {
 	case PACKET_TYPE::CS_LOGIN: {
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
@@ -201,7 +207,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 	{
 		cout << "Key down received" << endl;
 
-		KEYDOWN_PACKET* p = reinterpret_cast<KEYDOWN_PACKET*>(packet);
+		CS_KEYDOWN_PACKET* p = reinterpret_cast<CS_KEYDOWN_PACKET*>(packet);
 		
 		KineticState ks;
 		BionicState bs;
@@ -265,8 +271,8 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 	}
 	case PACKET_TYPE::CS_KEYUP:
 	{
-		cout << "Key up received" << endl;
-		KEYUP_PACKET* p = reinterpret_cast<KEYUP_PACKET*>(packet);
+		
+		CS_KEYUP_PACKET* p = reinterpret_cast<CS_KEYUP_PACKET*>(packet);
 
 		KineticState ks;
 		BionicState bs;
@@ -279,9 +285,12 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		bs.hp = -9999;
 		bs.attackID = -9999;
 		bs.isIntelligent = -9999;
+		bs.stateID = -9999;
+		cout << "Key up received:  ";
 
 		if (p->key == VK_UP)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -290,6 +299,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_DOWN)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -298,6 +308,7 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_LEFT)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -306,17 +317,60 @@ void process_packet(int c_id, char* packet, PACKET_TYPE packetType)
 		}
 		else if (p->key == VK_RIGHT)
 		{
+			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
 			clients[c_id].bState.stateID = IDLE_STATE;
 		}
+		else if (p->key == '2')
+		{
+			cout << "Code: " << p->key << endl;
+
+			bs.attackID = TYPE_RANGED;
+			clients[c_id].bState.attackID = TYPE_RANGED;
+		}
+		else if (p->key == '1')
+		{
+			cout << "Code: " << p->key << endl;
+
+			bs.attackID = TYPE_MELEE;
+			clients[c_id].bState.attackID = TYPE_MELEE;
+		}
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
 				pl.send_kinetic_change(c_id, ks);
+				pl.send_bionic_change(c_id, bs);
+			}
+		}
+		break;
+	}
+	case PACKET_TYPE::CS_MOUSE:
+	{
+		cout << "mouse msg received" << endl;
+		CS_MOUSE_PACKET* p = reinterpret_cast<CS_MOUSE_PACKET*>(packet);
+		
+		BionicState bs;
+		bs.hp = -9999;
+		bs.attackID = -9999;
+		bs.isIntelligent = -9999;
+		if (p->down == true)
+		{
+			bs.stateID = ATTACK_STATE;
+			clients[c_id].bState.attackID = ATTACK_STATE;
+		}
+		else
+		{
+			bs.stateID = IDLE_STATE;
+			clients[c_id].bState.attackID = IDLE_STATE;
+		}
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
 				pl.send_bionic_change(c_id, bs);
 			}
 		}
@@ -350,8 +404,12 @@ void disconnect(int c_id)
 
 //void CALLBACK recv_callback(DWORD err, DWORD num_bytes, LPWSAOVERLAPPED over, DWORD flags)
 //{
-//	int  client_id = over_to_session[over];
-//	if (0 == num_bytes) {
+//	auto client = reinterpret_cast<SESSION*>(over);
+//	int client_id = client->_id;
+//	SOCKET client_s = client->_socket;
+//	auto ex_over = &client->_recv_over;
+//
+//	if (num_bytes == 0) {
 //		cout << "Client disconnected\n";
 //		clients.erase(client_id);
 //		over_to_session.erase(over);
@@ -388,7 +446,7 @@ int main(int argc, char* argv[])
 
 	HANDLE h_iocp;
 	h_iocp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0); //IOCP 핸들 생성
-	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 1234, 0); //핸들 초기화
+	CreateIoCompletionPort(reinterpret_cast<HANDLE>(server), h_iocp, 0, 0); //핸들 초기화
 
 	SOCKET c_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED); //통신 소켓 생성
 	OVER_EXP a_over;
@@ -417,9 +475,9 @@ int main(int argc, char* argv[])
 			int client_id = get_new_player_id();
 			if (client_id != -1) {
 				clients[client_id]._use = true;
-				//clients[client_id].set.x = 1;
-				//clients[client_id].set.y = 2;
-				//clients[client_id].set.z = 3;
+				clients[client_id].set.x = 0;
+				clients[client_id].set.y = 0;
+				clients[client_id].set.z = 0;
 				clients[client_id]._id = client_id;
 				clients[client_id]._name[0] = 0;
 				clients[client_id]._prev_remain = 0;
@@ -445,7 +503,7 @@ int main(int argc, char* argv[])
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					process_packet(client_id, p, static_cast<PACKET_TYPE>(p[1]));
+					process_packet(client_id, p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}
@@ -469,51 +527,3 @@ int main(int argc, char* argv[])
 	WSACleanup();
 
 }
-
-void error_display(const char* msg)
-{
-	WCHAR* lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
-	std::cout << msg;
-	std::wcout << L"에러 " << lpMsgBuf << std::endl;
-	while (true);
-	LocalFree(lpMsgBuf);
-}
-
-void error_quit(const char* msg)
-{
-	wchar_t wMsg[20];
-	LPVOID lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
-
-	MessageBox(NULL, (LPCTSTR)lpMsgBuf, wMsg, MB_ICONERROR);
-	LocalFree(lpMsgBuf);
-	exit(1);
-
-}
-//
-//int recvn(SOCKET s, char* buf, int len, int flags)
-//{
-//	int received;
-//	char* ptr = buf;
-//	int left = len;
-//
-//	while (left > 0) {
-//		received = recv(s, ptr, left, flags);
-//
-//		if (received == SOCKET_ERROR) { return SOCKET_ERROR; }
-//		else if (received == 0) { break; }
-//
-//		left -= received;
-//		ptr += received;
-//	}
-//
-//	return (len - left);
-//}

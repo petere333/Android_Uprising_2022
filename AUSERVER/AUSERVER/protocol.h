@@ -5,8 +5,8 @@ constexpr int SERVERPORT = 9000;
 constexpr int BUFSIZE = 1024;
 constexpr int NAMESIZE = 20;
 
-constexpr int W_WIDTH = 8;
-constexpr int W_HEIGHT = 8;
+constexpr int W_WIDTH = 100;
+constexpr int W_HEIGHT = 100;
 
 // Packet Type
 
@@ -35,34 +35,43 @@ enum class PACKET_TYPE : short
 	CS_LOGIN = 0,
 	CS_KEYDOWN = 1,
 	CS_KEYUP = 2,
+	CS_MOUSE = 3,
 
 	//server to client
-	SC_LOGIN_INFO = 3,
-	SC_ADD_PLAYER = 4,
-	SC_REMOVE_PLAYER = 5,
-	SC_KINETIC_CHANGE = 6,
-	SC_BIONIC_CHANGE=7,
+	SC_LOGIN_INFO = 4,
+	SC_ADD_PLAYER = 5,
+	SC_REMOVE_PLAYER = 6,
+	SC_KINETIC_CHANGE = 7,
+	SC_BIONIC_CHANGE=8,
 	
 };
 
 // client to server packet
 #pragma pack (push, 1)
 
-struct KEYDOWN_PACKET
+struct CS_KEYDOWN_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
 	UINT key;
 	short c_id;
 };
-struct KEYUP_PACKET
+struct CS_KEYUP_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
 	UINT key;
 	short c_id;
 };
-struct KINETIC_PACKET
+
+struct CS_MOUSE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	bool down;
+	short c_id;
+};
+struct SC_KINETIC_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
@@ -70,7 +79,7 @@ struct KINETIC_PACKET
 	KineticState kState;
 };
 
-struct BIONIC_PACKET
+struct SC_BIONIC_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
@@ -88,6 +97,7 @@ struct CS_MOVE_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	float tx, ty, tz;
+	short direction;  // 0 : UP, 1 : DOWN, 2 : LEFT, 3 : RIGHT
 	bool isKey;
 	short c_id;
 
@@ -98,7 +108,8 @@ struct SC_LOGIN_INFO_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
-	int x, y, z;
+	bool isLogin;
+	float x, y, z;
 };
 
 struct SC_ADD_PLAYER_PACKET {
@@ -121,6 +132,11 @@ struct SC_KEYDOWN_PACKET {
 	unsigned char size;
 	PACKET_TYPE	type;
 	short	id;
+	float x, y, z;
+
+	//float cx, cy, cz; //camera
+
+	//weaponType
 	UINT key;
 };
 struct SC_KEYUP_PACKET {
@@ -130,5 +146,20 @@ struct SC_KEYUP_PACKET {
 	UINT key;
 };
 
+
+struct SC_UPDATE_PACKET { // ¼öÁ¤Áß
+	unsigned char size;
+	PACKET_TYPE type;
+	int player;
+	short id[MAX_PLAYER];
+	
+	int X[MAX_PLAYER];
+	int Y[MAX_PLAYER];
+	int Z[MAX_PLAYER];
+	
+	int CX[MAX_PLAYER];
+	int CY[MAX_PLAYER];
+	int CZ[MAX_PLAYER];
+};
 
 #pragma pack (pop)
