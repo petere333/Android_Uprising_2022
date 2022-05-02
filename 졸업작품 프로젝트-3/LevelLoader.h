@@ -141,15 +141,7 @@
 #define Factory_tool9 545
 #define Factory_tool10 550
 #define Factory_tool11 555
-#define Factory_tool12 560
-#define Factory_tool13 565
-#define Factory_tool14 570
-#define Factory_tool15 575
-#define Factory_tool16 580
-#define Factory_tool17 582
-#define Factory_tool18 584
-#define Factory_tool19 586
-#define Factory_tool20 588
+
 
 #define Wallz1 2100
 #define Wallz2 2102
@@ -198,20 +190,11 @@
 #define S_Wallz11 2188
 #define S_Wallz12 2190
 #define S_Wallz13 2192
-#define S_Wallz14 2194	
+#define S_Wallz14 2194
 #define S_Wallz15 2196
 #define S_Wallz16 2198
 #define S_Wallz17 2201
 #define S_Wallz18 2203
-#define S_Wallz19 2205
-#define S_Wallz20 2207
-#define S_Wallz21 2209
-#define S_Wallz22 2211
-#define S_Wallz23 2213
-#define S_Wallz24 2215
-#define S_Wallz25 2217
-#define S_Wallz26 2219
-
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)
 // 5000대 숫자들 : 컨테이너

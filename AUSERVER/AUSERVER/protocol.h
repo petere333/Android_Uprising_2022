@@ -36,13 +36,15 @@ enum class PACKET_TYPE : short
 	CS_KEYDOWN = 1,
 	CS_KEYUP = 2,
 	CS_MOUSE = 3,
+	CS_CAMERA_CHANGE = 4,
 
 	//server to client
-	SC_LOGIN_INFO = 4,
-	SC_ADD_PLAYER = 5,
-	SC_REMOVE_PLAYER = 6,
-	SC_KINETIC_CHANGE = 7,
-	SC_BIONIC_CHANGE=8,
+	SC_LOGIN_INFO = 5,
+	SC_ADD_PLAYER = 6,
+	SC_REMOVE_PLAYER = 7,
+	SC_KINETIC_CHANGE = 8,
+	SC_BIONIC_CHANGE=9,
+	SC_CAMERA_CHANGE=10,
 	
 };
 
@@ -71,6 +73,25 @@ struct CS_MOUSE_PACKET
 	bool down;
 	short c_id;
 };
+
+struct CS_CAMERA_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	float camAngle;
+	float camUp;
+	short c_id;
+};
+
+struct SC_CAMERA_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	float camAngle;
+	float camUp;
+	short c_id;
+};
+
 struct SC_KINETIC_PACKET
 {
 	unsigned char size;
@@ -119,7 +140,9 @@ struct SC_ADD_PLAYER_PACKET {
 	char	name[NAMESIZE];
 	KineticState kState;
 	BionicState bState;
-	float cam;
+	float camAngle;
+	float camUp;
+	XMFLOAT3 pos;
 };
 
 struct SC_REMOVE_PLAYER_PACKET {
