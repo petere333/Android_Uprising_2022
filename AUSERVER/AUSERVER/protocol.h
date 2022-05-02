@@ -33,16 +33,17 @@ enum class PACKET_TYPE : short
 {
 	//client to server
 	CS_LOGIN = 0,
-	CS_KEYDOWN = 1,
-	CS_KEYUP = 2,
-	CS_MOUSE = 3,
+	CS_KEYDOWN,
+	CS_KEYUP,
+	CS_MOUSE,
 
 	//server to client
-	SC_LOGIN_INFO = 4,
-	SC_ADD_PLAYER = 5,
-	SC_REMOVE_PLAYER = 6,
-	SC_KINETIC_CHANGE = 7,
-	SC_BIONIC_CHANGE=8,
+	SC_LOGIN_INFO,
+	SC_ADD_PLAYER,
+	SC_REMOVE_PLAYER,
+	SC_MOVE_PLAYER,
+	SC_KINETIC_CHANGE,
+	SC_BIONIC_CHANGE,
 	
 };
 
@@ -119,6 +120,7 @@ struct SC_ADD_PLAYER_PACKET {
 	char	name[NAMESIZE];
 	KineticState kState;
 	BionicState bState;
+	float x, y, z;
 	float cam;
 };
 
@@ -133,8 +135,7 @@ struct SC_KEYDOWN_PACKET {
 	PACKET_TYPE	type;
 	short	id;
 	float x, y, z;
-
-	//float cx, cy, cz; //camera
+	float cx, cy, cz; //camera
 
 	//weaponType
 	UINT key;

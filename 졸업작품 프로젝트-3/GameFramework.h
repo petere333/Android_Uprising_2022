@@ -48,6 +48,13 @@ public: // to server
 	void LoginServer();
 	//void Disconnection();
 	void ClientNet();
+	int GetPlayerid() { return m_Playerid; }
+	void SetPlayerid(int id) { m_Playerid = id; }
+	static CGameFramework& Instance() 
+	{
+		static CGameFramework _instance;
+		return _instance;
+	}
 
 private:
 	WSADATA						m_WSA;
@@ -55,6 +62,11 @@ private:
 	SOCKADDR					m_serveraddr;
 
 	CRITICAL_SECTION			m_cs;
+	//static CGameFramework		_instance;
+
+private:
+	string						m_PlayerName;
+	int							m_Playerid;
 
 private:
 	HINSTANCE					m_hInstance;

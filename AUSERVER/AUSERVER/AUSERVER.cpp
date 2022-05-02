@@ -3,7 +3,7 @@
 #include "protocol.h"
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
-constexpr int MAXUSER = 5; //최대 접속 유저
+constexpr int MAXUSER = 10; //최대 접속 유저
 
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 
@@ -83,9 +83,10 @@ public:
 		info.id = _id; //client id
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
-		info.x = info.y = info.z = 0;
+		info.x = 0;
+		info.y = 0;
+		info.z = 0;
 		info.isLogin = true;
-		
 
 		kState.xzspeed = 0.0f;
 		kState.yspeed = 0.0f;		
@@ -156,11 +157,14 @@ void process_packet(int c_id, char* packet)
 			if (pl._id == c_id) continue;
 
 			SC_ADD_PLAYER_PACKET add_packet;
-			PACKET_TYPE pt;
 			add_packet.id = c_id;
+			add_packet.x = clients[c_id].set.x;
+			add_packet.y = clients[c_id].set.y;
+			add_packet.z = clients[c_id].set.z;
 			strcpy_s(add_packet.name, p->name);
 			add_packet.size = sizeof(add_packet);
 			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+
 			add_packet.kState.xzspeed = 0.0f;
 			add_packet.kState.yspeed = 0.0f;
 			add_packet.kState.isMobile = true;
@@ -182,9 +186,13 @@ void process_packet(int c_id, char* packet)
 
 			SC_ADD_PLAYER_PACKET add_packet;
 			add_packet.id = pl._id;
+			add_packet.x = pl.set.x;
+			add_packet.y = pl.set.y;
+			add_packet.z = pl.set.z;
 			strcpy_s(add_packet.name, p->name);
 			add_packet.size = sizeof(add_packet);
 			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+
 			add_packet.kState.xzspeed = 0.0f;
 			add_packet.kState.yspeed = 0.0f;
 			add_packet.kState.isMobile = true;
@@ -498,22 +506,22 @@ int main(int argc, char* argv[])
 			break;
 		}
 		case PL_RECV: {
-			int remain_data = num_bytes + clients[client_id]._prev_remain;
+			int remain_data = num_bytes + clients[key]._prev_remain;
 			char* p = ex_over->_send_buf;
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					process_packet(client_id, p);
+					process_packet(static_cast<int>(key), p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}
 				else break;
 			}
-			clients[client_id]._prev_remain = remain_data;
+			clients[key]._prev_remain = remain_data;
 			if (remain_data > 0) {
 				memcpy(ex_over->_send_buf, p, remain_data);
 			}
-			clients[client_id].do_recv();
+			clients[key].do_recv();
 			cout << "Recv Success.\n";
 
 			break;

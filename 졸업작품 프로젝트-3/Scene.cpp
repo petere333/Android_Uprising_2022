@@ -5,6 +5,7 @@
 
 #include "stdafx.h"
 #include "Scene.h"
+#include "GameFramework.h"
 
 
 
@@ -2722,6 +2723,9 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 	char buf[10000];
 	PACKET_TYPE type = (PACKET_TYPE)p_buf[1];
 
+	//buf[0] = packet size
+	//buf[1] = packet type
+
 	switch (type)
 	{
 	case PACKET_TYPE::SC_LOGIN_INFO:
@@ -2731,7 +2735,7 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 		{
 			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
 
-			//SetplayerID(p_login.id);
+			CGameFramework::Instance().SetPlayerid(p_login.id);
 
 			cout << "\nPlayer ID : " << p_login.id << "\n" << endl;
 			cout << "x,y,z = " << p_login.x << p_login.y << p_login.z << "\n" << endl;
@@ -2744,7 +2748,7 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 		SC_ADD_PLAYER_PACKET p_new;
 		memcpy(&p_new, p_buf, p_buf[0]);
 
-		XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
+		XMFLOAT3 pos = XMFLOAT3{ p_new.x, p_new.y, p_new.z };
 		players[p_new.id]->SetPosition(pos);
 		break;
 	}
@@ -2755,12 +2759,17 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 		
 		//player remove
 		break;
+	case PACKET_TYPE::SC_MOVE_PLAYER:
+		//¼öÁ¤Áß
+		break;
 		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
-
+	default:
+		cout << "Unknown PACKET type [" << +p_buf[1] << "]" << endl;
+		break;
+	
 	}
 
 }
-
 
 void CScene::attack(int idx)
 {

@@ -302,7 +302,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			if (mousedown == false)
 			{
 				CS_MOUSE_PACKET p;
-				p.c_id = 1;
+				p.c_id = GetPlayerid();
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = true;
 				p.type = PACKET_TYPE::CS_MOUSE;
@@ -322,7 +322,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			if (mousedown == true)
 			{
 				CS_MOUSE_PACKET p;
-				p.c_id = 1;
+				p.c_id = GetPlayerid();
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = false;
 				p.type = PACKET_TYPE::CS_MOUSE;
@@ -349,12 +349,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
 	CS_KEYDOWN_PACKET packet;
-	packet.c_id = 1;
+	packet.c_id = GetPlayerid();
 	packet.size = sizeof(CS_KEYDOWN_PACKET);
 	packet.type = PACKET_TYPE::CS_KEYDOWN;
 	
 	CS_KEYUP_PACKET uppac;
-	uppac.c_id = 1;
+	uppac.c_id = GetPlayerid();
 	uppac.size = sizeof(CS_KEYUP_PACKET);
 	uppac.type = PACKET_TYPE::CS_KEYUP;
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
@@ -1059,7 +1059,7 @@ void CGameFramework::OnSocket(WPARAM wParam, LPARAM lParam)
 void CGameFramework::Connection()
 {
 	int retval = 0;
-	UINT c_id = 0;
+	//UINT c_id = 0;
 	// 윈속 초기화
 	if (WSAStartup(MAKEWORD(2, 2), &m_WSA) != 0) err_quit((const char*)"connect()");
 
@@ -1094,7 +1094,7 @@ void CGameFramework::Connection()
 
 	else {
 		cout << "서버 연결 성공\n";
-		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\nClient ID : " << c_id;
+		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\n";
 	}
 
 }
