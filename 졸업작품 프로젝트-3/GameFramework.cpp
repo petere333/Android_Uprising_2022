@@ -45,6 +45,7 @@ CGameFramework::~CGameFramework()
 
 bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 {
+	
 	m_hInstance = hInstance;
 	m_hWnd = hMainWnd;
 	
@@ -58,7 +59,8 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	// CSound::Init();
 
 	SetCursorPos(500, 500);
-
+	prevX = 500;
+	prevY = 500;
 	BuildObjects();
 
 	Connection();
@@ -322,7 +324,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			if (mousedown == true)
 			{
 				CS_MOUSE_PACKET p;
-				p.c_id = GetPlayerid();
+				p.c_id = m_pScene->pID; //GetPlayerid();
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = false;
 				p.type = PACKET_TYPE::CS_MOUSE;
@@ -349,12 +351,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 	
 	CS_KEYDOWN_PACKET packet;
-	packet.c_id = GetPlayerid();
+	packet.c_id = m_pScene->pID; //GetPlayerid();
 	packet.size = sizeof(CS_KEYDOWN_PACKET);
 	packet.type = PACKET_TYPE::CS_KEYDOWN;
 	
 	CS_KEYUP_PACKET uppac;
-	uppac.c_id = GetPlayerid();
+	uppac.c_id = m_pScene->pID; //GetPlayerid();
 	uppac.size = sizeof(CS_KEYUP_PACKET);
 	uppac.type = PACKET_TYPE::CS_KEYUP;
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
@@ -367,36 +369,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 		case VK_UP:
 		{
-			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
+			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
-			/*
-			if (lastOrder == 1)
-			{
-				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
-				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
-			}
-			else if(lastOrder == 2)
-			{
-				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
-				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
-			}
-			else if (lastOrder == 3)
-			{
-				// 플레이어를 카메라 시선 기준 상하좌우 방향으로 회전.
-				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
-			}
-			lastOrder = 0;
-			// 플레이어의 속도, 상태 설정
-			
-			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
-			{
-				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-				m_pScene->setObjectState(0, MOVE_STATE);
-				
-			}
-			*/
+
 			packet.key = VK_UP;
 			if (keydown == false)
 			{
@@ -407,31 +384,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_DOWN:
 		{
-			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
+			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
-			/*
-			if (lastOrder == 0)
-			{
-				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
-			}
-			else if (lastOrder == 2)
-			{
-				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
-			}
-			else if (lastOrder == 3)
-			{
-				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
-			}
-			lastOrder = 1;
 			
-			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
-			{
-				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-				m_pScene->setObjectState(0, MOVE_STATE);
-			}
-			*/
 			packet.key = VK_DOWN;
 			
 			if (keydown == false)
@@ -443,30 +400,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_LEFT:
 		{
-			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
+			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
-			/*
-			if (lastOrder == 0)
-			{
-				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
-			}
-			else if (lastOrder == 1)
-			{
-				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
-			}
-			else if (lastOrder == 3)
-			{
-				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
-			}
-			lastOrder = 2;
-			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
-			{
-				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-				m_pScene->setObjectState(0, MOVE_STATE);
-			}
-			*/
+
 			packet.key = VK_LEFT;
 			if (keydown == false)
 			{
@@ -477,30 +415,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_RIGHT:
 		{
-			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
+			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
-			/*
-			if (lastOrder == 0)
-			{
-				m_pScene->rotateObject(0, 0.0f, 90.0f, 0.0f);
-			}
-			else if (lastOrder == 1)
-			{
-				m_pScene->rotateObject(0, 0.0f, 270.0f, 0.0f);
-			}
-			else if (lastOrder == 2)
-			{
-				m_pScene->rotateObject(0, 0.0f, 180.0f, 0.0f);
-			}
-			lastOrder = 3;
-			if (m_pScene->getPlayerState(0).id != ATTACK_STATE)
-			{
-				m_pScene->setObjectSpeed(0, PLAYER_SPEED);
-				m_pScene->setObjectState(0, MOVE_STATE);
-			}
-			*/
+
 			packet.key = VK_RIGHT;
 			if (keydown == false)
 			{
@@ -512,7 +431,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case VK_SPACE:
 		{
 			
-			if (m_pScene->players[0]->pState.id == ATTACK_STATE)
+			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -528,27 +447,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		}
 		case '2':
 		{
-			/*
-			PlayerState state = m_pScene->getPlayerState(0);
 
-			XMFLOAT3 pos = m_pScene->getPos(0);
-			PlayerState pstate = m_pScene->players[0]->pState;
-			float spd = m_pScene->players[0]->speed;
-			XMFLOAT3 di = m_pScene->players[0]->direction;
-			float yspd = m_pScene->players[0]->yspeed;
-			XMFLOAT3 rot = m_pScene->players[0]->currentRotation;
-			//원거리 공격하는 상태가 아닌 경우 총기든 모델 객체로 변경
-			if (state.attType != TYPE_RANGED)
-			{
-
-				//m_pScene->players[0] = m_pScene->playerTypes[0];
-
-				m_pScene->players[0]->setRoot(m_pScene->binModels[0]->m_pModelRootObject, true);
-				m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, m_pScene->binModels[0]);
-
-				m_pScene->players[0]->pState.attType = TYPE_RANGED;
-			}
-			*/
 			packet.key = '2';
 			if (keydown == false)
 			{
@@ -559,27 +458,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		}
 		case '1':
 		{
-			/*
-			PlayerState state = m_pScene->getPlayerState(0);
-
-		
-			if (state.attType != TYPE_MELEE)
-			{
-				if (state.id == IDLE_STATE)
-				{
-					m_pScene->players[0]->setRoot(m_pScene->binModels[2]->m_pModelRootObject, true);
-					m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, m_pScene->binModels[2]);
-					m_pScene->players[0]->pState.attType = TYPE_MELEE;
-				}
-				else if (state.id == MOVE_STATE)
-				{
-					m_pScene->players[0]->setRoot(m_pScene->binModels[1]->m_pModelRootObject, true);
-					m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, m_pScene->binModels[1]);
-					m_pScene->players[0]->pState.attType = TYPE_MELEE;
-				}
-				
-			}
-			*/
+			
 			packet.key = '1';
 			if (keydown == false)
 			{
@@ -809,17 +688,25 @@ void CGameFramework::ProcessInput()
 	POINT pnt;
 	GetCursorPos(&pnt);
 
-	XMFLOAT3 offset = m_pScene->getPos(0);
+	XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
 	float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
 	float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+	if (deltaX != 0.0f || deltaY != 0.0f)
+	{
+		CS_CAMERA_PACKET p;
+		p.size = sizeof(CS_CAMERA_PACKET);
+		p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
+		p.c_id = m_pScene->pID;
+		p.camAngle = deltaX;
+		p.camUp = deltaY;
 
+		SendPacket(&p);
+	}
 
 	//여기서부터 서버에서 처리
-	m_pCamera->rotate(-deltaX, offset.x, offset.z);
-	m_pCamera->rotateUp(-deltaY);
-	m_pScene->rotateObject(0, 0.0f, deltaX, 0.0f);
 	
-
+	//prevX = pnt.x;
+	//prevY = pnt.y;
 
 	SetCursorPos(500, 500);
 	prevX = 500;
@@ -833,74 +720,10 @@ void CGameFramework::AnimateObjects()
 {
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
 
-	//m_pScene->moveObject(0);
 
 	
-	// 이 이후로는 클라가 처리
 
-	/*
-	if (m_pScene->getSpeed(0) > 0.0f || m_pScene->players[0]->yspeed != 0.0f)//실질적으로 이동을 시도한 경우=속도의 값이 0보다 큰 경우
-	{
-		if (m_pScene->moveSuccessed(0))//실제로 이동에 성공한 경우 = 충돌이 없는 경우
-		{
-			if (m_pScene->isWalking == false)
-			{
-				m_pScene->soundEffect[2]->play();
-				m_pScene->isWalking = true;
-			}
-			float angle = XMConvertToRadians(m_pCamera->angle);
-			XMFLOAT3 pos = m_pScene->getPos(0);
-			float spd = m_pScene->getSpeed(0);
-			m_pCamera->move(cos(angle) * 2.0f + pos.x, pos.y+2.85f, sin(angle) * 2.0f + pos.z);
-
-			if (m_pScene->players[0]->pState.attType == TYPE_RANGED)
-			{
-				if (m_pScene->currentPlayerAnim != 20)
-				{
-					m_pScene->players[0]->setRoot(m_pScene->binModels[0]->m_pModelRootObject, true);
-					m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, m_pScene->binModels[0]);
-					m_pScene->setPlayerAnimation(20);
-				}
-			}
-			else if (m_pScene->players[0]->pState.attType == TYPE_MELEE)
-			{
-				m_pScene->players[0]->setRoot(m_pScene->binModels[1]->m_pModelRootObject, true);
-				m_pScene->players[0]->m_pSkinnedAnimationController = new CAnimationController(m_pd3dDevice, m_pd3dCommandList, 1, m_pScene->binModels[1]);
-				m_pScene->setPlayerAnimation(0);
-			}
-		}
-		else
-		{
-			if (m_pScene->isWalking == true)
-			{
-				m_pScene->soundEffect[2]->stop();
-				m_pScene->isWalking = false;
-			}
-		}
-	}
-	else
-	{
-		if (m_pScene->isWalking == true)
-		{
-			m_pScene->soundEffect[2]->stop();
-			m_pScene->isWalking = false;
-		}
-		if (m_pScene->players[0]->pState.attType == TYPE_RANGED)
-		{
-			if (m_pScene->currentPlayerAnim != 11)
-			{
-				m_pScene->setPlayerAnimation(11);
-			}
-		}
-		else if (m_pScene->players[0]->pState.attType == TYPE_MELEE)
-		{
-			m_pScene->setPlayerAnimation(0);
-		}
-	}
-	*/
-	
-
-	if (m_pScene) m_pScene->AnimateObjects(m_pd3dDevice, m_pd3dCommandList, fTimeElapsed);
+	if (m_pScene) m_pScene->AnimateObjects(m_pd3dDevice, m_pd3dCommandList, fTimeElapsed, m_pCamera);
 
 	
 }
@@ -1046,7 +869,7 @@ void CGameFramework::OnSocket(WPARAM wParam, LPARAM lParam)
 	switch (WSAGETSELECTEVENT(lParam))
 	{
 	case FD_READ:
-		m_pScene->recv_packet();
+		m_pScene->recv_packet(m_pd3dDevice, m_pd3dCommandList, m_pCamera);
 		break;
 
 	case FD_CLOSE:
@@ -1058,8 +881,12 @@ void CGameFramework::OnSocket(WPARAM wParam, LPARAM lParam)
 
 void CGameFramework::Connection()
 {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 999);
+
 	int retval = 0;
-	//UINT c_id = 0;
+	//UINT c_id = dis(gen);
 	// 윈속 초기화
 	if (WSAStartup(MAKEWORD(2, 2), &m_WSA) != 0) err_quit((const char*)"connect()");
 

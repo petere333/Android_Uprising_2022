@@ -1855,7 +1855,7 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 	return(false);
 }
 
-void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed)
+void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed, CCamera* cam)
 {
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
@@ -1871,7 +1871,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
 				players[i]->SetTrackAnimationSet(0, 11);
+				players[i]->lastMove = std::chrono::system_clock::now();
 			}
+			
 		}
 		else if (players[i]->bState.stateID == MOVE_STATE)
 		{
@@ -1879,9 +1881,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
-				players[i]->SetTrackAnimationSet(0, 20);
-				moveObject(i);
 			}
+			players[i]->SetTrackAnimationSet(0, 20);
+//			players[i]->lastMove = std::chrono::system_clock::now();
+			cam->rotateUp();
+			moveObject(i,cam);
 		}
 		else if (players[i]->bState.stateID == ATTACK_STATE)
 		{
@@ -1889,9 +1893,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
-				players[i]->SetTrackAnimationSet(0, 2);
-				moveObject(i);
+				
 			}
+			players[i]->SetTrackAnimationSet(0, 2);
+			cam->rotateUp();
+			moveObject(i,cam);
 		}
 		/*
 		if (mouseDown == true)
@@ -2263,7 +2269,7 @@ void CScene::setPlayerAnimation(int a)
 
 
 
-void CScene::moveObject(int idx)
+void CScene::moveObject(int idx,CCamera* pCamera)
 {
 	
 	chrono::duration<double> fromLastMove = chrono::system_clock::now() - players[idx]->lastMove;
@@ -2274,13 +2280,15 @@ void CScene::moveObject(int idx)
 	bool stepOn;
 	
 
-
-		if (players[idx]->speed > 0.0f || players[idx]->yspeed != 0.0f)
+		if (players[idx]->kState.xzspeed > 0.0f || players[idx]->kState.yspeed != 0.0f)
 		{
+			
+			float rd = XMConvertToRadians(players[idx]->kState.rotation);
+			XMFLOAT3 dir = XMFLOAT3(cos(rd), 0.0f, sin(rd));
 
-			tx = players[idx]->GetPosition().x + fTime * players[idx]->speed * players[idx]->direction.x;
+			tx = players[idx]->GetPosition().x + fTime * players[idx]->kState.xzspeed * dir.x;
 			ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
-			tz = players[idx]->GetPosition().z + fTime * players[idx]->speed * players[idx]->direction.z;
+			tz = players[idx]->GetPosition().z + fTime * players[idx]->kState.xzspeed * -dir.z;
 			// 물체가 있는곳에 이동했는가?
 			for (int i = 0; i < nBox; ++i)
 			{
@@ -2291,16 +2299,18 @@ void CScene::moveObject(int idx)
 
 					if (players[idx]->GetPosition().x > boxesWorld[i].end.x || players[idx]->GetPosition().x < boxesWorld[i].start.x)
 					{
-						if (players[idx]->direction.x > 0.0f)
+						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							//players[idx]->kState.x = 0.0f;
 
 						}
-						else if (players[idx]->direction.x < 0.0f)
+						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							//dir.x = 0.0f;
 
 						}
 						crash = true;
@@ -2308,16 +2318,18 @@ void CScene::moveObject(int idx)
 					}
 					else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
 					{
-						if (players[idx]->direction.z > 0.0f)
+						if (dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							//dir.z = 0.0f;
 
 						}
-						else if (players[idx]->direction.z < 0.0f)
+						else if (dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							//dir.z = 0.0f;
 
 						}
 						crash = true;
@@ -2328,11 +2340,13 @@ void CScene::moveObject(int idx)
 						if (players[idx]->yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2364,16 +2378,18 @@ void CScene::moveObject(int idx)
 
 					if (players[idx]->GetPosition().x > enemyBoxes[i].end.x || players[idx]->GetPosition().x < enemyBoxes[i].start.x)
 					{
-						if (players[idx]->direction.x > 0.0f)
+						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.x = 0.0f;
 
 						}
-						else if (players[idx]->direction.x < 0.0f)
+						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.x = 0.0f;
 
 						}
 						crash = true;
@@ -2381,16 +2397,18 @@ void CScene::moveObject(int idx)
 					}
 					else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
 					{
-						if (players[idx]->direction.z > 0.0f)
+						if (dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.z = 0.0f;
 
 						}
-						else if (players[idx]->direction.z < 0.0f)
+						else if (dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.z = 0.0f;
 
 						}
 						crash = true;
@@ -2401,11 +2419,13 @@ void CScene::moveObject(int idx)
 						if (players[idx]->yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2427,16 +2447,18 @@ void CScene::moveObject(int idx)
 
 					if (players[idx]->GetPosition().x > stairsWorld[i].end.x || players[idx]->GetPosition().x < stairsWorld[i].start.x)
 					{
-						if (players[idx]->direction.x > 0.0f)
+						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(stairsWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.x = 0.0f;
 
 						}
-						else if (players[idx]->direction.x < 0.0f)
+						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(stairsWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							players[idx]->direction.x = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.x = 0.0f;
 
 						}
 						crash = true;
@@ -2444,16 +2466,18 @@ void CScene::moveObject(int idx)
 					}
 					else if (players[idx]->GetPosition().z > stairsWorld[i].end.z || players[idx]->GetPosition().z < stairsWorld[i].start.z)
 					{
-						if (players[idx]->direction.z > 0.0f)
+						if (dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].start.z - 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.z = 0.0f;
 
 						}
-						else if (players[idx]->direction.z < 0.0f)
+						else if (dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].end.z + 0.5f);
-							players[idx]->direction.z = 0.0f;
+							pCamera->move(players[idx]->GetPosition());
+							dir.z = 0.0f;
 
 						}
 						crash = true;
@@ -2463,12 +2487,14 @@ void CScene::moveObject(int idx)
 					{
 						if (players[idx]->yspeed > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].end.y, players[idx]->GetPosition().z);
+							pCamera->move(players[idx]->GetPosition());
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2500,7 +2526,9 @@ void CScene::moveObject(int idx)
 
 			if (crash == false)
 			{
+				XMFLOAT3 og = players[idx]->GetPosition();
 				players[idx]->SetPosition(tx, ty, tz);
+				pCamera->move(tx, ty, tz);
 				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 				players[idx]->lastMoveSuccess = true;
 
@@ -2517,6 +2545,7 @@ void CScene::moveObject(int idx)
 				if (players[idx]->isInAir == true)
 				{
 					players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
+					pCamera->move(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
 					players[idx]->lastMoveSuccess = true;
 
 					//if (players[idx]->yspeed != 0.0f)
@@ -2528,8 +2557,9 @@ void CScene::moveObject(int idx)
 			}
 
 		}
+		players[idx]->lastMove = chrono::system_clock::now();
 	
-
+		
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
 	// 변경 완료된 위치 값을 클라로 전송.
 	// moveObject 함수는 매 프레임마다 호출되므로 서버에서도 약 0.016초(초당 60프레임 기준)마다 전송해주는게 좋음.
@@ -2544,7 +2574,7 @@ void CScene::setObjectSpeed(int idx, float size)
 
 	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
 
-	players[idx]->direction = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
+	//dir = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
 	// speed, direction값을 클라에게 전달하자.
 }
 
@@ -2616,16 +2646,16 @@ void CScene::rotateObject(int idx, float x, float y, float z)
 }
 void CScene::setPlayerDirection(float dx, float dy, float dz)
 {
-	if (players[0]->currentRotation.y != dy)
+	if (players[pID]->kState.rotation != dy)
 	{
-		players[0]->Rotate(0.0f, dy - players[0]->currentRotation.y, 0.0f);
-		players[0]->currentRotation.y = dy;
+		players[0]->Rotate(0.0f, dy - players[0]->kState.rotation, 0.0f);
+		players[0]->kState.rotation = dy;
 	}
 }
 
 //client to server (received)
 //client to server (received)
-void CScene::recv_packet()
+void CScene::recv_packet(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
 	g_client.m_recv_over.m_wsabuf.buf = reinterpret_cast<char*>(g_client.m_recv_over.m_sendbuf) + g_client.m_prev_size;
 	g_client.m_recv_over.m_wsabuf.len = BUFSIZE - g_client.m_prev_size;
@@ -2648,7 +2678,7 @@ void CScene::recv_packet()
 	int packet_size = packet_ptr[0];
 
 	while (num_data >= packet_size) {
-		ProcessPacket(packet_ptr);
+		ProcessPacket(packet_ptr, pd3dDevice, pd3dCommandList, pCamera);
 		num_data -= packet_size;
 		packet_ptr += packet_size;
 		if (0 >= num_data) break;
@@ -2718,7 +2748,7 @@ void CScene::process_packet()
 	}
 }
 
-void CScene::ProcessPacket(unsigned char* p_buf)
+void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
 	char buf[10000];
 	PACKET_TYPE type = (PACKET_TYPE)p_buf[1];
@@ -2729,36 +2759,126 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 	switch (type)
 	{
 	case PACKET_TYPE::SC_LOGIN_INFO:
+	{
 		SC_LOGIN_INFO_PACKET p_login;
 		memcpy(&p_login, p_buf, p_buf[0]);
 		if (p_login.isLogin)
 		{
 			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-
-			CGameFramework::Instance().SetPlayerid(p_login.id);
+			addPlayer(pd3dDevice, pd3dCommandList, pos);
+			//SetplayerID(p_login.id);
+			pID = p_login.id;
+			//CGameFramework::Instance().SetPlayerid(p_login.id);
 
 			cout << "\nPlayer ID : " << p_login.id << "\n" << endl;
 			cout << "x,y,z = " << p_login.x << p_login.y << p_login.z << "\n" << endl;
 		}
-		break;
+		break; 
+	}
 
 	case PACKET_TYPE::SC_ADD_PLAYER:
 	{
 		cout << "New Player Connected.\n";
 		SC_ADD_PLAYER_PACKET p_new;
 		memcpy(&p_new, p_buf, p_buf[0]);
+		XMFLOAT3 pos = XMFLOAT3(p_new.pos.x, p_new.pos.y, p_new.pos.z);
+		KineticState k = p_new.kState;
+		BionicState b = p_new.bState;
 
-		XMFLOAT3 pos = XMFLOAT3{ p_new.x, p_new.y, p_new.z };
-		players[p_new.id]->SetPosition(pos);
+		players[pID]->kState = k;
+		players[pID]->bState = b;
+		pCamera->angle = p_new.camAngle;
+		pCamera->currentUp = p_new.camUp;
+		//XMFLOAT3 pos = XMFLOAT3{ p_new.x, p_new.y, p_new.z };
+		//players[p_new.id]->SetPosition(pos);
 		break;
 	}
 	case PACKET_TYPE::SC_REMOVE_PLAYER:
+	{
 		SC_REMOVE_PLAYER_PACKET p_remove;
 		memcpy(&p_remove, p_buf, p_buf[0]);
 		cout << p_remove.id << "Player REMOVED.\n";
-		
+		players[p_remove.id]->m_bActive = false;
 		//player remove
 		break;
+		
+	}
+	case PACKET_TYPE::SC_KINETIC_CHANGE:
+	{
+		SC_KINETIC_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		if (p.kState.isInAir != -9999)
+		{
+			players[pID]->kState.isInAir = p.kState.isInAir;
+		}
+		if (p.kState.isMobile != -9999)
+		{
+			players[pID]->kState.isMobile = p.kState.isMobile;
+		}
+		if (p.kState.rotation != -9999.0f)
+		{
+			float tangle = -p.kState.rotation + (players[pID]->kState.rotation);
+			players[pID]->kState.rotation = -p.kState.rotation;
+
+			
+			
+			players[pID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
+		}
+		if (p.kState.yspeed != -9999.0f)
+		{
+			players[pID]->kState.yspeed = p.kState.yspeed;
+		}
+		if (p.kState.xzspeed != -9999.0f)
+		{
+			players[pID]->kState.xzspeed = p.kState.xzspeed;
+		}
+		
+		printf("client player kinetic state change complete\n");
+		break;
+	}
+	case PACKET_TYPE::SC_BIONIC_CHANGE:
+	{
+		SC_BIONIC_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+		if (p.bState.attackID != -9999)
+		{
+			players[0]->bState.attackID = p.bState.attackID;
+		}
+		if (p.bState.stateID != -9999)
+		{
+			players[0]->bState.stateID = p.bState.stateID;
+		}
+		if (p.bState.isIntelligent != -9999)
+		{
+			players[0]->bState.isIntelligent = p.bState.isIntelligent;
+		}
+		if (p.bState.hp != -9999)
+		{
+			players[0]->bState.hp = p.bState.hp;
+		}
+		printf("client player bionic state change complete\n");
+		break;
+	}
+	case PACKET_TYPE::SC_CAMERA_CHANGE:
+	{
+		SC_CAMERA_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+		pCamera->angle = p.camAngle;
+		pCamera->currentUp = p.camUp;
+
+		XMFLOAT3 og = players[pID]->GetPosition();
+		float r = players[pID]->kState.rotation;
+
+		float dangle = (p.camAngle - 270.0f)-r;
+		pCamera->rotate(og.x, og.z);
+		pCamera->rotateUp();
+		pCamera->GenerateViewMatrix();
+		//players[pID]->Rotate(0.0f, -dangle, 0.0f);
+
+		printf("client player camera transform complete\n");
+		break;
+	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
 		//수정중
 		break;
@@ -2766,7 +2886,6 @@ void CScene::ProcessPacket(unsigned char* p_buf)
 	default:
 		cout << "Unknown PACKET type [" << +p_buf[1] << "]" << endl;
 		break;
-	
 	}
 
 }
@@ -3519,24 +3638,16 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 
 }
 
-void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+void CScene::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3 pos)
 {
-	binModels = new CLoadedModelInfo*[nSkinMesh];
-	playerTypes = new CGameObject * [nSkinMesh];
-
-	binModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
-	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_walk.bin", NULL);
-	binModels[2] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
-	binModels[3] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing1.bin", NULL);
-	binModels[4] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
 	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[0], 1);
 	obj->type = 1;
 	obj->objType = 1;
-
-	obj->SetPosition(100.0f, 0.0f, 100.0f);
+	
+	obj->SetPosition(pos);
 	obj->Rotate(0.0f, 0.0f, 0.0f);
 	obj->currentRotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	
+
 	obj->speed = 0.0f;
 	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	obj->lastMove = chrono::system_clock::now();
@@ -3547,38 +3658,21 @@ void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	obj->pState.attType = TYPE_RANGED;
 
 	obj->SetTrackAnimationSet(0, 11);
-	currentPlayerAnim = 11;
-	
-	
 
 
-	/*
-	if (shadowRect[0] == NULL)
-	{
-		shadowRect[0] = new RectMesh(pd3dDevice, pd3dCommandList, 0.7f, 0.7f);
-	}
-	shd = new CGameObject(1);
-	shd->SetMesh(shadowRect[0]);
-	shd->SetMaterial(0, shadowMats[0]);
-	*/
-	obj->SetMaterial(0, ppMaterials[32]);
+	players.push_back(obj);
+}
 
-	playerTypes[0] = obj;
+void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+{
+	binModels = new CLoadedModelInfo*[nSkinMesh];
+	playerTypes = new CGameObject * [nSkinMesh];
 
-	playerTypes[1]= new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[1], 1);
-	playerTypes[1]->type = 1;
-	playerTypes[1]->objType = 1;
-	
-	playerTypes[1]->speed = 0.0f;
-	playerTypes[1]->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	playerTypes[1]->lastMove = chrono::system_clock::now();
-	
-	playerTypes[1]->pState.currHP = 100;
-	playerTypes[1]->pState.id = IDLE_STATE;
-	playerTypes[1]->pState.timeElapsed = 0.0f;
-	playerTypes[1]->pState.attType = TYPE_RANGED;
-
-	players.push_back(playerTypes[0]);
+	binModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
+	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_walk.bin", NULL);
+	binModels[2] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
+	binModels[3] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing1.bin", NULL);
+	binModels[4] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
 }
 void CScene::createSounds()
 {

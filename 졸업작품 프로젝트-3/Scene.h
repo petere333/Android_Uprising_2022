@@ -73,7 +73,7 @@ public:
 	ID3D12RootSignature *GetGraphicsRootSignature() { return(m_pd3dGraphicsRootSignature); }
 
 	bool ProcessInput(UCHAR *pKeysBuffer);
-    void AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed);
+    void AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed, CCamera*);
     void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera=NULL);
 
 	void ReleaseUploadBuffers();
@@ -146,7 +146,7 @@ public:
 
 
 	
-	void moveObject(int);
+	void moveObject(int, CCamera*);
 	
 	void setPlayerAnimation(int a);
 
@@ -155,6 +155,8 @@ public:
 	std::vector<CGameObject*>			players;
 	std::vector<CGameObject*>			particles;
 	std::vector<CGameObject*>			enemies;
+
+	int pID;
 
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
@@ -217,18 +219,19 @@ public:
 	bool mouseDown = false;
 	void createParticles(int n, XMFLOAT3 pos);
 	void createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	void addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3);
 	void createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	void createSounds();
 	void delSounds();
 	void swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 public: // client to server
-	virtual void recv_packet(); // (receive packet);
+	virtual void recv_packet(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}
 
 	virtual void process_packet();
 
 public:
-	void ProcessPacket(unsigned char* p_buf);
+	void ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*);
 };
 typedef struct Line
 {

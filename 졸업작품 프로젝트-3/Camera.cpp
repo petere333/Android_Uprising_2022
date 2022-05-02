@@ -83,16 +83,19 @@ void CCamera::SetViewportsAndScissorRects(ID3D12GraphicsCommandList* pd3dCommand
 
 void CCamera::move(float mx, float my, float mz)
 {
-	m_xmf3Position.x = mx;
-	m_xmf3Position.y = my;
-	m_xmf3Position.z = mz;
-
 	float rad = XMConvertToRadians(angle);
 
+	m_xmf3Position.x = mx + static_cast<float>(cos(rad)) * dist;
+	m_xmf3Position.y = my+2.0f;
+	m_xmf3Position.z = mz + static_cast<float>(sin(rad)) * dist;
+
 	
-	lx = mx-static_cast<float>(cos(rad)) * dist;
-	ly = m_xmf3Position.y+currentUp-2.0f;
-	lz = mz-static_cast<float>(sin(rad)) * dist;
+
+	
+	lx = mx;
+	ly = m_xmf3Position.y;
+	lz = mz;
+	rotateUp();
 	GenerateViewMatrix();
 }
 void CCamera::moveRelative(float mx, float my, float mz)
@@ -101,22 +104,17 @@ void CCamera::moveRelative(float mx, float my, float mz)
 	m_xmf3Position.y += my;
 	m_xmf3Position.z += mz;
 
-	lx = mx;
-	ly = m_xmf3Position.y - 2.0f;
-	lz = mz + 2.0f;
+	lx += mx;
+	ly += my;
+	lz += mz;
 	GenerateViewMatrix();
 }
 
-void CCamera::rotate(float degree, float originX, float originZ)
+void CCamera::rotate(float originX, float originZ)
 {
-	angle += degree;
-	while (angle >= 360.0f)
-	{
-		angle -= 360.0f;
-	}
 	float rad = XMConvertToRadians(angle);
 	m_xmf3Position.x = static_cast<float>(cos(rad)) * dist+originX;
 	m_xmf3Position.z = static_cast<float>(sin(rad)) * dist+originZ;
-	GenerateViewMatrix();
+	
 }
 
