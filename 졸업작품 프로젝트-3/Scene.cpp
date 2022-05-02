@@ -205,9 +205,24 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[40]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/돌기둥받침.dds", RESOURCE_TEXTURE2D, 0);
 	textures[41] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[41]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기둥본체.dds", RESOURCE_TEXTURE2D, 0);
-
-
-
+	textures[42] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[42]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/철벽.dds", RESOURCE_TEXTURE2D, 0);
+	textures[43] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[43]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전소.dds", RESOURCE_TEXTURE2D, 0);
+	textures[44] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[44]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전소2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[45] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[45]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기둥텍스쳧.dds", RESOURCE_TEXTURE2D, 0);
+	textures[46] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[46]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/롱탱크.dds", RESOURCE_TEXTURE2D, 0);
+	textures[47] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[47]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/낡은벽.dds", RESOURCE_TEXTURE2D, 0);
+	textures[48] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[48]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/뚱글이.dds", RESOURCE_TEXTURE2D, 0);
+	textures[49] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[49]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/못뚤음.dds", RESOURCE_TEXTURE2D, 0);
+	textures[50] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[50]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/뚤어라.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -291,6 +306,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CCubeMeshTextured* Pan2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 120.0f, 2.0f, 60.0f);
 	CCubeMeshTextured* Pan3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 1.3f, 20.0f);
 	CCubeMeshTextured* Pan4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 16.0f, 19.9f, 16.0f);
+	CCubeMeshTextured* Not_ddul = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 31.25f, 5.0f, 2.0f);
+	CCubeMeshTextured* ddul = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 31.25f, 5.0f, 2.0f); // 뚫을 수 있는 벽
 	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
 	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
 
@@ -385,7 +402,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* Walz9 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 7.5f);
 	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 	WallMeshHorizontal* Walz11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 30.0f, 12.5f);
-	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 12.5f);
 	WallMeshHorizontal* Walz13 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // 감옥창살
 	WallMeshVertical* Walz14 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 60.0f, 12.5f);
 	WallMeshVertical* Walz15 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 145.0f, 5.0f);
@@ -425,6 +442,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshVertical* Walz46 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
 	WallMeshVertical* Walz47 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
 	WallMeshVertical* Walz48 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
+	WallMeshVertical* Walz49 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 100.0f, 12.5f);
+	WallMeshHorizontal* Walz50 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 12.5f);
+	WallMeshHorizontal* Walz51 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 12.5f);
+	WallMeshHorizontal* Walz52 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 90.0f, 12.5f);
+	WallMeshHorizontal* Walz53 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 20.0f, 12.5f);
+	WallMeshHorizontal* Walz54 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 12.5f);
 
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
@@ -454,6 +477,16 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_tool9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느선반.txt", NULL);
 	CLoadedMesh* Gongjang_tool10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_그냥화물1.txt", NULL);
 	CLoadedMesh* Gongjang_tool11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_쓰레기봉투.txt", NULL);
+	CLoadedMesh* Gongjang_tool12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_철벽.txt", NULL);
+	CLoadedMesh* Gongjang_tool13 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_철벽2.txt", NULL);
+	CLoadedMesh* Gongjang_tool14 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전소.txt", NULL);
+	CLoadedMesh* Gongjang_tool15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전소2.txt", NULL);
+	CLoadedMesh* Gongjang_tool16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_주기둥.txt", NULL);
+	CLoadedMesh* Gongjang_tool17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_긴탱크.txt", NULL);
+	CLoadedMesh* Gongjang_tool18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
+	CLoadedMesh* Gongjang_tool19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
+	CLoadedMesh* Gongjang_tool20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
+
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1559,6 +1592,135 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
+		else if (data[i].type == Factory_tool12)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool12);
+		obj->SetMaterial(0, ppMaterials[42]);
+	 	obj->Rotate(270.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool13)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool13);
+		obj->SetMaterial(0, ppMaterials[42]);
+		obj->Rotate(270.0f, 90.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool14)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool14);
+		obj->SetMaterial(0, ppMaterials[43]);
+		obj->Rotate(-90.0f, 90.0f, 0.0f);
+		}
+		else if (data[i].type == S_Wallz19)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz49);
+		obj->SetMaterial(0, ppMaterials[38]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool15)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool15);
+		obj->SetMaterial(0, ppMaterials[44]);
+		obj->Rotate(-90.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool16)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool16);
+		obj->SetMaterial(0, ppMaterials[45]);
+		obj->Rotate(0.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool17)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool17);
+		obj->SetMaterial(0, ppMaterials[46]);
+		obj->Rotate(-90.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == S_Wallz20)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz50);
+		obj->SetMaterial(0, ppMaterials[47]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz21)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz51);
+		obj->SetMaterial(0, ppMaterials[47]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz22)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz52);
+		obj->SetMaterial(0, ppMaterials[47]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz23)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz53);
+		obj->SetMaterial(0, ppMaterials[47]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz24)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Walz54);
+		obj->SetMaterial(0, ppMaterials[47]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == Factory_tool18)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool18);
+		obj->SetMaterial(0, ppMaterials[48]);
+		obj->Rotate(-90.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool19)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool19);
+		obj->SetMaterial(0, ppMaterials[48]);
+		obj->Rotate(-90.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == Factory_tool20)// 여기서부터 새로 만든거
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_tool20);
+		obj->SetMaterial(0, ppMaterials[48]);
+		obj->Rotate(-90.0f, 0.0f, 0.0f);
+		}
+		else if (data[i].type == S_Wallz25)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Not_ddul);
+		obj->SetMaterial(0, ppMaterials[49]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+		else if (data[i].type == S_Wallz26)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(ddul);
+		obj->SetMaterial(0, ppMaterials[50]);
+		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
+		}
+
+
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
