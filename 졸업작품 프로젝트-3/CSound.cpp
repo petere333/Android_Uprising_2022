@@ -22,7 +22,11 @@ CSound::~CSound() {
 
 
 int CSound::Init() {
+<<<<<<< HEAD
     FMOD_System_Create(&g_sound_system, FMOD_VERSION);
+=======
+    FMOD_System_Create(&g_sound_system,FMOD_VERSION);
+>>>>>>> aa45524ae4bdbcd2565cab5b5d564d89598b0878
     FMOD_System_Init(g_sound_system, 32, FMOD_INIT_NORMAL, NULL);
 
     return 0;

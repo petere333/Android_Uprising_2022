@@ -945,7 +945,12 @@ void CGameObject::MoveForward(float fDistance)
 void CGameObject::Rotate(float fPitch, float fYaw, float fRoll)
 {
 	XMMATRIX mtxRotate = XMMatrixRotationRollPitchYaw(XMConvertToRadians(fPitch), XMConvertToRadians(fYaw), XMConvertToRadians(fRoll));
-	m_xmf4x4ToParent = Matrix4x4::Multiply(mtxRotate, m_xmf4x4ToParent);
+	
+	XMFLOAT4X4 mat = Matrix4x4::Identity();
+	mat._41 = GetPosition().x;
+	mat._42 = GetPosition().y;
+	mat._43 = GetPosition().z;
+	m_xmf4x4ToParent = Matrix4x4::Multiply(mtxRotate, mat);
 
 	UpdateTransform(NULL);
 }

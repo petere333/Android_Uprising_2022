@@ -33,16 +33,18 @@ enum class PACKET_TYPE : short
 {
 	//client to server
 	CS_LOGIN = 0,
-	CS_KEYDOWN = 1,
-	CS_KEYUP = 2,
-	CS_MOUSE = 3,
-
+	CS_KEYDOWN,
+	CS_KEYUP,
+	CS_MOUSE,
+	CS_CAMERA_CHANGE,
 	//server to client
-	SC_LOGIN_INFO = 4,
-	SC_ADD_PLAYER = 5,
-	SC_REMOVE_PLAYER = 6,
-	SC_KINETIC_CHANGE = 7,
-	SC_BIONIC_CHANGE=8,
+	SC_LOGIN_INFO,
+	SC_ADD_PLAYER,
+	SC_REMOVE_PLAYER,
+	SC_MOVE_PLAYER,
+	SC_KINETIC_CHANGE,
+	SC_BIONIC_CHANGE,
+	SC_CAMERA_CHANGE,
 	
 };
 
@@ -71,6 +73,25 @@ struct CS_MOUSE_PACKET
 	bool down;
 	short c_id;
 };
+
+struct CS_CAMERA_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	float camAngle;
+	float camUp;
+	short c_id;
+};
+
+struct SC_CAMERA_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	float camAngle;
+	float camUp;
+	short c_id;
+};
+
 struct SC_KINETIC_PACKET
 {
 	unsigned char size;
@@ -119,7 +140,9 @@ struct SC_ADD_PLAYER_PACKET {
 	char	name[NAMESIZE];
 	KineticState kState;
 	BionicState bState;
-	float cam;
+	float camAngle;
+	float camUp;
+	XMFLOAT3 pos;
 };
 
 struct SC_REMOVE_PLAYER_PACKET {
@@ -133,8 +156,7 @@ struct SC_KEYDOWN_PACKET {
 	PACKET_TYPE	type;
 	short	id;
 	float x, y, z;
-
-	//float cx, cy, cz; //camera
+	float cx, cy, cz; //camera
 
 	//weaponType
 	UINT key;

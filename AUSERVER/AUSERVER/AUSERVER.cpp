@@ -3,8 +3,8 @@
 #include "protocol.h"
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
-constexpr int MAXUSER = 5; //최대 접속 유저
-
+constexpr int MAXUSER = 10; //최대 접속 유저
+int nplayer = 0;
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 
 class OVER_EXP {
@@ -43,6 +43,7 @@ public:
 	KineticState kState;
 	BionicState bState;
 	float cameraAngle;
+	float cameraUp;
 	char	_name[NAMESIZE];
 	int		_prev_remain;
 
@@ -77,15 +78,18 @@ public:
 
 	void send_login_info()
 	{
+		
 		//Server to Client
 		SC_LOGIN_INFO_PACKET info;
 		PACKET_TYPE pt;
 		info.id = _id; //client id
+		//info.id = nplayer;
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
-		info.x = info.y = info.z = 0;
+		info.x = 100.0f+ nplayer*5.0f;
+		info.y = 0.0f;
+		info.z = 100.0f;
 		info.isLogin = true;
-		
 
 		kState.xzspeed = 0.0f;
 		kState.yspeed = 0.0f;		
@@ -99,13 +103,16 @@ public:
 		bState.isIntelligent = true;
 		bState.stateID = IDLE_STATE;
 
-		cameraAngle = 0.0f;
+		cameraAngle = 270.0f;
+		cameraUp = 0.0f;
 
 		do_send(&info);
+		nplayer += 1;
 	}
 
 	void send_kinetic_change(int c_id, KineticState kState);
 	void send_bionic_change(int c_id, BionicState state);
+	void send_camera_change(int c_id, float, float);
 	
 };
 
@@ -132,7 +139,17 @@ public:
 
 	 do_send(&p);
 }
+ void SESSION::send_camera_change(int c_id, float angle, float up)
+ {
+	 SC_CAMERA_PACKET p;
+	 p.c_id = c_id;
+	 p.size = sizeof(SC_CAMERA_PACKET);
+	 p.type = PACKET_TYPE::SC_CAMERA_CHANGE;
+	 p.camAngle = angle;
+	 p.camUp = up;
 
+	 do_send(&p);
+ }
 
 int get_new_player_id()
 {
@@ -148,58 +165,104 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_LOGIN: {
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
-		clients[c_id].send_login_info();
-		cout << "client add order received" << endl;
-
-		for (auto pl : clients) { //새 클라이언트의 정보 전송
-			if (pl._use == false) continue;
-			if (pl._id == c_id) continue;
-
-			SC_ADD_PLAYER_PACKET add_packet;
-			PACKET_TYPE pt;
-			add_packet.id = c_id;
-			strcpy_s(add_packet.name, p->name);
-			add_packet.size = sizeof(add_packet);
-			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-			add_packet.kState.xzspeed = 0.0f;
-			add_packet.kState.yspeed = 0.0f;
-			add_packet.kState.isMobile = true;
-			add_packet.kState.isInAir = false;
-			add_packet.kState.rotation = 0.0f;
-			add_packet.kState.lastMove = std::chrono::system_clock::now();
+		if (nplayer < 2)
+		{
 			
-			add_packet.bState.attackID = TYPE_RANGED;
-			add_packet.bState.hp = 10;
-			add_packet.bState.isIntelligent = true;
-			add_packet.bState.stateID = IDLE_STATE;
-			add_packet.cam = 0.0f;
-			pl.do_send(&add_packet);
-		}
+			clients[c_id].send_login_info();
+			cout << "client add order received" << endl;
 
-		for (auto pl : clients) { //기존 클라이언트의 정보 전송 (수정중)
-			if (pl._use == false) continue;
-			if (pl._id == c_id) continue;
+			for (int i = 0; i < nplayer; ++i)
+			{
+				if (clients[i]._use == false)
+				{
+					continue;
+				}
+				SC_ADD_PLAYER_PACKET pc;
+				//pc.id = clients[i]._id;
+				pc.id = i;
+				strcpy_s(pc.name, p->name);
+				pc.size = sizeof(pc);
+				pc.type = PACKET_TYPE::SC_ADD_PLAYER;
+				clients[c_id].kState.xzspeed = 0.0f;
+				clients[c_id].kState.yspeed = 0.0f;
+				clients[c_id].kState.isMobile = true;
+				clients[c_id].kState.isInAir = false;
+				clients[c_id].kState.rotation = 0.0f;
+				clients[c_id].kState.lastMove = std::chrono::system_clock::now();
+				
+				clients[c_id].bState.attackID = TYPE_RANGED;
+				clients[c_id].bState.hp = 10;
+				clients[c_id].bState.isIntelligent = true;
+				clients[c_id].bState.stateID = IDLE_STATE;
+				clients[c_id].cameraAngle = 270.0f;
+				clients[c_id].cameraUp = 0.0f;
 
-			SC_ADD_PLAYER_PACKET add_packet;
-			add_packet.id = pl._id;
-			strcpy_s(add_packet.name, p->name);
-			add_packet.size = sizeof(add_packet);
-			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-			add_packet.kState.xzspeed = 0.0f;
-			add_packet.kState.yspeed = 0.0f;
-			add_packet.kState.isMobile = true;
-			add_packet.kState.isInAir = false;
-			add_packet.kState.rotation = 0.0f;
-			add_packet.kState.lastMove = std::chrono::system_clock::now();
+				pc.kState = clients[c_id].kState;
+				pc.bState = clients[c_id].bState;
+				pc.camAngle = clients[c_id].cameraAngle;
+				pc.camUp = clients[c_id].cameraUp;
 
-			add_packet.bState.attackID = TYPE_RANGED;
-			add_packet.bState.hp = 10;
-			add_packet.bState.isIntelligent = true;
-			add_packet.bState.stateID = IDLE_STATE;
-			add_packet.size = sizeof(add_packet);
-			add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-			add_packet.cam = 0.0f;
-			clients[c_id].do_send(&add_packet);
+				pc.pos = XMFLOAT3(100.0f + 5.0f * nplayer, 0.0f, 100.0f);
+				clients[i].do_send(&pc);
+			}
+			/*
+			for (auto pl : clients) { //새 클라이언트의 정보 전송
+				if (pl._use == false) continue;
+				if (pl._id == c_id) continue;
+
+				SC_ADD_PLAYER_PACKET add_packet;
+				PACKET_TYPE pt;
+				add_packet.id = c_id;
+				add_packet.x = clients[c_id].set.x;
+				add_packet.y = clients[c_id].set.y;
+				add_packet.z = clients[c_id].set.z;
+				strcpy_s(add_packet.name, p->name);
+				add_packet.size = sizeof(add_packet);
+				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+				add_packet.kState.xzspeed = 0.0f;
+				add_packet.kState.yspeed = 0.0f;
+				add_packet.kState.isMobile = true;
+				add_packet.kState.isInAir = false;
+				add_packet.kState.rotation = 0.0f;
+				add_packet.kState.lastMove = std::chrono::system_clock::now();
+
+				add_packet.bState.attackID = TYPE_RANGED;
+				add_packet.bState.hp = 10;
+				add_packet.bState.isIntelligent = true;
+				add_packet.bState.stateID = IDLE_STATE;
+				add_packet.cam = 0.0f;
+				pl.do_send(&add_packet);
+			}
+
+			for (auto pl : clients) { //기존 클라이언트의 정보 전송 (수정중)
+				if (pl._use == false) continue;
+				if (pl._id == c_id) continue;
+
+				SC_ADD_PLAYER_PACKET add_packet;
+				add_packet.id = pl._id;
+				add_packet.x = pl.set.x;
+				add_packet.y = pl.set.y;
+				add_packet.z = pl.set.z;
+				strcpy_s(add_packet.name, p->name);
+				add_packet.size = sizeof(add_packet);
+				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+				add_packet.kState.xzspeed = 0.0f;
+				add_packet.kState.yspeed = 0.0f;
+				add_packet.kState.isMobile = true;
+				add_packet.kState.isInAir = false;
+				add_packet.kState.rotation = 0.0f;
+				add_packet.kState.lastMove = std::chrono::system_clock::now();
+
+				add_packet.bState.attackID = TYPE_RANGED;
+				add_packet.bState.hp = 10;
+				add_packet.bState.isIntelligent = true;
+				add_packet.bState.stateID = IDLE_STATE;
+				add_packet.size = sizeof(add_packet);
+				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
+				add_packet.cam = 0.0f;
+				clients[c_id].do_send(&add_packet);
+			}*/
+			
 		}
 		break;
 	}
@@ -209,8 +272,9 @@ void process_packet(int c_id, char* packet)
 
 		CS_KEYDOWN_PACKET* p = reinterpret_cast<CS_KEYDOWN_PACKET*>(packet);
 		
-		KineticState ks;
-		BionicState bs;
+		KineticState ks=clients[c_id].kState;
+		BionicState bs=clients[c_id].bState;
+		/*
 		ks.yspeed = -9999.0f;
 		ks.isInAir = -9999;
 		ks.isMobile = -9999;
@@ -218,9 +282,12 @@ void process_packet(int c_id, char* packet)
 		bs.hp = -9999;
 		bs.attackID = -9999;
 		bs.isIntelligent = -9999;
+		*/
+
+
 		if (p->key == VK_UP)
 		{
-			ks.rotation = clients[c_id].cameraAngle;
+			ks.rotation = clients[c_id].cameraAngle+180.0f;
 			ks.xzspeed = PLAYER_SPEED;
 			bs.stateID = MOVE_STATE;
 
@@ -231,7 +298,7 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_DOWN)
 		{
-			ks.rotation = clients[c_id].cameraAngle+180.0f;
+			ks.rotation = clients[c_id].cameraAngle +0.0f;
 			ks.xzspeed = PLAYER_SPEED;
 			bs.stateID = MOVE_STATE;
 
@@ -259,11 +326,26 @@ void process_packet(int c_id, char* packet)
 			clients[c_id].kState.xzspeed = PLAYER_SPEED;
 			clients[c_id].bState.stateID = MOVE_STATE;
 		}
+		if (ks.rotation >= 360.0f)
+		{
+			ks.rotation -= 360.0f;
+		}
+		if (ks.rotation < 0.0f)
+		{
+			ks.rotation += 360.0f;
+		}
+		
+		clients[c_id].kState = ks;
+		clients[c_id].bState = bs;
+
+		KineticState ks2 = ks;
+		ks2.isInAir = -9999;
+		ks2.isMobile = -9999;
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
-				pl.send_kinetic_change(c_id, ks);
+				pl.send_kinetic_change(c_id, ks2);
 				pl.send_bionic_change(c_id, bs);
 			}
 		}
@@ -274,18 +356,9 @@ void process_packet(int c_id, char* packet)
 		
 		CS_KEYUP_PACKET* p = reinterpret_cast<CS_KEYUP_PACKET*>(packet);
 
-		KineticState ks;
-		BionicState bs;
-		ks.yspeed = -9999.0f;
-		ks.isInAir = -9999;
-		ks.isMobile = -9999;
-		ks.lastMove = chrono::system_clock::now();
-		ks.rotation = -9999.0f;
+		KineticState ks=clients[c_id].kState;
+		BionicState bs=clients[c_id].bState;
 
-		bs.hp = -9999;
-		bs.attackID = -9999;
-		bs.isIntelligent = -9999;
-		bs.stateID = -9999;
 		cout << "Key up received:  ";
 
 		if (p->key == VK_UP)
@@ -338,11 +411,17 @@ void process_packet(int c_id, char* packet)
 			bs.attackID = TYPE_MELEE;
 			clients[c_id].bState.attackID = TYPE_MELEE;
 		}
+		clients[c_id].kState = ks;
+		clients[c_id].bState = bs;
+		KineticState ks2 = ks;
+		ks2.isInAir = -9999;
+		ks2.isMobile = -9999;
+		ks2.rotation = -9999.0f;
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
-				pl.send_kinetic_change(c_id, ks);
+				pl.send_kinetic_change(c_id, ks2);
 				pl.send_bionic_change(c_id, bs);
 			}
 		}
@@ -353,7 +432,7 @@ void process_packet(int c_id, char* packet)
 		cout << "mouse msg received" << endl;
 		CS_MOUSE_PACKET* p = reinterpret_cast<CS_MOUSE_PACKET*>(packet);
 		
-		BionicState bs;
+		BionicState bs=clients[c_id].bState;
 		bs.hp = -9999;
 		bs.attackID = -9999;
 		bs.isIntelligent = -9999;
@@ -367,6 +446,7 @@ void process_packet(int c_id, char* packet)
 			bs.stateID = IDLE_STATE;
 			clients[c_id].bState.attackID = IDLE_STATE;
 		}
+		clients[c_id].bState = bs;
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
@@ -376,6 +456,53 @@ void process_packet(int c_id, char* packet)
 		}
 		break;
 	}
+	case PACKET_TYPE::CS_CAMERA_CHANGE:
+		cout << "mouse msg received" << endl;
+		CS_CAMERA_PACKET* p = reinterpret_cast<CS_CAMERA_PACKET*>(packet);
+
+		float tly = clients[c_id].cameraUp - p->camUp;
+		if (tly <= 3.0f && tly >= -3.0f)
+		{
+			clients[c_id].cameraUp = tly;
+		}
+		float tangle = clients[c_id].cameraAngle - p->camAngle;
+		if (tangle >= 360.0f)
+		{
+			tangle -= 360.0f;
+		}
+		if (tangle < 0.0f)
+		{
+			tangle += 360.0f;
+		}
+		clients[c_id].cameraAngle = tangle;
+		KineticState ks= clients[c_id].kState;
+
+		ks.rotation = clients[c_id].kState.rotation - p->camAngle;
+		if (ks.rotation < 0.0f)
+		{
+			ks.rotation += 360.0f;
+		}
+		if (ks.rotation >= 360.0f)
+		{
+			ks.rotation -= 360.0f;
+		}
+		
+
+		clients[c_id].kState = ks;
+		KineticState ks2 = ks;
+		ks2.xzspeed = -9999.0f;
+		ks2.yspeed = -9999.0f;
+		ks2.isInAir = -9999;
+		ks2.isMobile = -9999;
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_camera_change(c_id, clients[c_id].cameraAngle, clients[c_id].cameraUp);
+				pl.send_kinetic_change(c_id, ks2);
+			}
+		}
+		
 	}
 }
 
@@ -465,6 +592,7 @@ int main(int argc, char* argv[])
 			else {
 				cout << "GQCS Error on clients[" << key << "]\n";
 				disconnect(key);
+				nplayer -= 1;
 				if (ex_over->_comp_type == PL_SEND) delete ex_over;
 			}
 		}
@@ -498,22 +626,22 @@ int main(int argc, char* argv[])
 			break;
 		}
 		case PL_RECV: {
-			int remain_data = num_bytes + clients[client_id]._prev_remain;
+			int remain_data = num_bytes + clients[key]._prev_remain;
 			char* p = ex_over->_send_buf;
 			while (remain_data > 0) {
 				int packet_size = p[0];
 				if (packet_size <= remain_data) {
-					process_packet(client_id, p);
+					process_packet(static_cast<int>(key), p);
 					p = p + packet_size;
 					remain_data = remain_data - packet_size;
 				}
 				else break;
 			}
-			clients[client_id]._prev_remain = remain_data;
+			clients[key]._prev_remain = remain_data;
 			if (remain_data > 0) {
 				memcpy(ex_over->_send_buf, p, remain_data);
 			}
-			clients[client_id].do_recv();
+			clients[key].do_recv();
 			cout << "Recv Success.\n";
 
 			break;

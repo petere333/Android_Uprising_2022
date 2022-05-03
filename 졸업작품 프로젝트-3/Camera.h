@@ -33,8 +33,10 @@ private:
 	XMFLOAT3 rightVec;
 	XMFLOAT3 upVec;
 
-	float currentUp = 0.0f;
+	
 public:
+	float currentUp = 0.0f;
+
 	CCamera();
 	virtual ~CCamera();
 	virtual void CreateShaderVariables(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
@@ -50,19 +52,20 @@ public:
 	virtual void SetViewportsAndScissorRects(ID3D12GraphicsCommandList* pd3dCommandList);
 	
 	
-	
+	void move(XMFLOAT3 t)
+	{
+		move(t.x, t.y, t.z);
+	}
 	void move(float, float, float);
 	void moveRelative(float, float, float);
-	void rotate(float delta, float, float);
-	void rotateUp(float y) 
-	{ 
-		float tly = currentUp + y;
-
-		if (tly >= -3.0f && tly <= 3.0f)
-		{
-			currentUp = tly;
-			ly = tly + m_xmf3Position.y - 2.0f;
-		}
+	void moveRelative(XMFLOAT3 t)
+	{
+		moveRelative(t.x, t.y, t.z);
+	}
+	void rotate(float, float);
+	void rotateUp() 
+	{
+		ly = currentUp + m_xmf3Position.y - 2.0f;
 	}
 
 	
