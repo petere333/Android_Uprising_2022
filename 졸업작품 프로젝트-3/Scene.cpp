@@ -451,8 +451,6 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* Walz52 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 90.0f, 12.5f);
 	WallMeshHorizontal* Walz53 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 20.0f, 12.5f);
 	WallMeshHorizontal* Walz54 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 12.5f);
-	WallMeshVertical* Fro1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
-	WallMeshVertical* Fro2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -1722,18 +1720,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
-		else if (data[i].type == froom_set1_3)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Fro1);
-		obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == froom_set1_3_h)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Fro2);
-		obj->SetMaterial(0, ppMaterials[11]);
-		}
+
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
@@ -2031,23 +2018,24 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 
 void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed, CCamera* cam)
 {
+	cam->move(players[pID]->GetPosition());
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 
+	
 
 	for (int i = 0; i < players.size(); ++i)
 	{
-
+		
 		if (players[i]->bState.stateID == IDLE_STATE)
 		{
 			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
 			{
 				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
-				players[i]->SetTrackAnimationSet(0, 11);
-				players[i]->lastMove = std::chrono::system_clock::now();
 			}
-			
+			players[i]->SetTrackAnimationSet(0, 11);
+			setObjectLastMove(i);
 		}
 		else if (players[i]->bState.stateID == MOVE_STATE)
 		{
@@ -2057,9 +2045,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
 			}
 			players[i]->SetTrackAnimationSet(0, 20);
-//			players[i]->lastMove = std::chrono::system_clock::now();
-			cam->rotateUp();
 			moveObject(i,cam);
+			
+			setObjectLastMove(i);
+			
 		}
 		else if (players[i]->bState.stateID == ATTACK_STATE)
 		{
@@ -2069,9 +2058,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
 				
 			}
+			
 			players[i]->SetTrackAnimationSet(0, 2);
 			cam->rotateUp();
-			moveObject(i,cam);
+			attack(i);
+			setObjectLastMove(i);
+			for (int j = 0; j < players.size(); ++j)
+			{
+				if (pID != j)
+				setObjectLastMove(j);
+			}
 		}
 		/*
 		if (mouseDown == true)
@@ -2449,6 +2445,11 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 	chrono::duration<double> fromLastMove = chrono::system_clock::now() - players[idx]->lastMove;
 	double time = fromLastMove.count();
 	float fTime = static_cast<float>(time);
+	if (fTime > 0.02f)
+	{
+		fTime = 1.0f/60.0f;
+	}
+	//cout << "from last move " << fTime << endl;
 	bool crash=false;
 	float tx, ty, tz;
 	bool stepOn;
@@ -2463,6 +2464,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			tx = players[idx]->GetPosition().x + fTime * players[idx]->kState.xzspeed * dir.x;
 			ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
 			tz = players[idx]->GetPosition().z + fTime * players[idx]->kState.xzspeed * -dir.z;
+			
 			// 물체가 있는곳에 이동했는가?
 			for (int i = 0; i < nBox; ++i)
 			{
@@ -2476,15 +2478,21 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
-							//players[idx]->kState.x = 0.0f;
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
+							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
-							//dir.x = 0.0f;
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
+							dir.x = 0.0f;
 
 						}
 						crash = true;
@@ -2492,18 +2500,24 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 					}
 					else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
 					{
-						if (dir.z > 0.0f)
+						if (-dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
-							pCamera->move(players[idx]->GetPosition());
-							//dir.z = 0.0f;
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
+							dir.z = 0.0f;
 
 						}
-						else if (dir.z < 0.0f)
+						else if (-dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
-							pCamera->move(players[idx]->GetPosition());
-							//dir.z = 0.0f;
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
+							dir.z = 0.0f;
 
 						}
 						crash = true;
@@ -2514,13 +2528,19 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (players[idx]->yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2555,14 +2575,20 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.x = 0.0f;
 
 						}
@@ -2571,17 +2597,23 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 					}
 					else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
 					{
-						if (dir.z > 0.0f)
+						if (-dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.z = 0.0f;
 
 						}
-						else if (dir.z < 0.0f)
+						else if (-dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.z = 0.0f;
 
 						}
@@ -2593,13 +2625,19 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (players[idx]->yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2624,14 +2662,20 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (dir.x > 0.0f)
 						{
 							players[idx]->SetPosition(stairsWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
 							players[idx]->SetPosition(stairsWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.x = 0.0f;
 
 						}
@@ -2640,17 +2684,23 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 					}
 					else if (players[idx]->GetPosition().z > stairsWorld[i].end.z || players[idx]->GetPosition().z < stairsWorld[i].start.z)
 					{
-						if (dir.z > 0.0f)
+						if (-dir.z > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].start.z - 0.5f);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.z = 0.0f;
 
 						}
-						else if (dir.z < 0.0f)
+						else if (-dir.z < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].end.z + 0.5f);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							dir.z = 0.0f;
 
 						}
@@ -2662,13 +2712,19 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (players[idx]->yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 						}
 						else if (players[idx]->yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].end.y, players[idx]->GetPosition().z);
-							pCamera->move(players[idx]->GetPosition());
+							if (idx == pID)
+							{
+								pCamera->move(players[idx]->GetPosition());
+							}
 							players[idx]->yspeed = 0.0f;
 							players[idx]->isInAir = false;
 						}
@@ -2702,7 +2758,10 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			{
 				XMFLOAT3 og = players[idx]->GetPosition();
 				players[idx]->SetPosition(tx, ty, tz);
-				pCamera->move(tx, ty, tz);
+				if (idx == pID)
+				{
+					pCamera->move(players[idx]->GetPosition());
+				}
 				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 				players[idx]->lastMoveSuccess = true;
 
@@ -2731,9 +2790,10 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			}
 
 		}
-		players[idx]->lastMove = chrono::system_clock::now();
+	cout << "(" << players[idx]->GetPosition().x << ", " << players[idx]->GetPosition().y << ", " << players[idx]->GetPosition().z << ")" << endl;
 	
-		
+	
+	
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
 	// 변경 완료된 위치 값을 클라로 전송.
 	// moveObject 함수는 매 프레임마다 호출되므로 서버에서도 약 0.016초(초당 60프레임 기준)마다 전송해주는게 좋음.
@@ -2865,62 +2925,7 @@ void CScene::recv_packet(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd
 
 }
 
-void CScene::process_packet()
-{
-	
-	unsigned char* packet = g_client.m_recv_over.m_sendbuf;
-	const int type_kinetic = static_cast<int>(PACKET_TYPE::SC_KINETIC_CHANGE);
-	const int type_bionic = static_cast<int>(PACKET_TYPE::SC_BIONIC_CHANGE);
-	switch (packet[1])
-	{
-	case type_kinetic:
-	{
-		SC_KINETIC_PACKET* p = reinterpret_cast<SC_KINETIC_PACKET*>(packet);
-		if (p->kState.isInAir != -9999)
-		{
-			players[0]->kState.isInAir = p->kState.isInAir;
-		}
-		if (p->kState.isMobile != -9999)
-		{
-			players[0]->kState.isMobile = p->kState.isMobile;
-		}
-		if (p->kState.rotation != -9999.0f)
-		{
-			players[0]->kState.rotation = p->kState.rotation;
-		}
-		if (p->kState.yspeed != -9999.0f)
-		{
-			players[0]->kState.yspeed = p->kState.yspeed;
-		}
-		if (p->kState.xzspeed != -9999.0f)
-		{
-			players[0]->kState.xzspeed = p->kState.xzspeed;
-		}
-		printf("client player kinetic state change complete\n");
-		break;
-	}
-	case type_bionic:
-	{
-		SC_BIONIC_PACKET* p = reinterpret_cast<SC_BIONIC_PACKET*>(packet);
-		if (p->bState.attackID != -9999)
-		{
-			players[0]->bState.attackID = p->bState.attackID;
-		}
-		if (p->bState.stateID != -9999)
-		{
-			players[0]->bState.stateID = p->bState.stateID;
-		}
-		if (p->bState.isIntelligent != -9999)
-		{
-			players[0]->bState.isIntelligent = p->bState.isIntelligent;
-		}
-		if (p->bState.hp != -9999)
-		{
-			players[0]->bState.hp = p->bState.hp;
-		}
-	}
-	}
-}
+
 
 void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
@@ -2940,10 +2945,11 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		{
 			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
 			addPlayer(pd3dDevice, pd3dCommandList, pos);
-			//SetplayerID(p_login.id);
-			pID = p_login.id;
-			//CGameFramework::Instance().SetPlayerid(p_login.id);
 
+			pID = p_login.id;
+			
+			
+			
 			cout << "\nPlayer ID : " << p_login.id << "\n" << endl;
 			cout << "x,y,z = " << p_login.x << p_login.y << p_login.z << "\n" << endl;
 		}
@@ -2958,9 +2964,9 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		XMFLOAT3 pos = XMFLOAT3(p_new.pos.x, p_new.pos.y, p_new.pos.z);
 		KineticState k = p_new.kState;
 		BionicState b = p_new.bState;
-
-		players[pID]->kState = k;
-		players[pID]->bState = b;
+		
+		players[p_new.id]->kState = k;
+		players[p_new.id]->bState = b;
 		pCamera->angle = p_new.camAngle;
 		pCamera->currentUp = p_new.camUp;
 		//XMFLOAT3 pos = XMFLOAT3{ p_new.x, p_new.y, p_new.z };
@@ -2982,30 +2988,31 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_KINETIC_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 
+		int ID = p.c_id;
 		if (p.kState.isInAir != -9999)
 		{
-			players[pID]->kState.isInAir = p.kState.isInAir;
+			players[ID]->kState.isInAir = p.kState.isInAir;
 		}
 		if (p.kState.isMobile != -9999)
 		{
-			players[pID]->kState.isMobile = p.kState.isMobile;
+			players[ID]->kState.isMobile = p.kState.isMobile;
 		}
 		if (p.kState.rotation != -9999.0f)
 		{
-			float tangle = -p.kState.rotation + (players[pID]->kState.rotation);
-			players[pID]->kState.rotation = -p.kState.rotation;
+			float tangle = -p.kState.rotation + (players[ID]->kState.rotation);
+			players[ID]->kState.rotation = -p.kState.rotation;
 
 			
 			
-			players[pID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
+			players[ID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
 		}
 		if (p.kState.yspeed != -9999.0f)
 		{
-			players[pID]->kState.yspeed = p.kState.yspeed;
+			players[ID]->kState.yspeed = p.kState.yspeed;
 		}
 		if (p.kState.xzspeed != -9999.0f)
 		{
-			players[pID]->kState.xzspeed = p.kState.xzspeed;
+			players[ID]->kState.xzspeed = p.kState.xzspeed;
 		}
 		
 		printf("client player kinetic state change complete\n");
@@ -3015,21 +3022,24 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_BIONIC_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
+
+		int id = p.c_id;
+
 		if (p.bState.attackID != -9999)
 		{
-			players[0]->bState.attackID = p.bState.attackID;
+			players[id]->bState.attackID = p.bState.attackID;
 		}
 		if (p.bState.stateID != -9999)
 		{
-			players[0]->bState.stateID = p.bState.stateID;
+			players[id]->bState.stateID = p.bState.stateID;
 		}
 		if (p.bState.isIntelligent != -9999)
 		{
-			players[0]->bState.isIntelligent = p.bState.isIntelligent;
+			players[id]->bState.isIntelligent = p.bState.isIntelligent;
 		}
 		if (p.bState.hp != -9999)
 		{
-			players[0]->bState.hp = p.bState.hp;
+			players[id]->bState.hp = p.bState.hp;
 		}
 		printf("client player bionic state change complete\n");
 		break;
@@ -3038,19 +3048,22 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_CAMERA_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		pCamera->angle = p.camAngle;
-		pCamera->currentUp = p.camUp;
+		if (p.c_id == pID)
+		{
+			pCamera->angle = p.camAngle;
+			pCamera->currentUp = p.camUp;
 
-		XMFLOAT3 og = players[pID]->GetPosition();
-		float r = players[pID]->kState.rotation;
+			XMFLOAT3 og = players[pID]->GetPosition();
+			float r = players[pID]->kState.rotation;
 
-		float dangle = (p.camAngle - 270.0f)-r;
-		pCamera->rotate(og.x, og.z);
-		pCamera->rotateUp();
-		pCamera->GenerateViewMatrix();
-		//players[pID]->Rotate(0.0f, -dangle, 0.0f);
+			float dangle = (p.camAngle - 270.0f) - r;
+			pCamera->rotate(og.x, og.z);
+			pCamera->rotateUp();
+			pCamera->GenerateViewMatrix();
+			//players[pID]->Rotate(0.0f, -dangle, 0.0f);
 
-		printf("client player camera transform complete\n");
+			printf("client player camera transform complete\n");
+		}
 		break;
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:

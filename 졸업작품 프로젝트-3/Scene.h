@@ -156,7 +156,7 @@ public:
 	std::vector<CGameObject*>			particles;
 	std::vector<CGameObject*>			enemies;
 
-	int pID;
+	int pID=-9999;
 
 	int m_nDecos = 0;
 	CGameObject** m_ppDecos = NULL;
@@ -228,7 +228,7 @@ public: // client to server
 	virtual void recv_packet(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}
 
-	virtual void process_packet();
+	
 
 public:
 	void ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*);

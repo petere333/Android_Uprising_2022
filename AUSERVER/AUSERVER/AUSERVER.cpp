@@ -4,7 +4,6 @@
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
 constexpr int MAXUSER = 10; //최대 접속 유저
-int nplayer = 0;
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 
 class OVER_EXP {
@@ -76,17 +75,17 @@ public:
 		WSASend(_socket, &s_data->_wsabuf, 1, 0, 0, &s_data->_over, 0);
 	}
 
-	void send_login_info()
+	void send_login_info(int cid, int pid)
 	{
 		
 		//Server to Client
 		SC_LOGIN_INFO_PACKET info;
 		PACKET_TYPE pt;
-		info.id = _id; //client id
+		info.id = cid; //client id
 		//info.id = nplayer;
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
-		info.x = 100.0f+ nplayer*5.0f;
+		info.x = 100.0f+ pid*5.0f;
 		info.y = 0.0f;
 		info.z = 100.0f;
 		info.isLogin = true;
@@ -107,7 +106,7 @@ public:
 		cameraUp = 0.0f;
 
 		do_send(&info);
-		nplayer += 1;
+		
 	}
 
 	void send_kinetic_change(int c_id, KineticState kState);
@@ -162,21 +161,54 @@ int get_new_player_id()
 void process_packet(int c_id, char* packet)
 {
 	switch ((PACKET_TYPE)packet[1]) {
-	case PACKET_TYPE::CS_LOGIN: {
+	case PACKET_TYPE::CS_LOGIN:
+	{
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
-		if (nplayer < 2)
+
+		
+
+		if (c_id < 3)
 		{
-			
-			clients[c_id].send_login_info();
+			//새로 접속한 플레이어에 현재 접속한 총 인원만큼 플레이어 객체 생성.
+			for (int i = 0; i <= c_id; ++i)
+			{
+				clients[c_id].send_login_info(c_id, i);
+			}
 			cout << "client add order received" << endl;
 
-			for (int i = 0; i < nplayer; ++i)
+			//새로 접속한 플레이어에게만 기존 접속자들+본인의 로그인 패킷 전송
+			for(int i=0;i<=c_id;++i) // 모든 접속자의 정보 전달
 			{
 				if (clients[i]._use == false)
 				{
 					continue;
 				}
+				SC_ADD_PLAYER_PACKET pc;
+
+				pc.id = c_id;
+				strcpy_s(pc.name, p->name);
+				pc.size = sizeof(pc);
+				pc.type = PACKET_TYPE::SC_ADD_PLAYER;
+				pc.kState = clients[i].kState;
+				pc.bState = clients[i].bState;
+				pc.camAngle = clients[i].cameraAngle;
+				pc.camUp = clients[i].cameraUp;
+				pc.pos = XMFLOAT3(100.0f + 5.0f * i, 0.0f, 100.0f);
+
+				clients[c_id].do_send(&pc);
+			}
+
+			
+			//기존 플레이어에게 새 플레이어 추가를 명령하는 패킷 전송,
+			for (int i = 0; i <= c_id-1; ++i)
+			{
+				
+				if (clients[i]._use == false)
+				{
+					continue;
+				}
+				clients[i].send_login_info(i, c_id);
 				SC_ADD_PLAYER_PACKET pc;
 				//pc.id = clients[i]._id;
 				pc.id = i;
@@ -202,7 +234,7 @@ void process_packet(int c_id, char* packet)
 				pc.camAngle = clients[c_id].cameraAngle;
 				pc.camUp = clients[c_id].cameraUp;
 
-				pc.pos = XMFLOAT3(100.0f + 5.0f * nplayer, 0.0f, 100.0f);
+				pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
 				clients[i].do_send(&pc);
 			}
 			/*
@@ -268,7 +300,7 @@ void process_packet(int c_id, char* packet)
 	}
 	case PACKET_TYPE::CS_KEYDOWN: 
 	{
-		cout << "Key down received" << endl;
+		cout << "Key down received from " <<c_id<< endl;
 
 		CS_KEYDOWN_PACKET* p = reinterpret_cast<CS_KEYDOWN_PACKET*>(packet);
 		
@@ -359,11 +391,11 @@ void process_packet(int c_id, char* packet)
 		KineticState ks=clients[c_id].kState;
 		BionicState bs=clients[c_id].bState;
 
-		cout << "Key up received:  ";
+		cout << "Key up received: from "<<c_id;
 
 		if (p->key == VK_UP)
 		{
-			cout << "Code: " << p->key << endl;
+			cout << " Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			bs.stateID = IDLE_STATE;
 
@@ -429,7 +461,7 @@ void process_packet(int c_id, char* packet)
 	}
 	case PACKET_TYPE::CS_MOUSE:
 	{
-		cout << "mouse msg received" << endl;
+		//cout << "mouse msg received" << endl;
 		CS_MOUSE_PACKET* p = reinterpret_cast<CS_MOUSE_PACKET*>(packet);
 		
 		BionicState bs=clients[c_id].bState;
@@ -457,7 +489,7 @@ void process_packet(int c_id, char* packet)
 		break;
 	}
 	case PACKET_TYPE::CS_CAMERA_CHANGE:
-		cout << "mouse msg received" << endl;
+		//cout << "mouse msg received" << endl;
 		CS_CAMERA_PACKET* p = reinterpret_cast<CS_CAMERA_PACKET*>(packet);
 
 		float tly = clients[c_id].cameraUp - p->camUp;
@@ -592,7 +624,7 @@ int main(int argc, char* argv[])
 			else {
 				cout << "GQCS Error on clients[" << key << "]\n";
 				disconnect(key);
-				nplayer -= 1;
+				
 				if (ex_over->_comp_type == PL_SEND) delete ex_over;
 			}
 		}
@@ -642,7 +674,7 @@ int main(int argc, char* argv[])
 				memcpy(ex_over->_send_buf, p, remain_data);
 			}
 			clients[key].do_recv();
-			cout << "Recv Success.\n";
+			//cout << "Recv Success.\n";
 
 			break;
 		}
