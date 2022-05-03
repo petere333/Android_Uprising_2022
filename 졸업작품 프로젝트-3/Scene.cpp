@@ -2162,11 +2162,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 
-		if (enemies[i]->eState.currHP <= 0)
+		if (enemies[i]->bState.hp <= 0)
 		{
-			enemies[i]->eState.id = DEATH_STATE;
+			enemies[i]->bState.stateID = DEATH_STATE;
 		}
-		if (enemies[i]->eState.id == IDLE_STATE)
+		if (enemies[i]->bState.stateID == IDLE_STATE)
 		{
 			if (enemies[i]->m_pChild != enemyModels[0]->m_pModelRootObject)
 			{
@@ -2175,7 +2175,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				enemies[i]->SetTrackAnimationSet(0, 0);
 			}
 		}
-		else if (enemies[i]->eState.id == DEATH_STATE)
+		else if (enemies[i]->bState.stateID == DEATH_STATE)
 		{
 
 			if (enemies[i]->isDead == false)
@@ -3066,6 +3066,17 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		}
 		break;
 	}
+	case PACKET_TYPE::SC_ATTACK:
+	{
+		SC_ATTACK_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+		cout << "attack to target" << endl;
+		createParticles(100, XMFLOAT3(p.x, p.y, p.z));
+		if (p.target != -1)
+		{
+			enemies[p.target]->bState.hp -= 1;
+		}
+	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
 		//수정중
 		break;
@@ -3089,7 +3100,7 @@ void CScene::attack(int idx)
 		printf("time elapsed from last shot : %f\n", fTime);
 		setObjectLastAttack(idx);
 
-		float rad = XMConvertToRadians(players[idx]->currentRotation.y);
+		float rad = XMConvertToRadians(players[idx]->kState.rotation-270.0f);
 		//printf("발사 각도 %f  ", players[idx]->currentRotation.y);
 		XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
 
@@ -3468,16 +3479,27 @@ void CScene::attack(int idx)
 				printf("(Something)\n");
 			}*/
 		}
-		else if (type == 2)
+
+		CS_ATTACK_PACKET p;
+		p.type = PACKET_TYPE::CS_ATTACK;
+		p.size = sizeof(CS_ATTACK_PACKET);
+		p.target = target;
+		p.x = targetPos.x;
+		p.y = targetPos.y;
+		p.z = targetPos.z;
+		if (type == 2)
 		{
-			//또한 서버는 총알이 적에 맞았을 경우 target번째 적의 체력이 n 만큼 감소했다고 클라한테 알려줘야한다.
-			//여기서도 패킷 하나 더만들어 보내자.
-			enemies[target]->eState.currHP -= 1;
+			p.isAlive = true;
 		}
+		else if (type == 1)
+		{
+			p.isAlive = false;
+		}
+		SendPacket(&p);
 
 		// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
 		// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
-		createParticles(100, targetPos);
+		createParticles(50, targetPos);
 		// 그니까, createParticles 함수는 서버의 전담이 아니다.
 	}
 
@@ -3638,6 +3660,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		direct = Vector3::Normalize(direct);
 		
 		CGameObject* obj = new CGameObject(1);
+		obj->timeCreated = std::chrono::system_clock::now();
 		obj->SetMaterial(0, ppMaterials[33]);
 		obj->speed = 0.1f;
 		obj->direction = direct;

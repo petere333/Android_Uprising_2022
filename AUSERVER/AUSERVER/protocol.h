@@ -37,6 +37,7 @@ enum class PACKET_TYPE : short
 	CS_KEYUP,
 	CS_MOUSE,
 	CS_CAMERA_CHANGE,
+	CS_ATTACK,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -45,7 +46,7 @@ enum class PACKET_TYPE : short
 	SC_KINETIC_CHANGE,
 	SC_BIONIC_CHANGE,
 	SC_CAMERA_CHANGE,
-	
+	SC_ATTACK,
 };
 
 // client to server packet
@@ -124,6 +125,17 @@ struct CS_MOVE_PACKET {
 
 };
 
+struct CS_ATTACK_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE	type;
+	int target;
+	bool isAlive;
+	float x;
+	float y;
+	float z;
+};
+
 //server to client packet
 struct SC_LOGIN_INFO_PACKET {
 	unsigned char size;
@@ -182,6 +194,15 @@ struct SC_UPDATE_PACKET { // ¼öÁ¤Áß
 	int CX[MAX_PLAYER];
 	int CY[MAX_PLAYER];
 	int CZ[MAX_PLAYER];
+};
+
+struct SC_ATTACK_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+
+	float x, y, z;
+	int target;
 };
 
 #pragma pack (pop)

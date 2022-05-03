@@ -112,6 +112,7 @@ public:
 	void send_kinetic_change(int c_id, KineticState kState);
 	void send_bionic_change(int c_id, BionicState state);
 	void send_camera_change(int c_id, float, float);
+	void send_attack_info(int c_id, float x, float, float, int);
 	
 };
 
@@ -150,6 +151,18 @@ public:
 	 do_send(&p);
  }
 
+ void SESSION::send_attack_info(int c_id, float x, float y, float z, int tg)
+ {
+	 SC_ATTACK_PACKET p;
+	 p.size = sizeof(SC_ATTACK_PACKET);
+	 p.type = PACKET_TYPE::SC_ATTACK;
+	 p.target = tg;
+	 p.x = x;
+	 p.y = y;
+	 p.z = z;
+
+	 do_send(&p);
+ }
 int get_new_player_id()
 {
 	for (int i = 0; i < MAXUSER; ++i)
@@ -489,6 +502,7 @@ void process_packet(int c_id, char* packet)
 		break;
 	}
 	case PACKET_TYPE::CS_CAMERA_CHANGE:
+	{
 		//cout << "mouse msg received" << endl;
 		CS_CAMERA_PACKET* p = reinterpret_cast<CS_CAMERA_PACKET*>(packet);
 
@@ -507,7 +521,7 @@ void process_packet(int c_id, char* packet)
 			tangle += 360.0f;
 		}
 		clients[c_id].cameraAngle = tangle;
-		KineticState ks= clients[c_id].kState;
+		KineticState ks = clients[c_id].kState;
 
 		ks.rotation = clients[c_id].kState.rotation - p->camAngle;
 		if (ks.rotation < 0.0f)
@@ -518,7 +532,7 @@ void process_packet(int c_id, char* packet)
 		{
 			ks.rotation -= 360.0f;
 		}
-		
+
 
 		clients[c_id].kState = ks;
 		KineticState ks2 = ks;
@@ -534,7 +548,34 @@ void process_packet(int c_id, char* packet)
 				pl.send_kinetic_change(c_id, ks2);
 			}
 		}
+		break;
+	}
+	case PACKET_TYPE::CS_ATTACK:
+	{
+		CS_ATTACK_PACKET* p = reinterpret_cast<CS_ATTACK_PACKET*>(packet);
+		cout << "attack order" << endl;
+		float tx = p->x;
+		float ty = p->y;
+		float tz = p->z;
+		int tg;
+		if (p->isAlive == false)
+		{
+			tg = -1;
+		}
+		else
+		{
+			tg = p->target;
+		}
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_attack_info(c_id, tx, ty, tz, tg);
+			}
+		}
 		
+	}
+
 	}
 }
 
