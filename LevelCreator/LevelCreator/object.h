@@ -15,209 +15,212 @@
 #define CHAIR 9
 
 
-#define floor 12000
-#define vWalls 2001
-#define hWalls 2002
-#define vWalls_1 2003
-#define hWalls_1 2004
+#define floor 10000 // 1-1~4를 아우르는 구간들
+#define vWalls 10001 // 공통
+#define hWalls 10002 // 공통
+#define vWalls_1 10003 // 공통
+#define hWalls_1 10004 // 공통
 
-#define vWalls_S 2005
+#define vWalls_S 10005 // 공통
 
-#define vWalls_1S 2006
-#define vWalls_1SM 2007
-#define vWalls_SM 2008 // 오른쪽 일부 벽 중단
+#define vWalls_1S 10006 // 공통
+#define vWalls_1SM 10007 // 공통
+#define vWalls_SM 10008 // 공통
 
-#define vWalls_H 2009 // 양옆 상단
-#define hWalls_H 2010 // 앞뒤 상단
+#define vWalls_H 10009 // 공통
+#define hWalls_H 10010 // 공통
+//////////////////////////////////////////
 
-#define froom_set 2011
-#define froom_set_H 2012
-#define floor_T 12001
-#define floor_Se 12002
-
-
-
-#define loadwall_l 2013
-#define loadwall_m 2014 // 두번째방으로 향하는 통로 벽
-#define loadwall_h 2015
-
-#define Se_room_L1_1 2016
-#define Se_room_L1_2 2017 // 두번째 방 왼쪽벽2
-#define Se_room_L1_3 2018
-
-#define Se_room_R1_1 2019
-#define Se_room_R1_2 2020
-#define Se_room_R1_3 2021 // 두번째 방 왼쪽벽1
+#define froom_set 10011 // 공통
+#define froom_set1_3 13001 // 1-3
+#define froom_set1_3_h 13002 // 1-3
+#define froom_set_H 10012 // 공통
+#define floor_T 14001 // 1-4
+#define floor_Se 20000 // 2 공통
 
 
-#define Se_room_RSL 2022
-#define Se_room_RSM 2023
-#define Se_room_RSH 2024 // 두번째방 오른쪽 벽
 
-#define Se_room_FBL 2025
-#define Se_room_FBM 2026
-#define Se_room_FBH 2027 // 두번째 방 앞뒤 벽
+#define loadwall_l 14013  // 1-4
+#define loadwall_m 14014 // 두번째방으로 향하는 통로 벽 // 1-4
+#define loadwall_h 14015 // 1-4
 
-#define Se_Busok1_1 2028
-#define Se_Busok1_2 2029 // 두번째방 부속벽1
-#define Se_Busok1_3 2030
+#define Se_room_L1_1 20001 // 2 공통
+#define Se_room_L1_2 20002 // 두번째 방 왼쪽벽2 // 2공통
+#define Se_room_L1_3 20003 // 2공통
 
-#define Se_Busok2_1 2031
-#define Se_Busok2_2 2032
-#define Se_Busok2_3 2033
+#define Se_room_R1_1 20004 // 2공통
+#define Se_room_R1_2 20005 // 2공통
+#define Se_room_R1_3 20006 // 두번째 방 왼쪽벽1 2공통
 
-#define Se_Busok3_1 2034
-#define Se_Busok3_2 2035
-#define Se_Busok3_3 2036
 
-#define Se_Busok4_1 2037
-#define Se_Busok4_2 2038
-#define Se_Busok4_3 2039
+#define Se_room_RSL 20007 // 2공통
+#define Se_room_RSM 20008 // 2공통
+#define Se_room_RSH 20009 // 두번째방 오른쪽 벽 //2공통
+
+#define Se_room_FBL 20010 // 2공통
+#define Se_room_FBM 20011 // 2공통
+#define Se_room_FBH 20012 // 2공통 두번째 방 앞뒤 벽
+
+#define Se_Busok1_1 20013 // 2공통
+#define Se_Busok1_2 20014 // 2공통 두번째방 부속벽1
+#define Se_Busok1_3 20015 // 2공통
+
+#define Se_Busok2_1 20016 // 2공통
+#define Se_Busok2_2 20017 // 2공통
+#define Se_Busok2_3 20018 // 2공통
+
+#define Se_Busok3_1 20019 // 2공통
+#define Se_Busok3_2 20020 // 2공통 
+#define Se_Busok3_3 20021 // 2공통
+
+#define Se_Busok4_1 20022 // 2공통 
+#define Se_Busok4_2 20023 // 2공통
+#define Se_Busok4_3 20024 // 2공통
 
 #define Cont1_1 11
 #define Frs_H 123456*3
 
 
-#define BatSet1 2040
-#define BatSet2 2041
-#define BatSet3 2042
-
-#define Bat_FB_set1 2043
-#define Bat_FB_set2 2044
-
-
-#define BatSet_1 2045
-#define BatSet_2 2046
-
-#define Bat_FB_101 2047
-#define Bat_FB_102 2048
-
-#define SeBatSet1 2049
-#define SeBatSet3 2050
-
-#define SeBat_FB_set1 2051
-#define SeBat_FB_set2 2052
-
-#define SeBatSet_1 2053
-#define SeBatSet_2 2054
-
-#define SeBat_FB_101 2055
-#define SeBat_FB_102 2056
+#define BatSet1 10013 // 1공통
+#define BatSet2 10014 // 1공통
+#define BatSet3 10015 // 1 공통
+ 
+#define Bat_FB_set1 10016 // 1공통
+#define Bat_FB_set2 10017 // 1공통
 
 
-#define M_Contain 5010
-#define J_Contain 5020
-#define T_Contains 5030
+#define BatSet_1 10018 // 1공통
+#define BatSet_2 10019// 1공통
 
-#define B_Contain 5040
+#define Bat_FB_101 10020 // 1공통
+#define Bat_FB_102 10021 // 1공통
+
+#define SeBatSet1 20025 // 2공통
+#define SeBatSet3 20026 // 2공통
+
+#define SeBat_FB_set1 20027 // 2공통
+#define SeBat_FB_set2 20028 // 2공통
+
+#define SeBatSet_1 20029 // 2공통
+#define SeBatSet_2 20030 // 2공통
+
+#define SeBat_FB_101 20031 // 2공통
+#define SeBat_FB_102 20032 // 2공통
+
+
+#define M_Contain 12000 // 1-2
+#define J_Contain 12001 // 1-2
+#define T_Contains 13003 // 1-3
+
+#define B_Contain 22000 // 2-2
 #define Stairs1 25000
-#define Shell 50000
+#define Shell 30000 // 3공통
 
 
-#define GyeDans1 25020
-#define GyeDans2 25040
-#define R_GyeDan1 25060
+#define GyeDans1 13004 // 1-3
+#define GyeDans2 13005 // 1-3
+#define R_GyeDan1 22001 // 2-2
 
-#define Frs_Pons1 2060
-#define Frs_Pons2 2070
-#define adds_beok1 2080
-#define adds_beok2 2090
-#define B_Door 35000
+#define Frs_Pons1 12002// 1-2
+#define Frs_Pons2 12003 // 1-2
+#define adds_beok1 14000 // 1-4
+#define adds_beok2 14001 // 1-4
+#define B_Door 23000 // 2-3
 
-#define Add_squre1 75000
+#define Add_squre1 30001 // 3공통
 
-#define Add_squre2 75100
-#define SeAddings1 2200
-#define SeAddings2 2300
-#define Heaters1 90000
-#define F_Stages 95001
+#define Add_squre2 30002 // 3공통
+#define SeAddings1 23001 // 2-3
+#define SeAddings2 23002 // 2-3
+#define Heaters1 30003 // 
+#define F_Stages 13006
 
-#define Factory_tool1 505
-#define Factory_tool2 510
-#define Factory_tool3 515
-#define Factory_tool4 520
-#define Factory_tool5 525
-#define Factory_tool6 530
-#define Factory_tool7 535
-#define Factory_tool8 540
-#define Factory_tool9 545
-#define Factory_tool10 550
-#define Factory_tool11 555
-#define Factory_tool12 560
-#define Factory_tool13 565
-#define Factory_tool14 570
-#define Factory_tool15 575
-#define Factory_tool16 580
-#define Factory_tool17 582
-#define Factory_tool18 584
-#define Factory_tool19 586
-#define Factory_tool20 588
+#define Factory_tool1 12505 // 1-2
+#define Factory_tool2 22510 // 2-2
+#define Factory_tool3 22515 // 2-2
+#define Factory_tool4 22520 // 2-2 
+#define Factory_tool5 14525 // 1-4
+#define Factory_tool6 11530 // 1-1
+#define Factory_tool7 14535 // 1-4
+#define Factory_tool8 11540 // 1-1
+#define Factory_tool9 14545 // 1-4
+#define Factory_tool10 14550 // 1-4
+#define Factory_tool11 14555 // 1-4
+#define Factory_tool12 13560 // 1-3
+#define Factory_tool13 13565 // 1-3
+#define Factory_tool14 13570 // 1-3
+#define Factory_tool15 14575 // 1-4
+#define Factory_tool16 21580 // 2-1
+#define Factory_tool17 23582 // 2-3
+#define Factory_tool18 23584 // 2-3
+#define Factory_tool19 23586 // 2-3
+#define Factory_tool20 23588 // 2-3
 
-#define Wallz1 2100
-#define Wallz2 2102
-#define Wallz3 2104
-#define Wallz4 2106
-#define Wallz5 2108
-#define Wallz6 2110
-#define Wallz7 2112
-#define Wallz8 2114
-#define Wallz9 2116
-#define Wallz10 2118
-#define Chagsal1 2120
-#define Chagsal2 2122
-#define Pyo 2124
-#define GamOk 2126
-#define GamOk2 2128
-#define GamOk_Shell 2130
-#define Wallz11 2132
-#define Wallz12 2134
-#define Wallz13 2136
-#define Wallz14 2138
-#define Wallz15 2140
-#define Wallz16 2142
-#define Wallz17 2144
-#define Wallz18 2146
-#define Kidong 2148
-#define KidongMom 2150
-#define Wallz19 2152
-#define Wallz20 2154
-#define Wallz21 2156
-#define Wallz22 2158
-#define A_Wallz1 2160
-#define A_Wallz2 2162
-#define A_Wallz3 2164
-#define A_Wallz4 2166
-#define S_Wallz1 2168
-#define S_Wallz2 2170
-#define S_Wallz3 2172
-#define S_Wallz4 2174
-#define S_Wallz5 2176
-#define S_Wallz6 2178
-#define S_Wallz7 2180
-#define S_Wallz8 2182
+#define Wallz1 11100 // 1-1
+#define Wallz2 11102 // 1-1
+#define Wallz3 11104 // 1-1
+#define Wallz4 13106 // 1-3
+#define Wallz5 13108 // 1-3
+#define Wallz6 12110 // 1-2
+#define Wallz7 12112 // 1-2
+#define Wallz8 11114// 1-1
+#define Wallz9 11116 // 1-1
+#define Wallz10 11118 // 1-1
+#define Chagsal1 11120 // 1-1
+#define Chagsal2 11122 // 1-1
+#define Pyo 11124 // 1-1
+#define GamOk 14126 // 1-4 
+#define GamOk2 14128 // 1-4 
+#define GamOk_Shell 14130 // 1-4
+#define Wallz11 14132 // 1-1
+#define Wallz12 11134 // 1-1
+#define Wallz13 11136 // 1-1
+#define Wallz14 11138 // 1-1
+#define Wallz15 14140 // 1-4
+#define Wallz16 14142 // 1-4
+#define Wallz17 14144 // 1-4
+#define Wallz18 14146 // 1-4
+#define Kidong 11148 // 1-1
+#define KidongMom 11150 // 1-1
+#define Wallz19 14152 // 1-4
+#define Wallz20 14154 // 1-4
+#define Wallz21 14156 // 1-4
+#define Wallz22 14158 // 1-4
+#define A_Wallz1 14160 // 1-4
+#define A_Wallz2 14162 // 1-4
+#define A_Wallz3 14164 // 1=4
+#define A_Wallz4 14166 // 1-4
+#define S_Wallz1 21168 // 2-1
+#define S_Wallz2 21170 // 2-1
+#define S_Wallz3 21172 // 2-1
+#define S_Wallz4 21174 // 2-1
+#define S_Wallz5 21176 // 2-1
+#define S_Wallz6 21178 // 2-1
+#define S_Wallz7 21180 // 2-1
+#define S_Wallz8 21182 // 2-1
 
-#define S_Wallz9 2184
-#define S_Wallz10 2186
+#define S_Wallz9 2184 //
+#define S_Wallz10 2186 //
 #define S_Wallz11 2188
 #define S_Wallz12 2190
 
-#define S_Wallz13 2192
-#define S_Wallz14 2194
+#define S_Wallz13 23192 // 2-3
+#define S_Wallz14 23194 // 2-3
 
-#define S_Wallz15 2196
-#define S_Wallz16 2198
+#define S_Wallz15 23196 // 2-3
+#define S_Wallz16 23198 // 2-3
 
-#define S_Wallz17 2201
-#define S_Wallz18 2203
-#define S_Wallz19 2205
-#define S_Wallz20 2207
-#define S_Wallz21 2209
-#define S_Wallz22 2211
-#define S_Wallz23 2213
-#define S_Wallz24 2215
+#define S_Wallz17 23201 // 2-3
+#define S_Wallz18 23203 // 2-3
+#define S_Wallz19 14205 // 1-4
+#define S_Wallz20 23207 // 2-3
+#define S_Wallz21 23209 // 2-3
+#define S_Wallz22 23211 // 2-3
+#define S_Wallz23 23213 // 2-3
+#define S_Wallz24 23215 // 2-3
 
-#define S_Wallz25 2217
-#define S_Wallz26 2219
+#define S_Wallz25 21217 // 2-1
+#define S_Wallz26 21219 // 2-1
 
 
 // #define S_Wallz20 2207

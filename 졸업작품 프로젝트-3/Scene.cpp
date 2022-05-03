@@ -451,6 +451,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	WallMeshHorizontal* Walz52 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 90.0f, 12.5f);
 	WallMeshHorizontal* Walz53 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 20.0f, 12.5f);
 	WallMeshHorizontal* Walz54 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 12.5f);
+	WallMeshVertical* Fro1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
+	WallMeshVertical* Fro2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
 
 	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
 	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
@@ -1720,7 +1722,18 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
-
+		else if (data[i].type == froom_set1_3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Fro1);
+		obj->SetMaterial(0, ppMaterials[12]);
+		}
+		else if (data[i].type == froom_set1_3_h)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Fro2);
+		obj->SetMaterial(0, ppMaterials[11]);
+		}
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);

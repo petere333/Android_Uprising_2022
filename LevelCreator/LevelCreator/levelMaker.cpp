@@ -39,12 +39,12 @@ int main()
 
 	for (int i = 0; i < gList.size(); ++i)
 	{
-//		writeStair(sf, gList[i]);
+		//		writeStair(sf, gList[i]);
 	}
 
 	fclose(file);
 	fclose(bf);
-//	fclose(sf);
+	//	fclose(sf);
 	return 0;
 }
 
@@ -75,7 +75,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object floors_Se;
 	floors_Se.location = f3(800.0f, 0.0f, 0.0f);
 	floors_Se.rotation = f3(0.0f, 0.0f, 0.0f);
-	floors_Se.type = floor_Se;
+	floors_Se.type = floor_Se; // 2번째
 
 
 	list.push_back(floors);
@@ -301,7 +301,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Barigate1.location = f3(828.125f, 2.5f, 290.0f);
 	Barigate1.rotation = f3(0.0f, 0.0f, 0.0f);
-	Barigate1.type = S_Wallz25;
+	Barigate1.type = S_Wallz25; // 2번째
 
 	Barigate2.location = f3(859.375f, 2.5f, 398.0f);
 	Barigate2.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -346,7 +346,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Addos_5.location = f3(1265.0f, 0.0f, 430.0f);
 	Addos_5.rotation = f3(0.0f, 0.0f, 0.0f);
 	Addos_5.type = S_Wallz24;
-	
+
 
 	Add_Cheol1.location = f3(533.0f, 0.0f, 300.0f);
 	Add_Cheol1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -376,7 +376,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_Dedo10.location = f3(1265.0f, 5.0f, 430.0f);
 	Se_Dedo10.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_Dedo10.type = S_Wallz18;
-	
+
 
 	nanuki1_1.location = f3(1050.0f, 0.0f, 5.0f);
 	nanuki1_1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -467,7 +467,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	addes_8.location = f3(550.0f, 5.0f, 500.0f);
 	addes_8.rotation = f3(0.0f, 0.0f, 0.0f);
 	addes_8.type = A_Wallz4;
-	
+
 	addes_1.location = f3(450.0f, 0.0f, 305.0f);
 	addes_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	addes_1.type = adds_beok1;
@@ -478,7 +478,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	addes_3.location = f3(450.0f, 0.0f, 300.0f);
 	addes_3.rotation = f3(0.0f, 0.0f, 0.0f);
-	addes_3.type = A_Wallz1;
+	addes_3.type = A_Wallz1; 
 
 	addes_4.location = f3(450.0f, 5.0f, 300.0f);
 	addes_4.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -489,7 +489,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Dollp1.type = Wallz19;
 
 	Dollp2.location = f3(525.0f, 5.0f, 400.0f);
-	Dollp2.rotation = f3(0.0f,0.0f,0.0f);
+	Dollp2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Dollp2.type = Wallz20;
 
 	Dollp3.location = f3(525.0f, 0.0f, 407.5f);
@@ -540,7 +540,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Kidong_batchim1.location = f3(240.0f, 0.65f, 110.0f);
 	Kidong_batchim1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Kidong_batchim1.type = Kidong;
-	
+
 	Kidong_batchim2.location = f3(240.0f, 21.85f, 110.0f);
 	Kidong_batchim2.rotation = f3(0.0f, 0.0f, 0.0f);
 	Kidong_batchim2.type = Kidong;
@@ -1105,6 +1105,19 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	froom1.rotation = f3(0.0f, 0.0f, 0.0f);
 	froom1.type = froom_set;
 
+	Object froom1_3;
+	froom1_3.location = f3(397.5f, 0.0f, 200.0f);
+	froom1_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	froom1_3.type = froom_set1_3;
+
+	Object froom1_3h;
+	froom1_3h.location = f3(397.5f, 5.0f, 200.0f);
+	froom1_3h.rotation = f3(0.0f, 0.0f, 0.0f);
+	froom1_3h.type = froom_set1_3_h;
+
+	list.push_back(froom1_3);
+	list.push_back(froom1_3h);
+
 	froom2.location = f3(400.0f, 2.5f, 200.0f);
 	froom2.rotation = f3(0.0f, 0.0f, 0.0f);
 	froom2.type = froom_set;
@@ -1440,7 +1453,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Se_fb1;
 	BoundingBox Se_fb2;
 	BoundingBox Se_fb3;
-	BoundingBox Se_fb1_1;	
+	BoundingBox Se_fb1_1;
 	BoundingBox Se_fb2_1;
 	BoundingBox Se_fb3_1;
 	BoundingBox Se_bs1_1;
@@ -1484,7 +1497,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox B_Co1;
 	BoundingBox Cel;
 	BoundingBox Cel2;
-	BoundingBox Frs_WLs1;	
+	BoundingBox Frs_WLs1;
 	BoundingBox Frs_WLs2;
 	BoundingBox added_W1;
 	BoundingBox added_W2;
@@ -1553,7 +1566,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Dol_w2;
 	BoundingBox Dol_w3;
 	BoundingBox Dol_w4;
-	BoundingBox Dol_w5;	
+	BoundingBox Dol_w5;
 	BoundingBox Dol_w6;
 	BoundingBox ader1;
 	BoundingBox ader2;
@@ -1570,7 +1583,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox S_plus5;
 	BoundingBox S_plus6;
 	BoundingBox nanuk1;
-	BoundingBox nanuk2;	
+	BoundingBox nanuk2;
 	BoundingBox nanuk3;
 	BoundingBox nanuk4;
 	BoundingBox nanuk5;
@@ -1578,7 +1591,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox nanuk1_1;
 	BoundingBox nanuk2_1;
 	BoundingBox nanuk3_1;
-	BoundingBox nanuk4_1;	
+	BoundingBox nanuk4_1;
 	BoundingBox nanuk5_1;
 	BoundingBox nanuk6_1;
 	BoundingBox Aop1;
@@ -1609,6 +1622,14 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox K_bari4;
 	BoundingBox K_bari5;
 	BoundingBox K_bari6;
+	BoundingBox fr1_3;
+	BoundingBox fr1_3_h;
+
+	fr1_3.start = f3(397.5f, 0.0f, 200.0f);
+	fr1_3.end = f3(397.5f, 5.0f, 600.0f);
+	
+	fr1_3_h.start = f3(397.5f, 5.0f, 200.0f);
+	fr1_3_h.end = f3(397.5f, 12.5f, 600.0f);
 
 	K_bari1.start = f3(812.5f, 0.0f, 289.0f);
 	K_bari1.end = f3(843.75f, 5.0f, 291.0f);
@@ -1631,7 +1652,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Adoe1.start = f3(1145.0f, 0.0f, 300.0f);
 	Adoe1.end = f3(1300.0f, 12.5f, 300.0f);
-	
+
 	Adoe2.start = f3(1145.0f, 0.0f, 300.0f);
 	Adoe2.end = f3(1210.0f, 12.5f, 300.0f);
 
@@ -1649,7 +1670,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Aader1.start = f3(1300.0f, 0.0f, 300.0f);
 	Aader1.end = f3(1400.0f, 5.0f, 300.0f);
-	
+
 	Aader2.start = f3(1300.0f, 5.0f, 300.0f);
 	Aader2.end = f3(1400.0f, 12.5f, 300.0f);
 
@@ -1832,7 +1853,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Ken_w3.start = f3(430.0f, 0.0f, 0.0f);
 	Ken_w3.end = f3(430.0f, 5.0f, 115.0f);
-	
+
 	Ken_w4.start = f3(430.0f, 5.0f, 0.0f);
 	Ken_w4.end = f3(430.0f, 12.5f, 115.0f);
 
@@ -1887,7 +1908,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	}
 
 	Prsm1.start = f3(480.0f, 0.0f, 135.0f);
-	Prsm1.end = f3(600.0f,12.5f, 135.0f);
+	Prsm1.end = f3(600.0f, 12.5f, 135.0f);
 
 	Prsm2.start = f3(480.0f, 0.0f, 75.0f);
 	Prsm2.end = f3(600.0f, 12.5f, 75.0f);
@@ -2474,6 +2495,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(K_bari4);
 	blist.push_back(K_bari5);
 	blist.push_back(K_bari6);
+	blist.push_back(fr1_3);
+	blist.push_back(fr1_3_h);
 
 
 }
@@ -2570,7 +2593,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Tas1[2];
 	for (int i = 0; i < 2; ++i)
 	{
-		Tas1[i].location = f3(292.5f+(25.0f*i), 1.4f, 220.6f);
+		Tas1[i].location = f3(292.5f + (25.0f * i), 1.4f, 220.6f);
 		Tas1[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		Tas1[i].type = Factory_tool12;
 		list.push_back(Tas1[i]);
@@ -2579,7 +2602,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Bag1[3];
 	for (int i = 0; i < 3; ++i)
 	{
-		Bag1[i].location = f3(416.0f+(5.0f*i), 3.5f, 495.5f);
+		Bag1[i].location = f3(416.0f + (5.0f * i), 3.5f, 495.5f);
 		Bag1[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		Bag1[i].type = Factory_tool11;
 		list.push_back(Bag1[i]);
@@ -2626,16 +2649,16 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Object HwaMul1[7];
 	for (int i = 0; i < 7; ++i)
 	{
-			HwaMul1[i].location = f3(450.0f + (3.0f * i), 3.1f, 293.0f);
-			HwaMul1[i].rotation = f3(0.0f, 0.0f, 0.0f);
-			HwaMul1[i].type = Factory_tool10;
-			list.push_back(HwaMul1[i]);
+		HwaMul1[i].location = f3(450.0f + (3.0f * i), 3.1f, 293.0f);
+		HwaMul1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		HwaMul1[i].type = Factory_tool10;
+		list.push_back(HwaMul1[i]);
 	}
 
-	
+
 
 	Object HwaMul2[7];
-	
+
 	for (int i = 0; i < 7; ++i)
 	{
 		HwaMul2[i].location = f3(450.0f + (3.0f * i), 3.1f, 291.5f);
@@ -3342,14 +3365,14 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	for (int i = 0; i < 6; ++i)
 	{
-		SonVan1[i].location = f3(460.0f+(25.0f*i), 1.75f, 292.0f);
+		SonVan1[i].location = f3(460.0f + (25.0f * i), 1.75f, 292.0f);
 		SonVan1[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		SonVan1[i].type = Factory_tool9;
 		list.push_back(SonVan1[i]);
 	}
 
 	Object Tims1[10];
-	for (int i = 0; i <10; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
 		Tims1[i].location = f3(1225.0f + (5.0f * i), 0.0f, 30.0f);
 		Tims1[i].rotation = f3(0.0f, 0.0f, 0.0f);
@@ -3573,7 +3596,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		list.push_back(Jims12[i]);
 
 	}
-
+	
 
 
 	Object Edin1[20];
@@ -4054,12 +4077,12 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Fact_6.location = f3(869.0f, 0.0f, 588.0f);
 	Fact_6.rotation = f3(0.0f, 0.0f, 0.0f);
 	Fact_6.type = Factory_tool1;
-	
+
 	Object Fact_7;
 	Fact_7.location = f3(869.0f, 0.0f, 582.0f);
 	Fact_7.rotation = f3(0.0f, 0.0f, 0.0f);
 	Fact_7.type = Factory_tool1;
-	
+
 	Object Fact_8;
 	Fact_8.location = f3(869.0f, 0.0f, 576.0f);
 	Fact_8.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -4134,7 +4157,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Fact_22.location = f3(869.0f, 2.0f, 558.0f);
 	Fact_22.rotation = f3(0.0f, 0.0f, 0.0f);
 	Fact_22.type = Factory_tool1;
-	
+
 	Object Fact_23;
 	Fact_23.location = f3(869.0f, 2.0f, 552.0f);
 	Fact_23.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -4150,7 +4173,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Fact_25.rotation = f3(0.0f, 0.0f, 0.0f);
 	Fact_25.type = Factory_tool1;
 
-////////////////////////////////////////////
+	////////////////////////////////////////////
 
 	Object B_doorlock3;
 	B_doorlock3.location = f3(1399.0f, 2.5f, 560.0f);
@@ -4420,7 +4443,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox kingdo1[8];
 	for (int i = 0; i < 8; ++i)
 	{
-		kingdo1[i].start = f3(817.5f+(25.0f*i), 0.0f, 112.5f);
+		kingdo1[i].start = f3(817.5f + (25.0f * i), 0.0f, 112.5f);
 		kingdo1[i].end = f3(832.5f + (25.0f * i), 12.5f, 127.5f);
 		blist.push_back(kingdo1[i]);
 	}
@@ -4437,7 +4460,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Bals2[3];
 	for (int i = 0; i < 3; ++i)
 	{
-		Bals2[i].start = f3(540.0f, 0.0f, 305.0f+(30.0f*i));
+		Bals2[i].start = f3(540.0f, 0.0f, 305.0f + (30.0f * i));
 		Bals2[i].end = f3(600.0f, 6.0f, 335.0f + (30.0f * i));
 		blist.push_back(Bals2[i]);
 	}
@@ -4453,7 +4476,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox T_wall1[2];
 	for (int i = 0; i < 2; ++i)
 	{
-		T_wall1[i].start = f3(280.0f+(25.0f*i), 0.0f, 220.0f);
+		T_wall1[i].start = f3(280.0f + (25.0f * i), 0.0f, 220.0f);
 		T_wall1[i].end = f3(305.0f + (25.0f * i), 2.8f, 221.2f);
 		blist.push_back(T_wall1[i]);
 	}
@@ -4516,8 +4539,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul1[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul1[i].start = f3(448.5f+(3.0f*i), 2.7f, 292.25f);
-		SwaMul1[i].end = f3(451.5f+(3.0f*i), 3.5f, 293.75f);
+		SwaMul1[i].start = f3(448.5f + (3.0f * i), 2.7f, 292.25f);
+		SwaMul1[i].end = f3(451.5f + (3.0f * i), 3.5f, 293.75f);
 		blist.push_back(SwaMul1[i]);
 	}
 
@@ -4627,8 +4650,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul1a[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul1a[i].start = f3(448.5f + (3.0f * i)+25.0f, 2.7f, 292.25f);
-		SwaMul1a[i].end = f3(451.5f + (3.0f * i)+25.0f, 3.5f, 293.75f);
+		SwaMul1a[i].start = f3(448.5f + (3.0f * i) + 25.0f, 2.7f, 292.25f);
+		SwaMul1a[i].end = f3(451.5f + (3.0f * i) + 25.0f, 3.5f, 293.75f);
 		blist.push_back(SwaMul1a[i]);
 	}
 
@@ -4636,8 +4659,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul2a[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul2a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 290.75f);
-		SwaMul2a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul2a[i].start = f3(448.5f + 25.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2a[i].end = f3(451.5f + 25.0f + (3.0f * i), 3.5f, 292.25f);
 		blist.push_back(SwaMul2a[i]);
 	}
 
@@ -4645,8 +4668,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul3a[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul3a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 289.25f);
-		SwaMul3a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul3a[i].start = f3(448.5f + 25.0f + (3.0f * i), 2.7f, 289.25f);
+		SwaMul3a[i].end = f3(451.5f + 25.0f + (3.0f * i), 3.5f, 290.75f);
 		blist.push_back(SwaMul3a[i]);
 	}
 
@@ -4654,8 +4677,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul4a[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul4a[i].start = f3(448.5f+25.0f + (3.0f * i), 2.7f, 287.75f);
-		SwaMul4a[i].end = f3(451.5f+25.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul4a[i].start = f3(448.5f + 25.0f + (3.0f * i), 2.7f, 287.75f);
+		SwaMul4a[i].end = f3(451.5f + 25.0f + (3.0f * i), 3.5f, 289.25f);
 		blist.push_back(SwaMul4a[i]);
 	}
 
@@ -4663,16 +4686,16 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul1_ma[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul1_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 292.25f);
-		SwaMul1_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 293.75f);
+		SwaMul1_ma[i].start = f3(448.5f + 25.0f + (3.0f * i), 3.5f, 292.25f);
+		SwaMul1_ma[i].end = f3(451.5f + 25.0f + (3.0f * i), 4.3f, 293.75f);
 		blist.push_back(SwaMul1_ma[i]);
 	}
 
 	BoundingBox SwaMul2_ma[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul2_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 290.75f);
-		SwaMul2_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul2_ma[i].start = f3(448.5f + 25.0f + (3.0f * i), 3.5f, 290.75f);
+		SwaMul2_ma[i].end = f3(451.5f + 25.0f + (3.0f * i), 4.3f, 292.25f);
 		blist.push_back(SwaMul2_ma[i]);
 	}
 
@@ -4680,8 +4703,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul3_ma[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul3_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 289.25f);
-		SwaMul3_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul3_ma[i].start = f3(448.5f + 25.0f + (3.0f * i), 3.5f, 289.25f);
+		SwaMul3_ma[i].end = f3(451.5f + 25.0f + (3.0f * i), 4.3f, 290.75f);
 		blist.push_back(SwaMul3_ma[i]);
 	}
 
@@ -4689,32 +4712,32 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul4_ma[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul4_ma[i].start = f3(448.5f+25.0f + (3.0f * i), 3.5f, 287.75f);
-		SwaMul4_ma[i].end = f3(451.5f+25.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul4_ma[i].start = f3(448.5f + 25.0f + (3.0f * i), 3.5f, 287.75f);
+		SwaMul4_ma[i].end = f3(451.5f + 25.0f + (3.0f * i), 4.3f, 289.25f);
 		blist.push_back(SwaMul4_ma[i]);
 	}
 
 	BoundingBox SwaMul1_ha[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul1_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 292.25f);
-		SwaMul1_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 293.75f);
+		SwaMul1_ha[i].start = f3(448.5f + 25.0f + (3.0f * i), 4.3f, 292.25f);
+		SwaMul1_ha[i].end = f3(451.5f + 25.0f + (3.0f * i), 5.1f, 293.75f);
 		blist.push_back(SwaMul1_ha[i]);
 	}
 
 	BoundingBox SwaMul2_ha[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul2_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 290.75f);
-		SwaMul2_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 292.25f);
+		SwaMul2_ha[i].start = f3(448.5f + 25.0f + (3.0f * i), 4.3f, 290.75f);
+		SwaMul2_ha[i].end = f3(451.5f + 25.0f + (3.0f * i), 5.1f, 292.25f);
 		blist.push_back(SwaMul2_ha[i]);
 	}
 
 	BoundingBox SwaMul3_ha[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul3_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 289.25f);
-		SwaMul3_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 290.75f);
+		SwaMul3_ha[i].start = f3(448.5f + 25.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_ha[i].end = f3(451.5f + 25.0f + (3.0f * i), 5.1f, 290.75f);
 		blist.push_back(SwaMul3_ha[i]);
 	}
 
@@ -4722,8 +4745,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul4_ha[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul4_ha[i].start = f3(448.5f+25.0f + (3.0f * i), 4.3f, 287.75f);
-		SwaMul4_ha[i].end = f3(451.5f+25.0f + (3.0f * i), 5.1f, 289.25f);
+		SwaMul4_ha[i].start = f3(448.5f + 25.0f + (3.0f * i), 4.3f, 287.75f);
+		SwaMul4_ha[i].end = f3(451.5f + 25.0f + (3.0f * i), 5.1f, 289.25f);
 		blist.push_back(SwaMul4_ha[i]);
 	}
 
@@ -4959,7 +4982,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul2d[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul2d[i].start = f3(448.5f +100.0f + (3.0f * i), 2.7f, 290.75f);
+		SwaMul2d[i].start = f3(448.5f + 100.0f + (3.0f * i), 2.7f, 290.75f);
 		SwaMul2d[i].end = f3(451.5f + 100.0f + (3.0f * i), 3.5f, 292.25f);
 		blist.push_back(SwaMul2d[i]);
 	}
@@ -5145,7 +5168,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox SwaMul3_he[7];
 	for (int i = 0; i < 7; ++i)
 	{
-		SwaMul3_he[i].start = f3(448.5f +125.0f + (3.0f * i), 4.3f, 289.25f);
+		SwaMul3_he[i].start = f3(448.5f + 125.0f + (3.0f * i), 4.3f, 289.25f);
 		SwaMul3_he[i].end = f3(451.5f + 125.0f + (3.0f * i), 5.1f, 290.75f);
 		blist.push_back(SwaMul3_he[i]);
 	}
@@ -5360,7 +5383,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		Cov_jim12[i].end = f3(1225.0f + (5.0f * i), 5.0f, 510.0f);
 		blist.push_back(Cov_jim12[i]);
 	}
-	
+
 
 	BoundingBox Dom1[2];
 
@@ -5513,8 +5536,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	for (int i = 0; i < 20; ++i)
 	{
-		Edi[i].start = f3(250.0f+(5.0f*i), 0.0f, 2.5f);
-		Edi[i].end = f3(255.0f+(5.0f*i), 5.0f, 12.5f);
+		Edi[i].start = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
+		Edi[i].end = f3(255.0f + (5.0f * i), 5.0f, 12.5f);
 
 		blist.push_back(Edi[i]);
 	}
@@ -5606,7 +5629,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Pox12;
 	Pox12.start = f3(1060.0f, 12.5f, 500.0f);
 	Pox12.end = f3(1063.0f, 15.5f, 503.0f);
-	
+
 	BoundingBox Pox13;
 	Pox13.start = f3(1063.0f, 12.5f, 500.0f);
 	Pox13.end = f3(1066.0f, 15.5f, 503.0f);
@@ -5646,7 +5669,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Pox22;
 	Pox22.start = f3(1090.0f, 12.5f, 500.0f);
 	Pox22.end = f3(1093.0f, 15.5f, 503.0f);
-	
+
 	BoundingBox Coned_1;
 	Coned_1.start = f3(910.0f, 12.5f, 296.5f);
 	Coned_1.end = f3(1000.0f, 13.5f, 303.5f);
@@ -5654,7 +5677,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Coned_2;
 	Coned_2.start = f3(910.0f, 12.5f, 311.5f);
 	Coned_2.end = f3(1000.0f, 13.5f, 318.5f);
-	
+
 	BoundingBox Coned_3;
 	Coned_3.start = f3(910.0f, 12.5f, 326.5f);
 	Coned_3.end = f3(1000.0f, 13.5f, 333.5f);
@@ -5702,7 +5725,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Coned_14;
 	Coned_14.start = f3(1020.0f, 12.5f, 326.5f);
 	Coned_14.end = f3(1110.0f, 13.5f, 333.5f);
-	
+
 	BoundingBox Coned_15;
 	Coned_15.start = f3(1020.0f, 12.5f, 341.5f);
 	Coned_15.end = f3(1110.0f, 13.5f, 348.5f);
@@ -5758,7 +5781,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Fa_6;
 	Fa_6.start = f3(869.0f, 0.0f, 582.0f);
 	Fa_6.end = f3(875.0f, 3.0f, 588.0f);
-	
+
 	BoundingBox Fa_7;
 	Fa_7.start = f3(869.0f, 0.0f, 576.0f);
 	Fa_7.end = f3(875.0f, 3.0f, 582.0f);
@@ -5766,7 +5789,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Fa_8;
 	Fa_8.start = f3(869.0f, 0.0f, 570.0f);
 	Fa_8.end = f3(875.0f, 3.0f, 576.0f);
-	
+
 	BoundingBox Fa_9;
 	Fa_9.start = f3(869.0f, 0.0f, 564.0f);
 	Fa_9.end = f3(875.0f, 3.0f, 570.0f);
@@ -5786,7 +5809,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Fa_13;
 	Fa_13.start = f3(869.0f, 0.0f, 540.0f);
 	Fa_13.end = f3(875.0f, 3.0f, 546.0f);
-	
+
 	BoundingBox Fa_14;
 	Fa_14.start = f3(869.0f, 0.0f, 534.0f);
 	Fa_14.end = f3(875.0f, 3.0f, 540.0f);
@@ -5845,7 +5868,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Hiterz1[5];
 	for (int i = 0; i < 5; ++i)
 	{
-		Hiterz1[i].start = f3(165.0f, 0.0f, 290.0f+(50.0f*i));
+		Hiterz1[i].start = f3(165.0f, 0.0f, 290.0f + (50.0f * i));
 		Hiterz1[i].end = f3(175.0f, 5.0f, 300.0f + (50.0f * i));
 		blist.push_back(Hiterz1[i]);
 	}
