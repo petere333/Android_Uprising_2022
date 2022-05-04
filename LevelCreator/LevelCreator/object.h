@@ -170,6 +170,7 @@
 #define Chagsal2 11122 // 1-1
 #define Pyo 11124 // 1-1
 #define GamOk 14126 // 1-4 
+#define GamOk_1 14127 // 1-4
 #define GamOk2 14128 // 1-4 
 #define GamOk_Shell 14130 // 1-4
 #define Wallz11 14132 // 1-1
@@ -221,6 +222,9 @@
 
 #define S_Wallz25 21217 // 2-1
 #define S_Wallz26 21219 // 2-1
+
+#define Top_wall1 30004
+#define Top_wall2 30005
 
 
 // #define S_Wallz20 2207

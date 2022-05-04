@@ -298,6 +298,17 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Barigate4;
 	Object Barigate5;
 	Object Barigate6;
+	Object ggokji1;
+	Object ggokji2;
+
+	ggokji1.location = f3(0.0f, 12.5f, 200.0f);
+	ggokji1.rotation = f3(0.0f, 0.0f, 0.0f);
+	ggokji1.type = Top_wall1;
+
+	ggokji2.location = f3(400.0f, 12.5f, 200.0f);
+	ggokji2.rotation = f3(0.0f, 0.0f, 0.0f);
+	ggokji2.type = Top_wall2;
+
 
 	Barigate1.location = f3(828.125f, 2.5f, 290.0f);
 	Barigate1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -624,7 +635,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Prism1.location = f3(480.0f, 0.0f, 135.0f);
 	Prism1.rotation = f3(0.0f, 0.0f, 0.0f);
-	Prism1.type = GamOk;
+	Prism1.type = GamOk_1;
 
 	Prism2.location = f3(480.0f, 0.0f, 75.0f);
 	Prism2.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -636,7 +647,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Prism4.location = f3(480.0f, 0.0f, 0.01f);
 	Prism4.rotation = f3(0.0f, 0.0f, 0.0f);
-	Prism4.type = GamOk;
+	Prism4.type = GamOk_1;
 
 
 
@@ -1410,6 +1421,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Barigate4);
 	list.push_back(Barigate5);
 	list.push_back(Barigate6);
+	list.push_back(ggokji1);
+	list.push_back(ggokji2);
 
 
 
@@ -1624,6 +1637,14 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox K_bari6;
 	BoundingBox fr1_3;
 	BoundingBox fr1_3_h;
+	BoundingBox kkokji1;
+	BoundingBox kkokji2;
+
+	kkokji1.start = f3(0.0f, 12.5f, 200.0f);
+	kkokji1.end = f3(400.0f, 20.0f, 200.0f);
+
+	kkokji2.start = f3(400.0f, 12.5f, 200.0f);
+	kkokji2.end = f3(400.0f, 20.0f, 600.0f);
 
 	fr1_3.start = f3(397.5f, 0.0f, 200.0f);
 	fr1_3.end = f3(397.5f, 5.0f, 600.0f);
@@ -1641,13 +1662,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	K_bari3.end = f3(843.75f, 5.0f, 507.0f);
 
 	K_bari4.start = f3(843.75f, 0.0f, 289.0f);
-	K_bari4.end = f3(875.0f, 5.0f, 291.0f);
+	K_bari4.end = f3(875.0f, 0.0f, 291.0f);
 
 	K_bari5.start = f3(812.5f, 0.0f, 397.0f);
-	K_bari5.end = f3(843.75f, 5.0f, 399.0f);
+	K_bari5.end = f3(843.75f, 0.0f, 399.0f);
 
 	K_bari6.start = f3(843.75f, 0.0f, 505.0f);
-	K_bari6.end = f3(875.0f, 5.0f, 507.0f);
+	K_bari6.end = f3(875.0f, 0.0f, 507.0f);
 
 
 	Adoe1.start = f3(1145.0f, 0.0f, 300.0f);
@@ -2497,6 +2518,9 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(K_bari6);
 	blist.push_back(fr1_3);
 	blist.push_back(fr1_3_h);
+	blist.push_back(kkokji1);
+	blist.push_back(kkokji2);
+
 
 
 }
@@ -4337,7 +4361,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	for (int i = 0; i < 3; ++i)
 	{
 		electric1[i].location = f3(1160.0f + (60.0f * i), 4.5f, 180.0f);
-		electric1[i].location = f3(0.0f, 0.0f, 0.0f);
+		electric1[i].location = f3(-90.0f, 0.0f, 0.0f);
 		electric1[i].type = Factory_tool17;
 		list.push_back(electric1[i]);
 	}
