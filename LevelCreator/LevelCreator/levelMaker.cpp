@@ -2600,7 +2600,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	for (int i = 0; i < 3; ++i)
 	{
 		Baljeon1[i].location = f3(305.0f, 0.0f, 280.0f + (120.0f * i));
-		Baljeon1[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Baljeon1[i].rotation = f3(-90.0f, 0.0f, 0.0f);
 		Baljeon1[i].type = Factory_tool14;
 		list.push_back(Baljeon1[i]);
 	}
@@ -2609,7 +2609,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	for (int i = 0; i < 10; ++i)
 	{
 		Tas2[i].location = f3(329.4f, 1.4f, 239.0f + (38.0f * i));
-		Tas2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Tas2[i].rotation = f3(-90.0f, 0.0f, 0.0f);
 		Tas2[i].type = Factory_tool13;
 		list.push_back(Tas2[i]);
 	}
@@ -4361,7 +4361,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	for (int i = 0; i < 3; ++i)
 	{
 		electric1[i].location = f3(1160.0f + (60.0f * i), 4.5f, 180.0f);
-		electric1[i].location = f3(-90.0f, 0.0f, 0.0f);
+		electric1[i].rotation = f3(270.0f, 0.0f, 0.0f);
 		electric1[i].type = Factory_tool17;
 		list.push_back(electric1[i]);
 	}

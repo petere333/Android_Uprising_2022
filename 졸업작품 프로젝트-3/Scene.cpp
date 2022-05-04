@@ -1619,14 +1619,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool13);
 		obj->SetMaterial(0, ppMaterials[42]);
-		obj->Rotate(270.0f, 90.0f, 0.0f);
+		// obj->Rotate(270.0f, 90.0f, 0.0f);
 		}
 		else if (data[i].type == Factory_tool14)// 여기서부터 새로 만든거
 		{
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool14);
 		obj->SetMaterial(0, ppMaterials[43]);
-		obj->Rotate(-90.0f, 90.0f, 0.0f);
+
 		}
 		else if (data[i].type == S_Wallz19)
 		{
@@ -1655,7 +1655,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool17);
 		obj->SetMaterial(0, ppMaterials[46]);
-		obj->Rotate(0.0f, 0.0f, 0.0f);
+
 		}
 		else if (data[i].type == S_Wallz20)
 		{
@@ -1678,7 +1678,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Walz52);
 		obj->SetMaterial(0, ppMaterials[47]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
 
 		}
 		else if (data[i].type == S_Wallz23)
@@ -1686,7 +1686,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Walz53);
 		obj->SetMaterial(0, ppMaterials[47]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
 
 		}
 		else if (data[i].type == S_Wallz24)
@@ -1694,7 +1694,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Walz54);
 		obj->SetMaterial(0, ppMaterials[47]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
+
 
 		}
 		else if (data[i].type == Factory_tool18)// 여기서부터 새로 만든거
@@ -1702,21 +1702,21 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool18);
 		obj->SetMaterial(0, ppMaterials[48]);
-		obj->Rotate(-90.0f, 0.0f, 0.0f);
+
 		}
 		else if (data[i].type == Factory_tool19)// 여기서부터 새로 만든거
 		{
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool19);
 		obj->SetMaterial(0, ppMaterials[48]);
-		obj->Rotate(-90.0f, 0.0f, 0.0f);
+
 		}
 		else if (data[i].type == Factory_tool20)// 여기서부터 새로 만든거
 		{
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool20);
 		obj->SetMaterial(0, ppMaterials[48]);
-		obj->Rotate(-90.0f, 0.0f, 0.0f);
+
 		}
 		else if (data[i].type == S_Wallz25)
 		{
