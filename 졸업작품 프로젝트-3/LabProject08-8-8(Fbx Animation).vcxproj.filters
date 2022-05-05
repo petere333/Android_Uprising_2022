@@ -130,9 +130,6 @@
     <Filter Include="HLSL">
       <UniqueIdentifier>{3ed194c8-f599-4c3d-bde7-4ca883f1b02f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameFramework">
-      <UniqueIdentifier>{9277d988-7472-4f78-8552-6128c5676354}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Project">
       <UniqueIdentifier>{a20cdb28-b955-4167-8a08-914832ebcfe3}</UniqueIdentifier>
     </Filter>
@@ -159,6 +156,9 @@
     </Filter>
     <Filter Include="CSound">
       <UniqueIdentifier>{ae07d54f-3bef-4bb8-b891-37429517b7c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework">
+      <UniqueIdentifier>{9277d988-7472-4f78-8552-6128c5676354}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

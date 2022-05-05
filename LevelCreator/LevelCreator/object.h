@@ -35,7 +35,7 @@
 #define froom_set1_3 13001 // 1-3
 #define froom_set1_3_h 13002 // 1-3
 #define froom_set_H 10012 // 공통
-#define floor_T 14001 // 1-4
+#define floor_T 14901 // 1-4
 #define floor_Se 20000 // 2 공통
 
 
@@ -225,6 +225,12 @@
 
 #define Top_wall1 30004
 #define Top_wall2 30005
+
+#define Janhae1 11999 // 1-1
+#define Janhae2 11998
+#define Janhae3 11997
+#define Janhae2_1 11996
+
 
 
 // #define S_Wallz20 2207

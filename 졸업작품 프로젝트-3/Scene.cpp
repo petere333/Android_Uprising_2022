@@ -226,7 +226,12 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[50]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¶Ô¾î¶ó.dds", RESOURCE_TEXTURE2D, 0);
 	textures[51] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[51]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Toblock.dds", RESOURCE_TEXTURE2D, 0);
-
+	textures[52] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[52]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÀÜÇØ¾².dds", RESOURCE_TEXTURE2D, 0);
+	textures[53] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[53]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µÎÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[54] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[54]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼¼ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -494,6 +499,14 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_tool18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_µÕ±Û¹ðÀÌÅÊÅ©.txt", NULL);
 	CLoadedMesh* Gongjang_tool19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_µÕ±Û¹ðÀÌÅÊÅ©.txt", NULL);
 	CLoadedMesh* Gongjang_tool20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_µÕ±Û¹ðÀÌÅÊÅ©.txt", NULL);
+	CLoadedMesh* Gongjang_janhae1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°.txt", NULL);
+	CLoadedMesh* Gongjang_janhae2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°2.txt", NULL);
+	CLoadedMesh* Gongjang_janhae3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°3.txt", NULL);
+	CLoadedMesh* Gongjang_janhae3_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°3_1.txt", NULL);
+
+
+
+
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1619,7 +1632,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_tool13);
 		obj->SetMaterial(0, ppMaterials[42]);
-		// obj->Rotate(270.0f, 90.0f, 0.0f);
+		 obj->Rotate(0.0f, 90.0f, 0.0f);
 		}
 		else if (data[i].type == Factory_tool14)// ¿©±â¼­ºÎÅÍ »õ·Î ¸¸µç°Å
 		{
@@ -1757,8 +1770,36 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(tpw2);
 		obj->SetMaterial(0, ppMaterials[51]);
-		}
 
+		}
+		else if (data[i].type == Janhae1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae1);
+		obj->SetMaterial(0, ppMaterials[52]);
+
+		}
+		else if (data[i].type == Janhae2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae2);
+		obj->SetMaterial(0, ppMaterials[53]);
+
+		}
+		else if (data[i].type == Janhae3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae3);
+		obj->SetMaterial(0, ppMaterials[54]);
+
+		}
+		else if (data[i].type == Janhae2_1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae3_1);
+		obj->SetMaterial(0, ppMaterials[54]);
+
+		}
 
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
