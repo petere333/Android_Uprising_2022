@@ -121,8 +121,8 @@
 #define GyeDans2 13005 // 1-3
 #define R_GyeDan1 22001 // 2-2
 
-#define Frs_Pons1 12002// 1-2
-#define Frs_Pons2 12003 // 1-2
+#define Frs_Pons1 30099// 3공통
+#define Frs_Pons2 30098 // 3공통
 #define adds_beok1 14000 // 1-4
 #define adds_beok2 14001 // 1-4
 #define B_Door 23000 // 2-3
@@ -159,8 +159,8 @@
 #define Wallz1 11100 // 1-1
 #define Wallz2 11102 // 1-1
 #define Wallz3 11104 // 1-1
-#define Wallz4 13106 // 1-3
-#define Wallz5 13108 // 1-3
+#define Wallz4 30097 // 1-3
+#define Wallz5 30096 // 1-3
 #define Wallz6 12110 // 1-2
 #define Wallz7 12112 // 1-2
 #define Wallz8 11114// 1-1
