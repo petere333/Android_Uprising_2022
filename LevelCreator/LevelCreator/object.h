@@ -230,7 +230,10 @@
 #define Janhae2 11998
 #define Janhae3 11997
 #define Janhae2_1 11996
-
+#define Janhae4 11995
+#define Janhae5 11994
+#define Janhae6 11993
+#define Janhae7 11992
 
 
 // #define S_Wallz20 2207

@@ -228,6 +228,10 @@
 #define Janhae2 11998 // 1-1
 #define Janhae3 11997 // 1-1
 #define Janhae2_1 11996 // 1- 1
+#define Janhae4 11995
+#define Janhae5 11994
+#define Janhae6 11993
+#define Janhae7 11992
 
 
 

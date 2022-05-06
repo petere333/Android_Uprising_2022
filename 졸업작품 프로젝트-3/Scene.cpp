@@ -232,6 +232,12 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[53]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µÎÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[54] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[54]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼¼ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[55] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[55]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³×ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[56] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[56]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/´ÙÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[57] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[57]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Åé³¯´Ü°Ë.dds", RESOURCE_TEXTURE2D, 0);
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -503,9 +509,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_janhae2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°2.txt", NULL);
 	CLoadedMesh* Gongjang_janhae3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°3.txt", NULL);
 	CLoadedMesh* Gongjang_janhae3_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ¹°3_1.txt", NULL);
-
-
-
+	CLoadedMesh* Gongjang_janhae4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_±¸µ¥±âÅë.txt", NULL);
+	CLoadedMesh* Gongjang_janhae5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_»ð.txt", NULL);
+	CLoadedMesh* Gongjang_janhae6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Åé³¯´Ü°Ë.txt", NULL);
+	CLoadedMesh* Gongjang_janhae7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Åé³¯´Ü°Ë2.txt", NULL);
 
 
 	/*
@@ -1798,6 +1805,34 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_janhae3_1);
 		obj->SetMaterial(0, ppMaterials[54]);
+
+		}
+		else if (data[i].type == Janhae4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae4);
+		obj->SetMaterial(0, ppMaterials[55]);
+
+		}
+		else if (data[i].type == Janhae5)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae5);
+		obj->SetMaterial(0, ppMaterials[56]);
+
+		}
+		else if (data[i].type == Janhae6)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae6);
+		obj->SetMaterial(0, ppMaterials[57]);
+
+		}
+		else if (data[i].type == Janhae7)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae7);
+		obj->SetMaterial(0, ppMaterials[57]);
 
 		}
 

@@ -2641,6 +2641,13 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Janhaes3_1_3.type = Janhae2_1;
 	list.push_back(Janhaes3_1_3);
 
+	Object Janhaes3_1_4;
+	Janhaes3_1_4.location = f3(95.0f, 0.0f, 305.0f);
+	Janhaes3_1_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes3_1_4.type = Janhae2_1;
+	list.push_back(Janhaes3_1_4);
+
+
 
 
 	Object Janhaes3_1;
@@ -2654,6 +2661,105 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Janhaes3_2.rotation = f3(0.0f, 32.5f, 0.0f);
 	Janhaes3_2.type = Janhae3;
 	list.push_back(Janhaes3_2);
+
+	Object Janhaes4_1;
+	Janhaes4_1.location = f3(45.0f, 0.0f, 280.0f);
+	Janhaes4_1.rotation = f3(0.0f, -90.0f, 0.0f);
+	Janhaes4_1.type = Janhae4;
+	list.push_back(Janhaes4_1);
+
+	Object Janhaes4_2;
+	Janhaes4_2.location = f3(45.0f, 0.0f, 289.0f);
+	Janhaes4_2.rotation = f3(0.0f, -90.0f, 0.0f);
+	Janhaes4_2.type = Janhae4;
+	list.push_back(Janhaes4_2);
+
+	Object Janhaes5_1;
+	Janhaes5_1.location = f3(66.0f, 0.25f, 292.0f);
+	Janhaes5_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes5_1.type = Janhae5;
+	list.push_back(Janhaes5_1);
+
+	Object Janhaes5_2;
+	Janhaes5_2.location = f3(57.0f, 0.25f, 275.0f);
+	Janhaes5_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes5_2.type = Janhae5;
+	list.push_back(Janhaes5_2);
+
+	Object Janhaes5_3;
+	Janhaes5_3.location = f3(75.0f, 0.7f, 275.0f);
+	Janhaes5_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes5_3.type = Janhae5;
+	list.push_back(Janhaes5_3);
+
+	Object Janhaes5_4;
+	Janhaes5_4.location = f3(84.0f, 0.7f, 290.0f);
+	Janhaes5_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes5_4.type = Janhae5;
+	list.push_back(Janhaes5_4);
+
+	Object Janhaes6_1;
+	Janhaes6_1.location = f3(80.0f, 0.0f, 325.0f);
+	Janhaes6_1.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes6_1.type = Janhae6;
+	list.push_back(Janhaes6_1);
+
+	Object Janhaes6_2;
+	Janhaes6_2.location = f3(86.0f, 0.0f, 325.0f);
+	Janhaes6_2.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes6_2.type = Janhae6;
+	list.push_back(Janhaes6_2);
+
+	Object Janhaes7_1;
+	Janhaes7_1.location = f3(78.0f, 0.0f, 283.0f);
+	Janhaes7_1.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes7_1.type = Janhae7;
+	list.push_back(Janhaes7_1);
+
+	Object Janhaes7_2;
+	Janhaes7_2.location = f3(112.0f, 0.0f, 330.0f);
+	Janhaes7_2.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes7_2.type = Janhae7;
+	list.push_back(Janhaes7_2);
+
+	Object Janhaes7_3;
+	Janhaes7_3.location = f3(133.0f, 0.0f, 319.0f);
+	Janhaes7_3.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes7_3.type = Janhae7;
+	list.push_back(Janhaes7_3);
+
+	Object Janhaes7_4;
+	Janhaes7_4.location = f3(128.0f, 0.0f, 347.0f);
+	Janhaes7_4.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes7_4.type = Janhae7;
+	list.push_back(Janhaes7_4);
+
+	Object Janhaes7_5;
+	Janhaes7_5.location = f3(36.0f, 0.0f, 310.0f);
+	Janhaes7_5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes7_5.type = Janhae7;
+	list.push_back(Janhaes7_5);
+
+	Object Janhaes7_6;
+	Janhaes7_6.location = f3(47.0f, 0.0f, 337.0f);
+	Janhaes7_6.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes7_6.type = Janhae7;
+	list.push_back(Janhaes7_6);
+
+	Object Janhaes7_7;
+	Janhaes7_7.location = f3(60.0f, 0.0f, 219.0f);
+	Janhaes7_7.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes7_7.type = Janhae7;
+	list.push_back(Janhaes7_7);
+
+	Object Janhaes7_8;
+	Janhaes7_8.location = f3(115.0f, 0.0f, 375.0f);
+	Janhaes7_8.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes7_8.type = Janhae7;
+	list.push_back(Janhaes7_8);
+
+
+
 
 
 
@@ -4643,6 +4749,92 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans3_1_3.start = f3(148.5f, 0.0f, 60.5f);
 	Jans3_1_3.end = f3(155.5f, 7.0f, 67.5f);
 	blist.push_back(Jans3_1_3);
+
+	BoundingBox Jans3_1_4;
+	Jans3_1_4.start = f3(91.5f, 0.0f, 301.5f);
+	Jans3_1_4.end = f3(98.5f, 7.0f, 308.5f);
+	blist.push_back(Jans3_1_4);
+
+
+	BoundingBox Jans4_1;
+	Jans4_1.start = f3(40.5f, 0.0f, 275.5f);
+	Jans4_1.end = f3(49.5f, 4.0f, 284.5f);
+	blist.push_back(Jans4_1);
+
+	BoundingBox Jans4_2;
+	Jans4_2.start = f3(40.5f, 0.0f, 284.5f);
+	Jans4_2.end = f3(49.5f, 4.0f, 293.5f);
+	blist.push_back(Jans4_2);
+
+	BoundingBox Jans5_1;
+	Jans5_1.start = f3(64.5f, 0.0f, 290.5f);
+	Jans5_1.end = f3(67.5f, 0.5f, 293.5f);
+	blist.push_back(Jans5_1);
+
+	BoundingBox Jans5_2;
+	Jans5_2.start = f3(55.5f, 0.0f, 273.5f);
+	Jans5_2.end = f3(58.5f, 0.5f, 276.5f);
+	blist.push_back(Jans5_2);
+
+	BoundingBox Jans5_3;
+	Jans5_3.start = f3(73.5f, 0.0f, 273.5f);
+	Jans5_3.end = f3(76.5f, 1.4f, 276.5f);
+	blist.push_back(Jans5_3);
+
+	BoundingBox Jans5_4;
+	Jans5_4.start = f3(82.5f, 0.0f, 288.5f);
+	Jans5_4.end = f3(85.5f, 1.4f, 291.5f);
+	blist.push_back(Jans5_4);
+
+	BoundingBox Jans6_1;
+	Jans6_1.start = f3(77.0f, 0.0f, 322.0f);
+	Jans6_1.end = f3(83.0f, 2.0f, 328.0f);
+	blist.push_back(Jans6_1);
+
+	BoundingBox Jans6_2;
+	Jans6_2.start = f3(83.0f, 0.0f, 322.0f);
+	Jans6_2.end = f3(89.0f, 2.0f, 328.0f);
+	blist.push_back(Jans6_2);
+
+	BoundingBox Jans7_1;
+	Jans7_1.start = f3(66.0f, 0.0f, 280.0f);
+	Jans7_1.end = f3(90.0f, 6.0f, 286.0f);
+	blist.push_back(Jans7_1);
+
+	BoundingBox Jans7_2;
+	Jans7_2.start = f3(100.0f, 0.0f, 327.0f);
+	Jans7_2.end = f3(124.0f, 6.0f, 333.0f);
+	blist.push_back(Jans7_2);
+
+	BoundingBox Jans7_3;
+	Jans7_3.start = f3(121.0f, 0.0f, 316.0f);
+	Jans7_3.end = f3(145.0f, 6.0f, 322.0f);
+	blist.push_back(Jans7_3);
+
+	BoundingBox Jans7_4;
+	Jans7_4.start = f3(116.0f, 0.0f, 344.0f);
+	Jans7_4.end = f3(140.0f, 6.0f, 350.0f);
+	blist.push_back(Jans7_4);
+
+	BoundingBox Jans7_5;
+	Jans7_5.start = f3(33.0f, 0.0f, 298.0f);
+	Jans7_5.end = f3(39.0f, 6.0f, 322.0f);
+	blist.push_back(Jans7_5);
+
+	BoundingBox Jans7_6;
+	Jans7_6.start = f3(44.0f, 0.0f, 325.0f);
+	Jans7_6.end = f3(50.0f, 6.0f, 349.0f);
+	blist.push_back(Jans7_6);
+
+	BoundingBox Jans7_7;
+	Jans7_7.start = f3(57.0f, 0.0f, 207.0f);
+	Jans7_7.end = f3(63.0f, 6.0f, 231.0f);
+	blist.push_back(Jans7_7);
+
+	BoundingBox Jans7_8;
+	Jans7_8.start = f3(112.0f, 0.0f, 363.0f);
+	Jans7_8.end = f3(118.0f, 6.0f, 387.0f);
+	blist.push_back(Jans7_8);
 
 
 
