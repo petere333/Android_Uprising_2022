@@ -2490,7 +2490,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				}
 				if (px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f)//1-1
 				{
-					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7))
+					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7) || (tp == Janhae2))
 					{
 						if (m_pd3dCbvSrvDescriptorHeap)
 						{
@@ -2499,9 +2499,9 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 						continue;
 					}
-					else if ((tp >= 11200 && tp < 11900) || (tp==Heaters1) || (tp>=14126 && tp<=14130))
+					else if ((tp >= 11200 && tp < 11900) || (tp==Heaters1) || (tp>=14126 && tp<=14130) || (tp == Janhae10))
 					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist < 300.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
@@ -2510,7 +2510,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 							continue;
 						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(110.0f)) && dist < 10.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
@@ -2535,7 +2535,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 					}
 					else if ((tp >= 12200 && tp < 13000)||(tp>=11890 && tp<11900) || (tp==Heaters1))
 					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(65.0f)) && dist < 300.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
@@ -2544,7 +2544,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 							continue;
 						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(120.0f)) && dist < 15.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
@@ -2558,7 +2558,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 				if (px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f)//1-3
 				{
-					if (tp >= 13000 && tp < 13200)
+					if (tp >= 13000 && tp < 13200 || tp==Janhae10)
 					{
 						if (m_pd3dCbvSrvDescriptorHeap)
 						{
@@ -2569,7 +2569,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 					}
 					else if (tp >= 13200 && tp < 14000)
 					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(65.0f)) && dist < 300.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
@@ -2578,7 +2578,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 							continue;
 						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(110.0f)) && dist < 10.0f)
 						{
 							if (m_pd3dCbvSrvDescriptorHeap)
 							{
