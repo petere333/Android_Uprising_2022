@@ -235,6 +235,9 @@
 #define Janhae6 11893
 #define Janhae7 11892
 #define Janhae8 11891
+#define Janhae9 11890
+#define Janhae10 13899
+
 
 
 // #define S_Wallz20 2207

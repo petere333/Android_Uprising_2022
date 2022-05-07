@@ -171,7 +171,6 @@
 #define Pyo 11124 // 1-1
 #define GamOk 14126 // 1-4 
 #define GamOk_1 14127 // 1-4
-#define GamOk_2 14226 // 1-4 
 #define GamOk2 14128 // 1-4 
 #define GamOk_Shell 14130 // 1-4
 #define Wallz11 11132 // 1-1
@@ -234,6 +233,8 @@
 #define Janhae6 11893
 #define Janhae7 11892
 #define Janhae8 11891
+#define Janhae9 11890
+#define Janhae10 13899
 
 
 

@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/Machine_4.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/PalletTruck.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,8 +98,8 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/idx_잔해기계.txt", "w");
-	FILE* frameOut = fopen("result/vtx_잔해기계.txt", "w");
+	FILE* idxOut = fopen("result/idx_잔해트럭.txt", "w");
+	FILE* frameOut = fopen("result/vtx_잔해트럭.txt", "w");
 	
 	int maxidx = 0;
 	for (int i = 0; i < idx.size(); ++i)
@@ -190,8 +190,8 @@ int main()
 		}
 	}
 	float xscale = 8.0f/ (xmax - xmin);
-	float yscale = 12.0f/(max - min);
-	float zscale = 8.0f/(zmax - zmin);
+	float yscale = 8.0f/(max - min);
+	float zscale = 3.0f/(zmax - zmin);
 	//for (int i = 0; i < maxidx + 1; ++i)
 	for (int i = 0; i < posList.size(); ++i)
 	{
