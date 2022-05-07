@@ -401,6 +401,16 @@ void process_packet(int c_id, char* packet)
 			if (bs.attackID != TYPE_MELEE && ks.isInAir==0)
 			{
 				bs.attackID = TYPE_MELEE;
+				bs.stateID = IDLE_STATE;
+				ks.xzspeed = 0.0f;
+			}
+		}
+		else if (p->key == '2')
+		{
+			if (bs.attackID != TYPE_RANGED && ks.isInAir == 0)
+			{
+				bs.attackID = TYPE_RANGED;
+				bs.stateID = IDLE_STATE;
 				ks.xzspeed = 0.0f;
 			}
 		}
