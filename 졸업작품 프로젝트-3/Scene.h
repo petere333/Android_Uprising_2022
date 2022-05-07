@@ -96,12 +96,12 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_d3dSrvCPUDescriptorNextHandle;
 	D3D12_GPU_DESCRIPTOR_HANDLE			m_d3dSrvGPUDescriptorNextHandle;
 
-	#define nTex  58
+	#define nTex  59
 	#define nNormal  1
 	
 	#define nDirt  9
 	
-	#define nMat 58
+	#define nMat 59
 	#define nDirMat 9
 
 #define nSkinMesh 5

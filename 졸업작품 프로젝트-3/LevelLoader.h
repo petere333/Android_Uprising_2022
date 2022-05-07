@@ -173,7 +173,7 @@
 #define GamOk_2 14226 // 1-4 
 #define GamOk2 14128 // 1-4 
 #define GamOk_Shell 14130 // 1-4
-#define Wallz11 14132 // 1-1
+#define Wallz11 11132 // 1-1
 #define Wallz12 11134 // 1-1
 #define Wallz13 11136 // 1-1
 #define Wallz14 11138 // 1-1
@@ -232,6 +232,7 @@
 #define Janhae5 11994
 #define Janhae6 11993
 #define Janhae7 11992
+#define Janhae8 11991
 
 
 
