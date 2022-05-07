@@ -244,7 +244,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[59]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÆÈÆ®·°.dds", RESOURCE_TEXTURE2D, 0);
 	textures[60] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[60]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼û´Âº®.dds", RESOURCE_TEXTURE2D, 0);
-
+	textures[61] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µé¾öÅë.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -523,6 +524,12 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_janhae7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Åé³¯´Ü°Ë2.txt", NULL);
 	CLoadedMesh* Gongjang_janhae8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØ±â°è.txt", NULL);
 	CLoadedMesh* Gongjang_janhae9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØÆ®·°.txt", NULL);
+	CLoadedMesh* Gongjang_janhae11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÀÜÇØµå·³Åë.txt", NULL);
+
+
+
+
+
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1863,6 +1870,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_janhae10);
 		obj->SetMaterial(0, ppMaterials[60]);
+
+		}
+		else if (data[i].type == Janhae11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae11);
+		obj->SetMaterial(0, ppMaterials[61]);
 
 		}
 
