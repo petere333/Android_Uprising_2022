@@ -449,22 +449,22 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 
 			packet.key = '2';
-			if (keydown == false)
-			{
+			//if (keydown == false)
+			//{
 				SendPacket(&packet);
-				keydown = true;
-			}
+			//	keydown = true;
+			//}
 			break;
 		}
 		case '1':
 		{
 			
 			packet.key = '1';
-			if (keydown == false)
-			{
+			//if (keydown == false)
+			//{
 				SendPacket(&packet);
-				keydown = true;
-			}
+			//	keydown = true;
+			//}
 		}
 
 		}

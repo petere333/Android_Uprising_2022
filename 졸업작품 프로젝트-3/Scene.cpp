@@ -246,7 +246,6 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[60]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/숨는벽.dds", RESOURCE_TEXTURE2D, 0);
 
 
-
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 
@@ -1868,6 +1867,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 
+
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
@@ -2175,17 +2175,39 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		
 		if (players[i]->bState.stateID == IDLE_STATE)
 		{
-			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			if (players[i]->bState.attackID == TYPE_RANGED)
 			{
-				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				{
+					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				}
+				players[i]->SetTrackAnimationSet(0, 11);
+				if (players[i]->kState.yspeed != 0.0f)
+				{
+					moveObject(i, cam);
+				}
+				setObjectLastMove(i);
 			}
-			players[i]->SetTrackAnimationSet(0, 11);
-			if (players[i]->kState.yspeed != 0.0f)
+			else if (players[i]->bState.attackID == TYPE_MELEE)
 			{
-				moveObject(i, cam);
+				std::chrono::duration<double> dt = std::chrono::system_clock::now() - players[i]->lastAttack;
+				float df = static_cast<float>(dt.count());
+				if (df >= 0.833333f)
+				{
+					if (players[i]->m_pChild != binModels[2]->m_pModelRootObject)
+					{
+						players[i]->setRoot(binModels[2]->m_pModelRootObject, true);
+						players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
+					}
+					players[i]->SetTrackAnimationSet(0, 0);
+				}
+				if (players[i]->kState.yspeed != 0.0f)
+				{
+					moveObject(i, cam);
+				}
+				setObjectLastMove(i);
 			}
-			setObjectLastMove(i);
 		}
 		else if (players[i]->bState.stateID == JUMP_STATE)
 		{
@@ -2201,29 +2223,48 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		else if (players[i]->bState.stateID == MOVE_STATE)
 		{
-			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			if (players[i]->bState.attackID == TYPE_RANGED)
 			{
-				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				{
+					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				}
+				players[i]->SetTrackAnimationSet(0, 20);
 			}
-			players[i]->SetTrackAnimationSet(0, 20);
+			else if (players[i]->bState.attackID == TYPE_MELEE)
+			{
+				if (players[i]->m_pChild != binModels[1]->m_pModelRootObject)
+				{
+					players[i]->setRoot(binModels[1]->m_pModelRootObject, true);
+					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[1]);
+				}
+				players[i]->SetTrackAnimationSet(0, 0);
+			}
 			moveObject(i,cam);
-			
 			setObjectLastMove(i);
 			
 		}
 		else if (players[i]->bState.stateID == ATTACK_STATE)
 		{
-			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			if (players[i]->bState.attackID == TYPE_RANGED)
 			{
-				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
-				
+				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				{
+					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+
+				}
+
+				players[i]->SetTrackAnimationSet(0, 2);
+				cam->rotateUp();
+				attack(i);
 			}
-			
-			players[i]->SetTrackAnimationSet(0, 2);
-			cam->rotateUp();
-			attack(i);
+			else if (players[i]->bState.attackID == TYPE_MELEE)
+			{
+				cam->rotateUp();
+				swingHammer(i, pd3dDevice, pd3dCommandList);
+			}
 			setObjectLastMove(i);
 			for (int j = 0; j < players.size(); ++j)
 			{
@@ -2644,28 +2685,98 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		XMFLOAT3 pos = enemies[i]->GetPosition();
 		XMFLOAT3 camPos = pCamera->getPosition();
 		
+		float px = camPos.x;
+		float pz = camPos.z;
+
+		float ex = pos.x;
+		float ez = pos.z;
 		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
 
 		float dist = Vector3::Length(fromCamera);
 
 		XMFLOAT3 look = pCamera->getLook();
+		look.y = 0.0f;
+		fromCamera.y = 0.0f;
 
 		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
 
-		if (cosAngle <= 1.0f && cosAngle >= 0.0f && dist<=150.0f)
-		{
 
-			enemies[i]->Animate(m_fElapsedTime);
-			if (enemies[i]->m_pSkinnedAnimationController)
+
+		if ((px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f) &&
+			(ex >= 0.0f && ex <= 400.0f && ez >= 0.0f && ez <= 200.0f))//1-1
+		{
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 			{
-				enemies[i]->UpdateTransform(NULL);
+				enemies[i]->Animate(m_fElapsedTime);
+				if (enemies[i]->m_pSkinnedAnimationController)
+				{
+					enemies[i]->UpdateTransform(NULL);
+				}
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
+				enemies[i]->Render(pd3dCommandList, pCamera);
 			}
-			if (m_pd3dCbvSrvDescriptorHeap)
+		}
+
+
+		else if ((px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f) &&
+			(ex >= 0.0f && ex <= 200.0f && ez >= 200.0f && ez <= 600.0f))//1-2
+		{
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				enemies[i]->Animate(m_fElapsedTime);
+				if (enemies[i]->m_pSkinnedAnimationController)
+				{
+					enemies[i]->UpdateTransform(NULL);
+				}
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
+				enemies[i]->Render(pd3dCommandList, pCamera);
 			}
-			ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
-			enemies[i]->Render(pd3dCommandList, pCamera);
+		}
+
+		else if ((px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f) &&
+			(ex >= 280.0f && ex <= 400.0f && ez >= 200.0f && ez <= 600.0f))//1-3
+		{
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+			{
+				enemies[i]->Animate(m_fElapsedTime);
+				if (enemies[i]->m_pSkinnedAnimationController)
+				{
+					enemies[i]->UpdateTransform(NULL);
+				}
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
+				enemies[i]->Render(pd3dCommandList, pCamera);
+			}
+		}
+
+		else if ((px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f) &&
+			(ex >= 400.0f && ex <= 600.0f && ez >= 0.0f && ez <= 600.0f))//1-4
+		{
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+			{
+				enemies[i]->Animate(m_fElapsedTime);
+				if (enemies[i]->m_pSkinnedAnimationController)
+				{
+					enemies[i]->UpdateTransform(NULL);
+				}
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
+				enemies[i]->Render(pd3dCommandList, pCamera);
+			}
 		}
 	}
 
@@ -3841,7 +3952,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			{
 				players[idx]->setRoot(binModels[3]->m_pModelRootObject, true);
 				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[3]);
-				setPlayerAnimation(0);
+				players[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
 		else
@@ -3850,7 +3961,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			{
 				players[idx]->setRoot(binModels[4]->m_pModelRootObject, true);
 				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[4]);
-				setPlayerAnimation(0);
+				players[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
 	}
@@ -3912,7 +4023,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				soundEffect[4]->Update();
 				players[idx]->hammerHit = true;
 				createParticles(50, pnt);
-				enemies[i]->eState.currHP -= 1.0f;
+				enemies[i]->bState.hp -= 1.0f;
 			}
 		}
 	}
@@ -3922,7 +4033,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		{
 			players[idx]->setRoot(binModels[2]->m_pModelRootObject, true);
 			players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
-			setPlayerAnimation(0);
+			players[idx]->SetTrackAnimationSet(0, 0);
 			
 		}
 		
@@ -3990,159 +4101,50 @@ void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 
 
 	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj->SetPosition(160.0f, 0.0f, 280.0f);
+	obj->SetPosition(90.0f, 0.0f, 150.0f);
 	obj->type = -10;
 	obj->SetTrackAnimationSet(0, 0);
 
-	obj->eState.id = IDLE_STATE;
-	obj->eState.currHP = 10;
+	obj->bState.stateID = IDLE_STATE;
+	obj->bState.hp = 10;
 	enemies.push_back(obj);
 
 	CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj2->SetPosition(160.0f, 0.0f, 320.0f);
+	obj2->SetPosition(92.0f, 0.0f, 152.0f);
 	obj2->type = -10;
 	obj2->SetTrackAnimationSet(0, 0);
 
-	obj2->eState.id = IDLE_STATE;
-	obj2->eState.currHP = 10;
+	obj2->bState.stateID = IDLE_STATE;
+	obj2->bState.hp = 10;
 	enemies.push_back(obj2);
 
 	CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj3->SetPosition(170.0f, 0.0f, 300.0f);
+	obj3->SetPosition(94.0f, 0.0f, 150.0f);
 	obj3->type = -10;
 	obj3->SetTrackAnimationSet(0, 0);
 
-	obj3->eState.id = IDLE_STATE;
-	obj3->eState.currHP = 10;
+	obj3->bState.stateID = IDLE_STATE;
+	obj3->bState.hp = 10;
 	enemies.push_back(obj3);
 
-	CGameObject* obj4= new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj4->SetPosition(225.0f, 0.0f, 320.0f);
+	CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
+	obj4->SetPosition(120.0f, 0.0f, 220.0f);
 	obj4->type = -10;
 	obj4->SetTrackAnimationSet(0, 0);
-	   
-	obj4->eState.id = IDLE_STATE;
-	obj4->eState.currHP = 10;
+
+	obj4->bState.stateID = IDLE_STATE;
+	obj4->bState.hp = 10;
 	enemies.push_back(obj4);
 
 	CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj5->SetPosition(225.0f, 0.0f, 345.0f);
+	obj5->SetPosition(450.0f, 0.0f, 330.0f);
 	obj5->type = -10;
 	obj5->SetTrackAnimationSet(0, 0);
 
-	obj5->eState.id = IDLE_STATE;
-	obj5->eState.currHP = 10;
+	obj5->bState.stateID = IDLE_STATE;
+	obj5->bState.hp = 10;
 	enemies.push_back(obj5);
 
-	CGameObject* obj6 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj6->SetPosition(240.0f, 0.0f, 320.0f);
-	obj6->type = -10;
-	obj6->SetTrackAnimationSet(0, 0);
-
-	obj6->eState.id = IDLE_STATE;
-	obj6->eState.currHP = 10;
-	enemies.push_back(obj6);
-
-	CGameObject* obj7 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj7->SetPosition(240.0f, 0.0f, 345.0f);
-	obj7->type = -10;
-	obj7->SetTrackAnimationSet(0, 0);
-
-	obj7->eState.id = IDLE_STATE;
-	obj7->eState.currHP = 10;
-	enemies.push_back(obj7);
-
-
-	CGameObject* obj8 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj8->SetPosition(207.0f, 0.0f, 320.0f);
-	obj8->type = -10;
-	obj8->SetTrackAnimationSet(0, 0);
-	obj8->eState.id = IDLE_STATE;
-	obj8->eState.currHP = 10;
-	enemies.push_back(obj8);
-
-	for (int i = 0; i < 4; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(450.0f+i*15.0f, 0.0f, 330.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(450.0f + i * 15.0f, 0.0f, 80.0f+i*8.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-
-		CGameObject* obj00 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj00->SetPosition(420.0f + i * 10.0f, 0.0f, 80.0f + i * 3.0f);
-		obj00->type = -10;
-		obj00->SetTrackAnimationSet(0, 0);
-		obj00->eState.id = IDLE_STATE;
-		obj00->eState.currHP = 10;
-		enemies.push_back(obj00);
-	}
-
-	for (int i = 0; i < 2; ++i)
-	{
-		for (int j = 0; j < 2; ++j)
-		{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(495.0f + i * -20.0f, 0.0f, 565.0f+j*-15.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-		}
-	}
-	for (int i = 0; i < 4; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(860.0f, 0.0f, 565.0f+ i * -15.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-	}
-	for (int i = 0; i < 5; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(960.0f+i*5.0f, 0.0f, 65.0f + i * -5.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-	}
-	for (int i = 0; i < 5; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(1160.0f+5.0f*i, 0.0f, 555+i*3.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-	}
-	for (int i = 0; i < 3; ++i)
-	{
-		CGameObject* obj0 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-		obj0->SetPosition(1222.0f + 5.0f * i, 0.0f, 545 + i * -3.0f);
-		obj0->type = -10;
-		obj0->SetTrackAnimationSet(0, 0);
-		obj0->eState.id = IDLE_STATE;
-		obj0->eState.currHP = 10;
-		enemies.push_back(obj0);
-	}
 	// 각 적들의 위치에 바운딩 박스 생성
 	for (int i = 0; i < enemies.size(); ++i)
 	{
