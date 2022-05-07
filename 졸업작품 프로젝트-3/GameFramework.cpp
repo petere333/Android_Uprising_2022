@@ -438,11 +438,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			// 플레이어에 대한 점프 명령
 			//m_pScene->jumpObject(0);
 			packet.key = VK_SPACE;
-			if (keydown == false)
-			{
+			//if (keydown == false)
+			//{
 				SendPacket(&packet);
-				keydown = true;
-			}
+			//	keydown = true;
+			//}
 			break;
 		}
 		case '2':
@@ -564,7 +564,19 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					}
 					break;
 				}
+				/*
+				case VK_SPACE:
+				{
+					
+					uppac.key = VK_SPACE;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
 					break;
+				}
+				*/
 				default:
 					break;
 			}

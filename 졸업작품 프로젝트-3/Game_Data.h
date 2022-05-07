@@ -12,7 +12,8 @@
 #define MOVE_STATE 2
 #define ATTACK_STATE 3
 #define MOVE_ATTACK_STATE 4
-#define DEATH_STATE 5
+#define JUMP_STATE 5
+#define DEATH_STATE 6
 
 //적, 플레이어의 공격 유형 아이디값.
 #define TYPE_MELEE 1

@@ -113,6 +113,7 @@ public:
 	void send_bionic_change(int c_id, BionicState state);
 	void send_camera_change(int c_id, float, float);
 	void send_attack_info(int c_id, float x, float, float, int);
+	void send_jump(int c_id);
 	
 };
 
@@ -160,6 +161,16 @@ public:
 	 p.x = x;
 	 p.y = y;
 	 p.z = z;
+
+	 do_send(&p);
+ }
+
+ void SESSION::send_jump(int c_id)
+ {
+	 SC_JUMP_PACKET p;
+	 p.size = sizeof(SC_JUMP_PACKET);
+	 p.type = PACKET_TYPE::SC_JUMP;
+	 p.id = c_id;
 
 	 do_send(&p);
  }
@@ -334,6 +345,7 @@ void process_packet(int c_id, char* packet)
 		{
 			ks.rotation = clients[c_id].cameraAngle+180.0f;
 			ks.xzspeed = PLAYER_SPEED;
+			
 			bs.stateID = MOVE_STATE;
 
 			clients[c_id].kState.rotation = ks.rotation;
@@ -371,6 +383,28 @@ void process_packet(int c_id, char* packet)
 			clients[c_id].kState.xzspeed = PLAYER_SPEED;
 			clients[c_id].bState.stateID = MOVE_STATE;
 		}
+
+		else if (p->key == VK_SPACE)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_jump(c_id);
+				}
+			}
+			break;
+		}
+
+		else if (p->key == '1')
+		{
+			if (bs.attackID != TYPE_MELEE && ks.isInAir==0)
+			{
+				bs.attackID = TYPE_MELEE;
+				ks.xzspeed = 0.0f;
+			}
+		}
+
 		if (ks.rotation >= 360.0f)
 		{
 			ks.rotation -= 360.0f;
@@ -384,8 +418,8 @@ void process_packet(int c_id, char* packet)
 		clients[c_id].bState = bs;
 
 		KineticState ks2 = ks;
-		ks2.isInAir = -9999;
-		ks2.isMobile = -9999;
+		//ks2.isInAir = -9999;
+		//ks2.isMobile = -9999;
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
@@ -404,12 +438,14 @@ void process_packet(int c_id, char* packet)
 		KineticState ks=clients[c_id].kState;
 		BionicState bs=clients[c_id].bState;
 
+
 		cout << "Key up received: from "<<c_id;
 
 		if (p->key == VK_UP)
 		{
 			cout << " Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
+			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
@@ -419,6 +455,7 @@ void process_packet(int c_id, char* packet)
 		{
 			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
+			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
@@ -428,6 +465,7 @@ void process_packet(int c_id, char* packet)
 		{
 			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
+			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
@@ -437,6 +475,7 @@ void process_packet(int c_id, char* packet)
 		{
 			cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
+			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
 
 			clients[c_id].kState.xzspeed = 0.0f;
@@ -456,17 +495,31 @@ void process_packet(int c_id, char* packet)
 			bs.attackID = TYPE_MELEE;
 			clients[c_id].bState.attackID = TYPE_MELEE;
 		}
-		clients[c_id].kState = ks;
-		clients[c_id].bState = bs;
-		KineticState ks2 = ks;
+		else if (p->key == VK_SPACE)
+		{
+			
+		}
+		KineticState ks2;
+		BionicState bs2;
+		bs2 = bs;
+		ks2 = ks;
 		ks2.isInAir = -9999;
+		ks2.xzspeed = -9999.0f;
+		ks2.yspeed = -9999.0f;
 		ks2.isMobile = -9999;
 		ks2.rotation = -9999.0f;
+
+
+
+		clients[c_id].kState = ks;
+		clients[c_id].bState = bs;
+		
+
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
-				pl.send_kinetic_change(c_id, ks2);
+				pl.send_kinetic_change(c_id, ks);
 				pl.send_bionic_change(c_id, bs);
 			}
 		}
