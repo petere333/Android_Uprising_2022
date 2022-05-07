@@ -2378,7 +2378,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 			XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
 			XMFLOAT3 look = pCamera->getLook();
-			
+			float px = camPos.x;
+			float pz = camPos.z;
 			float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
 
 			float dist = Vector3::Length(fromCamera);
@@ -2389,38 +2390,172 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			*/
 			int tp = m_ppGameObjects[i]->type;
 
-			if (tp == 50000)
+			if (tp >= 30000 && tp!=Heaters1)
 			{
 				if (m_pd3dCbvSrvDescriptorHeap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 				}
 				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+				continue;
 			}
 
-			else if ((tp >= 2000 && tp < 3000) || (tp >= 10000) || (tp<6000 && tp>=5000))
+			//1±¸¿ª
+			if ((px >= 0.0f && px <= 600.0f) && (pz>=0.0f && pz<=600.0f))
 			{
-				//m_ppGameObjects[i]->Animate(m_fElapsedTime);
-				//if (!m_ppGameObjects[i]->m_pSkinnedAnimationController) m_ppGameObjects[i]->UpdateTransform(NULL);
-				if (m_pd3dCbvSrvDescriptorHeap)
+				if (tp >= 10000 && tp < 11000)
 				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+					continue;
 				}
-				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+				if (px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f)//1-1
+				{
+					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7))
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						continue;
+					}
+					else if (tp >= 11200 && tp < 11900)
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+					}
+				}
+
+				if (px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f)//1-2
+				{
+					if ((tp >= 12000 && tp < 12200) || (tp == GyeDans1 || tp == GyeDans2 || tp == R_GyeDan1 || tp == Stairs1))
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						continue;
+					}
+					else if ((tp >= 12200 && tp < 13000)||(tp>=11900 && tp<12000) || (tp==Heaters1))
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+					}
+				}
+
+				if (px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f)//1-3
+				{
+					if (tp >= 13000 && tp < 13200)
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						continue;
+					}
+					else if (tp >= 13200 && tp < 14000)
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+					}
+				}
+
+				if (px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f)//1-4
+				{
+					if (tp >= 14000 && tp < 14200)
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						continue;
+					}
+					else if (tp >= 14200 && tp < 15000)
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+							continue;
+						}
+					}
+				}
 			}
-			
-				
-			else if ((cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f))&& dist<=300.0f) || (dist<=50.0f && cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(120.0f))))
+			else
 			{
-
-				m_ppGameObjects[i]->Animate(m_fElapsedTime);
-				if (!m_ppGameObjects[i]->m_pSkinnedAnimationController) m_ppGameObjects[i]->UpdateTransform(NULL);
 				if (m_pd3dCbvSrvDescriptorHeap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 				}
-
 				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+				continue;
 			}
 		}
 	}
