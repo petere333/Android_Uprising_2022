@@ -2162,6 +2162,22 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
 			}
 			players[i]->SetTrackAnimationSet(0, 11);
+			if (players[i]->kState.yspeed != 0.0f)
+			{
+				moveObject(i, cam);
+			}
+			setObjectLastMove(i);
+		}
+		else if (players[i]->bState.stateID == JUMP_STATE)
+		{
+			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			{
+				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
+				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+			}
+			players[i]->SetTrackAnimationSet(0, 20);
+
+			moveObject(i, cam);
 			setObjectLastMove(i);
 		}
 		else if (players[i]->bState.stateID == MOVE_STATE)
@@ -2423,7 +2439,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 						continue;
 					}
-					else if (tp >= 11200 && tp < 11900)
+					else if ((tp >= 11200 && tp < 11900) || (tp==Heaters1) || (tp>=14126 && tp<=14130))
 					{
 						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
 						{
@@ -2457,7 +2473,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 						continue;
 					}
-					else if ((tp >= 12200 && tp < 13000)||(tp>=11900 && tp<12000) || (tp==Heaters1))
+					else if ((tp >= 12200 && tp < 13000)||(tp>=11890 && tp<11900) || (tp==Heaters1))
 					{
 						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
 						{
@@ -2724,7 +2740,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			XMFLOAT3 dir = XMFLOAT3(cos(rd), 0.0f, sin(rd));
 
 			tx = players[idx]->GetPosition().x + fTime * players[idx]->kState.xzspeed * dir.x;
-			ty = players[idx]->GetPosition().y + fTime * players[idx]->yspeed;
+			ty = players[idx]->GetPosition().y + fTime * players[idx]->kState.yspeed;
 			tz = players[idx]->GetPosition().z + fTime * players[idx]->kState.xzspeed * -dir.z;
 			
 			// 물체가 있는곳에 이동했는가?
@@ -2785,26 +2801,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->yspeed != 0.0f)
+					else if (players[idx]->kState.yspeed != 0.0f)
 					{
-						if (players[idx]->yspeed > 0.0f)
+						if (players[idx]->kState.yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
+							players[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->yspeed < 0.0f)
+						else if (players[idx]->kState.yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
-							players[idx]->isInAir = false;
+							players[idx]->kState.yspeed = 0.0f;
+							players[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -2815,8 +2831,8 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				else if (tx > boxesWorld[i].start.x - 0.5f && tz > boxesWorld[i].start.z - 0.5f
 					&& tx < boxesWorld[i].end.x + 0.5f && tz < boxesWorld[i].end.z + 0.5f && ty>boxesWorld[i].end.y)
 				{
-					players[idx]->isInAir = true;
-					players[idx]->yspeed -= 0.1f;
+					players[idx]->kState.isInAir = 1;
+					players[idx]->kState.yspeed -= 0.1f;
 					stepOn = false;
 					crash = false;
 
@@ -2882,26 +2898,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->yspeed != 0.0f)
+					else if (players[idx]->kState.yspeed != 0.0f)
 					{
-						if (players[idx]->yspeed > 0.0f)
+						if (players[idx]->kState.yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
+							players[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->yspeed < 0.0f)
+						else if (players[idx]->kState.yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
-							players[idx]->isInAir = false;
+							players[idx]->kState.yspeed = 0.0f;
+							players[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -2969,26 +2985,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->isInAir == true)
+					else if (players[idx]->kState.isInAir == 1)
 					{
-						if (players[idx]->yspeed > 0.0f)
+						if (players[idx]->kState.yspeed > 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
+							players[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->yspeed < 0.0f)
+						else if (players[idx]->kState.yspeed < 0.0f)
 						{
 							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].end.y, players[idx]->GetPosition().z);
 							if (idx == pID)
 							{
 								pCamera->move(players[idx]->GetPosition());
 							}
-							players[idx]->yspeed = 0.0f;
-							players[idx]->isInAir = false;
+							players[idx]->kState.yspeed = 0.0f;
+							players[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -3000,16 +3016,16 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 					&& tx < stairsWorld[i].end.x + 0.5f && ty <= stairsWorld[i].end.y && tz < stairsWorld[i].end.z + 0.5f)
 				{
 					ty = stairsWorld[i].end.y;
-					players[idx]->yspeed = 0.0f;
-					players[idx]->isInAir = false;
+					players[idx]->kState.yspeed = 0.0f;
+					players[idx]->kState.isInAir = 0;
 					crash = false;
 					stepOn = true;
 				}
 				else if (tx > stairsWorld[i].start.x - 0.5f && tz > stairsWorld[i].start.z - 0.5f
 					&& tx < stairsWorld[i].end.x + 0.5f && tz < stairsWorld[i].end.z + 0.5f && ty > stairsWorld[i].end.y)
 				{
-					players[idx]->isInAir = true;
-					players[idx]->yspeed -= 0.1f;
+					players[idx]->kState.isInAir = 1;
+					players[idx]->kState.yspeed -= 0.1f;
 					stepOn = false;
 					crash = false;
 				}
@@ -3028,16 +3044,16 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				players[idx]->lastMoveSuccess = true;
 
 				// y축 이동이 존재할 경우 중력가속도 적용
-				if (players[idx]->isInAir == true)
+				if (players[idx]->kState.isInAir == 1)
 				{
-					players[idx]->yspeed -= 9.8f * fTime * 5.0f;
+					players[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
 				}
 			}
 
 			else
 			{
 				players[idx]->lastMoveSuccess = false;
-				if (players[idx]->isInAir == true)
+				if (players[idx]->kState.isInAir == 1)
 				{
 					players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
 					pCamera->move(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
@@ -3045,12 +3061,17 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 
 					//if (players[idx]->yspeed != 0.0f)
 					//{
-					players[idx]->yspeed -= 9.8f * fTime * 5.0f;
+					players[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
 					//}
 				}
 
 			}
 
+		}
+		else
+		{
+			players[idx]->bState.stateID = IDLE_STATE;
+			players[idx]->kState.isInAir = 0;
 		}
 	cout << "(" << players[idx]->GetPosition().x << ", " << players[idx]->GetPosition().y << ", " << players[idx]->GetPosition().z << ")" << endl;
 	
@@ -3343,6 +3364,15 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		//수정중
 		break;
 		//case PACKET_TYPE::SC_KEYBOARD_INPUT:
+
+	case PACKET_TYPE::SC_JUMP:
+	{
+		SC_JUMP_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+		cout << "jump player" << endl;
+		players[p.id]->jump();
+		break;
+	}
 	default:
 		cout << "Unknown PACKET type [" << +p_buf[1] << "]" << endl;
 		break;

@@ -514,7 +514,7 @@ public:
 	bool isDead = false;
 
 public:
-	void jump() { if (yspeed ==0.0f) { yspeed = 15.0f; isInAir = true; } }
+	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }
 
 
 };
