@@ -155,16 +155,17 @@
 #define Factory_tool19 23586 // 2-3
 #define Factory_tool20 23588 // 2-3
 
-#define Wallz1 11100 // 1-1
-#define Wallz2 11102 // 1-1
-#define Wallz3 11104 // 1-1
+
+#define Wallz1 30093 // 1-1
+#define Wallz2 30094 // 1-1
+#define Wallz3 30095 // 1-1
 #define Wallz4 30097 // 1-3
 #define Wallz5 30096 // 1-3
 #define Wallz6 12110 // 1-2
 #define Wallz7 12112 // 1-2
-#define Wallz8 11114// 1-1
-#define Wallz9 11116 // 1-1
-#define Wallz10 11118 // 1-1
+#define Wallz8 30114// 1-1
+#define Wallz9 30116 // 1-1
+#define Wallz10 30118 // 1-1
 #define Chagsal1 11120 // 1-1
 #define Chagsal2 11122 // 1-1
 #define Pyo 11124 // 1-1
@@ -224,15 +225,15 @@
 #define S_Wallz26 21219 // 2-1
 #define Top_wall1 30004
 #define Top_wall2 30005
-#define Janhae1 11999 // 1-1
-#define Janhae2 11998 // 1-1
-#define Janhae3 11997 // 1-1
-#define Janhae2_1 11996 // 1- 1
-#define Janhae4 11995
-#define Janhae5 11994
-#define Janhae6 11993
-#define Janhae7 11992
-#define Janhae8 11991
+#define Janhae1 11899 // 1-1
+#define Janhae2 11898
+#define Janhae3 11897
+#define Janhae2_1 11896
+#define Janhae4 11895
+#define Janhae5 11894
+#define Janhae6 11893
+#define Janhae7 11892
+#define Janhae8 11891
 
 
 
