@@ -56,7 +56,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateDepthStencilView();
 	CoInitialize(NULL);
 	
-	// CSound::Init();
+	 CSound::Init();
 
 	SetCursorPos(500, 500);
 	prevX = 500;
@@ -694,12 +694,12 @@ void CGameFramework::ProcessInput()
 
 	//여기서부터 서버에서 처리
 	
-	prevX = pnt.x;
-	prevY = pnt.y;
+	//prevX = pnt.x;
+	//prevY = pnt.y;
 
-	//SetCursorPos(500, 500);
-	//prevX = 500;
-	//prevY = 500;
+	SetCursorPos(500, 500);
+	prevX = 500;
+	prevY = 500;
 	//서버 처리 끝
 
 }
