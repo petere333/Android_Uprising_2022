@@ -2926,12 +2926,223 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Janhaes11_4.type = Janhae11;
 	list.push_back(Janhaes11_4);
 
-
 	Object Janhaes11_5;
 	Janhaes11_5.location = f3(353.0f, 5.0f, 390.0f);
 	Janhaes11_5.rotation = f3(0.0f, 0.0f, 0.0f);
 	Janhaes11_5.type = Janhae11;
 	list.push_back(Janhaes11_5);
+
+	Object Janhaes12_1;
+	Janhaes12_1.location = f3(469.0f, 0.0f, 175.0f);
+	Janhaes12_1.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_1.type = Janhae12;
+	list.push_back(Janhaes12_1);
+
+	Object Janhaes12_2;
+	Janhaes12_2.location = f3(493.0f, 0.0f, 175.0f);
+	Janhaes12_2.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_2.type = Janhae12;
+	list.push_back(Janhaes12_2);
+
+	Object Janhaes12_3;
+	Janhaes12_3.location = f3(517.0f, 0.0f, 175.0f);
+	Janhaes12_3.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_3.type = Janhae12;
+	list.push_back(Janhaes12_3);
+
+	Object Janhaes12_4;
+	Janhaes12_4.location = f3(541.0f, 0.0f, 175.0f);
+	Janhaes12_4.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_4.type = Janhae12;
+	list.push_back(Janhaes12_4);
+
+	Object Janhaes12_5;
+	Janhaes12_5.location = f3(565.0f, 0.0f, 175.0f);
+	Janhaes12_5.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_5.type = Janhae12;
+	list.push_back(Janhaes12_5);
+
+
+
+	///////////////////////////////////////////////////////////
+
+
+	Object Janhaes12_6;
+	Janhaes12_6.location = f3(469.0f, 0.0f, 195.0f);
+	Janhaes12_6.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_6.type = Janhae12;
+	list.push_back(Janhaes12_6);
+
+	Object Janhaes12_7;
+	Janhaes12_7.location = f3(493.0f, 0.0f, 195.0f);
+	Janhaes12_7.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_7.type = Janhae12;
+	list.push_back(Janhaes12_7);
+
+	Object Janhaes12_8;
+	Janhaes12_8.location = f3(517.0f, 0.0f, 195.0f);
+	Janhaes12_8.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_8.type = Janhae12;
+	list.push_back(Janhaes12_8);
+
+	Object Janhaes12_9;
+	Janhaes12_9.location = f3(541.0f, 0.0f, 195.0f);
+	Janhaes12_9.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_9.type = Janhae12;
+	list.push_back(Janhaes12_4);
+
+	Object Janhaes12_10;
+	Janhaes12_10.location = f3(565.0f, 0.0f, 195.0f);
+	Janhaes12_10.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_10.type = Janhae12;
+	list.push_back(Janhaes12_10);
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	Object Janhaes12_11;
+	Janhaes12_11.location = f3(469.0f, 0.0f, 215.0f);
+	Janhaes12_11.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_11.type = Janhae12;
+	list.push_back(Janhaes12_11);
+
+	Object Janhaes12_12;
+	Janhaes12_12.location = f3(493.0f, 0.0f, 215.0f);
+	Janhaes12_12.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_12.type = Janhae12;
+	list.push_back(Janhaes12_12);
+
+	Object Janhaes12_13;
+	Janhaes12_13.location = f3(517.0f, 0.0f, 215.0f);
+	Janhaes12_13.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_13.type = Janhae12;
+	list.push_back(Janhaes12_13);
+
+	Object Janhaes12_14;
+	Janhaes12_14.location = f3(541.0f, 0.0f, 215.0f);
+	Janhaes12_14.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_14.type = Janhae12;
+	list.push_back(Janhaes12_14);
+
+	Object Janhaes12_15;
+	Janhaes12_15.location = f3(565.0f, 0.0f, 215.0f);
+	Janhaes12_15.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_15.type = Janhae12;
+	list.push_back(Janhaes12_15);
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	Object Janhaes12_16;
+	Janhaes12_16.location = f3(469.0f, 0.0f, 235.0f);
+	Janhaes12_16.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_16.type = Janhae12;
+	list.push_back(Janhaes12_16);
+
+	Object Janhaes12_17;
+	Janhaes12_17.location = f3(493.0f, 0.0f, 235.0f);
+	Janhaes12_17.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_17.type = Janhae12;
+	list.push_back(Janhaes12_17);
+
+	Object Janhaes12_18;
+	Janhaes12_18.location = f3(517.0f, 0.0f, 235.0f);
+	Janhaes12_18.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_18.type = Janhae12;
+	list.push_back(Janhaes12_18);
+
+	Object Janhaes12_19;
+	Janhaes12_19.location = f3(541.0f, 0.0f, 235.0f);
+	Janhaes12_19.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_19.type = Janhae12;
+	list.push_back(Janhaes12_19);
+
+	Object Janhaes12_20;
+	Janhaes12_20.location = f3(565.0f, 0.0f, 235.0f);
+	Janhaes12_20.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_20.type = Janhae12;
+	list.push_back(Janhaes12_20);
+
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	Object Janhaes12_21;
+	Janhaes12_21.location = f3(469.0f, 0.0f, 255.0f);
+	Janhaes12_21.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_21.type = Janhae12;
+	list.push_back(Janhaes12_21);
+
+	Object Janhaes12_22;
+	Janhaes12_22.location = f3(493.0f, 0.0f, 255.0f);
+	Janhaes12_22.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_22.type = Janhae12;
+	list.push_back(Janhaes12_22);
+
+	Object Janhaes12_23;
+	Janhaes12_23.location = f3(517.0f, 0.0f, 255.0f);
+	Janhaes12_23.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_23.type = Janhae12;
+	list.push_back(Janhaes12_23);
+
+	Object Janhaes12_24;
+	Janhaes12_24.location = f3(541.0f, 0.0f, 255.0f);
+	Janhaes12_24.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_24.type = Janhae12;
+	list.push_back(Janhaes12_24);
+
+	Object Janhaes12_25;
+	Janhaes12_25.location = f3(565.0f, 0.0f, 255.0f);
+	Janhaes12_25.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes12_25.type = Janhae12;
+	list.push_back(Janhaes12_25);
+
+	///////////////////////////////////////
+
+	Object Janhaes13_1;
+	Janhaes13_1.location = f3(405.0f, 1.5f, 200.0f);
+	Janhaes13_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes13_1.type = Janhae13;
+	list.push_back(Janhaes13_1);
+
+	Object Janhaes13_2;
+	Janhaes13_2.location = f3(405.0f, 1.5f, 224.0f);
+	Janhaes13_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes13_2.type = Janhae13;
+	list.push_back(Janhaes13_2);
+
+	Object Janhaes13_3;
+	Janhaes13_3.location = f3(405.0f, 1.5f, 176.0f);
+	Janhaes13_3.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes13_3.type = Janhae13;
+	list.push_back(Janhaes13_3);
+
+	Object Janhaes13_4;
+	Janhaes13_4.location = f3(418.0f, 1.5f, 164.0f);
+	Janhaes13_4.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes13_4.type = Janhae13;
+	list.push_back(Janhaes13_4);
+
+	Object Janhaes13_5;
+	Janhaes13_5.location = f3(430.0f, 1.5f, 188.0f);
+	Janhaes13_5.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes13_5.type = Janhae13;
+	list.push_back(Janhaes13_5);
+
+	Object Janhaes13_6;
+	Janhaes13_6.location = f3(425.0f, 1.5f, 305.0f);
+	Janhaes13_6.rotation = f3(0.0f, 90.0f, 0.0f);
+	Janhaes13_6.type = Janhae13;
+	list.push_back(Janhaes13_6);
+
+	Object Janhaes14_1;
+	Janhaes14_1.location = f3(490.0f, 3.75f, 380.0f);
+	Janhaes14_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes14_1.type = Janhae14;
+	list.push_back(Janhaes14_1);
+
+
 
 	Object Dungle1;
 	Dungle1.location = f3(1260.0f, 0.0f, 330.0f);
@@ -2975,7 +3186,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	for (int i = 0; i < 3; ++i)
 	{
 		Baljeon2[i].location = f3(570.0f, 0.0f, 320.0f + (30.0f * i));
-		Baljeon2[i].rotation = f3(0.0f, 0.0f, 0.0f);
+		Baljeon2[i].rotation = f3(-90.0f, 0.0f, 0.0f);
 		Baljeon2[i].type = Factory_tool15;
 		list.push_back(Baljeon2[i]);
 	}
@@ -5146,6 +5357,188 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans11_5.start = f3(350.0f, 5.0f, 387.0f);
 	Jans11_5.end = f3(356.0f, 11.0f, 393.0f);
 	blist.push_back(Jans11_5);
+
+	// 469 175
+	BoundingBox Jans12_1;
+	Jans12_1.start = f3(462.5f, 0.0f, 168.5f);
+	Jans12_1.end = f3(475.5f, 4.0f, 181.5f);
+	blist.push_back(Jans12_1);
+
+	BoundingBox Jans12_2;
+	Jans12_2.start = f3(486.5f, 0.0f, 168.5f);
+	Jans12_2.end = f3(499.5f, 4.0f, 181.5f);
+	blist.push_back(Jans12_2);
+
+	BoundingBox Jans12_3;
+	Jans12_3.start = f3(510.5f, 0.0f, 168.5f);
+	Jans12_3.end = f3(523.5f, 4.0f, 181.5f);
+	blist.push_back(Jans12_3);
+
+	BoundingBox Jans12_4;
+	Jans12_4.start = f3(534.5f, 0.0f, 168.5f);
+	Jans12_4.end = f3(547.5f, 4.0f, 181.5f);
+	blist.push_back(Jans12_4);
+
+	BoundingBox Jans12_5;
+	Jans12_5.start = f3(558.5f, 0.0f, 168.5f);
+	Jans12_5.end = f3(571.5f, 4.0f, 181.5f);
+	blist.push_back(Jans12_5);
+
+
+	//////////////////////////////////////////////////
+
+
+	BoundingBox Jans12_6;
+	Jans12_6.start = f3(462.5f, 0.0f, 188.5f);
+	Jans12_6.end = f3(475.5f, 4.0f, 201.5f);
+	blist.push_back(Jans12_6);
+
+	BoundingBox Jans12_7;
+	Jans12_7.start = f3(486.5f, 0.0f, 188.5f);
+	Jans12_7.end = f3(499.5f, 4.0f, 201.5f);
+	blist.push_back(Jans12_7);
+
+	BoundingBox Jans12_8;
+	Jans12_8.start = f3(510.5f, 0.0f, 188.5f);
+	Jans12_8.end = f3(523.5f, 4.0f, 201.5f);
+	blist.push_back(Jans12_8);
+
+	BoundingBox Jans12_9;
+	Jans12_9.start = f3(534.5f, 0.0f, 188.5f);
+	Jans12_9.end = f3(547.5f, 4.0f, 201.5f);
+	blist.push_back(Jans12_9);
+
+	BoundingBox Jans12_10;
+	Jans12_10.start = f3(558.5f, 0.0f, 188.5f);
+	Jans12_10.end = f3(571.5f, 4.0f, 201.5f);
+	blist.push_back(Jans12_10);
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	BoundingBox Jans12_11;
+	Jans12_11.start = f3(462.5f, 0.0f, 208.5f);
+	Jans12_11.end = f3(475.5f, 4.0f, 221.5f);
+	blist.push_back(Jans12_11);
+
+	BoundingBox Jans12_12;
+	Jans12_12.start = f3(486.5f, 0.0f, 208.5f);
+	Jans12_12.end = f3(499.5f, 4.0f, 221.5f);
+	blist.push_back(Jans12_12);
+
+	BoundingBox Jans12_13;
+	Jans12_13.start = f3(510.5f, 0.0f, 208.5f);
+	Jans12_13.end = f3(523.5f, 4.0f, 221.5f);
+	blist.push_back(Jans12_13);
+
+	BoundingBox Jans12_14;
+	Jans12_14.start = f3(534.5f, 0.0f, 208.5f);
+	Jans12_14.end = f3(547.5f, 4.0f, 221.5f);
+	blist.push_back(Jans12_14);
+
+	BoundingBox Jans12_15;
+	Jans12_15.start = f3(558.5f, 0.0f, 208.5f);
+	Jans12_15.end = f3(571.5f, 4.0f, 221.5f);
+	blist.push_back(Jans12_15);
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////
+
+	BoundingBox Jans12_16;
+	Jans12_16.start = f3(462.5f, 0.0f, 228.5f);
+	Jans12_16.end = f3(475.5f, 4.0f, 241.5f);
+	blist.push_back(Jans12_16);
+
+	BoundingBox Jans12_17;
+	Jans12_17.start = f3(486.5f, 0.0f, 228.5f);
+	Jans12_17.end = f3(499.5f, 4.0f, 241.5f);
+	blist.push_back(Jans12_17);
+
+	BoundingBox Jans12_18;
+	Jans12_18.start = f3(510.5f, 0.0f, 228.5f);
+	Jans12_18.end = f3(523.5f, 4.0f, 241.5f);
+	blist.push_back(Jans12_18);
+
+	BoundingBox Jans12_19;
+	Jans12_19.start = f3(534.5f, 0.0f, 228.5f);
+	Jans12_19.end = f3(547.5f, 4.0f, 241.5f);
+	blist.push_back(Jans12_19);
+
+	BoundingBox Jans12_20;
+	Jans12_20.start = f3(558.5f, 0.0f, 228.5f);
+	Jans12_20.end = f3(571.5f, 4.0f, 241.5f);
+	blist.push_back(Jans12_20);
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	BoundingBox Jans12_21;
+	Jans12_21.start = f3(462.5f, 0.0f, 248.5f);
+	Jans12_21.end = f3(475.5f, 4.0f, 261.5f);
+	blist.push_back(Jans12_21);
+
+	BoundingBox Jans12_22;
+	Jans12_22.start = f3(486.5f, 0.0f, 248.5f);
+	Jans12_22.end = f3(499.5f, 4.0f, 261.5f);
+	blist.push_back(Jans12_22);
+
+	BoundingBox Jans12_23;
+	Jans12_23.start = f3(510.5f, 0.0f, 248.5f);
+	Jans12_23.end = f3(523.5f, 4.0f, 261.5f);
+	blist.push_back(Jans12_23);
+
+	BoundingBox Jans12_24;
+	Jans12_24.start = f3(534.5f, 0.0f, 248.5f);
+	Jans12_24.end = f3(547.5f, 4.0f, 261.5f);
+	blist.push_back(Jans12_24);
+
+	BoundingBox Jans12_25;
+	Jans12_25.start = f3(558.5f, 0.0f, 248.5f);
+	Jans12_25.end = f3(571.5f, 4.0f, 261.5f);
+	blist.push_back(Jans12_25);
+
+
+	//////////////////////////////////////////////////////////////////////
+
+	BoundingBox Jans13_1;
+	Jans13_1.start = f3(403.5f, 0.0f, 188.0f);
+	Jans13_1.end = f3(406.5f, 3.0f, 212.0f);
+	blist.push_back(Jans13_1);
+
+	BoundingBox Jans13_2;
+	Jans13_2.start = f3(403.5f, 0.0f, 212.0f);
+	Jans13_2.end = f3(406.5f, 3.0f, 236.0f);
+	blist.push_back(Jans13_2);
+
+	BoundingBox Jans13_3;
+	Jans13_3.start = f3(403.5f, 0.0f, 164.0f);
+	Jans13_3.end = f3(406.5f, 3.0f, 188.0f);
+	blist.push_back(Jans13_3);
+
+	BoundingBox Jans13_4;
+	Jans13_4.start = f3(416.5f, 0.0f, 152.0f);
+	Jans13_4.end = f3(419.5f, 3.0f, 176.0f);
+	blist.push_back(Jans13_4);
+
+	BoundingBox Jans13_5;
+	Jans13_5.start = f3(428.5f, 0.0f, 176.0f);
+	Jans13_5.end = f3(431.5f, 3.0f, 200.0f);
+	blist.push_back(Jans13_5);
+
+	BoundingBox Jans13_6;
+	Jans13_6.start = f3(413.0f, 0.0f, 303.5f);
+	Jans13_6.end = f3(437.0f, 3.0f, 306.5f);
+	blist.push_back(Jans13_6);
+
+	BoundingBox Jans14_1;
+	Jans14_1.start = f3(487.0f, 0.0f, 345.0f);
+	Jans14_1.end = f3(493.0f, 7.5f, 415.0f);
+	blist.push_back(Jans14_1);
+
+
+
+
 
 	BoundingBox Dongle1;
 	Dongle1.start = f3(1235.0f, 0.0f, 305.0f);
