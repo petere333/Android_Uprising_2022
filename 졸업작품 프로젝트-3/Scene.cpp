@@ -3520,6 +3520,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		players[p.id]->jump();
 		break;
 	}
+	case PACKET_TYPE::SC_TELEPORT:
+		SC_TELEPORT_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+		cout << "teleport player" << endl;
+		players[p.id]->SetPosition(p.x+p.id*5.0f, p.y, p.z);
+		players[p.id]->bState.stateID = IDLE_STATE;
+		break;
+
 	default:
 		cout << "Unknown PACKET type [" << +p_buf[1] << "]" << endl;
 		break;

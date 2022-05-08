@@ -48,6 +48,7 @@ enum class PACKET_TYPE : short
 	SC_CAMERA_CHANGE,
 	SC_ATTACK,
 	SC_JUMP,
+	SC_TELEPORT,
 };
 
 // client to server packet
@@ -211,5 +212,12 @@ struct SC_JUMP_PACKET
 	unsigned char size;
 	PACKET_TYPE type;
 	short id;
+};
+struct SC_TELEPORT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+	float x, y, z;
 };
 #pragma pack (pop)

@@ -114,6 +114,7 @@ public:
 	void send_camera_change(int c_id, float, float);
 	void send_attack_info(int c_id, float x, float, float, int);
 	void send_jump(int c_id);
+	void send_teleport(int c_id, float x, float y, float z);
 	
 };
 
@@ -174,6 +175,22 @@ public:
 
 	 do_send(&p);
  }
+
+ void SESSION::send_teleport(int c_id, float x, float y, float z)
+ {
+	 SC_TELEPORT_PACKET p;
+	 p.id = c_id;
+	 p.size = sizeof(SC_TELEPORT_PACKET);
+	 p.type = PACKET_TYPE::SC_TELEPORT;
+	 
+	 p.x = x;
+	 p.y = y;
+	 p.z = z;
+
+	 do_send(&p);
+ }
+
+
 int get_new_player_id()
 {
 	for (int i = 0; i < MAXUSER; ++i)
@@ -413,6 +430,50 @@ void process_packet(int c_id, char* packet)
 				bs.stateID = IDLE_STATE;
 				ks.xzspeed = 0.0f;
 			}
+		}
+		else if (p->key == VK_F1)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 100.0f,0.0f,100.0f);
+				}
+			}
+			break;
+		}
+		else if (p->key == VK_F2)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 80.0f, 0.0f, 220.0f);
+				}
+			}
+			break;
+		}
+		else if (p->key == VK_F3)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 340.0f, 0.0f, 220.0f);
+				}
+			}
+			break;
+		}
+		else if (p->key == VK_F4)
+		{
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_teleport(c_id, 450.0f, 0.0f, 120.0f);
+			}
+		}
+		break;
 		}
 
 		if (ks.rotation >= 360.0f)
