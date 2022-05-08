@@ -2427,6 +2427,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					enemies[i]->setRoot(enemyModels[1]->m_pModelRootObject, true);
 					enemies[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[1]);
 					enemies[i]->SetTrackAnimationSet(0, 0);
+					enemies[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					enemies[i]->timeFromDie = chrono::system_clock::now();
 					enemies[i]->isDead = true;
 				}
@@ -2436,7 +2437,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				chrono::duration<double> fromDie = chrono::system_clock::now() - enemies[i]->timeFromDie;
 				float fTime = static_cast<float>(fromDie.count());
 
-				if (fTime >= 0.8f)
+				if (fTime >= 1.971666f)
 				{
 					enemies.erase(enemies.begin() + i);
 					enemyBoxes.erase(enemyBoxes.begin() + i);
