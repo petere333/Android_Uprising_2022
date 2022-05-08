@@ -186,10 +186,12 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[30]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/drum_t.dds", RESOURCE_TEXTURE2D, 0);
 	textures[31] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[31]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Áüµ¢ÀÌ_txt.dds", RESOURCE_TEXTURE2D, 0);
+
+
 	textures[32] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[32]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
+	textures[32]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[33] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
+	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
 	textures[34] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
 	textures[35] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -248,10 +250,15 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µé¾öÅë.dds", RESOURCE_TEXTURE2D, 0);
 	textures[62] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[62]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¾Ë¹Ì´½.dds", RESOURCE_TEXTURE2D, 0);
+
 	textures[63] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[63]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹®ÅØ½º1.dds", RESOURCE_TEXTURE2D, 0);
 	textures[64] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[64]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹®ÅØ½º2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[65] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[65]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample3.dds", RESOURCE_TEXTURE2D, 0); /// 32~34
+	textures[66] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[66]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -2505,7 +2512,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 		}
-		ppMaterials[32]->UpdateShaderVariable(pd3dCommandList);
+		ppMaterials[32+i]->UpdateShaderVariable(pd3dCommandList);
 		players[i]->Render(pd3dCommandList, pCamera);
 	}
 
