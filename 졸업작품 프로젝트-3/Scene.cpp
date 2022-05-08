@@ -2479,6 +2479,9 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			//	3. 객체의 유형이 소형 물체, 혹은 움직이는 캐릭터인 경우 양쪽 55도 내에 있는 경우에만 그린다.
 			*/
 			int tp = m_ppGameObjects[i]->type;
+			
+			float ox = m_ppGameObjects[i]->GetPosition().x;
+			float oz = m_ppGameObjects[i]->GetPosition().z;
 
 			if (tp >= 30000 && tp!=Heaters1)
 			{
@@ -2504,7 +2507,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				}
 				if (px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f)//1-1
 				{
-					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7) || (tp == Janhae2))
+					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7) || (tp == Janhae2) || (tp>=14140 &&tp<=14146))
 					{
 						if (m_pd3dCbvSrvDescriptorHeap)
 						{
@@ -2572,7 +2575,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 				if (px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f)//1-3
 				{
-					if (tp >= 13000 && tp < 13200 || tp==Janhae10)
+					if (tp >= 13000 && tp < 13200 || tp==Janhae10 || (ox>=280.0f && ox<=400.0f && oz>=200.0f && oz<=600.0f))
 					{
 						if (m_pd3dCbvSrvDescriptorHeap)
 						{
