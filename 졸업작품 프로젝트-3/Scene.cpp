@@ -186,68 +186,76 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[30]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/drum_t.dds", RESOURCE_TEXTURE2D, 0);
 	textures[31] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[31]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Áüµ¢ÀÌ_txt.dds", RESOURCE_TEXTURE2D, 0);
+
+
 	textures[32] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[32]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
 	textures[33] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
+	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[34] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
+	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample3.dds", RESOURCE_TEXTURE2D, 0);
+
+
 	textures[35] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[35]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼±¹Ý.dds", RESOURCE_TEXTURE2D, 0);
+	textures[35]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
 	textures[36] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÇÃ¶ó½ºÆ½ºó.dds", RESOURCE_TEXTURE2D, 0);
+	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
 	textures[37] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[37]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¢»ì.dds", RESOURCE_TEXTURE2D, 0);
+	textures[37]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼±¹Ý.dds", RESOURCE_TEXTURE2D, 0);
 	textures[38] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[38]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì.dds", RESOURCE_TEXTURE2D, 0);
+	textures[38]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÇÃ¶ó½ºÆ½ºó.dds", RESOURCE_TEXTURE2D, 0);
 	textures[39] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[39]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[39]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¢»ì.dds", RESOURCE_TEXTURE2D, 0);
 	textures[40] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[40]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µ¹±âµÕ¹ÞÄ§.dds", RESOURCE_TEXTURE2D, 0);
+	textures[40]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì.dds", RESOURCE_TEXTURE2D, 0);
 	textures[41] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[41]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±âµÕº»Ã¼.dds", RESOURCE_TEXTURE2D, 0);
+	textures[41]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/°¨¿ÁÃ¢»ì2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[42] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[42]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¶º®.dds", RESOURCE_TEXTURE2D, 0);
+	textures[42]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µ¹±âµÕ¹ÞÄ§.dds", RESOURCE_TEXTURE2D, 0);
 	textures[43] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[43]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹ßÀü¼Ò.dds", RESOURCE_TEXTURE2D, 0);
+	textures[43]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±âµÕº»Ã¼.dds", RESOURCE_TEXTURE2D, 0);
 	textures[44] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[44]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹ßÀü¼Ò2.dds", RESOURCE_TEXTURE2D, 0);
+	textures[44]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Ã¶º®.dds", RESOURCE_TEXTURE2D, 0);
 	textures[45] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[45]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±âµÕÅØ½º«Œ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[45]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹ßÀü¼Ò.dds", RESOURCE_TEXTURE2D, 0);
 	textures[46] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[46]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/·ÕÅÊÅ©.dds", RESOURCE_TEXTURE2D, 0);
+	textures[46]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¹ßÀü¼Ò2.dds", RESOURCE_TEXTURE2D, 0);
 	textures[47] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[47]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³°Àºº®.dds", RESOURCE_TEXTURE2D, 0);
+	textures[47]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±âµÕÅØ½º«Œ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[48] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[48]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¶×±ÛÀÌ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[48]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/·ÕÅÊÅ©.dds", RESOURCE_TEXTURE2D, 0);
 	textures[49] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[49]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¸ø¶ÔÀ½.dds", RESOURCE_TEXTURE2D, 0);
+	textures[49]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³°Àºº®.dds", RESOURCE_TEXTURE2D, 0);
 	textures[50] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[50]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¶Ô¾î¶ó.dds", RESOURCE_TEXTURE2D, 0);
+	textures[50]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¶×±ÛÀÌ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[51] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[51]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Toblock.dds", RESOURCE_TEXTURE2D, 0);
+	textures[51]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¸ø¶ÔÀ½.dds", RESOURCE_TEXTURE2D, 0);
 	textures[52] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[52]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÀÜÇØ¾².dds", RESOURCE_TEXTURE2D, 0);
+	textures[52]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¶Ô¾î¶ó.dds", RESOURCE_TEXTURE2D, 0);
 	textures[53] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[53]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µÎÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[53]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Toblock.dds", RESOURCE_TEXTURE2D, 0);
 	textures[54] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[54]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼¼ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[54]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÀÜÇØ¾².dds", RESOURCE_TEXTURE2D, 0);
 	textures[55] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[55]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³×ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[55]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µÎÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[56] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[56]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/´ÙÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
+	textures[56]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼¼ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[57] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[57]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Åé³¯´Ü°Ë.dds", RESOURCE_TEXTURE2D, 0);
+	textures[57]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/³×ÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[58] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[58]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±â°èÅØ½º.dds", RESOURCE_TEXTURE2D, 0);
+	textures[58]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/´ÙÀÜÇØ.dds", RESOURCE_TEXTURE2D, 0);
 	textures[59] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[59]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÆÈÆ®·°.dds", RESOURCE_TEXTURE2D, 0);
+	textures[59]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Åé³¯´Ü°Ë.dds", RESOURCE_TEXTURE2D, 0);
 	textures[60] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[60]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼û´Âº®.dds", RESOURCE_TEXTURE2D, 0);
+	textures[60]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/±â°èÅØ½º.dds", RESOURCE_TEXTURE2D, 0);
 	textures[61] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µé¾öÅë.dds", RESOURCE_TEXTURE2D, 0);
+	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ÆÈÆ®·°.dds", RESOURCE_TEXTURE2D, 0);
 	textures[62] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[62]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¾Ë¹Ì´½.dds", RESOURCE_TEXTURE2D, 0);
+	textures[62]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¼û´Âº®.dds", RESOURCE_TEXTURE2D, 0);
+	textures[63] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[63]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/µé¾öÅë.dds", RESOURCE_TEXTURE2D, 0);
+	textures[64] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[64]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/¾Ë¹Ì´½.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -2481,7 +2489,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 		}
-		ppMaterials[32]->UpdateShaderVariable(pd3dCommandList);
+		ppMaterials[32+i]->UpdateShaderVariable(pd3dCommandList);
 		players[i]->Render(pd3dCommandList, pCamera);
 	}
 
