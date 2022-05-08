@@ -2512,7 +2512,12 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 		}
-		ppMaterials[32+i]->UpdateShaderVariable(pd3dCommandList);
+		if(i== 0)
+			ppMaterials[33]->UpdateShaderVariable(pd3dCommandList);
+		else if(i==1)
+			ppMaterials[32]->UpdateShaderVariable(pd3dCommandList);
+		else if(i==2)
+			ppMaterials[65]->UpdateShaderVariable(pd3dCommandList);
 		players[i]->Render(pd3dCommandList, pCamera);
 	}
 
@@ -4165,7 +4170,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		
 		CGameObject* obj = new CGameObject(1);
 		obj->timeCreated = std::chrono::system_clock::now();
-		obj->SetMaterial(0, ppMaterials[33]);
+		obj->SetMaterial(0, ppMaterials[66]);
 		obj->speed = 0.1f;
 		obj->direction = direct;
 		obj->SetPosition(pos);
