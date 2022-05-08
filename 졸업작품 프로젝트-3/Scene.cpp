@@ -248,6 +248,10 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/들엄통.dds", RESOURCE_TEXTURE2D, 0);
 	textures[62] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[62]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/알미늄.dds", RESOURCE_TEXTURE2D, 0);
+	textures[63] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[63]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/문텍스1.dds", RESOURCE_TEXTURE2D, 0);
+	textures[64] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[64]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/문텍스2.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -529,9 +533,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_janhae9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해트럭.txt", NULL);
 	CLoadedMesh* Gongjang_janhae11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해드럼통.txt", NULL);
 	CLoadedMesh* Gongjang_janhae12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해탁자.txt", NULL);
-
-
-
+	CLoadedMesh* Gongjang_janhae15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_대회의실.txt", NULL);
+	CLoadedMesh* Gongjang_janhae16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문1.txt", NULL);
+	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문2.txt", NULL);
 
 
 	/*
@@ -1903,7 +1907,27 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->SetMaterial(0, ppMaterials[60]);
 
 		}
+		else if (data[i].type == Janhae15)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae15);
+		obj->SetMaterial(0, ppMaterials[62]);
 
+		}
+		else if (data[i].type == Janhae16)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae16);
+		obj->SetMaterial(0, ppMaterials[63]);
+
+		}
+		else if (data[i].type == Janhae17)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae17);
+		obj->SetMaterial(0, ppMaterials[64]);
+
+		}
 
 
 

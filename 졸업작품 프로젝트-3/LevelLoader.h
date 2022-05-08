@@ -235,17 +235,20 @@
 #define Janhae8 30891
 #define Janhae9 11890
 #define Janhae10 13899
-#define Janhae11 13898
+#define Janhae11 30598
 #define Janhae12 14899
 #define Janhae13 30199
-#define Janhae14 14898
+#define Janhae14 30898
+#define Janhae15 30897
+#define Janhae16 30896
+#define Janhae17 30895
 
 
 
 
 // 정리
 // 2000대 숫자들 : 벽종류 (위치 무관)
-// 5000대 숫자들 : 컨테이너
+// 5000대 숫자들 : 컨테
 // 12000대 숫자들 : 바닥
 // 그외는 컨테이너가 아닌 바닥이거나, 속성이 다른 모델, 천장 등 단일이거나, 모델 종류가 엄연히 달라 일부러 분리한 것들
 
