@@ -259,6 +259,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[65]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample3.dds", RESOURCE_TEXTURE2D, 0); /// 32~34
 	textures[66] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[66]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
+	textures[67] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[67]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전텍스쳐.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -543,7 +545,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_janhae15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_대회의실.txt", NULL);
 	CLoadedMesh* Gongjang_janhae16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문1.txt", NULL);
 	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문2.txt", NULL);
-
+	CLoadedMesh* Gongjang_janhae18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_소형발전.txt", NULL);
 
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
@@ -1935,7 +1937,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj->SetMaterial(0, ppMaterials[64]);
 
 		}
+		else if (data[i].type == Janhae18)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae18);
+		obj->SetMaterial(0, ppMaterials[67]);
 
+		}
 
 
 		obj->type = data[i].type;

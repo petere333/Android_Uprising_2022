@@ -246,6 +246,7 @@
 #define Janhae16 30896
 #define Janhae17 30895
 
+#define Janhae18 21899
 
 
 

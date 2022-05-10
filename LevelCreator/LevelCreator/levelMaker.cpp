@@ -3194,14 +3194,20 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Janhaes16_2;
 	Janhaes16_2.location = f3(330.0f, 2.5f, 200.0f);
 	Janhaes16_2.rotation = f3(0.0f, 90.0f, 0.0f);
-	Janhaes16_2.type = Janhae16;
+	Janhaes16_2.type = Janhae16; // 일반 문
 	list.push_back(Janhaes16_2);
 
 	Object Janhaes17_1;
 	Janhaes17_1.location = f3(600.0f, 0.0f, 560.0f);
 	Janhaes17_1.rotation = f3(-90.0f, 90.0f, 0.0f);
 	Janhaes17_1.type = Janhae17;
-	list.push_back(Janhaes17_1);
+	list.push_back(Janhaes17_1); // 게이트 문
+
+	Object Janhaes18_1;
+	Janhaes18_1.location = f3(862.5f, 0.0f, 311.0f);
+	Janhaes18_1.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes18_1.type = Janhae18;
+	list.push_back(Janhaes18_1);
 
 
 
@@ -5650,6 +5656,11 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans17_1.end = f3(600.1f, 0.0f, 570.0f);
 	blist.push_back(Jans17_1);
 
+	// 862.5 311
+	BoundingBox Jans18_1;
+	Jans18_1.start = f3(854.5f, 0.0f, 303.0f);
+	Jans18_1.end = f3(870.5f, 8.0f, 319.0f);
+	blist.push_back(Jans18_1);
 
 
 

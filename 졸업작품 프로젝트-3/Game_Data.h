@@ -43,12 +43,12 @@
 
 
 //플레이어 이동속도
-#define PLAYER_SPEED 33.15f
+#define PLAYER_SPEED 23.15f
 
 
 //서버 IP 정보
+// #define SERVERIP "172.20.10.5" // 루프백 주소
 #define SERVERIP "127.0.0.1" // 루프백 주소
-
 /*
 	플레이어 세부정보 자료구조.
 	각종 능력치와 경험치로 구성되어 있다.
