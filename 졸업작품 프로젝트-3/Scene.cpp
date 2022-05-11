@@ -578,6 +578,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 			obj = new CGameObject(1);
 			obj->SetMesh(container);
 			obj->SetMaterial(0, ppMaterials[0]);
+			
 
 		}
 		else if (data[i].type == floor)
