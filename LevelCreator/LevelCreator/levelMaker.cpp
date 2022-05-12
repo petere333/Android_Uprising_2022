@@ -3299,7 +3299,85 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Janhaes18_16.type = Janhae18;
 	list.push_back(Janhaes18_16);
 
+	///////////////////////////////////////////////////
 
+	Object Janhaes19_1;
+	Janhaes19_1.location = f3(860.0f, 0.0f, 135.0f);
+	Janhaes19_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes19_1.type = Janhae19;
+	list.push_back(Janhaes19_1);
+
+	Object Janhaes19_2;
+	Janhaes19_2.location = f3(826.0f, -0.2f, 164.0f);
+	Janhaes19_2.rotation = f3(0.0f, 24.0f, 0.0f);
+	Janhaes19_2.type = Janhae19;
+	list.push_back(Janhaes19_2);
+
+	Object Janhaes19_3;
+	Janhaes19_3.location = f3(845.0f, 0.3f, 200.5f);
+	Janhaes19_3.rotation = f3(0.0f, 7.0f, 0.0f);
+	Janhaes19_3.type = Janhae19;
+	list.push_back(Janhaes19_3);
+
+	Object Janhaes19_4;
+	Janhaes19_4.location = f3(869.5f, 0.1f, 210.0f);
+	Janhaes19_4.rotation = f3(0.0f, 42.5f, 0.0f);
+	Janhaes19_4.type = Janhae19;
+	list.push_back(Janhaes19_4);
+
+	Object Janhaes19_5;
+	Janhaes19_5.location = f3(821.0f, 1.5f, 210.0f);
+	Janhaes19_5.rotation = f3(0.0f, 33.3f, 0.0f);
+	Janhaes19_5.type = Janhae19;
+	list.push_back(Janhaes19_5);
+
+	Object Janhaes19_6;
+	Janhaes19_6.location = f3(839.0f, 0.0f, 245.0f);
+	Janhaes19_6.rotation = f3(0.0f, 68.2f, 0.0f);
+	Janhaes19_6.type = Janhae19;
+	list.push_back(Janhaes19_6);
+
+	Object Janhaes19_7;
+	Janhaes19_7.location = f3(852.5f, 0.0f, 249.0f);
+	Janhaes19_7.rotation = f3(0.0f, 39.5f, 0.0f);
+	Janhaes19_7.type = Janhae19;
+	list.push_back(Janhaes19_7);
+
+	Object Janhaes19_8;
+	Janhaes19_8.location = f3(866.0f, 0.0f, 229.0f);
+	Janhaes19_8.rotation = f3(0.0f, 44.3f, 0.0f);
+	Janhaes19_8.type = Janhae19;
+	list.push_back(Janhaes19_8);
+
+	Object Janhaes19_9;
+	Janhaes19_9.location = f3(833.0f, 0.0f, 227.0f);
+	Janhaes19_9.rotation = f3(0.0f, 93.25f, 0.0f);
+	Janhaes19_9.type = Janhae19;
+	list.push_back(Janhaes19_9);
+
+	Object Janhaes19_10;
+	Janhaes19_10.location = f3(831.0f, 0.0f, 274.5f);
+	Janhaes19_10.rotation = f3(0.0f, 2.5f, 0.0f);
+	Janhaes19_10.type = Janhae19;
+	list.push_back(Janhaes19_10);
+
+	Object Janhaes19_11;
+	Janhaes19_11.location = f3(849.5f, 0.0f, 269.8f);
+	Janhaes19_11.rotation = f3(0.0f, 77.7f, 0.0f);
+	Janhaes19_11.type = Janhae19;
+	list.push_back(Janhaes19_11);
+
+	Object Janhaes19_12;
+	Janhaes19_12.location = f3(839.2f, 0.0f, 180.0f);
+	Janhaes19_12.rotation = f3(0.0f, 59.5f, 0.0f);
+	Janhaes19_12.type = Janhae19;
+	list.push_back(Janhaes19_12);
+
+	Object Janhaes19_13;
+	Janhaes19_13.location = f3(865.5f, 0.0f, 157.0f);
+	Janhaes19_13.rotation = f3(0.0f, 0.0f, 0.0f);
+	Janhaes19_13.type = Janhae19;
+	list.push_back(Janhaes19_13);
 
 
 
@@ -5837,6 +5915,75 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans18_16.end = f3(830.5f, 8.0f, 483.5f);
 	blist.push_back(Jans18_16);
 
+	// 930 75
+	BoundingBox Jans19_1;
+	Jans19_1.start = f3(856.0f, 0.0f, 131.0f);
+	Jans19_1.end = f3(864.0f, 2.5f, 139.0f);
+	blist.push_back(Jans19_1);
+
+	// 826 164
+	BoundingBox Jans19_2;
+	Jans19_2.start = f3(822.0f, 0.0f, 160.0f);
+	Jans19_2.end = f3(830.0f, 2.3f, 168.0f);
+	blist.push_back(Jans19_2);
+
+	// 845 200.5
+	BoundingBox Jans19_3;
+	Jans19_3.start = f3(841.0f, 0.0f, 196.5f);
+	Jans19_3.end = f3(849.0f, 2.8f, 204.5f);
+	blist.push_back(Jans19_3);
+
+	// 869.5f, 210.0f
+	BoundingBox Jans19_4;
+	Jans19_4.start = f3(865.5f, 0.0f, 206.0f);
+	Jans19_4.end = f3(873.5f, 2.5f, 214.0f);
+	blist.push_back(Jans19_4);
+
+	// 821 1.5, 210
+	BoundingBox Jans19_5;
+	Jans19_5.start = f3(817.0f, 0.0f, 206.0f);
+	Jans19_5.end = f3(825.0f, 4.0f, 214.0f);
+	blist.push_back(Jans19_5);
+
+	BoundingBox Jans19_6;
+	Jans19_6.start = f3(835.0f, 0.0f, 241.0f);
+	Jans19_6.end = f3(843.0f, 2.5f, 249.0f);
+	blist.push_back(Jans19_6);
+
+	BoundingBox Jans19_7;
+	Jans19_7.start = f3(852.5f, 0.0f, 245.0f);
+	Jans19_7.end = f3(860.5f, 2.5f, 253.0f);
+	blist.push_back(Jans19_7);
+
+	BoundingBox Jans19_8;
+	Jans19_8.start = f3(862.0f, 0.0f, 225.0f);
+	Jans19_8.end = f3(870.0f, 2.5f, 233.0f);
+	blist.push_back(Jans19_8);
+
+	BoundingBox Jans19_9;
+	Jans19_9.start = f3(829.0f, 0.0f, 223.0f);
+	Jans19_9.end = f3(837.0f, 2.5f, 231.0f);
+	blist.push_back(Jans19_9);
+
+	BoundingBox Jans19_10;
+	Jans19_10.start = f3(827.0f, 0.0f, 270.5f);
+	Jans19_10.end = f3(835.0f, 2.5f, 278.5f);
+	blist.push_back(Jans19_10);
+
+	BoundingBox Jans19_11;
+	Jans19_11.start = f3(845.5f, 0.0f, 265.8f);
+	Jans19_11.end = f3(853.5f, 2.5f, 273.8f);
+	blist.push_back(Jans19_11);
+
+	BoundingBox Jans19_12;
+	Jans19_12.start = f3(835.2f, 0.0f, 176.0f);
+	Jans19_12.end = f3(843.2f, 2.5f, 184.0f);
+	blist.push_back(Jans19_12);
+
+	BoundingBox Jans19_13;
+	Jans19_13.start = f3(861.5f, 0.0f, 153.0f);
+	Jans19_13.end = f3(869.5f, 2.5f, 161.0f);
+	blist.push_back(Jans19_13);
 
 
 
