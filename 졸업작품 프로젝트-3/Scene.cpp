@@ -263,6 +263,8 @@ void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	textures[67]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전텍스쳐.dds", RESOURCE_TEXTURE2D, 0);
 	textures[68] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	textures[68]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/돌사진.dds", RESOURCE_TEXTURE2D, 0);
+	textures[69] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	textures[69]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PTSD.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -549,7 +551,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문2.txt", NULL);
 	CLoadedMesh* Gongjang_janhae18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_소형발전.txt", NULL);
 	CLoadedMesh* Gongjang_janhae19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_돌덩이1.txt", NULL);
-
+	CLoadedMesh* Gongjang_janhae20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_통신병PTSD.txt", NULL);
 
 
 
@@ -1956,6 +1958,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 		obj = new CGameObject(1);
 		obj->SetMesh(Gongjang_janhae19);
 		obj->SetMaterial(0, ppMaterials[68]);
+
+		}
+		else if (data[i].type == Janhae20)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae20);
+		obj->SetMaterial(0, ppMaterials[69]);
 
 		}
 
