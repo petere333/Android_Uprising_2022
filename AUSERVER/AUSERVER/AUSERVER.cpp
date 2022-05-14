@@ -470,7 +470,7 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_teleport(c_id, 450.0f, 0.0f, 120.0f);
+				pl.send_teleport(c_id, 850.0f, 0.0f, 550.0f);
 			}
 		}
 		break;
