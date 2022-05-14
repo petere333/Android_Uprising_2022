@@ -81,7 +81,7 @@
 
 
 #define BatSet1 10013 // 1공통
-#define BatSet2 10014 // 1공통
+#define BatSet2 30014 // 1공통
 #define BatSet3 10015 // 1 공통
 
 #define Bat_FB_set1 10016 // 1공통

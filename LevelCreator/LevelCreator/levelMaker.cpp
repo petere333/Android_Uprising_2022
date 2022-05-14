@@ -1662,13 +1662,13 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	K_bari3.end = f3(843.75f, 5.0f, 507.0f);
 
 	K_bari4.start = f3(843.75f, 0.0f, 289.0f);
-	K_bari4.end = f3(875.0f, 0.0f, 291.0f);
+	K_bari4.end = f3(875.0f, 5.0f, 291.0f);
 
 	K_bari5.start = f3(812.5f, 0.0f, 397.0f);
-	K_bari5.end = f3(843.75f, 0.0f, 399.0f);
+	K_bari5.end = f3(843.75f, 5.0f, 399.0f);
 
 	K_bari6.start = f3(843.75f, 0.0f, 505.0f);
-	K_bari6.end = f3(875.0f, 0.0f, 507.0f);
+	K_bari6.end = f3(875.0f, 5.0f, 507.0f);
 
 
 	Adoe1.start = f3(1145.0f, 0.0f, 300.0f);
@@ -5247,19 +5247,23 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	GyoDan2.type = GyeDans2;
 
 	Object R_stair1;
-	R_stair1.location = f3(890.0f, 0.0f, 264.5f);
+	R_stair1.location = f3(890.0f, 0.0f, 266.0f);
 	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair1.type = R_GyeDan1;
 
 	Object R_stair2;
-	R_stair2.location = f3(1030.0f, 0.0f, 264.5f);
+	R_stair2.location = f3(1030.0f, 0.0f, 266.0f);
 	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair2.type = R_GyeDan1;
 
 	Object R_stair3;
-	R_stair3.location = f3(10.0f, 0.0f, 389.5f);
+	R_stair3.location = f3(10.0f, -0.25f, 380.0f);
 	R_stair3.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair3.type = R_GyeDan1;
+
+
+
+
 
 	Object electric1[3];
 	for (int i = 0; i < 3; ++i)
