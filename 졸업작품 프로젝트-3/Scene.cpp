@@ -2734,14 +2734,101 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 					}
 				}
 			}
-			else
+
+			//2구역
+
+			else if (px>=800.0f && px<=1400.0f && pz>=0.0f && pz<=600.0f)
 			{
-				if (m_pd3dCbvSrvDescriptorHeap)
+				//2구역공통물체
+				if (tp >= 20000 && tp < 21000)
 				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 				}
-				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-				continue;
+				//2-1
+				else if ((px >= 800.0f && px <= 875.0f && pz >= 60.0f && pz <= 600.0f) || (px >= 800.0f && px <= 1050.0f && pz >= 60.0f && pz <= 150.0f))
+				{
+					if (tp >= 21000 && tp < 21200 || (tp>=14000&&tp<=14200) || tp==14901 || tp==14205||tp==10014)//그들중 큰물체는 무조건 그리고
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+					}
+					else if (tp >= 21200 && tp < 22000) // 작은 물체는 카메라 방향에따라 그릴지 말지 결정.
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						}
+					}
+				}
+				//2-2
+				else if ((px >= 876.0f && px <= 1010.0f && pz >= 150.0f && pz <= 210.0f) || (px >= 876.0f && px <= 1140.0f && pz >= 210.0f && pz <= 600.0f))
+				{
+					if (tp >= 22000 && tp < 22200)
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+					}
+					else if (tp >= 22200 && tp < 23000)
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						}
+					}
+				}
+				//2-3
+				else if ((px >= 1010.0f && px <= 1400.0f && pz >= 150.0f && pz <= 210.0f) || (px >= 1140.0f && px <= 1400.0f && pz >= 150.0f && pz <= 600.0f))
+				{
+					if (tp >= 23000 && tp < 23200)
+					{
+						if (m_pd3dCbvSrvDescriptorHeap)
+						{
+							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+						}
+						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+					}
+					else if (tp >= 23200 && tp < 24000)
+					{
+						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
+						{
+							if (m_pd3dCbvSrvDescriptorHeap)
+							{
+								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+							}
+							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+						}
+					}
+				}
+			}
+			//통로
+			else if(px>=600.0f && px<=800.0f && pz>=550.0f && pz<=570.0f)
+			{
+				if ((tp >= 14000 && tp < 14200) || tp==14901 || (tp>=10000&& tp<11000) || (tp >= 20000 && tp < 21200) || tp>=30000)
+				{
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+				}
 			}
 		}
 	}
