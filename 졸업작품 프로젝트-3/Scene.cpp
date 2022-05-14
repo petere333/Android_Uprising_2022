@@ -4105,6 +4105,30 @@ void CScene::attack(int idx)
 			{
 				printf("(Something)\n");
 			}*/
+			if (m_ppGameObjects[target-22]->type == 21217)
+			{
+				float ox = m_ppGameObjects[target - 22]->GetPosition().x;
+				float oy = m_ppGameObjects[target - 22]->GetPosition().y;
+				float oz = m_ppGameObjects[target - 22]->GetPosition().z;
+
+				m_ppGameObjects[target-22] = NULL;
+				boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
+				boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+
+
+
+				for (float x = ox - 15.0f; x < ox + 15.0f; x += 1.5f)
+				{
+					for (float y = oy - 4.5f; y < oy + 5.0f; y += 1.5f)
+					{
+						for (float z = oz - 0.5f; z < oz + 1.0f; z += 0.6f)
+						{
+							XMFLOAT3 tmp = XMFLOAT3(x, y, z);
+							createParticles(10, tmp);
+						}
+					}
+				}
+			}
 		}
 
 		CS_ATTACK_PACKET p;
@@ -4173,64 +4197,43 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 	else if (fTime >= 0.233333f && fTime <= 0.266666f)
 	{
-		for (int i = 0; i < enemyBoxes.size(); ++i)
+
+		BoundBox bx;
+		XMFLOAT3 ps = players[idx]->GetPosition();
+		
+		float rad = XMConvertToRadians(players[idx]->kState.rotation - 270.0f);
+		
+		float dx = sin(rad);
+		float dz = cos(rad);
+		XMFLOAT3 look = XMFLOAT3(dx, 0.0f, dz);
+
+
+
+		for (int i = 0; i < enemies.size(); ++i)
 		{
-			BoundBox bx;
-			XMFLOAT3 ps = players[idx]->GetPosition();
 
-			if (players[idx]->currentRotation.y <= 22.5f || players[idx]->currentRotation.y > 337.5f) //북향
-			{
-				bx.start = XMFLOAT3(ps.x - 0.3f, ps.y + 0.6f, ps.z + 0.4f);
-				bx.end = XMFLOAT3(ps.x + 0.3f, ps.y + 1.0f, ps.z + 1.0f);
-			}
-			else if (players[idx]->currentRotation.y <= 67.5f && players[idx]->currentRotation.y > 22.5f)//동북향
-			{
-				bx.start = XMFLOAT3(ps.x + 0.2f, ps.y + 0.6f, ps.z+0.2f);
-				bx.end = XMFLOAT3(ps.x + 0.8f, ps.y + 1.0f, ps.z + 0.8f);
-			}
-			else if (players[idx]->currentRotation.y <= 112.5f && players[idx]->currentRotation.y > 67.5f) //동향
-			{
-				bx.start = XMFLOAT3(ps.x + 0.4f, ps.y + 0.6f, ps.z - 0.3f);
-				bx.end = XMFLOAT3(ps.x + 1.0f, ps.y + 1.0f, ps.z + 0.3f);
-			}
-			else if (players[idx]->currentRotation.y <= 157.5f && players[idx]->currentRotation.y > 112.5f) //동남향
-			{
-				bx.start = XMFLOAT3(ps.x+0.2f, ps.y + 0.6f, ps.z-0.8f);
-				bx.end = XMFLOAT3(ps.x + 0.8f, ps.y + 1.0f, ps.z - 0.2f);
-			}
-			else if (players[idx]->currentRotation.y <= 202.5f && players[idx]->currentRotation.y > 157.5f) //남향
-			{
-				bx.start = XMFLOAT3(ps.x - 0.3f, ps.y + 0.6f, ps.z - 1.0f);
-				bx.end = XMFLOAT3(ps.x + 0.3f, ps.y + 1.0f, ps.z - 0.4f);
-			}
-			else if (players[idx]->currentRotation.y <= 247.5f && players[idx]->currentRotation.y > 202.5f)//서남향
-			{
-				bx.start = XMFLOAT3(ps.x-0.8f, ps.y + 0.6f, ps.z-0.8f);
-				bx.end = XMFLOAT3(ps.x - 0.2f, ps.y + 1.0f, ps.z - 0.2f);
-			}
-			else if (players[idx]->currentRotation.y <= 292.5f && players[idx]->currentRotation.y > 247.5f) //서향
-			{
-				bx.start = XMFLOAT3(ps.x - 1.0f, ps.y + 0.6f, ps.z - 0.3f);
-				bx.end = XMFLOAT3(ps.x - 0.4f, ps.y + 1.0f, ps.z + 0.3f);
-			}
-			else if (players[idx]->currentRotation.y <= 337.5f && players[idx]->currentRotation.y > 292.5f) //북서향
-			{
-				bx.start = XMFLOAT3(ps.x-0.8f, ps.y + 0.6f, ps.z+0.2f);
-				bx.end = XMFLOAT3(ps.x - 0.2f, ps.y + 1.0f, ps.z + 0.8f);
-			}
+			XMFLOAT3 es = enemies[i]->GetPosition();
 
-			XMFLOAT3 pnt = getBoxOverlapPoint(bx, enemyBoxes[i], players[idx]->currentRotation.y);
-			
-			if (pnt.x != -9999.0f && pnt.y != -9999.0f && pnt.z != -9999.0f && players[idx]->hammerHit==false)
+			XMFLOAT3 vec = XMFLOAT3(es.x - ps.x, 0.0f, es.z - ps.z);
+
+			float dist = Vector3::Length(vec);
+			float cosAngle = Vector3::DotProduct(Vector3::Normalize(vec), look);
+
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 1.5f && players[idx]->hammerHit==false)
 			{
 				printf("Enemy [%d] hit\n", i);
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
 				players[idx]->hammerHit = true;
-				createParticles(50, pnt);
+				createParticles(50, enemies[i]->GetPosition());
 				enemies[i]->bState.hp -= 1.0f;
+				break;
 			}
+			
+
 		}
+
+
 	}
 	else if (fTime >= 0.833333f && fTime < 1.0f)
 	{
