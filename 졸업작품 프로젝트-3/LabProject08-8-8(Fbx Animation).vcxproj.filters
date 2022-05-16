@@ -7,6 +7,9 @@
     <FxCompile Include="Light.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="interface.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">

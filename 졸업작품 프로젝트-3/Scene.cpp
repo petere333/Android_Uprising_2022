@@ -326,7 +326,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 
 	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
-
+	interShader = new InterfaceShader();
+	interShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	interShader->BuildObjects(pd3dDevice, pd3dCommandList);
 	BuildDefaultLightsAndMaterials();
 	createPlayers(pd3dDevice, pd3dCommandList);
 	createEnemies(pd3dDevice, pd3dCommandList);
@@ -2532,6 +2534,13 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	float alpha = 1.0f;
 
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
+
+	if (interShader)
+	{
+		interShader->OnPrepareRender(pd3dCommandList);
+		interShader->Render(pd3dCommandList, pCamera);
+	}
+
 	for (int i = 0; i < players.size(); ++i)
 	{
 		players[i]->Animate(m_fElapsedTime);

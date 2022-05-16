@@ -108,7 +108,7 @@ public:
 #define nEnemyMesh 2
 #define nShadows 9
 
-
+	InterfaceShader* interShader = NULL;
 
 	CTexture* textures[nTex];
 	CMaterial* ppMaterials[nMat];
