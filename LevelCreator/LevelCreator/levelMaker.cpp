@@ -3451,6 +3451,77 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Janhaes20_12.type = Janhae20;
 	list.push_back(Janhaes20_12);
 
+	Object Janhaes21_1;
+	Janhaes21_1.location = f3(1011.5f, 12.5f, 285.0f);
+	Janhaes21_1.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_1.type = Janhae21;
+	list.push_back(Janhaes21_1);
+
+	Object Janhaes21_2;
+	Janhaes21_2.location = f3(1011.5f, 12.5f, 305.0f);
+	Janhaes21_2.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_2.type = Janhae21;
+	list.push_back(Janhaes21_2);
+
+	Object Janhaes21_3;
+	Janhaes21_3.location = f3(1011.5f, 12.5f, 325.0f);
+	Janhaes21_3.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_3.type = Janhae21;
+	list.push_back(Janhaes21_3);
+
+	Object Janhaes21_4;
+	Janhaes21_4.location = f3(1011.5f, 12.5f, 345.0f);
+	Janhaes21_4.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_4.type = Janhae21;
+	list.push_back(Janhaes21_4);
+
+	Object Janhaes21_5;
+	Janhaes21_5.location = f3(1011.5f, 12.5f, 365.0f);
+	Janhaes21_5.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_5.type = Janhae21;
+	list.push_back(Janhaes21_5);
+
+	Object Janhaes21_6;
+	Janhaes21_6.location = f3(1011.5f, 12.5f, 385.0f);
+	Janhaes21_6.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_6.type = Janhae21;
+	list.push_back(Janhaes21_6);
+
+	Object Janhaes21_7;
+	Janhaes21_7.location = f3(1011.5f, 12.5f, 405.0f);
+	Janhaes21_7.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_7.type = Janhae21;
+	list.push_back(Janhaes21_7);
+
+	Object Janhaes21_8;
+	Janhaes21_8.location = f3(1011.5f, 12.5f, 425.0f);
+	Janhaes21_8.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_8.type = Janhae21;
+	list.push_back(Janhaes21_8);
+
+	Object Janhaes21_9;
+	Janhaes21_9.location = f3(1011.5f, 12.5f, 445.0f);
+	Janhaes21_9.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_9.type = Janhae21;
+	list.push_back(Janhaes21_9);
+
+	Object Janhaes21_10;
+	Janhaes21_10.location = f3(1011.5f, 12.5f, 465.0f);
+	Janhaes21_10.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_10.type = Janhae21;
+	list.push_back(Janhaes21_10);
+
+	Object Janhaes21_11;
+	Janhaes21_11.location = f3(1011.5f, 12.5f, 485.0f);
+	Janhaes21_11.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_11.type = Janhae21;
+	list.push_back(Janhaes21_11);
+
+	Object Janhaes21_12;
+	Janhaes21_12.location = f3(1011.5f, 12.5f, 505.0f);
+	Janhaes21_12.rotation = f3(-90.0f, 90.0f, 0.0f);
+	Janhaes21_12.type = Janhae21;
+	list.push_back(Janhaes21_12);
 
 
 	Object Dungle1;
@@ -5357,6 +5428,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Pbox3);
 
 
+
 	BoundingBox Jans1;
 	Jans1.start = f3(287.0f, 0.0f, 130.0f);
 	Jans1.end = f3(293.0f, 5.0f, 140.0f);
@@ -6120,6 +6192,66 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans20_12.start = f3(998.5f, 0.0f, 181.5f);
 	Jans20_12.end = f3(1005.5f, 3.0f, 188.5f);
 	blist.push_back(Jans20_12);
+
+	BoundingBox Jans21_1;
+	Jans21_1.start = f3(1008.5f, 12.5f, 275.0f);
+	Jans21_1.end = f3(1011.5f, 15.5f, 295.0f);
+	blist.push_back(Jans21_1);
+
+	BoundingBox Jans21_2;
+	Jans21_2.start = f3(1008.5f, 12.5f, 295.0f);
+	Jans21_2.end = f3(1011.5f, 15.5f, 315.0f);
+	blist.push_back(Jans21_2);
+
+	BoundingBox Jans21_3;
+	Jans21_3.start = f3(1008.5f, 12.5f, 315.0f);
+	Jans21_3.end = f3(1011.5f, 15.5f, 335.0f);
+	blist.push_back(Jans21_3);
+
+	BoundingBox Jans21_4;
+	Jans21_4.start = f3(1008.5f, 12.5f, 335.0f);
+	Jans21_4.end = f3(1011.5f, 15.5f, 355.0f);
+	blist.push_back(Jans21_4);
+
+	BoundingBox Jans21_5;
+	Jans21_5.start = f3(1008.5f, 12.5f, 355.0f);
+	Jans21_5.end = f3(1011.5f, 15.5f, 375.0f);
+	blist.push_back(Jans21_5);
+
+	BoundingBox Jans21_6;
+	Jans21_6.start = f3(1008.5f, 12.5f, 375.0f);
+	Jans21_6.end = f3(1011.5f, 15.5f, 395.0f);
+	blist.push_back(Jans21_6);
+
+	BoundingBox Jans21_7;
+	Jans21_7.start = f3(1008.5f, 12.5f, 395.0f);
+	Jans21_7.end = f3(1011.5f, 15.5f, 415.0f);
+	blist.push_back(Jans21_7);
+
+	BoundingBox Jans21_8;
+	Jans21_8.start = f3(1008.5f, 12.5f, 415.0f);
+	Jans21_8.end = f3(1011.5f, 15.5f, 435.0f);
+	blist.push_back(Jans21_8);
+
+	BoundingBox Jans21_9;
+	Jans21_9.start = f3(1008.5f, 12.5f, 435.0f);
+	Jans21_9.end = f3(1011.5f, 15.5f, 455.0f);
+	blist.push_back(Jans21_9);
+
+	BoundingBox Jans21_10;
+	Jans21_10.start = f3(1008.5f, 12.5f, 455.0f);
+	Jans21_10.end = f3(1011.5f, 15.5f, 475.0f);
+	blist.push_back(Jans21_10);
+
+	BoundingBox Jans21_11;
+	Jans21_11.start = f3(1008.5f, 12.5f, 475.0f);
+	Jans21_11.end = f3(1011.5f, 15.5f, 495.0f);
+	blist.push_back(Jans21_11);
+
+	BoundingBox Jans21_12;
+	Jans21_12.start = f3(1008.5f, 12.5f, 495.0f);
+	Jans21_12.end = f3(1011.5f, 15.5f, 515.0f);
+	blist.push_back(Jans21_12);
 
 	/// <summary
 	/// </summary>
@@ -7289,16 +7421,16 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	BoundingBox Pox1;
-	Pox1.start = f3(1000.0f, 12.5f, 500.0f);
-	Pox1.end = f3(1003.0f, 15.5f, 503.0f);
+	Pox1.start = f3(998.5f, 12.5f, 500.0f);
+	Pox1.end = f3(1001.5f, 15.5f, 503.0f);
 
 	BoundingBox Pox2;
-	Pox2.start = f3(1003.0f, 12.5f, 500.0f);
-	Pox2.end = f3(1006.0f, 15.5f, 503.0f);
+	Pox2.start = f3(1001.5f, 12.5f, 500.0f);
+	Pox2.end = f3(1004.5f, 15.5f, 503.0f);
 
 	BoundingBox Pox3;
-	Pox3.start = f3(1006.0f, 12.5f, 500.0f);
-	Pox3.end = f3(1009.0f, 15.5f, 503.0f);
+	Pox3.start = f3(1004.5f, 12.5f, 500.0f);
+	Pox3.end = f3(1007.5f, 15.5f, 503.0f);
 
 	BoundingBox Pox4;
 	Pox4.start = f3(1009.0f, 12.5f, 500.0f);
