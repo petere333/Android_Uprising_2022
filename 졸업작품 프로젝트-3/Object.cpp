@@ -9,6 +9,21 @@
 #include "Shader.h"
 #include "Scene.h"
 
+CWireFrameShader* wireShader;
+CSkinnedAnimationWireFrameShader* skinShader;
+
+void initShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature)
+{
+	wireShader = new CWireFrameShader();
+	wireShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+	wireShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+	skinShader = new CSkinnedAnimationWireFrameShader();
+	skinShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+	skinShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 CTexture::CTexture(int nTextures, UINT nTextureType, int nSamplers, int nRootParameters)
@@ -720,6 +735,7 @@ void CGameObject::SetWireFrameShader()
 	m_ppMaterials[0] = NULL;
 	CMaterial *pMaterial = new CMaterial(0);
 	pMaterial->SetWireFrameShader();
+	pMaterial->SetShader(wireShader);
 	SetMaterial(0, pMaterial);
 }
 
@@ -730,6 +746,7 @@ void CGameObject::SetSkinnedAnimationWireFrameShader()
 	m_ppMaterials[0] = NULL;
 	CMaterial *pMaterial = new CMaterial(0);
 	pMaterial->SetSkinnedAnimationWireFrameShader();
+	pMaterial->SetShader(skinShader);
 	SetMaterial(0, pMaterial);
 }
 
@@ -1047,7 +1064,7 @@ CGameObject *CGameObject::LoadFrameHierarchyFromFile(ID3D12Device *pd3dDevice, I
 			if (!strcmp(pstrToken, "<Mesh>:")) pSkinnedMesh->LoadMeshFromFile(pd3dDevice, pd3dCommandList, pInFile);
 
 			pGameObject->SetMesh(pSkinnedMesh);
-
+			pGameObject->dynamic = true;
 			/**/pGameObject->SetSkinnedAnimationWireFrameShader();
 		}
 		else if (!strcmp(pstrToken, "<Children>:"))

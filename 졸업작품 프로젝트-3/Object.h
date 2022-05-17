@@ -28,6 +28,8 @@ class CStandardShader;
 struct BionicState;
 struct KineticState;
 
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 #define RESOURCE_TEXTURE2D			0x01
@@ -41,6 +43,8 @@ struct SRVROOTARGUMENTINFO
 	int								m_nRootParameterIndex = 0;
 	D3D12_GPU_DESCRIPTOR_HANDLE		m_d3dSrvGpuDescriptorHandle;
 };
+
+void initShader(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature);
 
 class CTexture
 {
@@ -171,8 +175,16 @@ public:
 
 	static void CMaterial::PrepareShaders(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature);
 
-	void SetWireFrameShader() { CMaterial::SetShader(m_pWireFrameShader); }
-	void SetSkinnedAnimationWireFrameShader() { CMaterial::SetShader(m_pSkinnedAnimationWireFrameShader); }
+	void SetWireFrameShader() 
+	{ 
+		CMaterial::SetShader(m_pWireFrameShader); 
+		SetShader(CMaterial::m_pWireFrameShader);
+	}
+	void SetSkinnedAnimationWireFrameShader()
+	{ 
+		CMaterial::SetShader(m_pSkinnedAnimationWireFrameShader);
+		SetShader(CMaterial::m_pSkinnedAnimationWireFrameShader);
+	}
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,6 +397,7 @@ class CGameObject
 private:
 	int								m_nReferences = 0;
 	int matID = 0;
+	bool dynamic = false;
 public:
 	void AddRef();
 	void Release();

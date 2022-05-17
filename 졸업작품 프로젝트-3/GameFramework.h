@@ -7,6 +7,10 @@
 #include "Game_Data.h"
 #include "Scene.h"
 
+
+
+
+
 class CGameFramework
 {
 public:
@@ -55,6 +59,8 @@ public: // to server
 		static CGameFramework _instance;
 		return _instance;
 	}
+
+
 
 private:
 	WSADATA						m_WSA;

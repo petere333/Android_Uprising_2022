@@ -43,6 +43,8 @@ CGameFramework::~CGameFramework()
 {
 }
 
+
+
 bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 {
 	
@@ -61,6 +63,8 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	SetCursorPos(500, 500);
 	prevX = 500;
 	prevY = 500;
+	
+
 	BuildObjects();
 
 	Connection();
@@ -369,7 +373,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		{
 		case VK_UP:
 		{
-			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
+			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -384,7 +388,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_DOWN:
 		{
-			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
+			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -400,7 +404,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_LEFT:
 		{
-			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
+			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -415,7 +419,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		break;
 		case VK_RIGHT:
 		{
-			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
+			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -431,7 +435,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case VK_SPACE:
 		{
 			
-			if (m_pScene->players[m_pScene->pID]->pState.id == ATTACK_STATE)
+			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
 			{
 				break;
 			}
@@ -637,6 +641,7 @@ void CGameFramework::BuildObjects()
 
 	m_pScene = new CScene();
 	if (m_pScene) m_pScene->BuildObjects(m_pd3dDevice, m_pd3dCommandList);
+	
 
 	//models[0] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
 	//models[1] = CGameObject::LoadGeometryAndAnimationFromFile(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature, "res/bin/bluntIdle.bin", NULL);

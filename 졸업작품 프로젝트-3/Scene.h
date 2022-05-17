@@ -5,16 +5,25 @@
 #pragma once
 
 #include "Shader.h"
+#include "InterfaceShader.h"
+#include "PlayerShader.h"
+#include "TerrainShader.h"
+#include "EnemyShader.h"
+#include "ParticleShader.h"
+
 #include "LevelLoader.h"
 #include "stdafx.h"
 #include "Game_Data.h"
 #include "CNet.h"
+#include "ResourceManager.h"
 
 #define MAX_LIGHTS						16 
 
 #define POINT_LIGHT						1
 #define SPOT_LIGHT						2
 #define DIRECTIONAL_LIGHT				3
+
+
 
 struct LIGHT
 {
@@ -54,7 +63,7 @@ struct MATERIALS
 class CScene
 {
 public:
-
+	ResourceManager* rm;
     CScene();
     ~CScene();
 
@@ -81,7 +90,7 @@ public:
 	void CreateCbvSrvDescriptorHeaps(ID3D12Device* pd3dDevice, int nConstantBufferViews, int nShaderResourceViews);
 	void CreateConstantBufferViews(ID3D12Device* pd3dDevice, int nConstantBufferViews, ID3D12Resource* pd3dConstantBuffers, UINT nStride);
 	void CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pTexture, UINT nDescriptorHeapIndex, UINT nRootParameterStartIndex);
-	
+	void CreateRM(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 
 public:
 	ID3D12RootSignature					*m_pd3dGraphicsRootSignature = NULL;
@@ -109,6 +118,10 @@ public:
 #define nShadows 9
 
 	InterfaceShader* interShader = NULL;
+	PlayerShader* playerShader = NULL;
+	TerrainShader* terrainShader = NULL;
+	EnemyShader* enemyShader = NULL;
+	ParticleShader* partShader = NULL;
 
 	CTexture* textures[nTex];
 	CMaterial* ppMaterials[nMat];
@@ -133,15 +146,15 @@ public:
 
 public:
 
-	BoundBox* boxesWorld;
-	BoundBox* stairsWorld;
-	int nStairs=0;
+	//BoundBox* boxesWorld;
+	//BoundBox* stairsWorld;
+	//int nStairs=0;
 
 
 	std::vector<BoundBox> enemyBoxes;
-	int nBox = 0;
+	//int nBox = 0;
 
-	XMFLOAT3 playerSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	//XMFLOAT3 playerShader->objectspeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	int currentPlayerAnim = 0;
 
 
@@ -152,7 +165,7 @@ public:
 
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;
-	std::vector<CGameObject*>			players;
+	//std::vector<CGameObject*>			playerShader->objects;
 	std::vector<CGameObject*>			particles;
 	std::vector<CGameObject*>			enemies;
 
@@ -191,35 +204,33 @@ public:
 	void setObjectSpeed(int idx, float size);
 	void setObjectState(int index, int state);
 	bool moveSuccessed(int idx);
-	void jumpObject(int idx) { players[idx]->jump(); }
+	void jumpObject(int idx) { playerShader->objects[idx]->jump(); }
 
 
-	float getSpeed(int idx) { return players[idx]->speed; }
-	XMFLOAT3 getDirection(int idx) { return players[idx]->direction; }
-	PlayerState getPlayerState(int idx) { return players[idx]->pState; }
-	XMFLOAT3 getPos(int idx) { return players[idx]->GetPosition(); }
+	float getSpeed(int idx) { return playerShader->objects[idx]->speed; }
+	XMFLOAT3 getDirection(int idx) { return playerShader->objects[idx]->direction; }
+	//PlayerState getObjectstate(int idx) { return playerShader->objects[idx]->pState; }
+	XMFLOAT3 getPos(int idx) { return playerShader->objects[idx]->GetPosition(); }
 	void setObjectLastMove(int idx) 
 	{ 
-		players[idx]->lastMove = chrono::system_clock::now(); 
+		playerShader->objects[idx]->lastMove = chrono::system_clock::now(); 
 	}
 	void setObjectLastAttack(int idx)
 	{
-		players[idx]->lastAttack = chrono::system_clock::now();
+		playerShader->objects[idx]->lastAttack = chrono::system_clock::now();
 	}
 
 	void rotateObject(int idx, float, float, float);
 
 	void setPlayerDirection(float dx, float dy, float dz);
 
-	XMFLOAT3 getObjectRotation(int idx) { return players[idx]->currentRotation; }
+	XMFLOAT3 getObjectRotation(int idx) { return playerShader->objects[idx]->currentRotation; }
 
-	void createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 
-	void attack(int idx);
+	void attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list);
 	bool mouseDown = false;
 	void createParticles(int n, XMFLOAT3 pos);
-	void createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
-	void addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3);
+	
 	void createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	void createSounds();
 	void delSounds();

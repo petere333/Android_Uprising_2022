@@ -1,21 +1,21 @@
 #include "Shaders.hlsl"
 
-struct InterInput
+struct ParticleInput
 {
 	float3 position : POSITION;
 	float2 uvs : UV;
 };
 
-struct InterOutput
+struct ParticleOutput
 {
 	float4 position : SV_POSITION;
 	float3 positionW : POSITION;
 	float2 uvs : UV;
 };
 
-InterOutput vsInterface(InterInput input)
+ParticleOutput vsParticle(ParticleInput input)
 {
-	InterOutput output;
+	ParticleOutput output;
 
 	output.position = mul(mul(mul(float4(input.position, 1.0f), gmtxGameObject), gmtxView), gmtxProjection);
 	output.positionW = (float3)(mul(float4(input.position, 1.0f), gmtxGameObject));
@@ -23,8 +23,20 @@ InterOutput vsInterface(InterInput input)
 	return(output);
 }
 
-float4 psInterface(InterOutput input) : SV_TARGET
+float4 psParticle(ParticleOutput input) : SV_TARGET
 {
 	float4 color = tex.Sample(gSamplerState, input.uvs);
-	return color;
+	float3 norm = normalize(float3(normTex.Sample(gSamplerState, input.uvs).rgb));
+
+
+	float4 n = float4(norm, 1.0f);
+
+	norm = 2.0f * norm - 1.0f;
+
+	float4 cLight = Lighting(input.positionW, norm);
+
+	float4 result = color * cLight;
+	//result.a = result.a*alpha;
+
+	return result;
 }

@@ -17,7 +17,13 @@ CScene::~CScene()
 {
 	
 }
-
+void CScene::CreateRM(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+{
+	rm = new ResourceManager();
+	rm->Init(pd3dDevice, pd3dCommandList);
+	rm->BuildData(m_pd3dGraphicsRootSignature);
+	
+}
 void CScene::BuildDefaultLightsAndMaterials()
 {
 	m_nLights = 4;
@@ -119,201 +125,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 
 }
 
-void CScene::createTextureData(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
-{
-	
-	textures[0] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
-	textures[1] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[1]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/chons.dds", RESOURCE_TEXTURE2D, 0);
-	textures[2] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[2]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/WhitePaint.dds", RESOURCE_TEXTURE2D, 0);
-	textures[3] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[3]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/GreenPaint.dds", RESOURCE_TEXTURE2D, 0);
-	textures[4] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[4]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ceiling.dds", RESOURCE_TEXTURE2D, 0);
-	textures[5] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[5]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/box.dds", RESOURCE_TEXTURE2D, 0);
-	textures[6] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[6]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/table.dds", RESOURCE_TEXTURE2D, 0);
-	textures[7] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[7]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PalletTruck.dds", RESOURCE_TEXTURE2D, 0);
-	textures[8] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[8]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/bin.dds", RESOURCE_TEXTURE2D, 0);
-	textures[9] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[9]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/barrel.dds", RESOURCE_TEXTURE2D, 0);
-	textures[10] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[10]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/truck.dds", RESOURCE_TEXTURE2D, 0);
-	textures[11] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[11]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단.dds", RESOURCE_TEXTURE2D, 0);
-	textures[12] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[12]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상단벽1.dds", RESOURCE_TEXTURE2D, 0);
-	textures[13] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[13]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/wood.dds", RESOURCE_TEXTURE2D, 0);
-	textures[14] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[14]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Cont3.dds", RESOURCE_TEXTURE2D, 0);
-	textures[15] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[15]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/녹슨컨테이너.dds", RESOURCE_TEXTURE2D, 0);
-	textures[16] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[16]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Real_Contain.dds", RESOURCE_TEXTURE2D, 0);
-	textures[17] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[17]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PlateTexture.dds", RESOURCE_TEXTURE2D, 0);
-	textures[18] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[18]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/ceiling.dds", RESOURCE_TEXTURE2D, 0);
-	textures[19] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[19]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/blockTexture.dds", RESOURCE_TEXTURE2D, 0);
-	textures[20] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[20]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Stair_txt.dds", RESOURCE_TEXTURE2D, 0);
-	textures[21] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[21]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Heater_Texture.dds", RESOURCE_TEXTURE2D, 0);
-	textures[22] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[22]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/BaseColor_txt.dds", RESOURCE_TEXTURE2D, 0);
-	textures[23] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[23]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Metal_txt.dds", RESOURCE_TEXTURE2D, 0);
-	textures[24] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[24]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/상자커버.dds", RESOURCE_TEXTURE2D, 0);
-	textures[25] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[25]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Convels.dds", RESOURCE_TEXTURE2D, 0);
-	textures[26] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[26]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Paperbox.dds", RESOURCE_TEXTURE2D, 0);
-	textures[27] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[27]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Machine_txt.dds", RESOURCE_TEXTURE2D, 0);
-	textures[28] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[28]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Conl.dds", RESOURCE_TEXTURE2D, 0);
-	textures[29] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[29]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Tank.dds", RESOURCE_TEXTURE2D, 0);
-	textures[30] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[30]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/drum_t.dds", RESOURCE_TEXTURE2D, 0);
-	textures[31] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[31]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/짐덩이_txt.dds", RESOURCE_TEXTURE2D, 0);
 
-
-	textures[32] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[32]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
-	textures[33] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[33]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample.dds", RESOURCE_TEXTURE2D, 0);
-	textures[34] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[34]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/enemy.dds", RESOURCE_TEXTURE2D, 0);
-	textures[35] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[35]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/선반.dds", RESOURCE_TEXTURE2D, 0);
-	textures[36] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[36]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/플라스틱빈.dds", RESOURCE_TEXTURE2D, 0);
-	textures[37] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[37]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/창살.dds", RESOURCE_TEXTURE2D, 0);
-	textures[38] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[38]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/감옥창살.dds", RESOURCE_TEXTURE2D, 0);
-	textures[39] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[39]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/감옥창살2.dds", RESOURCE_TEXTURE2D, 0);
-	textures[40] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[40]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/돌기둥받침.dds", RESOURCE_TEXTURE2D, 0);
-	textures[41] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[41]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기둥본체.dds", RESOURCE_TEXTURE2D, 0);
-	textures[42] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[42]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/철벽.dds", RESOURCE_TEXTURE2D, 0);
-	textures[43] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[43]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전소.dds", RESOURCE_TEXTURE2D, 0);
-	textures[44] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[44]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전소2.dds", RESOURCE_TEXTURE2D, 0);
-	textures[45] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[45]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기둥텍스쳧.dds", RESOURCE_TEXTURE2D, 0);
-	textures[46] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[46]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/롱탱크.dds", RESOURCE_TEXTURE2D, 0);
-	textures[47] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[47]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/낡은벽.dds", RESOURCE_TEXTURE2D, 0);
-	textures[48] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[48]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/뚱글이.dds", RESOURCE_TEXTURE2D, 0);
-	textures[49] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[49]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/못뚤음.dds", RESOURCE_TEXTURE2D, 0);
-	textures[50] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[50]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/뚤어라.dds", RESOURCE_TEXTURE2D, 0);
-	textures[51] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[51]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/Toblock.dds", RESOURCE_TEXTURE2D, 0);
-	textures[52] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[52]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/잔해쓰.dds", RESOURCE_TEXTURE2D, 0);
-	textures[53] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[53]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/두잔해.dds", RESOURCE_TEXTURE2D, 0);
-	textures[54] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[54]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/세잔해.dds", RESOURCE_TEXTURE2D, 0);
-	textures[55] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[55]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/네잔해.dds", RESOURCE_TEXTURE2D, 0);
-	textures[56] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[56]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/다잔해.dds", RESOURCE_TEXTURE2D, 0);
-	textures[57] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[57]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/톱날단검.dds", RESOURCE_TEXTURE2D, 0);
-	textures[58] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[58]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/기계텍스.dds", RESOURCE_TEXTURE2D, 0);
-	textures[59] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[59]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/팔트럭.dds", RESOURCE_TEXTURE2D, 0);
-	textures[60] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[60]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/숨는벽.dds", RESOURCE_TEXTURE2D, 0);
-	textures[61] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[61]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/들엄통.dds", RESOURCE_TEXTURE2D, 0);
-	textures[62] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[62]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/알미늄.dds", RESOURCE_TEXTURE2D, 0);
-
-	textures[63] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[63]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/문텍스1.dds", RESOURCE_TEXTURE2D, 0);
-	textures[64] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[64]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/문텍스2.dds", RESOURCE_TEXTURE2D, 0);
-	textures[65] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[65]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample3.dds", RESOURCE_TEXTURE2D, 0); /// 32~34
-	textures[66] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[66]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/particle.dds", RESOURCE_TEXTURE2D, 0);
-	textures[67] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[67]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/발전텍스쳐.dds", RESOURCE_TEXTURE2D, 0);
-	textures[68] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[68]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/돌사진.dds", RESOURCE_TEXTURE2D, 0);
-	textures[69] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[69]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/PTSD.dds", RESOURCE_TEXTURE2D, 0);
-	textures[70] = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	textures[70]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/철벽즈.dds", RESOURCE_TEXTURE2D, 0);
-
-
-	normalTex[0]=new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	normalTex[0]->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
-
-	CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, nTex+nNormal);
-
-	for (int i = 0; i < nTex; ++i)
-	{
-		CreateShaderResourceViews(pd3dDevice, textures[i], 0, 3);
-	}
-	
-	for (int i = 0; i < nNormal; ++i)
-	{
-		CreateShaderResourceViews(pd3dDevice, normalTex[i], 0, 6);
-	}
-	/*
-	for (int i = 0; i < nDirt; ++i)
-	{
-		CreateShaderResourceViews(pd3dDevice, dirtTex[i], 0, 3);
-	}
-	for (int i = 0; i < nShadows; ++i)
-	{
-		CreateShaderResourceViews(pd3dDevice, shadowTex[i], 0, 3);
-	}*/
-
-	for (int i = 0; i < nTex; ++i)
-	{
-		ppMaterials[i] = new CMaterial(1);
-		ppMaterials[i]->SetTexture(textures[i], 0);
-		ppMaterials[i]->SetNormalTex(normalTex[0]);
-	}
-	/*
-	for (int i = 0; i < 9; ++i)
-	{
-		dirtMaterials[i] = new CMaterial(1);
-		dirtMaterials[i]->SetTexture(dirtTex[i], 0);
-		dirtMaterials[i]->SetNormalTex(normalTex[11]);
-	}
-	for (int i = 0; i < nShadows; ++i)
-	{
-		shadowMats[i] = new CMaterial(1);
-		shadowMats[i]->SetTexture(shadowTex[i], 0);
-		shadowMats[i]->SetNormalTex(normalTex[11]);
-	}
-	*/
-}
 
 
 
@@ -321,1737 +133,37 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 {
 	m_pd3dGraphicsRootSignature = CreateGraphicsRootSignature(pd3dDevice);
 
-	createTextureData(pd3dDevice, pd3dCommandList);
+	initShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	createSounds();
+	CreateRM(pd3dDevice, pd3dCommandList);
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
-
-
-	CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
-	interShader = new InterfaceShader();
+	
+	//CMaterial::PrepareShaders(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature); 
+	interShader = new InterfaceShader(rm);
 	interShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	interShader->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	playerShader = new PlayerShader(rm);
+	playerShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	playerShader->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrainShader = new TerrainShader(rm);
+	terrainShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrainShader->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	enemyShader = new EnemyShader(rm);
+	enemyShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+
+	partShader = new ParticleShader(rm, pd3dDevice, pd3dCommandList);
+	partShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	partShader->BuildObjects();
+
 	BuildDefaultLightsAndMaterials();
-	createPlayers(pd3dDevice, pd3dCommandList);
-	createEnemies(pd3dDevice, pd3dCommandList);
+	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
-	boxesWorld = LoadBoxes("res/map/box.txt", &nBox);
-	stairsWorld = LoadStairs("res/map/stair.txt", &nStairs);
-	m_nGameObjects = data.size();
-	m_ppGameObjects = new CGameObject*[m_nGameObjects];
-
-	CCubeMeshTextured* pPlayerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 1.7f, 1.0f);
-	CCubeMeshTextured* ContMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 100.0f, 25.0f, 50.0f);
-	CCubeMeshTextured* J_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 50.0f, 7.5f, 120.0f);
-	CCubeMeshTextured* T_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 5.0f, 200.0f);
-	CCubeMeshTextured* B_ConMesh1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 260.0f, 12.5f, 320.0f);
-   // CCubeMeshTextured* ChonJang = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 620.0f, 3.0f, 620.0f);
-	CCubeMeshTextured* Add_block1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 7.5f, 25.0f);
-	CCubeMeshTextured* Add_block2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 5.0f, 2.5f);
-	CCubeMeshTextured* Pan1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 0.0f, 0.0f, 0.0f);
-	CCubeMeshTextured* Pan2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 120.0f, 2.0f, 60.0f);
-	CCubeMeshTextured* Pan3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 1.3f, 20.0f);
-	CCubeMeshTextured* Pan4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 16.0f, 19.9f, 16.0f);
-	//CCubeMeshTextured* pContainerMesh = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 6.0f);
-	//CCubeMeshTextured* Contain1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 25.0f, 20.0f);
-	CCubeMeshTextured* Not_ddul = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 31.25f, 5.0f, 2.0f);
-	CCubeMeshTextured* ddul = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 31.25f, 5.0f, 2.0f); // 뚫을 수 있는 벽
-	CCubeMeshTextured* Gongjang_janhae10 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 5.5f, 3.0f); //
-	CCubeMeshTextured* Gongjang_janhae13 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 24.0f); //
-	CCubeMeshTextured* Gongjang_janhae14 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 6.0f, 7.5f, 70.0f); //
-
-	//CRectMeshTextured* pTileMesh = new CRectMeshTextured(pd3dDevice, pd3dCommandList, 2.5f, 2.5f);
-
-	GridMesh* pGrid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
-	GridMesh* t_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 20.0f);
-	GridMesh* Se_Grid = new GridMesh(pd3dDevice, pd3dCommandList, 600.0f, 600.0f);
-	GridMesh* ChonJang = new GridMesh(pd3dDevice, pd3dCommandList, 670.0f, 640.0f);
-
-
-
-
-	WallMeshHorizontal* hWall = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshHorizontal* hWall_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshVertical* vWall = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
-	WallMeshVertical* vWall_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshVertical* vWall_S = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
-	WallMeshVertical* vWall_SM = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
-	WallMeshVertical* vWall_1S = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
-	WallMeshVertical* vWall_1SM = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
-	WallMeshVertical* vWall_H = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
-	WallMeshHorizontal* hWall_H = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
-	WallMeshVertical* frooms = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 2.5f);
-	WallMeshVertical* frooms_H = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-	WallMeshHorizontal* loadwall1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
-	WallMeshHorizontal* loadwall2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 2.5f);
-	WallMeshHorizontal* loadwall3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 7.5f);
-	WallMeshVertical* Se_room_l1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
-	WallMeshVertical* Se_room_l2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 2.5f);
-	WallMeshVertical* Se_room_l3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 550.0f, 7.5f);
-	WallMeshVertical* Se_room_r1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
-	WallMeshVertical* Se_room_r2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 2.5f);
-	WallMeshVertical* Se_room_r3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 30.0f, 7.5f);
-	WallMeshVertical* Se_rs1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshVertical* Se_rs2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshVertical* Se_rs3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
-	WallMeshHorizontal* Se_fb1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshHorizontal* Se_fb2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 2.5f);
-	WallMeshHorizontal* Se_fb3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
-	WallMeshVertical* Se_BS1_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 2.5f);
-	WallMeshVertical* Se_BS1_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 2.5f);
-	WallMeshVertical* Se_BS1_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 450.0f, 7.5f);
-	WallMeshVertical* Se_BS2_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
-	WallMeshVertical* Se_BS2_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
-	WallMeshVertical* Se_BS2_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 390.0f, 7.5f);
-	WallMeshVertical* Se_BS3_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 2.5f);
-	WallMeshVertical* Se_BS3_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 2.5f);
-	WallMeshVertical* Se_BS3_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 120.0f, 7.5f);
-	WallMeshHorizontal* Se_BS4_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
-	WallMeshHorizontal* Se_BS4_2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
-	WallMeshHorizontal* Se_BS4_3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 7.5f);
-	WallMeshVertical* Frst_lh = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
-
-	WallMeshVertical* Bated_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* Bated_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* Bat_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
-	WallMeshVertical* Bat_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 20.0f, 200.0f);
-	WallMeshVertical* Bat_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
-	WallMeshHorizontal* Bat_FB1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* Bat_FB2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* Bat_FB_11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* Bat_FB_12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* SeBated_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* SeBated_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* SeBat_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
-	WallMeshVertical* SeBat_2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 20.0f, 200.0f);
-	WallMeshVertical* SeBat_3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 10.0f);
-	WallMeshHorizontal* SeBat_FB1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* SeBat_FB2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* SeBat_FB_11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshHorizontal* SeBat_FB_12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
-	WallMeshVertical* add_wall1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
-	WallMeshVertical* add_wall2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-
-	WallMeshHorizontal* Add_Bak1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 150.0f, 5.0f);
-	WallMeshHorizontal* Add_Bak2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 150.0f, 7.5f);
-	WallMeshHorizontal* SeAdders1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 100.0f, 5.0f);
-	WallMeshHorizontal* SeAdders2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 100.0f, 7.5f);
-
-
-	WallMeshHorizontal* Walz1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 5.0f);
-	WallMeshHorizontal* Walz2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 7.5f);
-	WallMeshHorizontal* Walz3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
-	WallMeshVertical* Walz4 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
-	WallMeshVertical* Walz5 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-	WallMeshHorizontal* Walz6 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 5.0f);
-	WallMeshHorizontal* Walz7 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 7.5f);
-	WallMeshHorizontal* Walz8 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 5.0f);
-	WallMeshHorizontal* Walz9 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 7.5f);
-	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
-	WallMeshHorizontal* Walz11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 30.0f, 12.5f);
-	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
-	WallMeshHorizontal* Walz13 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // 감옥창살
-	WallMeshHorizontal* Walz13_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // 감옥창살
-	WallMeshVertical* Walz14 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 60.0f, 12.5f);
-	WallMeshVertical* Walz15 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 145.0f, 5.0f);
-	WallMeshVertical* Walz16 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 145.0f, 7.5f);
-	WallMeshHorizontal* Walz17 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 5.0f); // 시작지점 근처 벽
-	WallMeshHorizontal* Walz18 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
-	WallMeshVertical* Walz19 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 115.0f, 5.0f);
-	WallMeshVertical* Walz20 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 115.0f, 7.5f);
-	WallMeshHorizontal* Walz21 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f); // 시작지점 근처 벽
-	WallMeshHorizontal* Walz22 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-	WallMeshHorizontal* Walz23 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 75.0f, 5.0f); // 시작지점 근처 벽
-	WallMeshHorizontal* Walz24 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 75.0f, 7.5f);
-	WallMeshVertical* Walz25 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 5.0f);
-	WallMeshVertical* Walz26 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 7.5f, 7.5f);
-
-
-	WallMeshVertical* Walz27 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 5.0f);
-	WallMeshVertical* Walz28 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
-	WallMeshVertical* Walz29 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
-	WallMeshVertical* Walz30 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-	WallMeshVertical* Walz31 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 5.0f);
-	WallMeshVertical* Walz32 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 315.0f, 7.5f);
-	WallMeshHorizontal* Walz33 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 5.0f);
-	WallMeshHorizontal* Walz34 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 12.5f, 7.5f);
-	WallMeshHorizontal* Walz35 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 5.0f);
-	WallMeshHorizontal* Walz36 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 250.0f, 7.5f);
-	WallMeshVertical* Walz37 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 5.0f);
-	WallMeshVertical* Walz38 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 15.0f, 7.5f);
-	WallMeshVertical* Walz39 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 5.0f);
-	WallMeshVertical* Walz40 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 90.0f, 7.5f);
-	WallMeshHorizontal* Walz41 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
-	WallMeshHorizontal* Walz42 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-	WallMeshVertical* Walz43 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
-	WallMeshVertical* Walz44 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-
-	WallMeshVertical* Walz45 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
-	WallMeshVertical* Walz46 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-	WallMeshVertical* Walz47 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 5.0f);
-	WallMeshVertical* Walz48 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 10.0f, 7.5f);
-	WallMeshVertical* Walz49 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 100.0f, 12.5f);
-	WallMeshHorizontal* Walz50 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 12.5f);
-	WallMeshHorizontal* Walz51 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 12.5f);
-	WallMeshHorizontal* Walz52 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 90.0f, 12.5f);
-	WallMeshHorizontal* Walz53 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 20.0f, 12.5f);
-	WallMeshHorizontal* Walz54 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 12.5f);
-	WallMeshVertical* Fro1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
-	WallMeshVertical* Fro2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-	WallMeshHorizontal* tpw1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-	WallMeshVertical* tpw2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
-
-	CLoadedMesh* container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_container2.txt", NULL);
-	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_box.txt", NULL);
-	CLoadedMesh* tableMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_table.txt", "res/idx_table.txt");
-	CLoadedMesh* chairMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_chair3.txt", "res/idx_chair3.txt");
-	CLoadedMesh* cartMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_pallet.txt", "res/idx_pallet.txt");
-	CLoadedMesh* binMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_bin.txt", "res/idx_bin.txt");
-	CLoadedMesh* barrelMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_barrel.txt", "res/idx_barrel.txt");
-	CLoadedMesh* truckMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_truck.txt", "res/idx_truck.txt");
-
-	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
-	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
-	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
-	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단2.txt", NULL);
-	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
-	CLoadedMesh* H_Heat = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_공장_히터.txt", NULL);
-	CLoadedMesh* B_box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_1Stage_Box.txt", NULL);
-	CLoadedMesh* Gongjang_tool1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Covers.txt", NULL);
-	CLoadedMesh* Gongjang_tool2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Convel.txt", NULL);
-	CLoadedMesh* Gongjang_tool3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_종이박스.txt", NULL);
-	CLoadedMesh* Gongjang_tool4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전기.txt", NULL);
-	CLoadedMesh* Gongjang_tool5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_케비넷.txt", NULL);
-	CLoadedMesh* Gongjang_tool6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느기계.txt", NULL);
-	CLoadedMesh* Gongjang_tool7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_드럼통.txt", NULL);
-	CLoadedMesh* Gongjang_tool8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_짐덩이.txt", NULL);
-	CLoadedMesh* Gongjang_tool9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_어느선반.txt", NULL);
-	CLoadedMesh* Gongjang_tool10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_그냥화물1.txt", NULL);
-	CLoadedMesh* Gongjang_tool11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_쓰레기봉투.txt", NULL);
-	CLoadedMesh* Gongjang_tool12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_철벽.txt", NULL);
-	CLoadedMesh* Gongjang_tool13 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_철벽2.txt", NULL);
-	CLoadedMesh* Gongjang_tool14 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전소.txt", NULL);
-	CLoadedMesh* Gongjang_tool15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_발전소2.txt", NULL);
-	CLoadedMesh* Gongjang_tool16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_주기둥.txt", NULL);
-	CLoadedMesh* Gongjang_tool17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_긴탱크.txt", NULL);
-	CLoadedMesh* Gongjang_tool18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
-	CLoadedMesh* Gongjang_tool19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
-	CLoadedMesh* Gongjang_tool20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_둥글뱅이탱크.txt", NULL);
-	CLoadedMesh* Gongjang_janhae1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해물.txt", NULL);
-	CLoadedMesh* Gongjang_janhae2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해물2.txt", NULL);
-	CLoadedMesh* Gongjang_janhae3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해물3.txt", NULL);
-	CLoadedMesh* Gongjang_janhae3_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해물3_1.txt", NULL);
-	CLoadedMesh* Gongjang_janhae4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_구데기통.txt", NULL);
-	CLoadedMesh* Gongjang_janhae5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_삽.txt", NULL);
-	CLoadedMesh* Gongjang_janhae6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_톱날단검.txt", NULL);
-	CLoadedMesh* Gongjang_janhae7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_톱날단검2.txt", NULL);
-	CLoadedMesh* Gongjang_janhae8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해기계.txt", NULL);
-	CLoadedMesh* Gongjang_janhae9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해트럭.txt", NULL);
-	CLoadedMesh* Gongjang_janhae11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해드럼통.txt", NULL);
-	CLoadedMesh* Gongjang_janhae12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해탁자.txt", NULL);
-	CLoadedMesh* Gongjang_janhae15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_대회의실.txt", NULL);
-	CLoadedMesh* Gongjang_janhae16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문1.txt", NULL);
-	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문2.txt", NULL);
-	CLoadedMesh* Gongjang_janhae18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_소형발전.txt", NULL);
-	CLoadedMesh* Gongjang_janhae19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_돌덩이1.txt", NULL);
-	CLoadedMesh* Gongjang_janhae20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_통신병PTSD.txt", NULL);
-	CLoadedMesh* Gongjang_janhae21 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_팬스.txt", NULL);
-
-
-
-	/*
-	RectMesh** shadowRect = new RectMesh * [nShadows];
-	m_ppShadows = new CGameObject * [m_nGameObjects];
-
-	for (int i = 0; i < nShadows; ++i)
-	{
-		shadowRect[i] = NULL;
-	}
-	for (int i = 0; i < m_nGameObjects; ++i)
-	{
-		m_ppShadows[i] = NULL;
-	}
-	*/
-	
-
-	for (int i = 0; i < data.size(); ++i)
-	{
-		CGameObject* obj;
-
-		if (data[i].type == PLAYER)//player
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(barrelMesh);
-			obj->SetMaterial(0, ppMaterials[9]);
-
-		}
-		else if (data[i].type == CONTAINER)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(container);
-			obj->SetMaterial(0, ppMaterials[0]);
-			
-
-		}
-		else if (data[i].type == floor)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(pGrid);
-			obj->SetMaterial(0, ppMaterials[17]);
-		}
-		else if (data[i].type == vWalls)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == hWalls)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(hWall);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == BOX)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(box);
-			obj->SetMaterial(0, ppMaterials[5]);
-		}
-		else if (data[i].type == PALLET)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(cartMesh);
-			obj->SetMaterial(0, ppMaterials[7]);
-		}
-		else if (data[i].type == TRASH)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(binMesh);
-			obj->SetMaterial(0, ppMaterials[8]);
-		}
-		else if (data[i].type == BARREL)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(barrelMesh);
-			obj->SetMaterial(0, ppMaterials[9]);
-		}
-		else if (data[i].type == TRUCK)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(truckMesh);
-			obj->SetMaterial(0, ppMaterials[10]);
-		}
-		else if (data[i].type == TABLE)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(tableMesh);
-			obj->SetMaterial(0, ppMaterials[6]);
-		}
-		else if (data[i].type == CHAIR)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(chairMesh);
-			obj->SetMaterial(0, ppMaterials[1]);
-		}
-		else if (data[i].type == vWalls_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_1);
-			obj->SetMaterial(0, ppMaterials[2]);
-		}
-		else if (data[i].type == hWalls_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(hWall_1);
-			obj->SetMaterial(0, ppMaterials[2]);
-		}
-		else if (data[i].type == vWalls_S)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_S);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == vWalls_SM)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_SM);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == vWalls_1S)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_1S);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == vWalls_1SM)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_1SM);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == vWalls_H)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(vWall_H);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == hWalls_H)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(hWall_H);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == froom_set)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(frooms);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == froom_set_H)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(frooms_H);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == floor_T)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(t_Grid);
-			obj->SetMaterial(0, ppMaterials[17]);
-		}
-		else if (data[i].type == loadwall_l)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(loadwall1);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == loadwall_m)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(loadwall2);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == loadwall_h)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(loadwall3);
-			obj->SetMaterial(0, ppMaterials[11]);
-
-		}
-		else if (data[i].type == floor_Se)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_Grid);
-			obj->SetMaterial(0, ppMaterials[17]);
-		}
-		else if (data[i].type == Se_room_L1_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_l1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_L1_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_l2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_L1_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_l3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_room_R1_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_r1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_R1_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_r2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_R1_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_room_r3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_room_RSL)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_rs1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_RSM)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_rs2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_RSH)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_rs3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_room_FBL)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_fb1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_FBM)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_fb2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_room_FBH)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_fb3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_Busok1_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS1_1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok1_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS1_2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok1_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS1_3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_Busok2_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS2_1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok2_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS2_2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok2_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS2_3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_Busok3_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS3_1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok3_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS3_2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok3_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS3_3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Se_Busok4_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS4_1);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok4_2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS4_2);
-			obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == Se_Busok4_3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Se_BS4_3);
-			obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Cont1_1)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Container1_1);
-			obj->Rotate(0.0f, 90.0f, 0.0f);
-			obj->SetMaterial(0, ppMaterials[0]);
-
-		}
-		else if (data[i].type == Frs_H)//container
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Frst_lh);
-			obj->SetMaterial(0, ppMaterials[11]);
-
-		}
-		else if (data[i].type == BatSet1)//지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == BatSet2)//지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_2);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == BatSet3)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_3);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == Bat_FB_set1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_FB1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == Bat_FB_set2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_FB2);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == BatSet_1)// 지붕
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bated_1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == BatSet_2)// 지붕
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bated_2);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == Bat_FB_101)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_FB_11);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == Bat_FB_102)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Bat_FB_12);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBatSet1)//지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBatSet3)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_3);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBat_FB_set1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_FB1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBat_FB_set2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_FB2);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBatSet_1)// 지붕
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBated_1);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBatSet_2)// 지붕
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBated_2);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBat_FB_101)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_FB_11);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == SeBat_FB_102)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeBat_FB_12);
-			obj->SetMaterial(0, ppMaterials[1]);
-
-		}
-		else if (data[i].type == M_Contain)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(ContMesh1);
-			obj->SetMaterial(0, ppMaterials[0]);
-
-		}
-		else if (data[i].type == J_Contain)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(J_ConMesh1);
-			obj->SetMaterial(0, ppMaterials[14]);
-
-		}
-		else if (data[i].type == T_Contains)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(T_ConMesh1);
-			obj->SetMaterial(0, ppMaterials[15]);
-
-		}
-		else if (data[i].type == B_Contain)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(B_ConMesh1);
-			obj->SetMaterial(0, ppMaterials[16]);
-
-		}
-		else if (data[i].type == Shell)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(ChonJang);
-			obj->SetMaterial(0, ppMaterials[18]);
-
-		}
-		else if (data[i].type == GyeDans1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(GyeDan);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-			obj->SetMaterial(0, ppMaterials[20]);
-		}
-		else if (data[i].type == Frs_Pons1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(add_wall1);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == Frs_Pons2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(add_wall2);
-			obj->SetMaterial(0, ppMaterials[11]);
-
-		}
-		else if (data[i].type == GyeDans2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(GyeDan_1);
-			//	obj->Rotate(270.0f, 0.0f, 0.0f);
-			obj->SetMaterial(0, ppMaterials[20]);
-
-		}
-		else if (data[i].type == R_GyeDan1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(R_GyeDan_1);
-			//	obj->Rotate(270.0f, 0.0f, 0.0f);
-			obj->SetMaterial(0, ppMaterials[20]);
-
-		}
-		else if (data[i].type == adds_beok1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Add_Bak1);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == adds_beok2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Add_Bak2);
-			obj->SetMaterial(0, ppMaterials[11]);
-
-		}
-		else if (data[i].type == B_Door)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(P_Doors);
-			//	obj->SetMaterial(0, ppMaterials[1]);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Add_squre1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Add_block1);
-			obj->SetMaterial(0, ppMaterials[19]);
-
-		}
-		else if (data[i].type == Add_squre2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Add_block2);
-			obj->SetMaterial(0, ppMaterials[19]);
-
-		}
-		else if (data[i].type == SeAddings1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeAdders1);
-			obj->SetMaterial(0, ppMaterials[12]);
-
-		}
-		else if (data[i].type == SeAddings2)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(SeAdders2);
-			obj->SetMaterial(0, ppMaterials[11]);
-
-		}
-		else if (data[i].type == Heaters1)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(H_Heat);
-			obj->SetMaterial(0, ppMaterials[21]);
-
-		}
-		else if (data[i].type == F_Stages)// 지붕의 시작점
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(B_box);
-			obj->SetMaterial(0, ppMaterials[22]);
-			//obj->SetMaterial(0, ppMaterials[23]);
-		}
-		else if (data[i].type == Factory_tool1)// 여기서부터 새로 만든거
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool1);
-			obj->SetMaterial(0, ppMaterials[24]);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
-		}
-		else if (data[i].type == Factory_tool2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool2);
-			obj->SetMaterial(0, ppMaterials[25]);
-
-		}
-		else if (data[i].type == Factory_tool3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool3);
-			obj->SetMaterial(0, ppMaterials[26]);
-
-		}
-		else if (data[i].type == Factory_tool4)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool4);
-			obj->SetMaterial(0, ppMaterials[27]);
-
-		}
-		else if (data[i].type == Factory_tool5)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool5);
-			obj->SetMaterial(0, ppMaterials[28]);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool6)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool6);
-			obj->SetMaterial(0, ppMaterials[29]);
-			obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool7)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool7);
-			obj->SetMaterial(0, ppMaterials[30]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool8)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Gongjang_tool8);
-			obj->SetMaterial(0, ppMaterials[31]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool9)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool9);
-		obj->SetMaterial(0, ppMaterials[35]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool10)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool10);
-		obj->SetMaterial(0, ppMaterials[36]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool11)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool11);
-		obj->SetMaterial(0, ppMaterials[36]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz1)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz1);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz2)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz2);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz3)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz3);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz4)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz4);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz5)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz5);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz6)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz6);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz7)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz7);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz8)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz8);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz9)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz9);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz10)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz10);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Chagsal1)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz11);
-		obj->SetMaterial(0, ppMaterials[37]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Chagsal2)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz12);
-		obj->SetMaterial(0, ppMaterials[37]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Pyo)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Pan1);
-		obj->SetMaterial(0, ppMaterials[13]);
-	//	obj->Rotate(0.0f, 0.0f, 90.0f);
-
-		}
-		else if (data[i].type == GamOk)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz13);
-		obj->SetMaterial(0, ppMaterials[38]);
-		//	obj->Rotate(0.0f, 0.0f, 90.0f);
-
-		}
-		else if (data[i].type == GamOk2)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz14);
-		obj->SetMaterial(0, ppMaterials[39]);
-		//obj->Rotate(0.0f, 90.0f, 0.0f);
-
-		}
-		else if (data[i].type == GamOk_Shell)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Pan2);
-		obj->SetMaterial(0, ppMaterials[36]);
-		//obj->Rotate(0.0f, 90.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz11)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz15);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz12)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz16);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz13)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz17);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz14)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz18);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz15)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz19);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-	   
-		if (data[i].type == Wallz16)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz20);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz17)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz21);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz18)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz22);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Kidong)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Pan3);
-			obj->SetMaterial(0, ppMaterials[40]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == KidongMom)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Pan4);
-			obj->SetMaterial(0, ppMaterials[41]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz19)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz23);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-
-		if (data[i].type == Wallz20)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz24);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == GamOk_1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz13_1);
-			obj->SetMaterial(0, ppMaterials[39]);
-			//	obj->Rotate(0.0f, 0.0f, 90.0f);
-
-		}
-		else if (data[i].type == Wallz21)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz25);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Wallz22)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz26);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == A_Wallz1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz27);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == A_Wallz2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz28);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == A_Wallz3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz29);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == A_Wallz4)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz30);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz31);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz32);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz3)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz33);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz4)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz34);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz5)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz35);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz6)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz36);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz7)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz37);
-			obj->SetMaterial(0, ppMaterials[12]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz8)
-		{
-			obj = new CGameObject(1);
-			obj->SetMesh(Walz38);
-			obj->SetMaterial(0, ppMaterials[11]);
-			//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz9)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz39);
-		obj->SetMaterial(0, ppMaterials[12]); // 바꿀 예정
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz10)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz40);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz11)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz41);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz12)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz42);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz13)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz43);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz14)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz44);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-
-		else if (data[i].type == S_Wallz15)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz45);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz16)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz46);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz17)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz47);
-		obj->SetMaterial(0, ppMaterials[12]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz18)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz48);
-		obj->SetMaterial(0, ppMaterials[11]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool12)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool12);
-		obj->SetMaterial(0, ppMaterials[42]);
-		obj->Rotate(270.0f, 0.0f, 0.0f);
-		}
-		else if (data[i].type == Factory_tool13)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool13);
-		obj->SetMaterial(0, ppMaterials[42]);
-		 obj->Rotate(0.0f, 90.0f, 0.0f);
-		}
-		else if (data[i].type == Factory_tool14)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool14);
-		obj->SetMaterial(0, ppMaterials[43]);
-
-		}
-		else if (data[i].type == S_Wallz19)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz49);
-		obj->SetMaterial(0, ppMaterials[38]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == Factory_tool15)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool15);
-		obj->SetMaterial(0, ppMaterials[44]);
-		obj->Rotate(-90.0f, 0.0f, 0.0f);
-		}
-		else if (data[i].type == Factory_tool16)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool16);
-		obj->SetMaterial(0, ppMaterials[45]);
-		obj->Rotate(0.0f, 0.0f, 0.0f);
-		}
-		else if (data[i].type == Factory_tool17)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool17);
-		obj->SetMaterial(0, ppMaterials[46]);
-
-		}
-		else if (data[i].type == S_Wallz20)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz50);
-		obj->SetMaterial(0, ppMaterials[47]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz21)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz51);
-		obj->SetMaterial(0, ppMaterials[47]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz22)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz52);
-		obj->SetMaterial(0, ppMaterials[47]);
-
-
-		}
-		else if (data[i].type == S_Wallz23)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz53);
-		obj->SetMaterial(0, ppMaterials[47]);
-
-
-		}
-		else if (data[i].type == S_Wallz24)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Walz54);
-		obj->SetMaterial(0, ppMaterials[47]);
-
-
-		}
-		else if (data[i].type == Factory_tool18)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool18);
-		obj->SetMaterial(0, ppMaterials[48]);
-
-		}
-		else if (data[i].type == Factory_tool19)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool19);
-		obj->SetMaterial(0, ppMaterials[48]);
-
-		}
-		else if (data[i].type == Factory_tool20)// 여기서부터 새로 만든거
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_tool20);
-		obj->SetMaterial(0, ppMaterials[48]);
-
-		}
-		else if (data[i].type == S_Wallz25)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Not_ddul);
-		obj->SetMaterial(0, ppMaterials[49]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == S_Wallz26)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(ddul);
-		obj->SetMaterial(0, ppMaterials[50]);
-		//obj->Rotate(270.0f, 0.0f, 0.0f);
-
-		}
-		else if (data[i].type == froom_set1_3)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Fro1);
-		obj->SetMaterial(0, ppMaterials[12]);
-		}
-		else if (data[i].type == froom_set1_3_h)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Fro2);
-		obj->SetMaterial(0, ppMaterials[11]);
-		}
-		else if (data[i].type == Top_wall1)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(tpw1);
-		obj->SetMaterial(0, ppMaterials[51]);
-		}
-		else if (data[i].type == Top_wall2)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(tpw2);
-		obj->SetMaterial(0, ppMaterials[51]);
-
-		}
-		else if (data[i].type == Janhae1)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae1);
-		obj->SetMaterial(0, ppMaterials[52]);
-
-		}
-		else if (data[i].type == Janhae2)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae2);
-		obj->SetMaterial(0, ppMaterials[53]);
-
-		}
-		else if (data[i].type == Janhae3)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae3);
-		obj->SetMaterial(0, ppMaterials[54]);
-
-		}
-		else if (data[i].type == Janhae2_1)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae3_1);
-		obj->SetMaterial(0, ppMaterials[54]);
-
-		}
-		else if (data[i].type == Janhae4)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae4);
-		obj->SetMaterial(0, ppMaterials[55]);
-
-		}
-		else if (data[i].type == Janhae5)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae5);
-		obj->SetMaterial(0, ppMaterials[56]);
-
-		}
-		else if (data[i].type == Janhae6)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae6);
-		obj->SetMaterial(0, ppMaterials[57]);
-
-		}
-		else if (data[i].type == Janhae7)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae7);
-		obj->SetMaterial(0, ppMaterials[57]);
-
-		}
-		else if (data[i].type == Janhae8)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae8);
-		obj->SetMaterial(0, ppMaterials[58]);
-
-		}
-		else if (data[i].type == Janhae9)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae9);
-		obj->SetMaterial(0, ppMaterials[59]);
-
-		}
-		else if (data[i].type == Janhae10)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae10);
-		obj->SetMaterial(0, ppMaterials[60]);
-
-		}
-		else if (data[i].type == Janhae11)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae11);
-		obj->SetMaterial(0, ppMaterials[61]);
-
-		}
-		else if (data[i].type == Janhae12)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae12);
-		obj->SetMaterial(0, ppMaterials[62]);
-
-		}
-		else if (data[i].type == Janhae13)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae13);
-		obj->SetMaterial(0, ppMaterials[60]);
-
-		}
-		else if (data[i].type == Janhae14)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae14);
-		obj->SetMaterial(0, ppMaterials[60]);
-
-		}
-		else if (data[i].type == Janhae15)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae15);
-		obj->SetMaterial(0, ppMaterials[62]);
-
-		}
-		else if (data[i].type == Janhae16)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae16);
-		obj->SetMaterial(0, ppMaterials[63]);
-
-		}
-		else if (data[i].type == Janhae17)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae17);
-		obj->SetMaterial(0, ppMaterials[64]);
-
-		}
-		else if (data[i].type == Janhae18)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae18);
-		obj->SetMaterial(0, ppMaterials[67]);
-
-		}
-		else if (data[i].type == Janhae19)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae19);
-		obj->SetMaterial(0, ppMaterials[68]);
-
-		}
-		else if (data[i].type == Janhae20)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae20);
-		obj->SetMaterial(0, ppMaterials[69]);
-
-		}
-		else if (data[i].type == Janhae21)
-		{
-		obj = new CGameObject(1);
-		obj->SetMesh(Gongjang_janhae21);
-		obj->SetMaterial(0, ppMaterials[70]);
-
-		}
-
-
-		obj->type = data[i].type;
-		obj->SetPosition(data[i].position.x, data[i].position.y, data[i].position.z);
-		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
-		//obj->SetCbvGPUDescriptorHandlePtr(m_d3dCbvGPUDescriptorStartHandle.ptr + (::gnCbvSrvDescriptorIncrementSize * i));
-		m_ppGameObjects[i] = obj;
-	}
-	/*
-	WallDecorationMesh* floor_paint = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 800.0f, 600.0f, 1, 300, true);
-	WallDecorationMesh* floor_crack1 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 4.0f, 4.0f, 800.0f, 600.0f, 1, 300, true);
-	WallDecorationMesh* floor_old2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 2.0f, 2.0f, 800.0f, 600.0f, 1, 1000, true);
-
-	/*
-	WallDecorationMesh* horizonWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, true);
-	WallDecorationMesh* horizonWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 800.0f, 3.0f, 2, 50, false);
-	WallDecorationMesh* verticalWallDeco = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 2.0f, 3, 50, true);
-	WallDecorationMesh* verticalWallDeco2 = new WallDecorationMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f, 600.0f, 3.0f, 3, 50, false);
-	*/
-	/*
-	m_nDecos = 5;
-	m_nDecos = 1;
-	m_ppDecos = new CGameObject * [1];
-	 
-	
-	m_ppDecos[0] = new CGameObject(1);
-	m_ppDecos[0]->SetMesh(floor_crack1);
-	m_ppDecos[0]->SetMaterial(0, dirtMaterials[7]);
-	m_ppDecos[0]->SetPosition(0.0f, 0.0f, 0.0f);
-	/*
-	m_ppDecos[1] = new CGameObject(1);
-	m_ppDecos[1]->bgTransparent = true;
-	m_ppDecos[1]->SetMesh(floor_crack1);
-	m_ppDecos[1]->SetMaterial(0, dirtMaterials[0]);
-	m_ppDecos[1]->SetPosition(0.0f, 0.0f, 0.0f);
-
-	m_ppDecos[2] = new CGameObject(1);
-	m_ppDecos[2]->bgTransparent = true;
-	m_ppDecos[2]->SetMesh(floor_old2);
-	m_ppDecos[2]->SetMaterial(0, dirtMaterials[5]);
-	m_ppDecos[2]->SetPosition(0.0f, 0.0f, 0.0f);
-	*/
-	/*
-	m_ppDecos[1] = new CGameObject(1);
-	m_ppDecos[1]->objType = 0;
-	m_ppDecos[1]->SetMesh(horizonWallDeco);
-	m_ppDecos[1]->SetMaterial(0, ppMaterials[4]);
-	m_ppDecos[1]->SetPosition(0.0f, 0.0f, 0.0f);
-
-	m_ppDecos[2] = new CGameObject(1);
-	m_ppDecos[2]->objType = 0;
-	m_ppDecos[2]->SetMesh(horizonWallDeco2);
-	m_ppDecos[2]->SetMaterial(0, ppMaterials[4]);
-	m_ppDecos[2]->SetPosition(0.0f, 0.0f, 600.0f);
-
-	m_ppDecos[3] = new CGameObject(1);
-	m_ppDecos[3]->objType = 0;
-	m_ppDecos[3]->SetMesh(verticalWallDeco);
-	m_ppDecos[3]->SetMaterial(0, ppMaterials[4]);
-	m_ppDecos[3]->SetPosition(0.0f, 0.0f, 0.0f);
-
-	m_ppDecos[4] = new CGameObject(1);
-	m_ppDecos[4]->objType = 0;
-	m_ppDecos[4]->SetMesh(verticalWallDeco2);
-	m_ppDecos[4]->SetMaterial(0, ppMaterials[4]);
-	m_ppDecos[4]->SetPosition(800.0f, 0.0f, 0.0f);
-	*/
-	
-	
-
-
-
-
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
@@ -2277,244 +389,178 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 
 void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed, CCamera* cam)
 {
-	cam->move(players[pID]->GetPosition());
+	cam->move(playerShader->objects[pID]->GetPosition());
 	m_fElapsedTime = fTimeElapsed;
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 
 	
 
-	for (int i = 0; i < players.size(); ++i)
+	for (int i = 0; i < playerShader->objects.size(); ++i)
 	{
 		
-		if (players[i]->bState.stateID == IDLE_STATE)
+		if (playerShader->objects[i]->bState.stateID == IDLE_STATE)
 		{
-			if (players[i]->bState.attackID == TYPE_RANGED)
+			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 			{
-				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
 				{
-					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+					playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 				}
-				players[i]->SetTrackAnimationSet(0, 11);
-				if (players[i]->kState.yspeed != 0.0f)
+				playerShader->objects[i]->SetTrackAnimationSet(0, 11);
+				if (playerShader->objects[i]->kState.yspeed != 0.0f)
 				{
 					moveObject(i, cam);
 				}
 				setObjectLastMove(i);
 			}
-			else if (players[i]->bState.attackID == TYPE_MELEE)
+			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
 			{
-				std::chrono::duration<double> dt = std::chrono::system_clock::now() - players[i]->lastAttack;
+				std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
 				float df = static_cast<float>(dt.count());
 				if (df >= 0.833333f)
 				{
-					if (players[i]->m_pChild != binModels[2]->m_pModelRootObject)
+					if (playerShader->objects[i]->m_pChild != rm->playerModels[2]->m_pModelRootObject)
 					{
-						players[i]->setRoot(binModels[2]->m_pModelRootObject, true);
-						players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
+						playerShader->objects[i]->setRoot(rm->playerModels[2]->m_pModelRootObject, true);
+						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
 					}
-					players[i]->SetTrackAnimationSet(0, 0);
+					playerShader->objects[i]->SetTrackAnimationSet(0, 0);
 				}
-				if (players[i]->kState.yspeed != 0.0f)
+				if (playerShader->objects[i]->kState.yspeed != 0.0f)
 				{
 					moveObject(i, cam);
 				}
 				setObjectLastMove(i);
 			}
 		}
-		else if (players[i]->bState.stateID == JUMP_STATE)
+		else if (playerShader->objects[i]->bState.stateID == JUMP_STATE)
 		{
-			if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+			if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
 			{
-				players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-				players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+				playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+				playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 			}
-			players[i]->SetTrackAnimationSet(0, 20);
+			playerShader->objects[i]->SetTrackAnimationSet(0, 20);
 
 			moveObject(i, cam);
 			setObjectLastMove(i);
 		}
-		else if (players[i]->bState.stateID == MOVE_STATE)
+		else if (playerShader->objects[i]->bState.stateID == MOVE_STATE)
 		{
-			if (players[i]->bState.attackID == TYPE_RANGED)
+			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 			{
-				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
 				{
-					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+					playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 				}
-				players[i]->SetTrackAnimationSet(0, 20);
+				playerShader->objects[i]->SetTrackAnimationSet(0, 20);
 			}
-			else if (players[i]->bState.attackID == TYPE_MELEE)
+			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
 			{
-				if (players[i]->m_pChild != binModels[1]->m_pModelRootObject)
+				if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
 				{
-					players[i]->setRoot(binModels[1]->m_pModelRootObject, true);
-					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[1]);
+					playerShader->objects[i]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
+					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
 				}
-				players[i]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[i]->SetTrackAnimationSet(0, 0);
 			}
 			moveObject(i,cam);
 			setObjectLastMove(i);
 			
 		}
-		else if (players[i]->bState.stateID == ATTACK_STATE)
+		else if (playerShader->objects[i]->bState.stateID == ATTACK_STATE)
 		{
-			if (players[i]->bState.attackID == TYPE_RANGED)
+			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 			{
-				if (players[i]->m_pChild != binModels[0]->m_pModelRootObject)
+				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
 				{
-					players[i]->setRoot(binModels[0]->m_pModelRootObject, true);
-					players[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[0]);
+					playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 
 				}
 
-				players[i]->SetTrackAnimationSet(0, 2);
+				playerShader->objects[i]->SetTrackAnimationSet(0, 2);
 				cam->rotateUp();
-				attack(i);
+				attack(i, pd3dDevice, pd3dCommandList);
 			}
-			else if (players[i]->bState.attackID == TYPE_MELEE)
+			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
 			{
 				cam->rotateUp();
 				swingHammer(i, pd3dDevice, pd3dCommandList);
 			}
 			setObjectLastMove(i);
-			for (int j = 0; j < players.size(); ++j)
+			for (int j = 0; j < playerShader->objects.size(); ++j)
 			{
 				if (pID != j)
 				setObjectLastMove(j);
 			}
 		}
-		/*
-		if (mouseDown == true)
-		{
-			players[i]->pState.id = ATTACK_STATE;
-		}
-		else
-		{
-			std::chrono::duration<double> d = std::chrono::system_clock::now() - players[i]->lastAttack;
-			float ft = static_cast<float>(d.count());
-			if (ft >= 0.833333f && players[i]->pState.attType == TYPE_MELEE && players[i]->speed==0.0f)
-			{
-				players[i]->pState.id = IDLE_STATE;
-			}
-		}
-		if (players[i]->pState.attType == TYPE_RANGED)
-		{
-			if (players[i]->pState.id == ATTACK_STATE)
-			{
-				players[i]->speed = 0.0f;
-				if (currentPlayerAnim != 2)
-				{
 
-					setPlayerAnimation(2);
-				}
-				// 이 클라이언트의 플레이어가 어느 방향으로 총을 쐈는지 서버로 전송하는 기능을 이곳에 추가해야 함.
-
-				attack(i);// 캐릭터가 당시 바라봤던 방향으로 3km이내의 직선상에 총알이 발사됨. 이걸 서버가 처리.
-			}
-			else if (players[i]->pState.id == IDLE_STATE)
-			{
-				if (currentPlayerAnim != 11)
-				{
-
-					setPlayerAnimation(11);
-				}
-			}
-		}
-		else if (players[i]->pState.attType == TYPE_MELEE)
-		{
-			if (players[i]->pState.id == IDLE_STATE)
-			{
-				if (players[0]->m_pChild != binModels[2]->m_pModelRootObject)
-				{
-
-					players[0]->setRoot(binModels[2]->m_pModelRootObject, true);
-					players[0]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
-
-					setPlayerAnimation(0);
-				}
-			}
-			else if (players[i]->pState.id == MOVE_STATE)
-			{
-				if (players[0]->m_pChild != binModels[1]->m_pModelRootObject)
-				{
-					players[0]->setRoot(binModels[1]->m_pModelRootObject, true);
-					players[0]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[1]);
-					setPlayerAnimation(0);
-				}
-			}
-			else if (players[i]->pState.id == ATTACK_STATE)
-			{
-				players[i]->speed = 0.0f;
-				swingHammer(i, pd3dDevice,pd3dCommandList);
-
-			}
-		}
-		*/
 	}
 	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-	for (int i = 0; i < particles.size(); ++i)
+
+	for (int i = 0; i < partShader->objects.size(); ++i)
 	{
-		chrono::duration<double> fromCreated = moment - particles[i]->timeCreated;
+		chrono::duration<double> fromCreated = moment - partShader->objects[i]->timeCreated;
 		float fTime = static_cast<float>(fromCreated.count());
 		if (fTime > 0.5f)
 		{
-			//delete particles[i];
-			particles.erase(particles.begin() + i);
+			partShader->objects.erase(partShader->objects.begin() + i);
 			i -= 1;
 		}
 		else
 		{
-			XMFLOAT3 tmp = particles[i]->GetPosition();
-			particles[i]->SetPosition(tmp.x + particles[i]->direction.x * particles[i]->speed * fTime,
-				tmp.y + particles[i]->direction.y * particles[i]->speed * fTime,
-				tmp.z + particles[i]->direction.z * particles[i]->speed * fTime);
+			XMFLOAT3 tmp = partShader->objects[i]->GetPosition();
+			partShader->objects[i]->SetPosition(tmp.x + partShader->objects[i]->direction.x * partShader->objects[i]->speed * fTime,
+				tmp.y + partShader->objects[i]->direction.y * partShader->objects[i]->speed * fTime,
+				tmp.z + partShader->objects[i]->direction.z * partShader->objects[i]->speed * fTime);
 		}
 	}
 
 	//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
 	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
-	for (int i = 0; i < enemies.size(); ++i)
+	for (int i = 0; i < enemyShader->objects.size(); ++i)
 	{
 
-		if (enemies[i]->bState.hp <= 0)
+		if (enemyShader->objects[i]->bState.hp <= 0)
 		{
-			enemies[i]->bState.stateID = DEATH_STATE;
+			enemyShader->objects[i]->bState.stateID = DEATH_STATE;
 		}
-		if (enemies[i]->bState.stateID == IDLE_STATE)
+		if (enemyShader->objects[i]->bState.stateID == IDLE_STATE)
 		{
-			if (enemies[i]->m_pChild != enemyModels[0]->m_pModelRootObject)
+			if (enemyShader->objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
 			{
-				enemies[i]->setRoot(enemyModels[0]->m_pModelRootObject, true);
-				enemies[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[0]);
-				enemies[i]->SetTrackAnimationSet(0, 0);
+				enemyShader->objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
+				enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+				enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
 			}
 		}
-		else if (enemies[i]->bState.stateID == DEATH_STATE)
+		else if (enemyShader->objects[i]->bState.stateID == DEATH_STATE)
 		{
 
-			if (enemies[i]->isDead == false)
+			if (enemyShader->objects[i]->isDead == false)
 			{
-				if (enemies[i]->m_pChild != enemyModels[1]->m_pModelRootObject)
+				if (enemyShader->objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
 				{
-					enemies[i]->setRoot(enemyModels[1]->m_pModelRootObject, true);
-					enemies[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[1]);
-					enemies[i]->SetTrackAnimationSet(0, 0);
-					enemies[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
-					enemies[i]->timeFromDie = chrono::system_clock::now();
-					enemies[i]->isDead = true;
+					enemyShader->objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
+					enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+					enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
+					enemyShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+					enemyShader->objects[i]->timeFromDie = chrono::system_clock::now();
+					enemyShader->objects[i]->isDead = true;
 				}
 			}
 			else
 			{
-				chrono::duration<double> fromDie = chrono::system_clock::now() - enemies[i]->timeFromDie;
+				chrono::duration<double> fromDie = chrono::system_clock::now() - enemyShader->objects[i]->timeFromDie;
 				float fTime = static_cast<float>(fromDie.count());
 
 				if (fTime >= 1.971666f)
 				{
-					enemies.erase(enemies.begin() + i);
-					enemyBoxes.erase(enemyBoxes.begin() + i);
+					enemyShader->objects.erase(enemyShader->objects.begin() + i);
+					enemyShader->enemyBoxes.erase(enemyShader->enemyBoxes.begin() + i);
 				}
 			}
 		}
@@ -2548,340 +594,48 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	if (interShader)
 	{
 		interShader->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+		}
 		interShader->Render(pd3dCommandList, pCamera);
 	}
 
-	for (int i = 0; i < players.size(); ++i)
+	if (playerShader)
 	{
-		players[i]->Animate(m_fElapsedTime);
-		if (players[i]->m_pSkinnedAnimationController)
+		playerShader->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
 		{
-			players[i]->UpdateTransform(NULL);
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
 		}
-		if (m_pd3dCbvSrvDescriptorHeap)
-		{
-			pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-		}
-		if(i== 0)
-			ppMaterials[33]->UpdateShaderVariable(pd3dCommandList);
-		else if(i==1)
-			ppMaterials[32]->UpdateShaderVariable(pd3dCommandList);
-		else if(i==2)
-			ppMaterials[65]->UpdateShaderVariable(pd3dCommandList);
-		players[i]->Render(pd3dCommandList, pCamera);
+		playerShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+		
+
 	}
 
-	for (int i = 0; i < m_nGameObjects; i++)
+
+
+	if (terrainShader)
 	{
-		if (m_ppGameObjects[i])
-		{
-			XMFLOAT3 pos = m_ppGameObjects[i]->GetPosition();
-			XMFLOAT3 camPos = pCamera->getPosition();
-
-			XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
-			XMFLOAT3 look = pCamera->getLook();
-			float px = camPos.x;
-			float pz = camPos.z;
-			float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
-
-			float dist = Vector3::Length(fromCamera);
-			/* 
-			//	1. 객체의 유형이 벽인 경우 그냥 그린다.
-			//	2. 객체의 유형이 xyz 크기가 3m 이상인 대형 물체인 경우 카메라의 방향 벡터로부터 양쪽 70도 내에 있는 경우에만 그린다.
-			//	3. 객체의 유형이 소형 물체, 혹은 움직이는 캐릭터인 경우 양쪽 55도 내에 있는 경우에만 그린다.
-			*/
-			int tp = m_ppGameObjects[i]->type;
-			
-			float ox = m_ppGameObjects[i]->GetPosition().x;
-			float oz = m_ppGameObjects[i]->GetPosition().z;
-
-			if (tp >= 30000 && tp!=Heaters1)
-			{
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-				continue;
-			}
-
-			//1구역
-			if ((px >= 0.0f && px <= 600.0f) && (pz>=0.0f && pz<=600.0f))
-			{
-				if (tp >= 10000 && tp < 11000)
-				{
-					if (m_pd3dCbvSrvDescriptorHeap)
-					{
-						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-					}
-					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-					continue;
-				}
-				if (px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f)//1-1
-				{
-					if ((tp >= 11000 && tp < 11200)|| (tp ==Wallz6 || tp==Wallz7) || (tp == Janhae2) || (tp>=14140 &&tp<=14146))
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						continue;
-					}
-					else if ((tp >= 11200 && tp < 11900) || (tp==Heaters1) || (tp>=14126 && tp<=14130) || (tp == Janhae10))
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist < 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(110.0f)) && dist < 10.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-					}
-				}
-
-				if (px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f)//1-2
-				{
-					if ((tp >= 12000 && tp < 12200) || (tp == GyeDans1 || tp == GyeDans2 || tp == R_GyeDan1 || tp == Stairs1))
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						continue;
-					}
-					else if ((tp >= 12200 && tp < 13000)||(tp>=11890 && tp<11900) || (tp==Heaters1))
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(65.0f)) && dist < 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(120.0f)) && dist < 15.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-					}
-				}
-
-				if (px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f)//1-3
-				{
-					if (tp >= 13000 && tp < 13200 || tp==Janhae10 || (ox>=280.0f && ox<=400.0f && oz>=200.0f && oz<=600.0f))
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						continue;
-					}
-					else if (tp >= 13200 && tp < 14000)
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(65.0f)) && dist < 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(110.0f)) && dist < 10.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-					}
-				}
-
-				if (px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f)//1-4
-				{
-					if (tp >= 14000 && tp < 14200)
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						continue;
-					}
-					else if (tp >= 14200 && tp < 15000)
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(60.0f)) && dist < 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-						else if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(100.0f)) && dist < 10.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-							continue;
-						}
-					}
-				}
-			}
-
-			//2구역
-
-			else if (px>=800.0f && px<=1400.0f && pz>=0.0f && pz<=600.0f)
-			{
-				//2구역공통물체
-				if (tp >= 20000 && tp < 21000)
-				{
-					if (m_pd3dCbvSrvDescriptorHeap)
-					{
-						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-					}
-					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-				}
-				//2-1
-				else if ((px >= 800.0f && px <= 875.0f && pz >= 60.0f && pz <= 600.0f) || (px >= 800.0f && px <= 1050.0f && pz >= 60.0f && pz <= 150.0f))
-				{
-					if (tp >= 21000 && tp < 21200 || (tp>=14000&&tp<=14200) || tp==14901 || tp==14205||tp==10014)//그들중 큰물체는 무조건 그리고
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-					}
-					else if (tp >= 21200 && tp < 22000) // 작은 물체는 카메라 방향에따라 그릴지 말지 결정.
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						}
-					}
-				}
-				//2-2
-				else if ((px >= 876.0f && px <= 1010.0f && pz >= 150.0f && pz <= 210.0f) || (px >= 876.0f && px <= 1140.0f && pz >= 210.0f && pz <= 600.0f))
-				{
-					if (tp >= 22000 && tp < 22200)
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-					}
-					else if (tp >= 22200 && tp < 23000)
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						}
-					}
-				}
-				//2-3
-				else if ((px >= 1010.0f && px <= 1400.0f && pz >= 150.0f && pz <= 210.0f) || (px >= 1140.0f && px <= 1400.0f && pz >= 150.0f && pz <= 600.0f))
-				{
-					if (tp >= 23000 && tp < 23200)
-					{
-						if (m_pd3dCbvSrvDescriptorHeap)
-						{
-							pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-						}
-						m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-					}
-					else if (tp >= 23200 && tp < 24000)
-					{
-						if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(70.0f)) && dist <= 300.0f)
-						{
-							if (m_pd3dCbvSrvDescriptorHeap)
-							{
-								pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-							}
-							m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-						}
-					}
-				}
-			}
-			//통로
-			else if(px>=600.0f && px<=800.0f && pz>=550.0f && pz<=570.0f)
-			{
-				if ((tp >= 14000 && tp < 14200) || tp==14901 || (tp>=10000&& tp<11000) || (tp >= 20000 && tp < 21200) || tp>=30000)
-				{
-					if (m_pd3dCbvSrvDescriptorHeap)
-					{
-						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-					}
-					m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
-				}
-			}
-		}
+		terrainShader->OnPrepareRender(pd3dCommandList);
+		terrainShader->Render(pd3dCommandList, pCamera);
 	}
+	if (enemyShader)
+	{
+		enemyShader->OnPrepareRender(pd3dCommandList);
+		enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+	}
+	if (partShader)
+	{
+		partShader->OnPrepareRender(pd3dCommandList);
+		partShader->Render(pd3dCommandList, pCamera);
+	}
+
+	
 	/*
-	for (int i = 0; i < m_nDecos; ++i)
+	for (int i = 0; i < partShader->objects.size(); ++i)
 	{
-		if (m_ppDecos[i])
-		{
-			if (m_pd3dCbvSrvDescriptorHeap)
-			{
-				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-			}
-			m_ppDecos[i]->Render(pd3dCommandList, pCamera);
-		}
-	}
-	alpha = 0.5f;
-	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
-
-	for (int i = 0; i < m_nGameObjects; ++i)
-	{
-		if (m_ppShadows[i]!=NULL)
-		{
-			if (m_pd3dCbvSrvDescriptorHeap)
-			{
-				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-			}
-			m_ppShadows[i]->Render(pd3dCommandList, pCamera);
-		}
-	}
-	*/
-
-	for (int i = 0; i < particles.size(); ++i)
-	{
-		XMFLOAT3 pos = particles[i]->GetPosition();
+		XMFLOAT3 pos = partShader->objects[i]->GetPosition();
 		XMFLOAT3 camPos = pCamera->getPosition();
 		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
 		XMFLOAT3 look = pCamera->getLook();
@@ -2890,111 +644,11 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 		if (cosAngle >= cos(XMConvertToRadians(45.0f)) && cosAngle <= 1.0f)
 		{
-			particles[i]->Render(pd3dCommandList, pCamera);
+			partShader->objects[i]->Render(pd3dCommandList, pCamera);
 		}
 		
 	}
-
-	//적 그리기
-	for (int i = 0; i < enemies.size(); ++i)
-	{
-		XMFLOAT3 pos = enemies[i]->GetPosition();
-		XMFLOAT3 camPos = pCamera->getPosition();
-		
-		float px = camPos.x;
-		float pz = camPos.z;
-
-		float ex = pos.x;
-		float ez = pos.z;
-		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
-
-		float dist = Vector3::Length(fromCamera);
-
-		XMFLOAT3 look = pCamera->getLook();
-		look.y = 0.0f;
-		fromCamera.y = 0.0f;
-
-		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
-
-
-
-		if ((px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f) &&
-			(ex >= 0.0f && ex <= 400.0f && ez >= 0.0f && ez <= 200.0f))//1-1
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				enemies[i]->Animate(m_fElapsedTime);
-				if (enemies[i]->m_pSkinnedAnimationController)
-				{
-					enemies[i]->UpdateTransform(NULL);
-				}
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
-				enemies[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-
-
-		else if ((px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f) &&
-			(ex >= 0.0f && ex <= 200.0f && ez >= 200.0f && ez <= 600.0f))//1-2
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				enemies[i]->Animate(m_fElapsedTime);
-				if (enemies[i]->m_pSkinnedAnimationController)
-				{
-					enemies[i]->UpdateTransform(NULL);
-				}
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
-				enemies[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-
-		else if ((px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f) &&
-			(ex >= 280.0f && ex <= 400.0f && ez >= 200.0f && ez <= 600.0f))//1-3
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				enemies[i]->Animate(m_fElapsedTime);
-				if (enemies[i]->m_pSkinnedAnimationController)
-				{
-					enemies[i]->UpdateTransform(NULL);
-				}
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
-				enemies[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-
-		else if ((px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f) &&
-			(ex >= 400.0f && ex <= 600.0f && ez >= 0.0f && ez <= 600.0f))//1-4
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				enemies[i]->Animate(m_fElapsedTime);
-				if (enemies[i]->m_pSkinnedAnimationController)
-				{
-					enemies[i]->UpdateTransform(NULL);
-				}
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				ppMaterials[34]->UpdateShaderVariable(pd3dCommandList);
-				enemies[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-	}
+	*/
 
 	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
 
@@ -3057,7 +711,7 @@ void CScene::CreateShaderResourceViews(ID3D12Device* pd3dDevice, CTexture* pText
 
 void CScene::setPlayerAnimation(int a)
 {
-	players[0]->SetTrackAnimationSet(0, a);
+	playerShader->objects[0]->SetTrackAnimationSet(0, a);
 	currentPlayerAnim = a;
 }
 
@@ -3066,7 +720,7 @@ void CScene::setPlayerAnimation(int a)
 void CScene::moveObject(int idx,CCamera* pCamera)
 {
 	
-	chrono::duration<double> fromLastMove = chrono::system_clock::now() - players[idx]->lastMove;
+	chrono::duration<double> fromLastMove = chrono::system_clock::now() - playerShader->objects[idx]->lastMove;
 	double time = fromLastMove.count();
 	float fTime = static_cast<float>(time);
 	if (fTime > 0.02f)
@@ -3079,42 +733,42 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 	bool stepOn;
 	
 
-		if (players[idx]->kState.xzspeed > 0.0f || players[idx]->kState.yspeed != 0.0f)
+		if (playerShader->objects[idx]->kState.xzspeed > 0.0f || playerShader->objects[idx]->kState.yspeed != 0.0f)
 		{
 			
-			float rd = XMConvertToRadians(players[idx]->kState.rotation);
+			float rd = XMConvertToRadians(playerShader->objects[idx]->kState.rotation);
 			XMFLOAT3 dir = XMFLOAT3(cos(rd), 0.0f, sin(rd));
 
-			tx = players[idx]->GetPosition().x + fTime * players[idx]->kState.xzspeed * dir.x;
-			ty = players[idx]->GetPosition().y + fTime * players[idx]->kState.yspeed;
-			tz = players[idx]->GetPosition().z + fTime * players[idx]->kState.xzspeed * -dir.z;
+			tx = playerShader->objects[idx]->GetPosition().x + fTime * playerShader->objects[idx]->kState.xzspeed * dir.x;
+			ty = playerShader->objects[idx]->GetPosition().y + fTime * playerShader->objects[idx]->kState.yspeed;
+			tz = playerShader->objects[idx]->GetPosition().z + fTime * playerShader->objects[idx]->kState.xzspeed * -dir.z;
 			
 			// 물체가 있는곳에 이동했는가?
-			for (int i = 0; i < nBox; ++i)
+			for (int i = 0; i < terrainShader->nBox; ++i)
 			{
-				if (tx > boxesWorld[i].start.x - 0.4f && ty > boxesWorld[i].start.y - 1.7f && tz > boxesWorld[i].start.z - 0.4f
-					&& tx < boxesWorld[i].end.x + 0.4f && ty < boxesWorld[i].end.y - 0.0f && tz < boxesWorld[i].end.z + 0.4f)
+				if (tx > terrainShader->boxesWorld[i].start.x - 0.4f && ty > terrainShader->boxesWorld[i].start.y - 1.7f && tz > terrainShader->boxesWorld[i].start.z - 0.4f
+					&& tx < terrainShader->boxesWorld[i].end.x + 0.4f && ty < terrainShader->boxesWorld[i].end.y - 0.0f && tz < terrainShader->boxesWorld[i].end.z + 0.4f)
 				{
 
 
-					if (players[idx]->GetPosition().x > boxesWorld[i].end.x || players[idx]->GetPosition().x < boxesWorld[i].start.x)
+					if (playerShader->objects[idx]->GetPosition().x > terrainShader->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrainShader->boxesWorld[i].start.x)
 					{
 						if (dir.x > 0.0f)
 						{
-							players[idx]->SetPosition(boxesWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(terrainShader->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
-							players[idx]->SetPosition(boxesWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(terrainShader->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
@@ -3122,24 +776,24 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->GetPosition().z > boxesWorld[i].end.z || players[idx]->GetPosition().z < boxesWorld[i].start.z)
+					else if (playerShader->objects[idx]->GetPosition().z > terrainShader->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrainShader->boxesWorld[i].start.z)
 					{
 						if (-dir.z > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].start.z - 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrainShader->boxesWorld[i].start.z - 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
 						}
 						else if (-dir.z < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, boxesWorld[i].end.z + 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrainShader->boxesWorld[i].end.z + 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
@@ -3147,26 +801,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->kState.yspeed != 0.0f)
+					else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
 					{
-						if (players[idx]->kState.yspeed > 0.0f)
+						if (playerShader->objects[idx]->kState.yspeed > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrainShader->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->kState.yspeed < 0.0f)
+						else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, boxesWorld[i].end.y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrainShader->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
-							players[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -3174,11 +828,11 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 
 				}
 
-				else if (tx > boxesWorld[i].start.x - 0.5f && tz > boxesWorld[i].start.z - 0.5f
-					&& tx < boxesWorld[i].end.x + 0.5f && tz < boxesWorld[i].end.z + 0.5f && ty>boxesWorld[i].end.y)
+				else if (tx > terrainShader->boxesWorld[i].start.x - 0.5f && tz > terrainShader->boxesWorld[i].start.z - 0.5f
+					&& tx < terrainShader->boxesWorld[i].end.x + 0.5f && tz < terrainShader->boxesWorld[i].end.z + 0.5f && ty>terrainShader->boxesWorld[i].end.y)
 				{
-					players[idx]->kState.isInAir = 1;
-					players[idx]->kState.yspeed -= 0.1f;
+					playerShader->objects[idx]->kState.isInAir = 1;
+					playerShader->objects[idx]->kState.yspeed -= 0.1f;
 					stepOn = false;
 					crash = false;
 
@@ -3187,31 +841,31 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 
 			}
 			// 적이 있는곳에 이동했는가?
-			for (int i = 0; i < enemies.size(); ++i)
+			for (int i = 0; i < enemyShader->objects.size(); ++i)
 			{
-				if (tx > enemyBoxes[i].start.x - 0.4f && ty > enemyBoxes[i].start.y - 1.7f && tz > enemyBoxes[i].start.z - 0.4f
-					&& tx < enemyBoxes[i].end.x + 0.4f && ty < enemyBoxes[i].end.y + 0.0f && tz < enemyBoxes[i].end.z + 0.4f)
+				if (tx > enemyShader->enemyBoxes[i]->start.x - 0.4f && ty > enemyShader->enemyBoxes[i]->start.y - 1.7f && tz > enemyShader->enemyBoxes[i]->start.z - 0.4f
+					&& tx < enemyShader->enemyBoxes[i]->end.x + 0.4f && ty < enemyShader->enemyBoxes[i]->end.y + 0.0f && tz < enemyShader->enemyBoxes[i]->end.z + 0.4f)
 				{
 
 
-					if (players[idx]->GetPosition().x > enemyBoxes[i].end.x || players[idx]->GetPosition().x < enemyBoxes[i].start.x)
+					if (playerShader->objects[idx]->GetPosition().x > enemyShader->enemyBoxes[i]->end.x || playerShader->objects[idx]->GetPosition().x < enemyShader->enemyBoxes[i]->start.x)
 					{
 						if (dir.x > 0.0f)
 						{
-							players[idx]->SetPosition(enemyBoxes[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(enemyShader->enemyBoxes[i]->start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
-							players[idx]->SetPosition(enemyBoxes[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(enemyShader->enemyBoxes[i]->end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
@@ -3219,24 +873,24 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->GetPosition().z > enemyBoxes[i].end.z || players[idx]->GetPosition().z < enemyBoxes[i].start.z)
+					else if (playerShader->objects[idx]->GetPosition().z > enemyShader->enemyBoxes[i]->end.z || playerShader->objects[idx]->GetPosition().z < enemyShader->enemyBoxes[i]->start.z)
 					{
 						if (-dir.z > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].start.z - 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, enemyShader->enemyBoxes[i]->start.z - 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
 						}
 						else if (-dir.z < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, enemyBoxes[i].end.z + 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, enemyShader->enemyBoxes[i]->end.z + 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
@@ -3244,26 +898,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->kState.yspeed != 0.0f)
+					else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
 					{
-						if (players[idx]->kState.yspeed > 0.0f)
+						if (playerShader->objects[idx]->kState.yspeed > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, enemyShader->enemyBoxes[i]->start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->kState.yspeed < 0.0f)
+						else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, enemyBoxes[i].end.y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, enemyShader->enemyBoxes[i]->end.y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
-							players[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -3274,31 +928,31 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			}
 
 			//계단이 있는 곳에 갔는가?
-			for (int i = 0; i < nStairs; ++i)
+			for (int i = 0; i < terrainShader->nStairs; ++i)
 			{
-				if (tx > stairsWorld[i].start.x - 0.4f && ty > stairsWorld[i].start.y - 1.7f && tz > stairsWorld[i].start.z - 0.4f
-					&& tx < stairsWorld[i].end.x + 0.4f && ty < stairsWorld[i].end.y - 0.3f && tz < stairsWorld[i].end.z + 0.4f)
+				if (tx > terrainShader->stairsWorld[i].start.x - 0.4f && ty > terrainShader->stairsWorld[i].start.y - 1.7f && tz > terrainShader->stairsWorld[i].start.z - 0.4f
+					&& tx < terrainShader->stairsWorld[i].end.x + 0.4f && ty < terrainShader->stairsWorld[i].end.y - 0.3f && tz < terrainShader->stairsWorld[i].end.z + 0.4f)
 				{
 
 
-					if (players[idx]->GetPosition().x > stairsWorld[i].end.x || players[idx]->GetPosition().x < stairsWorld[i].start.x)
+					if (playerShader->objects[idx]->GetPosition().x > terrainShader->stairsWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrainShader->stairsWorld[i].start.x)
 					{
 						if (dir.x > 0.0f)
 						{
-							players[idx]->SetPosition(stairsWorld[i].start.x - 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(terrainShader->stairsWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
 						}
 						else if (dir.x < 0.0f)
 						{
-							players[idx]->SetPosition(stairsWorld[i].end.x + 0.5f, players[idx]->GetPosition().y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(terrainShader->stairsWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.x = 0.0f;
 
@@ -3306,24 +960,24 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->GetPosition().z > stairsWorld[i].end.z || players[idx]->GetPosition().z < stairsWorld[i].start.z)
+					else if (playerShader->objects[idx]->GetPosition().z > terrainShader->stairsWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrainShader->stairsWorld[i].start.z)
 					{
 						if (-dir.z > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].start.z - 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrainShader->stairsWorld[i].start.z - 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
 						}
 						else if (-dir.z < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, players[idx]->GetPosition().y, stairsWorld[i].end.z + 0.5f);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrainShader->stairsWorld[i].end.z + 0.5f);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
 							dir.z = 0.0f;
 
@@ -3331,26 +985,26 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						crash = true;
 
 					}
-					else if (players[idx]->kState.isInAir == 1)
+					else if (playerShader->objects[idx]->kState.isInAir == 1)
 					{
-						if (players[idx]->kState.yspeed > 0.0f)
+						if (playerShader->objects[idx]->kState.yspeed > 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].start.y - 1.7f, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrainShader->stairsWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
-						else if (players[idx]->kState.yspeed < 0.0f)
+						else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
 						{
-							players[idx]->SetPosition(players[idx]->GetPosition().x, stairsWorld[i].end.y, players[idx]->GetPosition().z);
+							playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrainShader->stairsWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
 							if (idx == pID)
 							{
-								pCamera->move(players[idx]->GetPosition());
+								pCamera->move(playerShader->objects[idx]->GetPosition());
 							}
-							players[idx]->kState.yspeed = 0.0f;
-							players[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->kState.isInAir = 0;
 						}
 
 						crash = true;
@@ -3358,20 +1012,20 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 					stepOn = false;
 				}
 
-				else if (tx > stairsWorld[i].start.x - 0.5f && ty >= stairsWorld[i].start.y - 0.3f && tz > stairsWorld[i].start.z - 0.5f
-					&& tx < stairsWorld[i].end.x + 0.5f && ty <= stairsWorld[i].end.y && tz < stairsWorld[i].end.z + 0.5f)
+				else if (tx > terrainShader->stairsWorld[i].start.x - 0.5f && ty >= terrainShader->stairsWorld[i].start.y - 0.3f && tz > terrainShader->stairsWorld[i].start.z - 0.5f
+					&& tx < terrainShader->stairsWorld[i].end.x + 0.5f && ty <= terrainShader->stairsWorld[i].end.y && tz < terrainShader->stairsWorld[i].end.z + 0.5f)
 				{
-					ty = stairsWorld[i].end.y;
-					players[idx]->kState.yspeed = 0.0f;
-					players[idx]->kState.isInAir = 0;
+					ty = terrainShader->stairsWorld[i].end.y;
+					playerShader->objects[idx]->kState.yspeed = 0.0f;
+					playerShader->objects[idx]->kState.isInAir = 0;
 					crash = false;
 					stepOn = true;
 				}
-				else if (tx > stairsWorld[i].start.x - 0.5f && tz > stairsWorld[i].start.z - 0.5f
-					&& tx < stairsWorld[i].end.x + 0.5f && tz < stairsWorld[i].end.z + 0.5f && ty > stairsWorld[i].end.y)
+				else if (tx > terrainShader->stairsWorld[i].start.x - 0.5f && tz > terrainShader->stairsWorld[i].start.z - 0.5f
+					&& tx < terrainShader->stairsWorld[i].end.x + 0.5f && tz < terrainShader->stairsWorld[i].end.z + 0.5f && ty > terrainShader->stairsWorld[i].end.y)
 				{
-					players[idx]->kState.isInAir = 1;
-					players[idx]->kState.yspeed -= 0.1f;
+					playerShader->objects[idx]->kState.isInAir = 1;
+					playerShader->objects[idx]->kState.yspeed -= 0.1f;
 					stepOn = false;
 					crash = false;
 				}
@@ -3380,34 +1034,34 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 
 			if (crash == false)
 			{
-				XMFLOAT3 og = players[idx]->GetPosition();
-				players[idx]->SetPosition(tx, ty, tz);
+				XMFLOAT3 og = playerShader->objects[idx]->GetPosition();
+				playerShader->objects[idx]->SetPosition(tx, ty, tz);
 				if (idx == pID)
 				{
-					pCamera->move(players[idx]->GetPosition());
+					pCamera->move(playerShader->objects[idx]->GetPosition());
 				}
 				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
-				players[idx]->lastMoveSuccess = true;
+				playerShader->objects[idx]->lastMoveSuccess = true;
 
 				// y축 이동이 존재할 경우 중력가속도 적용
-				if (players[idx]->kState.isInAir == 1)
+				if (playerShader->objects[idx]->kState.isInAir == 1)
 				{
-					players[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
+					playerShader->objects[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
 				}
 			}
 
 			else
 			{
-				players[idx]->lastMoveSuccess = false;
-				if (players[idx]->kState.isInAir == 1)
+				playerShader->objects[idx]->lastMoveSuccess = false;
+				if (playerShader->objects[idx]->kState.isInAir == 1)
 				{
-					players[idx]->SetPosition(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
-					pCamera->move(players[idx]->GetPosition().x, ty, players[idx]->GetPosition().z);
-					players[idx]->lastMoveSuccess = true;
+					playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
+					pCamera->move(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
+					playerShader->objects[idx]->lastMoveSuccess = true;
 
-					//if (players[idx]->yspeed != 0.0f)
+					//if (playerShader->objects[idx]->yspeed != 0.0f)
 					//{
-					players[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
+					playerShader->objects[idx]->kState.yspeed -= 9.8f * fTime * 5.0f;
 					//}
 				}
 
@@ -3416,10 +1070,10 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 		}
 		else
 		{
-			players[idx]->bState.stateID = IDLE_STATE;
-			players[idx]->kState.isInAir = 0;
+			playerShader->objects[idx]->bState.stateID = IDLE_STATE;
+			playerShader->objects[idx]->kState.isInAir = 0;
 		}
-	cout << "(" << players[idx]->GetPosition().x << ", " << players[idx]->GetPosition().y << ", " << players[idx]->GetPosition().z << ")" << endl;
+	cout << "(" << playerShader->objects[idx]->GetPosition().x << ", " << playerShader->objects[idx]->GetPosition().y << ", " << playerShader->objects[idx]->GetPosition().z << ")" << endl;
 	
 	
 	
@@ -3433,9 +1087,9 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 void CScene::setObjectSpeed(int idx, float size)
 {
 	//플레이어의 속도 크기 및 방향 벡터를 서버가 계산해줘야 한다.
-	players[idx]->speed = size;
+	playerShader->objects[idx]->speed = size;
 
-	float rad = XMConvertToRadians(players[idx]->currentRotation.y);
+	float rad = XMConvertToRadians(playerShader->objects[idx]->currentRotation.y);
 
 	//dir = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
 	// speed, direction값을 클라에게 전달하자.
@@ -3446,73 +1100,73 @@ void CScene::setObjectState(int index, int state)
 	// 플레이어의 상태가 변하면 서버가 id값, 몇 번째 플레이어인지 index값을 전해준다.
 	// 어차피 timeElapsed는 클라가 상태 변화를 나타내는 패킷을 수신받은
 	// 시점을 기준으로 시간을 측정하면 되므로 서버가 전해줄 필요가 없다.
-	if (players[index]->objType == TYPE_PLAYER)
+	if (playerShader->objects[index]->objType == TYPE_PLAYER)
 	{
-		if (players[index]->pState.id != state)
+		if (playerShader->objects[index]->pState.id != state)
 		{
-			players[index]->pState.id = state;
-			players[index]->pState.timeElapsed = 0.0f;
+			playerShader->objects[index]->pState.id = state;
+			playerShader->objects[index]->pState.timeElapsed = 0.0f;
 		}
 	}
 	// 적의 경우에도 id, index값만 전해주면 된다.
-	else if (players[index]->objType == TYPE_ENEMY)
+	else if (playerShader->objects[index]->objType == TYPE_ENEMY)
 	{
-		if (players[index]->eState.id != state)
+		if (playerShader->objects[index]->eState.id != state)
 		{
-			players[index]->eState.id = state;
-			players[index]->eState.timeElapsed = 0.0f;
+			playerShader->objects[index]->eState.id = state;
+			playerShader->objects[index]->eState.timeElapsed = 0.0f;
 		}
 	}
 }
 
 bool CScene::moveSuccessed(int idx)
 {
-	return players[idx]->lastMoveSuccess;
+	return playerShader->objects[idx]->lastMoveSuccess;
 }
 
 void CScene::rotateObject(int idx, float x, float y, float z)
 {
 	//플레이어가 현재 바라보는 방향을 계산한다.
 	//이걸 서버가 해야 된다.
-	players[idx]->Rotate(x, y, z);
-	players[idx]->currentRotation.x += x;
-	players[idx]->currentRotation.y += y;
-	players[idx]->currentRotation.z += z;
+	playerShader->objects[idx]->Rotate(x, y, z);
+	playerShader->objects[idx]->currentRotation.x += x;
+	playerShader->objects[idx]->currentRotation.y += y;
+	playerShader->objects[idx]->currentRotation.z += z;
 
-	if (players[idx]->currentRotation.x >= 360.0f)
+	if (playerShader->objects[idx]->currentRotation.x >= 360.0f)
 	{
-		players[idx]->currentRotation.x -= 360.0f;
+		playerShader->objects[idx]->currentRotation.x -= 360.0f;
 	}
-	if (players[idx]->currentRotation.y >= 360.0f)
+	if (playerShader->objects[idx]->currentRotation.y >= 360.0f)
 	{
-		players[idx]->currentRotation.y -= 360.0f;
+		playerShader->objects[idx]->currentRotation.y -= 360.0f;
 	}
-	if (players[idx]->currentRotation.z >= 360.0f)
+	if (playerShader->objects[idx]->currentRotation.z >= 360.0f)
 	{
-		players[idx]->currentRotation.z -= 360.0f;
+		playerShader->objects[idx]->currentRotation.z -= 360.0f;
 	}
 
-	if (players[idx]->currentRotation.x < 0.0f)
+	if (playerShader->objects[idx]->currentRotation.x < 0.0f)
 
 	{
-		players[idx]->currentRotation.x += 360.0f;
+		playerShader->objects[idx]->currentRotation.x += 360.0f;
 	}
-	if (players[idx]->currentRotation.y < 0.0f)
+	if (playerShader->objects[idx]->currentRotation.y < 0.0f)
 	{
-		players[idx]->currentRotation.y += 360.0f;
+		playerShader->objects[idx]->currentRotation.y += 360.0f;
 	}
-	if (players[idx]->currentRotation.z < 0.0f)
+	if (playerShader->objects[idx]->currentRotation.z < 0.0f)
 	{
-		players[idx]->currentRotation.z += 360.0f;
+		playerShader->objects[idx]->currentRotation.z += 360.0f;
 	}
 	//이런 다음, currentRotation값을 클라에 넘겨주면 된다.
 }
 void CScene::setPlayerDirection(float dx, float dy, float dz)
 {
-	if (players[pID]->kState.rotation != dy)
+	if (playerShader->objects[pID]->kState.rotation != dy)
 	{
-		players[0]->Rotate(0.0f, dy - players[0]->kState.rotation, 0.0f);
-		players[0]->kState.rotation = dy;
+		playerShader->objects[0]->Rotate(0.0f, dy - playerShader->objects[0]->kState.rotation, 0.0f);
+		playerShader->objects[0]->kState.rotation = dy;
 	}
 }
 
@@ -3573,7 +1227,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		if (p_login.isLogin)
 		{
 			XMFLOAT3 pos = XMFLOAT3{ p_login.x, p_login.y, p_login.z };
-			addPlayer(pd3dDevice, pd3dCommandList, pos);
+			playerShader->addPlayer(pd3dDevice, pd3dCommandList, pos, m_pd3dGraphicsRootSignature);
 
 			pID = p_login.id;
 			
@@ -3594,12 +1248,12 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		KineticState k = p_new.kState;
 		BionicState b = p_new.bState;
 		
-		players[p_new.id]->kState = k;
-		players[p_new.id]->bState = b;
+		playerShader->objects[p_new.id]->kState = k;
+		playerShader->objects[p_new.id]->bState = b;
 		pCamera->angle = p_new.camAngle;
 		pCamera->currentUp = p_new.camUp;
 		//XMFLOAT3 pos = XMFLOAT3{ p_new.x, p_new.y, p_new.z };
-		//players[p_new.id]->SetPosition(pos);
+		//playerShader->objects[p_new.id]->SetPosition(pos);
 		break;
 	}
 	case PACKET_TYPE::SC_REMOVE_PLAYER:
@@ -3607,7 +1261,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_REMOVE_PLAYER_PACKET p_remove;
 		memcpy(&p_remove, p_buf, p_buf[0]);
 		cout << p_remove.id << "Player REMOVED.\n";
-		players[p_remove.id]->m_bActive = false;
+		playerShader->objects[p_remove.id]->m_bActive = false;
 		//player remove
 		break;
 		
@@ -3620,28 +1274,28 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		int ID = p.c_id;
 		if (p.kState.isInAir != -9999)
 		{
-			players[ID]->kState.isInAir = p.kState.isInAir;
+			playerShader->objects[ID]->kState.isInAir = p.kState.isInAir;
 		}
 		if (p.kState.isMobile != -9999)
 		{
-			players[ID]->kState.isMobile = p.kState.isMobile;
+			playerShader->objects[ID]->kState.isMobile = p.kState.isMobile;
 		}
 		if (p.kState.rotation != -9999.0f)
 		{
-			float tangle = -p.kState.rotation + (players[ID]->kState.rotation);
-			players[ID]->kState.rotation = -p.kState.rotation;
+			float tangle = -p.kState.rotation + (playerShader->objects[ID]->kState.rotation);
+			playerShader->objects[ID]->kState.rotation = -p.kState.rotation;
 
 			
 			
-			players[ID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
+			playerShader->objects[ID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
 		}
 		if (p.kState.yspeed != -9999.0f)
 		{
-			players[ID]->kState.yspeed = p.kState.yspeed;
+			playerShader->objects[ID]->kState.yspeed = p.kState.yspeed;
 		}
 		if (p.kState.xzspeed != -9999.0f)
 		{
-			players[ID]->kState.xzspeed = p.kState.xzspeed;
+			playerShader->objects[ID]->kState.xzspeed = p.kState.xzspeed;
 		}
 		
 		printf("client player kinetic state change complete\n");
@@ -3656,19 +1310,19 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 		if (p.bState.attackID != -9999)
 		{
-			players[id]->bState.attackID = p.bState.attackID;
+			playerShader->objects[id]->bState.attackID = p.bState.attackID;
 		}
 		if (p.bState.stateID != -9999)
 		{
-			players[id]->bState.stateID = p.bState.stateID;
+			playerShader->objects[id]->bState.stateID = p.bState.stateID;
 		}
 		if (p.bState.isIntelligent != -9999)
 		{
-			players[id]->bState.isIntelligent = p.bState.isIntelligent;
+			playerShader->objects[id]->bState.isIntelligent = p.bState.isIntelligent;
 		}
 		if (p.bState.hp != -9999)
 		{
-			players[id]->bState.hp = p.bState.hp;
+			playerShader->objects[id]->bState.hp = p.bState.hp;
 		}
 		printf("client player bionic state change complete\n");
 		break;
@@ -3682,14 +1336,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			pCamera->angle = p.camAngle;
 			pCamera->currentUp = p.camUp;
 
-			XMFLOAT3 og = players[pID]->GetPosition();
-			float r = players[pID]->kState.rotation;
+			XMFLOAT3 og = playerShader->objects[pID]->GetPosition();
+			float r = playerShader->objects[pID]->kState.rotation;
 
 			float dangle = (p.camAngle - 270.0f) - r;
 			pCamera->rotate(og.x, og.z);
 			pCamera->rotateUp();
 			pCamera->GenerateViewMatrix();
-			//players[pID]->Rotate(0.0f, -dangle, 0.0f);
+			//playerShader->objects[pID]->Rotate(0.0f, -dangle, 0.0f);
 
 			printf("client player camera transform complete\n");
 		}
@@ -3700,10 +1354,10 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_ATTACK_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 		cout << "attack to target" << endl;
-		createParticles(100, XMFLOAT3(p.x, p.y, p.z));
+		partShader->createParticles(100, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
 		if (p.target != -1)
 		{
-			enemies[p.target]->bState.hp -= 1;
+			enemyShader->objects[p.target]->bState.hp -= 1;
 		}
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
@@ -3716,15 +1370,15 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_JUMP_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 		cout << "jump player" << endl;
-		players[p.id]->jump();
+		playerShader->objects[p.id]->jump();
 		break;
 	}
 	case PACKET_TYPE::SC_TELEPORT:
 		SC_TELEPORT_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 		cout << "teleport player" << endl;
-		players[p.id]->SetPosition(p.x+p.id*5.0f, p.y, p.z);
-		players[p.id]->bState.stateID = IDLE_STATE;
+		playerShader->objects[p.id]->SetPosition(p.x+p.id*5.0f, p.y, p.z);
+		playerShader->objects[p.id]->bState.stateID = IDLE_STATE;
 		break;
 
 	default:
@@ -3734,9 +1388,9 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 }
 
-void CScene::attack(int idx)
+void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list)
 {
-	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
+	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - playerShader->objects[idx]->lastAttack;
 	float fTime = static_cast<float>(fromLastAttack.count());
 	
 	if (fTime >= 1.0f / 6.0f)
@@ -3746,12 +1400,12 @@ void CScene::attack(int idx)
 		printf("time elapsed from last shot : %f\n", fTime);
 		setObjectLastAttack(idx);
 
-		float rad = XMConvertToRadians(players[idx]->kState.rotation-270.0f);
-		//printf("발사 각도 %f  ", players[idx]->currentRotation.y);
+		float rad = XMConvertToRadians(playerShader->objects[idx]->kState.rotation-270.0f);
+		//printf("발사 각도 %f  ", playerShader->objects[idx]->currentRotation.y);
 		XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
 
 		Line line;
-		line.start = players[idx]->GetPosition(); // 사격 위치
+		line.start = playerShader->objects[idx]->GetPosition(); // 사격 위치
 		line.start.y += 1.0f;
 		line.end = XMFLOAT3(line.start.x + dir.x * 3000.0f, line.start.y + dir.y * 3000.0f, line.start.z + dir.z * 3000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
 
@@ -3771,7 +1425,7 @@ void CScene::attack(int idx)
 
 
 		// 고정된 물체에 총알이 박혔나?
-		for (int i = 0; i < nBox; ++i)
+		for (int i = 0; i < terrainShader->nBox; ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
 
@@ -3782,14 +1436,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = boxesWorld[i].start.x;
+				p.pos = terrainShader->boxesWorld[i].start.x;
 				checkList.push_back(p);
 			}
 			else if (n.x < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = boxesWorld[i].end.x;
+				p.pos = terrainShader->boxesWorld[i].end.x;
 				checkList.push_back(p);
 			}
 
@@ -3797,14 +1451,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = boxesWorld[i].start.z;
+				p.pos = terrainShader->boxesWorld[i].start.z;
 				checkList.push_back(p);
 			}
 			else if (n.z < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = boxesWorld[i].end.z;
+				p.pos = terrainShader->boxesWorld[i].end.z;
 				checkList.push_back(p);
 			}
 
@@ -3812,14 +1466,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = boxesWorld[i].start.y;
+				p.pos = terrainShader->boxesWorld[i].start.y;
 				checkList.push_back(p);
 			}
 			else if (n.y < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = boxesWorld[i].end.y;
+				p.pos = terrainShader->boxesWorld[i].end.y;
 				checkList.push_back(p);
 			}
 
@@ -3833,9 +1487,9 @@ void CScene::attack(int idx)
 				
 
 				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-				if ((temp.x <= boxesWorld[i].end.x+0.001f && temp.x >= boxesWorld[i].start.x-0.001f) &&
-					(temp.y <= boxesWorld[i].end.y + 0.001f && temp.y >= boxesWorld[i].start.y-0.001f) &&
-					(temp.z <= boxesWorld[i].end.z + 0.001f && temp.z >= boxesWorld[i].start.z-0.001f))
+				if ((temp.x <= terrainShader->boxesWorld[i].end.x+0.001f && temp.x >= terrainShader->boxesWorld[i].start.x-0.001f) &&
+					(temp.y <= terrainShader->boxesWorld[i].end.y + 0.001f && temp.y >= terrainShader->boxesWorld[i].start.y-0.001f) &&
+					(temp.z <= terrainShader->boxesWorld[i].end.z + 0.001f && temp.z >= terrainShader->boxesWorld[i].start.z-0.001f))
 				{
 					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 					{
@@ -3881,7 +1535,7 @@ void CScene::attack(int idx)
 		soundEffect[1]->play();
 		soundEffect[1]->Update();
 		// 적한테 총알이 박혔나?
-		for (int i = 0; i < enemies.size(); ++i)
+		for (int i = 0; i < enemyShader->objects.size(); ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
 
@@ -3892,14 +1546,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = enemyBoxes[i].start.x;
+				p.pos = enemyShader->enemyBoxes[i]->start.x;
 				checkList.push_back(p);
 			}
 			else if (n.x < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = enemyBoxes[i].end.x;
+				p.pos = enemyShader->enemyBoxes[i]->end.x;
 				checkList.push_back(p);
 			}
 
@@ -3907,14 +1561,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = enemyBoxes[i].start.z;
+				p.pos = enemyShader->enemyBoxes[i]->start.z;
 				checkList.push_back(p);
 			}
 			else if (n.z < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = enemyBoxes[i].end.z;
+				p.pos = enemyShader->enemyBoxes[i]->end.z;
 				checkList.push_back(p);
 			}
 
@@ -3922,14 +1576,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = enemyBoxes[i].start.y;
+				p.pos = enemyShader->enemyBoxes[i]->start.y;
 				checkList.push_back(p);
 			}
 			else if (n.y < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = enemyBoxes[i].end.y;
+				p.pos = enemyShader->enemyBoxes[i]->end.y;
 				checkList.push_back(p);
 			}
 
@@ -3943,9 +1597,9 @@ void CScene::attack(int idx)
 
 
 				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-				if ((temp.x <= enemyBoxes[i].end.x + 0.001f && temp.x >= enemyBoxes[i].start.x - 0.001f) &&
-					(temp.y <= enemyBoxes[i].end.y + 0.001f && temp.y >= enemyBoxes[i].start.y - 0.001f) &&
-					(temp.z <= enemyBoxes[i].end.z + 0.001f && temp.z >= enemyBoxes[i].start.z - 0.001f))
+				if ((temp.x <= enemyShader->enemyBoxes[i]->end.x + 0.001f && temp.x >= enemyShader->enemyBoxes[i]->start.x - 0.001f) &&
+					(temp.y <= enemyShader->enemyBoxes[i]->end.y + 0.001f && temp.y >= enemyShader->enemyBoxes[i]->start.y - 0.001f) &&
+					(temp.z <= enemyShader->enemyBoxes[i]->end.z + 0.001f && temp.z >= enemyShader->enemyBoxes[i]->start.z - 0.001f))
 				{
 					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 					{
@@ -3988,7 +1642,7 @@ void CScene::attack(int idx)
 
 		}
 
-		for (int i = 0; i < nStairs; ++i)
+		for (int i = 0; i < terrainShader->nStairs; ++i)
 		{
 			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
 
@@ -3999,14 +1653,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = stairsWorld[i].start.x;
+				p.pos = terrainShader->stairsWorld[i].start.x;
 				checkList.push_back(p);
 			}
 			else if (n.x < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = stairsWorld[i].end.x;
+				p.pos = terrainShader->stairsWorld[i].end.x;
 				checkList.push_back(p);
 			}
 
@@ -4014,14 +1668,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = stairsWorld[i].start.z;
+				p.pos = terrainShader->stairsWorld[i].start.z;
 				checkList.push_back(p);
 			}
 			else if (n.z < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = stairsWorld[i].end.z;
+				p.pos = terrainShader->stairsWorld[i].end.z;
 				checkList.push_back(p);
 			}
 
@@ -4029,14 +1683,14 @@ void CScene::attack(int idx)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = stairsWorld[i].start.y;
+				p.pos = terrainShader->stairsWorld[i].start.y;
 				checkList.push_back(p);
 			}
 			else if (n.y < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = stairsWorld[i].end.y;
+				p.pos = terrainShader->stairsWorld[i].end.y;
 				checkList.push_back(p);
 			}
 
@@ -4050,9 +1704,9 @@ void CScene::attack(int idx)
 
 
 				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-				if ((temp.x <= stairsWorld[i].end.x + 0.001f && temp.x >= stairsWorld[i].start.x - 0.001f) &&
-					(temp.y <= stairsWorld[i].end.y + 0.001f && temp.y >= stairsWorld[i].start.y - 0.001f) &&
-					(temp.z <= stairsWorld[i].end.z + 0.001f && temp.z >= stairsWorld[i].start.z - 0.001f))
+				if ((temp.x <= terrainShader->stairsWorld[i].end.x + 0.001f && temp.x >= terrainShader->stairsWorld[i].start.x - 0.001f) &&
+					(temp.y <= terrainShader->stairsWorld[i].end.y + 0.001f && temp.y >= terrainShader->stairsWorld[i].start.y - 0.001f) &&
+					(temp.z <= terrainShader->stairsWorld[i].end.z + 0.001f && temp.z >= terrainShader->stairsWorld[i].start.z - 0.001f))
 				{
 					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 					{
@@ -4124,15 +1778,15 @@ void CScene::attack(int idx)
 			{
 				printf("(Something)\n");
 			}*/
-			if (m_ppGameObjects[target-22]->type == 21217)
+			if (terrainShader->objects[target-22]->type == 21217)
 			{
-				float ox = m_ppGameObjects[target - 22]->GetPosition().x;
-				float oy = m_ppGameObjects[target - 22]->GetPosition().y;
-				float oz = m_ppGameObjects[target - 22]->GetPosition().z;
+				float ox = terrainShader->objects[target - 22]->GetPosition().x;
+				float oy = terrainShader->objects[target - 22]->GetPosition().y;
+				float oz = terrainShader->objects[target - 22]->GetPosition().z;
 
-				m_ppGameObjects[target-22] = NULL;
-				boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
-				boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+				terrainShader->objects[target-22] = NULL;
+				terrainShader->boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
+				terrainShader->boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 
 
 
@@ -4143,7 +1797,7 @@ void CScene::attack(int idx)
 						for (float z = oz - 0.5f; z < oz + 1.0f; z += 0.6f)
 						{
 							XMFLOAT3 tmp = XMFLOAT3(x, y, z);
-							createParticles(10, tmp);
+							partShader->createParticles(10, tmp, device, list);
 						}
 					}
 				}
@@ -4169,8 +1823,8 @@ void CScene::attack(int idx)
 
 		// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
 		// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
-		createParticles(50, targetPos);
-		// 그니까, createParticles 함수는 서버의 전담이 아니다.
+		partShader->createParticles(50, targetPos, device, list);
+		// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
 	}
 
 
@@ -4179,7 +1833,7 @@ void CScene::attack(int idx)
 
 void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - players[idx]->lastAttack;
+	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - playerShader->objects[idx]->lastAttack;
 	float fTime = static_cast<float>(fromLastAttack.count());
 
 	if (fTime >= 1.0f)
@@ -4188,7 +1842,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
-		players[idx]->hammerHit = false;
+		playerShader->objects[idx]->hammerHit = false;
 		soundEffect[3]->play();
 		soundEffect[3]->Update();
 
@@ -4196,20 +1850,20 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 		if (r)
 		{
-			if (players[idx]->m_pChild != binModels[3]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[3]->m_pModelRootObject)
 			{
-				players[idx]->setRoot(binModels[3]->m_pModelRootObject, true);
-				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[3]);
-				players[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->setRoot(rm->playerModels[3]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[3]);
+				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
 		else
 		{
-			if (players[idx]->m_pChild != binModels[4]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[4]->m_pModelRootObject)
 			{
-				players[idx]->setRoot(binModels[4]->m_pModelRootObject, true);
-				players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[4]);
-				players[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->setRoot(rm->playerModels[4]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[4]);
+				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
 	}
@@ -4218,9 +1872,9 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	{
 
 		BoundBox bx;
-		XMFLOAT3 ps = players[idx]->GetPosition();
+		XMFLOAT3 ps = playerShader->objects[idx]->GetPosition();
 		
-		float rad = XMConvertToRadians(players[idx]->kState.rotation - 270.0f);
+		float rad = XMConvertToRadians(playerShader->objects[idx]->kState.rotation - 270.0f);
 		
 		float dx = sin(rad);
 		float dz = cos(rad);
@@ -4228,24 +1882,24 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 
 
-		for (int i = 0; i < enemies.size(); ++i)
+		for (int i = 0; i < enemyShader->objects.size(); ++i)
 		{
 
-			XMFLOAT3 es = enemies[i]->GetPosition();
+			XMFLOAT3 es = enemyShader->objects[i]->GetPosition();
 
 			XMFLOAT3 vec = XMFLOAT3(es.x - ps.x, 0.0f, es.z - ps.z);
 
 			float dist = Vector3::Length(vec);
 			float cosAngle = Vector3::DotProduct(Vector3::Normalize(vec), look);
 
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 1.5f && players[idx]->hammerHit==false)
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 1.5f && playerShader->objects[idx]->hammerHit==false)
 			{
 				printf("Enemy [%d] hit\n", i);
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
-				players[idx]->hammerHit = true;
-				createParticles(50, enemies[i]->GetPosition());
-				enemies[i]->bState.hp -= 1.0f;
+				playerShader->objects[idx]->hammerHit = true;
+				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
+				enemyShader->objects[i]->bState.hp -= 1.0f;
 				break;
 			}
 			
@@ -4256,11 +1910,11 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	}
 	else if (fTime >= 0.833333f && fTime < 1.0f)
 	{
-		if (players[idx]->m_pChild != binModels[2]->m_pModelRootObject)
+		if (playerShader->objects[idx]->m_pChild != rm->playerModels[2]->m_pModelRootObject)
 		{
-			players[idx]->setRoot(binModels[2]->m_pModelRootObject, true);
-			players[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, binModels[2]);
-			players[idx]->SetTrackAnimationSet(0, 0);
+			playerShader->objects[idx]->setRoot(rm->playerModels[2]->m_pModelRootObject, true);
+			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
+			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
 			
 		}
 		
@@ -4310,7 +1964,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		
 		CGameObject* obj = new CGameObject(1);
 		obj->timeCreated = std::chrono::system_clock::now();
-		obj->SetMaterial(0, ppMaterials[66]);
+		obj->SetMaterial(0, rm->materials[66]);
 		obj->speed = 0.1f;
 		obj->direction = direct;
 		obj->SetPosition(pos);
@@ -4320,110 +1974,11 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 }
 
 // 적 만드는 함수
-void CScene::createEnemies(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
-{
-	enemyModels = new CLoadedModelInfo * [nEnemyMesh];
-	enemyModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
-	enemyModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_die.bin", NULL);
 
 
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj->SetPosition(90.0f, 0.0f, 150.0f);
-	obj->type = -10;
-	obj->SetTrackAnimationSet(0, 0);
-
-	obj->bState.stateID = IDLE_STATE;
-	obj->bState.hp = 10;
-	enemies.push_back(obj);
-
-	CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj2->SetPosition(92.0f, 0.0f, 152.0f);
-	obj2->type = -10;
-	obj2->SetTrackAnimationSet(0, 0);
-
-	obj2->bState.stateID = IDLE_STATE;
-	obj2->bState.hp = 10;
-	enemies.push_back(obj2);
-
-	CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj3->SetPosition(94.0f, 0.0f, 150.0f);
-	obj3->type = -10;
-	obj3->SetTrackAnimationSet(0, 0);
-
-	obj3->bState.stateID = IDLE_STATE;
-	obj3->bState.hp = 10;
-	enemies.push_back(obj3);
-
-	CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj4->SetPosition(120.0f, 0.0f, 220.0f);
-	obj4->type = -10;
-	obj4->SetTrackAnimationSet(0, 0);
-
-	obj4->bState.stateID = IDLE_STATE;
-	obj4->bState.hp = 10;
-	enemies.push_back(obj4);
-
-	CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, enemyModels[0], 1);
-	obj5->SetPosition(450.0f, 0.0f, 330.0f);
-	obj5->type = -10;
-	obj5->SetTrackAnimationSet(0, 0);
-
-	obj5->bState.stateID = IDLE_STATE;
-	obj5->bState.hp = 10;
-	enemies.push_back(obj5);
-
-	// 각 적들의 위치에 바운딩 박스 생성
-	for (int i = 0; i < enemies.size(); ++i)
-	{
-		//x,y=-0.25~0.25 z=0.0~1.7
-
-		XMFLOAT3 pos = enemies[i]->GetPosition();
-
-		BoundBox box;
-		box.start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
-		box.end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
-
-		enemyBoxes.push_back(box);
-	}
-
-}
-
-void CScene::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3 pos)
-{
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, binModels[0], 1);
-	obj->type = 1;
-	obj->objType = 1;
-	
-	obj->SetPosition(pos);
-	obj->Rotate(0.0f, 0.0f, 0.0f);
-	obj->currentRotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
-
-	obj->speed = 0.0f;
-	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	obj->lastMove = chrono::system_clock::now();
-
-	obj->pState.currHP = 100;
-	obj->pState.id = IDLE_STATE;
-	obj->pState.timeElapsed = 0.0f;
-	obj->pState.attType = TYPE_RANGED;
-
-	obj->SetTrackAnimationSet(0, 11);
 
 
-	players.push_back(obj);
-}
 
-void CScene::createPlayers(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
-{
-	binModels = new CLoadedModelInfo*[nSkinMesh];
-	playerTypes = new CGameObject * [nSkinMesh];
-
-	binModels[0] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
-	binModels[1] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_walk.bin", NULL);
-	binModels[2] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
-	binModels[3] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing1.bin", NULL);
-	binModels[4] = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
-}
 void CScene::createSounds()
 {
 	bgm = new CSound * [nBGM];

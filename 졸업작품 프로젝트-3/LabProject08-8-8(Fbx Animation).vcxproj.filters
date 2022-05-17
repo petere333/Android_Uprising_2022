@@ -10,6 +10,18 @@
     <FxCompile Include="interface.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="Player.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Terrain.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Enemy.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Particles.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -53,6 +65,24 @@
     </ClCompile>
     <ClCompile Include="CSound.cpp">
       <Filter>CSound</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleShader.cpp">
+      <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +141,24 @@
     <ClInclude Include="CSound.h">
       <Filter>CSound</Filter>
     </ClInclude>
+    <ClInclude Include="InterfaceShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -162,6 +210,9 @@
     </Filter>
     <Filter Include="GameFramework">
       <UniqueIdentifier>{9277d988-7472-4f78-8552-6128c5676354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{3bc38380-bcdd-4c59-b556-840eeca14f2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
