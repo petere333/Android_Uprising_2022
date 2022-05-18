@@ -391,8 +391,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 {
 	cam->move(playerShader->objects[pID]->GetPosition());
 	m_fElapsedTime = fTimeElapsed;
-	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-
+	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
+	interShader->Animate(cam);
 	
 
 	for (int i = 0; i < playerShader->objects.size(); ++i)
@@ -591,15 +591,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
 
-	if (interShader)
-	{
-		interShader->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
-		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-		}
-		interShader->Render(pd3dCommandList, pCamera);
-	}
+	
 
 	if (playerShader)
 	{
@@ -631,26 +623,16 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		partShader->Render(pd3dCommandList, pCamera);
 	}
 
-	
-	/*
-	for (int i = 0; i < partShader->objects.size(); ++i)
+	//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
+	if (interShader)
 	{
-		XMFLOAT3 pos = partShader->objects[i]->GetPosition();
-		XMFLOAT3 camPos = pCamera->getPosition();
-		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
-		XMFLOAT3 look = pCamera->getLook();
-
-		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
-
-		if (cosAngle >= cos(XMConvertToRadians(45.0f)) && cosAngle <= 1.0f)
+		interShader->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
 		{
-			partShader->objects[i]->Render(pd3dCommandList, pCamera);
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
 		}
-		
+		interShader->Render(pd3dCommandList, pCamera);
 	}
-	*/
-
-	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
 
 	
 }
@@ -759,6 +741,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -769,6 +752,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -784,6 +768,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -794,6 +779,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -809,6 +795,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
@@ -818,6 +805,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 							playerShader->objects[idx]->kState.isInAir = 0;
@@ -856,6 +844,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -866,6 +855,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -881,6 +871,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -891,6 +882,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -906,6 +898,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
@@ -915,6 +908,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 							playerShader->objects[idx]->kState.isInAir = 0;
@@ -943,6 +937,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -953,6 +948,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.x = 0.0f;
 
@@ -968,6 +964,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -978,6 +975,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							dir.z = 0.0f;
 
@@ -993,6 +991,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 						}
@@ -1002,6 +1001,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
 							}
 							playerShader->objects[idx]->kState.yspeed = 0.0f;
 							playerShader->objects[idx]->kState.isInAir = 0;
@@ -1039,6 +1039,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				if (idx == pID)
 				{
 					pCamera->move(playerShader->objects[idx]->GetPosition());
+					interShader->Animate(pCamera);
 				}
 				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 				playerShader->objects[idx]->lastMoveSuccess = true;
@@ -1057,6 +1058,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				{
 					playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
 					pCamera->move(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
+					interShader->Animate(pCamera);
 					playerShader->objects[idx]->lastMoveSuccess = true;
 
 					//if (playerShader->objects[idx]->yspeed != 0.0f)

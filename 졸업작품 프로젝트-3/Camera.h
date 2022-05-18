@@ -74,5 +74,7 @@ public:
 
 
 	XMFLOAT3 getPosition() { return m_xmf3Position; }
-	XMFLOAT3 getLook() { XMFLOAT3 look = XMFLOAT3(lx - m_xmf3Position.x, ly - m_xmf3Position.y, lz - m_xmf3Position.z); return look; }
+	XMFLOAT3 getLook();
+	XMFLOAT3 getRight();
+	XMFLOAT3 getUp();
 };

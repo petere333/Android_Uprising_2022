@@ -118,3 +118,26 @@ void CCamera::rotate(float originX, float originZ)
 	
 }
 
+XMFLOAT3 CCamera::getLook() 
+{ 
+	XMFLOAT3 look = XMFLOAT3(lx - m_xmf3Position.x, ly - m_xmf3Position.y, lz - m_xmf3Position.z); 
+	look = Vector3::Normalize(look);
+	return look; 
+}
+
+XMFLOAT3 CCamera::getRight()
+{
+	XMFLOAT3 look = getLook();
+
+	XMFLOAT3 right = XMFLOAT3(look.y, -look.x, -look.z);
+	return right;
+}
+XMFLOAT3 CCamera::getUp()
+{
+	XMFLOAT3 look = getLook();
+	XMFLOAT3 right = getRight();
+	XMFLOAT3 up = Vector3::CrossProduct(look, right);
+	up = Vector3::Normalize(up);
+
+	return up;
+}
