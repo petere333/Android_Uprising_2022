@@ -63,7 +63,7 @@ void ResourceManager::createTextures()
 	CTexture* tex41; CTexture* tex42; CTexture* tex43; CTexture* tex44; CTexture* tex45; CTexture* tex46; CTexture* tex47; CTexture* tex48; CTexture* tex49; CTexture* tex50;
 	CTexture* tex51; CTexture* tex52; CTexture* tex53; CTexture* tex54; CTexture* tex55; CTexture* tex56; CTexture* tex57; CTexture* tex58; CTexture* tex59; CTexture* tex60;
 	CTexture* tex61; CTexture* tex62; CTexture* tex63; CTexture* tex64; CTexture* tex65; CTexture* tex66; CTexture* tex67; CTexture* tex68; CTexture* tex69; CTexture* tex70;
-	CTexture* tex71;
+	CTexture* tex71; CTexture* tex72; CTexture* tex73;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -304,6 +304,12 @@ void ResourceManager::createTextures()
 	tex71 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex71->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/철벽즈.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex71);
+	tex72 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex72->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/동글동글.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex72);
+	tex73 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex73->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/트래비.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex73);
 
 	CTexture* norm;
 

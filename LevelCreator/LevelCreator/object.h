@@ -120,6 +120,8 @@
 #define GyeDans1 13004 // 1-3
 #define GyeDans2 13005 // 1-3
 #define R_GyeDan1 22001 // 2-2
+#define didims 30049
+#define R_GyeDan1_1 30050 // 2-2
 
 #define Frs_Pons1 30099// 3공통
 #define Frs_Pons2 30098 // 3공통
@@ -252,7 +254,8 @@
 
 #define Janhae21 22899
 
-
+#define Janhae22 30849
+#define Janhae23 30848
 
 
 

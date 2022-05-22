@@ -31,6 +31,8 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CCubeMeshTextured* Gongjang_janhae10 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 5.5f, 3.0f); //
 	CCubeMeshTextured* Gongjang_janhae13 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 3.0f, 3.0f, 24.0f); //
 	CCubeMeshTextured* Gongjang_janhae14 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 6.0f, 7.5f, 70.0f); //
+	CCubeMeshTextured* didimz1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 80.0f, 0.7f, 2.0f); //
+	CCubeMeshTextured* R_GyeDan_1_1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 92.0f, 6.0f, 14.0f); //
 
 	//CRectMeshTextured* pTileMesh = new CRectMeshTextured(pd3dDevice, pd3dCommandList, 2.5f, 2.5f);
 
@@ -185,7 +187,7 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CLoadedMesh* Container1_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Cont1_1.txt", "res/idx_Cont1_1.txt");
 	CLoadedMesh* GyeDan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
 	CLoadedMesh* GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단1.txt", NULL);
-	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_신계단2.txt", NULL);
+	CLoadedMesh* R_GyeDan_1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_new계단.txt", NULL);
 	CLoadedMesh* P_Doors = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_Doors.txt", NULL);
 	CLoadedMesh* H_Heat = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_공장_히터.txt", NULL);
 	CLoadedMesh* B_box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_1Stage_Box.txt", NULL);
@@ -223,12 +225,13 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CLoadedMesh* Gongjang_janhae12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_잔해탁자.txt", NULL);
 	CLoadedMesh* Gongjang_janhae15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_대회의실.txt", NULL);
 	CLoadedMesh* Gongjang_janhae16 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문1.txt", NULL);
-	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문2.txt", NULL);
+	CLoadedMesh* Gongjang_janhae17 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_문짝.txt", NULL);
 	CLoadedMesh* Gongjang_janhae18 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_소형발전.txt", NULL);
 	CLoadedMesh* Gongjang_janhae19 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_돌덩이1.txt", NULL);
 	CLoadedMesh* Gongjang_janhae20 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_통신병PTSD.txt", NULL);
 	CLoadedMesh* Gongjang_janhae21 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_팬스.txt", NULL);
-
+	CLoadedMesh* Gongjang_janhae22 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_물돼지.txt", NULL);
+	CLoadedMesh* Gongjang_janhae23 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_스윽삭.txt", NULL);
 
 
 	/*
@@ -1651,6 +1654,36 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			obj->SetMaterial(0, rm->materials[70]);
 
 		}
+		else if (data[i].type == Janhae22)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae22);
+		obj->SetMaterial(0, rm->materials[71]);
+
+		}
+		else if (data[i].type == Janhae23)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Gongjang_janhae23);
+		obj->SetMaterial(0, rm->materials[72]);
+
+		}
+		else if (data[i].type == didims)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(didimz1);
+		obj->SetMaterial(0, rm->materials[40]);
+
+		}
+		else if (data[i].type == R_GyeDan1_1)// 지붕의 시작점
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(R_GyeDan_1_1);
+		//	obj->Rotate(270.0f, 0.0f, 0.0f);
+		obj->SetMaterial(0, rm->materials[40]);
+
+		}
+
 
 
 		obj->type = data[i].type;
