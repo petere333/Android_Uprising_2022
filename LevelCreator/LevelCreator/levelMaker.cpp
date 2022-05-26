@@ -3198,10 +3198,17 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Janhaes16_2);
 
 	Object Janhaes17_1;
-	Janhaes17_1.location = f3(600.0f, 0.0f, 570.0f);
+	Janhaes17_1.location = f3(600.0f, 2.5f, 571.0f);
 	Janhaes17_1.rotation = f3(-90.0f, 0.0f, 0.0f);
 	Janhaes17_1.type = Janhae17;
 	list.push_back(Janhaes17_1); // 게이트 문
+
+	Object Janhaes17_2;
+	Janhaes17_2.location = f3(800.0f, 2.5f, 571.0f);
+	Janhaes17_2.rotation = f3(-90.0f, 0.0f, 0.0f);
+	Janhaes17_2.type = Janhae17;
+	list.push_back(Janhaes17_2);
+
 
 	Object Janhaes18_1;
 	Janhaes18_1.location = f3(862.5f, 0.0f, 311.0f);
@@ -6159,8 +6166,13 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox Jans17_1;
 	Jans17_1.start = f3(599.9f, 0.0f, 550.0f);
-	Jans17_1.end = f3(600.1f, 0.0f, 570.0f);
+	Jans17_1.end = f3(600.1f, 5.0f, 570.0f);
 	blist.push_back(Jans17_1);
+
+	BoundingBox Jans17_2;
+	Jans17_2.start = f3(799.9f, 0.0f, 550.0f);
+	Jans17_2.end = f3(800.1f, 5.0f, 570.0f);
+	blist.push_back(Jans17_2);
 
 	// 862.5 311
 	BoundingBox Jans18_1;
@@ -7325,16 +7337,16 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		blist.push_back(SSonVan1[i]);
 	}
 
-	BoundingBox Cov_tim1[10];
-	for (int i = 0; i < 10; ++i)
+	BoundingBox Cov_tim1[4];
+	for (int i = 0; i < 4; ++i)
 	{
 		Cov_tim1[i].start = f3(1220.0f + (5.0f * i), 0.0f, 30.0f);
 		Cov_tim1[i].end = f3(1225.0f + (5.0f * i), 5.0f, 35.0f);
 		blist.push_back(Cov_tim1[i]);
 	}
 
-	BoundingBox Cov_tim2[10];
-	for (int i = 0; i < 10; ++i)
+	BoundingBox Cov_tim2[4];
+	for (int i = 0; i < 4; ++i)
 	{
 		Cov_tim2[i].start = f3(1220.0f + (5.0f * i), 0.0f, 39.0f);
 		Cov_tim2[i].end = f3(1225.0f + (5.0f * i), 5.0f, 44.0f);
