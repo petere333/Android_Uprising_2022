@@ -4484,8 +4484,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		list.push_back(SonVan1[i]);
 	}
 
-	Object Tims1[10];
-	for (int i = 0; i < 10; ++i)
+	Object Tims1[4];
+	for (int i = 0; i < 4; ++i)
 	{
 		Tims1[i].location = f3(1225.0f + (5.0f * i), 0.0f, 30.0f);
 		Tims1[i].rotation = f3(0.0f, 0.0f, 0.0f);
@@ -4494,8 +4494,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	}
 
-	Object Tims2[10];
-	for (int i = 0; i < 10; ++i)
+	Object Tims2[4];
+	for (int i = 0; i < 4; ++i)
 	{
 		Tims2[i].location = f3(1225.0f + (5.0f * i), 0.0f, 39.0f);
 		Tims2[i].rotation = f3(0.0f, 0.0f, 0.0f);
@@ -8228,18 +8228,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Pox8);
 	blist.push_back(Pox9);
 	blist.push_back(Pox10);
-	blist.push_back(Pox11);
-	blist.push_back(Pox12);
-	blist.push_back(Pox13);
-	blist.push_back(Pox14);
-	blist.push_back(Pox15);
-	blist.push_back(Pox16);
-	blist.push_back(Pox17);
-	blist.push_back(Pox18);
-	blist.push_back(Pox19);
-	blist.push_back(Pox20);
-	blist.push_back(Pox21);
-	blist.push_back(Pox22);
+
 
 
 
