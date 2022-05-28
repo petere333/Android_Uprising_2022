@@ -1126,8 +1126,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	froom1_3h.rotation = f3(0.0f, 0.0f, 0.0f);
 	froom1_3h.type = froom_set1_3_h;
 
-	list.push_back(froom1_3);
-	list.push_back(froom1_3h);
+
 
 	froom2.location = f3(400.0f, 2.5f, 200.0f);
 	froom2.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -1421,6 +1420,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Barigate4);
 	list.push_back(Barigate5);
 	list.push_back(Barigate6);
+	list.push_back(froom1_3);
+	list.push_back(froom1_3h);
 	list.push_back(ggokji1);
 	list.push_back(ggokji2);
 
