@@ -5701,6 +5701,27 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	Jans2_4.end = f3(221.0f, 6.0f, 40.0f);
 	blist.push_back(Jans2_4);
 
+	BoundingBox Jans3_1_1;
+	Jans3_1_1.start = f3(240.5f, 0.0f, 66.5f);
+	Jans3_1_1.end = f3(247.5f, 7.0f, 73.5f);
+	blist.push_back(Jans3_1_1);
+
+	BoundingBox Jans3_1_2;
+	Jans3_1_2.start = f3(207.5f, 0.0f, 61.5f);
+	Jans3_1_2.end = f3(214.5f, 7.0f, 68.5f);
+	blist.push_back(Jans3_1_2);
+
+	BoundingBox Jans3_1_3;
+	Jans3_1_3.start = f3(148.5f, 0.0f, 60.5f);
+	Jans3_1_3.end = f3(155.5f, 7.0f, 67.5f);
+	blist.push_back(Jans3_1_3);
+
+	BoundingBox Jans3_1_4;
+	Jans3_1_4.start = f3(91.5f, 0.0f, 301.5f);
+	Jans3_1_4.end = f3(98.5f, 7.0f, 308.5f);
+	blist.push_back(Jans3_1_4);
+
+
 	BoundingBox Jans3_1;
 	Jans3_1.start = f3(190.0f, 0.0f, 109.0f);
 	Jans3_1.end = f3(202.0f, 12.0f, 121.0f);
@@ -5722,26 +5743,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Jans3_4);
 
 
-	BoundingBox Jans3_1_1;
-	Jans3_1_1.start = f3(240.5f, 0.0f, 66.5f);
-	Jans3_1_1.end = f3(247.5f, 7.0f, 73.5f);
-	blist.push_back(Jans3_1_1);
-
-	BoundingBox Jans3_1_2;
-	Jans3_1_2.start = f3(207.5f, 0.0f, 61.5f);
-	Jans3_1_2.end = f3(214.5f, 7.0f, 68.5f);
-	blist.push_back(Jans3_1_2);
-
-	BoundingBox Jans3_1_3;
-	Jans3_1_3.start = f3(148.5f, 0.0f, 60.5f);
-	Jans3_1_3.end = f3(155.5f, 7.0f, 67.5f);
-	blist.push_back(Jans3_1_3);
-
-	BoundingBox Jans3_1_4;
-	Jans3_1_4.start = f3(91.5f, 0.0f, 301.5f);
-	Jans3_1_4.end = f3(98.5f, 7.0f, 308.5f);
-	blist.push_back(Jans3_1_4);
-
+	
 
 	BoundingBox Jans4_1;
 	Jans4_1.start = f3(40.5f, 0.0f, 275.5f);
@@ -6606,13 +6608,6 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		blist.push_back(Bals[i]);
 	}
 
-	BoundingBox T_wall1[2];
-	for (int i = 0; i < 2; ++i)
-	{
-		T_wall1[i].start = f3(280.0f + (25.0f * i), 0.0f, 220.0f);
-		T_wall1[i].end = f3(305.0f + (25.0f * i), 2.8f, 221.2f);
-		blist.push_back(T_wall1[i]);
-	}
 
 	BoundingBox T_Wall2[10];
 	for (int i = 0; i < 10; ++i)
@@ -6620,6 +6615,15 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		T_Wall2[i].start = f3(328.8f, 0.0f, 220.0f + (38.0f * i));
 		T_Wall2[i].end = f3(330.0f, 2.8f, 258.0f + (38.0f * i));
 		blist.push_back(T_Wall2[i]);
+	}
+
+
+	BoundingBox T_wall1[2];
+	for (int i = 0; i < 2; ++i)
+	{
+		T_wall1[i].start = f3(280.0f + (25.0f * i), 0.0f, 220.0f);
+		T_wall1[i].end = f3(305.0f + (25.0f * i), 2.8f, 221.2f);
+		blist.push_back(T_wall1[i]);
 	}
 
 	BoundingBox TrashBag1[3];
@@ -7517,6 +7521,25 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 		blist.push_back(Cov_jim12[i]);
 	}
 
+	BoundingBox Edi[20];
+
+	for (int i = 0; i < 20; ++i)
+	{
+		Edi[i].start = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
+		Edi[i].end = f3(255.0f + (5.0f * i), 5.0f, 12.5f);
+
+		blist.push_back(Edi[i]);
+	}
+
+	BoundingBox binet1[30];
+
+	for (int i = 0; i < 30; ++i)
+	{
+		binet1[i].start = f3(401.5f, 0.0f, 300.0f + (3.0f * i));
+		binet1[i].end = f3(404.5f, 7.0f, 303.0f + (3.0f * i));
+
+		blist.push_back(binet1[i]);
+	}
 
 	BoundingBox Dom1[2];
 
@@ -7665,25 +7688,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	}
 
 
-	BoundingBox Edi[20];
 
-	for (int i = 0; i < 20; ++i)
-	{
-		Edi[i].start = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
-		Edi[i].end = f3(255.0f + (5.0f * i), 5.0f, 12.5f);
-
-		blist.push_back(Edi[i]);
-	}
-
-	BoundingBox binet1[30];
-
-	for (int i = 0; i < 30; ++i)
-	{
-		binet1[i].start = f3(401.5f, 0.0f, 300.0f + (3.0f * i));
-		binet1[i].end = f3(404.5f, 7.0f, 303.0f + (3.0f * i));
-
-		blist.push_back(binet1[i]);
-	}
 
 	BoundingBox Egin1;
 	Egin1.start = f3(802.0f, 0.0f, 375.0f);
@@ -8201,6 +8206,14 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Pox1);
 	blist.push_back(Pox2);
 	blist.push_back(Pox3);
+
+	blist.push_back(Egin1);
+	blist.push_back(Egin2);
+	blist.push_back(Egin3);
+	blist.push_back(Egin4);
+	blist.push_back(Egin5);
+	blist.push_back(Egin6);
+	blist.push_back(Egin7);
 	blist.push_back(Pox4);
 	blist.push_back(Pox5);
 	blist.push_back(Pox6);
@@ -8220,13 +8233,6 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Pox20);
 	blist.push_back(Pox21);
 	blist.push_back(Pox22);
-	blist.push_back(Egin1);
-	blist.push_back(Egin2);
-	blist.push_back(Egin3);
-	blist.push_back(Egin4);
-	blist.push_back(Egin5);
-	blist.push_back(Egin6);
-	blist.push_back(Egin7);
 
 
 
