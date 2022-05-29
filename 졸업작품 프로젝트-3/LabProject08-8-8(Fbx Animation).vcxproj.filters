@@ -22,6 +22,9 @@
     <FxCompile Include="Particles.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="Shadow.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -82,6 +85,9 @@
       <Filter>Shader</Filter>
     </ClCompile>
     <ClCompile Include="ParticleShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowShader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
@@ -157,6 +163,9 @@
       <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="ParticleShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
   </ItemGroup>
