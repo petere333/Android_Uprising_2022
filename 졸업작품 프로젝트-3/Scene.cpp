@@ -160,6 +160,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	partShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	partShader->BuildObjects();
 
+	sdwShader = new ShadowShader(rm);
+	sdwShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	sdwShader->BuildObjects(pd3dDevice,pd3dCommandList);
+
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
 
@@ -621,6 +625,12 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	{
 		partShader->OnPrepareRender(pd3dCommandList);
 		partShader->Render(pd3dCommandList, pCamera);
+	}
+
+	if (sdwShader)
+	{
+		sdwShader->OnPrepareRender(pd3dCommandList);
+		sdwShader->Render(pd3dCommandList, pCamera);
 	}
 
 	//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
@@ -1780,13 +1790,13 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			{
 				printf("(Something)\n");
 			}*/
-			if (terrainShader->objects[target-22]->type == 21217)
+			if (terrainShader->objects[target]->type == 21217)
 			{
-				float ox = terrainShader->objects[target - 22]->GetPosition().x;
-				float oy = terrainShader->objects[target - 22]->GetPosition().y;
-				float oz = terrainShader->objects[target - 22]->GetPosition().z;
+				float ox = terrainShader->objects[target]->GetPosition().x;
+				float oy = terrainShader->objects[target]->GetPosition().y;
+				float oz = terrainShader->objects[target]->GetPosition().z;
 
-				terrainShader->objects[target-22] = NULL;
+				terrainShader->objects[target] = NULL;
 				terrainShader->boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
 				terrainShader->boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 

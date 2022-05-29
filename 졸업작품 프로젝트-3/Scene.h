@@ -10,6 +10,7 @@
 #include "TerrainShader.h"
 #include "EnemyShader.h"
 #include "ParticleShader.h"
+#include "ShadowShader.h"
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -122,6 +123,7 @@ public:
 	TerrainShader* terrainShader = NULL;
 	EnemyShader* enemyShader = NULL;
 	ParticleShader* partShader = NULL;
+	ShadowShader* sdwShader = NULL;
 
 	CTexture* textures[nTex];
 	CMaterial* ppMaterials[nMat];
