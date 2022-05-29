@@ -2528,8 +2528,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist, vector<BoundingStair>& slist)
 {
-	createPlayer(list);
 	createObstacles(list, blist);
+	createPlayer(list);
 	createSpace(list, blist);
 
 	createStairBox(list, blist, slist);
