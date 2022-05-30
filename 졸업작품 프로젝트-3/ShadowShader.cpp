@@ -19,14 +19,14 @@ void ShadowShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandL
 		if (data[i].type == Janhae6)
 		{
 			obj = new CGameObject(1);
-			RectMesh* mesh = new RectMesh(pd3dDevice, pd3dCommandList, boxesWorld[i].end.x - boxesWorld[i].start.x, boxesWorld[i].end.z - boxesWorld->start.z);
+			RectMesh* mesh = new RectMesh(pd3dDevice, pd3dCommandList, boxesWorld[i].end.x - boxesWorld[i].start.x, boxesWorld[i].end.z - boxesWorld[i].start.z);
 			obj->SetMesh(mesh);
 			obj->SetMaterial(0, rm->materials[74]);
 
 			obj->type = -data[i].type;
 			float randomY = (float)(rand() % 10000) / 10000.0f / 50.0f;
 
-			obj->SetPosition(data[i].position.x, 0.0f + randomY, data[i].position.z);
+			obj->SetPosition(data[i].position.x+0.5f, 0.0f + randomY, data[i].position.z);
 			obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 			objects.push_back(obj);
 		}

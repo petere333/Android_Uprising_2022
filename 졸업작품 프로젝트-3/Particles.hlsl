@@ -33,7 +33,7 @@ float4 psParticle(ParticleOutput input) : SV_TARGET
 
 	norm = 2.0f * norm - 1.0f;
 
-	float4 cLight = Lighting(input.positionW, norm);
+	float4 cLight = Lighting(input.positionW, norm, input.uvs);
 
 	float4 result = color * cLight;
 	//result.a = result.a*alpha;

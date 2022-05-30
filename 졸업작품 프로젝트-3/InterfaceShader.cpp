@@ -26,8 +26,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj2->SetMaterial(0, rm->materials[11]);
 	obj2->SetPosition(100.0f, 3.0f, 106.0f);
 
-	objects.push_back(obj);
-	objects.push_back(obj2);
+	//objects.push_back(obj);
+	//objects.push_back(obj2);
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -169,6 +169,6 @@ void InterfaceShader::Animate(CCamera* cam)
 		objects[i]->Rotate(-pitch, yaw, 0.0f);
 		objects[i]->SetPosition(cp.x + cl.x, cp.y+cl.y, cp.z+cl.z);
 	}
-	XMFLOAT3 p = objects[1]->GetPosition();
+	//	XMFLOAT3 p = objects[1]->GetPosition();
 	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
 }

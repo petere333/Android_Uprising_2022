@@ -19,7 +19,7 @@ cbuffer transparent : register(b6)
 #include "Light.hlsl"
 Texture2D tex : register(t0);
 Texture2D normTex : register(t1);
-SamplerState gSamplerState : register(s0);
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -56,7 +56,7 @@ float4 PSWireFrame(VS_WIREFRAME_OUTPUT input) : SV_TARGET
 
 	norm = 2.0f * norm - 1.0f;
 
-	float4 cLight = Lighting(input.positionW, norm);
+	float4 cLight = Lighting(input.positionW, norm, input.uvs);
 
 	float4 result = color * cLight;
 	//result.a = result.a*alpha;
@@ -120,7 +120,7 @@ float4 PSSkinnedAnimationWireFrame(VS_SKINNED_WIREFRAME_OUTPUT input) : SV_TARGE
 	float4 n = float4(norm, 1.0f);
 
 	norm = 2.0f * norm - 1.0f;
-	float4 cLight = Lighting(input.positionW, norm);
+	float4 cLight = Lighting(input.positionW, norm, input.uvs);
 
 	return color*cLight;
 }

@@ -145,6 +145,7 @@ public:
 	void SetShader(CShader *pShader);
 	void SetMaterialType(UINT nType) { m_nType |= nType; }
 	void SetTexture(CTexture *pTexture, UINT nTexture = 0);
+	void SetSpecTex(CTexture* tex);
 	void SetNormalTex(CTexture* tex);
 
 	virtual void UpdateShaderVariable(ID3D12GraphicsCommandList *pd3dCommandList);
@@ -166,6 +167,7 @@ public:
 	CTexture						**m_ppTextures = NULL; //0:Albedo, 1:Specular, 2:Metallic, 3:Normal, 4:Emission, 5:DetailAlbedo, 6:DetailNormal
 
 	CTexture* normalTex = NULL;
+	CTexture* specTex = NULL;
 
 	void LoadTextureFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, UINT nType, UINT nRootParameter, _TCHAR *pwstrTextureName, CTexture **ppTexture, CGameObject *pParent, FILE *pInFile, CShader *pShader);
 

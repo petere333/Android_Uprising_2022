@@ -38,6 +38,7 @@ public:
 
 	std::vector<CTexture*> textures;
 	std::vector<CTexture*> normals;
+	std::vector<CTexture*> specs;
 
 	std::vector<CMaterial*> materials;
 

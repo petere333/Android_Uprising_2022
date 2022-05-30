@@ -324,9 +324,18 @@ void ResourceManager::createTextures()
 	norm = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 
+
+
 	normals.push_back(norm);
 
-	createSRV(pd3dDevice, 0, textures.size()+normals.size());
+	CTexture* spc;
+
+	spc = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec.dds", RESOURCE_TEXTURE2D, 0);
+
+	specs.push_back(spc);
+
+	createSRV(pd3dDevice, 0, textures.size()+normals.size()+specs.size());
 
 	for (int i = 0; i < textures.size(); ++i)
 	{
@@ -336,11 +345,17 @@ void ResourceManager::createTextures()
 	{
 		CreateShaderResourceViews(pd3dDevice, normals[i], 0, 6);
 	}
+
+	for (int i = 0; i < specs.size(); ++i)
+	{
+		CreateShaderResourceViews(pd3dDevice, specs[i], 0, 9);
+	}
 	for (int i = 0; i < textures.size(); ++i)
 	{
 		CMaterial* mat = new CMaterial(1);
 		mat->SetTexture(textures[i], 0);
 		mat->SetNormalTex(normals[0]);
+		mat->SetSpecTex(specs[0]);
 		materials.push_back(mat);
 	}
 }

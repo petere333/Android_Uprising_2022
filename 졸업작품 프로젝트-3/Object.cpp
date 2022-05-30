@@ -223,6 +223,12 @@ void CMaterial::SetNormalTex(CTexture* pTexture)
 	normalTex = pTexture;
 	if (normalTex) normalTex->AddRef();
 }
+void CMaterial::SetSpecTex(CTexture* tex)
+{
+	if (specTex) specTex->Release();
+	specTex = tex;
+	if (specTex) specTex->AddRef();
+}
 void CMaterial::ReleaseUploadBuffers()
 {
 	for (int i = 0; i < m_nTextures; i++)
@@ -254,6 +260,10 @@ void CMaterial::UpdateShaderVariable(ID3D12GraphicsCommandList *pd3dCommandList)
 	if (normalTex)
 	{
 		normalTex->UpdateShaderVariables(pd3dCommandList);
+	}
+	if (specTex)
+	{
+		specTex->UpdateShaderVariables(pd3dCommandList);
 	}
 }
 

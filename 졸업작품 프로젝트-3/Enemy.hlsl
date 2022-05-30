@@ -41,7 +41,7 @@ float4 psEnemy(EnemyOutput input) : SV_TARGET
 	float4 n = float4(norm, 1.0f);
 
 	norm = 2.0f * norm - 1.0f;
-	float4 cLight = Lighting(input.positionW, norm);
+	float4 cLight = Lighting(input.positionW, norm, input.uvs);
 
 	return color * cLight;
 }
