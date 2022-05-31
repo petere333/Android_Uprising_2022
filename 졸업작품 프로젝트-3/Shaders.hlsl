@@ -114,6 +114,7 @@ VS_SKINNED_WIREFRAME_OUTPUT VSSkinnedAnimationWireFrame(VS_SKINNED_WIREFRAME_INP
 
 float4 PSSkinnedAnimationWireFrame(VS_SKINNED_WIREFRAME_OUTPUT input) : SV_TARGET
 {
+	//float4 color = tex.Sample(gSamplerState, input.uvs);
 	float4 color = tex.Sample(gSamplerState, input.uvs);
 	float3 norm = normalize(float3(normTex.Sample(gSamplerState, input.uvs).rgb));
 	
@@ -121,6 +122,7 @@ float4 PSSkinnedAnimationWireFrame(VS_SKINNED_WIREFRAME_OUTPUT input) : SV_TARGE
 
 	norm = 2.0f * norm - 1.0f;
 	float4 cLight = Lighting(input.positionW, norm, input.uvs);
+	
 
 	return color*cLight;
 }

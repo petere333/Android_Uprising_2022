@@ -11,7 +11,9 @@
 //#define _WITH_REFLECT
 
 Texture2D specTex : register(t2);
+
 SamplerState gSamplerState : register(s0);
+
 struct LIGHT
 {
 	float4					m_cAmbient;
@@ -62,7 +64,7 @@ float4 DirectionalLight(int nIndex, float3 vNormal, float3 vToCamera, float2 uv)
 #ifdef _WITH_REFLECT
 			float3 vReflect = reflect(-vToLight, vNormal);
 			//fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), gMaterials[0].m_cSpecular.a);
-			fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 30.0f);
+			fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 20.0f);
 #else
 #ifdef _WITH_LOCAL_VIEWER_HIGHLIGHTING
 			float3 vHalf = normalize(vToCamera + vToLight);
@@ -70,13 +72,15 @@ float4 DirectionalLight(int nIndex, float3 vNormal, float3 vToCamera, float2 uv)
 			float3 vHalf = float3(0.0f, 1.0f, 0.0f);
 #endif
 			//fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), gMaterials[0].m_cSpecular.a);
-			fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 30.0f);
+			fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 20.0f);
 #endif
 		}
 	}
 	
-	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * gMaterials[0].m_cSpecular));
-	return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv)));
+	return ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * specTex.Sample(gSamplerState, uv).x;
+	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,0.0f)));
+	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv)));
+	
 }
 
 float4 PointLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera, float2 uv)
@@ -95,7 +99,7 @@ float4 PointLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera
 #ifdef _WITH_REFLECT
 				float3 vReflect = reflect(-vToLight, vNormal);
 				//fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), gMaterials[0].m_cSpecular.a);
-				fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 30.0f);
+				fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 20.0f);
 #else
 #ifdef _WITH_LOCAL_VIEWER_HIGHLIGHTING
 				float3 vHalf = normalize(vToCamera + vToLight);
@@ -103,7 +107,7 @@ float4 PointLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera
 				float3 vHalf = float3(0.0f, 1.0f, 0.0f);
 #endif
 				//fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), gMaterials[0].m_cSpecular.a);
-				fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 30.0f);
+				fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 20.0f);
 #endif
 			}
 		}
@@ -131,7 +135,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 #ifdef _WITH_REFLECT
 				float3 vReflect = reflect(-vToLight, vNormal);
 				//fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), gMaterials[0].m_cSpecular.a);
-				fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 30.0f);
+				fSpecularFactor = pow(max(dot(vReflect, vToCamera), 0.0f), 20.0f);
 #else
 #ifdef _WITH_LOCAL_VIEWER_HIGHLIGHTING
 				float3 vHalf = normalize(vToCamera + vToLight);
@@ -139,7 +143,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 				float3 vHalf = float3(0.0f, 1.0f, 0.0f);
 #endif
 				//fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), gMaterials[0].m_cSpecular.a);
-				fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 30.0f);
+				fSpecularFactor = pow(max(dot(vHalf, vNormal), 0.0f), 20.0f);
 #endif
 			}
 		}
@@ -150,9 +154,10 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 		float fSpotFactor = pow(max(dot(-vToLight, gLights[i].m_vDirection), 0.0f), gLights[i].m_fFalloff);
 #endif
 		float fAttenuationFactor = 1.0f / dot(gLights[nIndex].m_vAttenuation, float3(1.0f, fDistance, fDistance*fDistance));
-
-		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * gMaterials[0].m_cSpecular)) * fAttenuationFactor * fSpotFactor);
-		return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor);
+		
+		return ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse)+(gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor * specTex.Sample(gSamplerState, uv).x;
+		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,1.0f))) * fAttenuationFactor * fSpotFactor);
+		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor);
 	}
 	return(float4(0.0f, 0.0f, 0.0f, 0.0f));
 }

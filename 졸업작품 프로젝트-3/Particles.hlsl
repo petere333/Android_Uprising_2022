@@ -36,6 +36,7 @@ float4 psParticle(ParticleOutput input) : SV_TARGET
 	float4 cLight = Lighting(input.positionW, norm, input.uvs);
 
 	float4 result = color * cLight;
+	//float4 result = color;
 	//result.a = result.a*alpha;
 
 	return result;

@@ -36,6 +36,7 @@ PlayerOutput vsPlayer(PlayerInput input)
 float4 psPlayer(PlayerOutput input) : SV_TARGET
 {
 	float4 color = tex.Sample(gSamplerState, input.uvs);
+	//float4 color = float4(0.0f,0.0f,0.0f,1.0f);
 	float3 norm = normalize(float3(normTex.Sample(gSamplerState, input.uvs).rgb));
 
 	float4 n = float4(norm, 1.0f);
