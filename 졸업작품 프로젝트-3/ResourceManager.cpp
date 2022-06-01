@@ -334,7 +334,7 @@ void ResourceManager::createTextures()
 	spc->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec2.dds", RESOURCE_TEXTURE2D, 0);
 
 	spc2 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	spc2->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sdw_anim2.dds", RESOURCE_TEXTURE2D, 0);
+	spc2->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 
 	specs.push_back(spc);
 	specs.push_back(spc2);
@@ -362,6 +362,7 @@ void ResourceManager::createTextures()
 		mat->SetSpecTex(specs[1]);
 		materials.push_back(mat);
 	}
+	materials[33]->SetSpecTex(specs[0]);
 }
 
 void ResourceManager::createSound(){}

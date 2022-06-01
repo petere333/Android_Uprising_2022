@@ -77,9 +77,29 @@ float4 DirectionalLight(int nIndex, float3 vNormal, float3 vToCamera, float2 uv)
 		}
 	}
 	
-	return ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * specTex.Sample(gSamplerState, uv).x;
-	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,0.0f)));
+	float4 result = ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,0.0f)));
+	float rx = result.x;
+	float ry = result.y;
+	float rz = result.z;
+	float ra = result.z;
+	float weight = specTex.Sample(gSamplerState, uv).x * 2.0f - 1.0f;
+
+	if (weight <= 0.0f)
+	{
+		rx = rx + rx * weight;
+		ry = ry + ry * weight;
+		rz = rz + rz * weight;
+	}
+	else
+	{
+		rx = rx + (1.0 - rx) * weight;
+		ry = ry + (1.0 - ry) * weight;
+		rz = rz + (1.0 - rz) * weight;
+	}
+
+	return float4(rx, ry, rz, 1.0f);
 	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv)));
+	
 	
 }
 
@@ -123,7 +143,9 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 {
 	float3 vToLight = gLights[nIndex].m_vPosition - vPosition;
 	float fDistance = length(vToLight);
-	if (fDistance <= gLights[nIndex].m_fRange)
+	float cosAngle = dot(normalize(-vToLight), gLights[nIndex].m_vDirection);
+
+	if (fDistance <= gLights[nIndex].m_fRange  && cosAngle <=1.0f && cosAngle>=cos(3.141592f/180.0f *20.0f))
 	{
 		float fSpecularFactor = 0.0f;
 		vToLight /= fDistance;
@@ -155,7 +177,29 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 #endif
 		float fAttenuationFactor = 1.0f / dot(gLights[nIndex].m_vAttenuation, float3(1.0f, fDistance, fDistance*fDistance));
 		
-		return ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse)+(gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor * specTex.Sample(gSamplerState, uv).x;
+		float4 result = ((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse)+(gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,1.0f))) * fAttenuationFactor * fSpotFactor;
+
+		float rx = result.x;
+		float ry = result.y;
+		float rz = result.z;
+		float ra = result.z;
+		float weight = specTex.Sample(gSamplerState, uv).x * 2.0f - 1.0f;
+
+		if (weight <= 0.0f)
+		{
+			rx = rx + rx * weight;
+			ry = ry + ry * weight;
+			rz = rz + rz * weight;
+		}
+		else
+		{
+			rx = rx + (1.0 - rx) * weight;
+			ry = ry + (1.0 - ry) * weight;
+			rz = rz + (1.0 - rz) * weight;
+		}
+		
+
+		return float4(rx, ry, rz, ra);
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,1.0f))) * fAttenuationFactor * fSpotFactor);
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor);
 	}
