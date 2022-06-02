@@ -291,3 +291,10 @@ public:
 	ParticleMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	virtual ~ParticleMesh();
 };
+
+class UIMesh : public CMesh
+{
+public:
+	UIMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, bool reversed, float x, float y);
+	virtual ~UIMesh();
+};

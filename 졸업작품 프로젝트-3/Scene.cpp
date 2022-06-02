@@ -164,6 +164,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	sdwShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	sdwShader->BuildObjects(pd3dDevice,pd3dCommandList);
 
+	lobbyInter = new LobbyInterfaceShader(rm);
+	lobbyInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	lobbyInter->BuildObjects(pd3dDevice, pd3dCommandList);
+
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
 
@@ -221,7 +225,7 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	
 	pd3dDescriptorRanges[2].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	pd3dDescriptorRanges[2].NumDescriptors = 1;
-	pd3dDescriptorRanges[2].BaseShaderRegister = 2; //t2: normal
+	pd3dDescriptorRanges[2].BaseShaderRegister = 2; //t2: spec
 	pd3dDescriptorRanges[2].RegisterSpace = 0;
 	pd3dDescriptorRanges[2].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
@@ -404,66 +408,54 @@ bool CScene::ProcessInput(UCHAR *pKeysBuffer)
 
 void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fTimeElapsed, CCamera* cam)
 {
-	cam->move(playerShader->objects[pID]->GetPosition());
-	m_fElapsedTime = fTimeElapsed;
-	//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-	interShader->Animate(cam);
-	
-
-	for (int i = 0; i < playerShader->objects.size(); ++i)
+	if (currentScreen == IN_GAME_STATE)
 	{
-		
-		if (playerShader->objects[i]->bState.stateID == IDLE_STATE)
-		{
-			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
-			{
-				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
-				{
-					playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
-					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
-				}
-				playerShader->objects[i]->SetTrackAnimationSet(0, 11);
-				if (playerShader->objects[i]->kState.yspeed != 0.0f)
-				{
-					moveObject(i, cam);
-				}
-				setObjectLastMove(i);
-			}
-			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
-			{
-				std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
-				float df = static_cast<float>(dt.count());
-				if (df >= 0.833333f)
-				{
-					if (playerShader->objects[i]->m_pChild != rm->playerModels[2]->m_pModelRootObject)
-					{
-						playerShader->objects[i]->setRoot(rm->playerModels[2]->m_pModelRootObject, true);
-						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
-					}
-					playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-				}
-				if (playerShader->objects[i]->kState.yspeed != 0.0f)
-				{
-					moveObject(i, cam);
-				}
-				setObjectLastMove(i);
-			}
-		}
-		else if (playerShader->objects[i]->bState.stateID == JUMP_STATE)
-		{
-			if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
-			{
-				playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
-				playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
-			}
-			playerShader->objects[i]->SetTrackAnimationSet(0, 20);
+		cam->move(playerShader->objects[pID]->GetPosition());
+		m_fElapsedTime = fTimeElapsed;
+		//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
+		interShader->Animate(cam);
 
-			moveObject(i, cam);
-			setObjectLastMove(i);
-		}
-		else if (playerShader->objects[i]->bState.stateID == MOVE_STATE)
+
+		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
-			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
+
+			if (playerShader->objects[i]->bState.stateID == IDLE_STATE)
+			{
+				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
+				{
+					if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
+					{
+						playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
+					}
+					playerShader->objects[i]->SetTrackAnimationSet(0, 11);
+					if (playerShader->objects[i]->kState.yspeed != 0.0f)
+					{
+						moveObject(i, cam);
+					}
+					setObjectLastMove(i);
+				}
+				else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
+				{
+					std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
+					float df = static_cast<float>(dt.count());
+					if (df >= 0.833333f)
+					{
+						if (playerShader->objects[i]->m_pChild != rm->playerModels[2]->m_pModelRootObject)
+						{
+							playerShader->objects[i]->setRoot(rm->playerModels[2]->m_pModelRootObject, true);
+							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
+						}
+						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+					}
+					if (playerShader->objects[i]->kState.yspeed != 0.0f)
+					{
+						moveObject(i, cam);
+					}
+					setObjectLastMove(i);
+				}
+			}
+			else if (playerShader->objects[i]->bState.stateID == JUMP_STATE)
 			{
 				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
 				{
@@ -471,124 +463,139 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 				}
 				playerShader->objects[i]->SetTrackAnimationSet(0, 20);
+
+				moveObject(i, cam);
+				setObjectLastMove(i);
 			}
-			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
+			else if (playerShader->objects[i]->bState.stateID == MOVE_STATE)
 			{
-				if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
+				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 				{
-					playerShader->objects[i]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
-					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
+					if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
+					{
+						playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
+					}
+					playerShader->objects[i]->SetTrackAnimationSet(0, 20);
 				}
-				playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			moveObject(i,cam);
-			setObjectLastMove(i);
-			
-		}
-		else if (playerShader->objects[i]->bState.stateID == ATTACK_STATE)
-		{
-			if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
-			{
-				if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
+				else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
 				{
-					playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
-					playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
-
+					if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
+					{
+						playerShader->objects[i]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
+						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
+					}
+					playerShader->objects[i]->SetTrackAnimationSet(0, 0);
 				}
+				moveObject(i, cam);
+				setObjectLastMove(i);
 
-				playerShader->objects[i]->SetTrackAnimationSet(0, 2);
-				cam->rotateUp();
-				attack(i, pd3dDevice, pd3dCommandList);
 			}
-			else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
+			else if (playerShader->objects[i]->bState.stateID == ATTACK_STATE)
 			{
-				cam->rotateUp();
-				swingHammer(i, pd3dDevice, pd3dCommandList);
-			}
-			setObjectLastMove(i);
-			for (int j = 0; j < playerShader->objects.size(); ++j)
-			{
-				if (pID != j)
-				setObjectLastMove(j);
-			}
-		}
-
-	}
-	chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-
-	for (int i = 0; i < partShader->objects.size(); ++i)
-	{
-		chrono::duration<double> fromCreated = moment - partShader->objects[i]->timeCreated;
-		float fTime = static_cast<float>(fromCreated.count());
-		if (fTime > 0.5f)
-		{
-			partShader->objects.erase(partShader->objects.begin() + i);
-			i -= 1;
-		}
-		else
-		{
-			XMFLOAT3 tmp = partShader->objects[i]->GetPosition();
-			partShader->objects[i]->SetPosition(tmp.x + partShader->objects[i]->direction.x * partShader->objects[i]->speed * fTime,
-				tmp.y + partShader->objects[i]->direction.y * partShader->objects[i]->speed * fTime,
-				tmp.z + partShader->objects[i]->direction.z * partShader->objects[i]->speed * fTime);
-		}
-	}
-
-	//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
-	//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
-	for (int i = 0; i < enemyShader->objects.size(); ++i)
-	{
-
-		if (enemyShader->objects[i]->bState.hp <= 0)
-		{
-			enemyShader->objects[i]->bState.stateID = DEATH_STATE;
-		}
-		if (enemyShader->objects[i]->bState.stateID == IDLE_STATE)
-		{
-			if (enemyShader->objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
-			{
-				enemyShader->objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
-				enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
-				enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
-			}
-		}
-		else if (enemyShader->objects[i]->bState.stateID == DEATH_STATE)
-		{
-
-			if (enemyShader->objects[i]->isDead == false)
-			{
-				if (enemyShader->objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 				{
-					enemyShader->objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
-					enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
-					enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
-					enemyShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
-					enemyShader->objects[i]->timeFromDie = chrono::system_clock::now();
-					enemyShader->objects[i]->isDead = true;
+					if (playerShader->objects[i]->m_pChild != rm->playerModels[0]->m_pModelRootObject)
+					{
+						playerShader->objects[i]->setRoot(rm->playerModels[0]->m_pModelRootObject, true);
+						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
+
+					}
+
+					playerShader->objects[i]->SetTrackAnimationSet(0, 2);
+					cam->rotateUp();
+					attack(i, pd3dDevice, pd3dCommandList);
 				}
+				else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
+				{
+					cam->rotateUp();
+					swingHammer(i, pd3dDevice, pd3dCommandList);
+				}
+				setObjectLastMove(i);
+				for (int j = 0; j < playerShader->objects.size(); ++j)
+				{
+					if (pID != j)
+						setObjectLastMove(j);
+				}
+			}
+
+		}
+		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+
+		for (int i = 0; i < partShader->objects.size(); ++i)
+		{
+			chrono::duration<double> fromCreated = moment - partShader->objects[i]->timeCreated;
+			float fTime = static_cast<float>(fromCreated.count());
+			if (fTime > 0.5f)
+			{
+				partShader->objects.erase(partShader->objects.begin() + i);
+				i -= 1;
 			}
 			else
 			{
-				chrono::duration<double> fromDie = chrono::system_clock::now() - enemyShader->objects[i]->timeFromDie;
-				float fTime = static_cast<float>(fromDie.count());
+				XMFLOAT3 tmp = partShader->objects[i]->GetPosition();
+				partShader->objects[i]->SetPosition(tmp.x + partShader->objects[i]->direction.x * partShader->objects[i]->speed * fTime,
+					tmp.y + partShader->objects[i]->direction.y * partShader->objects[i]->speed * fTime,
+					tmp.z + partShader->objects[i]->direction.z * partShader->objects[i]->speed * fTime);
+			}
+		}
 
-				if (fTime >= 1.971666f)
+		//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
+		//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
+		for (int i = 0; i < enemyShader->objects.size(); ++i)
+		{
+
+			if (enemyShader->objects[i]->bState.hp <= 0)
+			{
+				enemyShader->objects[i]->bState.stateID = DEATH_STATE;
+			}
+			if (enemyShader->objects[i]->bState.stateID == IDLE_STATE)
+			{
+				if (enemyShader->objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
 				{
-					enemyShader->objects.erase(enemyShader->objects.begin() + i);
-					enemyShader->enemyBoxes.erase(enemyShader->enemyBoxes.begin() + i);
+					enemyShader->objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
+					enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+					enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
+				}
+			}
+			else if (enemyShader->objects[i]->bState.stateID == DEATH_STATE)
+			{
+
+				if (enemyShader->objects[i]->isDead == false)
+				{
+					if (enemyShader->objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+					{
+						enemyShader->objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
+						enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+						enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
+						enemyShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+						enemyShader->objects[i]->timeFromDie = chrono::system_clock::now();
+						enemyShader->objects[i]->isDead = true;
+					}
+				}
+				else
+				{
+					chrono::duration<double> fromDie = chrono::system_clock::now() - enemyShader->objects[i]->timeFromDie;
+					float fTime = static_cast<float>(fromDie.count());
+
+					if (fTime >= 1.971666f)
+					{
+						enemyShader->objects.erase(enemyShader->objects.begin() + i);
+						enemyShader->enemyBoxes.erase(enemyShader->enemyBoxes.begin() + i);
+					}
 				}
 			}
 		}
 	}
-
+	else if (currentScreen == LOBBY_STATE)
+	{
+		lobbyInter->Animate(cam);
+	}
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
 {
-
-
 	if (m_pd3dGraphicsRootSignature) pd3dCommandList->SetGraphicsRootSignature(m_pd3dGraphicsRootSignature);
-	
 
 	pCamera->SetViewportsAndScissorRects(pd3dCommandList);
 	pCamera->UpdateShaderVariables(pd3dCommandList);
@@ -605,57 +612,70 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 	float alpha = 1.0f;
 
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
-
-	
-
-	if (playerShader)
+	if (currentScreen == IN_GAME_STATE)
 	{
-		playerShader->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
+
+		if (playerShader)
 		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			playerShader->OnPrepareRender(pd3dCommandList);
+			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			}
+			playerShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+
+
 		}
-		playerShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
-		
-
-	}
 
 
 
-	if (terrainShader)
-	{
-		terrainShader->OnPrepareRender(pd3dCommandList);
-		terrainShader->Render(pd3dCommandList, pCamera);
-	}
-	if (enemyShader)
-	{
-		enemyShader->OnPrepareRender(pd3dCommandList);
-		enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
-	}
-	if (partShader)
-	{
-		partShader->OnPrepareRender(pd3dCommandList);
-		partShader->Render(pd3dCommandList, pCamera);
-	}
-
-	if (sdwShader)
-	{
-		sdwShader->OnPrepareRender(pd3dCommandList);
-		sdwShader->Render(pd3dCommandList, pCamera);
-	}
-
-	//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
-	if (interShader)
-	{
-		interShader->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
+		if (terrainShader)
 		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			terrainShader->OnPrepareRender(pd3dCommandList);
+			terrainShader->Render(pd3dCommandList, pCamera);
 		}
-		interShader->Render(pd3dCommandList, pCamera);
-	}
+		if (enemyShader)
+		{
+			enemyShader->OnPrepareRender(pd3dCommandList);
+			enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+		}
+		if (partShader)
+		{
+			partShader->OnPrepareRender(pd3dCommandList);
+			partShader->Render(pd3dCommandList, pCamera);
+		}
 
+		if (sdwShader)
+		{
+			sdwShader->OnPrepareRender(pd3dCommandList);
+			sdwShader->Render(pd3dCommandList, pCamera);
+		}
+
+		//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
+		if (interShader)
+		{
+			interShader->OnPrepareRender(pd3dCommandList);
+			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			}
+			interShader->Render(pd3dCommandList, pCamera);
+		}
+	}
 	
+	else if (currentScreen == LOBBY_STATE)
+	{
+		if (lobbyInter)
+		{
+			lobbyInter->OnPrepareRender(pd3dCommandList);
+			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			}
+			
+			lobbyInter->Render(pd3dCommandList, pCamera);
+		}
+	}
 }
 
 

@@ -90,6 +90,9 @@
     <ClCompile Include="ShadowShader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyInterfaceShader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -166,6 +169,9 @@
       <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="ShadowShader.h">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyInterfaceShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
   </ItemGroup>

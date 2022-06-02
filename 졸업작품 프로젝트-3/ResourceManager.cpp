@@ -63,7 +63,7 @@ void ResourceManager::createTextures()
 	CTexture* tex41; CTexture* tex42; CTexture* tex43; CTexture* tex44; CTexture* tex45; CTexture* tex46; CTexture* tex47; CTexture* tex48; CTexture* tex49; CTexture* tex50;
 	CTexture* tex51; CTexture* tex52; CTexture* tex53; CTexture* tex54; CTexture* tex55; CTexture* tex56; CTexture* tex57; CTexture* tex58; CTexture* tex59; CTexture* tex60;
 	CTexture* tex61; CTexture* tex62; CTexture* tex63; CTexture* tex64; CTexture* tex65; CTexture* tex66; CTexture* tex67; CTexture* tex68; CTexture* tex69; CTexture* tex70;
-	CTexture* tex71; CTexture* tex72; CTexture* tex73; CTexture* tex74; CTexture* tex75;
+	CTexture* tex71; CTexture* tex72; CTexture* tex73; CTexture* tex74; CTexture* tex75; CTexture* tex76; CTexture* tex77; CTexture* tex78; CTexture* tex79; CTexture* tex80;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -314,10 +314,12 @@ void ResourceManager::createTextures()
 	tex74 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex74->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sdw_anim2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex74);
-
 	tex75 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex75->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sdw_Åé³¯´Ü°Ë2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex75);
+	tex76 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex76->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/btn_start.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex76);
 
 	CTexture* norm;
 
@@ -339,7 +341,13 @@ void ResourceManager::createTextures()
 	specs.push_back(spc);
 	specs.push_back(spc2);
 
-	createSRV(pd3dDevice, 0, textures.size()+normals.size()+specs.size());
+	
+
+
+
+	
+
+	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
 
 	for (int i = 0; i < textures.size(); ++i)
 	{
@@ -354,6 +362,7 @@ void ResourceManager::createTextures()
 	{
 		CreateShaderResourceViews(pd3dDevice, specs[i], 0, 9);
 	}
+
 	for (int i = 0; i < textures.size(); ++i)
 	{
 		CMaterial* mat = new CMaterial(1);
@@ -363,6 +372,9 @@ void ResourceManager::createTextures()
 		materials.push_back(mat);
 	}
 	materials[33]->SetSpecTex(specs[0]);
+
+
+	
 }
 
 void ResourceManager::createSound(){}

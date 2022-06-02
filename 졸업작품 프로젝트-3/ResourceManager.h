@@ -42,6 +42,8 @@ public:
 
 	std::vector<CMaterial*> materials;
 
+	std::vector<CTexture*> uiTex;
+	std::vector<CMaterial*> uiMat;
 
 
 	std::vector<CSound*> bgms;

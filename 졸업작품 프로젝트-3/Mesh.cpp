@@ -1209,3 +1209,84 @@ ParticleMesh::ParticleMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
 }
 ParticleMesh::~ParticleMesh(){}
+
+
+UIMesh::UIMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, bool reversed, float x, float y) : CMesh(pd3dDevice, pd3dCommandList)
+{
+	m_nVertices = 12;
+
+	XMFLOAT3* pos = new XMFLOAT3[12];
+	XMFLOAT2* uv = new XMFLOAT2[12];
+
+	float ox = width * 0.5f;
+	float oy = -height * 0.5f;
+
+	pos[0] = XMFLOAT3(-ox + x, -oy + y, 0.0f);
+	pos[1] = XMFLOAT3(-ox + x, oy + y, 0.0f);
+	pos[2] = XMFLOAT3(ox + x, oy + y, 0.0f);
+
+	pos[3] = XMFLOAT3(-ox + x, -oy + y, 0.0f);
+	pos[4] = XMFLOAT3(ox + x, oy + y, 0.0f);
+	pos[5] = XMFLOAT3(ox + x, -oy + y, 0.0f);
+
+	pos[6] = XMFLOAT3(-ox + x, -oy + y, 0.01f);
+	pos[7] = XMFLOAT3(-ox + x, oy + y, 0.01f);
+	pos[8] = XMFLOAT3(ox + x, oy + y, 0.01f);
+
+	pos[9] = XMFLOAT3(-ox + x, -oy + y, 0.01f);
+	pos[10] = XMFLOAT3(ox + x, oy + y, 0.01f);
+	pos[11] = XMFLOAT3(ox + x, -oy + y, 0.01f);
+
+	if (reversed == false)
+	{
+		uv[0] = XMFLOAT2(0.0f, 0.0f);
+		uv[1] = XMFLOAT2(0.0f, 1.0f);
+		uv[2] = XMFLOAT2(1.0f, 1.0f);
+
+		uv[3] = XMFLOAT2(0.0f, 0.0f);
+		uv[4] = XMFLOAT2(1.0f, 1.0f);
+		uv[5] = XMFLOAT2(1.0f, 0.0f);
+
+		uv[6] = XMFLOAT2(0.0f, 0.0f);
+		uv[7] = XMFLOAT2(0.0f, 1.0f);
+		uv[8] = XMFLOAT2(1.0f, 1.0f);
+
+		uv[9] = XMFLOAT2(0.0f, 0.0f);
+		uv[10] = XMFLOAT2(1.0f, 1.0f);
+		uv[11] = XMFLOAT2(1.0f, 0.0f);
+	}
+	else
+	{
+		uv[0] = XMFLOAT2(1.0f, 1.0f);
+		uv[1] = XMFLOAT2(1.0f, 0.0f);
+		uv[2] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[3] = XMFLOAT2(1.0f, 1.0f);
+		uv[4] = XMFLOAT2(0.0f, 0.0f);
+		uv[5] = XMFLOAT2(0.0f, 1.0f);
+
+		uv[6] = XMFLOAT2(1.0f, 1.0f);
+		uv[7] = XMFLOAT2(1.0f, 0.0f);
+		uv[8] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[9] = XMFLOAT2(1.0f, 1.0f);
+		uv[10] = XMFLOAT2(0.0f, 0.0f);
+		uv[11] = XMFLOAT2(0.0f, 1.0f);
+	}
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	m_pd3dPositionBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, pos, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+
+	m_pd3dTextureBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, uv, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
+}
+UIMesh::~UIMesh(){}

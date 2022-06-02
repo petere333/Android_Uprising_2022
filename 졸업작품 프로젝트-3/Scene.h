@@ -11,6 +11,9 @@
 #include "EnemyShader.h"
 #include "ParticleShader.h"
 #include "ShadowShader.h"
+#include "LobbyInterfaceShader.h"
+
+
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -125,6 +128,8 @@ public:
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
 
+	LobbyInterfaceShader* lobbyInter = NULL;
+
 	CTexture* textures[nTex];
 	CMaterial* ppMaterials[nMat];
 
@@ -164,6 +169,8 @@ public:
 	void moveObject(int, CCamera*);
 	
 	void setPlayerAnimation(int a);
+
+	int currentScreen = LOBBY_STATE;
 
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;

@@ -301,8 +301,10 @@ void CGameFramework::ChangeSwapChainState()
 void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
 	if (m_pScene) m_pScene->OnProcessingMouseMessage(hWnd, nMessageID, wParam, lParam);
-	switch (nMessageID)
+	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
+		switch (nMessageID)
+		{
 		case WM_LBUTTONDOWN:
 			// 마우스 좌클릭 시 공격 상태로 변화.
 			if (mousedown == false)
@@ -317,10 +319,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			}
 			break;
 		case WM_RBUTTONDOWN:
-			
+
 			//::SetCapture(hWnd);
 			//::GetCursorPos(&m_ptOldCursorPos);
-			
+
 			break;
 		case WM_LBUTTONUP:
 		{
@@ -346,6 +348,33 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		default:
 			break;
+		}
+	}
+	else if (m_pScene->currentScreen == LOBBY_STATE)
+	{
+		
+		switch (nMessageID)
+		{
+		case WM_LBUTTONDOWN:
+		
+			break;
+		case WM_LBUTTONUP:
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
+			if ((pnt.x >= 478+wx && pnt.x <= 722+wx) && (pnt.y >= 623+wy && pnt.y <= 722+wy))
+			{
+				m_pScene->currentScreen = IN_GAME_STATE;
+			}
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 
@@ -365,205 +394,207 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	uppac.type = PACKET_TYPE::CS_KEYUP;
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
-
-	switch (nMessageID)
+	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
-	case WM_KEYDOWN:
-		switch (wParam)
+		switch (nMessageID)
 		{
-		case VK_UP:
-		{
-			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+		case WM_KEYDOWN:
+			switch (wParam)
 			{
-				break;
-			}
+			case VK_UP:
+			{
+				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+				{
+					break;
+				}
 
-			packet.key = VK_UP;
-			if (keydown == false)
-			{
-				SendPacket(&packet);
-				keydown = true;
+				packet.key = VK_UP;
+				if (keydown == false)
+				{
+					SendPacket(&packet);
+					keydown = true;
+				}
 			}
-		}
-		break;
-		case VK_DOWN:
-		{
-			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+			break;
+			case VK_DOWN:
 			{
-				break;
-			}
-			
-			packet.key = VK_DOWN;
-			
-			if (keydown == false)
-			{
-				SendPacket(&packet);
-				keydown = true;
-			}
-		}
-		break;
-		case VK_LEFT:
-		{
-			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-			{
-				break;
-			}
+				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+				{
+					break;
+				}
 
-			packet.key = VK_LEFT;
-			if (keydown == false)
-			{
-				SendPacket(&packet);
-				keydown = true;
-			}
-		}
-		break;
-		case VK_RIGHT:
-		{
-			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-			{
-				break;
-			}
+				packet.key = VK_DOWN;
 
-			packet.key = VK_RIGHT;
-			if (keydown == false)
-			{
-				SendPacket(&packet);
-				keydown = true;
+				if (keydown == false)
+				{
+					SendPacket(&packet);
+					keydown = true;
+				}
 			}
-		}
 			break;
-		case VK_SPACE:
-		{
-			
-			if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+			case VK_LEFT:
 			{
+				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+				{
+					break;
+				}
+
+				packet.key = VK_LEFT;
+				if (keydown == false)
+				{
+					SendPacket(&packet);
+					keydown = true;
+				}
+			}
+			break;
+			case VK_RIGHT:
+			{
+				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+				{
+					break;
+				}
+
+				packet.key = VK_RIGHT;
+				if (keydown == false)
+				{
+					SendPacket(&packet);
+					keydown = true;
+				}
+			}
+			break;
+			case VK_SPACE:
+			{
+
+				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
+				{
+					break;
+				}
+				// 플레이어에 대한 점프 명령
+				//m_pScene->jumpObject(0);
+				packet.key = VK_SPACE;
+				//if (keydown == false)
+				//{
+				SendPacket(&packet);
+				//	keydown = true;
+				//}
 				break;
 			}
-			// 플레이어에 대한 점프 명령
-			//m_pScene->jumpObject(0);
-			packet.key = VK_SPACE;
-			//if (keydown == false)
-			//{
+			case '2':
+			{
+				packet.key = '2';
 				SendPacket(&packet);
-			//	keydown = true;
-			//}
+				break;
+			}
+			case '1':
+			{
+				packet.key = '1';
+				SendPacket(&packet);
+				break;
+			}
+			case VK_F1:
+				packet.key = VK_F1;
+				SendPacket(&packet);
+				break;
+			case VK_F2:
+				packet.key = VK_F2;
+				SendPacket(&packet);
+				break;
+			case VK_F3:
+				packet.key = VK_F3;
+				SendPacket(&packet);
+				break;
+			case VK_F4:
+				packet.key = VK_F4;
+				SendPacket(&packet);
+				break;
+			}
 			break;
-		}
-		case '2':
-		{
-			packet.key = '2';
-			SendPacket(&packet);
-			break;
-		}
-		case '1':
-		{
-			packet.key = '1';
-			SendPacket(&packet);
-			break;
-		}
-		case VK_F1:
-			packet.key = VK_F1;
-			SendPacket(&packet);
-			break;
-		case VK_F2:
-			packet.key = VK_F2;
-			SendPacket(&packet);
-			break;
-		case VK_F3:
-			packet.key = VK_F3;
-			SendPacket(&packet);
-			break;
-		case VK_F4:
-			packet.key = VK_F4;
-			SendPacket(&packet);
-			break;
-		}
-		break;
 		case WM_KEYUP:
 			switch (wParam)
 			{
-				case VK_ESCAPE:
-					::PostQuitMessage(0);
-					break;
-				case VK_RETURN:
-					break;
+			case VK_ESCAPE:
+				::PostQuitMessage(0);
+				break;
+			case VK_RETURN:
+				break;
 
 				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
-				case VK_UP:
-					
-					uppac.key = VK_UP;
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
-				case VK_DOWN:
+			case VK_UP:
 
-					uppac.key = VK_DOWN;
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
-				case VK_LEFT:
+				uppac.key = VK_UP;
+				if (keydown == true)
+				{
+					SendPacket(&uppac);
+					keydown = false;
+				}
+				break;
+			case VK_DOWN:
 
-					uppac.key = VK_LEFT;
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
-				case VK_RIGHT:
+				uppac.key = VK_DOWN;
+				if (keydown == true)
+				{
+					SendPacket(&uppac);
+					keydown = false;
+				}
+				break;
+			case VK_LEFT:
 
-					uppac.key = VK_RIGHT;
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
-				case '1':
+				uppac.key = VK_LEFT;
+				if (keydown == true)
 				{
-					uppac.key = '1';
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
+					SendPacket(&uppac);
+					keydown = false;
 				}
-				case '2':
+				break;
+			case VK_RIGHT:
+
+				uppac.key = VK_RIGHT;
+				if (keydown == true)
 				{
-					uppac.key = '2';
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
+					SendPacket(&uppac);
+					keydown = false;
 				}
-				/*
-				case VK_SPACE:
+				break;
+			case '1':
+			{
+				uppac.key = '1';
+				if (keydown == true)
 				{
-					
-					uppac.key = VK_SPACE;
-					if (keydown == true)
-					{
-						SendPacket(&uppac);
-						keydown = false;
-					}
-					break;
+					SendPacket(&uppac);
+					keydown = false;
 				}
-				*/
-				default:
-					break;
+				break;
+			}
+			case '2':
+			{
+				uppac.key = '2';
+				if (keydown == true)
+				{
+					SendPacket(&uppac);
+					keydown = false;
+				}
+				break;
+			}
+			/*
+			case VK_SPACE:
+			{
+
+				uppac.key = VK_SPACE;
+				if (keydown == true)
+				{
+					SendPacket(&uppac);
+					keydown = false;
+				}
+				break;
+			}
+			*/
+			default:
+				break;
 			}
 			break;
 		default:
 			break;
+		}
 	}
 }
 
@@ -679,34 +710,36 @@ void CGameFramework::ReleaseObjects()
 void CGameFramework::ProcessInput()
 {
 	//마우스 이동 시 플레이어의 위치 변경.
-	POINT pnt;
-	GetCursorPos(&pnt);
-
-	XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
-	float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
-	float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
-	if (deltaX != 0.0f || deltaY != 0.0f)
+	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
-		CS_CAMERA_PACKET p;
-		p.size = sizeof(CS_CAMERA_PACKET);
-		p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
-		p.c_id = m_pScene->pID;
-		p.camAngle = deltaX;
-		p.camUp = deltaY;
+		POINT pnt;
+		GetCursorPos(&pnt);
 
-		SendPacket(&p);
+		XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
+		float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
+		float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+		if (deltaX != 0.0f || deltaY != 0.0f)
+		{
+			CS_CAMERA_PACKET p;
+			p.size = sizeof(CS_CAMERA_PACKET);
+			p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
+			p.c_id = m_pScene->pID;
+			p.camAngle = deltaX;
+			p.camUp = deltaY;
+
+			SendPacket(&p);
+		}
+
+		//여기서부터 서버에서 처리
+
+		//prevX = pnt.x;
+		//prevY = pnt.y;
+
+		SetCursorPos(500, 500);
+		prevX = 500;
+		prevY = 500;
+		//서버 처리 끝
 	}
-
-	//여기서부터 서버에서 처리
-	
-	//prevX = pnt.x;
-	//prevY = pnt.y;
-
-	SetCursorPos(500, 500);
-	prevX = 500;
-	prevY = 500;
-	//서버 처리 끝
-
 }
 
 
