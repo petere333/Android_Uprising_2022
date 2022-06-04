@@ -93,6 +93,15 @@
     <ClCompile Include="LobbyInterfaceShader.cpp">
       <Filter>Shader</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerInfoManager.cpp">
+      <Filter>CharacterData</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -174,6 +183,18 @@
     <ClInclude Include="LobbyInterfaceShader.h">
       <Filter>Shader</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerInfoManager.h">
+      <Filter>CharacterData</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerData.h">
+      <Filter>CharacterData</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -228,6 +249,12 @@
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{3bc38380-bcdd-4c59-b556-840eeca14f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CharacterData">
+      <UniqueIdentifier>{859c4ec7-1e6d-4929-9edd-b832c29e4457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{2fb06f0b-199f-47bd-bbb6-9075879004e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
