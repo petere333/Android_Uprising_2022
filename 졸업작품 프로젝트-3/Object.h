@@ -506,7 +506,7 @@ public:
 	PlayerInfoManager* info=NULL;
 	BionicState bState;
 	KineticState kState;
-
+	int maxHP;
 	XMFLOAT3 currentRotation;
 	int objType;
 	PlayerState pState;
@@ -527,6 +527,8 @@ public:
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
 	chrono::time_point<chrono::system_clock> timeCreated;
 	chrono::time_point<chrono::system_clock> timeFromDie;
+
+	chrono::time_point<chrono::system_clock> lastDamaged;
 	bool isDead = false;
 
 public:

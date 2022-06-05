@@ -12,6 +12,7 @@
 #include "ParticleShader.h"
 #include "ShadowShader.h"
 #include "LobbyInterfaceShader.h"
+#include "HealthBarShader.h"
 
 
 
@@ -129,6 +130,7 @@ public:
 	ShadowShader* sdwShader = NULL;
 
 	LobbyInterfaceShader* lobbyInter = NULL;
+	HealthBarShader* barShader = NULL;
 
 	CTexture* textures[nTex];
 	CMaterial* ppMaterials[nMat];

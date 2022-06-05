@@ -25,6 +25,9 @@
     <FxCompile Include="Shadow.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="Health.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBarShader.cpp">
+      <Filter>Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBarShader.h">
+      <Filter>Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

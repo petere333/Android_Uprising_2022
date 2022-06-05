@@ -162,6 +162,7 @@
     <ClInclude Include="EnemyShader.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="Game_Data.h" />
+    <ClInclude Include="HealthBarShader.h" />
     <ClInclude Include="InterfaceShader.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemManager.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="DDSTextureLoader12.cpp" />
     <ClCompile Include="EnemyShader.cpp" />
     <ClCompile Include="GameFramework.cpp" />
+    <ClCompile Include="HealthBarShader.cpp" />
     <ClCompile Include="InterfaceShader.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -227,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Enemy.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Health.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="interface.hlsl">
