@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../졸업작품 프로젝트-3/PlayerInfoManager.h"
+
 constexpr int MAX_PLAYER = 50;
 constexpr int SERVERPORT = 9000;
 constexpr int BUFSIZE = 1024;
@@ -27,6 +29,7 @@ struct BionicState
 	int stateID;
 	int attackID;
 	int hp;
+	//PlayerInfoManager* manager;
 };
 
 enum class PACKET_TYPE : short

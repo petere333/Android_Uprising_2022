@@ -12,5 +12,5 @@ public:
 	void init();
 
 public:
-	std::vector<Item> items;
+	std::vector<EquipItem*> items;
 };

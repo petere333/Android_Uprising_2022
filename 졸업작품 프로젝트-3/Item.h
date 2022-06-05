@@ -1,13 +1,11 @@
 #pragma once
 
-#include "Object.h"
+
 #include "PlayerData.h"
 
-typedef struct EquipSlot
-{
-	EquipItem* weapon = NULL;
-	EquipItem* armor = NULL;
-}EquipmentSlot;
+class CMaterial;
+
+
 
 class Item
 {
@@ -15,10 +13,10 @@ public:
 	Item();
 	~Item();
 public:
-	CMaterial* name;
-	CMaterial* image;
-	CMaterial* desc;
-
+	CMaterial* name = 0;
+	CMaterial* image= 0;
+	CMaterial* desc = 0;
+	
 };
 class EquipItem : Item
 {

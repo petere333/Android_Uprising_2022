@@ -2,7 +2,10 @@
 
 PlayerInfoManager::PlayerInfoManager()
 {
+	manager = new ItemManager();
 	initGrowth();
+	initStats();
+	
 }
 
 PlayerInfoManager::~PlayerInfoManager()
@@ -28,6 +31,10 @@ void PlayerInfoManager::initStats()
 	stats.precision = 4;
 	stats.entrophy = 4;
 	stats.attack = 0;
+
+	slot.meleeWeapon = manager->items[0];
+	slot.rangedWeapon = manager->items[1];
+	slot.armor = manager->items[2];
 }
 
 float PlayerInfoManager::getAttackSpeed()
@@ -38,19 +45,21 @@ float PlayerInfoManager::getAttackSpeed()
 float PlayerInfoManager::getDamageReduction()
 {
 	
-	float hard = (float)(stats.hardness + slot.weapon->stats.hardness + slot.armor->stats.hardness);
+	float hard = (float)(stats.hardness +  slot.armor->stats.hardness);
 	return 100.0f / (100.0f + hard);
 }
 int PlayerInfoManager::getMeleeDamage()
 {
 	
-	float attack = (float)slot.weapon->stats.attack;
-	float pw = (float)(stats.power + slot.weapon->stats.power + slot.armor->stats.power);
-	return (int) (attack / 100.0f * 4.0f * pw * 1.5f);
+	float attack = (float)slot.meleeWeapon->stats.attack;
+	float pw = (float)(stats.power + slot.meleeWeapon->stats.power + slot.armor->stats.power);
+	int result = (int)(attack / 100.0f * 4.0f * pw * 1.5f);
+	return result;
 }
 int PlayerInfoManager::getRangedDamage()
 {
-	float attack = (float)slot.weapon->stats.attack;
-	float prec = (float)(stats.precision + slot.weapon->stats.precision + slot.armor->stats.precision);
-	return (int)(attack / 100.0f * 4.0f * prec * 0.3f);
+	float attack = (float)slot.rangedWeapon->stats.attack;
+	float prec = (float)(stats.precision + slot.rangedWeapon->stats.precision + slot.armor->stats.precision);
+	int result = (int)(attack / 100.0f * 4.0f * prec * 0.3f);
+	return result;
 }

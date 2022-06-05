@@ -1400,7 +1400,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		partShader->createParticles(100, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
 		if (p.target != -1)
 		{
-			enemyShader->objects[p.target]->bState.hp -= 1;
+			//enemyShader->objects[p.target]->bState.hp -= playerShader;
 		}
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
@@ -1802,25 +1802,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 
 			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-			/*
-			if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
-			{
-				printf("(Building Wall)\n");
-			}
-			else if (m_ppGameObjects[target]->type < 6000 && m_ppGameObjects[target]->type >= 5000)
-			{
-				printf("(Container)\n");
-			}
 
-			else if (m_ppGameObjects[target]->type == 90000)
-			{
-				printf("(Heater)\n");
-			}
-
-			else
-			{
-				printf("(Something)\n");
-			}*/
 			if (terrainShader->objects[target]->type == 21217)
 			{
 				float ox = terrainShader->objects[target]->GetPosition().x;
@@ -1857,6 +1839,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		if (type == 2)
 		{
 			p.isAlive = true;
+			enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage();
 		}
 		else if (type == 1)
 		{
@@ -1942,7 +1925,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				enemyShader->objects[i]->bState.hp -= 1.0f;
+				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
 				break;
 			}
 			

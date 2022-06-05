@@ -1,7 +1,23 @@
 #pragma once
 
 
+
+#include "PlayerData.h"
 #include "Item.h"
+#include "ItemManager.h"
+
+
+class Item;
+
+
+
+
+struct EquipSlot
+{
+	EquipItem* meleeWeapon;
+	EquipItem* rangedWeapon;
+	EquipItem* armor;
+};
 
 class PlayerInfoManager
 {
@@ -14,8 +30,8 @@ public:
 	Growth growth;
 	Stats stats;
 	Item inventory[18];
-	EquipmentSlot slot;
-	
+	EquipSlot slot;
+	ItemManager* manager;
 
 public:
 	void initGrowth();
