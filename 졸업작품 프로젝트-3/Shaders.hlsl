@@ -16,6 +16,7 @@ cbuffer transparent : register(b6)
 	float alpha : packoffset(c0);
 }
 
+
 #include "Light.hlsl"
 Texture2D tex : register(t0);
 Texture2D normTex : register(t1);

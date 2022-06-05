@@ -7,6 +7,7 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "Game_Data.h"
+#include "PlayerInfoManager.h"
 #include "../AUSERVER/AUSERVER/protocol.h"
 
 #define DIR_FORWARD					0x01
@@ -355,7 +356,7 @@ public:
 class CAnimationController 
 {
 public:
-	CAnimationController(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, int nAnimationTracks, CLoadedModelInfo *pModel, bool bApplyRootMotion = false);
+	CAnimationController(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, int nAnimationTracks, CLoadedModelInfo *pModel, bool m_bApplyRootMotion = false);
 	~CAnimationController();
 
 public:
@@ -502,10 +503,10 @@ public:
 
 public:
 	
-
+	PlayerInfoManager* info=NULL;
 	BionicState bState;
 	KineticState kState;
-
+	int maxHP;
 	XMFLOAT3 currentRotation;
 	int objType;
 	PlayerState pState;
@@ -526,6 +527,8 @@ public:
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
 	chrono::time_point<chrono::system_clock> timeCreated;
 	chrono::time_point<chrono::system_clock> timeFromDie;
+
+	chrono::time_point<chrono::system_clock> lastDamaged;
 	bool isDead = false;
 
 public:

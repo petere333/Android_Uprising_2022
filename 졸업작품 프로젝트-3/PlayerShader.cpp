@@ -148,6 +148,10 @@ void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	obj->pState.timeElapsed = 0.0f;
 	obj->pState.attType = TYPE_RANGED;
 
+	PlayerInfoManager* manager = new PlayerInfoManager();
+	
+
+	obj->info = manager;
 	obj->SetTrackAnimationSet(0, 11);
 
 

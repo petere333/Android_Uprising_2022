@@ -29,4 +29,7 @@ public:
 public:
 	std::vector<CGameObject*>	objects;
 	ResourceManager* rm;
+public:
+	std::vector<XMFLOAT3> getEnemyPosition();
+	std::vector<int> getHealthRate();
 };

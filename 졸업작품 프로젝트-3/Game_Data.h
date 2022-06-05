@@ -92,6 +92,7 @@ typedef struct PlayerState
 	int currHP;									// 현재 내구도
 	int attType;								// 현재 공격 유형
 	float timeElapsed=0.0f;						// 이 상태로 변경된 지 얼마나 지났나?
+	
 
 }PlayerState;
 

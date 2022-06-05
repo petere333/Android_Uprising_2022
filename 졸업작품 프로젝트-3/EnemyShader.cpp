@@ -14,7 +14,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj->SetTrackAnimationSet(0, 0);
 
 	obj->bState.stateID = IDLE_STATE;
-	obj->bState.hp = 10;
+	obj->bState.hp = 20;
+	obj->maxHP = 20;
 	objects.push_back(obj);
 
 	CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
@@ -23,7 +24,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj2->SetTrackAnimationSet(0, 0);
 
 	obj2->bState.stateID = IDLE_STATE;
-	obj2->bState.hp = 10;
+	obj2->bState.hp = 20;
+	obj2->maxHP = 20;
 	objects.push_back(obj2);
 
 	CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
@@ -32,7 +34,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj3->SetTrackAnimationSet(0, 0);
 
 	obj3->bState.stateID = IDLE_STATE;
-	obj3->bState.hp = 10;
+	obj3->bState.hp = 20;
+	obj3->maxHP = 20;
 	objects.push_back(obj3);
 
 	CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
@@ -41,7 +44,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj4->SetTrackAnimationSet(0, 0);
 
 	obj4->bState.stateID = IDLE_STATE;
-	obj4->bState.hp = 10;
+	obj4->bState.hp = 20;
+	obj4->maxHP = 20;
 	objects.push_back(obj4);
 
 	CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
@@ -50,7 +54,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj5->SetTrackAnimationSet(0, 0);
 
 	obj5->bState.stateID = IDLE_STATE;
-	obj5->bState.hp = 10;
+	obj5->bState.hp = 20;
+	obj5->maxHP = 20;
 	objects.push_back(obj5);
 
 	// 각 적들의 위치에 바운딩 박스 생성
@@ -104,8 +109,12 @@ void EnemyShader::ReleaseShaderVariables()
 
 void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed, ID3D12DescriptorHeap* heap)
 {
+	
 	for (int i = 0; i < objects.size(); ++i)
 	{
+		
+
+
 		XMFLOAT3 pos = objects[i]->GetPosition();
 		XMFLOAT3 camPos = pCamera->getPosition();
 
@@ -252,4 +261,26 @@ D3D12_SHADER_BYTECODE EnemyShader::CreateVertexShader()
 D3D12_SHADER_BYTECODE EnemyShader::CreatePixelShader()
 {
 	return(CShader::CompileShaderFromFile(L"Enemy.hlsl", "psEnemy", "ps_5_1", &m_pd3dPixelShaderBlob));
+}
+std::vector<XMFLOAT3> EnemyShader::getEnemyPosition()
+{
+	std::vector<XMFLOAT3> result;
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		XMFLOAT3 pos = objects[i]->GetPosition();
+		result.push_back(pos);
+	}
+	return result;
+}
+
+std::vector<int> EnemyShader::getHealthRate()
+{
+	std::vector<int> result;
+
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		int hprate = (int)((float)objects[i]->bState.hp / (float)objects[i]->maxHP * 9.0f);
+		result.push_back(hprate);
+	}
+	return result;
 }

@@ -720,7 +720,7 @@ void CGameObject::setRoot(CGameObject* pChild, bool update)
 
 void CGameObject::SetMesh(CMesh *pMesh)
 {
-	if (m_pMesh) m_pMesh->Release();
+	//if (m_pMesh) m_pMesh->Release();
 	m_pMesh = pMesh;
 	if (m_pMesh) m_pMesh->AddRef();
 }

@@ -156,6 +156,13 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	enemyShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
+	std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
+	std::vector<int> ehp = enemyShader->getHealthRate();
+
+	barShader = new HealthBarShader(rm);
+	barShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	barShader->BuildObjects(pd3dDevice, pd3dCommandList, ep, ehp);
+
 	partShader = new ParticleShader(rm, pd3dDevice, pd3dCommandList);
 	partShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	partShader->BuildObjects();
@@ -286,6 +293,8 @@ ID3D12RootSignature *CScene::CreateGraphicsRootSignature(ID3D12Device *pd3dDevic
 	pd3dRootParameters[9].DescriptorTable.NumDescriptorRanges = 1;
 	pd3dRootParameters[9].DescriptorTable.pDescriptorRanges = &(pd3dDescriptorRanges[2]);//specTex t2
 	pd3dRootParameters[9].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+
 
 
 	D3D12_STATIC_SAMPLER_DESC d3dSamplerDesc; // gSamplerState
@@ -582,10 +591,17 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						enemyShader->objects.erase(enemyShader->objects.begin() + i);
 						enemyShader->enemyBoxes.erase(enemyShader->enemyBoxes.begin() + i);
+						barShader->objects.erase(barShader->objects.begin() + i);
+						
 					}
 				}
 			}
 		}
+
+		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
+		std::vector<int> ehp = enemyShader->getHealthRate();
+
+		barShader->Animate(cam, ep, ehp);
 	}
 	else if (currentScreen == LOBBY_STATE)
 	{
@@ -649,6 +665,12 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			sdwShader->OnPrepareRender(pd3dCommandList);
 			sdwShader->Render(pd3dCommandList, pCamera);
+		}
+
+		if (barShader)
+		{
+			barShader->OnPrepareRender(pd3dCommandList);
+			barShader->Render(pd3dCommandList, pCamera);
 		}
 
 		//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
@@ -1400,7 +1422,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		partShader->createParticles(100, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
 		if (p.target != -1)
 		{
-			enemyShader->objects[p.target]->bState.hp -= 1;
+			//enemyShader->objects[p.target]->bState.hp -= playerShader;
 		}
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
@@ -1802,25 +1824,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 
 			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-			/*
-			if ((m_ppGameObjects[target]->type < 3000 && m_ppGameObjects[target]->type >= 2000) || (m_ppGameObjects[target]->type < 13000 && m_ppGameObjects[target]->type >= 12000))
-			{
-				printf("(Building Wall)\n");
-			}
-			else if (m_ppGameObjects[target]->type < 6000 && m_ppGameObjects[target]->type >= 5000)
-			{
-				printf("(Container)\n");
-			}
 
-			else if (m_ppGameObjects[target]->type == 90000)
-			{
-				printf("(Heater)\n");
-			}
-
-			else
-			{
-				printf("(Something)\n");
-			}*/
 			if (terrainShader->objects[target]->type == 21217)
 			{
 				float ox = terrainShader->objects[target]->GetPosition().x;
@@ -1857,6 +1861,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		if (type == 2)
 		{
 			p.isAlive = true;
+			enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage();
 		}
 		else if (type == 1)
 		{
@@ -1942,7 +1947,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				enemyShader->objects[i]->bState.hp -= 1.0f;
+				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
 				break;
 			}
 			
