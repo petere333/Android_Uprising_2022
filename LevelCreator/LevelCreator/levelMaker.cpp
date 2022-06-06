@@ -4717,7 +4717,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	for (int i = 0; i < 20; ++i)
 	{
-		Edin1[i].location = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
+		Edin1[i].location = f3(250.0f + (5.0f * i), 2.5f, 2.5f);
 		Edin1[i].rotation = f3(0.0f, 0.0f, 0.0f);
 		Edin1[i].type = Factory_tool6;
 
@@ -7533,8 +7533,8 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 	for (int i = 0; i < 20; ++i)
 	{
-		Edi[i].start = f3(250.0f + (5.0f * i), 0.0f, 2.5f);
-		Edi[i].end = f3(255.0f + (5.0f * i), 5.0f, 12.5f);
+		Edi[i].start = f3(247.5f + (5.0f * i), 0.0f, 2.5f);
+		Edi[i].end = f3(252.5f + (5.0f * i), 5.0f, 7.5f);
 
 		blist.push_back(Edi[i]);
 	}
