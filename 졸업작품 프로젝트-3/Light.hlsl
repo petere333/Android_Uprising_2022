@@ -144,7 +144,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 	float3 vToLight = gLights[nIndex].m_vPosition - vPosition;
 	float fDistance = length(vToLight);
 	float cosAngle = dot(normalize(-vToLight), gLights[nIndex].m_vDirection);
-
+	float angle = acos(cosAngle);
 	if (fDistance <= gLights[nIndex].m_fRange  && cosAngle <=1.0f && cosAngle>=cos(3.141592f/180.0f *20.0f))
 	{
 		float fSpecularFactor = 0.0f;
@@ -198,8 +198,33 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 			rz = rz + (1.0 - rz) * weight;
 		}
 		
+		float4 result2 = float4(rx, ry, rz, ra);
+		float reduce;
+		float reduceAngle;
+		if (fDistance >= gLights[nIndex].m_fRange) //거리가 멀면 이 빛으로 영향 없음.
+		{
+			reduce = 0.0f;
+		}
+		else
+		{
+			reduce = fDistance / gLights[nIndex].m_fRange * 9.0f + 1.0f; // 1~10까지의 값으로 치환
+			reduce = 1.0f - log10(reduce);
+		}
+		if (angle >= 3.141592f / 180.0f * 20.0f)
+		{
+			reduceAngle = 0.0f;
+		}
+		else
+		{
+			reduceAngle = angle / (3.141592f / 180 * 20.0f) * 9.0f + 1.0f;
+			reduceAngle = 1.0f - log10(reduceAngle);
+		}
 
-		return float4(rx, ry, rz, ra);
+
+		
+		result2 = result2 * (reduce*reduceAngle);
+		//return float4(rx, ry, rz, ra);
+		 return result2;
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,1.0f))) * fAttenuationFactor * fSpotFactor);
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor * fSpotFactor);
 	}
