@@ -1463,7 +1463,7 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(Not_ddul);
-			obj->SetMaterial(0, rm->materials[49]);
+			obj->SetMaterial(0, rm->materials[50]);
 			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}
@@ -1471,7 +1471,7 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		{
 			obj = new CGameObject(1);
 			obj->SetMesh(ddul);
-			obj->SetMaterial(0, rm->materials[50]);
+			obj->SetMaterial(0, rm->materials[49]);
 			//obj->Rotate(270.0f, 0.0f, 0.0f);
 
 		}

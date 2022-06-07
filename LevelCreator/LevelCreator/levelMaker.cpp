@@ -5433,7 +5433,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 	GyoDan2.type = GyeDans2;
 
 	Object R_stair1;
-	R_stair1.location = f3(890.0f, 0.0f, 258.0f);
+	R_stair1.location = f3(890.0f, 0.0f, 252.5f);
 	R_stair1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair1.type = R_GyeDan1;
 
@@ -5445,7 +5445,7 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	Object R_stair2;
-	R_stair2.location = f3(1030.0f, 0.0f, 258.0f);
+	R_stair2.location = f3(1030.0f, 0.0f, 252.5f);
 	R_stair2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair2.type = R_GyeDan1;
 
@@ -5559,49 +5559,49 @@ void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	Object R_stair1_1;
-	R_stair1_1.location = f3(890.0f, 5.5f, 270.5f);
+	R_stair1_1.location = f3(890.0f, 5.5f, 265.0f);
 	R_stair1_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair1_1.type = R_GyeDan1;
 	list.push_back(R_stair1_1);
 
 	Object R_stair1_2;
-	R_stair1_2.location = f3(930.0f, 2.5f, 273.5f);
+	R_stair1_2.location = f3(930.0f, 2.5f, 268.0f);
 	R_stair1_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair1_2.type = R_GyeDan1_1;
 	list.push_back(R_stair1_2);
 
 	Object R_didim1_1;
-	R_didim1_1.location = f3(925.0f, 5.0166f, 258.0f);
+	R_didim1_1.location = f3(925.0f, 5.0166f, 261.5f);
 	R_didim1_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_didim1_1.type = didims;
 	list.push_back(R_didim1_1);
 
 	Object R_didim1_2;
-	R_didim1_2.location = f3(925.0f, 10.566f, 270.5f);
+	R_didim1_2.location = f3(925.0f, 10.566f, 274.0f);
 	R_didim1_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_didim1_2.type = didims;
 	list.push_back(R_didim1_2);
 
 	Object R_stair2_1;
-	R_stair2_1.location = f3(1030.0f, 5.5f, 270.5f);
+	R_stair2_1.location = f3(1030.0f, 5.5f, 265.0f);
 	R_stair2_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair2_1.type = R_GyeDan1;
 	list.push_back(R_stair2_1);
 
 	Object R_stair2_2;
-	R_stair2_2.location = f3(1070.0f, 2.5f, 273.5f);
+	R_stair2_2.location = f3(1070.0f, 2.5f, 268.0f);
 	R_stair2_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_stair2_2.type = R_GyeDan1_1;
 	list.push_back(R_stair2_2);
 
 	Object R_didim2_1;
-	R_didim2_1.location = f3(1065.0f, 5.0166f, 258.0f);
+	R_didim2_1.location = f3(1065.0f, 5.0166f, 262.0f);
 	R_didim2_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_didim2_1.type = didims;
 	list.push_back(R_didim2_1);
 
 	Object R_didim2_2;
-	R_didim2_2.location = f3(1065.0f, 10.566f, 270.5f);
+	R_didim2_2.location = f3(1065.0f, 10.566f, 274.0f);
 	R_didim2_2.rotation = f3(0.0f, 0.0f, 0.0f);
 	R_didim2_2.type = didims;
 	list.push_back(R_didim2_2);
