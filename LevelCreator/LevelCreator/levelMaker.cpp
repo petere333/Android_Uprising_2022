@@ -137,6 +137,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object Se_busok4_1;
 	Object Se_busok4_2;
 	Object Se_busok4_3;
+	Object Se_busok5_1;
+	Object Se_busok5_2;
 	Object Frst_LH;
 	Object Frst_RH;
 
@@ -229,15 +231,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Object big_wall4;
 	Object big_wall5;
 	Object big_wall6;
-	Object Kidong_batchim1;
-	Object Kidongs_mom;
-	Object Kidong_batchim2;
-	Object Kidong_batchim3;
-	Object Kidong_batchim4;
-	Object Kidongs_mom2;
-	Object Kidong_batchim5;
-	Object Kidong_batchim6;
-	Object Kidongs_mom3;
+
 	Object Dollp1;
 	Object Dollp2;
 	Object Dollp3;
@@ -309,7 +303,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	ggokji2.rotation = f3(0.0f, 0.0f, 0.0f);
 	ggokji2.type = Top_wall2;
 
-
+/*
 	Barigate1.location = f3(828.125f, 2.5f, 290.0f);
 	Barigate1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Barigate1.type = S_Wallz25; // 2¹øÂ°
@@ -334,7 +328,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Barigate6.rotation = f3(0.0f, 0.0f, 0.0f);
 	Barigate6.type = S_Wallz26;
 
-
+	*/
 
 
 	Addos_1.location = f3(1145.0f, 0.0f, 300.0f);
@@ -389,29 +383,6 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_Dedo10.type = S_Wallz18;
 
 
-	nanuki1_1.location = f3(1050.0f, 0.0f, 5.0f);
-	nanuki1_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki1_1.type = Wallz9;
-
-	nanuki2_1.location = f3(1050.0f, 5.0f, 5.0f);
-	nanuki2_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki2_1.type = Wallz10;
-
-	nanuki3_1.location = f3(1060.0f, 0.0f, 5.0f);
-	nanuki3_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki3_1.type = Wallz9;
-
-	nanuki4_1.location = f3(1060.0f, 5.0f, 5.0f);
-	nanuki4_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki4_1.type = Wallz10;
-
-	nanuki5_1.location = f3(1050.0f, 0.0f, 5.0f);
-	nanuki5_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki5_1.type = Wallz11;
-
-	nanuki6_1.location = f3(1050.0f, 5.0f, 5.0f);
-	nanuki6_1.rotation = f3(0.0f, 0.0f, 0.0f);
-	nanuki6_1.type = Wallz12;
 
 
 	nanuki1.location = f3(800.0f, 0.0f, 60.0f);
@@ -430,11 +401,11 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	nanuki4.rotation = f3(0.0f, 0.0f, 0.0f);
 	nanuki4.type = S_Wallz6;
 
-	nanuki5.location = f3(1050.0f, 0.0f, 60.0f);
+	nanuki5.location = f3(1400.0f, 0.0f, 60.0f);
 	nanuki5.rotation = f3(0.0f, 0.0f, 0.0f);
 	nanuki5.type = S_Wallz7;
 
-	nanuki6.location = f3(1050.0f, 5.0f, 60.0f);
+	nanuki6.location = f3(1400.0f, 5.0f, 60.0f);
 	nanuki6.rotation = f3(0.0f, 0.0f, 0.0f);
 	nanuki6.type = S_Wallz8;
 
@@ -520,41 +491,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Dollp6.type = Wallz22;
 
 
-	Kidong_batchim5.location = f3(350.0f, 0.65f, 75.0f);
-	Kidong_batchim5.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim5.type = Kidong;
 
-	Kidong_batchim6.location = f3(350.0f, 21.85f, 75.0f);
-	Kidong_batchim6.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim6.type = Kidong;
-
-	Kidongs_mom3.location = f3(350.0f, 11.25f, 75.0f);
-	Kidongs_mom3.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidongs_mom3.type = KidongMom;
-
-	Kidong_batchim3.location = f3(350.0f, 0.65f, 165.0f);
-	Kidong_batchim3.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim3.type = Kidong;
-
-	Kidong_batchim4.location = f3(350.0f, 21.85f, 165.0f);
-	Kidong_batchim4.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim4.type = Kidong;
-
-	Kidongs_mom2.location = f3(350.0f, 11.25f, 165.0f);
-	Kidongs_mom2.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidongs_mom2.type = KidongMom;
-
-	Kidongs_mom.location = f3(240.0f, 11.25f, 110.0f);
-	Kidongs_mom.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidongs_mom.type = KidongMom;
-
-	Kidong_batchim1.location = f3(240.0f, 0.65f, 110.0f);
-	Kidong_batchim1.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim1.type = Kidong;
-
-	Kidong_batchim2.location = f3(240.0f, 21.85f, 110.0f);
-	Kidong_batchim2.rotation = f3(0.0f, 0.0f, 0.0f);
-	Kidong_batchim2.type = Kidong;
 
 	big_wall1.location = f3(420.0f, 0.0f, 0.0f);
 	big_wall1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -685,7 +622,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Firse_Add4.rotation = f3(0.0f, 0.0f, 0.0f);
 	Firse_Add4.type = Wallz9;
 
-	Firse_Add5.location = f3(330.0f, 5.0f, 200.0f);
+	Firse_Add5.location = f3(330.0f, 0.0f, 200.0f);
 	Firse_Add5.rotation = f3(0.0f, 0.0f, 0.0f);
 	Firse_Add5.type = Wallz10;
 
@@ -723,7 +660,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Wall_Beok2_1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Wall_Beok2_1.type = Wallz2;
 
-	Wall_Meok1.location = f3(97.5f, 5.0f, 200.0f);
+	Wall_Meok1.location = f3(97.5f, 0.0f, 200.0f);
 	Wall_Meok1.rotation = f3(0.0f, 0.0f, 0.0f);
 	Wall_Meok1.type = Wallz3;
 
@@ -1020,6 +957,14 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Se_busok4_3.rotation = f3(0.0f, 0.0f, 0.0f);
 	Se_busok4_3.type = Se_Busok4_3;
 
+	Se_busok5_1.location = f3(875.0f, 0.0f, 150.0f);
+	Se_busok5_1.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_busok5_1.type = Se_Busok5_1;
+
+	Se_busok5_2.location = f3(875.0f, 5.0f, 150.0f);
+	Se_busok5_2.rotation = f3(0.0f, 0.0f, 0.0f);
+	Se_busok5_2.type = Se_Busok5_2;
+
 
 	Se_RS1.location = f3(1400.0f, 0.0f, 0.0f);
 	Se_RS1.rotation = f3(0.0f, 0.0f, 0.0f);
@@ -1269,6 +1214,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Se_busok4_1);
 	list.push_back(Se_busok4_2);
 	list.push_back(Se_busok4_3);
+	list.push_back(Se_busok5_1);
+	list.push_back(Se_busok5_2);
 	list.push_back(Frst_LH);
 	list.push_back(Frst_RH);
 	list.push_back(Batchim1);
@@ -1351,15 +1298,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(big_wall4);
 	list.push_back(big_wall5);
 	list.push_back(big_wall6);
-	list.push_back(Kidong_batchim1);
-	list.push_back(Kidongs_mom);
-	list.push_back(Kidong_batchim2);
-	list.push_back(Kidong_batchim3);
-	list.push_back(Kidongs_mom2);
-	list.push_back(Kidong_batchim4);
-	list.push_back(Kidong_batchim5);
-	list.push_back(Kidongs_mom3);
-	list.push_back(Kidong_batchim6);
+
 	list.push_back(Dollp1);
 	list.push_back(Dollp2);
 	list.push_back(Dollp3);
@@ -1386,12 +1325,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(nanuki4);
 	list.push_back(nanuki5);
 	list.push_back(nanuki6);
-	list.push_back(nanuki1_1);
-	list.push_back(nanuki2_1);
-	list.push_back(nanuki3_1);
-	list.push_back(nanuki4_1);
-	list.push_back(nanuki5_1);
-	list.push_back(nanuki6_1);
+
 	list.push_back(Se_Ado1);
 	list.push_back(Se_Ado2);
 	list.push_back(Se_Ado3);
@@ -1414,12 +1348,14 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(Addos_3);
 	list.push_back(Addos_4);
 	list.push_back(Addos_5);
+	/*
 	list.push_back(Barigate1);
 	list.push_back(Barigate2);
 	list.push_back(Barigate3);
 	list.push_back(Barigate4);
 	list.push_back(Barigate5);
 	list.push_back(Barigate6);
+		*/
 	list.push_back(froom1_3);
 	list.push_back(froom1_3h);
 	list.push_back(ggokji1);
@@ -1482,6 +1418,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Se_bs4_1;
 	BoundingBox Se_bs4_2;
 	BoundingBox Se_bs4_3;
+	BoundingBox Se_bs5_1;
+	BoundingBox Se_bs5_2;
 	BoundingBox frst_lh;
 	BoundingBox frst_rh;
 	BoundingBox Bat_set1;
@@ -1567,15 +1505,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox Ken_w4;
 	BoundingBox Ken_w5;
 	BoundingBox Ken_w6; // ½ÃÀÛÁöÁ¡ ±ÙÃ³ º®2
-	BoundingBox dongki; // ±âµÕ ¾Æ·§¹ÞÄ§
-	BoundingBox dongkimom;
-	BoundingBox dongki2; // ±âµÕ ¾Æ·§¹ÞÄ§
-	BoundingBox dongki3;
-	BoundingBox dongki4;
-	BoundingBox dongkimom2;
-	BoundingBox dongki5;
-	BoundingBox dongki6;
-	BoundingBox dongkimom3;
+
 	BoundingBox Dol_w1;
 	BoundingBox Dol_w2;
 	BoundingBox Dol_w3;
@@ -1652,7 +1582,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	
 	fr1_3_h.start = f3(397.5f, 5.0f, 200.0f);
 	fr1_3_h.end = f3(397.5f, 12.5f, 600.0f);
-
+/*
 	K_bari1.start = f3(812.5f, 0.0f, 289.0f);
 	K_bari1.end = f3(843.75f, 5.0f, 291.0f);
 
@@ -1670,7 +1600,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	K_bari6.start = f3(843.75f, 0.0f, 505.0f);
 	K_bari6.end = f3(875.0f, 5.0f, 507.0f);
-
+	*/
 
 	Adoe1.start = f3(1145.0f, 0.0f, 300.0f);
 	Adoe1.end = f3(1300.0f, 12.5f, 300.0f);
@@ -1740,42 +1670,24 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Aop6.end = f3(1310.0f, 12.5f, 360.0f);
 
 
-	nanuk1_1.start = f3(1050.0f, 0.0f, 5.0f);
-	nanuk1_1.end = f3(1050.0f, 5.0f, 150.0f);
-
-	nanuk2_1.start = f3(1050.0f, 5.0f, 5.0f);
-	nanuk2_1.end = f3(1050.0f, 12.5f, 150.0f);
-
-	nanuk3_1.start = f3(1060.0f, 0.0f, 5.0f);
-	nanuk3_1.end = f3(1060.0f, 5.0f, 150.0f);
-
-	nanuk4_1.start = f3(1060.0f, 5.0f, 5.0f);
-	nanuk4_1.end = f3(1060.0f, 12.5f, 150.0f);
-
-	nanuk5_1.start = f3(1050.0f, 0.0f, 5.0f);
-	nanuk5_1.end = f3(1060.0f, 5.0f, 5.0f);
-
-	nanuk6_1.start = f3(1050.0f, 5.0f, 5.0f);
-	nanuk6_1.end = f3(1060.0f, 12.5f, 5.0f);
-
 
 	nanuk1.start = f3(800.0f, 0.0f, 60.0f);
-	nanuk1.end = f3(1050.0f, 5.0f, 60.0f);
+	nanuk1.end = f3(1400.0f, 5.0f, 60.0f);
 
 	nanuk2.start = f3(800.0f, 5.0f, 60.0f);
-	nanuk2.end = f3(1050.0f, 12.5f, 60.0f);
+	nanuk2.end = f3(1400.0f, 12.5f, 60.0f);
 
 	nanuk3.start = f3(800.0f, 0.0f, 75.0f);
-	nanuk3.end = f3(1050.0f, 5.0f, 75.0f);
+	nanuk3.end = f3(1400.0f, 5.0f, 75.0f);
 
 	nanuk4.start = f3(800.0f, 5.0f, 75.0f);
-	nanuk4.end = f3(1050.0f, 12.5f, 75.0f);
+	nanuk4.end = f3(1400.0f, 12.5f, 75.0f);
 
-	nanuk5.start = f3(1050.0f, 0.0f, 60.0f);
-	nanuk5.end = f3(1050.0f, 5.0f, 75.0f);
+	nanuk5.start = f3(1400.0f, 0.0f, 60.0f);
+	nanuk5.end = f3(1400.0f, 5.0f, 75.0f);
 
-	nanuk6.start = f3(1050.0f, 5.0f, 60.0f);
-	nanuk6.end = f3(1050.0f, 12.5f, 75.0f);
+	nanuk6.start = f3(1400.0f, 5.0f, 60.0f);
+	nanuk6.end = f3(1400.0f, 12.5f, 75.0f);
 
 
 	S_plus1.start = f3(812.5f, 0.0f, 230.0f);
@@ -1839,33 +1751,6 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	Dol_w6.start = f3(525.0f, 5.0f, 400.0f);
 	Dol_w6.end = f3(525.0f, 12.5f, 407.5f);
-
-	dongki5.start = f3(340.0f, 0.0f, 65.0f);
-	dongki5.end = f3(360.0f, 1.3f, 85.0f);
-
-	dongki6.start = f3(340.0f, 21.2f, 65.0f);
-	dongki6.end = f3(360.0f, 22.5f, 85.0f);
-
-	dongkimom3.start = f3(342.0f, 1.3f, 67.0f);
-	dongkimom3.end = f3(358.0f, 21.2f, 83.0f);
-
-	dongki3.start = f3(340.0f, 0.0f, 155.0f);
-	dongki3.end = f3(360.0f, 1.3f, 175.0f);
-
-	dongki4.start = f3(340.0f, 21.2f, 155.0f);
-	dongki4.end = f3(360.0f, 22.5f, 175.0f);
-
-	dongkimom2.start = f3(342.0f, 1.3f, 157.0f);
-	dongkimom2.end = f3(358.0f, 21.2f, 173.0f);
-
-	dongkimom.start = f3(232.0f, 1.3f, 102.0f);
-	dongkimom.end = f3(248.0f, 21.2f, 118.0f);
-
-	dongki.start = f3(230.0f, 0.0f, 100.0f);
-	dongki.end = f3(250.0f, 1.3f, 120.0f);
-
-	dongki2.start = f3(230.0f, 21.2f, 100.0f);
-	dongki2.end = f3(250.0f, 22.5f, 120.0f);
 
 	Ken_w1.start = f3(420.0f, 0.0f, 0.0f);
 	Ken_w1.end = f3(420.0f, 5.0f, 115.0f);
@@ -1965,7 +1850,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	Fadd4.start = f3(335.0f, 5.0f, 200.0f);
 	Fadd4.end = f3(400.0f, 12.5f, 200.0f);
 
-	Fadd5.start = f3(330.0f, 5.0f, 200.0f);
+	Fadd5.start = f3(330.0f, 0.0f, 200.0f);
 	Fadd5.end = f3(335.0f, 12.5f, 200.0f);
 
 
@@ -1993,7 +1878,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	wb2_1.start = f3(102.5f, 5.0f, 200.0f);
 	wb2_1.end = f3(200.0f, 12.5f, 200.0f);
 
-	wm1.start = f3(97.5f, 5.0f, 200.0f);
+	wm1.start = f3(97.5f, 0.0f, 200.0f);
 	wm1.end = f3(102.5f, 12.5f, 200.0f);
 
 
@@ -2148,6 +2033,12 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 
 	frst_rh.start = f3(600.0f, 5.0f, 0.0f);
 	frst_rh.end = f3(600.0f, 12.5f, 600.0f);
+
+	Se_bs5_1.start = f3(875.0f, 0.0f, 150.0f);
+	Se_bs5_1.end = f3(1010.0f, 5.0f, 150.0f);
+	
+	Se_bs5_2.start = f3(875.0f, 5.0f, 150.0f);
+	Se_bs5_2.end = f3(1010.0f, 12.5f, 150.0f);
 
 	Se_bs4_1.start = f3(1010.0f, 0.0f, 150.0f);
 	Se_bs4_1.end = f3(1400.0f, 2.5f, 150.0f);
@@ -2362,6 +2253,8 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Se_bs4_1);
 	blist.push_back(Se_bs4_2);
 	blist.push_back(Se_bs4_3);
+	blist.push_back(Se_bs5_1);
+	blist.push_back(Se_bs5_2);
 	blist.push_back(frst_lh);
 	blist.push_back(frst_rh);
 	blist.push_back(Bat_set1);
@@ -2446,15 +2339,6 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Ken_w4);
 	blist.push_back(Ken_w5);
 	blist.push_back(Ken_w6);
-	blist.push_back(dongki);
-	blist.push_back(dongkimom);
-	blist.push_back(dongki2);
-	blist.push_back(dongki3);
-	blist.push_back(dongkimom2);
-	blist.push_back(dongki4);
-	blist.push_back(dongki5);
-	blist.push_back(dongkimom3);
-	blist.push_back(dongki6);
 	blist.push_back(Dol_w1);
 	blist.push_back(Dol_w2);
 	blist.push_back(Dol_w3);
@@ -2481,12 +2365,6 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(nanuk4);
 	blist.push_back(nanuk5);
 	blist.push_back(nanuk6);
-	blist.push_back(nanuk1_1);
-	blist.push_back(nanuk2_1);
-	blist.push_back(nanuk3_1);
-	blist.push_back(nanuk4_1);
-	blist.push_back(nanuk5_1);
-	blist.push_back(nanuk6_1);
 
 	blist.push_back(Aop1);
 	blist.push_back(Aop2);
@@ -2511,12 +2389,15 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(Adoe3);
 	blist.push_back(Adoe4);
 	blist.push_back(Adoe5);
+	/*
 	blist.push_back(K_bari1);
 	blist.push_back(K_bari2);
 	blist.push_back(K_bari3);
 	blist.push_back(K_bari4);
 	blist.push_back(K_bari5);
 	blist.push_back(K_bari6);
+
+	*/
 	blist.push_back(fr1_3);
 	blist.push_back(fr1_3_h);
 	blist.push_back(kkokji1);
@@ -2550,6 +2431,7 @@ void createStairBox(vector<Object>& list, vector<BoundingBox>& blist, vector<Bou
 void createObstacles(vector<Object>& list, vector<BoundingBox>& blist)
 {
 
+	/*
 	Object Janhaes1;
 	Janhaes1.location = f3(290.0f, 0.0f, 135.0f);
 	Janhaes1.rotation = f3(-90.0f, 0.0f, 0.0f);

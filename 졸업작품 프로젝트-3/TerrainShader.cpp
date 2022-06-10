@@ -83,6 +83,9 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	WallMeshHorizontal* Se_BS4_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
 	WallMeshHorizontal* Se_BS4_2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 2.5f);
 	WallMeshHorizontal* Se_BS4_3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 390.0f, 7.5f);
+	WallMeshHorizontal* Se_BS5_1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 5.0f);
+	WallMeshHorizontal* Se_BS5_2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 135.0f, 7.5f);
+
 	WallMeshVertical* Frst_lh = new WallMeshVertical(pd3dDevice, pd3dCommandList, 600.0f, 7.5f);
 
 	WallMeshVertical* Bated_1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 620.0f, 10.0f);
@@ -114,14 +117,14 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 	WallMeshHorizontal* Walz1 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 5.0f);
 	WallMeshHorizontal* Walz2 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 97.5f, 7.5f);
-	WallMeshHorizontal* Walz3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshHorizontal* Walz3 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 12.5f);
 	WallMeshVertical* Walz4 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 5.0f);
 	WallMeshVertical* Walz5 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 400.0f, 7.5f);
 	WallMeshHorizontal* Walz6 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 5.0f);
 	WallMeshHorizontal* Walz7 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 155.0f, 7.5f);
 	WallMeshHorizontal* Walz8 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 5.0f);
 	WallMeshHorizontal* Walz9 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 65.0f, 7.5f);
-	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
+	WallMeshHorizontal* Walz10 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 12.5f);
 	WallMeshHorizontal* Walz11 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 30.0f, 12.5f);
 	WallMeshHorizontal* Walz12 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 5.0f, 7.5f);
 	WallMeshHorizontal* Walz13 = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 120.0f, 12.5f); // °¨¿ÁÃ¢»ì
@@ -1682,6 +1685,18 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		//	obj->Rotate(270.0f, 0.0f, 0.0f);
 		obj->SetMaterial(0, rm->materials[40]);
 
+		}
+		else if (data[i].type == Se_Busok5_1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Se_BS5_1);
+		obj->SetMaterial(0, rm->materials[12]);
+		}
+		else if (data[i].type == Se_Busok5_2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMesh(Se_BS5_2);
+		obj->SetMaterial(0, rm->materials[11]);
 		}
 
 

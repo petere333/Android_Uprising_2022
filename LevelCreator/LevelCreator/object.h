@@ -77,6 +77,9 @@
 #define Se_Busok4_2 20023 // 2공통
 #define Se_Busok4_3 20024 // 2공통
 
+#define Se_Busok5_1 20025 // 2공통
+#define Se_Busok5_2 20026 // 2공토ㅜㅇ
+
 #define Cont1_1 11
 #define Frs_H 123456*3
 
