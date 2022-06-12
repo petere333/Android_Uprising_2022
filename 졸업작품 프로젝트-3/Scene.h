@@ -7,7 +7,15 @@
 #include "Shader.h"
 #include "InterfaceShader.h"
 #include "PlayerShader.h"
+
 #include "TerrainShader.h"
+#include "TerrainShader1_1.h"
+#include "TerrainShader1_2.h"
+#include "TerrainShader1_3.h"
+#include "TerrainShader2_1.h"
+#include "TerrainShader2_2.h"
+#include "TerrainShader2_3.h"
+
 #include "EnemyShader.h"
 #include "ParticleShader.h"
 #include "ShadowShader.h"
@@ -128,6 +136,14 @@ public:
 	EnemyShader* enemyShader = NULL;
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
+
+	TerrainShader1_1* terrain1_1 = NULL;
+	TerrainShader1_2* terrain1_2 = NULL;
+	TerrainShader1_3* terrain1_3 = NULL;
+	TerrainShader2_1* terrain2_1 = NULL;
+	TerrainShader2_2* terrain2_2 = NULL;
+	TerrainShader2_3* terrain2_3 = NULL;
+
 
 	LobbyInterfaceShader* lobbyInter = NULL;
 	HealthBarShader* barShader = NULL;

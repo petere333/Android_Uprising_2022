@@ -320,7 +320,9 @@ void ResourceManager::createTextures()
 	tex76 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex76->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/btn_start.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex76);
-
+	tex77 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex77->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyMetal.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex77);
 	CTexture* norm;
 
 	norm = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);

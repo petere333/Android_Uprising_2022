@@ -14,12 +14,5 @@ typedef struct BoundingSphere
 	float dist;
 }BoundingSphere;
 
-typedef struct BoundingStair {
-	float xstart, xend;
-	float zstart, zend;
-	float height;
-}BoundingStair;
-
 void writeBox(FILE* f, BoundingBox box);
 void writeSphere(FILE* f, BoundingSphere sphere);
-void writeStair(FILE* f, BoundingStair Stairs);

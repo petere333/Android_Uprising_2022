@@ -209,6 +209,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 		{
 			reduce = fDistance / gLights[nIndex].m_fRange * 9.0f + 1.0f; // 1~10까지의 값으로 치환
 			reduce = 1.0f - log10(reduce);
+			
 		}
 		if (angle >= 3.141592f / 180.0f * 20.0f)
 		{
@@ -218,6 +219,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 		{
 			reduceAngle = angle / (3.141592f / 180 * 20.0f) * 9.0f + 1.0f;
 			reduceAngle = 1.0f - log10(reduceAngle);
+			
 		}
 
 

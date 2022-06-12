@@ -255,13 +255,21 @@
 #define Janhae23 30848
 
 
+//1-1 폐기물처리장 모음
 
 
-// 정리
-// 2000대 숫자들 : 벽종류 (위치 무관)
-// 5000대 숫자들 : 컨테
-// 12000대 숫자들 : 바닥
-// 그외는 컨테이너가 아닌 바닥이거나, 속성이 다른 모델, 천장 등 단일이거나, 모델 종류가 엄연히 달라 일부러 분리한 것들
+#define RustyMetal_Floor 11001
+#define RustyMetal_Wall_Left 11002
+#define RustyMetal_Wall_Right 11003
+#define RustyMetal_Wall_Front 11004
+#define RustyMetal_Wall_Back 11005
+#define RustyMetal_Ceiling 11006
+#define Dustbin 11200
+
+
+
+
+
 
 
 

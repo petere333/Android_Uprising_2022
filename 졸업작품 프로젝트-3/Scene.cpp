@@ -71,27 +71,14 @@ void CScene::BuildDefaultLightsAndMaterials()
 	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
 	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
 
-	m_pLights[0].m_bEnable = true;
+	m_pLights[0].m_bEnable = false;
 	m_pLights[0].m_nType = DIRECTIONAL_LIGHT;
 	m_pLights[0].m_xmf4Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
 	m_pLights[0].m_xmf4Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
 	m_pLights[0].m_xmf4Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
 	m_pLights[0].m_xmf3Direction = XMFLOAT3(1.0f, 0.0f, 0.0f);
 	
-	/*
-	m_pLights[1].m_bEnable = true;
-	m_pLights[1].m_nType = SPOT_LIGHT;
-	m_pLights[1].m_fRange = 600.0f;
-	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
-	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
-	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.3f, 0.3f, 0.3f, 0.0f);
-	m_pLights[1].m_xmf3Position = XMFLOAT3(300.0f, 20.0f, 300.0f);
-	m_pLights[1].m_xmf3Direction = XMFLOAT3(0.0f, -1.0f, 0.0f);
-	m_pLights[1].m_xmf3Attenuation = XMFLOAT3(1.0f, 0.01f, 0.0001f);
-	m_pLights[1].m_fFalloff = 10.0f;
-	m_pLights[1].m_fPhi = (float)cos(XMConvertToRadians(90.0f));
-	m_pLights[1].m_fTheta = (float)cos(XMConvertToRadians(30.0f));
-	*/
+
 	m_pMaterials = new MATERIALS;
 	::ZeroMemory(m_pMaterials, sizeof(MATERIALS));
 
@@ -103,25 +90,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 	m_pMaterials->m_pReflections[5] = { XMFLOAT4(0.0f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 30.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
 	m_pMaterials->m_pReflections[6] = { XMFLOAT4(0.5f, 0.5f, 1.0f, 1.0f), XMFLOAT4(0.5f, 0.5f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 35.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
 	m_pMaterials->m_pReflections[7] = { XMFLOAT4(1.0f, 0.5f, 1.0f, 1.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 40.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f) };
-	/*
-	shadowMtx = new XMMATRIX[m_nLights];
-
-	for (int i = 0; i < m_nLights; ++i)
-	{
-		if (m_pLights[i].m_nType == DIRECTIONAL_LIGHT)
-		{
-			XMFLOAT4 light = XMFLOAT4(-m_pLights[i].m_xmf3Direction.x, -m_pLights[i].m_xmf3Direction.y, -m_pLights[i].m_xmf3Direction.z, 0.0f);
-			XMFLOAT4 plane = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-			shadowMtx[i] = XMMatrixShadow(XMLoadFloat4(&plane), XMLoadFloat4(&light));
-		}
-		else if (m_pLights[i].m_nType == POINT_LIGHT)
-		{
-			XMFLOAT4 light = XMFLOAT4(m_pLights[i].m_xmf3Position.x, m_pLights[i].m_xmf3Position.y, m_pLights[i].m_xmf3Position.z, 1.0f);
-			XMFLOAT4 plane = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-			shadowMtx[i] = XMMatrixShadow(XMLoadFloat4(&plane), XMLoadFloat4(&light));
-		}
-	}
-	*/
+	
 
 }
 
@@ -151,6 +120,30 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	terrainShader = new TerrainShader(rm);
 	terrainShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	terrainShader->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain1_1 = new TerrainShader1_1(rm);
+	terrain1_1->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain1_1->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain1_2 = new TerrainShader1_2(rm);
+	terrain1_2->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain1_2->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain1_3 = new TerrainShader1_3(rm);
+	terrain1_3->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain1_3->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain2_1 = new TerrainShader2_1(rm);
+	terrain2_1->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain2_1->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain2_2 = new TerrainShader2_2(rm);
+	terrain2_2->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain2_2->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	terrain2_3 = new TerrainShader2_3(rm);
+	terrain2_3->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	terrain2_3->BuildObjects(pd3dDevice, pd3dCommandList);
 
 	enemyShader = new EnemyShader(rm);
 	enemyShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
@@ -425,6 +418,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		interShader->Animate(cam);
 
 
+
+
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
 
@@ -602,6 +597,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		std::vector<int> ehp = enemyShader->getHealthRate();
 
 		barShader->Animate(cam, ep, ehp);
+
+		m_pLights[1].m_xmf3Position = playerShader->objects[pID]->GetPosition();
+		m_pLights[1].m_xmf3Position.y = 50.0f;
+		UpdateShaderVariables(pd3dCommandList);
 	}
 	else if (currentScreen == LOBBY_STATE)
 	{
@@ -627,6 +626,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	float alpha = 1.0f;
 
+	XMFLOAT3 cp = pCamera->getPosition();
+
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
 	if (currentScreen == IN_GAME_STATE)
 	{
@@ -650,6 +651,15 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			terrainShader->OnPrepareRender(pd3dCommandList);
 			terrainShader->Render(pd3dCommandList, pCamera);
 		}
+		if ((cp.x >= 0.0f && cp.x <= 200.0f) && cp.z >= 0.0f && cp.z <= 200.0f)
+		{
+			if (terrain1_1)
+			{
+				terrain1_1->OnPrepareRender(pd3dCommandList);
+				terrain1_1->Render(pd3dCommandList, pCamera);
+			}
+		}
+
 		if (enemyShader)
 		{
 			enemyShader->OnPrepareRender(pd3dCommandList);

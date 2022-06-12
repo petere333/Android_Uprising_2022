@@ -235,8 +235,6 @@ void TerrainShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CLoadedMesh* Gongjang_janhae21 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_ÆÒ½º.txt", NULL);
 	CLoadedMesh* Gongjang_janhae22 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_¹°µÅÁö.txt", NULL);
 	CLoadedMesh* Gongjang_janhae23 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx_½ºÀ¹»è.txt", NULL);
-
-
 	/*
 	RectMesh** shadowRect = new RectMesh * [nShadows];
 	m_ppShadows = new CGameObject * [m_nGameObjects];

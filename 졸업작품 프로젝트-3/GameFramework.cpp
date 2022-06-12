@@ -401,6 +401,20 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 		case WM_KEYDOWN:
 			switch (wParam)
 			{
+
+			case VK_F12:
+			{
+				if (m_pScene->m_pLights[0].m_bEnable == false)
+				{
+					m_pScene->m_pLights[0].m_bEnable = true;
+				}
+				else
+				{
+					m_pScene->m_pLights[0].m_bEnable = false;
+				}
+				m_pScene->UpdateShaderVariables(m_pd3dCommandList);
+				break;
+			}
 			case VK_UP:
 			{
 				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
