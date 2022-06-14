@@ -321,8 +321,19 @@ void ResourceManager::createTextures()
 	tex76->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/btn_start.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex76);
 	tex77 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex77->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyMetal.dds", RESOURCE_TEXTURE2D, 0);
+	tex77->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyMetalPlate.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex77);
+	tex78 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex78->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/Rusty_barrel.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex78);
+	tex79 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex79->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/metal_box.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex79);
+	tex80 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex80->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyMetalWall.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex80);
+
+
 	CTexture* norm;
 
 	norm = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);

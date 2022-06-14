@@ -85,9 +85,9 @@ public:
 		//info.id = nplayer;
 		info.size = sizeof(SC_LOGIN_INFO_PACKET); //packet size
 		info.type = PACKET_TYPE::SC_LOGIN_INFO; //packet type
-		info.x = 100.0f+ pid*5.0f;
+		info.x = 20.0f+ pid*5.0f;
 		info.y = 0.0f;
-		info.z = 100.0f;
+		info.z = 175.0f;
 		info.isLogin = true;
 
 		kState.xzspeed = 0.0f;

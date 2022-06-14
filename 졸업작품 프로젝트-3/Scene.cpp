@@ -625,8 +625,8 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 
 	float alpha = 1.0f;
-
-	XMFLOAT3 cp = pCamera->getPosition();
+	
+	XMFLOAT3 cp = playerShader->objects[pID]->GetPosition();
 
 	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
 	if (currentScreen == IN_GAME_STATE)
@@ -657,6 +657,47 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			{
 				terrain1_1->OnPrepareRender(pd3dCommandList);
 				terrain1_1->Render(pd3dCommandList, pCamera);
+			}
+		}
+		else if ((cp.x >= 200.0f && cp.x <= 600.0f) && cp.z >= 0.0f && cp.z <= 200.0f)
+		{
+			if (terrain1_2)
+			{
+				terrain1_2->OnPrepareRender(pd3dCommandList);
+				terrain1_2->Render(pd3dCommandList, pCamera);
+			}
+		}
+		else if ((cp.x >= 400.0f && cp.x <= 600.0f) && cp.z >= 200.0f && cp.z <= 600.0f)
+		{
+			if (terrain1_2)
+			{
+				terrain1_3->OnPrepareRender(pd3dCommandList);
+				terrain1_3->Render(pd3dCommandList, pCamera);
+			}
+		}
+
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 400.0f && cp.z <= 600.0f)
+		{
+			if (terrain2_1)
+			{
+				terrain2_1->OnPrepareRender(pd3dCommandList);
+				terrain2_1->Render(pd3dCommandList, pCamera);
+			}
+		}
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 400.0f)
+		{
+			if (terrain2_2)
+			{
+				terrain2_2->OnPrepareRender(pd3dCommandList);
+				terrain2_2->Render(pd3dCommandList, pCamera);
+			}
+		}
+		else if ((cp.x >= 900.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
+		{
+			if (terrain2_3)
+			{
+				terrain2_3->OnPrepareRender(pd3dCommandList);
+				terrain2_3->Render(pd3dCommandList, pCamera);
 			}
 		}
 
@@ -1104,6 +1145,655 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				}
 
 			}
+
+
+			
+			float px = playerShader->objects[idx]->GetPosition().x;
+			float pz = playerShader->objects[idx]->GetPosition().z;
+			//1-1구역에 있는가?
+			if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
+			{
+				for (int i = 0; i < terrain1_1->nBox; ++i)
+				{
+					if (tx > terrain1_1->boxesWorld[i].start.x - 0.4f && ty > terrain1_1->boxesWorld[i].start.y - 1.7f && tz > terrain1_1->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain1_1->boxesWorld[i].end.x + 0.4f && ty < terrain1_1->boxesWorld[i].end.y - 0.0f && tz < terrain1_1->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain1_1->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain1_1->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_1->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_1->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain1_1->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain1_1->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_1->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_1->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_1->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_1->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain1_1->boxesWorld[i].start.x - 0.5f && tz > terrain1_1->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain1_1->boxesWorld[i].end.x + 0.5f && tz < terrain1_1->boxesWorld[i].end.z + 0.5f && ty>terrain1_1->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+			
+			//1-2
+			if (px >= 200.0f && px <= 600.0f && pz >= 0.0f && pz <= 200.0f)
+			{
+				for (int i = 0; i < terrain1_2->nBox; ++i)
+				{
+					if (tx > terrain1_2->boxesWorld[i].start.x - 0.4f && ty > terrain1_2->boxesWorld[i].start.y - 1.7f && tz > terrain1_2->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain1_2->boxesWorld[i].end.x + 0.4f && ty < terrain1_2->boxesWorld[i].end.y - 0.0f && tz < terrain1_2->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain1_2->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain1_2->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_2->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_2->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain1_2->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain1_2->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_2->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_2->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_2->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_2->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain1_2->boxesWorld[i].start.x - 0.5f && tz > terrain1_2->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain1_2->boxesWorld[i].end.x + 0.5f && tz < terrain1_2->boxesWorld[i].end.z + 0.5f && ty>terrain1_2->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+
+			//1-3
+			if (px >= 400.0f && px <= 600.0f && pz >= 200.0f && pz <= 600.0f)
+			{
+				for (int i = 0; i < terrain1_3->nBox; ++i)
+				{
+					if (tx > terrain1_3->boxesWorld[i].start.x - 0.4f && ty > terrain1_3->boxesWorld[i].start.y - 1.7f && tz > terrain1_3->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain1_3->boxesWorld[i].end.x + 0.4f && ty < terrain1_3->boxesWorld[i].end.y - 0.0f && tz < terrain1_3->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain1_3->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain1_3->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_3->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain1_3->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain1_3->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain1_3->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_3->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_3->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_3->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_3->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain1_3->boxesWorld[i].start.x - 0.5f && tz > terrain1_3->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain1_3->boxesWorld[i].end.x + 0.5f && tz < terrain1_3->boxesWorld[i].end.z + 0.5f && ty>terrain1_3->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+
+			//2-1
+			if (px >= 800.0f && px <= 900.0f && pz >= 400.0f && pz <= 600.0f)
+			{
+				for (int i = 0; i < terrain2_1->nBox; ++i)
+				{
+					if (tx > terrain2_1->boxesWorld[i].start.x - 0.4f && ty > terrain2_1->boxesWorld[i].start.y - 1.7f && tz > terrain2_1->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain2_1->boxesWorld[i].end.x + 0.4f && ty < terrain2_1->boxesWorld[i].end.y - 0.0f && tz < terrain2_1->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain2_1->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain2_1->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_1->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_1->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain2_1->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain2_1->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_1->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_1->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_1->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_1->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain2_1->boxesWorld[i].start.x - 0.5f && tz > terrain2_1->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain2_1->boxesWorld[i].end.x + 0.5f && tz < terrain2_1->boxesWorld[i].end.z + 0.5f && ty>terrain2_1->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+
+			//2-2
+			if (px >= 800.0f && px <= 900.0f && pz >= 60.0f && pz <= 400.0f)
+			{
+				for (int i = 0; i < terrain2_2->nBox; ++i)
+				{
+					if (tx > terrain2_2->boxesWorld[i].start.x - 0.4f && ty > terrain2_2->boxesWorld[i].start.y - 1.7f && tz > terrain2_2->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain2_2->boxesWorld[i].end.x + 0.4f && ty < terrain2_2->boxesWorld[i].end.y - 0.0f && tz < terrain2_2->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain2_2->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain2_2->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_2->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_2->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain2_2->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain2_2->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_2->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_2->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_2->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_2->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain2_2->boxesWorld[i].start.x - 0.5f && tz > terrain2_2->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain2_2->boxesWorld[i].end.x + 0.5f && tz < terrain2_2->boxesWorld[i].end.z + 0.5f && ty>terrain2_2->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+
+			//2-3
+			if (px >= 900.0f && px <= 1200.0f && pz >= 60.0f && pz <= 150.0f)
+			{
+				for (int i = 0; i < terrain2_3->nBox; ++i)
+				{
+					if (tx > terrain2_3->boxesWorld[i].start.x - 0.4f && ty > terrain2_3->boxesWorld[i].start.y - 1.7f && tz > terrain2_3->boxesWorld[i].start.z - 0.4f
+						&& tx < terrain2_3->boxesWorld[i].end.x + 0.4f && ty < terrain2_3->boxesWorld[i].end.y - 0.0f && tz < terrain2_3->boxesWorld[i].end.z + 0.4f)
+					{
+
+
+						if (playerShader->objects[idx]->GetPosition().x > terrain2_3->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain2_3->boxesWorld[i].start.x)
+						{
+							if (dir.x > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_3->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							else if (dir.x < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(terrain2_3->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.x = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->GetPosition().z > terrain2_3->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain2_3->boxesWorld[i].start.z)
+						{
+							if (-dir.z > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_3->boxesWorld[i].start.z - 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							else if (-dir.z < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain2_3->boxesWorld[i].end.z + 0.5f);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								dir.z = 0.0f;
+
+							}
+							crash = true;
+
+						}
+						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
+						{
+							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_3->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+							}
+							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+							{
+								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain2_3->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
+								if (idx == pID)
+								{
+									pCamera->move(playerShader->objects[idx]->GetPosition());
+									interShader->Animate(pCamera);
+								}
+								playerShader->objects[idx]->kState.yspeed = 0.0f;
+								playerShader->objects[idx]->kState.isInAir = 0;
+							}
+
+							crash = true;
+						}
+
+					}
+
+					else if (tx > terrain2_3->boxesWorld[i].start.x - 0.5f && tz > terrain2_3->boxesWorld[i].start.z - 0.5f
+						&& tx < terrain2_3->boxesWorld[i].end.x + 0.5f && tz < terrain2_3->boxesWorld[i].end.z + 0.5f && ty>terrain2_3->boxesWorld[i].end.y)
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						playerShader->objects[idx]->kState.yspeed -= 0.1f;
+						stepOn = false;
+						crash = false;
+
+					}
+
+
+				}
+			}
+
+			//===================================================================================//
+
 
 			if (crash == false)
 			{
@@ -1606,6 +2296,676 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			}
 
 		}
+
+		float px = playerShader->objects[idx]->GetPosition().x;
+		float pz = playerShader->objects[idx]->GetPosition().z;
+
+		//1-1구역인 경우
+		if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
+		{
+			for (int i = 0; i < terrain1_1->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_1->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_1->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_1->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_1->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_1->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_1->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+		//1-2
+		if (px >= 200.0f && px <= 600.0f && pz >= 0.0f && pz <= 200.0f)
+		{
+			for (int i = 0; i < terrain1_2->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_2->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_2->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_2->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_2->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_2->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_2->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//1-3
+		if (px >= 400.0f && px <= 600.0f && pz >= 200.0f && pz <= 600.0f)
+		{
+			for (int i = 0; i < terrain1_3->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_3->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_3->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_3->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_3->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_3->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_3->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-1
+		if (px >= 800.0f && px <= 900.0f && pz >= 400.0f && pz <= 600.0f)
+		{
+			for (int i = 0; i < terrain2_1->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_1->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_1->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_1->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_1->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_1->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_1->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-2
+		if (px >= 800.0f && px <= 900.0f && pz >= 60.0f && pz <= 400.0f)
+		{
+			for (int i = 0; i < terrain2_2->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_2->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_2->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_2->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_2->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_2->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_2->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-3
+		if (px >= 900.0f && px <= 1200.0f && pz >= 60.0f && pz <= 150.0f)
+		{
+			for (int i = 0; i < terrain2_3->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_3->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_3->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_3->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_3->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_3->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_3->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//===============================================================================//
 
 		soundEffect[1]->play();
 		soundEffect[1]->Update();

@@ -254,9 +254,8 @@
 #define Janhae22 30849
 #define Janhae23 30848
 
-
+//이 위엔 이제부터 안쓰는 것들임.
 //1-1 폐기물처리장 모음
-
 
 #define RustyMetal_Floor 11001
 #define RustyMetal_Wall_Left 11002
@@ -264,8 +263,20 @@
 #define RustyMetal_Wall_Front 11004
 #define RustyMetal_Wall_Back 11005
 #define RustyMetal_Ceiling 11006
-#define Dustbin 11200
 
+#define RustyMetal_Wall_Left_100m 11007
+#define RustyMetal_Wall_Center_50m 11008
+
+#define RustyMetal_Wall_HCenter_50m 11009
+#define RustyMetal_Wall_Bottom_50m 11010
+#define RustyMetal_Wall_Top_100m 11011
+
+#define Dustbin 11200
+#define RustyMetal_Box 11201
+#define RustyMetal_Barrel 11202
+
+#define WallPipe 11203
+#define FloorPipe 11204
 
 
 
