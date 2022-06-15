@@ -144,6 +144,25 @@ public:
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
 
+	float* height11;
+	float* height12;
+	float* height13;
+	float* height21;
+	float* height22;
+	float* height23;
+
+	int x11 = 400;
+	int z11 = 400;
+	int x12 = 800;
+	int z12 = 400;
+	int x13 = 400;
+	int z13 = 800;
+	int x21 = 200;
+	int z21 = 400;
+	int x22 = 200;
+	int z22 = 680;
+	int x23 = 600;
+	int z23 = 180;
 
 	LobbyInterfaceShader* lobbyInter = NULL;
 	HealthBarShader* barShader = NULL;

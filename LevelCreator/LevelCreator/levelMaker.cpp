@@ -5,6 +5,32 @@ vector<Object> list;
 vector<BoundingBox> bList;
 vector<BoundingSphere> sList;
 
+int x11 = 400;
+int z11 = 400;
+
+int x12 = 800;
+int z12 = 400;
+
+int x13 = 400;
+int z13 = 800;
+
+int x21 = 200;
+int z21 = 400;
+
+int x22 = 200;
+int z22 = 680;
+
+int x23 = 600;
+int z23 = 180;
+
+
+float* height1_1;
+float* height1_2;
+float* height1_3;
+float* height2_1;
+float* height2_2;
+float* height2_3;
+
 FILE* file;
 
 float contX = 10.0f, contY = 2.5f, contZ = 6.0f;
@@ -26,6 +52,12 @@ int main()
 	file = fopen("result/objects1-1.txt", "w");
 	FILE* bf = fopen("result/box1-1.txt", "w");
 	
+	FILE* hf11 = fopen("result/height1-1.txt", "w");
+	FILE* hf12 = fopen("result/height1-2.txt", "w");
+	FILE* hf13 = fopen("result/height1-3.txt", "w");
+	FILE* hf21 = fopen("result/height2-1.txt", "w");
+	FILE* hf22 = fopen("result/height2-2.txt", "w");
+	FILE* hf23 = fopen("result/height2-3.txt", "w");
 	//file = fopen("result/objects1-2.txt", "w");
 	//FILE* bf = fopen("result/box1-2.txt", "w");
 
@@ -50,9 +82,23 @@ int main()
 	{
 		writeBox(bf, bList[i]);
 	}
-
+	writeHeight(hf11, height1_1, x11 * z11);
 	fclose(file);
 	fclose(bf);
+	fclose(hf11);
+	fclose(hf12);
+	fclose(hf13);
+	fclose(hf21);
+	fclose(hf22);
+	fclose(hf23);
+
+	delete height1_1;
+	delete height1_2;
+	delete height1_3;
+	delete height2_1;
+	delete height2_2;
+	delete height2_3;
+
 	return 0;
 }
 
@@ -66,6 +112,38 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
+
+	height1_1 = new float[x11*z11];
+	height1_2 = new float[x12*z12];
+	height1_3 = new float[x13*z13];
+	height2_1 = new float[x21*z21];
+	height2_2 = new float[x22*z22];
+	height2_3 = new float[x23*z23];
+
+	for (int i = 0; i < x11 * z11; ++i)
+	{
+		height1_1[i] = 0.0f;
+	}
+	for (int i = 0; i < x12 * z12; ++i)
+	{
+		height1_2[i] = 0.0f;
+	}
+	for (int i = 0; i < x13 * z13; ++i)
+	{
+		height1_3[i] = 0.0f;
+	}
+	for (int i = 0; i < x21 * z21; ++i)
+	{
+		height2_1[i] = 0.0f;
+	}
+	for (int i = 0; i < x22 * z22; ++i)
+	{
+		height2_2[i] = 0.0f;
+	}
+	for (int i = 0; i < x23 * z23; ++i)
+	{
+		height2_3[i] = 0.0f;
+	}
 	createObstacles1_1(list, blist);
 
 	// 자신이 배치하고자 하는 구역 한 번에 하나씩만 주석을 풀면 된다.
@@ -109,10 +187,56 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Ceiling->rotation = f3(0.0f, 0.0f, 0.0f);
 	Ceiling->type = RustyMetal_Ceiling;
 
+	Object* Left100m = (Object*)malloc(sizeof(Object));
+	Left100m->location = f3(50.0f, 0.0f, 100.0f);
+	Left100m->rotation = f3(0.0f, 0.0f, 0.0f);
+	Left100m->type = RustyMetal_Wall_Left_100m;
+
+	Object* center50m = (Object*)malloc(sizeof(Object));
+	center50m->location = f3(100.0f, 0.0f, 50.0f);
+	center50m->rotation = f3(0.0f, 0.0f, 0.0f);
+	center50m->type = RustyMetal_Wall_Center_50m;
+
+	Object* hcenter50m = (Object*)malloc(sizeof(Object));
+	hcenter50m->location = f3(50.0f, 0.0f, 100.0f);
+	hcenter50m->rotation = f3(0.0f, 0.0f, 0.0f);
+	hcenter50m->type = RustyMetal_Wall_HCenter_50m;
+
+	Object* bottom50m = (Object*)malloc(sizeof(Object));
+	bottom50m->location = f3(100.0f, 0.0f, 50.0f);
+	bottom50m->rotation = f3(0.0f, 0.0f, 0.0f);
+	bottom50m->type = RustyMetal_Wall_Bottom_50m;
+
+	Object* top100m = (Object*)malloc(sizeof(Object));
+	top100m->location = f3(100.0f, 0.0f, 150.0f);
+	top100m->rotation = f3(0.0f, 0.0f, 0.0f);
+	top100m->type = RustyMetal_Wall_Top_100m;
+
+
+
+
+	Object* Barrel = (Object*)malloc(sizeof(Object));
+	Barrel->location = f3(50.0f, 2.625f, 50.0f);
+	Barrel->rotation = f3(0.0f, 0.0f, 0.0f);
+	Barrel->type = RustyMetal_Barrel;
+
+	Object* wpipe = (Object*)malloc(sizeof(Object));
+	wpipe->location = f3(0.0f, 1.5f, 50.0f);
+	wpipe->rotation = f3(0.0f, 0.0f, 0.0f);
+	wpipe->type = WallPipe;
+
+	Object* cpipe = (Object*)malloc(sizeof(Object));
+	cpipe->location = f3(0.0f, 0.5f, 50.0f);
+	cpipe->rotation = f3(0.0f, 0.0f, 0.0f);
+	cpipe->type = FloorPipe;
+
+
+
 	BoundingBox* boxFloor = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxFloor->start = f3(0.0f, 0.0f, 0.0f);
 	boxFloor->end = f3(200.0f, 0.001f, 200.0f);
 
+	
 
 	BoundingBox* boxFrontWall = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxFrontWall->start = f3(0.0f, 0.0f, 199.999f);
@@ -134,6 +258,109 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	boxCeiling->start = f3(0.0f, 9.999f, 0.0f);
 	boxCeiling->end = f3(200.0f, 10.0f, 200.0f);
 
+	BoundingBox* boxLeft100m = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxLeft100m->start = f3(49.999f, 0.0f, 100.0f);
+	boxLeft100m->end = f3(50.001f, 10.0f, 200.0f);
+
+	BoundingBox* boxCenter50m = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxCenter50m->start = f3(99.999f, 0.0f, 50.0f);
+	boxCenter50m->end = f3(100.001f, 10.0f, 100.0f);
+
+	BoundingBox* boxHCenter50m = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxHCenter50m->start = f3(50.0f, 0.0f, 99.999f);
+	boxHCenter50m->end = f3(100.0f, 10.0f, 100.001f);
+
+	BoundingBox* boxBottom50m = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBottom50m->start = f3(100.0f, 0.0f, 49.999f);
+	boxBottom50m->end = f3(150.0f, 10.0f, 50.001f);
+
+	BoundingBox* boxTop100m = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxTop100m->start = f3(100.0f, 0.0f, 149.999f);
+	boxTop100m->end = f3(200.0f, 10.0f, 150.001f);
+
+
+	for (int i = 0; i < 7; ++i)
+	{
+		for (int j = 0; j < 7; ++j)
+		{
+			float x = 10.0f * i + 20.0f;
+			float y = 10.0f * j + 20.0f;
+
+			Object* Box = (Object*)malloc(sizeof(Object));
+			Box->location = f3(x - 0.75f, 0.75f, y - 0.75f);
+			Box->rotation = f3(0.0f, 0.0f, 0.0f);
+			Box->type = RustyMetal_Box;
+
+			BoundingBox* boxBox = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxBox->start = f3(x - 1.5f, 0.0f, y - 1.5f);
+			boxBox->end = f3(x, 1.5f, y);
+			setAreaHeight(height1_1, x11, z11, x - 1.5f, y - 1.5f, x, y, 1.5f);
+
+
+			Object* Box2 = (Object*)malloc(sizeof(Object));
+			Box2->location = f3(x + 0.75f, 0.75f, y - 0.75f);
+			Box2->rotation = f3(0.0f, 0.0f, 0.0f);
+			Box2->type = RustyMetal_Box;
+
+			BoundingBox* boxBox2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxBox2->start = f3(x, 0.0f, y - 1.5f);
+			boxBox2->end = f3(x + 1.5f, 1.5f, y);
+			setAreaHeight(height1_1, x11, z11, x, y - 1.5f, x+1.5f, y, 1.5f);
+
+
+			Object* Box3 = (Object*)malloc(sizeof(Object));
+			Box3->location = f3(x - 0.75f, 0.75f, y + 0.75f);
+			Box3->rotation = f3(0.0f, 0.0f, 0.0f);
+			Box3->type = RustyMetal_Box;
+
+			BoundingBox* boxBox3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxBox3->start = f3(x - 1.5f, 0.0f, y);
+			boxBox3->end = f3(x, 1.5f, y + 1.5f);
+			setAreaHeight(height1_1, x11, z11, x - 1.5f, y, x, y+1.5f, 1.5f);
+
+
+			Object* Box4 = (Object*)malloc(sizeof(Object));
+			Box4->location = f3(x + 0.75f, 0.75f, y + 0.75f);
+			Box4->rotation = f3(0.0f, 0.0f, 0.0f);
+			Box4->type = RustyMetal_Box;
+
+			BoundingBox* boxBox4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxBox4->start = f3(x, 0.0f, y);
+			boxBox4->end = f3(x + 1.5f, 1.5f, y + 1.5f);
+			setAreaHeight(height1_1, x11, z11, x, y, x+1.5f, y+1.5f, 1.5f);
+
+
+			Object* Box5 = (Object*)malloc(sizeof(Object));
+			Box5->location = f3(x, 2.25f, y);
+			Box5->rotation = f3(0.0f, 0.0f, 0.0f);
+			Box5->type = RustyMetal_Box;
+
+			BoundingBox* boxBox5 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxBox5->start = f3(x-0.75f, 1.5f, y - 0.75f);
+			boxBox5->end = f3(x+0.75f, 3.0f, y+0.75f);
+			setAreaHeight(height1_1, x11, z11, x - 0.75f, y - 0.75f, x+0.75f, y+0.75f, 3.0f);
+
+			list.push_back(*Box);
+			blist.push_back(*boxBox);
+			list.push_back(*Box2);
+			blist.push_back(*boxBox2);
+			list.push_back(*Box3);
+			blist.push_back(*boxBox3);
+			list.push_back(*Box4);
+			blist.push_back(*boxBox4);
+			list.push_back(*Box5);
+			blist.push_back(*boxBox5);
+		}
+	}
+
+	
+
+	BoundingBox* boxBarrel = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBarrel->start = f3(49.25f, 1.5f, 49.25f);
+	boxBarrel->end = f3(50.75f, 3.75f, 50.75f);
+	setAreaHeight(height1_1, x11, z11, 49.25f, 49.25f, 50.75f, 50.75f, 3.75f);
+
+
 	list.push_back(*floor);
 	blist.push_back(*boxFloor);
 
@@ -151,6 +378,30 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	list.push_back(*Ceiling);
 	blist.push_back(*boxCeiling);
+
+	list.push_back(*Left100m);
+	blist.push_back(*boxLeft100m);
+
+	list.push_back(*center50m);
+	blist.push_back(*boxCenter50m);
+
+	list.push_back(*hcenter50m);
+	blist.push_back(*boxHCenter50m);
+
+	list.push_back(*bottom50m);
+	blist.push_back(*boxBottom50m);
+
+	list.push_back(*top100m);
+	blist.push_back(*boxTop100m);
+
+	
+
+	list.push_back(*Barrel);
+	blist.push_back(*boxBarrel);
+
+	list.push_back(*wpipe);
+	list.push_back(*cpipe);
+
 }
 
 void createObstacles1_2(vector<Object>& list, vector<BoundingBox>& blist)

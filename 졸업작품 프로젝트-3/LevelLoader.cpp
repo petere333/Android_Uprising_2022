@@ -96,3 +96,18 @@ BoundBox* LoadBoxes(const char* filename, int* n)
 	*n = result.size();
 	return bx;
 }
+
+void LoadHeight(const char* filename, float* data)
+{
+	FILE* f = fopen(filename, "r");
+	
+	int size=0;
+
+	while (!feof(f))
+	{
+		fscanf(f, "%f ", &data[size]);
+		size += 1;
+	}
+	
+	fclose(f);
+}

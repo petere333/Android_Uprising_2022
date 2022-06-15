@@ -284,6 +284,9 @@
 
 
 
+
+
+
 typedef struct Obj
 {
 	XMFLOAT3 position;
@@ -315,3 +318,4 @@ std::vector<Obj> LoadObjects(const char* filename);
 BoundBox* LoadBoxes(const char* filename, int*);
 BoundBox* LoadStairs(const char* filename, int* n);
 
+void LoadHeight(const char* filename, float* data);

@@ -105,6 +105,17 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	initShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	createSounds();
 	CreateRM(pd3dDevice, pd3dCommandList);
+
+	height11 = new float[x11 * z11];
+	height12 = new float[x12 * z12];
+	height13 = new float[x13 * z13];
+
+	height21 = new float[x21 * z21];
+	height22 = new float[x22 * z22];
+	height23 = new float[x23 * z23];
+
+	LoadHeight("res/map/area1_1/height1-1.txt", height11);
+
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
 	
@@ -838,7 +849,11 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			tx = playerShader->objects[idx]->GetPosition().x + fTime * playerShader->objects[idx]->kState.xzspeed * dir.x;
 			ty = playerShader->objects[idx]->GetPosition().y + fTime * playerShader->objects[idx]->kState.yspeed;
 			tz = playerShader->objects[idx]->GetPosition().z + fTime * playerShader->objects[idx]->kState.xzspeed * -dir.z;
-			
+
+			float ox = playerShader->objects[idx]->GetPosition().x;
+			float oz = playerShader->objects[idx]->GetPosition().z;
+			float oy = playerShader->objects[idx]->GetPosition().y;
+
 			// 물체가 있는곳에 이동했는가?
 			for (int i = 0; i < terrainShader->nBox; ++i)
 			{
@@ -1153,107 +1168,125 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			//1-1구역에 있는가?
 			if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
 			{
-				for (int i = 0; i < terrain1_1->nBox; ++i)
+
+				int oix = (int)(ox / 0.5f);
+				int oiz = (int)(oz / 0.5f);
+				
+				int ix = (int)(tx / 0.5f);
+				int iz = (int)(tz / 0.5f);
+				
+				if (playerShader->objects[idx]->kState.yspeed == 0.0f)
 				{
-					if (tx > terrain1_1->boxesWorld[i].start.x - 0.4f && ty > terrain1_1->boxesWorld[i].start.y - 1.7f && tz > terrain1_1->boxesWorld[i].start.z - 0.4f
-						&& tx < terrain1_1->boxesWorld[i].end.x + 0.4f && ty < terrain1_1->boxesWorld[i].end.y - 0.0f && tz < terrain1_1->boxesWorld[i].end.z + 0.4f)
+					//다음위치의 높이가 저장된 높이맵의 해당위치 높이보다 낮은 경우 위치는 불변
+					
+					if (ty < height11[ix * x11 + iz])
 					{
-
-
-						if (playerShader->objects[idx]->GetPosition().x > terrain1_1->boxesWorld[i].end.x || playerShader->objects[idx]->GetPosition().x < terrain1_1->boxesWorld[i].start.x)
-						{
-							if (dir.x > 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(terrain1_1->boxesWorld[i].start.x - 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								dir.x = 0.0f;
-
-							}
-							else if (dir.x < 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(terrain1_1->boxesWorld[i].end.x + 0.5f, playerShader->objects[idx]->GetPosition().y, playerShader->objects[idx]->GetPosition().z);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								dir.x = 0.0f;
-
-							}
-							crash = true;
-
-						}
-						else if (playerShader->objects[idx]->GetPosition().z > terrain1_1->boxesWorld[i].end.z || playerShader->objects[idx]->GetPosition().z < terrain1_1->boxesWorld[i].start.z)
-						{
-							if (-dir.z > 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_1->boxesWorld[i].start.z - 0.5f);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								dir.z = 0.0f;
-
-							}
-							else if (-dir.z < 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, playerShader->objects[idx]->GetPosition().y, terrain1_1->boxesWorld[i].end.z + 0.5f);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								dir.z = 0.0f;
-
-							}
-							crash = true;
-
-						}
-						else if (playerShader->objects[idx]->kState.yspeed != 0.0f)
-						{
-							if (playerShader->objects[idx]->kState.yspeed > 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_1->boxesWorld[i].start.y - 1.7f, playerShader->objects[idx]->GetPosition().z);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								playerShader->objects[idx]->kState.yspeed = 0.0f;
-							}
-							else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
-							{
-								playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, terrain1_1->boxesWorld[i].end.y, playerShader->objects[idx]->GetPosition().z);
-								if (idx == pID)
-								{
-									pCamera->move(playerShader->objects[idx]->GetPosition());
-									interShader->Animate(pCamera);
-								}
-								playerShader->objects[idx]->kState.yspeed = 0.0f;
-								playerShader->objects[idx]->kState.isInAir = 0;
-							}
-
-							crash = true;
-						}
-
+						crash = true;
 					}
-
-					else if (tx > terrain1_1->boxesWorld[i].start.x - 0.5f && tz > terrain1_1->boxesWorld[i].start.z - 0.5f
-						&& tx < terrain1_1->boxesWorld[i].end.x + 0.5f && tz < terrain1_1->boxesWorld[i].end.z + 0.5f && ty>terrain1_1->boxesWorld[i].end.y)
+					//동일한경우 땅에 붙어서 쭈욱 이동
+					else if (ty == height11[ix * x11 + iz])
+					{
+						playerShader->objects[idx]->kState.isInAir = 0;
+						playerShader->objects[idx]->kState.yspeed = 0.0f;
+						crash = false;
+					}
+					//더 위인경우 공중에 뜸
+					else if (ty > height11[ix * x11 + iz])
 					{
 						playerShader->objects[idx]->kState.isInAir = 1;
-						playerShader->objects[idx]->kState.yspeed -= 0.1f;
-						stepOn = false;
 						crash = false;
-
+					}
+				}
+				else if (playerShader->objects[idx]->kState.yspeed > 0.0f)
+				{
+					if (ty < height11[ix * x11 + iz])
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						
+						crash = true;
+					}
+					else if (ty > height11[ix * x11 + iz])
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						crash = false;
+					}
+					else if (ty == height11[ix * x11 + iz])
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						crash = false;
 					}
 
+				}
+				else if (playerShader->objects[idx]->kState.yspeed < 0.0f)
+				{
 
+					//더 높은 곳을 향해 가는 경우
+					if (height11[ix * x11 + iz] > height11[oix * x11 + oiz])
+					{
+						if (ty <= height11[ix * x11 + iz] && ty >= height11[ix * x11 + iz] - 0.3f)
+						{
+							playerShader->objects[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->SetPosition(tx, height11[ix * x11 + iz], tz);
+							if (idx == pID)
+							{
+								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
+							}
+							crash = true;
+							cout << "착지 높이" << height11[ix * x11 + iz] << endl;
+						}
+						else if (ty < height11[ix * x11 + iz] - 0.3f && ty >= height11[oix * x11 + oiz] + 0.3f)
+						{
+
+							crash = true;
+						}
+						else if (ty < height11[oix * x11 + oiz] + 0.3f && ty >= height11[oix * x11 + oiz])
+						{
+							playerShader->objects[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->SetPosition(ox, height11[oix * x11 + oiz], oz);
+							if (idx == pID)
+							{
+								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
+							}
+							crash = true;
+						}
+						else if (ty > height11[ix * x11 + iz])
+						{
+							playerShader->objects[idx]->kState.isInAir = 1;
+							crash = false;
+
+						}
+					}
+					//지대가 낮은 곳으로 갈 경우
+					else if (height11[ix * x11 + iz] < height11[oix * x11 + oiz])
+					{
+						playerShader->objects[idx]->kState.isInAir = 1;
+						crash = false;
+					}
+					//등고도인경우
+					else if (height11[ix * x11 + iz] == height11[oix * x11 + oiz])
+					{
+						if (ty <= height11[ix * x11 + iz])
+						{
+							playerShader->objects[idx]->kState.isInAir = 0;
+							playerShader->objects[idx]->kState.yspeed = 0.0f;
+							playerShader->objects[idx]->SetPosition(tx, height11[ix * x11 + iz], tz);
+							if (idx == pID)
+							{
+								pCamera->move(playerShader->objects[idx]->GetPosition());
+								interShader->Animate(pCamera);
+							}
+							crash = true;
+						}
+						else
+						{
+							playerShader->objects[idx]->kState.isInAir = 1;
+							crash = false;
+						}
+					}
 				}
 			}
 			
@@ -1839,7 +1872,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			playerShader->objects[idx]->kState.isInAir = 0;
 		}
 	cout << "(" << playerShader->objects[idx]->GetPosition().x << ", " << playerShader->objects[idx]->GetPosition().y << ", " << playerShader->objects[idx]->GetPosition().z << ")" << endl;
-	
+	cout << "yspeed : " << playerShader->objects[pID]->kState.yspeed << endl;
 	
 	
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
@@ -3194,7 +3227,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 
 			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-
+			/*
 			if (terrainShader->objects[target]->type == 21217)
 			{
 				float ox = terrainShader->objects[target]->GetPosition().x;
@@ -3219,6 +3252,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 					}
 				}
 			}
+			*/
 		}
 
 		CS_ATTACK_PACKET p;
