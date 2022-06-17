@@ -278,7 +278,24 @@
 #define WallPipe 11203
 #define FloorPipe 11204
 
-
+#define RustyFence 11205
+#define FoodBin 11206
+#define Envelop 11207
+#define MetalLadder 11208
+#define Rail 11209
+#define RuinWood1 11210
+#define RuinWood2 11211
+#define RuinBrick1 11212
+#define RuinBrick2 11213
+#define RuinBrick3 11214
+#define RuinBrick4 11215
+#define RuinBrick5 11216
+#define RuinCeramic1 11217
+#define RuinCeramic2 11218
+#define RuinMix1 11219
+#define RuinMix2 11220
+#define RustyStair 11221
+#define RustyTrashCan 11222
 
 
 
