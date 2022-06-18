@@ -230,53 +230,70 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	cpipe->rotation = f3(0.0f, 0.0f, 0.0f);
 	cpipe->type = FloorPipe;
 
+	
 
 
 	BoundingBox* boxFloor = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxFloor->start = f3(0.0f, 0.0f, 0.0f);
 	boxFloor->end = f3(200.0f, 0.001f, 200.0f);
-
+	
 	
 
 	BoundingBox* boxFrontWall = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxFrontWall->start = f3(0.0f, 0.0f, 199.999f);
 	boxFrontWall->end = f3(200.0f, 10.0f, 200.0f);
+	setAreaHeight(height1_1, x11, z11, 0.0f, 199.5f, 200.0f, 200.0f, 10.0f);
 
 	BoundingBox* boxBackWall = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxBackWall->start = f3(0.0f, 0.0f, 0.0f);
 	boxBackWall->end = f3(200.0f, 10.0f, 0.001f);
+	setAreaHeight(height1_1, x11, z11, 0.0f, 0.0f, 200.0f, 0.5f, 10.0f);
+
 
 	BoundingBox* boxLeftWall = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxLeftWall->start = f3(0.0f, 0.0f, 0.0f);
 	boxLeftWall->end = f3(0.001f, 10.0f, 200.0f);
+	setAreaHeight(height1_1, x11, z11, 0.0f, 0.0f, 0.5f, 200.0f, 10.0f);
 
 	BoundingBox* boxRightWall = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxRightWall->start = f3(199.999f, 0.0f, 0.0f);
 	boxRightWall->end = f3(200.0f, 10.0f, 200.0f);
+	setAreaHeight(height1_1, x11, z11, 199.5f, 0.0f, 200.0f, 200.0f, 10.0f);
+
 
 	BoundingBox* boxCeiling = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxCeiling->start = f3(0.0f, 9.999f, 0.0f);
 	boxCeiling->end = f3(200.0f, 10.0f, 200.0f);
 
+
+
 	BoundingBox* boxLeft100m = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxLeft100m->start = f3(49.999f, 0.0f, 100.0f);
 	boxLeft100m->end = f3(50.001f, 10.0f, 200.0f);
+	setAreaHeight(height1_1, x11, z11, 49.5f, 99.5f, 50.5f, 200.0f, 10.0f);
+
 
 	BoundingBox* boxCenter50m = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxCenter50m->start = f3(99.999f, 0.0f, 50.0f);
 	boxCenter50m->end = f3(100.001f, 10.0f, 100.0f);
+	setAreaHeight(height1_1, x11, z11, 99.5f, 49.5f, 100.5f, 100.5f, 10.0f);
+
 
 	BoundingBox* boxHCenter50m = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxHCenter50m->start = f3(50.0f, 0.0f, 99.999f);
 	boxHCenter50m->end = f3(100.0f, 10.0f, 100.001f);
+	setAreaHeight(height1_1, x11, z11, 49.5f, 99.5f, 100.5f, 100.5f, 10.0f);
+
 
 	BoundingBox* boxBottom50m = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxBottom50m->start = f3(100.0f, 0.0f, 49.999f);
 	boxBottom50m->end = f3(150.0f, 10.0f, 50.001f);
+	setAreaHeight(height1_1, x11, z11, 99.5f, 49.5f, 150.5f, 50.5f, 10.0f);
 
 	BoundingBox* boxTop100m = (BoundingBox*)malloc(sizeof(BoundingBox));
 	boxTop100m->start = f3(100.0f, 0.0f, 149.999f);
 	boxTop100m->end = f3(200.0f, 10.0f, 150.001f);
+	setAreaHeight(height1_1, x11, z11, 99.5f, 149.5f, 200.0, 150.5f, 10.0f);
 
 
 	for (int i = 0; i < 7; ++i)
@@ -360,6 +377,162 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	boxBarrel->end = f3(50.75f, 3.75f, 50.75f);
 	setAreaHeight(height1_1, x11, z11, 49.25f, 49.25f, 50.75f, 50.75f, 3.75f);
 
+	BoundingBox* boxPipe1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxPipe1->start = f3(-1.0f, -1.0f, -1.0f);
+	boxPipe1->end = f3(0.0f, 0.0f, 0.0f);
+	//setAreaHeight(height1_1, x11, z11, 49.25f, 49.25f, 50.75f, 50.75f, 3.75f);
+
+	BoundingBox* boxPipe2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxPipe2->start = f3(-1.0f, -1.0f, -1.0f);
+	boxPipe2->end = f3(0.0f, 0.0f, 0.0f);
+
+	Object* fence = (Object*)malloc(sizeof(Object));
+	fence->location = f3(25.0f, 0.3f, 160.0f);
+	fence->rotation = f3(0.0f, 0.0f, 0.0f);
+	fence->type = RustyFence;
+
+	BoundingBox* boxFence = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxFence->start = f3(24.875f, 0.0f,156.0f);
+	boxFence->end = f3(25.125f, 1.5f, 160.0f);
+	setAreaHeight(height1_1, x11, z11, 24.75f, 156.0f, 25.25f, 160.0f, 2.5f);
+
+	Object* food = (Object*)malloc(sizeof(Object));
+	food->location = f3(27.0f, 0.0f, 160.0f);
+	food->rotation = f3(0.0f, 0.0f, 0.0f);
+	food->type = FoodBin;
+
+	BoundingBox* boxFood = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxFood->start = f3(26.5f, 0.0f, 159.5f);
+	boxFood->end = f3(27.5f, 1.5f, 160.5f);
+	setAreaHeight(height1_1, x11, z11, 26.5f, 159.5f, 27.5f, 160.5f, 1.5f);
+
+	Object* envelope1 = (Object*)malloc(sizeof(Object));
+	envelope1->location = f3(29.0f, 0.0f, 160.0f);
+	envelope1->rotation = f3(0.0f, 0.0f, 0.0f);
+	envelope1->type = Envelop1;
+
+	BoundingBox* boxEnv1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxEnv1->start = f3(28.5f, 0.0f, 159.5f);
+	boxEnv1->end = f3(29.5f, 0.5f, 160.5f);
+	setAreaHeight(height1_1, x11, z11, 28.5f, 159.5f, 29.5f, 160.5f, 0.75f);
+
+	Object* envelope2 = (Object*)malloc(sizeof(Object));
+	envelope2->location = f3(30.0f, 0.5f, 160.0f);
+	envelope2->rotation = f3(0.0f, 0.0f, 0.0f);
+	envelope2->type = Envelop2;
+
+	BoundingBox* boxEnv2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxEnv2->start = f3(29.5f, 0.0f, 159.5f);
+	boxEnv2->end = f3(30.5f, 0.5f, 160.5f);
+	setAreaHeight(height1_1, x11, z11, 29.5f, 159.5f, 30.5f, 160.5f, 0.75f);
+
+	Object* envelope3 = (Object*)malloc(sizeof(Object));
+	envelope3->location = f3(31.0f, 0.5f, 160.0f);
+	envelope3->rotation = f3(0.0f, 0.0f, 180.0f);
+	envelope3->type = Envelop3;
+
+	BoundingBox* boxEnv3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxEnv3->start = f3(30.5f, 0.0f, 159.5f);
+	boxEnv3->end = f3(31.5f, 0.5f, 160.5f);
+	setAreaHeight(height1_1, x11, z11, 30.5f, 159.5f, 31.5f, 160.5f, 0.75f);
+
+	Object* ladder = (Object*)malloc(sizeof(Object));
+	ladder->location = f3(23.0f, 1.0f, 160.0f);
+	ladder->rotation = f3(0.0f, 0.0f, 0.0f);
+	ladder->type = MetalLadder;
+
+	BoundingBox* boxLadder = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxLadder->start = f3(22.25f, 0.0f, 159.5f);
+	boxLadder->end = f3(23.75f, 0.5f, 160.5f);
+	setAreaHeight(height1_1, x11, z11, 22.25f, 159.5f, 23.75f, 160.5f, 1.0f);
+
+	Object* railBend = (Object*)malloc(sizeof(Object));
+	railBend->location = f3(22.0f, 0.0f, 160.0f);
+	railBend->rotation = f3(0.0f, 0.0f, 0.0f);
+	railBend->type = RailBend;
+
+	BoundingBox* boxBend = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBend->start = f3(21.5f, 0.0f, 156.75f);
+	boxBend->end = f3(22.5f, 0.1f, 163.25f);
+	
+	Object* railStr = (Object*)malloc(sizeof(Object));
+	railStr->location = f3(21.0f, 0.0f, 160.0f);
+	railStr->rotation = f3(0.0f, 0.0f, 0.0f);
+	railStr->type = RailStraight;
+
+	BoundingBox* boxStraight = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxStraight->start = f3(20.5f, 0.0f, 156.75f);
+	boxStraight->end = f3(21.5f, 0.1f, 163.25f);
+
+	Object* ruinBrick1 = (Object*)malloc(sizeof(Object));
+	ruinBrick1->location = f3(25.0f, 0.0f, 165.0f);
+	ruinBrick1->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinBrick1->type = RuinBrick1;
+
+	BoundingBox* boxBrick1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBrick1->start = f3(24.5f, 0.0f, 164.5f);
+	boxBrick1->end = f3(25.5f, 0.3f, 165.5f);
+	setAreaHeight(height1_1, x11, z11, 24.5f, 164.5f, 25.5f, 165.5f, 0.2f);
+
+	Object* ruinBrick2 = (Object*)malloc(sizeof(Object));
+	ruinBrick2->location = f3(24.0f, 0.0f, 165.0f);
+	ruinBrick2->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinBrick2->type = RuinBrick2;
+
+	BoundingBox* boxBrick2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBrick2->start = f3(23.75f, 0.0f, 164.75f);
+	boxBrick2->end = f3(24.25f, 0.2f, 165.25f);
+	setAreaHeight(height1_1, x11, z11, 23.75f, 164.75f, 24.25f, 165.25f, 0.2f);
+
+	Object* ruinBrick3 = (Object*)malloc(sizeof(Object));
+	ruinBrick3->location = f3(23.0f, 0.0f, 165.0f);
+	ruinBrick3->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinBrick3->type = RuinBrick3;
+
+	BoundingBox* boxBrick3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBrick3->start = f3(22.75f, 0.0f, 164.75f);
+	boxBrick3->end = f3(23.25f, 0.2f, 165.25f);
+	setAreaHeight(height1_1, x11, z11, 22.75f, 164.75f, 23.25f, 165.25f, 0.2f);
+
+	Object* ruinBrick4 = (Object*)malloc(sizeof(Object));
+	ruinBrick4->location = f3(22.0f, 0.0f, 165.0f);
+	ruinBrick4->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinBrick4->type = RuinBrick4;
+
+	BoundingBox* boxBrick4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBrick4->start = f3(21.5f, 0.0f, 164.5f);
+	boxBrick4->end = f3(22.5f, 0.25f, 165.5f);
+	setAreaHeight(height1_1, x11, z11, 21.5f, 164.5f, 22.5f, 165.5f, 0.2f);
+
+	Object* ruinBrick5 = (Object*)malloc(sizeof(Object));
+	ruinBrick5->location = f3(21.0f, 0.0f, 165.0f);
+	ruinBrick5->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinBrick5->type = RuinBrick5;
+
+	BoundingBox* boxBrick5 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxBrick5->start = f3(20.5f, 0.0f, 164.5f);
+	boxBrick5->end = f3(21.5f, 0.25f, 165.5f);
+	setAreaHeight(height1_1, x11, z11, 20.5f, 164.5f, 21.5f, 165.5f, 0.2f);
+
+	Object* ruinCeramic1 = (Object*)malloc(sizeof(Object));
+	ruinCeramic1->location = f3(26.0f, 0.0f, 165.0f);
+	ruinCeramic1->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinCeramic1->type = RuinCeramic1;
+
+	BoundingBox* boxCeramic1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxCeramic1->start = f3(25.5f, 0.0f, 164.5f);
+	boxCeramic1->end = f3(26.5f, 0.2f, 165.5f);
+	setAreaHeight(height1_1, x11, z11, 25.5f, 164.5f, 26.5f, 165.5f, 0.2f);
+
+	Object* ruinCeramic2 = (Object*)malloc(sizeof(Object));
+	ruinCeramic2->location = f3(27.0f, 0.0f, 165.0f);
+	ruinCeramic2->rotation = f3(0.0f, 0.0f, 0.0f);
+	ruinCeramic2->type = RuinCeramic2;
+
+	BoundingBox* boxCeramic2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxCeramic2->start = f3(26.5f, 0.0f, 164.5f);
+	boxCeramic2->end = f3(27.5f, 0.3f, 165.5f);
+	setAreaHeight(height1_1, x11, z11, 26.5f, 164.5f, 26.5f, 165.5f, 0.2f);
 
 	list.push_back(*floor);
 	blist.push_back(*boxFloor);
@@ -400,7 +573,49 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	blist.push_back(*boxBarrel);
 
 	list.push_back(*wpipe);
+	blist.push_back(*boxPipe1);
 	list.push_back(*cpipe);
+	blist.push_back(*boxPipe2);
+
+	list.push_back(*fence);
+	blist.push_back(*boxFence);
+
+	list.push_back(*food);
+	blist.push_back(*boxFood);
+
+	list.push_back(*envelope1);
+	blist.push_back(*boxEnv1);
+
+	list.push_back(*envelope2);
+	blist.push_back(*boxEnv2);
+
+	list.push_back(*envelope3);
+	blist.push_back(*boxEnv3);
+
+	list.push_back(*ladder);
+	blist.push_back(*boxLadder);
+
+	list.push_back(*railBend);
+	blist.push_back(*boxBend);
+
+	list.push_back(*railStr);
+	blist.push_back(*boxStraight);
+
+	list.push_back(*ruinBrick1);
+	blist.push_back(*boxBrick1);
+	list.push_back(*ruinBrick2);
+	blist.push_back(*boxBrick2);
+	list.push_back(*ruinBrick3);
+	blist.push_back(*boxBrick3);
+	list.push_back(*ruinBrick4);
+	blist.push_back(*boxBrick4);
+	list.push_back(*ruinBrick5);
+	blist.push_back(*boxBrick5);
+
+	list.push_back(*ruinCeramic1);
+	blist.push_back(*boxCeramic1);
+	list.push_back(*ruinCeramic2);
+	blist.push_back(*boxCeramic2);
 
 }
 

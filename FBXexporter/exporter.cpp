@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/sawblade2.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/area11/ruin/ceramic/ruin_ceramic2.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,41 +98,10 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/idx_톱날단검_2.txt", "w");
-	FILE* frameOut = fopen("result/vtx_톱날단검_2.txt", "w");
+	FILE* idxOut = fopen("result/area11/idx_ruinCeramic2.txt", "w");
+	FILE* frameOut = fopen("result/area11/vtx_ruinCeramic2.txt", "w");
 	
-	int maxidx = 0;
-	for (int i = 0; i < idx.size(); ++i)
-	{
-		if (idx[i] > maxidx)
-		{
-			maxidx = idx[i];
-		}
-	}
-	printf("가장 큰 정점 인덱스 = %d\n", maxidx);
 
-	int maxuvidx = 0;
-
-	for (int i = 0; i < uvIdx.size(); ++i)
-	{
-		if (uvIdx[i] > maxuvidx)
-		{
-			maxuvidx = uvIdx[i];
-		}
-	}
-	printf("가장 큰 정점 uv 인덱스 = %d\n", maxuvidx);
-
-	/*
-	VertexUV* vertices = new VertexUV[ctrlPoints.size()];
-	
-	for (int i = 0; i < posList.size(); ++i)
-	{
-		vertices[idx[i]].position = ctrlPoints[idx[i]];
-		vertices[idx[i]].uv = uvList[i];
-
-		
-	}
-	*/
 	
 	VertexUV* vertices = new VertexUV[posList.size()];
 
@@ -144,12 +113,7 @@ int main()
 
 	}
 
-	printf("파일에 인덱스 기록 중\n");
-	for (int i = 0; i < idx.size(); ++i)
-	{
-		fprintf(idxOut, "%d, ", idx[i]);
-	}
-	printf("파일에 인덱스 기록 완료\n");
+
 	
 	
 	FbxArrayDelete(names);
@@ -189,15 +153,27 @@ int main()
 			zmin = ctrlPoints[i].z;
 		}
 	}
-	float xscale = 6.0f/ (xmax - xmin);
-	float yscale = 24.0f/(max - min);
-	float zscale = 6.0f/(zmax - zmin);
+
+
+	//원본 비율을 유지하지 않고 직접 크기를 지정하는 경우
+
+	float xscale = 1.0f / (xmax - xmin);
+	float yscale = 0.3f / (max - min);
+	float zscale = 1.0f / (zmax - zmin);
+
+	//원본 비율을 유지하고 확대 축소만 하는 경우
+	//float xscale = 1.0f;
+	//float yscale = 1.0f;
+	//float zscale = 1.0f;
+
 	//for (int i = 0; i < maxidx + 1; ++i)
 	for (int i = 0; i < posList.size(); ++i)
 	{
-		// fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x*xscale, vertices[i].position.y*yscale, vertices[i].position.z*zscale, vertices[i].uv.x, vertices[i].uv.y);
+		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x*xscale, vertices[i].position.y*yscale, vertices[i].position.z*zscale, vertices[i].uv.x, vertices[i].uv.y);
+		//이게 원래 코드
 
-		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x * xscale, vertices[i].position.z * zscale, vertices[i].position.y * yscale, vertices[i].uv.x, vertices[i].uv.y);
+		//오른손 좌표계 모델 사용 시 코드
+		//fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x * xscale, vertices[i].position.z * zscale, vertices[i].position.y * yscale, vertices[i].uv.x, vertices[i].uv.y);
 	}
 	printf("max : %f, min : %f, y size : %f\n",max,min,max-min);
 	printf("xmax : %f, xmin : %f, x size : %f\n", xmax, xmin, xmax - xmin);
@@ -206,6 +182,7 @@ int main()
 
 	fclose(idxOut);
 	fclose(frameOut);
+	printf("처리 완료.\n");
 	return 0;
 }
 

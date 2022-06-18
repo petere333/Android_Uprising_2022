@@ -38,6 +38,24 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* Pipe_Wall = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_wallpipe.txt", NULL);
 	CLoadedMesh* Pipe_Floor = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_floorpipe.txt", NULL);
 
+	CLoadedMesh* Fence = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_fence.txt", NULL);
+	CLoadedMesh* Foodbin = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_foodBin.txt", NULL);
+	CLoadedMesh* env1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_envelope1.txt", NULL);
+	CLoadedMesh* env2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_envelope2.txt", NULL);
+	CLoadedMesh* env3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_envelope3.txt", NULL);
+	CLoadedMesh* SteelLadder = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ladder.txt", NULL);
+	CLoadedMesh* BendRail = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_railBend.txt", NULL);
+	CLoadedMesh* StraightRail = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_railStraight.txt", NULL);
+
+	CLoadedMesh* brick1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick1.txt", NULL);
+	CLoadedMesh* brick2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick2.txt", NULL);
+	CLoadedMesh* brick3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick3.txt", NULL);
+	CLoadedMesh* brick4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick4.txt", NULL);
+	CLoadedMesh* brick5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick5.txt", NULL);
+
+	CLoadedMesh* ceramic1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinCeramic1.txt", NULL);
+	CLoadedMesh* ceramic2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinCeramic2.txt", NULL);
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
@@ -146,7 +164,113 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->SetMesh(Pipe_Floor);
 			obj->shadowHeight = 0.375f;
 		}
-
+		else if (data[i].type == RustyFence)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[80]);
+			obj->SetMesh(Fence);
+			obj->shadowHeight = 0.3f;
+			obj->shadowZ = 2.0f;
+		}
+		else if (data[i].type == FoodBin)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[81]);
+			obj->SetMesh(Foodbin);
+			obj->shadowHeight = 0.0f;
+			
+		}
+		else if (data[i].type == Envelop1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[82]);
+			obj->SetMesh(env1);
+			obj->shadowHeight = 0.25f;
+		}
+		else if (data[i].type == Envelop2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[82]);
+			obj->SetMesh(env2);
+			obj->shadowHeight = 0.25f;
+		}
+		else if (data[i].type == Envelop3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[82]);
+			obj->SetMesh(env3);
+			obj->shadowHeight = 0.25f;
+		}
+		else if (data[i].type == MetalLadder)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[83]);
+			obj->SetMesh(SteelLadder);
+			obj->shadowHeight = 1.0f;
+		}
+		else if (data[i].type == RailBend)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[84]);
+			obj->SetMesh(BendRail);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RailStraight)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[84]);
+			obj->SetMesh(StraightRail);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinBrick1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[85]);
+			obj->SetMesh(brick1);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinBrick2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[85]);
+			obj->SetMesh(brick2);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinBrick3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[85]);
+			obj->SetMesh(brick3);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinBrick4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[85]);
+			obj->SetMesh(brick4);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinBrick5)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[85]);
+			obj->SetMesh(brick5);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinCeramic1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[86]);
+			obj->SetMesh(ceramic1);
+			obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinCeramic2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[86]);
+			obj->SetMesh(ceramic2);
+			obj->shadowHeight = 0.0f;
+		}
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		objects.push_back(obj);

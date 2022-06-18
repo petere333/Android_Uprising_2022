@@ -64,6 +64,7 @@ void ResourceManager::createTextures()
 	CTexture* tex51; CTexture* tex52; CTexture* tex53; CTexture* tex54; CTexture* tex55; CTexture* tex56; CTexture* tex57; CTexture* tex58; CTexture* tex59; CTexture* tex60;
 	CTexture* tex61; CTexture* tex62; CTexture* tex63; CTexture* tex64; CTexture* tex65; CTexture* tex66; CTexture* tex67; CTexture* tex68; CTexture* tex69; CTexture* tex70;
 	CTexture* tex71; CTexture* tex72; CTexture* tex73; CTexture* tex74; CTexture* tex75; CTexture* tex76; CTexture* tex77; CTexture* tex78; CTexture* tex79; CTexture* tex80;
+	CTexture* tex81; CTexture* tex82; CTexture* tex83; CTexture* tex84; CTexture* tex85; CTexture* tex86; CTexture* tex87; CTexture* tex88; CTexture* tex89; CTexture* tex90;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -333,6 +334,33 @@ void ResourceManager::createTextures()
 	tex80->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyMetalWall.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex80);
 
+	tex81 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex81->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyFence.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex81);
+	
+	tex82 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex82->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/foodbin.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex82);
+
+	tex83 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex83->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/envelope.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex83);
+
+	tex84 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex84->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/ladder.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex84);
+
+	tex85 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex85->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/rail.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex85);
+
+	tex86 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex86->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/brick.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex86);
+
+	tex87 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex87->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/ceramic.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex87);
 
 	CTexture* norm;
 

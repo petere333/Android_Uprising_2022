@@ -25,9 +25,9 @@
 
 #define RustyFence 11205
 #define FoodBin 11206
-#define Envelop 11207
+#define Envelop1 11207
 #define MetalLadder 11208
-#define Rail 11209
+#define RailBend 11209
 #define RuinWood1 11210
 #define RuinWood2 11211
 #define RuinBrick1 11212
@@ -41,6 +41,11 @@
 #define RuinMix2 11220
 #define RustyStair 11221
 #define RustyTrashCan 11222
+
+#define Envelop2 11223
+#define Envelop3 11224
+
+#define RailStraight 11225
 
 using namespace std;
 
