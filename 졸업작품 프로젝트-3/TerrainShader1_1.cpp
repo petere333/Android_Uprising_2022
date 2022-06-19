@@ -56,6 +56,15 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* ceramic1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinCeramic1.txt", NULL);
 	CLoadedMesh* ceramic2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinCeramic2.txt", NULL);
 
+	CLoadedMesh* mix1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinMix1.txt", NULL);
+	CLoadedMesh* mix2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinMix2.txt", NULL);
+
+	CLoadedMesh* wood1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinWood1.txt", NULL);
+	CLoadedMesh* wood2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinWood2.txt", NULL);
+
+	CLoadedMesh* rustyStair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_rustyStair.txt", NULL);
+	CLoadedMesh* trashCan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_GarbageCan.txt", NULL);
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
@@ -271,6 +280,54 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->SetMesh(ceramic2);
 			obj->shadowHeight = 0.0f;
 		}
+		else if (data[i].type == RuinMix1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[87]);
+		obj->SetMesh(mix1);
+		obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinMix2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[88]);
+		obj->SetMesh(mix2);
+		obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinWood1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[89]);
+		obj->SetMesh(wood1);
+		obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RuinWood2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[89]);
+		obj->SetMesh(wood2);
+		obj->shadowHeight = 0.0f;
+		}
+		else if (data[i].type == RustyStair)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[90]);
+		obj->SetMesh(rustyStair);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 1.5f;
+		obj->shadowZ = 1.5f;
+		}
+		else if (data[i].type == RustyTrashCan)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[91]);
+		obj->SetMesh(trashCan);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		objects.push_back(obj);

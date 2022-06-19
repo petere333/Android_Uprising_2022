@@ -65,6 +65,7 @@ void ResourceManager::createTextures()
 	CTexture* tex61; CTexture* tex62; CTexture* tex63; CTexture* tex64; CTexture* tex65; CTexture* tex66; CTexture* tex67; CTexture* tex68; CTexture* tex69; CTexture* tex70;
 	CTexture* tex71; CTexture* tex72; CTexture* tex73; CTexture* tex74; CTexture* tex75; CTexture* tex76; CTexture* tex77; CTexture* tex78; CTexture* tex79; CTexture* tex80;
 	CTexture* tex81; CTexture* tex82; CTexture* tex83; CTexture* tex84; CTexture* tex85; CTexture* tex86; CTexture* tex87; CTexture* tex88; CTexture* tex89; CTexture* tex90;
+	CTexture* tex91; CTexture* tex92; CTexture* tex93; CTexture* tex94; CTexture* tex95; CTexture* tex96; CTexture* tex97; CTexture* tex98; CTexture* tex99; CTexture* tex100;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -361,6 +362,25 @@ void ResourceManager::createTextures()
 	tex87 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex87->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/ceramic.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex87);
+
+	tex88 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex88->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/mix1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex88);
+
+	tex89 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex89->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/mix2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex89);
+
+	tex90 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex90->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/wood.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex90);
+
+	tex91 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex91->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/RustyStair.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex91);
+	tex92 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex92->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/TrashCan.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex92);
 
 	CTexture* norm;
 
