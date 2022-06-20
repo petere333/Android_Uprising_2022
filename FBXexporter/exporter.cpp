@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/area21/desk1A/desk-1A.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/area11/CementBag/WoodenPallet.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,8 +98,8 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/area21/idx_desk-1A.txt", "w");
-	FILE* frameOut = fopen("result/area21/vtx_desk-1A.txt", "w");
+	FILE* idxOut = fopen("result/area11/idx_woodenPallet.txt", "w");
+	FILE* frameOut = fopen("result/area11/vtx_woodenPallet.txt", "w");
 	
 
 	
@@ -153,13 +153,15 @@ int main()
 			zmin = ctrlPoints[i].z;
 		}
 	}
-
+	float midx = (xmax - xmin) * 0.5f + xmin;
+	float midy = (max - min) * 0.5f + min;
+	float midz = (zmax - min) * 0.5f + zmin;
 
 	//원본 비율을 유지하지 않고 직접 크기를 지정하는 경우
 
-	float xscale = 4.00f / (xmax - xmin);
-	float yscale = 1.5f / (max - min);
-	float zscale = 4.00f / (zmax - zmin);
+	float xscale = 3.0f / (xmax - xmin);
+	float yscale = 3.0f / (max - min);
+	float zscale = 0.6f / (zmax - zmin);
 
 	//원본 비율을 유지하고 확대 축소만 하는 경우
 	//float xscale = 1.0f;
@@ -169,11 +171,11 @@ int main()
 	//for (int i = 0; i < maxidx + 1; ++i)
 	for (int i = 0; i < posList.size(); ++i)
 	{
-		//fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x*xscale, vertices[i].position.y*yscale, vertices[i].position.z*zscale, vertices[i].uv.x, vertices[i].uv.y);
+		//fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", (vertices[i].position.x-midx)*xscale, (vertices[i].position.y-midy)*yscale, (vertices[i].position.z-midz)*zscale, vertices[i].uv.x, vertices[i].uv.y);
 		//이게 원래 코드
 
 		//오른손 좌표계 모델 사용 시 코드
-		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", vertices[i].position.x * xscale, vertices[i].position.z * zscale, (vertices[i].position.y-63.460495f-26.080253f) * yscale, vertices[i].uv.x, vertices[i].uv.y);
+		fprintf(frameOut, "(%f,  %f,  %f),  (%f,  %f)\n", (vertices[i].position.x-midx) * xscale, (vertices[i].position.z-zmin) * zscale, (vertices[i].position.y-midy) * yscale, vertices[i].uv.x, vertices[i].uv.y);
 	}
 	printf("max : %f, min : %f, y size : %f\n",max,min,max-min);
 	printf("xmax : %f, xmin : %f, x size : %f\n", xmax, xmin, xmax - xmin);
