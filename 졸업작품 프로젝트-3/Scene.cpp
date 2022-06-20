@@ -687,15 +687,23 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 		}
 
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 400.0f && cp.z <= 600.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 0.0f && cp.z <= 600.0f)
 		{
 			if (terrain2_1)
 			{
 				terrain2_1->OnPrepareRender(pd3dCommandList);
 				terrain2_1->Render(pd3dCommandList, pCamera);
+
+				
+			}
+
+			if (terrain2_2)
+			{
+				terrain2_2->OnPrepareRender(pd3dCommandList);
+				terrain2_2->Render(pd3dCommandList, pCamera);
 			}
 		}
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 400.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 0.0f && cp.z <= 600.0f)
 		{
 			if (terrain2_2)
 			{

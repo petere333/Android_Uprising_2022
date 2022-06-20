@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/area11/trashcan/Garbage_can.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/area21/desk1A/desk-1A.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -98,8 +98,8 @@ int main()
 	getUVCoords(root);
 	printf("정점들의 정보 로딩 완료\n");
 
-	FILE* idxOut = fopen("result/area11/idx_GarbageCan.txt", "w");
-	FILE* frameOut = fopen("result/area11/vtx_GarbageCan.txt", "w");
+	FILE* idxOut = fopen("result/area21/idx_desk-1A.txt", "w");
+	FILE* frameOut = fopen("result/area21/vtx_desk-1A.txt", "w");
 	
 
 	
@@ -157,9 +157,9 @@ int main()
 
 	//원본 비율을 유지하지 않고 직접 크기를 지정하는 경우
 
-	float xscale = 0.75f / (xmax - xmin);
-	float yscale = 0.75f / (max - min);
-	float zscale = 1.25f / (zmax - zmin);
+	float xscale = 4.00f / (xmax - xmin);
+	float yscale = 1.5f / (max - min);
+	float zscale = 4.00f / (zmax - zmin);
 
 	//원본 비율을 유지하고 확대 축소만 하는 경우
 	//float xscale = 1.0f;

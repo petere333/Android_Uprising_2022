@@ -67,6 +67,11 @@ void ResourceManager::createTextures()
 	CTexture* tex81; CTexture* tex82; CTexture* tex83; CTexture* tex84; CTexture* tex85; CTexture* tex86; CTexture* tex87; CTexture* tex88; CTexture* tex89; CTexture* tex90;
 	CTexture* tex91; CTexture* tex92; CTexture* tex93; CTexture* tex94; CTexture* tex95; CTexture* tex96; CTexture* tex97; CTexture* tex98; CTexture* tex99; CTexture* tex100;
 
+	// 2-1 2-2 ÅØ½ºÃÄ 
+	CTexture* tex101; CTexture* tex102; CTexture* tex103; CTexture* tex104; CTexture* tex105; CTexture* tex106; CTexture* tex107; CTexture* tex108; CTexture* tex109; CTexture* tex110;
+	CTexture* tex111; CTexture* tex112; CTexture* tex113; CTexture* tex114;
+
+
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex1);
@@ -381,6 +386,65 @@ void ResourceManager::createTextures()
 	tex92 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex92->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/TrashCan.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex92);
+
+
+	tex93 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex93->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwangjae1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex93);
+
+	tex94 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex94->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanjae_badak1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex94);
+
+	tex95 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex95->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanjae_beok1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex95);
+
+	tex96 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex96->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanjae_CheonJang1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex96);
+
+	tex97 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex97->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanjae_badak2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex97);
+
+	tex98 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex98->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanja_walls.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex98);
+
+	tex99 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex99->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanja_hwalls.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex99);
+
+
+	tex100 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex100->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_1000jang.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex100);
+
+
+	tex101 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex101->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_badak1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex101);
+
+	tex102 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex102->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_wall1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex102);
+
+	tex103 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex103->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_hwall1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex103);
+
+	tex104 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex104->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_front.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex104);
+
+	tex105 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex105->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_garomak1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex105);
+
+	tex106 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex106->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_gidung.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex106);
 
 	CTexture* norm;
 

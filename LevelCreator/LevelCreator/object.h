@@ -47,6 +47,27 @@
 
 #define RailStraight 11225
 
+#define Gwanja_wall1 21001
+#define Gwanja_floor 21002
+#define Gwanja_front 21003
+#define Gwanja_celing 21004
+#define Gwanja_floor2 21005
+#define Gwanja_wall2 21006
+#define Gwanja_wall3 21007
+
+#define Recep_celing 21008
+#define Recep_floor 21009
+#define Recep_wall1 21010
+#define Recep_wall2 21011
+#define Recep_front 21012
+#define Recep_front2 21013
+#define Recep_wall3 21014
+#define Recep_wall4 21015
+#define Recep_wall5 21016
+#define Recep_garomak 21017
+#define Recep_kidung 21018
+
+
 using namespace std;
 
 
