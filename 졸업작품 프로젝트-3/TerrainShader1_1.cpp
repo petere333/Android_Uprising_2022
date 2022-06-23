@@ -65,6 +65,47 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* rustyStair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_rustyStair.txt", NULL);
 	CLoadedMesh* trashCan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_GarbageCan.txt", NULL);
 
+	CLoadedMesh* ruinBrick6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinBrick6.txt", NULL);
+	CLoadedMesh* ruinCeramic3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinCeramic3.txt", NULL);
+
+	CLoadedMesh* wdPallet = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_woodenPallet.txt", NULL);
+	CLoadedMesh* wdPalletLayer = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_woodenPalletLayer.txt", NULL);
+
+	CLoadedMesh* cement1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_Cement1.txt", NULL);
+	CLoadedMesh* cement2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_Cement2.txt", NULL);
+
+	CLoadedMesh* warnSign = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_radiationSign.txt", NULL);
+
+	CLoadedMesh* fuelTruck = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_truck.txt", NULL);
+
+	CLoadedMesh* chon = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_chon.txt", NULL);
+	CLoadedMesh* guardRail = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_guardrail.txt", NULL);
+
+	CLoadedMesh* twheel = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_truckwheel.txt", NULL);
+	CLoadedMesh* tbody = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_truckbody.txt", NULL);
+
+	CLoadedMesh* cardboard1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_cardboards1.txt", NULL);
+	CLoadedMesh* cardboard2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_cardboards2.txt", NULL);
+	CLoadedMesh* cardboard3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_cardboards3.txt", NULL);
+	CLoadedMesh* cardboard4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_cardboards4.txt", NULL);
+
+	CLoadedMesh* cont1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_control1.txt", NULL);
+	CLoadedMesh* cont2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_control2.txt", NULL);
+	CLoadedMesh* cont4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_control4.txt", NULL);
+
+	CLoadedMesh* leverBody = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_leverbody.txt", NULL);
+	CLoadedMesh* leverHandle = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_leverhandle.txt", NULL);
+
+	CLoadedMesh* papers = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_papers.txt", NULL);
+
+	CLoadedMesh* pizzaBox = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_pizzabox.txt", NULL);
+	CLoadedMesh* speedBump = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_speedbump.txt", NULL);
+	CLoadedMesh* trashCont = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_trashContainer.txt", NULL);
+
+	RectMesh* ruinbase = new RectMesh(pd3dDevice, pd3dCommandList, 3.9f, 1.9f);
+
+	PillarMesh* pillar = new PillarMesh(pd3dDevice, pd3dCommandList, 2, 2, 10);
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
@@ -150,7 +191,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj = new CGameObject(1);
 			obj->SetMaterial(0, rm->materials[78]);
 			obj->SetMesh(Metal_Box);
-			obj->shadowHeight = 0.75f;
+			
 		}
 		else if (data[i].type == RustyMetal_Barrel) // 밑면 - 1.125f
 		{
@@ -326,8 +367,251 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
 		}
+		else if (data[i].type == RuinBrick6)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[85]);
+		obj->SetMesh(ruinBrick6);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 1.5f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == RuinCeramic3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[86]);
+		obj->SetMesh(ruinCeramic3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodenPallet)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[92]);
+		obj->SetMesh(wdPallet);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodenPalletLayer)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[92]);
+		obj->SetMesh(wdPalletLayer);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == CementBag1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[93]);
+		obj->SetMesh(cement1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == CementBag2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[93]);
+		obj->SetMesh(cement2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WarningSign)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[94]);
+		obj->SetMesh(warnSign);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == FuelTruck)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[95]);
+		obj->SetMesh(fuelTruck);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Chon)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[96]);
+		obj->SetMesh(chon);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == GuardRail)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[97]);
+		obj->SetMesh(guardRail);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Truck2Wheel)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[99]);
+		obj->SetMesh(twheel);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Truck2Body)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[98]);
+		obj->SetMesh(tbody);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Cardboard1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[100]);
+		obj->SetMesh(cardboard1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Cardboard2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[100]);
+		obj->SetMesh(cardboard2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Cardboard3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[100]);
+		obj->SetMesh(cardboard3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Cardboard4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[100]);
+		obj->SetMesh(cardboard4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == LeverBody)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[90]);
+		obj->SetMesh(leverBody);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == LeverHandle)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[90]);
+		obj->SetMesh(leverHandle);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
 
-
+		else if (data[i].type == PaperWaste)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[102]);
+		obj->SetMesh(papers);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PizzaBox)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[103]);
+		obj->SetMesh(pizzaBox);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == SpeedBump)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[104]);
+		obj->SetMesh(speedBump);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == TrashContainer)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[105]);
+		obj->SetMesh(trashCont);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == RuinBase)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[100]);
+		obj->SetMesh(ruinbase);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pillar)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[76]);
+		obj->SetMesh(pillar);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		obj->type = data[i].type;
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		objects.push_back(obj);
@@ -373,15 +657,52 @@ void TerrainShader1_1::ReleaseShaderVariables()
 
 void TerrainShader1_1::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
 {
+	XMFLOAT3 cp = pCamera->getPosition();
+
+	XMFLOAT3 look = pCamera->getLook();
+
+
+
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		if (objects[i])
 		{
-			if (m_pd3dCbvSrvDescriptorHeap)
+			XMFLOAT3 pos = objects[i]->GetPosition();
+			XMFLOAT3 direction = XMFLOAT3(pos.x - cp.x, pos.y - cp.y, pos.z - cp.z);
+			float dist = Vector3::Length(direction);
+			XMFLOAT3 dir = Vector3::Normalize(direction);
+			float cosAngle = Vector3::DotProduct(look, dir);
+
+			//벽종류이거나 객체가 카메라와 10미터 이내인 경우 그냥 그림.
+
+			if ((objects[i]->type >= 11000 && objects[i]->type < 11200))
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				objects[i]->Render(pd3dCommandList, pCamera);
 			}
-			objects[i]->Render(pd3dCommandList, pCamera);
+			//벽이 아니거나 거리가 10미터 이상 멀 경우 각도를 고려하여 그릴지 말지 판단.
+			else
+			{
+				if (dist <= 10.0f)
+				{
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					objects[i]->Render(pd3dCommandList, pCamera);
+				}
+				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
+				{
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					objects[i]->Render(pd3dCommandList, pCamera);
+				}
+			}
 		}
 	}
 }

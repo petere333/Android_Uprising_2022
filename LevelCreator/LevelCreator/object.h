@@ -47,26 +47,48 @@
 
 #define RailStraight 11225
 
-#define Gwanja_wall1 21001
-#define Gwanja_floor 21002
-#define Gwanja_front 21003
-#define Gwanja_celing 21004
-#define Gwanja_floor2 21005
-#define Gwanja_wall2 21006
-#define Gwanja_wall3 21007
+#define RuinBrick6 11226
+#define RuinCeramic3 11227
 
-#define Recep_celing 21008
-#define Recep_floor 21009
-#define Recep_wall1 21010
-#define Recep_wall2 21011
-#define Recep_front 21012
-#define Recep_front2 21013
-#define Recep_wall3 21014
-#define Recep_wall4 21015
-#define Recep_wall5 21016
-#define Recep_garomak 21017
-#define Recep_kidung 21018
+#define CementBag1 11228
+#define CementBag2 11229
+#define WoodenPallet 11230
+#define WoodenPalletLayer 11231
 
+#define WarningSign 11232
+
+#define FuelTruck 11233
+
+#define Chon 11234
+#define GuardRail 11235
+
+
+
+#define Truck2Wheel 11236
+#define Truck2Body 11245
+
+#define Cardboard1 11237
+#define Cardboard2 11238
+#define Cardboard3 11239
+#define Cardboard4 11240
+
+#define Controller1 11241
+#define Controller2 11242
+#define Controller3 11243
+#define Controller4 11244
+
+#define LeverHandle 11246
+#define LeverBody 11247
+
+#define PaperWaste 11248
+
+#define PizzaBox 11249
+#define SpeedBump 11250
+#define TrashContainer 11251
+
+#define RuinBase 11252
+
+#define Pillar 11253
 
 using namespace std;
 

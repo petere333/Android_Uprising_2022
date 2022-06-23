@@ -298,3 +298,10 @@ public:
 	UIMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height, bool reversed, float x, float y);
 	virtual ~UIMesh();
 };
+
+class PillarMesh : public CMesh
+{
+public:
+	PillarMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int x, int y, int z);
+	virtual ~PillarMesh();
+};

@@ -1,10 +1,14 @@
 x=가로, y=높이, z=세로
 위에서 아래를 내려다보는 것이 xz평면.
 
+* Truck2는 바퀴와 몸체가 별도의 오브젝트로 분리됨.
+트럭의 몸체는 바퀴보다 y값이 0.2 더 크다.
+바퀴는 몸체보다 z값이 0.7 더 작다.
+
 type		x	y	z
 box		1.5	1.5	1.5
 barrel		1.5	1.5	2.25
-fence		0.25	1.5	4.0
+fence		0.5	1.5	4.0	height 3.0
 foodbin	1.0	1.5	1.0
 envelope	1.0	1.0	1.0	height 0.75
 ladder		1.5	2.5	1.0	height 1.0
@@ -16,9 +20,11 @@ brick2		0.5	0.2	0.5
 brick3		0.5	0.2	0.5
 brick4		1.0	0.25	1.0
 brick5		1.0	0.25	1.0	height 0.2 
+brick6		3.0	0.75	3.0 	height 0.6
 
 ceramic1	1.0	0.2	1.0
 ceramic2	1.0	0.3	1.0	height 0.2
+ceramic3	2.5	0.75	2.5	height 0.6
 
 mix1		2.5	0.25	2.5	height 0.2
 mix2		1.0	0.2	2.0
@@ -28,4 +34,39 @@ wood2	1.5	0.15	3.0 height 0.2
 
 stair		3.0	3.5	3.0 height=3.0
 
-trashcan	0.75	1.5	0.75 
+trashcan	1	1.5	1
+
+truck		3.0	3.0	10.0
+truck2		3.0	3.0	10.0
+
+wdPallet	3.0	0.6	3.0
+wdpalLayer	3.0	1.65	3.0
+
+cement1	3.0	1.65	3.0
+cement2	4.5	2.25	3.0
+
+sign		1.0	3.0	0.5
+
+chon		0.5	1.5	0.5
+
+guardrail	8.0	2.0	1.0
+
+paper1	1.0	0.1	1.0
+paper2	2.0	0.75	2.0
+paper3	2.0	0.9	2.0	height 0.75
+paper4	3.0	1.0	3.0	height 0.75
+
+cont1		0.5	1.75 	1.5
+cont2		0.5	0.85	0.5
+cont4		0.5	0.9	1.0
+
+lever 		0.5	1.2	1.0
+
+papers	3.0	2.0	2.0
+
+pizzabox	1.0	0.2	1.0
+
+bump		10.0	0.1	1.5	height 0
+
+trashcont	2.0	1.0	4.0
+

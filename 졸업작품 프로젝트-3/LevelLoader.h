@@ -337,6 +337,10 @@
 #define SpeedBump 11250
 #define TrashContainer 11251
 
+#define RuinBase 11252
+
+#define Pillar 11253
+
 typedef struct Obj
 {
 	XMFLOAT3 position;

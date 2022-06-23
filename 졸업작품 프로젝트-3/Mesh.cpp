@@ -1290,3 +1290,119 @@ UIMesh::UIMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandL
 	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
 }
 UIMesh::~UIMesh(){}
+
+PillarMesh::PillarMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int x, int y, int z) :CMesh(pd3dDevice, pd3dCommandList)
+{
+	m_nVertices = (6 * x * z + 6 * y * z) * 2;
+
+	
+
+	XMFLOAT3* pos = new XMFLOAT3[m_nVertices];
+	XMFLOAT2* uv = new XMFLOAT2[m_nVertices];
+	for (int i = 0; i < x; ++i)
+	{
+		for (int j = 0; j < z*6; j+=6)
+		{
+			pos[i * z * 6 + j + 0] = XMFLOAT3(i, j / 6, 0.0f);
+			pos[i * z * 6 + j + 1] = XMFLOAT3(i, j / 6 + 1, 0.0f);
+			pos[i * z * 6 + j + 2] = XMFLOAT3(i + 1, j / 6 + 1, 0.0f);
+
+			pos[i * z * 6 + j + 3] = XMFLOAT3(i, j / 6, 0.0f);
+			pos[i * z * 6 + j + 4] = XMFLOAT3(i + 1, j / 6 + 1, 0.0f);
+			pos[i * z * 6 + j + 5] = XMFLOAT3(i + 1, j / 6, 0.0f);
+
+			uv[i * z * 6 +j + 0] = XMFLOAT2(0.0f, 0.0f);
+			uv[i * z * 6 +j + 1] = XMFLOAT2(0.0f, 1.0f);
+			uv[i * z * 6 +j + 2] = XMFLOAT2(1.0f, 1.0f);
+
+			uv[i * z * 6 +j + 3] = XMFLOAT2(0.0f, 0.0f);
+			uv[i * z * 6 +j + 4] = XMFLOAT2(1.0f, 1.0f);
+			uv[i * z * 6 +j + 5] = XMFLOAT2(1.0f, 0.0f);
+		}
+	}
+
+	int t = x * z * 6;
+	for (int i = 0; i < x; ++i)
+	{
+		for (int j = 0; j < z * 6; j += 6)
+		{
+			pos[t+i * z * 6 + j + 0] = XMFLOAT3(i, j/6, y);
+			pos[t+i * z * 6 + j + 1] = XMFLOAT3(i, j/6 + 1, y);
+			pos[t+i * z * 6 + j + 2] = XMFLOAT3(i + 1, j/6 + 1, y);
+
+			pos[t+i * z * 6 + j + 3] = XMFLOAT3(i, j/6, y);
+			pos[t+i * z * 6 + j + 4] = XMFLOAT3(i + 1, j/6 + 1, y);
+			pos[t+i * z * 6 + j + 5] = XMFLOAT3(i + 1, j/6, y);
+
+			uv[t+i * z * 6 +j + 0] = XMFLOAT2(0.0f, 0.0f);
+			uv[t+i * z * 6 +j + 1] = XMFLOAT2(0.0f, 1.0f);
+			uv[t+i * z * 6 +j + 2] = XMFLOAT2(1.0f, 1.0f);
+
+			uv[t+i * z * 6 +j + 3] = XMFLOAT2(0.0f, 0.0f);
+			uv[t+i * z * 6 +j + 4] = XMFLOAT2(1.0f, 1.0f);
+			uv[t+i * z * 6 +j + 5] = XMFLOAT2(1.0f, 0.0f);
+		}
+	}
+	t = 12 * x * z;
+
+	for (int i = 0; i < y; ++i)
+	{
+		for (int j = 0; j < z*6; j+=6)
+		{
+			pos[t +i * z * 6 + j + 0] = XMFLOAT3(0.0f, j/6, i);
+			pos[t +i * z * 6 + j + 1] = XMFLOAT3(0.0f, j/6+1, i);
+			pos[t +i * z * 6 + j + 2] = XMFLOAT3(0.0f, j/6+1, i+1);
+				   
+			pos[t + i * z * 6 +j + 3] = XMFLOAT3(0.0f, j/6, i);
+			pos[t + i * z * 6 +j + 4] = XMFLOAT3(0.0f, j/6+1, i+1);
+			pos[t + i * z * 6 +j + 5] = XMFLOAT3(0.0f, j/6, i+1);
+
+			uv[t+i * z * 6 +j + 0] = XMFLOAT2(0.0f, 0.0f);
+			uv[t+i * z * 6 +j + 1] = XMFLOAT2(0.0f, 1.0f);
+			uv[t+i * z * 6 +j + 2] = XMFLOAT2(1.0f, 1.0f);
+				 
+			uv[t+i * z * 6 +j + 3] = XMFLOAT2(0.0f, 0.0f);
+			uv[t+i * z * 6 +j + 4] = XMFLOAT2(1.0f, 1.0f);
+			uv[t+i * z * 6 +j + 5] = XMFLOAT2(1.0f, 0.0f);
+		}
+	}
+	t += 6 * y * z;
+	for (int i = 0; i < y; ++i)
+	{
+		for (int j = 0; j < z * 6; j += 6)
+		{
+			pos[t +i * z * 6 + j + 0] = XMFLOAT3(x, j/6, i);
+			pos[t +i * z * 6 + j + 1] = XMFLOAT3(x, j/6 + 1, i);
+			pos[t +i * z * 6 + j + 2] = XMFLOAT3(x, j/6 + 1, i + 1);
+				   
+			pos[t +i * z * 6 + j + 3] = XMFLOAT3(x, j/6, i);
+			pos[t +i * z * 6 + j + 4] = XMFLOAT3(x, j/6 + 1, i + 1);
+			pos[t +i * z * 6 + j + 5] = XMFLOAT3(x, j/6, i + 1);
+
+			uv[t +i * z * 6 + j + 0] = XMFLOAT2(0.0f, 0.0f);
+			uv[t +i * z * 6 + j + 1] = XMFLOAT2(0.0f, 1.0f);
+			uv[t +i * z * 6 + j + 2] = XMFLOAT2(1.0f, 1.0f);
+				  
+			uv[t +i * z * 6 + j + 3] = XMFLOAT2(0.0f, 0.0f);
+			uv[t +i * z * 6 + j + 4] = XMFLOAT2(1.0f, 1.0f);
+			uv[t +i * z * 6 + j + 5] = XMFLOAT2(1.0f, 0.0f);
+		}
+	}
+
+	m_nOffset = 0;
+	m_nSlot = 0;
+	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+	m_pd3dPositionBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, pos, sizeof(XMFLOAT3) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dPositionUploadBuffer);
+
+	m_d3dPositionBufferView.BufferLocation = m_pd3dPositionBuffer->GetGPUVirtualAddress();
+	m_d3dPositionBufferView.StrideInBytes = sizeof(XMFLOAT3);
+	m_d3dPositionBufferView.SizeInBytes = sizeof(XMFLOAT3) * m_nVertices;
+
+	m_pd3dTextureBuffer = CreateBufferResource(pd3dDevice, pd3dCommandList, uv, sizeof(XMFLOAT2) * m_nVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pd3dTextureUploadBuffer);
+
+	m_d3dTextureBufferView.BufferLocation = m_pd3dTextureBuffer->GetGPUVirtualAddress();
+	m_d3dTextureBufferView.StrideInBytes = sizeof(XMFLOAT2);
+	m_d3dTextureBufferView.SizeInBytes = sizeof(XMFLOAT2) * m_nVertices;
+}
+PillarMesh::~PillarMesh(){}
