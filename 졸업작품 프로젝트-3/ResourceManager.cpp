@@ -68,6 +68,8 @@ void ResourceManager::createTextures()
 	CTexture* tex91; CTexture* tex92; CTexture* tex93; CTexture* tex94; CTexture* tex95; CTexture* tex96; CTexture* tex97; CTexture* tex98; CTexture* tex99; CTexture* tex100;
 	CTexture* tex101; CTexture* tex102; CTexture* tex103; CTexture* tex104; CTexture* tex105; CTexture* tex106; CTexture* tex107; CTexture* tex108; CTexture* tex109; CTexture* tex110;
 	CTexture* tex111; CTexture* tex112; CTexture* tex113; CTexture* tex114; CTexture* tex115; CTexture* tex116; CTexture* tex117; CTexture* tex118; CTexture* tex119; CTexture* tex120;
+	CTexture* tex121; CTexture* tex122; CTexture* tex123; CTexture* tex124; CTexture* tex125; CTexture* tex126; CTexture* tex127; CTexture* tex128; CTexture* tex129; CTexture* tex130;
+	CTexture* tex131; CTexture* tex132; CTexture* tex133; CTexture* tex134; CTexture* tex135; CTexture* tex136; CTexture* tex137; CTexture* tex138; CTexture* tex139; CTexture* tex140;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -471,6 +473,41 @@ void ResourceManager::createTextures()
 	tex114 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex114->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/TrashContainer.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex114);
+
+	tex115 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex115->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Energy Shield.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex115);
+	tex116 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex116->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Big Energy Shield.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex116);
+	tex117 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex117->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/LongTank.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex117);
+	tex118 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex118->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/airfan.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex118);
+
+	tex119 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex119->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Machine_1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex119);
+	tex120 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex120->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Machine_3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex120);
+	tex121 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex121->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Machine_4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex121);
+	tex122 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex122->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Machine_6.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex122);
+	tex123 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex123->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/Machine_7.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex123);
+	tex124 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex124->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/robotArm.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex124);
+	tex125 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex125->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/sewer.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex125);
 
 	CTexture* norm;
 

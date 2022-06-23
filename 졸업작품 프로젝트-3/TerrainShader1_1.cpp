@@ -102,6 +102,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* speedBump = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_speedbump.txt", NULL);
 	CLoadedMesh* trashCont = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_trashContainer.txt", NULL);
 
+
 	RectMesh* ruinbase = new RectMesh(pd3dDevice, pd3dCommandList, 3.9f, 1.9f);
 
 	PillarMesh* pillar = new PillarMesh(pd3dDevice, pd3dCommandList, 2, 2, 10);

@@ -8,6 +8,131 @@ TerrainShader1_2::~TerrainShader1_2() {}
 
 void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
+	data = LoadObjects("res/map/area1_2/objects1-2.txt");
+	boxesWorld = LoadBoxes("res/map/area1_2/box1-2.txt", &nBox);
+
+	CLoadedMesh* shield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_shield.txt", NULL);
+	CLoadedMesh* bigshield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bigshield.txt", NULL);
+	CLoadedMesh* longtank = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_longtank.txt", NULL);
+	CLoadedMesh* fan = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_airfan.txt", NULL);
+
+	CLoadedMesh* m1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_machine1.txt", NULL);
+	CLoadedMesh* m3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_machine3.txt", NULL);
+	CLoadedMesh* m4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_machine4.txt", NULL);
+	CLoadedMesh* m6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_machine6.txt", NULL);
+	CLoadedMesh* m7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_machine7.txt", NULL);
+
+	CLoadedMesh* arm = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_robotarm.txt", NULL);
+	CLoadedMesh* sewer = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_sewer.txt", NULL);
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		CGameObject* obj = NULL;
+
+		if (data[i].type == Shield)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[114]);
+			obj->SetMesh(shield);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == BigShield)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[115]);
+			obj->SetMesh(bigshield);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == AirFan)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[117]);
+			obj->SetMesh(fan);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == LongTank)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[116]);
+			obj->SetMesh(longtank);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Machine1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[118]);
+			obj->SetMesh(m1);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Machine3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[119]);
+			obj->SetMesh(m3);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Machine4)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[120]);
+			obj->SetMesh(m4);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Machine6)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[121]);
+			obj->SetMesh(m6);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Machine7)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[122]);
+			obj->SetMesh(m7);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == RobotArm)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[123]);
+			obj->SetMesh(arm);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Sewer)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[124]);
+			obj->SetMesh(sewer);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		obj->type = data[i].type;
+		obj->SetPosition(data[i].position);
+		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
+		objects.push_back(obj);
+	}
 }
 
 void TerrainShader1_2::ReleaseObjects()

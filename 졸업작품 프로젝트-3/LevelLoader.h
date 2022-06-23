@@ -341,6 +341,20 @@
 
 #define Pillar 11253
 
+#define Shield 12200
+#define BigShield 12201
+#define AirFan 12202
+#define LongTank 12203
+
+#define Machine1 12204
+#define Machine3 12205
+#define Machine4 12206
+#define Machine6 12207
+#define Machine7 12208
+
+#define RobotArm 12209
+#define Sewer 12210
+
 typedef struct Obj
 {
 	XMFLOAT3 position;
