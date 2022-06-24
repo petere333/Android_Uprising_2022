@@ -16,6 +16,9 @@
 #define RustyMetal_Wall_Bottom_50m 11010
 #define RustyMetal_Wall_Top_100m 11011
 
+#define RustyMetal_Wall_Right2 11012
+#define RustyMetal_Wall_Right3 11013
+
 #define Dustbin 11200
 #define RustyMetal_Box 11201
 #define RustyMetal_Barrel 11202
@@ -89,6 +92,66 @@
 #define RuinBase 11252
 
 #define Pillar 11253
+
+
+#define Wall12_Left1 12000
+#define Wall12_Left2 12001
+#define Wall12_Left3 12002
+
+#define Wall12_Front 12003
+#define Wall12_Back 12004
+
+#define Wall12_Right1 12005
+
+#define Wall12_Center1 12006
+#define Wall12_Center2 12007
+#define Wall12_Center3 12008
+#define Wall12_HCenter1 12009
+
+#define Wall12_Floor 12010
+#define Wall12_UpperFloor 12011
+
+#define Wall12_Right2 12012
+#define Wall12_Right3 12013
+
+#define Wall12_Ceiling 12014
+
+#define Wall12_LeftUnder 12015
+#define Wall12_RightUnder 12016
+#define Wall12_CenterUnder 12017
+
+#define Wall12_HCenter2 12018
+#define Wall12_HCenter3 12019
+
+#define Wall12_Center4 12020
+
+#define Wall12_HCenter4 12021
+#define Wall12_HCenter5 12022
+
+#define WireFrame 12023
+
+#define Shield 12200
+#define BigShield 12201
+#define AirFan 12202
+#define LongTank 12203
+
+#define Machine1 12204
+#define Machine3 12205
+#define Machine4 12206
+#define Machine6 12207
+#define Machine7 12208
+
+#define RobotArm 12209
+#define Sewer 12210
+
+#define Fence12 12211
+#define Pillar12 12212
+
+#define Container12 12213
+
+#define Chon12 12214
+
+
 
 using namespace std;
 

@@ -5,11 +5,11 @@ bigenergy	4.0	2.0	0.8	right
 
 longtank	10.0	4.0	4.5	right
 
-machine1	3.5	1.5	2.5
-machine3	5.5	2.5	3.0
-machine4	3.0	2.0	3.0 			*2,  z+1, x+1
-machine6	4.5	3.0	5.0		sz, endz+2
-machine7	3.0	1.5	3.5	left
+machine1	5.0	2.5	4.0
+machine3	6.0	3.0	4.0
+machine4	3.0	5.0	3.0 			
+machine6	6	4	6.0		
+machine7	5.0	1.5	3.0	left
 
 robotarm	2.0	3.0	2.0	left
 

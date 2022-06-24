@@ -25,6 +25,33 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* arm = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_robotarm.txt", NULL);
 	CLoadedMesh* sewer = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_sewer.txt", NULL);
 
+	WallMeshHorizontal* front = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
+	WallMeshHorizontal* back = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
+
+	WallMeshVertical* left1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 195.0f, 10.0f);
+	WallMeshVertical* left2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 5.0f);
+	WallMeshVertical* left3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 10.0f);
+
+	WallMeshVertical* right1 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 195.0f, 10.0f);
+	WallMeshVertical* right2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 5.0f);
+	WallMeshVertical* right3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 10.0f);
+
+	PillarMesh* center1 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 150, 10);
+	PillarMesh* center2 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 4, 5);
+	PillarMesh* center3 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 43, 5);
+	PillarMesh* center4 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 3, 2);
+
+	PillarMesh* hcenter1 = new PillarMesh(pd3dDevice, pd3dCommandList, 10, 1, 10);
+	PillarMesh* hcenter2 = new PillarMesh(pd3dDevice, pd3dCommandList, 92, 1, 10);
+	PillarMesh* hcenter3 = new PillarMesh(pd3dDevice, pd3dCommandList, 92, 1, 10);
+	PillarMesh* hcenter4 = new PillarMesh(pd3dDevice, pd3dCommandList, 3, 1, 5);
+	PillarMesh* hcenter5 = new PillarMesh(pd3dDevice, pd3dCommandList, 3, 1, 5);
+
+	PillarMesh* wire = new PillarMesh(pd3dDevice, pd3dCommandList, 100, 50, 5);
+
+
+	GridMesh* basefloor = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 200.0f);
+	GridMesh* upperfloor = new GridMesh(pd3dDevice, pd3dCommandList, 100.0f, 50.0f);
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
@@ -128,6 +155,197 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
 		}
+
+		else if (data[i].type == Wall12_Left1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[125]);
+			obj->SetMesh(left1);
+			obj->shadowHeight = 0.0f;
+			obj->shadowX = 0.0f;
+			obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Left2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(left2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Left3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(left3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Right1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(right1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Right2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(right2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Right3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(right3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Front)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(front);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Back)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(back);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Floor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(basefloor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Ceiling)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[126]);
+		obj->SetMesh(basefloor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_UpperFloor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(upperfloor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Center1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(center1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Center2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(center2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Center3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(center3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_Center4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(center4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_HCenter1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(hcenter1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_HCenter2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(hcenter2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_HCenter3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(hcenter3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_HCenter4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(hcenter4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Wall12_HCenter5)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(hcenter5);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WireFrame)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[128]);
+		obj->SetMesh(wire);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);

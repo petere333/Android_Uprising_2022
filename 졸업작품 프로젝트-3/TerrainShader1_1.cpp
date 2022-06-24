@@ -22,7 +22,11 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	WallMeshHorizontal* RustyWallFront = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
 	WallMeshHorizontal* RustyWallBack = new WallMeshHorizontal(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
 	WallMeshVertical* RustyWallLeft = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
-	WallMeshVertical* RustyWallRight = new WallMeshVertical(pd3dDevice, pd3dCommandList, 200.0f, 10.0f);
+	WallMeshVertical* RustyWallRight = new WallMeshVertical(pd3dDevice, pd3dCommandList, 195.0f, 10.0f);
+	WallMeshVertical* RustyWallRight2 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 5.0f);
+	WallMeshVertical* RustyWallRight3 = new WallMeshVertical(pd3dDevice, pd3dCommandList, 2.5f, 10.0f);
+
+
 
 	WallMeshVertical* RustyWallLeft100m = new WallMeshVertical(pd3dDevice, pd3dCommandList, 100.0f, 10.0f);
 	WallMeshVertical* RustyWallCenter50m = new WallMeshVertical(pd3dDevice, pd3dCommandList, 50.0f, 10.0f);
@@ -146,6 +150,18 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj = new CGameObject(1);
 			obj->SetMaterial(0, rm->materials[79]);
 			obj->SetMesh(RustyWallRight);
+		}
+		else if (data[i].type == RustyMetal_Wall_Right2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[79]);
+			obj->SetMesh(RustyWallRight2);
+		}
+		else if (data[i].type == RustyMetal_Wall_Right3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[79]);
+			obj->SetMesh(RustyWallRight3);
 		}
 		else if (data[i].type == RustyMetal_Wall_Left_100m)
 		{

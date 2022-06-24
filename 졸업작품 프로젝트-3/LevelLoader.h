@@ -255,7 +255,8 @@
 #define Janhae23 30848
 
 //이 위엔 이제부터 안쓰는 것들임.
-//1-1 폐기물처리장 모음
+
+//1-1 wall
 
 #define RustyMetal_Floor 11001
 #define RustyMetal_Wall_Left 11002
@@ -270,6 +271,11 @@
 #define RustyMetal_Wall_HCenter_50m 11009
 #define RustyMetal_Wall_Bottom_50m 11010
 #define RustyMetal_Wall_Top_100m 11011
+
+#define RustyMetal_Wall_Right2 11012
+#define RustyMetal_Wall_Right3 11013
+
+//1-1 object
 
 #define Dustbin 11200
 #define RustyMetal_Box 11201
@@ -340,6 +346,46 @@
 #define RuinBase 11252
 
 #define Pillar 11253
+
+//1-2 space
+
+#define Wall12_Left1 12000
+#define Wall12_Left2 12001
+#define Wall12_Left3 12002
+
+#define Wall12_Front 12003
+#define Wall12_Back 12004
+
+#define Wall12_Right1 12005
+
+#define Wall12_Center1 12006
+#define Wall12_Center2 12007
+#define Wall12_Center3 12008
+#define Wall12_HCenter1 12009
+
+#define Wall12_Floor 12010
+#define Wall12_UpperFloor 12011
+
+#define Wall12_Right2 12012
+#define Wall12_Right3 12013
+
+#define Wall12_Ceiling 12014
+
+#define Wall12_LeftUnder 12015
+#define Wall12_RightUnder 12016
+#define Wall12_CenterUnder 12017
+
+#define Wall12_HCenter2 12018
+#define Wall12_HCenter3 12019
+
+#define Wall12_Center4 12020
+
+#define Wall12_HCenter4 12021
+#define Wall12_HCenter5 12022
+
+#define WireFrame 12023
+
+//1-2 object
 
 #define Shield 12200
 #define BigShield 12201
