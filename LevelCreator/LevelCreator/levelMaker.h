@@ -8,6 +8,7 @@ void createPlayer(vector<Object>& list);
 void createSpace(vector<Object>& list, vector<BoundingBox>& blist);
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist);
 void createObstacles1_2(vector<Object>& list, vector<BoundingBox>& blist);
+void createObstacles1_22(vector<Object>& list, vector<BoundingBox>& blist);
 void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist);
 void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist);
 void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist);

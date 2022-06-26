@@ -305,3 +305,16 @@ public:
 	PillarMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, int x, int y, int z);
 	virtual ~PillarMesh();
 };
+
+class RectMeshVertical : public CMesh
+{
+public: 
+	RectMeshVertical(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~RectMeshVertical(){}
+};
+class RectMeshHorizontal : public CMesh
+{
+public:
+	RectMeshHorizontal(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float width, float height);
+	virtual ~RectMeshHorizontal() {}
+};

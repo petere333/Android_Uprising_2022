@@ -12,11 +12,11 @@ public:
 	TerrainShader1_2(ResourceManager* r);
 	virtual ~TerrainShader1_2();
 
-	virtual void BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	virtual void BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig);
 	virtual void ReleaseObjects();
 	virtual void ReleaseUploadBuffers();
 	virtual void ReleaseShaderVariables();
-	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera);
+	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed);
 
 	virtual D3D12_INPUT_LAYOUT_DESC CreateInputLayout();
 	virtual D3D12_RASTERIZER_DESC CreateRasterizerState();
@@ -38,4 +38,6 @@ public:
 	std::vector<CGameObject*>	objects;
 
 	ResourceManager* rm;
+
+	bool animStart = false;
 };

@@ -16,3 +16,17 @@ robotarm	2.0	3.0	2.0	left
 fan		2.5	2.5	6.0	right
 
 sewer		1.0	0.5	0.5	left
+
+container	3.0	3.0	6.0	right
+heater		1	1.5	3	right
+
+cont1		0.5	1.75 	1.5
+cont2		0.5	0.85	0.5
+cont4		0.5	0.9	1.0
+
+fence		0.5	1.5	4.0	height 3.0
+
+woods	2.0	0.25	8.0	right
+table		4.0	1.0	2.0	right
+table2		8.0	1.0	3.0	right
+bucket	1	1	1	left

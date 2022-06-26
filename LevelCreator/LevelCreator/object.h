@@ -151,7 +151,20 @@
 
 #define Chon12 12214
 
+#define Heater 12215
 
+#define Controller12_1 12216
+#define Controller12_2 12217
+#define Controller12_4 12218
+
+#define ChargeSlot 12219
+#define ChargeFloor 12220
+
+#define ChargingRobot 12221
+
+#define ChargeFloor2 12222
+
+#define Box12 12223
 
 using namespace std;
 
@@ -164,11 +177,19 @@ typedef struct Object
 	int type;
 };
 
+typedef struct HeightData
+{
+	float startx, startz;
+	float endx, endz;
+	float height;
+}HeightData;
+
+
 void writeFile(FILE* file, Object o);
 
-void writeHeight(FILE* file, float* data, int size);
+void writeHeight(FILE* file, std::vector<HeightData> data);
 
-void setAreaHeight(float* data, int,int,float sx, float sz, float ex, float ez, float height);
+void setAreaHeight(std::vector<HeightData>& data, int,int,float sx, float sz, float ex, float ez, float height);
 
 
 float3 f3(float f1, float f2, float f3);

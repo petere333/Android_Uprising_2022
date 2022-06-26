@@ -5,6 +5,7 @@ vector<Object> list;
 vector<BoundingBox> bList;
 vector<BoundingSphere> sList;
 
+
 int x11 = 400;
 int z11 = 400;
 
@@ -24,12 +25,13 @@ int x23 = 600;
 int z23 = 180;
 
 
-float* height1_1;
-float* height1_2;
-float* height1_3;
-float* height2_1;
-float* height2_2;
-float* height2_3;
+std::vector<HeightData> height1_1;
+std::vector<HeightData> height1_2;
+std::vector<HeightData> height1_22;
+std::vector<HeightData> height1_3;
+std::vector<HeightData> height2_1;
+std::vector<HeightData> height2_2;
+std::vector<HeightData> height2_3;
 
 FILE* file;
 
@@ -46,32 +48,13 @@ int main()
 {
 	createObjects(list,bList);
 
-	//파일 이름도 구역마다 다르게 구분을 주어야 한다.
-	//그래야 구역 별로 나눈 쉐이더 하나 당 하나씩 넣을 수 있다.
+
 	
 	file = fopen("result/objects1-2.txt", "w");
 	FILE* bf = fopen("result/box1-2.txt", "w");
+	FILE* hf = fopen("result/height1-2.txt", "w");
 	
-	//FILE* hf11 = fopen("result/height1-1.txt", "w");
-	FILE* hf12 = fopen("result/height1-2.txt", "w");
-	//FILE* hf13 = fopen("result/height1-3.txt", "w");
-	//FILE* hf21 = fopen("result/height2-1.txt", "w");
-	//FILE* hf22 = fopen("result/height2-2.txt", "w");
-	//FILE* hf23 = fopen("result/height2-3.txt", "w");
-	//file = fopen("result/objects1-2.txt", "w");
-	//FILE* bf = fopen("result/box1-2.txt", "w");
-
-	//file = fopen("result/objects1-3.txt", "w");
-	//FILE* bf = fopen("result/box1-3.txt", "w");
-
-	//file = fopen("result/objects2-1.txt", "w");
-	//FILE* bf = fopen("result/box2-1.txt", "w");
-	
-	//file = fopen("result/objects2-2.txt", "w");
-	//FILE* bf = fopen("result/box2-2.txt", "w");
-	
-	//file = fopen("result/objects2-3.txt", "w");
-	//FILE* bf = fopen("result/box2-3.txt", "w");
+	writeHeight(hf, height1_2);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -82,23 +65,16 @@ int main()
 	{
 		writeBox(bf, bList[i]);
 	}
-	//writeHeight(hf11, height1_1, x11 * z11);
-	writeHeight(hf12, height1_2, x12 * z12);
+	
+	
+	
 	fclose(file);
 	fclose(bf);
-	//fclose(hf11);
-	fclose(hf12);
-	//fclose(hf13);
-	//fclose(hf21);
-	//fclose(hf22);
-	//fclose(hf23);
 
-	delete height1_1;
-	delete height1_2;
-	delete height1_3;
-	delete height2_1;
-	delete height2_2;
-	delete height2_3;
+	fclose(hf);
+	
+
+
 
 	return 0;
 }
@@ -113,47 +89,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-
-	height1_1 = new float[x11*z11];
-	height1_2 = new float[x12*z12];
-	height1_3 = new float[x13*z13];
-	height2_1 = new float[x21*z21];
-	height2_2 = new float[x22*z22];
-	height2_3 = new float[x23*z23];
-
-	for (int i = 0; i < x11 * z11; ++i)
-	{
-		height1_1[i] = 0.0f;
-	}
-	for (int i = 0; i < x12 * z12; ++i)
-	{
-		height1_2[i] = 0.0f;
-	}
-	for (int i = 0; i < x13 * z13; ++i)
-	{
-		height1_3[i] = 0.0f;
-	}
-	for (int i = 0; i < x21 * z21; ++i)
-	{
-		height2_1[i] = 0.0f;
-	}
-	for (int i = 0; i < x22 * z22; ++i)
-	{
-		height2_2[i] = 0.0f;
-	}
-	for (int i = 0; i < x23 * z23; ++i)
-	{
-		height2_3[i] = 0.0f;
-	}
-	//createObstacles1_1(list, blist);
-
-	// 자신이 배치하고자 하는 구역 한 번에 하나씩만 주석을 풀면 된다.
-
 	createObstacles1_2(list, blist);
-	//createObstacles1_3(list, blist);
-	//createObstacles2_1(list, blist);
-	//createObstacles2_2(list, blist);
-	//createObstacles2_3(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -522,12 +458,12 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 							BoundingBox* boxPallet = (BoundingBox*)malloc(sizeof(BoundingBox));
 							boxPallet->start = f3(tx - 1.5f, 0.0f, tz - 1.5f);
-boxPallet->end = f3(tx + 1.5f, 1.65f, tz + 1.5f);
-setAreaHeight(height1_1, x11, z11, tx - 1.5f, tz - 1.5f, tx + 1.5f, tz + 1.5f, 1.65f);
-
-list.push_back(*wdPallet);
-blist.push_back(*boxPallet);
-break;
+							boxPallet->end = f3(tx + 1.5f, 1.65f, tz + 1.5f);
+							setAreaHeight(height1_1, x11, z11, tx - 1.5f, tz - 1.5f, tx + 1.5f, tz + 1.5f, 1.65f);
+							
+							list.push_back(*wdPallet);
+							blist.push_back(*boxPallet);
+							break;
 						}
 						case 3:
 						{
@@ -2055,307 +1991,2772 @@ void createObstacles1_2(vector<Object>& list, vector<BoundingBox>& blist)
 	}
 
 	//내부 벽
-	Object* center1 = (Object*)malloc(sizeof(Object));
-	center1->location = f3(300.25f, 0.0f, 50.0f);
-	center1->rotation = f3(0.0f, 0.0f, 0.0f);
-	center1->type = Wall12_Center1;
-
-	BoundingBox* boxcenter1 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcenter1->start = f3(300.25f, 0.0f, 50.0f);
-	boxcenter1->end = f3(301.25f, 10.0f, 200.0f);
-
-	setAreaHeight(height1_2, x12, z12, 100.0f, 50.0f, 101.5f, 200.0f, 10.0f);
-
-	Object* center2 = (Object*)malloc(sizeof(Object));
-	center2->location = f3(300.25f, 5.0f, 0.0f);
-	center2->rotation = f3(0.0f, 0.0f, 0.0f);
-	center2->type = Wall12_Center2;
-
-	BoundingBox* boxcenter2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcenter2->start = f3(300.25f, 5.0f, 0.0f);
-	boxcenter2->end = f3(301.25f, 10.0f, 4.0f);
-
-	setAreaHeight(height1_2, x12, z12, 100.0f, 0.0f, 101.5f, 4.0f, 10.0f);
-
-	Object* center3 = (Object*)malloc(sizeof(Object));
-	center3->location = f3(300.25f, 5.0f, 7.0f);
-	center3->rotation = f3(0.0f, 0.0f, 0.0f);
-	center3->type = Wall12_Center3;
-
-	BoundingBox* boxcenter3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcenter3->start = f3(300.25f, 5.0f, 7.0f);
-	boxcenter3->end = f3(301.25f, 10.0f, 50.0f);
-
-	setAreaHeight(height1_2, x12, z12, 100.0f, 7.0f, 101.5f, 50.0f, 10.0f);
-
-	Object* center4 = (Object*)malloc(sizeof(Object));
-	center4->location = f3(300.25f, 8.0f, 4.0f);
-	center4->rotation = f3(0.0f, 0.0f, 0.0f);
-	center4->type = Wall12_Center4;
-
-	BoundingBox* boxcenter4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcenter4->start = f3(300.25f, 8.0f, 4.0f);
-	boxcenter4->end = f3(301.25f, 10.0f, 7.0f);
-
-	setAreaHeight(height1_2, x12, z12, 100.0f, 4.0f, 101.5f, 7.0f, 10.0f);
-
-
-	Object* hcenter = (Object*)malloc(sizeof(Object));
-	hcenter->location = f3(295.0f, 0.0f, 100.25f);
-	hcenter->rotation = f3(0.0f, 0.0f, 0.0f);
-	hcenter->type = Wall12_HCenter1;
-
-	BoundingBox* boxhcenter = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxhcenter->start = f3(295.0f, 0.0f, 100.25f);
-	boxhcenter->end = f3(305.0f, 10.0f, 101.25f);
-
-	setAreaHeight(height1_2, x12, z12, 95.0f, 99.0f, 105.0f, 102.5f, 10.0f);
-
-	Object* hcenter2 = (Object*)malloc(sizeof(Object));
-	hcenter2->location = f3(200.0f, 0.0f, 100.25f);
-	hcenter2->rotation = f3(0.0f, 0.0f, 0.0f);
-	hcenter2->type = Wall12_HCenter2;
-
-	BoundingBox* boxhcenter2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxhcenter2->start = f3(200.0f, 0.0f, 100.25f);
-	boxhcenter2->end = f3(292.0f, 10.0f, 101.25f);
-
-	setAreaHeight(height1_2, x12, z12, 0.0f, 99.0f, 92.0f, 102.5f, 10.0f);
-
-	Object* hcenter3 = (Object*)malloc(sizeof(Object));
-	hcenter3->location = f3(308.0f, 0.0f, 100.25f);
-	hcenter3->rotation = f3(0.0f, 0.0f, 0.0f);
-	hcenter3->type = Wall12_HCenter3;
-
-	BoundingBox* boxhcenter3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxhcenter3->start = f3(308.0f, 0.0f, 100.25f);
-	boxhcenter3->end = f3(400.0f, 10.0f, 101.25f);
-
-	setAreaHeight(height1_2, x12, z12, 108.0f, 99.0f, 200.0f, 102.5f, 10.0f);
-
-	Object* hcenter4 = (Object*)malloc(sizeof(Object));
-	hcenter4->location = f3(292.0f, 5.0f, 100.25f);
-	hcenter4->rotation = f3(0.0f, 0.0f, 0.0f);
-	hcenter4->type = Wall12_HCenter4;
-
-	BoundingBox* boxhcenter4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxhcenter4->start = f3(292.0f, 5.0f, 100.25f);
-	boxhcenter4->end = f3(295.0f, 10.0f, 101.25f);
-
-	setAreaHeight(height1_2, x12, z12, 92.0f, 99.0f, 95.0f, 102.5f, 0.0f);
-
-	Object* hcenter5 = (Object*)malloc(sizeof(Object));
-	hcenter5->location = f3(305.0f, 5.0f, 100.25f);
-	hcenter5->rotation = f3(0.0f, 0.0f, 0.0f);
-	hcenter5->type = Wall12_HCenter5;
-
-	BoundingBox* boxhcenter5 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxhcenter5->start = f3(305.0f, 5.0f, 100.25f);
-	boxhcenter5->end = f3(308.0f, 10.0f, 101.25f);
-
-	setAreaHeight(height1_2, x12, z12, 105.0f, 99.0f, 108.0f, 102.5f, 0.0f);
-
-	Object* ufloor = (Object*)malloc(sizeof(Object));
-	ufloor->location = f3(250.0f, 5.0f, 0.0f);
-	ufloor->rotation = f3(0.0f, 0.0f, 0.0f);
-	ufloor->type = Wall12_UpperFloor;
-
-	BoundingBox* boxufloor = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxufloor->start = f3(250.0f, 4.99f, 0.0f);
-	boxufloor->end = f3(350.0f, 5.0f, 50.0f);
-
-	setAreaHeight(height1_2, x12, z12, 50.0f, 0.0f, 150.0f, 50.0f, 5.0f);
-
-	Object* frame = (Object*)malloc(sizeof(Object));
-	frame->location = f3(250.0f, 0.0f, 0.0f);
-	frame->rotation = f3(0.0f, 0.0f, 0.0f);
-	frame->type = WireFrame;
-
-	BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxframe->start = f3(250.0f, 0.0f, 0.0f);
-	boxframe->end = f3(350.0f, 5.0f, 50.0f);
-
-	
-
-	list.push_back(*center1);
-	list.push_back(*center2);
-	list.push_back(*center3);
-	list.push_back(*center4);
-	list.push_back(*hcenter);
-	list.push_back(*hcenter2);
-	list.push_back(*hcenter3);
-	list.push_back(*hcenter4);
-	list.push_back(*hcenter5);
-	list.push_back(*ufloor);
-	list.push_back(*frame);
-
-
-	blist.push_back(*boxcenter1);
-	blist.push_back(*boxcenter2);
-	blist.push_back(*boxcenter3);
-	blist.push_back(*boxcenter4);
-	blist.push_back(*boxhcenter);
-	blist.push_back(*boxhcenter2);
-	blist.push_back(*boxhcenter3);
-	blist.push_back(*boxhcenter4);
-	blist.push_back(*boxhcenter5);
-	blist.push_back(*boxufloor);
-	blist.push_back(*boxframe);
-	/*
-	//에너지쉴드 테스트 1,3,4,6,7
 	{
-		Object* shield = (Object*)malloc(sizeof(Object));
-		shield->location = f3(220.0f, 0.0f, 180.0f);
-		shield->rotation = f3(0.0f, 0.0f, 0.0f);
-		shield->type = Shield;
+		Object* center1 = (Object*)malloc(sizeof(Object));
+		center1->location = f3(300.25f, 0.0f, 50.0f);
+		center1->rotation = f3(0.0f, 0.0f, 0.0f);
+		center1->type = Wall12_Center1;
 
-		BoundingBox* boxshield = (BoundingBox*)malloc(sizeof(BoundingBox));
-		boxshield->start = f3(219.6f, 0.0f, 179.75f);
-		boxshield->end = f3(220.4f, 2.0f, 180.25f);
+		BoundingBox* boxcenter1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxcenter1->start = f3(300.25f, 0.0f, 50.0f);
+		boxcenter1->end = f3(301.25f, 10.0f, 200.0f);
 
-		setAreaHeight(height1_2, x12, z12, 19.5f, 179.5f, 20.5f, 180.5f, 2.0f);
+		setAreaHeight(height1_2, x12, z12, 100.0f, 50.0f, 101.5f, 200.0f, 10.0f);
 
-		Object* shield2 = (Object*)malloc(sizeof(Object));
-		shield2->location = f3(220.0f, 0.0f, 178.0f);
-		shield2->rotation = f3(0.0f, 0.0f, 0.0f);
-		shield2->type = BigShield;
+		Object* center2 = (Object*)malloc(sizeof(Object));
+		center2->location = f3(300.25f, 5.0f, 0.0f);
+		center2->rotation = f3(0.0f, 0.0f, 0.0f);
+		center2->type = Wall12_Center2;
 
-		BoundingBox* boxshield2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		boxshield2->start = f3(218.0f, 0.0f, 177.6f);
-		boxshield2->end = f3(222.0f, 2.0f, 178.4f);
+		BoundingBox* boxcenter2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxcenter2->start = f3(300.25f, 5.0f, 0.0f);
+		boxcenter2->end = f3(301.25f, 10.0f, 4.0f);
 
-		setAreaHeight(height1_2, x12, z12, 18.0f, 177.5f, 22.0f, 178.5f, 2.0f);
+		setAreaHeight(height1_2, x12, z12, 100.0f, 0.0f, 101.5f, 4.0f, 10.0f);
 
-		Object* shield3 = (Object*)malloc(sizeof(Object));
-		shield3->location = f3(220.0f, 0.0f, 175.0f);
-		shield3->rotation = f3(0.0f, 0.0f, 0.0f);
-		shield3->type = LongTank;
+		Object* center3 = (Object*)malloc(sizeof(Object));
+		center3->location = f3(300.25f, 5.0f, 7.0f);
+		center3->rotation = f3(0.0f, 0.0f, 0.0f);
+		center3->type = Wall12_Center3;
 
-		BoundingBox* boxshield3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		boxshield3->start = f3(215.0f, 0.0f, 172.75f);
-		boxshield3->end = f3(225.0f, 2.0f, 177.25f);
+		BoundingBox* boxcenter3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxcenter3->start = f3(300.25f, 5.0f, 7.0f);
+		boxcenter3->end = f3(301.25f, 10.0f, 50.0f);
 
-		setAreaHeight(height1_2, x12, z12, 15.0f, 172.5f, 25.0f, 177.5f, 4.0f);
+		setAreaHeight(height1_2, x12, z12, 100.0f, 7.0f, 101.5f, 50.0f, 10.0f);
 
-		Object* shield4 = (Object*)malloc(sizeof(Object));
-		shield4->location = f3(220.0f, 0.0f, 170.0f);
-		shield4->rotation = f3(0.0f, 0.0f, 0.0f);
-		shield4->type = AirFan;
+		Object* center4 = (Object*)malloc(sizeof(Object));
+		center4->location = f3(300.25f, 8.0f, 4.0f);
+		center4->rotation = f3(0.0f, 0.0f, 0.0f);
+		center4->type = Wall12_Center4;
 
-		BoundingBox* boxshield4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		boxshield4->start = f3(218.75f, 0.0f, 167.0f);
-		boxshield4->end = f3(221.25f, 2.5f, 173.0f);
+		BoundingBox* boxcenter4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxcenter4->start = f3(300.25f, 8.0f, 4.0f);
+		boxcenter4->end = f3(301.25f, 10.0f, 7.0f);
 
-		setAreaHeight(height1_2, x12, z12, 18.5f, 167.0f, 21.5f, 173.0f, 2.5f);
+		setAreaHeight(height1_2, x12, z12, 100.0f, 4.0f, 101.5f, 7.0f, 10.0f);
 
 
-		list.push_back(*shield);
-		blist.push_back(*boxshield);
-		list.push_back(*shield2);
-		blist.push_back(*boxshield2);
-		list.push_back(*shield3);
-		blist.push_back(*boxshield3);
-		list.push_back(*shield4);
-		blist.push_back(*boxshield4);
+		Object* hcenter = (Object*)malloc(sizeof(Object));
+		hcenter->location = f3(295.0f, 0.0f, 100.25f);
+		hcenter->rotation = f3(0.0f, 0.0f, 0.0f);
+		hcenter->type = Wall12_HCenter1;
+
+		BoundingBox* boxhcenter = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxhcenter->start = f3(295.0f, 0.0f, 100.25f);
+		boxhcenter->end = f3(305.0f, 10.0f, 101.25f);
+
+		setAreaHeight(height1_2, x12, z12, 95.0f, 99.0f, 105.0f, 102.5f, 10.0f);
+
+		Object* hcenter2 = (Object*)malloc(sizeof(Object));
+		hcenter2->location = f3(200.0f, 0.0f, 100.25f);
+		hcenter2->rotation = f3(0.0f, 0.0f, 0.0f);
+		hcenter2->type = Wall12_HCenter2;
+
+		BoundingBox* boxhcenter2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxhcenter2->start = f3(200.0f, 0.0f, 100.25f);
+		boxhcenter2->end = f3(292.0f, 10.0f, 101.25f);
+
+		setAreaHeight(height1_2, x12, z12, 0.0f, 99.0f, 92.0f, 102.5f, 10.0f);
+
+		Object* hcenter3 = (Object*)malloc(sizeof(Object));
+		hcenter3->location = f3(308.0f, 0.0f, 100.25f);
+		hcenter3->rotation = f3(0.0f, 0.0f, 0.0f);
+		hcenter3->type = Wall12_HCenter3;
+
+		BoundingBox* boxhcenter3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxhcenter3->start = f3(308.0f, 0.0f, 100.25f);
+		boxhcenter3->end = f3(400.0f, 10.0f, 101.25f);
+
+		setAreaHeight(height1_2, x12, z12, 108.0f, 99.0f, 200.0f, 102.5f, 10.0f);
+
+		Object* hcenter4 = (Object*)malloc(sizeof(Object));
+		hcenter4->location = f3(292.0f, 5.0f, 100.25f);
+		hcenter4->rotation = f3(0.0f, 0.0f, 0.0f);
+		hcenter4->type = Wall12_HCenter4;
+
+		BoundingBox* boxhcenter4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxhcenter4->start = f3(292.0f, 5.0f, 100.25f);
+		boxhcenter4->end = f3(295.0f, 10.0f, 101.25f);
+
+		setAreaHeight(height1_2, x12, z12, 92.0f, 99.0f, 95.0f, 102.5f, 0.0f);
+
+		Object* hcenter5 = (Object*)malloc(sizeof(Object));
+		hcenter5->location = f3(305.0f, 5.0f, 100.25f);
+		hcenter5->rotation = f3(0.0f, 0.0f, 0.0f);
+		hcenter5->type = Wall12_HCenter5;
+
+		BoundingBox* boxhcenter5 = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxhcenter5->start = f3(305.0f, 5.0f, 100.25f);
+		boxhcenter5->end = f3(308.0f, 10.0f, 101.25f);
+
+		setAreaHeight(height1_2, x12, z12, 105.0f, 99.0f, 108.0f, 102.5f, 0.0f);
+
+		Object* ufloor = (Object*)malloc(sizeof(Object));
+		ufloor->location = f3(250.0f, 5.0f, 0.0f);
+		ufloor->rotation = f3(0.0f, 0.0f, 0.0f);
+		ufloor->type = Wall12_UpperFloor;
+
+		BoundingBox* boxufloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxufloor->start = f3(250.0f, 4.99f, 0.0f);
+		boxufloor->end = f3(350.0f, 5.0f, 50.0f);
+
+		setAreaHeight(height1_2, x12, z12, 50.0f, 0.0f, 150.0f, 50.0f, 5.0f);
+
+		Object* frame = (Object*)malloc(sizeof(Object));
+		frame->location = f3(250.0f, 0.0f, 0.0f);
+		frame->rotation = f3(0.0f, 0.0f, 0.0f);
+		frame->type = WireFrame;
+
+		BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+		boxframe->start = f3(250.0f, 0.0f, 0.0f);
+		boxframe->end = f3(350.0f, 5.0f, 50.0f);
+
+
+
+
+
+		list.push_back(*center1);
+		list.push_back(*center2);
+		list.push_back(*center3);
+		list.push_back(*center4);
+		list.push_back(*hcenter);
+		list.push_back(*hcenter2);
+		list.push_back(*hcenter3);
+		list.push_back(*hcenter4);
+		list.push_back(*hcenter5);
+		list.push_back(*ufloor);
+		list.push_back(*frame);
+
+
+		blist.push_back(*boxcenter1);
+		blist.push_back(*boxcenter2);
+		blist.push_back(*boxcenter3);
+		blist.push_back(*boxcenter4);
+		blist.push_back(*boxhcenter);
+		blist.push_back(*boxhcenter2);
+		blist.push_back(*boxhcenter3);
+		blist.push_back(*boxhcenter4);
+		blist.push_back(*boxhcenter5);
+		blist.push_back(*boxufloor);
+		blist.push_back(*boxframe);
+	}
+
+	//좌상단 기계구역
+	{
+		//cont & shield
+		
+		for (float x = 212.0f; x < 290.0f; x += 4.0f)
+			{
+				int irand = rand() % 3;
+
+				int ir = rand() % 2;
+
+				if (irand == 0)
+				{
+
+					Object* frame = (Object*)malloc(sizeof(Object));
+					frame->location = f3(x, 0.0f, 199.75f);
+					frame->rotation = f3(0.0f, 90.0f, 0.0f);
+					frame->type = Controller12_1;
+
+					BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+					boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
+
+					list.push_back(*frame);
+					blist.push_back(*boxframe);
+				}
+				else if (irand == 1)
+				{
+
+					Object* frame = (Object*)malloc(sizeof(Object));
+					frame->location = f3(x, 1.0f, 199.75f);
+					frame->rotation = f3(0.0f, 90.0f, 0.0f);
+					frame->type = Controller12_2;
+
+					BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+					boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
+
+					list.push_back(*frame);
+					blist.push_back(*boxframe);
+				}
+				else if (irand == 2)
+				{
+
+					Object* frame = (Object*)malloc(sizeof(Object));
+					frame->location = f3(x, 1.0f, 199.75f);
+					frame->rotation = f3(0.0f, 90.0f, 0.0f);
+					frame->type = Controller12_4;
+
+					BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+					boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
+					list.push_back(*frame);
+					blist.push_back(*boxframe);
+				}
+
+				if (ir)
+				{
+					Object* frame = (Object*)malloc(sizeof(Object));
+					frame->location = f3(x, 0.0f, 195.0f);
+					frame->rotation = f3(0.0f, 0.0f, 0.0f);
+					frame->type = Shield;
+
+					BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxframe->start = f3(x - 0.5f, 0.0f, 194.5f);
+					boxframe->end = f3(x + 0.5f, 2.0f, 195.5f);
+					list.push_back(*frame);
+					blist.push_back(*boxframe);
+				}
+				else
+				{
+					Object* frame = (Object*)malloc(sizeof(Object));
+					frame->location = f3(x, 0.0f, 195.0f);
+					frame->rotation = f3(0.0f, 0.0f, 0.0f);
+					frame->type = BigShield;
+					if (x == 288.0f)
+					{
+						frame->type = Shield;
+					}
+
+					BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxframe->start = f3(x - 2.5f, 0.0f, 194.5f);
+					boxframe->end = f3(x + 2.5f, 2.0f, 195.5f);
+					list.push_back(*frame);
+					blist.push_back(*boxframe);
+				}
+			}
+
+		//fence
+		for (float z = 198.0f; z > 191.0f; z -= 4.0f)
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(210.0f, 0.0f, z);
+				fence->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(209.75f, 0.0f, z - 2.0f);
+				boxfence->end = f3(210.25f, 3.0f, z + 2.0f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(290.0f, 0.0f, z);
+				fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(289.75f, 0.0f, z - 2.0f);
+				boxfence2->end = f3(290.25f, 3.0f, z + 2.0f);
+
+				list.push_back(*fence);
+				list.push_back(*fence2);
+				blist.push_back(*boxfence);
+				blist.push_back(*boxfence2);
+			}
+		for (float x = 212.0f; x < 290.0f; x += 4.0f)
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(x, 0.0f, 192.0f);
+				fence->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(x - 2.0f, 0.0f, 191.75f);
+				boxfence->end = f3(x + 2.0f, 3.0f, 192.25f);
+
+				list.push_back(*fence);
+				blist.push_back(*boxfence);
+			}
+
+		setAreaHeight(height1_2, x12, z12, 9.75f, 191.75f, 90.25f, 200.0f, 3.0f);
+		
+		//container
+		for (float z = 141.0f; z <= 160.0f; z += 9.0f)
+		{
+			if (z == 150.0f)
+			{
+				for (float x = 220.0f; x <= 290.0f; x += 12.0f)
+				{
+					Object* con = (Object*)malloc(sizeof(Object));
+					con->location = f3(x, 0.0f, z);
+					con->rotation = f3(0.0f, 90.0f, 0.0f);
+					con->type = Container12;
+
+					BoundingBox* boxcon = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxcon->start = f3(x - 3.0f, 0.0f, z - 1.5f);
+					boxcon->end = f3(x + 3.0f, 3.0f, z + 1.5f);
+
+					setAreaHeight(height1_2, x12, z12, x - 3.5f - 200.0f, z - 2.0f, x + 3.5f -200.0f, z + 2.0f, 3.0f);
+
+					list.push_back(*con);
+					blist.push_back(*boxcon);
+				}
+			}
+			else
+			{
+				for (float x = 214.0f; x <= 290.0f; x += 12.0f)
+				{
+					Object* con = (Object*)malloc(sizeof(Object));
+					con->location = f3(x, 0.0f, z);
+					con->rotation = f3(0.0f, 90.0f, 0.0f);
+					con->type = Container12;
+
+					BoundingBox* boxcon = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxcon->start = f3(x - 3.0f, 0.0f, z - 1.5f);
+					boxcon->end = f3(x + 3.0f, 3.0f, z + 1.5f);
+
+					setAreaHeight(height1_2, x12, z12, x - 3.5f-200.0f, z - 2.0f, x + 3.5f-200.0f, z + 2.0f, 3.0f);
+
+					list.push_back(*con);
+					blist.push_back(*boxcon);
+				}
+			}
+
+		}
+
+
+		//fan & machine
+		for (float x = 210.0f; x < 241.0f; x += 3.0f)
+		{
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 180.0f);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = AirFan;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x - 1.25f, 0.0f, 177.0f);
+				boxfan->end = f3(x + 1.25f, 2.5f, 183.0f);
+
+
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x + 50.0f, 0.0f, 180.0f);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = AirFan;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x + 50.0f - 1.25f, 0.0f, 177.0f);
+				boxfan2->end = f3(x + 50.0f + 1.25f, 2.5f, 183.0f);
+
+
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 120.0f);
+				fan->rotation = f3(0.0f, 180.0f, 0.0f);
+				fan->type = AirFan;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x - 1.25f, 0.0f, 117.0f);
+				boxfan->end = f3(x + 1.25f, 2.5f, 123.0f);
+
+
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x + 50.0f, 0.0f, 120.0f);
+				fan2->rotation = f3(0.0f, 180.0f, 0.0f);
+				fan2->type = AirFan;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x + 50.0f - 1.25f, 0.0f, 117.0f);
+				boxfan2->end = f3(x + 50.0f + 1.25f, 2.5f, 123.0f);
+
+
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+		}
+
+		for (float x = 210.0f; x < 240.0f; x += 7.0f)
+		{
+			{
+				int irand = rand() % 5;
+				if (irand == 0)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine1;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 2.5f, 0.0f, 169.0f);
+					boxm->end = f3(x + 2.5f, 2.5f, 173.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				else if (irand == 1)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine3;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 3.0f, 0.0f, 169.0f);
+					boxm->end = f3(x + 3.0f, 3.0f, 173.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (irand == 2)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine4;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 1.5f, 0.0f, 169.5f);
+					boxm->end = f3(x + 1.5f, 5.0f, 172.5f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (irand == 3)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine6;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 3.0f, 0.0f, 168.0f);
+					boxm->end = f3(x + 3.0f, 4.0f, 174.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				else if (irand == 4)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine7;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 2.5f, 0.0f, 169.5f);
+					boxm->end = f3(x + 2.5f, 4.0f, 172.5f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				int r2 = rand() % 5;
+				if (r2 == 0)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine1;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 169.0f);
+					boxm->end = f3(x + 50.0f + 2.5f, 2.5f, 173.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 1)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine3;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 169.0f);
+					boxm->end = f3(x + 50.0f + 3.0f, 3.0f, 173.0f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 2)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine4;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 1.5f, 0.0f, 169.5f);
+					boxm->end = f3(x + 50.0f + 1.5f, 5.0f, 172.5f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 3)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine6;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 168.0f);
+					boxm->end = f3(x + 50.0f + 3.0f, 4.0f, 174.0f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 4)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 171.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine7;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 169.5f);
+					boxm->end = f3(x + 50.0f + 2.5f, 1.5f, 172.5f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+			}
+
+			{
+				int irand = rand() % 5;
+				if (irand == 0)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine1;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 2.5f, 0.0f, 123.0f);
+					boxm->end = f3(x + 2.5f, 2.5f, 127.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				else if (irand == 1)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine3;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 3.0f, 0.0f, 123.0f);
+					boxm->end = f3(x + 3.0f, 3.0f, 127.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (irand == 2)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine4;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 1.5f, 0.0f, 123.5f);
+					boxm->end = f3(x + 1.5f, 5.0f, 126.5f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (irand == 3)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine6;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 3.0f, 0.0f, 122.0f);
+					boxm->end = f3(x + 3.0f, 4.0f, 128.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				else if (irand == 4)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine7;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x - 2.5f, 0.0f, 123.5f);
+					boxm->end = f3(x + 2.5f, 4.0f, 126.5f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+
+				int r2 = rand() % 5;
+				if (r2 == 0)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine1;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 123.0f);
+					boxm->end = f3(x + 50.0f + 2.5f, 2.5f, 127.0f);
+
+
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 1)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine3;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 123.0f);
+					boxm->end = f3(x + 50.0f + 3.0f, 3.0f, 127.0f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 2)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine4;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 1.5f, 0.0f, 123.5f);
+					boxm->end = f3(x + 50.0f + 1.5f, 5.0f, 126.5f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 3)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine6;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 122.0f);
+					boxm->end = f3(x + 50.0f + 3.0f, 4.0f, 128.0f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+				else if (r2 == 4)
+				{
+					Object* m = (Object*)malloc(sizeof(Object));
+					m->location = f3(x + 50.0f, 0.0f, 125.0f);
+					m->rotation = f3(0.0f, 0.0f, 0.0f);
+					m->type = Machine7;
+
+					BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 123.5f);
+					boxm->end = f3(x + 50.0f + 2.5f, 1.5f, 126.5f);
+
+					list.push_back(*m);
+					blist.push_back(*boxm);
+				}
+			}
+		}
+
+		//fence
+		for (float x = 208.0f; x < 244.4f; x += 4.0f)
+		{
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(x, 0.0f, 185.0f);
+				fence->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(x - 2.0f, 0.0f, 184.75f);
+				boxfence->end = f3(x + 2.0f, 3.0f, 185.25f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(x, 0.0f, 169.0f);
+				fence2->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(x - 2.0f, 0.0f, 168.75f);
+				boxfence2->end = f3(x + 2.0f, 3.0f, 169.25f);
+
+
+				Object* fence3 = (Object*)malloc(sizeof(Object));
+				fence3->location = f3(300.0f - (x - 200.0f), 0.0f, 185.0f);
+				fence3->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence3->type = Fence12;
+
+				BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence3->start = f3(300.0f - (x - 200.0f) - 2.0f, 0.0f, 184.75f);
+				boxfence3->end = f3(300.0f - (x - 200.0f) + 2.0f, 3.0f, 185.25f);
+
+				Object* fence4 = (Object*)malloc(sizeof(Object));
+				fence4->location = f3(300.0f - (x - 200.0f), 0.0f, 169.0f);
+				fence4->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence4->type = Fence12;
+
+				BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence4->start = f3(300.0f - (x - 200.0f) - 2.0f, 0.0f, 168.75f);
+				boxfence4->end = f3(300.0f - (x - 200.0f) + 2.0f, 3.0f, 169.25f);
+
+				list.push_back(*fence);
+				blist.push_back(*boxfence);
+				list.push_back(*fence2);
+				blist.push_back(*boxfence2);
+				list.push_back(*fence3);
+				blist.push_back(*boxfence3);
+				list.push_back(*fence4);
+				blist.push_back(*boxfence4);
+			}
+
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(x, 0.0f, 115.0f);
+				fence->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(x - 2.0f, 0.0f, 114.75f);
+				boxfence->end = f3(x + 2.0f, 3.0f, 115.25f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(x, 0.0f, 131.0f);
+				fence2->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(x - 2.0f, 0.0f, 130.75f);
+				boxfence2->end = f3(x + 2.0f, 3.0f, 131.25f);
+
+
+				Object* fence3 = (Object*)malloc(sizeof(Object));
+				fence3->location = f3(300.0f - (x - 200.0f), 0.0f, 115.0f);
+				fence3->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence3->type = Fence12;
+
+				BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence3->start = f3(300.0f - (x - 200.0f) - 2.0f, 0.0f, 114.75f);
+				boxfence3->end = f3(300.0f - (x - 200.0f) + 2.0f, 3.0f, 115.25f);
+
+				Object* fence4 = (Object*)malloc(sizeof(Object));
+				fence4->location = f3(300.0f - (x - 200.0f), 0.0f, 131.0f);
+				fence4->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence4->type = Fence12;
+
+				BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence4->start = f3(300.0f - (x - 200.0f) - 2.0f, 0.0f, 130.75f);
+				boxfence4->end = f3(300.0f - (x - 200.0f) + 2.0f, 3.0f, 131.25f);
+
+				list.push_back(*fence);
+				blist.push_back(*boxfence);
+				list.push_back(*fence2);
+				blist.push_back(*boxfence2);
+				list.push_back(*fence3);
+				blist.push_back(*boxfence3);
+				list.push_back(*fence4);
+				blist.push_back(*boxfence4);
+			}
+		}
+
+		for (float z = 171.0f; z < 186.0f; z += 4.0f)
+		{
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(206.0, 0.0f, z);
+				fence->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(205.75f, 0.0f, z - 2.0f);
+				boxfence->end = f3(206.25f, 3.0f, z + 2.0f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(294.0, 0.0f, z);
+				fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(293.75f, 0.0f, z - 2.0f);
+				boxfence2->end = f3(294.25f, 3.0f, z + 2.0f);
+
+				Object* fence3 = (Object*)malloc(sizeof(Object));
+				fence3->location = f3(246.0, 0.0f, z);
+				fence3->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence3->type = Fence12;
+
+				BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence3->start = f3(245.75f, 0.0f, z - 2.0f);
+				boxfence3->end = f3(246.25f, 3.0f, z + 2.0f);
+
+				Object* fence4 = (Object*)malloc(sizeof(Object));
+				fence4->location = f3(254.0, 0.0f, z);
+				fence4->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence4->type = Fence12;
+
+				BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence4->start = f3(253.75f, 0.0f, z - 2.0f);
+				boxfence4->end = f3(254.25f, 3.0f, z + 2.0f);
+
+				list.push_back(*fence);
+				list.push_back(*fence2);
+				list.push_back(*fence3);
+				list.push_back(*fence4);
+				blist.push_back(*boxfence);
+				blist.push_back(*boxfence2);
+				blist.push_back(*boxfence3);
+				blist.push_back(*boxfence4);
+			}
+
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(206.0, 0.0f, 100.0f + (200.0f - z));
+				fence->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(205.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+				boxfence->end = f3(206.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(294.0, 0.0f, 100.0f + (200.0f - z));
+				fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(293.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+				boxfence2->end = f3(294.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+				Object* fence3 = (Object*)malloc(sizeof(Object));
+				fence3->location = f3(246.0, 0.0f, 100.0f + (200.0f - z));
+				fence3->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence3->type = Fence12;
+
+				BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence3->start = f3(245.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+				boxfence3->end = f3(246.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+				Object* fence4 = (Object*)malloc(sizeof(Object));
+				fence4->location = f3(254.0, 0.0f, 100.0f + (200.0f - z));
+				fence4->rotation = f3(0.0f, 0.0f, 0.0f);
+				fence4->type = Fence12;
+
+				BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence4->start = f3(253.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+				boxfence4->end = f3(254.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+				list.push_back(*fence);
+				list.push_back(*fence2);
+				list.push_back(*fence3);
+				list.push_back(*fence4);
+				blist.push_back(*boxfence);
+				blist.push_back(*boxfence2);
+				blist.push_back(*boxfence3);
+				blist.push_back(*boxfence4);
+			}
+		}
+
+		setAreaHeight(height1_2, x12, z12, 5.5f, 168.5f, 46.5f, 185.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 53.5f, 168.5f, 94.5f, 185.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 53.5f, 114.5f, 94.5f, 131.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 5.5f, 114.5f, 46.5f, 131.5f, 3.0f);
 	}
 
 
+	//우상단 기계구역(거의 대칭)
 
-	//machine test
 	{
-		Object* m1 = (Object*)malloc(sizeof(Object));
-		m1->location = f3(230.0f, 0.0f, 180.0f);
-		m1->rotation = f3(0.0f, 0.0f, 0.0f);
-		m1->type = Machine1;
+		//cont & shield
+		
+		for (float x = 312.0f; x < 390.0f; x += 4.0f)
+		{
+			int irand = rand() % 3;
 
-		BoundingBox* box1 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		box1->start = f3(228.25f, 0.0f, 178.75f);
-		box1->end = f3(231.75f, 1.5f, 181.25f);
+			int ir = rand() % 2;
 
-		setAreaHeight(height1_2, x12, z12, 28.0f, 178.5f, 32.0f, 181.5f, 1.5f);
+			if (irand == 0)
+			{
 
-		Object* m3 = (Object*)malloc(sizeof(Object));
-		m3->location = f3(230.0f, 0.0f, 175.0f);
-		m3->rotation = f3(0.0f, 0.0f, 0.0f);
-		m3->type = Machine3;
+				Object* frame = (Object*)malloc(sizeof(Object));
+				frame->location = f3(x, 0.0f, 199.75f);
+				frame->rotation = f3(0.0f, 90.0f, 0.0f);
+				frame->type = Controller12_1;
 
-		BoundingBox* box3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		box3->start = f3(227.25f, 0.0f, 173.5f);
-		box3->end = f3(232.75f, 2.5f, 176.5f);
+				BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+				boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
 
-		setAreaHeight(height1_2, x12, z12, 27.0f, 173.5f, 33.0f, 176.5f, 2.5f);
+				list.push_back(*frame);
+				blist.push_back(*boxframe);
+			}
+			else if (irand == 1)
+			{
 
-		Object* m4 = (Object*)malloc(sizeof(Object));
-		m4->location = f3(230.0f, 0.0f, 170.0f);
-		m4->rotation = f3(0.0f, 0.0f, 0.0f);
-		m4->type = Machine4;
+				Object* frame = (Object*)malloc(sizeof(Object));
+				frame->location = f3(x, 1.0f, 199.75f);
+				frame->rotation = f3(0.0f, 90.0f, 0.0f);
+				frame->type = Controller12_2;
 
-		BoundingBox* box4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		box4->start = f3(228.0f, 0.0f, 168.5f);
-		box4->end = f3(232.5f, 2.0f, 172.0f);
+				BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+				boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
 
-		setAreaHeight(height1_2, x12, z12, 28.0f, 168.5f, 32.5f, 172.0f, 2.0f);
+				list.push_back(*frame);
+				blist.push_back(*boxframe);
+			}
+			else if (irand == 2)
+			{
 
-		Object* m6 = (Object*)malloc(sizeof(Object));
-		m6->location = f3(230.0f, 0.0f, 165.0f);
-		m6->rotation = f3(0.0f, 0.0f, 0.0f);
-		m6->type = Machine6;
+				Object* frame = (Object*)malloc(sizeof(Object));
+				frame->location = f3(x, 1.0f, 199.75f);
+				frame->rotation = f3(0.0f, 90.0f, 0.0f);
+				frame->type = Controller12_4;
 
-		BoundingBox* box6 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		box6->start = f3(227.75f, 0.0f, 164.5f);
-		box6->end = f3(232.25f, 3.0f, 169.5f);
+				BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxframe->start = f3(x - 0.5f, 0.0f, 199.5f);
+				boxframe->end = f3(x + 0.5, 2.0f, 200.0f);
+				list.push_back(*frame);
+				blist.push_back(*boxframe);
+			}
 
-		setAreaHeight(height1_2, x12, z12, 27.5f, 164.5f, 32.5f, 169.5f, 3.0f);
+			if (ir)
+			{
+				Object* frame = (Object*)malloc(sizeof(Object));
+				frame->location = f3(x, 0.0f, 195.0f);
+				frame->rotation = f3(0.0f, 0.0f, 0.0f);
+				frame->type = Shield;
 
-		Object* m7 = (Object*)malloc(sizeof(Object));
-		m7->location = f3(230.0f, 0.0f, 160.0f);
-		m7->rotation = f3(0.0f, 0.0f, 0.0f);
-		m7->type = Machine7;
+				BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxframe->start = f3(x - 0.5f, 0.0f, 194.5f);
+				boxframe->end = f3(x + 0.5f, 2.0f, 195.5f);
+				list.push_back(*frame);
+				blist.push_back(*boxframe);
+			}
+			else
+			{
+				Object* frame = (Object*)malloc(sizeof(Object));
+				frame->location = f3(x, 0.0f, 195.0f);
+				frame->rotation = f3(0.0f, 0.0f, 0.0f);
+				frame->type = BigShield;
+				if (x == 288.0f)
+				{
+					frame->type = Shield;
+				}
 
-		BoundingBox* box7 = (BoundingBox*)malloc(sizeof(BoundingBox));
-		box7->start = f3(228.5f, 0.0f, 158.25f);
-		box7->end = f3(231.5f, 1.5f, 161.75f);
+				BoundingBox* boxframe = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxframe->start = f3(x - 2.5f, 0.0f, 194.5f);
+				boxframe->end = f3(x + 2.5f, 2.0f, 195.5f);
+				list.push_back(*frame);
+				blist.push_back(*boxframe);
+			}
+		}
 
-		setAreaHeight(height1_2, x12, z12, 28.5f, 158.0f, 31.5f, 162.0f, 1.5f);
+		//fence
+		for (float z = 198.0f; z > 191.0f; z -= 4.0f)
+		{
+			Object* fence = (Object*)malloc(sizeof(Object));
+			fence->location = f3(310.0f, 0.0f, z);
+			fence->rotation = f3(0.0f, 0.0f, 0.0f);
+			fence->type = Fence12;
 
-		list.push_back(*m1);
-		blist.push_back(*box1);
-		list.push_back(*m3);
-		blist.push_back(*box3);
-		list.push_back(*m4);
-		blist.push_back(*box4);
-		list.push_back(*m6);
-		blist.push_back(*box6);
-		list.push_back(*m7);
-		blist.push_back(*box7);
+			BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfence->start = f3(309.75f, 0.0f, z - 2.0f);
+			boxfence->end = f3(310.25f, 3.0f, z + 2.0f);
+
+			Object* fence2 = (Object*)malloc(sizeof(Object));
+			fence2->location = f3(390.0f, 0.0f, z);
+			fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+			fence2->type = Fence12;
+
+			BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfence2->start = f3(389.75f, 0.0f, z - 2.0f);
+			boxfence2->end = f3(390.25f, 3.0f, z + 2.0f);
+
+			list.push_back(*fence);
+			list.push_back(*fence2);
+			blist.push_back(*boxfence);
+			blist.push_back(*boxfence2);
+		}
+		for (float x = 312.0f; x < 390.0f; x += 4.0f)
+		{
+			Object* fence = (Object*)malloc(sizeof(Object));
+			fence->location = f3(x, 0.0f, 192.0f);
+			fence->rotation = f3(0.0f, 90.0f, 0.0f);
+			fence->type = Fence12;
+
+			BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfence->start = f3(x - 2.0f, 0.0f, 191.75f);
+			boxfence->end = f3(x + 2.0f, 3.0f, 192.25f);
+
+			list.push_back(*fence);
+			blist.push_back(*boxfence);
+		}
+
+		setAreaHeight(height1_2, x12, z12, 109.75f, 191.75f, 190.25f, 200.0f, 3.0f);
+
+		//container
+		for (float z = 141.0f; z <= 160.0f; z += 9.0f)
+		{
+			if (z == 150.0f)
+			{
+				for (float x = 320.0f; x <= 390.0f; x += 12.0f)
+				{
+					Object* con = (Object*)malloc(sizeof(Object));
+					con->location = f3(x, 0.0f, z);
+					con->rotation = f3(0.0f, 90.0f, 0.0f);
+					con->type = Container12;
+
+					BoundingBox* boxcon = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxcon->start = f3(x - 3.0f, 0.0f, z - 1.5f);
+					boxcon->end = f3(x + 3.0f, 3.0f, z + 1.5f);
+
+					setAreaHeight(height1_2, x12, z12, x - 3.5f - 200.0f, z - 2.0f, x + 3.5f - 200.0f, z + 2.0f, 3.0f);
+
+					list.push_back(*con);
+					blist.push_back(*boxcon);
+				}
+			}
+			else
+			{
+				for (float x = 314.0f; x <= 390.0f; x += 12.0f)
+				{
+					Object* con = (Object*)malloc(sizeof(Object));
+					con->location = f3(x, 0.0f, z);
+					con->rotation = f3(0.0f, 90.0f, 0.0f);
+					con->type = Container12;
+
+					BoundingBox* boxcon = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxcon->start = f3(x - 3.0f, 0.0f, z - 1.5f);
+					boxcon->end = f3(x + 3.0f, 3.0f, z + 1.5f);
+
+					setAreaHeight(height1_2, x12, z12, x - 3.5f - 200.0f, z - 2.0f, x + 3.5f - 200.0f, z + 2.0f, 3.0f);
+
+					list.push_back(*con);
+					blist.push_back(*boxcon);
+				}
+			}
+		}
+
+		//fan & machine
+		for (float x = 310.0f; x < 341.0f; x += 3.0f)
+			{
+				{
+					Object* fan = (Object*)malloc(sizeof(Object));
+					fan->location = f3(x, 0.0f, 180.0f);
+					fan->rotation = f3(0.0f, 0.0f, 0.0f);
+					fan->type = AirFan;
+
+					BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfan->start = f3(x - 1.25f, 0.0f, 177.0f);
+					boxfan->end = f3(x + 1.25f, 2.5f, 183.0f);
+
+
+
+					Object* fan2 = (Object*)malloc(sizeof(Object));
+					fan2->location = f3(x + 50.0f, 0.0f, 180.0f);
+					fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+					fan2->type = AirFan;
+
+					BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfan2->start = f3(x + 50.0f - 1.25f, 0.0f, 177.0f);
+					boxfan2->end = f3(x + 50.0f + 1.25f, 2.5f, 183.0f);
+
+
+
+					list.push_back(*fan);
+					blist.push_back(*boxfan);
+					list.push_back(*fan2);
+					blist.push_back(*boxfan2);
+				}
+
+				{
+					Object* fan = (Object*)malloc(sizeof(Object));
+					fan->location = f3(x, 0.0f, 120.0f);
+					fan->rotation = f3(0.0f, 180.0f, 0.0f);
+					fan->type = AirFan;
+
+					BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfan->start = f3(x - 1.25f, 0.0f, 117.0f);
+					boxfan->end = f3(x + 1.25f, 2.5f, 123.0f);
+
+
+
+					Object* fan2 = (Object*)malloc(sizeof(Object));
+					fan2->location = f3(x + 50.0f, 0.0f, 120.0f);
+					fan2->rotation = f3(0.0f, 180.0f, 0.0f);
+					fan2->type = AirFan;
+
+					BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfan2->start = f3(x + 50.0f - 1.25f, 0.0f, 117.0f);
+					boxfan2->end = f3(x + 50.0f + 1.25f, 2.5f, 123.0f);
+
+
+
+					list.push_back(*fan);
+					blist.push_back(*boxfan);
+					list.push_back(*fan2);
+					blist.push_back(*boxfan2);
+				}
+
+			}
+		for (float x = 310.0f; x < 340.0f; x += 7.0f)
+			{
+				{
+					int irand = rand() % 5;
+					if (irand == 0)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine1;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 2.5f, 0.0f, 169.0f);
+						boxm->end = f3(x + 2.5f, 2.5f, 173.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					else if (irand == 1)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine3;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 3.0f, 0.0f, 169.0f);
+						boxm->end = f3(x + 3.0f, 3.0f, 173.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (irand == 2)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine4;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 1.5f, 0.0f, 169.5f);
+						boxm->end = f3(x + 1.5f, 5.0f, 172.5f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (irand == 3)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine6;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 3.0f, 0.0f, 168.0f);
+						boxm->end = f3(x + 3.0f, 4.0f, 174.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					else if (irand == 4)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine7;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 2.5f, 0.0f, 169.5f);
+						boxm->end = f3(x + 2.5f, 4.0f, 172.5f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					int r2 = rand() % 5;
+					if (r2 == 0)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine1;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 169.0f);
+						boxm->end = f3(x + 50.0f + 2.5f, 2.5f, 173.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 1)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine3;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 169.0f);
+						boxm->end = f3(x + 50.0f + 3.0f, 3.0f, 173.0f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 2)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine4;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 1.5f, 0.0f, 169.5f);
+						boxm->end = f3(x + 50.0f + 1.5f, 5.0f, 172.5f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 3)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine6;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 168.0f);
+						boxm->end = f3(x + 50.0f + 3.0f, 4.0f, 174.0f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 4)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 171.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine7;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 169.5f);
+						boxm->end = f3(x + 50.0f + 2.5f, 1.5f, 172.5f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+				}
+
+				{
+					int irand = rand() % 5;
+					if (irand == 0)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine1;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 2.5f, 0.0f, 123.0f);
+						boxm->end = f3(x + 2.5f, 2.5f, 127.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					else if (irand == 1)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine3;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 3.0f, 0.0f, 123.0f);
+						boxm->end = f3(x + 3.0f, 3.0f, 127.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (irand == 2)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine4;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 1.5f, 0.0f, 123.5f);
+						boxm->end = f3(x + 1.5f, 5.0f, 126.5f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (irand == 3)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine6;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 3.0f, 0.0f, 122.0f);
+						boxm->end = f3(x + 3.0f, 4.0f, 128.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					else if (irand == 4)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine7;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x - 2.5f, 0.0f, 123.5f);
+						boxm->end = f3(x + 2.5f, 4.0f, 126.5f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+
+					int r2 = rand() % 5;
+					if (r2 == 0)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine1;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 123.0f);
+						boxm->end = f3(x + 50.0f + 2.5f, 2.5f, 127.0f);
+
+
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 1)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine3;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 123.0f);
+						boxm->end = f3(x + 50.0f + 3.0f, 3.0f, 127.0f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 2)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine4;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 1.5f, 0.0f, 123.5f);
+						boxm->end = f3(x + 50.0f + 1.5f, 5.0f, 126.5f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 3)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine6;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 3.0f, 0.0f, 122.0f);
+						boxm->end = f3(x + 50.0f + 3.0f, 4.0f, 128.0f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+					else if (r2 == 4)
+					{
+						Object* m = (Object*)malloc(sizeof(Object));
+						m->location = f3(x + 50.0f, 0.0f, 125.0f);
+						m->rotation = f3(0.0f, 0.0f, 0.0f);
+						m->type = Machine7;
+
+						BoundingBox* boxm = (BoundingBox*)malloc(sizeof(BoundingBox));
+						boxm->start = f3(x + 50.0f - 2.5f, 0.0f, 123.5f);
+						boxm->end = f3(x + 50.0f + 2.5f, 1.5f, 126.5f);
+
+						list.push_back(*m);
+						blist.push_back(*boxm);
+					}
+				}
+			}
+
+		//fence
+		for (float x = 308.0f; x < 344.4f; x += 4.0f)
+		{
+			{
+				Object* fence = (Object*)malloc(sizeof(Object));
+				fence->location = f3(x, 0.0f, 185.0f);
+				fence->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence->type = Fence12;
+
+				BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence->start = f3(x - 2.0f, 0.0f, 184.75f);
+				boxfence->end = f3(x + 2.0f, 3.0f, 185.25f);
+
+				Object* fence2 = (Object*)malloc(sizeof(Object));
+				fence2->location = f3(x, 0.0f, 169.0f);
+				fence2->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence2->type = Fence12;
+
+				BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence2->start = f3(x - 2.0f, 0.0f, 168.75f);
+				boxfence2->end = f3(x + 2.0f, 3.0f, 169.25f);
+
+
+				Object* fence3 = (Object*)malloc(sizeof(Object));
+				fence3->location = f3(400.0f - (x - 300.0f), 0.0f, 185.0f);
+				fence3->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence3->type = Fence12;
+
+				BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence3->start = f3(400.0f - (x - 300.0f) - 2.0f, 0.0f, 184.75f);
+				boxfence3->end = f3(400.0f - (x - 300.0f) + 2.0f, 3.0f, 185.25f);
+
+				Object* fence4 = (Object*)malloc(sizeof(Object));
+				fence4->location = f3(400.0f - (x - 300.0f), 0.0f, 169.0f);
+				fence4->rotation = f3(0.0f, 90.0f, 0.0f);
+				fence4->type = Fence12;
+
+				BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfence4->start = f3(400.0f - (x - 300.0f) - 2.0f, 0.0f, 168.75f);
+				boxfence4->end = f3(400.0f - (x - 300.0f) + 2.0f, 3.0f, 169.25f);
+
+				list.push_back(*fence);
+				blist.push_back(*boxfence);
+				list.push_back(*fence2);
+				blist.push_back(*boxfence2);
+				list.push_back(*fence3);
+				blist.push_back(*boxfence3);
+				list.push_back(*fence4);
+				blist.push_back(*boxfence4);
+			}
+
+			{
+					Object* fence = (Object*)malloc(sizeof(Object));
+					fence->location = f3(x, 0.0f, 115.0f);
+					fence->rotation = f3(0.0f, 90.0f, 0.0f);
+					fence->type = Fence12;
+
+					BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence->start = f3(x - 2.0f, 0.0f, 114.75f);
+					boxfence->end = f3(x + 2.0f, 3.0f, 115.25f);
+
+					Object* fence2 = (Object*)malloc(sizeof(Object));
+					fence2->location = f3(x, 0.0f, 131.0f);
+					fence2->rotation = f3(0.0f, 90.0f, 0.0f);
+					fence2->type = Fence12;
+
+					BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence2->start = f3(x - 2.0f, 0.0f, 130.75f);
+					boxfence2->end = f3(x + 2.0f, 3.0f, 131.25f);
+
+
+					Object* fence3 = (Object*)malloc(sizeof(Object));
+					fence3->location = f3(400.0f - (x - 300.0f), 0.0f, 115.0f);
+					fence3->rotation = f3(0.0f, 90.0f, 0.0f);
+					fence3->type = Fence12;
+
+					BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence3->start = f3(400.0f - (x - 300.0f) - 2.0f, 0.0f, 114.75f);
+					boxfence3->end = f3(400.0f - (x - 300.0f) + 2.0f, 3.0f, 115.25f);
+
+					Object* fence4 = (Object*)malloc(sizeof(Object));
+					fence4->location = f3(400.0f - (x - 300.0f), 0.0f, 131.0f);
+					fence4->rotation = f3(0.0f, 90.0f, 0.0f);
+					fence4->type = Fence12;
+
+					BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence4->start = f3(400.0f - (x - 300.0f) - 2.0f, 0.0f, 130.75f);
+					boxfence4->end = f3(400.0f - (x - 300.0f) + 2.0f, 3.0f, 131.25f);
+
+					list.push_back(*fence);
+					blist.push_back(*boxfence);
+					list.push_back(*fence2);
+					blist.push_back(*boxfence2);
+					list.push_back(*fence3);
+					blist.push_back(*boxfence3);
+					list.push_back(*fence4);
+					blist.push_back(*boxfence4);
+				}
+		}
+
+		for (float z = 171.0f; z < 186.0f; z += 4.0f)
+			{
+				{
+					Object* fence = (Object*)malloc(sizeof(Object));
+					fence->location = f3(306.0, 0.0f, z);
+					fence->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence->type = Fence12;
+
+					BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence->start = f3(305.75f, 0.0f, z - 2.0f);
+					boxfence->end = f3(306.25f, 3.0f, z + 2.0f);
+
+					Object* fence2 = (Object*)malloc(sizeof(Object));
+					fence2->location = f3(394.0, 0.0f, z);
+					fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence2->type = Fence12;
+
+					BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence2->start = f3(393.75f, 0.0f, z - 2.0f);
+					boxfence2->end = f3(394.25f, 3.0f, z + 2.0f);
+
+					Object* fence3 = (Object*)malloc(sizeof(Object));
+					fence3->location = f3(346.0, 0.0f, z);
+					fence3->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence3->type = Fence12;
+
+					BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence3->start = f3(345.75f, 0.0f, z - 2.0f);
+					boxfence3->end = f3(346.25f, 3.0f, z + 2.0f);
+
+					Object* fence4 = (Object*)malloc(sizeof(Object));
+					fence4->location = f3(354.0, 0.0f, z);
+					fence4->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence4->type = Fence12;
+
+					BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence4->start = f3(353.75f, 0.0f, z - 2.0f);
+					boxfence4->end = f3(354.25f, 3.0f, z + 2.0f);
+
+					list.push_back(*fence);
+					list.push_back(*fence2);
+					list.push_back(*fence3);
+					list.push_back(*fence4);
+					blist.push_back(*boxfence);
+					blist.push_back(*boxfence2);
+					blist.push_back(*boxfence3);
+					blist.push_back(*boxfence4);
+				}
+
+				{
+					Object* fence = (Object*)malloc(sizeof(Object));
+					fence->location = f3(306.0, 0.0f, 100.0f + (200.0f - z));
+					fence->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence->type = Fence12;
+
+					BoundingBox* boxfence = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence->start = f3(305.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+					boxfence->end = f3(306.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+					Object* fence2 = (Object*)malloc(sizeof(Object));
+					fence2->location = f3(394.0, 0.0f, 100.0f + (200.0f - z));
+					fence2->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence2->type = Fence12;
+
+					BoundingBox* boxfence2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence2->start = f3(393.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+					boxfence2->end = f3(394.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+					Object* fence3 = (Object*)malloc(sizeof(Object));
+					fence3->location = f3(346.0, 0.0f, 100.0f + (200.0f - z));
+					fence3->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence3->type = Fence12;
+
+					BoundingBox* boxfence3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence3->start = f3(345.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+					boxfence3->end = f3(346.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+					Object* fence4 = (Object*)malloc(sizeof(Object));
+					fence4->location = f3(354.0, 0.0f, 100.0f + (200.0f - z));
+					fence4->rotation = f3(0.0f, 0.0f, 0.0f);
+					fence4->type = Fence12;
+
+					BoundingBox* boxfence4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfence4->start = f3(353.75f, 0.0f, 100.0f + (200.0f - z) - 2.0f);
+					boxfence4->end = f3(354.25f, 3.0f, 100.0f + (200.0f - z) + 2.0f);
+
+					list.push_back(*fence);
+					list.push_back(*fence2);
+					list.push_back(*fence3);
+					list.push_back(*fence4);
+					blist.push_back(*boxfence);
+					blist.push_back(*boxfence2);
+					blist.push_back(*boxfence3);
+					blist.push_back(*boxfence4);
+				}
+			}
+
+		setAreaHeight(height1_2, x12, z12, 105.5f, 168.5f, 146.5f, 185.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 153.5f, 168.5f, 194.5f, 185.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 153.5f, 114.5f, 194.5f, 131.5f, 3.0f);
+
+		setAreaHeight(height1_2, x12, z12, 105.5f, 114.5f, 146.5f, 131.5f, 3.0f);
 	}
 
-	// manufacturer test
-	Object* arm = (Object*)malloc(sizeof(Object));
-	arm->location = f3(230.0f, 0.0f, 150.0f);
-	arm->rotation = f3(0.0f, 0.0f, 0.0f);
-	arm->type = RobotArm;
+	//좌하단 안드로이드 충전소
+	{
+	//좌상단 충전소
+		{
+			Object* floor = (Object*)malloc(sizeof(Object));
+			floor->location = f3(200.0, 2.0f, 60.0f);
+			floor->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor->type = ChargeFloor;
 
-	BoundingBox* box = (BoundingBox*)malloc(sizeof(BoundingBox));
-	box->start = f3(229.0f, 0.0f, 149.0f);
-	box->end = f3(231.0f, 3.0f, 151.0f);
+			BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor->start = f3(200.0f, 2.0f, 60.0f);
+			boxfloor->end = f3(240.0f, 3.0f, 100.0f);
+
+			Object* floor2 = (Object*)malloc(sizeof(Object));
+			floor2->location = f3(200.0, 5.0f, 60.0f);
+			floor2->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor2->type = ChargeFloor;
+
+			BoundingBox* boxfloor2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor2->start = f3(200.0f, 5.0f, 60.0f);
+			boxfloor2->end = f3(240.0f, 6.0f, 100.0f);
+
+			Object* floor21 = (Object*)malloc(sizeof(Object));
+			floor21->location = f3(200.0, 6.0f, 60.0f);
+			floor21->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor21->type = ChargeFloor2;
+
+			BoundingBox* boxfloor21 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor21->start = f3(200.0f, 5.99f, 60.0f);
+			boxfloor21->end = f3(240.0f, 6.0f, 100.0f);
+
+			Object* floor212 = (Object*)malloc(sizeof(Object));
+			floor212->location = f3(200.0, 2.0f, 60.0f);
+			floor212->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor212->type = ChargeFloor2;
+
+			BoundingBox* boxfloor212 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor212->start = f3(200.0f, 1.99f, 60.0f);
+			boxfloor212->end = f3(240.0f, 2.0f, 100.0f);
+
+			Object* floor213 = (Object*)malloc(sizeof(Object));
+			floor213->location = f3(200.0, 3.0f, 60.0f);
+			floor213->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor213->type = ChargeFloor2;
+
+			BoundingBox* boxfloor213 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor213->start = f3(200.0f, 2.99f, 60.0f);
+			boxfloor213->end = f3(240.0f, 3.0f, 100.0f);
+
+			list.push_back(*floor);
+			blist.push_back(*boxfloor);
+			list.push_back(*floor2);
+			blist.push_back(*boxfloor2);
+			list.push_back(*floor21);
+			blist.push_back(*boxfloor21);
+			list.push_back(*floor212);
+			blist.push_back(*boxfloor212);
+			list.push_back(*floor213);
+			blist.push_back(*boxfloor213);
+
+			for (float x = 200.0f; x < 240.0f; x += 2.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 0.0f, 61.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 0.0f, 60.5f);
+					boxrobot->end = f3(x + 1.5f, 1.7f, 61.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 3.0f, 61.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 3.0f, 60.5f);
+					boxrobot->end = f3(x + 1.5f, 4.7f, 61.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
 
 
-	Object* sew = (Object*)malloc(sizeof(Object));
-	sew->location = f3(225.0f, 0.0f, 150.0f);
-	sew->rotation = f3(0.0f, 0.0f, 0.0f);
-	sew->type = Sewer;
 
-	BoundingBox* box2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	box2->start = f3(224.5f, 0.0f, 149.75f);
-	box2->end = f3(225.5f, 0.5f, 150.75f);
+
+			}
+			for (float z = 62.0f; z < 99.0f; z += 2.0f)
+			{
+
+
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(239.0f, 0.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(238.5f, 0.0f, z + 0.5f);
+					boxrobot->end = f3(239.5f, 1.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(239.0f, 3.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(238.5f, 3.0f, z + 0.5f);
+					boxrobot->end = f3(239.5f, 4.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+			}
+			for (float x = 200.0f; x < 240.0f; x += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 60.0f);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x, 0.0f, 60.0f);
+				boxfan->end = f3(x + 2.0f, 2.0f, 62.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x, 3.0f, 60.0f);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x, 3.0f, 60.0f);
+				boxfan2->end = f3(x + 2.0f, 5.0f, 62.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+			for (float z = 62.0f; z < 99.0f; z += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(238.0, 0.0f, z);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(238.0f, 0.0f, z);
+				boxfan->end = f3(240.0f, 2.0f, z + 2.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(238.0, 3.0f, z);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(238.0f, 3.0f, z);
+				boxfan2->end = f3(240.0f, 5.0f, z + 2.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+
+			setAreaHeight(height1_2, x12, z12, 0.0f, 59.5f, 40.5f, 100.0f, 6.0f);
+
+		}
+
+		//우상단 충전소
+		{
+			Object* floor3 = (Object*)malloc(sizeof(Object));
+			floor3->location = f3(260.0, 2.0f, 50.0f);
+			floor3->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor3->type = ChargeFloor;
+
+			BoundingBox* boxfloor3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor3->start = f3(260.0f, 2.0f, 50.0f);
+			boxfloor3->end = f3(300.0f, 3.0f, 90.0f);
+
+			Object* floor4 = (Object*)malloc(sizeof(Object));
+			floor4->location = f3(260.0, 5.0f, 50.0f);
+			floor4->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor4->type = ChargeFloor;
+
+			BoundingBox* boxfloor4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor4->start = f3(260.0f, 5.0f, 50.0f);
+			boxfloor4->end = f3(300.0f, 6.0f, 90.0f);
+
+			Object* floor22 = (Object*)malloc(sizeof(Object));
+			floor22->location = f3(260.0, 6.0f, 50.0f);
+			floor22->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor22->type = ChargeFloor2;
+
+			BoundingBox* boxfloor22 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor22->start = f3(260.0f, 5.99f, 50.0f);
+			boxfloor22->end = f3(300.0f, 6.0f, 90.0f);
+
+			Object* floor222 = (Object*)malloc(sizeof(Object));
+			floor222->location = f3(260.0, 2.0f, 50.0f);
+			floor222->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor222->type = ChargeFloor2;
+
+			BoundingBox* boxfloor222 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor222->start = f3(260.0f, 1.99f, 50.0f);
+			boxfloor222->end = f3(300.0f, 2.0f, 90.0f);
+
+			Object* floor223 = (Object*)malloc(sizeof(Object));
+			floor223->location = f3(260.0, 3.0f, 50.0f);
+			floor223->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor223->type = ChargeFloor2;
+
+			BoundingBox* boxfloor223 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor223->start = f3(260.0f, 2.99f, 50.0f);
+			boxfloor223->end = f3(300.0f, 3.0f, 90.0f);
+
+			list.push_back(*floor3);
+			blist.push_back(*boxfloor3);
+			list.push_back(*floor4);
+			blist.push_back(*boxfloor4);
+			list.push_back(*floor22);
+			blist.push_back(*boxfloor22);
+			list.push_back(*floor222);
+			blist.push_back(*boxfloor222);
+			list.push_back(*floor223);
+			blist.push_back(*boxfloor223);
+
+			for (float x = 260.0f; x < 300.0f; x += 2.0f)
+			{
+
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 0.0f, 89.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 0.0f, 88.5f);
+					boxrobot->end = f3(x + 1.5f, 1.7f, 89.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 3.0f, 89.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 3.0f, 88.5f);
+					boxrobot->end = f3(x + 1.5f, 4.7f, 89.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+			}
+			for (float z = 50.0f; z < 87.0f; z += 2.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(261.0f, 0.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(260.5f, 0.0f, z + 0.5f);
+					boxrobot->end = f3(261.5f, 1.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(261.0f, 3.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(260.5f, 3.0f, z + 0.5f);
+					boxrobot->end = f3(261.5f, 4.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+
+
+
+			}
+			for (float x = 260.0f; x < 300.0f; x += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 88.0f);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x, 0.0f, 88.0f);
+				boxfan->end = f3(x + 2.0f, 2.0f, 90.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x, 3.0f, 88.0f);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x, 3.0f, 88.0f);
+				boxfan2->end = f3(x + 2.0f, 5.0f, 90.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+			for (float z = 50.0f; z < 87.0f; z += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(260.0, 0.0f, z);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(260.0f, 0.0f, z);
+				boxfan->end = f3(262.0f, 2.0f, z + 2.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(260.0, 3.0f, z);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(260.0f, 3.0f, z);
+				boxfan2->end = f3(262.0f, 5.0f, z + 2.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+
+			setAreaHeight(height1_2, x12, z12, 59.5f, 50.0f, 100.0f, 90.5f, 6.0f);
+		}
+
+		//좌하단 에너지실드
+		{
+			for (float z = 2.5f; z < 45.0f; z += 5.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(204.0, 0.0f, z);
+					floor->rotation = f3(0.0f, 270.0f, 0.0f);
+					floor->type = Shield;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(203.75f, 0.0f, z - 0.4f);
+					boxfloor->end = f3(204.25f, 2.0f, z + 0.4f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(204.0, 0.0f, z);
+					floor->rotation = f3(0.0f, 270.0f, 0.0f);
+					floor->type = BigShield;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(203.75f, 0.0f, z - 2.0f);
+					boxfloor->end = f3(204.25f, 2.0f, z + 2.0f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+
+				int ir2 = rand() % 3;
+				if (ir == 0)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(200.25, 0.0f, z);
+					floor->rotation = f3(0.0f, 0.0f, 0.0f);
+					floor->type = Controller12_1;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(200.0f, 0.0f, z - 0.75f);
+					boxfloor->end = f3(200.5f, 1.75f, z + 0.75f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else if (ir == 1)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(200.25, 0.0f, z);
+					floor->rotation = f3(0.0f, 0.0f, 0.0f);
+					floor->type = Controller12_2;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(200.0f, 0.0f, z - 0.25f);
+					boxfloor->end = f3(200.5f, 0.85f, z + 0.25f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else if (ir == 2)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(200.25, 0.0f, z);
+					floor->rotation = f3(0.0f, 0.0f, 0.0f);
+					floor->type = Controller12_4;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(200.0f, 0.0f, z - 0.5f);
+					boxfloor->end = f3(200.5f, 0.9f, z + 0.5f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+
+
+			}
+			for (float z = 2.0f; z <= 46.1f; z += 4.0f)
+			{
+
+				Object* floor = (Object*)malloc(sizeof(Object));
+				floor->location = f3(208.0, 0.0f, z);
+				floor->rotation = f3(0.0f, 0.0f, 0.0f);
+				floor->type = Fence12;
+
+				BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfloor->start = f3(207.75f, 0.0f, z - 2.0f);
+				boxfloor->end = f3(208.25f, 3.0f, z + 2.0f);
+
+				list.push_back(*floor);
+				blist.push_back(*boxfloor);
+			}
+
+			for (float x = 202.0f; x < 206.1f; x += 4.0f)
+			{
+				Object* floor = (Object*)malloc(sizeof(Object));
+				floor->location = f3(x, 0.0f, 48.0f);
+				floor->rotation = f3(0.0f, 90.0f, 0.0f);
+				floor->type = Fence12;
+
+				BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfloor->start = f3(x - 2.0f, 0.0f, 47.75f);
+				boxfloor->end = f3(x + 2.0f, 3.0f, 48.25f);
+
+				list.push_back(*floor);
+				blist.push_back(*boxfloor);
+			}
+
+			setAreaHeight(height1_2, x12, z12, 0.0f, 0.0f, 8.5f, 48.5f, 5.0f);
+		}
+
+		//위층 올라가는길
+
+		for (float z = 10.75f; z < 40.0f; z += 1.5f)
+		{
+			for (float x = 241.75f; x < 244.0f; x += 1.5f)
+			{
+				Object* box = (Object*)malloc(sizeof(Object));
+				box->location = f3(x, 0.0f, z);
+				box->rotation = f3(0.0f, 90.0f, 0.0f);
+				box->type = Box12;
+
+				BoundingBox* boxbox = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox->start = f3(x - 1.0f, 0.0f, z - 1.0f);
+				boxbox->end = f3(x + 1.0f, 1.5f, z + 1.0f);
+
+				Object* box2 = (Object*)malloc(sizeof(Object));
+				box2->location = f3(x + 6.0f, 3.0f, z);
+				box2->rotation = f3(0.0f, 90.0f, 0.0f);
+				box2->type = Box12;
+
+				BoundingBox* boxbox2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox2->start = f3(x + 5.0f, 3.0f, z - 1.0f);
+				boxbox2->end = f3(x + 7.0f, 4.5f, z + 1.0f);
+
+				list.push_back(*box);
+				blist.push_back(*boxbox);
+				list.push_back(*box2);
+				blist.push_back(*boxbox2);
+			}
+		}
+		for (float z = 13.0f; z < 40.0f; z += 6.0f)
+		{
+			for (float x = 245.5f; x < 250.0f; x += 3.0f)
+			{
+				Object* box = (Object*)malloc(sizeof(Object));
+				box->location = f3(x, 0.0f, z);
+				box->rotation = f3(0.0f, 0.0f, 0.0f);
+				box->type = Container12;
+
+				BoundingBox* boxbox = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox->start = f3(x - 1.5f, 0.0f, z - 3.0f);
+				boxbox->end = f3(x + 1.5f, 3.0f, z + 3.0f);
+
+				list.push_back(*box);
+				blist.push_back(*boxbox);
+			}
+		}
+		setAreaHeight(height1_2, x12, z12, 40.5f, 9.5f, 50.0f, 40.5f, 1.5f);
+		setAreaHeight(height1_2, x12, z12, 43.5f, 9.5f, 50.0f, 40.5f, 3.0f);
+		setAreaHeight(height1_2, x12, z12, 46.5f, 9.5f, 50.0f, 40.5f, 4.5f);
+	}
 	
-	list.push_back(*arm);
-	list.push_back(*sew);
-	blist.push_back(*box);
-	blist.push_back(*box2);
-	*/
+	//우하단 안드로이드 충전소
+	{
+	//우상단 충전소
+		{
+			Object* floor = (Object*)malloc(sizeof(Object));
+			floor->location = f3(360.0, 2.0f, 60.0f);
+			floor->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor->type = ChargeFloor;
+
+			BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor->start = f3(360.0f, 2.0f, 60.0f);
+			boxfloor->end = f3(400.0f, 3.0f, 100.0f);
+
+			Object* floor2 = (Object*)malloc(sizeof(Object));
+			floor2->location = f3(360.0, 5.0f, 60.0f);
+			floor2->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor2->type = ChargeFloor;
+
+			BoundingBox* boxfloor2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor2->start = f3(360.0f, 5.0f, 60.0f);
+			boxfloor2->end = f3(400.0f, 6.0f, 100.0f);
+
+			Object* floor21 = (Object*)malloc(sizeof(Object));
+			floor21->location = f3(360.0, 6.0f, 60.0f);
+			floor21->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor21->type = ChargeFloor2;
+
+			BoundingBox* boxfloor21 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor21->start = f3(360.0f, 5.99f, 60.0f);
+			boxfloor21->end = f3(400.0f, 6.0f, 100.0f);
+
+			Object* floor212 = (Object*)malloc(sizeof(Object));
+			floor212->location = f3(360.0, 2.0f, 60.0f);
+			floor212->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor212->type = ChargeFloor2;
+
+			BoundingBox* boxfloor212 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor212->start = f3(360.0f, 1.99f, 60.0f);
+			boxfloor212->end = f3(400.0f, 2.0f, 100.0f);
+
+			Object* floor213 = (Object*)malloc(sizeof(Object));
+			floor213->location = f3(360.0, 3.0f, 60.0f);
+			floor213->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor213->type = ChargeFloor2;
+
+			BoundingBox* boxfloor213 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor213->start = f3(360.0f, 2.99f, 60.0f);
+			boxfloor213->end = f3(400.0f, 3.0f, 100.0f);
+
+			list.push_back(*floor);
+			blist.push_back(*boxfloor);
+			list.push_back(*floor2);
+			blist.push_back(*boxfloor2);
+			list.push_back(*floor21);
+			blist.push_back(*boxfloor21);
+			list.push_back(*floor212);
+			blist.push_back(*boxfloor212);
+			list.push_back(*floor213);
+			blist.push_back(*boxfloor213);
+
+			for (float x = 360.0f; x < 400.0f; x += 2.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 0.0f, 61.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 0.0f, 60.5f);
+					boxrobot->end = f3(x + 1.5f, 1.7f, 61.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 3.0f, 61.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 3.0f, 60.5f);
+					boxrobot->end = f3(x + 1.5f, 4.7f, 61.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+
+
+
+
+			}
+			for (float z = 62.0f; z < 99.0f; z += 2.0f)
+			{
+
+
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(361.0f, 0.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(360.5f, 0.0f, z + 0.5f);
+					boxrobot->end = f3(361.5f, 1.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(361.0f, 3.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(360.5f, 3.0f, z + 0.5f);
+					boxrobot->end = f3(361.5f, 4.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+			}
+			for (float x = 360.0f; x < 400.0f; x += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 60.0f);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x, 0.0f, 60.0f);
+				boxfan->end = f3(x + 2.0f, 2.0f, 62.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x, 3.0f, 60.0f);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x, 3.0f, 60.0f);
+				boxfan2->end = f3(x + 2.0f, 5.0f, 62.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+			for (float z = 62.0f; z < 99.0f; z += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(360.0, 0.0f, z);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(360.0f, 0.0f, z);
+				boxfan->end = f3(362.0f, 2.0f, z + 2.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(360.0, 3.0f, z);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(360.0f, 3.0f, z);
+				boxfan2->end = f3(362.0f, 5.0f, z + 2.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+
+			setAreaHeight(height1_2, x12, z12, 159.5f, 59.5f, 200.0f, 100.0f, 6.0f);
+
+		}
+
+
+
+		//좌상단 충전소
+		{
+			Object* floor3 = (Object*)malloc(sizeof(Object));
+			floor3->location = f3(300.0, 2.0f, 50.0f);
+			floor3->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor3->type = ChargeFloor;
+
+			BoundingBox* boxfloor3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor3->start = f3(300.0f, 2.0f, 50.0f);
+			boxfloor3->end = f3(340.0f, 3.0f, 90.0f);
+
+			Object* floor4 = (Object*)malloc(sizeof(Object));
+			floor4->location = f3(300.0, 5.0f, 50.0f);
+			floor4->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor4->type = ChargeFloor;
+
+			BoundingBox* boxfloor4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor4->start = f3(300.0f, 5.0f, 50.0f);
+			boxfloor4->end = f3(340.0f, 6.0f, 90.0f);
+
+			Object* floor22 = (Object*)malloc(sizeof(Object));
+			floor22->location = f3(300.0, 6.0f, 50.0f);
+			floor22->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor22->type = ChargeFloor2;
+
+			BoundingBox* boxfloor22 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor22->start = f3(300.0f, 5.99f, 50.0f);
+			boxfloor22->end = f3(340.0f, 6.0f, 90.0f);
+
+			Object* floor222 = (Object*)malloc(sizeof(Object));
+			floor222->location = f3(300.0, 2.0f, 50.0f);
+			floor222->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor222->type = ChargeFloor2;
+
+			BoundingBox* boxfloor222 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor222->start = f3(300.0f, 1.99f, 50.0f);
+			boxfloor222->end = f3(340.0f, 2.0f, 90.0f);
+
+			Object* floor223 = (Object*)malloc(sizeof(Object));
+			floor223->location = f3(300.0, 3.0f, 50.0f);
+			floor223->rotation = f3(0.0f, 0.0f, 0.0f);
+			floor223->type = ChargeFloor2;
+
+			BoundingBox* boxfloor223 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxfloor223->start = f3(300.0f, 2.99f, 50.0f);
+			boxfloor223->end = f3(340.0f, 3.0f, 90.0f);
+
+			list.push_back(*floor3);
+			blist.push_back(*boxfloor3);
+			list.push_back(*floor4);
+			blist.push_back(*boxfloor4);
+			list.push_back(*floor22);
+			blist.push_back(*boxfloor22);
+			list.push_back(*floor222);
+			blist.push_back(*boxfloor222);
+			list.push_back(*floor223);
+			blist.push_back(*boxfloor223);
+
+			for (float x = 300.0f; x < 340.0f; x += 2.0f)
+			{
+
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 0.0f, 89.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 0.0f, 88.5f);
+					boxrobot->end = f3(x + 1.5f, 1.7f, 89.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(x + 1.0f, 3.0f, 89.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(x + 0.5f, 3.0f, 88.5f);
+					boxrobot->end = f3(x + 1.5f, 4.7f, 89.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+			}
+			for (float z = 50.0f; z < 87.0f; z += 2.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(339.0f, 0.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(338.5f, 0.0f, z + 0.5f);
+					boxrobot->end = f3(339.5f, 1.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+				int ir2 = rand() % 2;
+				if (ir2)
+				{
+					Object* robot = (Object*)malloc(sizeof(Object));
+					robot->location = f3(339.0f, 3.0f, z + 1.0f);
+					robot->rotation = f3(0.0f, 0.0f, 0.0f);
+					robot->type = ChargingRobot;
+
+					BoundingBox* boxrobot = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxrobot->start = f3(338.5f, 3.0f, z + 0.5f);
+					boxrobot->end = f3(339.5f, 4.7f, z + 1.5f);
+
+					list.push_back(*robot);
+					blist.push_back(*boxrobot);
+				}
+
+
+
+			}
+			for (float x = 300.0f; x < 340.0f; x += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(x, 0.0f, 88.0f);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(x, 0.0f, 88.0f);
+				boxfan->end = f3(x + 2.0f, 2.0f, 90.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(x, 3.0f, 88.0f);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(x, 3.0f, 88.0f);
+				boxfan2->end = f3(x + 2.0f, 5.0f, 90.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+			for (float z = 50.0f; z < 87.0f; z += 2.0f)
+			{
+				Object* fan = (Object*)malloc(sizeof(Object));
+				fan->location = f3(338.0, 0.0f, z);
+				fan->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan->type = ChargeSlot;
+
+				BoundingBox* boxfan = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan->start = f3(338.0f, 0.0f, z);
+				boxfan->end = f3(340.0f, 2.0f, z + 2.0f);
+
+				Object* fan2 = (Object*)malloc(sizeof(Object));
+				fan2->location = f3(338.0, 3.0f, z);
+				fan2->rotation = f3(0.0f, 0.0f, 0.0f);
+				fan2->type = ChargeSlot;
+
+				BoundingBox* boxfan2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfan2->start = f3(338.0f, 3.0f, z);
+				boxfan2->end = f3(340.0f, 5.0f, z + 2.0f);
+
+				list.push_back(*fan);
+				blist.push_back(*boxfan);
+				list.push_back(*fan2);
+				blist.push_back(*boxfan2);
+			}
+
+
+			setAreaHeight(height1_2, x12, z12, 100.0f, 50.0f, 140.5f, 90.5f, 6.0f);
+		}
+
+		//우하단 에너지실드
+		{
+			for (float z = 2.5f; z < 45.0f; z += 5.0f)
+			{
+				int ir = rand() % 2;
+				if (ir)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(396.0, 0.0f, z);
+					floor->rotation = f3(0.0f, 90.0f, 0.0f);
+					floor->type = Shield;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(395.75f, 0.0f, z - 0.4f);
+					boxfloor->end = f3(396.25f, 2.0f, z + 0.4f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(396.0, 0.0f, z);
+					floor->rotation = f3(0.0f, 90.0f, 0.0f);
+					floor->type = BigShield;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(395.75f, 0.0f, z - 2.0f);
+					boxfloor->end = f3(396.25f, 2.0f, z + 2.0f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+
+				int ir2 = rand() % 3;
+				if (ir == 0)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(399.75, 0.0f, z);
+					floor->rotation = f3(0.0f, 180.0f, 0.0f);
+					floor->type = Controller12_1;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(399.5f, 0.0f, z - 0.75f);
+					boxfloor->end = f3(400.0f, 1.75f, z + 0.75f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else if (ir == 1)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(399.75, 0.0f, z);
+					floor->rotation = f3(0.0f, 180.0f, 0.0f);
+					floor->type = Controller12_2;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(399.5f, 0.0f, z - 0.25f);
+					boxfloor->end = f3(400.0f, 0.85f, z + 0.25f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+				else if (ir == 2)
+				{
+					Object* floor = (Object*)malloc(sizeof(Object));
+					floor->location = f3(399.75, 0.0f, z);
+					floor->rotation = f3(0.0f, 180.0f, 0.0f);
+					floor->type = Controller12_4;
+
+					BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+					boxfloor->start = f3(399.5f, 0.0f, z - 0.5f);
+					boxfloor->end = f3(400.0f, 0.9f, z + 0.5f);
+
+					list.push_back(*floor);
+					blist.push_back(*boxfloor);
+				}
+
+
+			}
+			for (float z = 2.0f; z <= 46.1f; z += 4.0f)
+			{
+
+				Object* floor = (Object*)malloc(sizeof(Object));
+				floor->location = f3(392.0, 0.0f, z);
+				floor->rotation = f3(0.0f, 0.0f, 0.0f);
+				floor->type = Fence12;
+
+				BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfloor->start = f3(391.75f, 0.0f, z - 2.0f);
+				boxfloor->end = f3(392.25f, 3.0f, z + 2.0f);
+
+				list.push_back(*floor);
+				blist.push_back(*boxfloor);
+			}
+
+			for (float x = 398.0f; x > 393.9f; x -= 4.0f)
+			{
+				Object* floor = (Object*)malloc(sizeof(Object));
+				floor->location = f3(x, 0.0f, 48.0f);
+				floor->rotation = f3(0.0f, 90.0f, 0.0f);
+				floor->type = Fence12;
+
+				BoundingBox* boxfloor = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxfloor->start = f3(x - 2.0f, 0.0f, 47.75f);
+				boxfloor->end = f3(x + 2.0f, 3.0f, 48.25f);
+
+				list.push_back(*floor);
+				blist.push_back(*boxfloor);
+			}
+
+			setAreaHeight(height1_2, x12, z12, 191.5f, 0.0f, 200.0f, 48.5f, 5.0f);
+		}
+
+		//위층 올라가는길
+
+		for (float z = 10.75f; z < 40.0f; z += 1.5f)
+		{
+			for (float x = 358.25f; x > 356.0f; x -= 1.5f)
+			{
+				Object* box = (Object*)malloc(sizeof(Object));
+				box->location = f3(x, 0.0f, z);
+				box->rotation = f3(0.0f, 90.0f, 0.0f);
+				box->type = Box12;
+
+				BoundingBox* boxbox = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox->start = f3(x - 1.0f, 0.0f, z - 1.0f);
+				boxbox->end = f3(x + 1.0f, 1.5f, z + 1.0f);
+
+				Object* box2 = (Object*)malloc(sizeof(Object));
+				box2->location = f3(x - 6.0f, 3.0f, z);
+				box2->rotation = f3(0.0f, 90.0f, 0.0f);
+				box2->type = Box12;
+
+				BoundingBox* boxbox2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox2->start = f3(x - 5.0f, 3.0f, z - 1.0f);
+				boxbox2->end = f3(x - 7.0f, 4.5f, z + 1.0f);
+
+				list.push_back(*box);
+				blist.push_back(*boxbox);
+				list.push_back(*box2);
+				blist.push_back(*boxbox2);
+			}
+		}
+		for (float z = 13.0f; z < 40.0f; z += 6.0f)
+		{
+			for (float x = 354.5f; x > 350.0f; x -= 3.0f)
+			{
+				Object* box = (Object*)malloc(sizeof(Object));
+				box->location = f3(x, 0.0f, z);
+				box->rotation = f3(0.0f, 0.0f, 0.0f);
+				box->type = Container12;
+
+				BoundingBox* boxbox = (BoundingBox*)malloc(sizeof(BoundingBox));
+				boxbox->start = f3(x - 1.5f, 0.0f, z - 3.0f);
+				boxbox->end = f3(x + 1.5f, 3.0f, z + 3.0f);
+
+				list.push_back(*box);
+				blist.push_back(*boxbox);
+			}
+		}
+		setAreaHeight(height1_2, x12, z12, 150.0f, 9.5f, 159.5f, 40.5f, 1.5f);
+		setAreaHeight(height1_2, x12, z12, 150.0f, 9.5f, 156.5f, 40.5f, 3.0f);
+		setAreaHeight(height1_2, x12, z12, 150.0f, 9.5f, 153.5f, 40.5f, 4.5f);
+	}
 }
+
+
 
 void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 {

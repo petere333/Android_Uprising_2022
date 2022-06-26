@@ -15,30 +15,23 @@ float3 f3(float f1, float f2, float f3)
 	return f;
 }
 
-void writeHeight(FILE* file, float* data, int size)
+void writeHeight(FILE* file, std::vector<HeightData> data)
 {
-	for (int i = 0; i < size; ++i)
+	for (int i = 0; i < data.size(); ++i)
 	{
-		fprintf(file, "%f ", data[i]);
+		fprintf(file, "start : (%f, %f)   end : (%f, %f)   height : %f\n", data[i].startx, data[i].startz, data[i].endx, data[i].endz, data[i].height);
 	}
 }
 
 
-void setAreaHeight(float* data, int areaWidth, int areaHeight, float startx, float startz, float endx, float endz, float height)
+void setAreaHeight(std::vector<HeightData>& data, int areaWidth, int areaHeight, float startx, float startz, float endx, float endz, float height)
 {
-	int rx = (int)((endx - startx) / 0.5f);
-	int rz = (int)((endz - startz) / 0.5f);
+	HeightData* d = (HeightData*)malloc(sizeof(HeightData));
+	d->startx = startx;
+	d->endx = endx;
+	d->startz = startz;
+	d->endz = endz;
+	d->height = height;
 
-	int sx = (int)(startx / 0.5f);
-	int sz = (int)(startz / 0.5f);
-
-	
-
-	for (int i = sx; i < sx+rx; ++i)
-	{
-		for (int j = sz; j < sz+rz; ++j)
-		{
-			data[i * areaWidth + j] = height;
-		}
-	}
+	data.push_back(*d);
 }

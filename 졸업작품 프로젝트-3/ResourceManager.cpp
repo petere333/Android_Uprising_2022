@@ -523,6 +523,14 @@ void ResourceManager::createTextures()
 	tex129->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/wireframe.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex129);
 
+	tex130 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex130->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/cont2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex130);
+
+	tex131 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex131->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/wireframe.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex131);
+
 	CTexture* norm;
 
 	norm = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);

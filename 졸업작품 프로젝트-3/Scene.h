@@ -16,6 +16,7 @@
 #include "TerrainShader2_2.h"
 #include "TerrainShader2_3.h"
 
+
 #include "EnemyShader.h"
 #include "ParticleShader.h"
 #include "ShadowShader.h"
@@ -144,12 +145,14 @@ public:
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
 
-	float* height11;
-	float* height12;
-	float* height13;
-	float* height21;
-	float* height22;
-	float* height23;
+	
+
+	float** height11;
+	float** height12;
+	float** height13;
+	float** height21;
+	float** height22;
+	float** height23;
 
 	int x11 = 400;
 	int z11 = 400;

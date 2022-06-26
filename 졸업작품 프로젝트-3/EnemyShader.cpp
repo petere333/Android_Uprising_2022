@@ -8,69 +8,76 @@ EnemyShader::~EnemyShader() {}
 
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-	obj->SetPosition(90.0f, 0.0f, 150.0f);
-	obj->type = -10;
-	obj->SetTrackAnimationSet(0, 0);
-
-	obj->bState.stateID = IDLE_STATE;
-	obj->bState.hp = 20;
-	obj->maxHP = 20;
-	objects.push_back(obj);
-
-	CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-	obj2->SetPosition(92.0f, 0.0f, 152.0f);
-	obj2->type = -10;
-	obj2->SetTrackAnimationSet(0, 0);
-
-	obj2->bState.stateID = IDLE_STATE;
-	obj2->bState.hp = 20;
-	obj2->maxHP = 20;
-	objects.push_back(obj2);
-
-	CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-	obj3->SetPosition(94.0f, 0.0f, 150.0f);
-	obj3->type = -10;
-	obj3->SetTrackAnimationSet(0, 0);
-
-	obj3->bState.stateID = IDLE_STATE;
-	obj3->bState.hp = 20;
-	obj3->maxHP = 20;
-	objects.push_back(obj3);
-
-	CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-	obj4->SetPosition(120.0f, 0.0f, 220.0f);
-	obj4->type = -10;
-	obj4->SetTrackAnimationSet(0, 0);
-
-	obj4->bState.stateID = IDLE_STATE;
-	obj4->bState.hp = 20;
-	obj4->maxHP = 20;
-	objects.push_back(obj4);
-
-	CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-	obj5->SetPosition(450.0f, 0.0f, 330.0f);
-	obj5->type = -10;
-	obj5->SetTrackAnimationSet(0, 0);
-
-	obj5->bState.stateID = IDLE_STATE;
-	obj5->bState.hp = 20;
-	obj5->maxHP = 20;
-	objects.push_back(obj5);
-
-	// 각 적들의 위치에 바운딩 박스 생성
-	for (int i = 0; i < objects.size(); ++i)
 	{
-		//x,y=-0.25~0.25 z=0.0~1.7
+		CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
+		obj->SetPosition(90.0f, 0.0f, 150.0f);
+		obj->type = -10;
+		obj->SetTrackAnimationSet(0, 0);
 
-		XMFLOAT3 pos = objects[i]->GetPosition();
+		obj->bState.stateID = IDLE_STATE;
+		obj->bState.hp = 20;
+		obj->maxHP = 20;
+		objects.push_back(obj);
 
-		BoundBox* box = new BoundBox;
-		box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
-		box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
+		CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
+		obj2->SetPosition(92.0f, 0.0f, 152.0f);
+		obj2->type = -10;
+		obj2->SetTrackAnimationSet(0, 0);
 
-		enemyBoxes.push_back(box);
+		obj2->bState.stateID = IDLE_STATE;
+		obj2->bState.hp = 20;
+		obj2->maxHP = 20;
+		objects.push_back(obj2);
+
+		CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
+		obj3->SetPosition(94.0f, 0.0f, 150.0f);
+		obj3->type = -10;
+		obj3->SetTrackAnimationSet(0, 0);
+
+		obj3->bState.stateID = IDLE_STATE;
+		obj3->bState.hp = 20;
+		obj3->maxHP = 20;
+		objects.push_back(obj3);
+
+		CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
+		obj4->SetPosition(120.0f, 0.0f, 220.0f);
+		obj4->type = -10;
+		obj4->SetTrackAnimationSet(0, 0);
+
+		obj4->bState.stateID = IDLE_STATE;
+		obj4->bState.hp = 20;
+		obj4->maxHP = 20;
+		objects.push_back(obj4);
+
+		CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
+		obj5->SetPosition(450.0f, 0.0f, 330.0f);
+		obj5->type = -10;
+		obj5->SetTrackAnimationSet(0, 0);
+
+		obj5->bState.stateID = IDLE_STATE;
+		obj5->bState.hp = 20;
+		obj5->maxHP = 20;
+		objects.push_back(obj5);
+
+
+
+
+		// 각 적들의 위치에 바운딩 박스 생성
+		for (int i = 0; i < objects.size(); ++i)
+		{
+			//x,y=-0.25~0.25 z=0.0~1.7
+
+			XMFLOAT3 pos = objects[i]->GetPosition();
+
+			BoundBox* box = new BoundBox;
+			box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
+			box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
+
+			enemyBoxes.push_back(box);
+		}
 	}
+
+
 }
 
 void EnemyShader::ReleaseObjects()

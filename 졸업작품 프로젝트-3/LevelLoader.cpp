@@ -97,16 +97,30 @@ BoundBox* LoadBoxes(const char* filename, int* n)
 	return bx;
 }
 
-void LoadHeight(const char* filename, float* data)
+void LoadHeight(const char* filename, float** data)
 {
 	FILE* f = fopen(filename, "r");
 	
-	int size=0;
+	
 
 	while (!feof(f))
 	{
-		fscanf(f, "%f ", &data[size]);
-		size += 1;
+		float sx, sz, ex, ez, h;
+		fscanf(f, "start : (%f, %f)   end : (%f, %f)   height : %f\n", &sx, &sz, &ex, &ez, &h);
+		
+		int x1 = (int)(sx / 0.5f);
+		int z1 = (int)(sz / 0.5f);
+		int x2 = (int)(ex / 0.5f)-1;
+		int z2 = (int)(ez / 0.5f)-1;
+
+		for (int x = x1; x <= x2; ++x)
+		{
+			for (int z = z1; z <= z2; ++z)
+			{
+				data[x][z] = h;
+			}
+		}
+		
 	}
 	
 	fclose(f);

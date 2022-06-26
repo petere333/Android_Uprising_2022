@@ -401,6 +401,26 @@
 #define RobotArm 12209
 #define Sewer 12210
 
+#define Fence12 12211
+#define Pillar12 12212
+
+#define Container12 12213
+
+#define Chon12 12214
+
+#define Heater 12215
+
+#define Controller12_1 12216
+#define Controller12_2 12217
+#define Controller12_4 12218
+
+#define ChargeSlot 12219
+#define ChargeFloor 12220
+
+#define ChargingRobot 12221
+
+#define ChargeFloor2 12222
+#define Box12 12223
 typedef struct Obj
 {
 	XMFLOAT3 position;
@@ -432,4 +452,4 @@ std::vector<Obj> LoadObjects(const char* filename);
 BoundBox* LoadBoxes(const char* filename, int*);
 BoundBox* LoadStairs(const char* filename, int* n);
 
-void LoadHeight(const char* filename, float* data);
+void LoadHeight(const char* filename, float** data);

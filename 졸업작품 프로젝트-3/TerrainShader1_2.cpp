@@ -6,7 +6,7 @@ TerrainShader1_2::TerrainShader1_2(ResourceManager* r)
 }
 TerrainShader1_2::~TerrainShader1_2() {}
 
-void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
+void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
 	data = LoadObjects("res/map/area1_2/objects1-2.txt");
 	boxesWorld = LoadBoxes("res/map/area1_2/box1-2.txt", &nBox);
@@ -52,6 +52,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 	GridMesh* basefloor = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 200.0f);
 	GridMesh* upperfloor = new GridMesh(pd3dDevice, pd3dCommandList, 100.0f, 50.0f);
+
+	CLoadedMesh* fence = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_fence.txt", NULL);
+	CLoadedMesh* chon = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_chon.txt", NULL);
+
+	CLoadedMesh* cont1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_control1.txt", NULL);
+	CLoadedMesh* cont2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_control2.txt", NULL);
+	CLoadedMesh* cont4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_control4.txt", NULL);
+
+	CLoadedMesh* contain = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_container.txt", NULL);
+
+	CLoadedMesh* box = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_box.txt", NULL);
+
+	PillarMesh* chargeSlot = new PillarMesh(pd3dDevice, pd3dCommandList, 2, 2, 2);
+	PillarMesh* chargeFloor = new PillarMesh(pd3dDevice, pd3dCommandList, 40, 40, 1);
+	
+	GridMesh* chargeFloor2 = new GridMesh(pd3dDevice, pd3dCommandList, 40.0f, 40.0f);
+
+
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
@@ -345,10 +363,123 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
 		}
+		else if (data[i].type == Fence12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[80]);
+		obj->SetMesh(fence);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Chon12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[96]);
+		obj->SetMesh(chon);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller12_1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller12_2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Controller12_4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[101]);
+		obj->SetMesh(cont4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Container12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[129]);
+		obj->SetMesh(contain);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Container12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[129]);
+		obj->SetMesh(contain);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ChargeSlot)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[128]);
+		obj->SetMesh(chargeSlot);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ChargeFloor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(chargeFloor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ChargeFloor2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(chargeFloor2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ChargingRobot)
+		{
+		CLoadedModelInfo* md = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, sig, "res/bin/sample.bin", NULL);
 
+		obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, md, 1);
+
+		obj->SetTrackAnimationSet(0, 0);
+
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Box12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[78]);
+		obj->SetMesh(box);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		
+		
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
+		
 		objects.push_back(obj);
 	}
 }
@@ -387,19 +518,79 @@ void TerrainShader1_2::ReleaseShaderVariables()
 	}
 }
 
-void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera)
+void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed)
 {
+	XMFLOAT3 cp = pCamera->getPosition();
+
+	XMFLOAT3 look = pCamera->getLook();
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		if (objects[i])
 		{
-			if (m_pd3dCbvSrvDescriptorHeap)
+			XMFLOAT3 pos = objects[i]->GetPosition();
+			XMFLOAT3 direction = XMFLOAT3(pos.x - cp.x, pos.y - cp.y, pos.z - cp.z);
+			float dist = Vector3::Length(direction);
+			XMFLOAT3 dir = Vector3::Normalize(direction);
+			float cosAngle = Vector3::DotProduct(look, dir);
+
+			//벽인경우 그냥 그림
+			if ((objects[i]->type >= 12000 && objects[i]->type < 12200))
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				objects[i]->Render(pd3dCommandList, pCamera);
 			}
+
+			//아닌경우
+			else
+			{
+				if (dist <= 10.0f)
+				{
+					if (objects[i]->type == ChargingRobot)
+					{
+
+						objects[i]->Animate(elapsed);
+						if (objects[i]->m_pSkinnedAnimationController)
+						{
+							objects[i]->UpdateTransform(NULL);
+						}
+						rm->materials[33]->UpdateShaderVariable(pd3dCommandList);
+
+					}
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					objects[i]->Render(pd3dCommandList, pCamera);
+				}
+				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
+				{
+					if (objects[i]->type == ChargingRobot)
+					{
+
+						objects[i]->Animate(elapsed);
+						if (objects[i]->m_pSkinnedAnimationController)
+						{
+							objects[i]->UpdateTransform(NULL);
+						}
+						rm->materials[33]->UpdateShaderVariable(pd3dCommandList);
+
+					}
+					if (m_pd3dCbvSrvDescriptorHeap)
+					{
+						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+					}
+					objects[i]->Render(pd3dCommandList, pCamera);
+				}
+			}
+			
+
 			objects[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
+	
 }
 
 D3D12_INPUT_LAYOUT_DESC TerrainShader1_2::CreateInputLayout()
