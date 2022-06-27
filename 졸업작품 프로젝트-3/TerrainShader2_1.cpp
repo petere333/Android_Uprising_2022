@@ -8,8 +8,107 @@ TerrainShader2_1::~TerrainShader2_1() {}
 
 void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-}
 
+	data = LoadObjects("res/map/area2-1/objects2-1.txt");
+	boxesWorld = LoadBoxes("res/map/area2-1/box2-1.txt", &nBox);
+
+	CCubeMeshTextured* Gwang_wall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 7.5f, 20.0f);
+	GridMesh* Gwang_floor1 = new GridMesh(pd3dDevice, pd3dCommandList, 75.0f, 60.0f);
+	CCubeMeshTextured* Gwang_front1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 10.0f, 20.833f);
+	GridMesh* Gwang_Cheons1 = new GridMesh(pd3dDevice, pd3dCommandList, 75.0f, 235.0f);
+	GridMesh* Gwang_floor2 = new GridMesh(pd3dDevice, pd3dCommandList, 75.0f, 175.0f);
+	CCubeMeshTextured* Gwang_front2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, 15.0f);
+	CCubeMeshTextured* Gwang_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 5.0f, 20.0f);
+	CLoadedMesh* Gwang_Screen1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Screen_4.txt", NULL);
+	CLoadedMesh* Gwang_Table1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A1.txt", NULL);
+	CLoadedMesh* Gwang_Table2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A2.txt", NULL);
+	CLoadedMesh* Gwang_Chair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_MetalChair.txt", NULL);
+	CCubeMeshTextured* Receps_Karo1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 3.0f, 3.0f);
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		CGameObject* obj = NULL;
+
+		if (data[i].type == Gwanja_wall1)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[137]);
+			obj->SetMesh(Gwang_wall1);
+		}
+		else if (data[i].type == Gwanja_floor)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[140]);
+			obj->SetMesh(Gwang_floor1);
+		}
+		else if (data[i].type == Gwanja_front)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[138]);
+			obj->SetMesh(Gwang_front1);
+		}
+		else if (data[i].type == Gwanja_celing)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[144]);
+			obj->SetMesh(Gwang_Cheons1);
+		}
+		else if (data[i].type == Gwanja_floor2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[137]);
+			obj->SetMesh(Gwang_floor2);
+		}
+		else if (data[i].type == Gwanja_wall2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[139]);
+			obj->SetMesh(Gwang_front2);
+		}
+		else if (data[i].type == Gwanja_wall3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[138]);
+			obj->SetMesh(Gwang_wall2);
+		}
+		else if (data[i].type == Gwanja_Screen)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[145]);
+			obj->SetMesh(Gwang_Screen1);
+		}
+		else if (data[i].type == Gwanja_tables)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[146]);
+			obj->SetMesh(Gwang_Table1);
+		}
+		else if (data[i].type == Gwanja_tablesA)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[146]);
+			obj->SetMesh(Gwang_Table2);
+		}
+		else if (data[i].type == Gwanja_Chair)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[143]);
+			obj->SetMesh(Gwang_Chair);
+		}
+		else if (data[i].type == Recep_garomak)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[149]);
+			obj->SetMesh(Receps_Karo1);
+		}
+
+		obj->SetPosition(data[i].position);
+		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
+		objects.push_back(obj);
+	}
+
+
+}
 void TerrainShader2_1::ReleaseObjects()
 {
 

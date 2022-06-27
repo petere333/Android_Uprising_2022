@@ -183,6 +183,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	LoadHeight("res/map/area1_1/height1-1.txt", height11);
 	LoadHeight("res/map/area1_2/height1-2.txt", height12);
+	LoadHeight("res/map/area2-1/height2-1.txt", height21);
+	LoadHeight("res/map/area2-2/height2-2.txt", height22);
 	
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
@@ -758,7 +760,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 		}
 
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 400.0f && cp.z <= 600.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 363.0f && cp.z <= 600.0f)
 		{
 			if (terrain2_1)
 			{
@@ -766,7 +768,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				terrain2_1->Render(pd3dCommandList, pCamera);
 			}
 		}
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 400.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 363.0f)
 		{
 			if (terrain2_2)
 			{
@@ -2340,7 +2342,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		}
 
 		//2-1
-		if (px >= 800.0f && px <= 900.0f && pz >= 400.0f && pz <= 600.0f)
+		if (px >= 800.0f && px <= 900.0f && pz >= 363.0f && pz <= 600.0f)
 		{
 			for (int i = 0; i < terrain2_1->nBox; ++i)
 			{
@@ -2451,7 +2453,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		}
 
 		//2-2
-		if (px >= 800.0f && px <= 900.0f && pz >= 60.0f && pz <= 400.0f)
+		if (px >= 800.0f && px <= 900.0f && pz >= 60.0f && pz <= 363.0f)
 		{
 			for (int i = 0; i < terrain2_2->nBox; ++i)
 			{

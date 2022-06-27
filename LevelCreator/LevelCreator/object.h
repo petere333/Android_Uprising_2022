@@ -166,6 +166,46 @@
 
 #define Box12 12223
 
+#define Gwanja_wall1 21001
+#define Gwanja_floor 21002
+#define Gwanja_front 21003
+#define Gwanja_celing 21004
+#define Gwanja_floor2 21005
+#define Gwanja_wall2 21006
+#define Gwanja_wall3 21007
+#define Gwanja_Screen 21020
+#define Gwanja_tables 21019
+#define Gwanja_tablesA 21021
+#define Gwanja_Chair 21022
+
+#define Recep_celing 21008
+#define Recep_floor 21009
+#define Recep_wall1 21010
+#define Recep_wall2 21011
+#define Recep_front 21012
+#define Recep_front2 21013
+#define Recep_wall3 21014
+#define Recep_wall4 21015
+#define Recep_wall5 21016
+#define Recep_garomak 21017
+#define Recep_kidung 21018
+#define Recep_Kanmak 21023
+#define Recep_Tables 21024
+#define Recep_Couch 21025
+#define Recep_Vending 21026
+#define Recep_Counter1 21027
+#define Recep_Screened1 21028
+#define Recep_MidWal 21029
+#define Recep_Counter2 21030
+#define Recep_Air 21031
+#define Recep_DongSSang1 21032
+#define Recep_Misul 21033
+#define Recep_Lamps 21034
+#define Recep_Door1 21035
+#define Recep_DoorL 21036
+#define Recep_DoorR 21037
+
+
 using namespace std;
 
 
