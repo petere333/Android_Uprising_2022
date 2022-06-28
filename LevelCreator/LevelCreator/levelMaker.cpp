@@ -51,11 +51,11 @@ int main()
 
 
 	
-	file = fopen("result/objects2-2.txt", "w");
-	FILE* bf = fopen("result/box2-2.txt", "w");
-	FILE* hf = fopen("result/height2-2.txt", "w");
+	file = fopen("result/objects2-1.txt", "w");
+	FILE* bf = fopen("result/box2-1.txt", "w");
+	FILE* hf = fopen("result/height2-1.txt", "w");
 	
-	writeHeight(hf, height2_2);
+	writeHeight(hf, height2_1);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -90,7 +90,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles2_2(list, blist);
+	createObstacles2_1(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -5216,7 +5216,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* Gwangjae_celing1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_celing1->start = f3(800.0f, 12.3f, 365.0f);
 	Gwangjae_celing1->end = f3(875.0f, 12.5f, 600.0f);
-	setAreaHeight(height2_1, x21, z21, 0.0f, 2.0f, 75.0f, 237.0f, 12.5f);
+	//setAreaHeight(height2_1, x21, z21, 0.0f, 2.0f, 75.0f, 237.0f, 12.5f);
 
 	/////////////////////////////////////////////////////////////////////
 
@@ -6951,7 +6951,7 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* receps_celing1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	receps_celing1->start = f3(800.0f, 12.3f, 0.0f);
 	receps_celing1->end = f3(875.0f, 12.5f, 365.0f);
-	setAreaHeight(height2_2, x22, z22, 0.0f, 0.0f, 75.0f, 305.0f, 12.5f);
+	//setAreaHeight(height2_2, x22, z22, 0.0f, 0.0f, 75.0f, 305.0f, 12.5f);
 
 	Object* Receps_floor1 = (Object*)malloc(sizeof(Object));
 	Receps_floor1->location = f3(800.0f, 0.001f, 0.0f);

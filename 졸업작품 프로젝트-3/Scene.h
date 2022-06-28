@@ -160,10 +160,14 @@ public:
 	int z12 = 400;
 	int x13 = 400;
 	int z13 = 800;
+
+
 	int x21 = 200;
-	int z21 = 400;
+	int z21 = 474;
+
 	int x22 = 200;
-	int z22 = 680;
+	int z22 = 606;
+
 	int x23 = 600;
 	int z23 = 180;
 
