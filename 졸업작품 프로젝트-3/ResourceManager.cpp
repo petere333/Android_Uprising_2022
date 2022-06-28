@@ -647,6 +647,15 @@ void ResourceManager::createTextures()
 	tex159->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/Receps_Doorlock.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex159);
 
+	tex160 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex160->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanjae_Screen2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex160);
+
+	tex161 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex161->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanja_Tabe.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex161);
+
+
 	CTexture* norm;
 
 	norm = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);

@@ -20,6 +20,8 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CCubeMeshTextured* Gwang_front2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, 15.0f);
 	CCubeMeshTextured* Gwang_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 5.0f, 20.0f);
 	CLoadedMesh* Gwang_Screen1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Screen_4.txt", NULL);
+	CLoadedMesh* Gwang_Screen2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Screen_4.txt", NULL);
+	CLoadedMesh* Gwang_Screen3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Screen_4.txt", NULL);
 	CLoadedMesh* Gwang_Table1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A1.txt", NULL);
 	CLoadedMesh* Gwang_Table2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A2.txt", NULL);
 	CLoadedMesh* Gwang_Chair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_MetalChair.txt", NULL);
@@ -76,6 +78,18 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj = new CGameObject(1);
 			obj->SetMaterial(0, rm->materials[145]);
 			obj->SetMesh(Gwang_Screen1);
+		}
+		else if (data[i].type == Gwanja_Screen2)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[159]);
+			obj->SetMesh(Gwang_Screen2);
+		}
+		else if (data[i].type == Gwanja_Screen3)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[145]);
+			obj->SetMesh(Gwang_Screen3);
 		}
 		else if (data[i].type == Gwanja_tables)
 		{

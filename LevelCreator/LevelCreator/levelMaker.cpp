@@ -5723,7 +5723,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Screens2 = (Object*)malloc(sizeof(Object));
 	Kwan_Screens2->location = f3(874.0f, 6.0f, 454.5f);
 	Kwan_Screens2->rotation = f3(0.0f, 0.0f, 90.0f);
-	Kwan_Screens2->type = Gwanja_Screen;
+	Kwan_Screens2->type = Gwanja_Screen2;
 
 	BoundingBox* Gwangjae_Screens2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Screens2->start = f3(873.0f, 2.0f, 442.5f);
@@ -5733,7 +5733,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Screens3 = (Object*)malloc(sizeof(Object));
 	Kwan_Screens3->location = f3(874.0f, 6.0f, 398.5f);
 	Kwan_Screens3->rotation = f3(0.0f, 0.0f, 90.0f);
-	Kwan_Screens3->type = Gwanja_Screen;
+	Kwan_Screens3->type = Gwanja_Screen3;
 
 	BoundingBox* Gwangjae_Screens3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Screens3->start = f3(873.0f, 2.0f, 386.5f);
@@ -9029,8 +9029,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Vending1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Vending1->start = f3(843.0f, 0.0f, 201.6f);
-	Receps_Vending1->end = f3(846.0f, 2.7f, 207.0f);
-	setAreaHeight(height2_2, x22, z22, 43.0f, 142.0f, 46.0f, 147.0f, 2.7f);
+	Receps_Vending1->end = f3(846.0f, 5.4f, 207.0f);
+	setAreaHeight(height2_2, x22, z22, 43.0f, 142.0f, 46.0f, 147.0f, 5.4f);
 
 	Object* Receps_Ven2 = (Object*)malloc(sizeof(Object));
 	Receps_Ven2->location = f3(846.0f, 1.35f, 209.7f);
@@ -9039,8 +9039,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Vending2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Vending2->start = f3(843.0f, 0.0f, 207.0f);
-	Receps_Vending2->end = f3(846.0f, 2.7f, 212.4f);
-	setAreaHeight(height2_2, x22, z22, 43.0f, 147.0f, 46.0f, 152.5f, 2.7f);
+	Receps_Vending2->end = f3(846.0f, 5.4f, 212.4f);
+	setAreaHeight(height2_2, x22, z22, 43.0f, 147.0f, 46.0f, 152.5f, 5.4f);
 
 	Object* Receps_Ven3 = (Object*)malloc(sizeof(Object));
 	Receps_Ven3->location = f3(846.0f, 1.35f, 204.3f);
@@ -9049,8 +9049,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Vending3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Vending3->start = f3(846.0f, 0.0f, 201.6f);
-	Receps_Vending3->end = f3(849.0f, 2.7f, 207.0f);
-	setAreaHeight(height2_2, x22, z22, 46.0f, 142.0f, 49.0f, 147.0f, 2.7f);
+	Receps_Vending3->end = f3(849.0f, 5.4f, 207.0f);
+	setAreaHeight(height2_2, x22, z22, 46.0f, 142.0f, 49.0f, 147.0f, 5.4f);
 
 	Object* Receps_Ven4 = (Object*)malloc(sizeof(Object));
 	Receps_Ven4->location = f3(846.0f, 1.35f, 209.7f);
@@ -9059,8 +9059,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Vending4 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Vending4->start = f3(846.0f, 0.0f, 207.0f);
-	Receps_Vending4->end = f3(849.0f, 2.7f, 212.4f);
-	setAreaHeight(height2_2, x22, z22, 46.0f, 147.0f, 49.0f, 152.5f, 2.7f);
+	Receps_Vending4->end = f3(849.0f, 5.4f, 212.4f);
+	setAreaHeight(height2_2, x22, z22, 46.0f, 147.0f, 49.0f, 152.5f, 5.4f);
 
 	////////////////////////////////////////////////////////////////////////////////////////////
 

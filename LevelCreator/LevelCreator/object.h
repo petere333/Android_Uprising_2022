@@ -177,6 +177,8 @@
 #define Gwanja_tables 21019
 #define Gwanja_tablesA 21021
 #define Gwanja_Chair 21022
+#define Gwanja_Screen2 21038
+#define Gwanja_Screen3 21039
 
 #define Recep_celing 21008
 #define Recep_floor 21009

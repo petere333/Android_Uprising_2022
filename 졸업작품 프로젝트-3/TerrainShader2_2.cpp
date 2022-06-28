@@ -111,7 +111,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Recep_Tables)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[132]);
+			obj->SetMaterial(0, rm->materials[160]);
 			obj->SetMesh(Recep_Takja1);
 		}
 		else if (data[i].type == Recep_Couch)
