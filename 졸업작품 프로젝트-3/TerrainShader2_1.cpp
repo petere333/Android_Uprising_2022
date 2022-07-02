@@ -26,6 +26,7 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* Gwang_Table2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A2.txt", NULL);
 	CLoadedMesh* Gwang_Chair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_MetalChair.txt", NULL);
 	CCubeMeshTextured* Receps_Karo1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 3.0f, 3.0f);
+	CLoadedMesh* Gwang_Cabinet = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Cabinets.txt", NULL);
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -114,6 +115,12 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj = new CGameObject(1);
 			obj->SetMaterial(0, rm->materials[149]);
 			obj->SetMesh(Receps_Karo1);
+		}
+		else if (data[i].type == Gwanja_Cabinet)
+		{
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[161]);
+			obj->SetMesh(Gwang_Cabinet);
 		}
 
 		obj->SetPosition(data[i].position);
