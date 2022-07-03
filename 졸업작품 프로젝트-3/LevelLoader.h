@@ -385,7 +385,39 @@
 
 #define WireFrame 12023
 
+#define WoodManu_WallBack 12024
+#define WoodManu_WallFront 12025
+#define WoodManu_WallRight1 12026
+#define WoodManu_WallRight2 12027
+#define WoodManu_WallRight3 12028
+
+#define Pottery_WallFront 12029
+#define Pottery_WallBack1 12030
+#define Pottery_WallBack2 12031
+#define Pottery_WallBack3 12032
+
+#define Pottery_WallRight 12033
+
+#define Pottery_WallCenter 12034
+#define Pottery_WallHCenter 12035
+
+#define Pottery_UpperFloor 12036
+
+#define Pottery_Stair 12037
+
+#define Transfer_UpperFloor 12038
+#define Transfer_WallRight 12039
+#define Transfer_WallBack1 12040
+#define Transfer_WallBack2 12041
+#define Transfer_WallBack3 12042
+
+#define Transfer_Stair 12043
+#define Transfer_HCenter 12044
+
+
+
 //1-2 object
+
 
 #define Shield 12200
 #define BigShield 12201
@@ -422,6 +454,62 @@
 #define ChargeFloor2 12222
 #define Box12 12223
 
+#define TableBig 12224
+#define Saw 12225
+#define Drill 12226
+#define Woods1 12227
+#define Woods2 12228
+
+#define PlainLog1 12229
+#define PlainLog2 12230
+
+#define Furniture1 12231
+#define Furniture2 12232
+
+#define Shelf 12233
+
+#define ToolBox 12234
+#define PaintBarrel 12235
+#define Bottle 12236
+#define Hammer 12237
+#define Glue 12238
+
+#define PotterySoil 12239
+#define PotterySoilPallet 12240
+#define Pottery1 12241
+#define Pottery2 12242
+#define Pottery3 12243
+#define Pottery4 12244
+#define Pottery5 12245
+#define Pottery6 12246
+#define Pottery7 12247
+#define Pottery8 12248
+#define Pottery9 12249
+#define Pottery10 12250
+#define Pottery11 12251
+#define Pottery12 12252
+#define Pottery13 12253
+#define Pottery14 12254
+#define Pottery15 12255
+
+#define PotterySoilPalletLayer 12256
+
+#define ConveyorDoor 12257
+#define ConveyorBelt 12258
+#define ConveyorCover 12259
+
+#define Elevator 12260
+
+#define PotteryKlinOpen 12261
+#define PotteryWheel 12262
+#define PotteryKlinClose 12263
+#define Whiteboard 12264
+#define Banner 12265
+#define WoodManu_Pillar1 12266
+#define WoodManu_Pillar2 12267
+
+
+//2-1
 #define Gwanja_wall1 21001
 #define Gwanja_floor 21002
 #define Gwanja_front 21003
@@ -436,6 +524,8 @@
 #define Gwanja_Screen2 21038
 #define Gwanja_Screen3 21039
 #define Gwanja_Cabinet 21040
+
+//2-2
 
 #define Recep_celing 21008
 #define Recep_floor 21009
@@ -463,6 +553,7 @@
 #define Recep_Door1 21035
 #define Recep_DoorL 21036
 #define Recep_DoorR 21037
+
 
 typedef struct Obj
 {

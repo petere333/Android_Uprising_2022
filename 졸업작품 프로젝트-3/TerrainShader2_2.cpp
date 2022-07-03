@@ -45,25 +45,25 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		if (data[i].type == Recep_celing)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[152]);
+			obj->SetMaterial(0, rm->materials[165]);
 			obj->SetMesh(Receps_Cheons1);
 		}
 		else if (data[i].type == Recep_floor)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[151]);
+			obj->SetMaterial(0, rm->materials[172]);
 			obj->SetMesh(Receps_floor1);
 		}
 		else if (data[i].type == Recep_wall1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[153]);
+			obj->SetMaterial(0, rm->materials[174]);
 			obj->SetMesh(Receps_wall1);
 		}
 		else if (data[i].type == Recep_wall2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[153]);
+			obj->SetMaterial(0, rm->materials[174]);
 			obj->SetMesh(Receps_wall2);
 		}
 		else if (data[i].type == Recep_front)
@@ -99,43 +99,43 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Recep_kidung)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[150]);
+			obj->SetMaterial(0, rm->materials[171]);
 			obj->SetMesh(Receps_kidoo1);
 		}
 		else if (data[i].type == Recep_Kanmak)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[153]);
+			obj->SetMaterial(0, rm->materials[174]);
 			obj->SetMesh(Receps_Gan1);
 		}
 		else if (data[i].type == Recep_Tables)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[160]);
+			obj->SetMaterial(0, rm->materials[181]);
 			obj->SetMesh(Recep_Takja1);
 		}
 		else if (data[i].type == Recep_Couch)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[147]);
+			obj->SetMaterial(0, rm->materials[153]);
 			obj->SetMesh(Recep_Cow1);
 		}
 		else if (data[i].type == Recep_Vending)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[148]);
+			obj->SetMaterial(0, rm->materials[154]);
 			obj->SetMesh(Recep_Bending1);
 		}
 		else if (data[i].type == Recep_Counter1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[135]);
+			obj->SetMaterial(0, rm->materials[156]);
 			obj->SetMesh(Recep_blackcow);
 		}
 		else if (data[i].type == Recep_Screened1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[136]);
+			obj->SetMaterial(0, rm->materials[157]);
 			obj->SetMesh(Recep_CCTV);
 		}
 		else if (data[i].type == Recep_MidWal)
@@ -147,19 +147,19 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Recep_Counter2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[154]);
+			obj->SetMaterial(0, rm->materials[175]);
 			obj->SetMesh(Recep_TwoCounter);
 		}
 		else if (data[i].type == Recep_Air)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[155]);
+			obj->SetMaterial(0, rm->materials[176]);
 			obj->SetMesh(Recep_Gonggi);
 		}
 		else if (data[i].type == Recep_DongSSang1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[156]);
+			obj->SetMaterial(0, rm->materials[177]);
 			obj->SetMesh(Recep_MalDong);
 		}
 		else if (data[i].type == Recep_Misul)
@@ -171,25 +171,25 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Recep_Lamps)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[157]);
+			obj->SetMaterial(0, rm->materials[178]);
 			obj->SetMesh(Recep_lamped);
 		}
 		else if (data[i].type == Recep_Door1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[158]);
+			obj->SetMaterial(0, rm->materials[179]);
 			obj->SetMesh(Recep_Door_B);
 		}
 		else if (data[i].type == Recep_DoorL)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[158]);
+			obj->SetMaterial(0, rm->materials[179]);
 			obj->SetMesh(Recep_Door_L);
 		}
 		else if (data[i].type == Recep_DoorR)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[158]);
+			obj->SetMaterial(0, rm->materials[179]);
 			obj->SetMesh(Recep_Door_R);
 		}
 
