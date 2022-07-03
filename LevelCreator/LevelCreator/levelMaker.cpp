@@ -51,11 +51,11 @@ int main()
 
 
 	
-	file = fopen("result/objects2-1.txt", "w");
-	FILE* bf = fopen("result/box2-1.txt", "w");
-	FILE* hf = fopen("result/height2-1.txt", "w");
+	file = fopen("result/objects2-2.txt", "w");
+	FILE* bf = fopen("result/box2-2.txt", "w");
+	FILE* hf = fopen("result/height2-2.txt", "w");
 	
-	writeHeight(hf, height2_1);
+	writeHeight(hf, height2_2);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -90,7 +90,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles2_1(list, blist);
+	createObstacles2_2(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -5738,7 +5738,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* Gwangjae_Screens3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Screens3->start = f3(873.0f, 2.0f, 386.5f);
 	Gwangjae_Screens3->end = f3(875.0f, 10.0f, 410.5f);
-	setAreaHeight(height2_1, x21, z21, 74.5f, 23.5f, 75.0f, 237.5f, 10.0f);
+	setAreaHeight(height2_1, x21, z21, 74.5f, 2.5f, 75.0f, 237.5f, 10.0f);
 
 	/////////////////////////////////////////////////////////////////////
 
@@ -9275,7 +9275,7 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* Receps_air1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air1->start = f3(862.0f, 0.0f, 173.5f);
 	Receps_air1->end = f3(870.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 61.5f, 113.0f, 70.5f, 117.0f, 2.2f);
+	setAreaHeight(height2_2, x22, z22, 61.5f, 111.0f, 70.5f, 119.0f, 2.2f);
 
 	Object* Receps_Airs2 = (Object*)malloc(sizeof(Object));
 	Receps_Airs2->location = f3(858.0f, 0.0f, 175.0f);
@@ -9285,7 +9285,7 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* Receps_air2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air2->start = f3(854.0f, 0.0f, 173.5f);
 	Receps_air2->end = f3(862.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 53.5f, 113.5f, 62.5f, 117.0f, 2.2f);
+	setAreaHeight(height2_2, x22, z22, 53.5f, 111.0f, 62.5f, 119.0f, 2.2f);
 
 	Object* Receps_Airs3 = (Object*)malloc(sizeof(Object));
 	Receps_Airs3->location = f3(850.0f, 0.0f, 175.0f);
@@ -9295,7 +9295,7 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	BoundingBox* Receps_air3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air3->start = f3(846.0f, 0.0f, 173.5f);
 	Receps_air3->end = f3(854.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 45.5f, 113.0f, 54.5f, 117.0f, 2.2f);
+	setAreaHeight(height2_2, x22, z22, 45.5f, 111.0f, 54.5f, 119.0f, 2.2f);
 
 	Object* Receps_Dosang1 = (Object*)malloc(sizeof(Object));
 	Receps_Dosang1->location = f3(822.5f, 0.0f, 165.0f);
