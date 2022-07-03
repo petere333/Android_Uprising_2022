@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "levelMaker.h"
 
 vector<Object> list;
@@ -51,11 +52,17 @@ int main()
 
 
 	
-	file = fopen("result/objects2-2.txt", "w");
-	FILE* bf = fopen("result/box2-2.txt", "w");
-	FILE* hf = fopen("result/height2-2.txt", "w");
+	/*file = fopen("result/objects2-1.txt", "w");
+	FILE* bf = fopen("result/box2-1.txt", "w");
+	FILE* hf = fopen("result/height2-1.txt", "w");
 	
-	writeHeight(hf, height2_2);
+	writeHeight(hf, height2_1);*/
+
+	file = fopen("result/1_3/objects1-3.txt", "w");
+	FILE* bf = fopen("result/1_3/box1-3.txt", "w");
+	FILE* hf = fopen("result/1_3/height1-3.txt", "w");
+
+	writeHeight(hf, height1_3);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -66,14 +73,14 @@ int main()
 	{
 		writeBox(bf, bList[i]);
 	}
-	
-	
-	
+
+
+
 	fclose(file);
 	fclose(bf);
 
 	fclose(hf);
-	
+
 
 
 
@@ -90,7 +97,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles2_2(list, blist);
+	createObstacles1_3(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -4761,7 +4768,52 @@ void createObstacles1_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 {
+	//컨테이너
+	Object* cont = (Object*)malloc(sizeof(Object));
+	cont->location = f3(530.0f, -10.0f, 281.0f);
+	cont->rotation = f3(90.0f, 0.0f, 0.0f);
+	cont->type = Container13;
 
+	BoundingBox* boxcont = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxcont->start = f3(530.0f - 2.0f, 0.0f, 281.0f - 1.0f);
+	boxcont->end = f3(530.0f + 2.0f, 2.0f, 281.0f + 1.0f);
+	setAreaHeight(height1_3, x13, z13, 530.0f - 2.0f, 281.0f - 1.0f, 530.0f + 2.0f, 281.0f + 1.0f, 2.0f);
+
+	list.push_back(*cont);
+	blist.push_back(*boxcont);
+
+	Object* cont2 = (Object*)malloc(sizeof(Object));
+	cont2->location = f3(400.0f, -10.0f, 200.0f);
+	cont2->rotation = f3(90.0f, 90.0f, 0.0f);
+	cont2->type = Container13;
+
+	BoundingBox* boxcont2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	boxcont2->start = f3(400.0f - 2.0f, 0.0f, 200.0f - 1.0f);
+	boxcont2->end = f3(400.0f + 2.0f, 2.0f, 200.0f + 1.0f);
+	setAreaHeight(height1_3, x13, z13, 400.0f - 2.0f, 200.0f - 1.0f, 400.0f + 2.0f, 200.0f + 1.0f, 2.0f);
+
+
+	list.push_back(*cont2);
+	blist.push_back(*boxcont2);
+
+	//선반
+
+	for (float z = 310.0f; z < 360.0f; z += 8.0f) {
+		for (float x = 450.0f; x < 500.0f; x += 15.0f) {
+			Object* shelf2 = (Object*)malloc(sizeof(Object));
+			shelf2->location = f3(x, 2.5f, z);
+			shelf2->rotation = f3(-90.0f, 0.0f, -90.0f);
+			shelf2->type = Shelf02;
+
+			BoundingBox* boxshelf2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+			boxshelf2->start = f3(x - 2.0f, 2.5f, z - 1.0f);
+			boxshelf2->end = f3(x + 2.0f, 5.0f, z + 1.0f);
+			setAreaHeight(height1_3, x13, z13, x - 2.0f, z - 1.0f, x + 2.0f, z + 1.0f, 2.0f);
+
+			list.push_back(*shelf2);
+			blist.push_back(*boxshelf2);
+		}
+	}
 }
 
 void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)

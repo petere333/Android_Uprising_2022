@@ -23,9 +23,9 @@ CSound::~CSound() {
 
 int CSound::Init() {
 
-    FMOD_System_Create(&g_sound_system, FMOD_VERSION);
+    FMOD_System_Create(&g_sound_system);
 
-    FMOD_System_Create(&g_sound_system,FMOD_VERSION);
+    //FMOD_System_Create(&g_sound_system,FMOD_VERSION);
 
     FMOD_System_Init(g_sound_system, 32, FMOD_INIT_NORMAL, NULL);
 
