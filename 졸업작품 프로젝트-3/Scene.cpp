@@ -187,7 +187,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	LoadHeight("res/map/area1_1/height1-1.txt", height11);
 	LoadHeight("res/map/area1_2/height1-2.txt", height12);
-	
+	LoadHeight("res/map/area2-1/height2-1.txt", height21);
+	LoadHeight("res/map/area2-2/height2-2.txt", height22);
+
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
 	
@@ -857,7 +859,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 
 		//2-1
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 363.0f && cp.z <= 600.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 375.0f && cp.z <= 600.0f)
 		{
 			if (terrain2_1)
 			{
@@ -866,8 +868,21 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 		}
 
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 213.0f && cp.z <= 375.0f)
+		{
+			if (terrain2_1)
+			{
+				terrain2_1->OnPrepareRender(pd3dCommandList);
+				terrain2_1->Render(pd3dCommandList, pCamera);
+			}
+			if (terrain2_2)
+			{
+				terrain2_2->OnPrepareRender(pd3dCommandList);
+				terrain2_2->Render(pd3dCommandList, pCamera);
+			}
+		}
 		//2-2
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 363.0f)
+		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 213.0f)
 		{
 			if (terrain2_2)
 			{
