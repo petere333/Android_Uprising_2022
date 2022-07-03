@@ -24,12 +24,14 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed);
+
 public:
 
 
 public:
 	std::vector<Obj> data;
-
+	
 	int nBox;
 	int nStairs;
 	BoundBox* stairsWorld;
@@ -40,4 +42,12 @@ public:
 	ResourceManager* rm;
 
 	bool animStart = false;
+
+	chrono::time_point<chrono::system_clock> productCreated[5];
+
+	CLoadedMesh* goodsMesh = NULL;
+
+	std::vector<CGameObject*> products;
+	std::vector<BoundBox*> boxGoods;
+	std::vector<chrono::time_point<chrono::system_clock>> lastMove;
 };

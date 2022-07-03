@@ -29,6 +29,7 @@ struct LIGHT
 	int 					m_nType;
 	float					m_fRange;
 	float					padding;
+	
 };
 
 struct MATERIAL
@@ -82,20 +83,21 @@ float4 DirectionalLight(int nIndex, float3 vNormal, float3 vToCamera, float2 uv)
 	float ry = result.y;
 	float rz = result.z;
 	float ra = result.z;
-	float weight = specTex.Sample(gSamplerState, uv).x * 2.0f - 1.0f;
+	//float weight = specTex.Sample(gSamplerState, uv).x * 2.0f - 1.0f;
+	float weight = specTex.Sample(gSamplerState, uv).x;
 
-	if (weight <= 0.0f)
-	{
-		rx = rx + rx * weight;
-		ry = ry + ry * weight;
-		rz = rz + rz * weight;
-	}
-	else
-	{
+	//if (weight <= 0.0f)
+	//{
+	//	rx = rx + rx * weight;
+	//	ry = ry + ry * weight;
+	//	rz = rz + rz * weight;
+	//}
+	//else
+	//{
 		rx = rx + (1.0 - rx) * weight;
 		ry = ry + (1.0 - ry) * weight;
 		rz = rz + (1.0 - rz) * weight;
-	}
+	//}
 
 	return float4(rx, ry, rz, 1.0f);
 	//return((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv)));
@@ -134,7 +136,34 @@ float4 PointLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera
 		float fAttenuationFactor = 1.0f / dot(gLights[nIndex].m_vAttenuation, float3(1.0f, fDistance, fDistance*fDistance));
 
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * gMaterials[0].m_cSpecular)) * fAttenuationFactor);
-		return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * specTex.Sample(gSamplerState, uv))) * fAttenuationFactor);
+		float4 result = (((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * gMaterials[0].m_cSpecular)) * fAttenuationFactor);
+
+		float rx = result.x;
+		float ry = result.y;
+		float rz = result.z;
+		float ra = result.a;
+		float weight = specTex.Sample(gSamplerState, uv).x;
+
+
+		rx = rx + (1.0 - rx) * weight;
+		ry = ry + (1.0 - ry) * weight;
+		rz = rz + (1.0 - rz) * weight;
+
+		float4 result2 = float4(rx, ry, rz, ra);
+		float reduce;
+		float reduceAngle;
+		if (fDistance >= gLights[nIndex].m_fRange) //거리가 멀면 이 빛으로 영향 없음.
+		{
+			reduce = 0.0f;
+		}
+		else
+		{
+			reduce = fDistance / gLights[nIndex].m_fRange * 9.0f + 1.0f; // 1~10까지의 값으로 치환
+			reduce = 1.0f - log10(reduce);
+
+		}
+		result2 = result2 * reduce;
+		return result2;
 	}
 	return(float4(0.0f, 0.0f, 0.0f, 0.0f));
 }
@@ -145,7 +174,7 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 	float fDistance = length(vToLight);
 	float cosAngle = dot(normalize(-vToLight), gLights[nIndex].m_vDirection);
 	float angle = acos(cosAngle);
-	if (fDistance <= gLights[nIndex].m_fRange  && cosAngle <=1.0f && cosAngle>=cos(3.141592f/180.0f *20.0f))
+	if (fDistance <= gLights[nIndex].m_fRange  && angle>=0.0f && angle <= (3.141592f/180.0f * 90.0f))
 	{
 		float fSpecularFactor = 0.0f;
 		vToLight /= fDistance;
@@ -183,20 +212,13 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 		float ry = result.y;
 		float rz = result.z;
 		float ra = result.z;
-		float weight = specTex.Sample(gSamplerState, uv).x * 2.0f - 1.0f;
+		float weight = specTex.Sample(gSamplerState, uv).x;
 
-		if (weight <= 0.0f)
-		{
-			rx = rx + rx * weight;
-			ry = ry + ry * weight;
-			rz = rz + rz * weight;
-		}
-		else
-		{
-			rx = rx + (1.0 - rx) * weight;
-			ry = ry + (1.0 - ry) * weight;
-			rz = rz + (1.0 - rz) * weight;
-		}
+		
+		rx = rx + (1.0 - rx) * weight;
+		ry = ry + (1.0 - ry) * weight;
+		rz = rz + (1.0 - rz) * weight;
+		
 		
 		float4 result2 = float4(rx, ry, rz, ra);
 		float reduce;
@@ -211,20 +233,21 @@ float4 SpotLight(int nIndex, float3 vPosition, float3 vNormal, float3 vToCamera,
 			reduce = 1.0f - log10(reduce);
 			
 		}
-		if (angle >= 3.141592f / 180.0f * 20.0f)
+		if (angle >= 3.141592f / 180.0f * 90.0f)
 		{
 			reduceAngle = 0.0f;
 		}
 		else
 		{
-			reduceAngle = angle / (3.141592f / 180 * 20.0f) * 9.0f + 1.0f;
+			reduceAngle = angle / (3.141592f / 180 * 90.0f) * 9.0f + 1.0f;
 			reduceAngle = 1.0f - log10(reduceAngle);
 			
 		}
 
 
 		
-		result2 = result2 * (reduce*reduceAngle);
+		//result2 = result2 * (reduce*reduceAngle);
+		result2 = result2 * reduce;
 		//return float4(rx, ry, rz, ra);
 		 return result2;
 		//return(((gLights[nIndex].m_cAmbient * gMaterials[0].m_cAmbient) + (gLights[nIndex].m_cDiffuse * fDiffuseFactor * gMaterials[0].m_cDiffuse) + (gLights[nIndex].m_cSpecular * fSpecularFactor * float4(0.0f,0.0f,0.0f,1.0f))) * fAttenuationFactor * fSpotFactor);

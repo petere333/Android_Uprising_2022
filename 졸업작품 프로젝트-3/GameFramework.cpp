@@ -407,10 +407,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				if (m_pScene->m_pLights[0].m_bEnable == false)
 				{
 					m_pScene->m_pLights[0].m_bEnable = true;
+					m_pScene->m_pLights[1].m_bEnable = false;
 				}
 				else
 				{
 					m_pScene->m_pLights[0].m_bEnable = false;
+					m_pScene->m_pLights[1].m_bEnable = true;
 				}
 				m_pScene->UpdateShaderVariables(m_pd3dCommandList);
 				break;

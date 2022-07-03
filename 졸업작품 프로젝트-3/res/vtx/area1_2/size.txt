@@ -30,3 +30,36 @@ woods	2.0	0.25	8.0	right
 table		4.0	1.0	2.0	right
 table2		8.0	1.0	3.0	right
 bucket	1	1	1	left
+
+drill		0.4	0.4	0.2	right
+furniture1	0.5	2.5	2.5	left
+furniture2	1.0	1.0	1.0	left
+
+saw		0.3	1.5	0.5	right
+
+log1		0.6	1.0	3.0	left
+log2		0.6	1.0	3.0	left
+
+shelf		4.0	4.0	1.0	right
+
+glue 		0.3	0.5	0.2	left
+bottle		0.3	0.6	0.3	right
+hammer	0.3	0.7	0.7	left
+toolbox	0.6	0.6	1.0
+
+vase1~15	0.3	0.5	0.3	right
+
+wdPallet	3.0	0.6	3.0
+wdpalLayer	3.0	1.65	3.0
+
+cement1	3.0	1.65	3.0
+cement2	4.5	2.25	3.0
+
+klinopen	4.0	4.5	3.0	left
+klinclose	3.0	4.5	3.0	left
+
+banner	1.5	2.5	1.5	right
+
+wheel		2.5	1.5	2.0	right->left
+
+whiteboard	3.5	3.0	1.0	right

@@ -11,6 +11,11 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	data = LoadObjects("res/map/area1_2/objects1-2.txt");
 	boxesWorld = LoadBoxes("res/map/area1_2/box1-2.txt", &nBox);
 
+	for (int i = 0; i < 5; ++i)
+	{
+		productCreated[i] = chrono::system_clock::now();
+	}
+	goodsMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase1.txt", NULL);
 	CLoadedMesh* shield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_shield.txt", NULL);
 	CLoadedMesh* bigshield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bigshield.txt", NULL);
 	CLoadedMesh* longtank = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_longtank.txt", NULL);
@@ -69,6 +74,95 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	
 	GridMesh* chargeFloor2 = new GridMesh(pd3dDevice, pd3dCommandList, 40.0f, 40.0f);
 
+	PillarMesh* woodmanu_front = new PillarMesh(pd3dDevice, pd3dCommandList, 70, 1, 10);
+	PillarMesh* woodmanu_back = new PillarMesh(pd3dDevice, pd3dCommandList, 70, 1, 10);
+
+	PillarMesh* woodmanu_right1 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 145, 10);
+	PillarMesh* woodmanu_right2 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 3, 7);
+	PillarMesh* woodmanu_right3 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 12, 10);
+
+	CLoadedMesh* table2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_table2.txt", NULL);
+	CLoadedMesh* drill = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_drill.txt", NULL);
+	CLoadedMesh* saw = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_saw.txt", NULL);
+
+	CLoadedMesh* furniture1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_furniture1.txt", NULL);
+	CLoadedMesh* furniture2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_furniture2.txt", NULL);
+
+	CLoadedMesh* wood1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinWood1.txt", NULL);
+	CLoadedMesh* wood2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ruinWood2.txt", NULL);
+
+	CLoadedMesh* log1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_log1.txt", NULL);
+	CLoadedMesh* log2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_log2.txt", NULL);
+
+	CLoadedMesh* shelf = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_shelf.txt", NULL);
+
+	CLoadedMesh* glue = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_glue.txt", NULL);
+	CLoadedMesh* bottle = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bottle.txt", NULL);
+	CLoadedMesh* hammer = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_hammer.txt", NULL);
+
+
+
+	CLoadedMesh* toolbox = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_toolbox.txt", NULL);
+	CLoadedMesh* bucket = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bucket.txt", NULL);
+
+	PillarMesh* pot_front = new PillarMesh(pd3dDevice, pd3dCommandList, 70, 1, 10);
+	PillarMesh* pot_back1 = new PillarMesh(pd3dDevice, pd3dCommandList, 63, 1, 10);
+	PillarMesh* pot_back2 = new PillarMesh(pd3dDevice, pd3dCommandList, 3, 1, 7);
+	PillarMesh* pot_back3 = new PillarMesh(pd3dDevice, pd3dCommandList, 4, 1, 10);
+
+	PillarMesh* pot_right = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 79, 10);
+
+	PillarMesh* pot_center = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 70, 10);
+	PillarMesh* pot_hcenter = new PillarMesh(pd3dDevice, pd3dCommandList, 10, 1, 10);
+
+	GridMesh* pot_floor = new GridMesh(pd3dDevice, pd3dCommandList, 10.0f, 80.0f);
+
+	CCubeMeshTextured* stair = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 1.0f, 10.0f);
+
+	CLoadedMesh* pot1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase1.txt", NULL);
+	CLoadedMesh* pot2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase2.txt", NULL);
+	CLoadedMesh* pot3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase3.txt", NULL);
+	CLoadedMesh* pot4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase4.txt", NULL);
+	CLoadedMesh* pot5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase5.txt", NULL);
+	CLoadedMesh* pot6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase6.txt", NULL);
+	CLoadedMesh* pot7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase7.txt", NULL);
+	CLoadedMesh* pot8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase8.txt", NULL);
+	CLoadedMesh* pot9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase9.txt", NULL);
+	CLoadedMesh* pot10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase10.txt", NULL);
+	CLoadedMesh* pot11 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase11.txt", NULL);
+	CLoadedMesh* pot12 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase12.txt", NULL);
+	CLoadedMesh* pot13 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase13.txt", NULL);
+	CLoadedMesh* pot14 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase14.txt", NULL);
+	CLoadedMesh* pot15 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase15.txt", NULL);
+
+	CLoadedMesh* wdPallet = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_woodenPallet.txt", NULL);
+	CLoadedMesh* wdPalletLayer = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_woodenPalletLayer.txt", NULL);
+
+	CLoadedMesh* cement1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_Cement1.txt", NULL);
+
+	GridMesh* trans_floor = new GridMesh(pd3dDevice, pd3dCommandList, 30.0f, 7.5f);
+
+	PillarMesh* trans_hcenter = new PillarMesh(pd3dDevice, pd3dCommandList, 40, 1, 10);
+	PillarMesh* trans_back1 = new PillarMesh(pd3dDevice, pd3dCommandList, 40, 1, 10);
+	PillarMesh* trans_back2 = new PillarMesh(pd3dDevice, pd3dCommandList, 3, 1, 6);
+	PillarMesh* trans_back3 = new PillarMesh(pd3dDevice, pd3dCommandList, 27, 1, 10);
+	PillarMesh* trans_right = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 50, 10);
+
+	CCubeMeshTextured* trans_stair = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 1.0f, 8.0f);
+	
+	PillarMesh* ev = new PillarMesh(pd3dDevice, pd3dCommandList, 20, 35, 10);
+
+	RectMeshVertical* ev_door = new RectMeshVertical(pd3dDevice, pd3dCommandList, 3.0f, 4.0f);
+	GridMesh* belt = new GridMesh(pd3dDevice, pd3dCommandList, 50.0f, 2.5f);
+
+	CLoadedMesh* klinopen = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_klinopen.txt", NULL);
+	CLoadedMesh* klinclose = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_klinclose.txt", NULL);
+	CLoadedMesh* wheel = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_wheel.txt", NULL);
+	CLoadedMesh* banner = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_banner.txt", NULL);
+	CLoadedMesh* whitebd = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_whiteboard.txt", NULL);
+
+	PillarMesh* woodPillar1 = new PillarMesh(pd3dDevice, pd3dCommandList, 60, 1, 10);
+	PillarMesh* woodPillar2 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 50, 10);
 
 	for (int i = 0; i < data.size(); ++i)
 	{
@@ -474,13 +568,597 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
 		}
-		
-		
+
+		else if (data[i].type == WoodManu_WallFront)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodmanu_front);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_WallBack)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodmanu_back);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_WallRight1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodmanu_right1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_WallRight2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodmanu_right2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_WallRight3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodmanu_right3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == TableBig)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[136]);
+		obj->SetMesh(table2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Saw)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[132]);
+		obj->SetMesh(saw);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Drill)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[131]);
+		obj->SetMesh(drill);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Woods1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[89]);
+		obj->SetMesh(wood1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Woods2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[89]);
+		obj->SetMesh(wood2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PlainLog1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[137]);
+		obj->SetMesh(log1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PlainLog2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[138]);
+		obj->SetMesh(log2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Furniture1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[133]);
+		obj->SetMesh(furniture1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Furniture2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[134]);
+		obj->SetMesh(furniture2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Shelf)
+		{	
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[134]);
+		obj->SetMesh(shelf);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ToolBox)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[139]);
+		obj->SetMesh(toolbox);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Glue)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[140]);
+		obj->SetMesh(glue);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Hammer)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[141]);
+		obj->SetMesh(glue);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Bottle)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[142]);
+		obj->SetMesh(glue);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PaintBarrel)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[136]);
+		obj->SetMesh(bucket);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == Pottery_WallFront)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_front);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallBack1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_back1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallBack2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_back2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallBack3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_back3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallRight)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_right);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallCenter)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_center);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_WallHCenter)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[143]);
+		obj->SetMesh(pot_hcenter);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_UpperFloor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(pot_floor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery_Stair)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(stair);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == Pottery1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery4)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot4);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == Pottery5)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot5);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery6)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot6);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery7)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot7);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery8)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot8);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == Pottery9)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot9);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery10)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot10);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery11)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot11);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery12)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot12);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == Pottery13)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot13);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery14)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot14);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Pottery15)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(pot15);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == PotterySoil)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[93]);
+		obj->SetMesh(cement1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PotterySoilPallet)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[92]);
+		obj->SetMesh(wdPallet);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PotterySoilPalletLayer)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[92]);
+		obj->SetMesh(wdPalletLayer);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_UpperFloor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(trans_floor);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_HCenter)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(trans_hcenter);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_WallBack1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(trans_back1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_WallBack2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(trans_back2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_WallBack3)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(trans_back3);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_WallRight)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(trans_right);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Transfer_Stair)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[127]);
+		obj->SetMesh(trans_stair);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+
+		else if (data[i].type == ConveyorDoor)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[146]);
+		obj->SetMesh(ev_door);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == ConveyorBelt)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[147]);
+		obj->SetMesh(belt);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Elevator)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMesh(ev);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PotteryKlinClose)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[149]);
+		obj->SetMesh(klinclose);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PotteryKlinOpen)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[149]);
+		obj->SetMesh(klinopen);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == PotteryWheel)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[150]);
+		obj->SetMesh(wheel);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Banner)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[148]);
+		obj->SetMesh(banner);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == Whiteboard)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[151]);
+		obj->SetMesh(whitebd);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_Pillar1)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodPillar1);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
+		else if (data[i].type == WoodManu_Pillar2)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[145]);
+		obj->SetMesh(woodPillar2);
+		obj->shadowHeight = 0.0f;
+		obj->shadowX = 0.0f;
+		obj->shadowZ = 0.0f;
+		}
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
 		
 		objects.push_back(obj);
+
+
 	}
 }
 
@@ -496,6 +1174,15 @@ void TerrainShader1_2::ReleaseObjects()
 		}
 	}
 	objects.clear();
+	for (int i = 0; i < products.size(); ++i)
+	{
+		if (products[i])
+		{
+			products[i]->Release();
+			products.erase(products.begin() + i);
+		}
+	}
+	products.clear();
 }
 void TerrainShader1_2::ReleaseUploadBuffers()
 {
@@ -504,6 +1191,13 @@ void TerrainShader1_2::ReleaseUploadBuffers()
 		if (objects[i])
 		{
 			objects[i]->ReleaseUploadBuffers();
+		}
+	}
+	for (int i = 0; i < products.size(); ++i)
+	{
+		if (products[i])
+		{
+			products[i]->ReleaseUploadBuffers();
 		}
 	}
 }
@@ -516,6 +1210,13 @@ void TerrainShader1_2::ReleaseShaderVariables()
 			objects[i]->ReleaseShaderVariables();
 		}
 	}
+	for (int i = 0; i < products.size(); ++i)
+	{
+		if (products[i])
+		{
+			products[i]->ReleaseShaderVariables();
+		}
+	}
 }
 
 void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed)
@@ -523,6 +1224,29 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 	XMFLOAT3 cp = pCamera->getPosition();
 
 	XMFLOAT3 look = pCamera->getLook();
+	for (int i = 0; i < products.size(); ++i)
+	{
+		if (products[i])
+		{
+			XMFLOAT3 pos = products[i]->GetPosition();
+			XMFLOAT3 direction = XMFLOAT3(pos.x - cp.x, pos.y - cp.y, pos.z - cp.z);
+			float dist = Vector3::Length(direction);
+			XMFLOAT3 dir = Vector3::Normalize(direction);
+			float cosAngle = Vector3::DotProduct(look, dir);
+
+			if (dist <= 10.0f)
+			{
+
+				products[i]->Render(pd3dCommandList, pCamera);
+			}
+			else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
+			{
+
+				products[i]->Render(pd3dCommandList, pCamera);
+			}
+		}
+	}
+
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		if (objects[i])
@@ -565,7 +1289,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 					}
 					objects[i]->Render(pd3dCommandList, pCamera);
 				}
-				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
+				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 55.0f))
 				{
 					if (objects[i]->type == ChargingRobot)
 					{
@@ -640,4 +1364,66 @@ D3D12_SHADER_BYTECODE TerrainShader1_2::CreateVertexShader()
 D3D12_SHADER_BYTECODE TerrainShader1_2::CreatePixelShader()
 {
 	return(CShader::CompileShaderFromFile(L"Terrain.hlsl", "psTerrain", "ps_5_1", &m_pd3dPixelShaderBlob));
+}
+
+
+void TerrainShader1_2::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed)
+{
+	
+	// 모든 상품 생성 지점에 대해
+	for (int i = 0; i < 5; ++i)
+	{
+		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+		chrono::duration<double> fromCreated = moment - productCreated[i];
+		float sec = (float)fromCreated.count();
+		//마지막으로 생성된지 4초가 지나면 생성시점을 현재로 하고 물체 생성
+		if (sec > 4.0f)
+		{
+			CGameObject* goods = new CGameObject(1);
+			goods->SetMaterial(0, rm->materials[125]);
+			goods->SetMesh(goodsMesh);
+			goods->shadowHeight = 0.0f;
+			goods->shadowX = 0.0f;
+			goods->shadowZ = 0.0f;
+
+			goods->type = 12400;
+			goods->SetPosition(540.0f, 0.0f, 167.5f + 7.5f*i);
+			goods->Rotate(0.0f, 0.0f, 0.0f);
+
+			products.push_back(goods);
+
+			BoundBox* box = (BoundBox*)malloc(sizeof(BoundBox));
+			box->start = XMFLOAT3(539.85f, 0.0f, 167.35f + 7.5f * i);
+			box->end = XMFLOAT3(540.15f, 0.5f, 167.65f + 7.5f * i);
+
+			boxGoods.push_back(box);
+
+			productCreated[i] = chrono::system_clock::now();
+			lastMove.push_back(chrono::system_clock::now());
+			
+		}
+	}
+
+	//모든 물체에 대해
+	for (int i = 0; i < products.size(); ++i)
+	{
+		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+		chrono::duration<double> fromCreated = moment - lastMove[i];
+		float ftime = (float)fromCreated.count();
+
+		XMFLOAT3 pt = products[i]->GetPosition();
+		products[i]->SetPosition(pt.x - ftime * 5.0f, pt.y, pt.z);
+		boxGoods[i]->start.x -= ftime * 5.0f;
+		boxGoods[i]->end.x -= ftime * 5.0f;
+
+		lastMove[i] = moment;
+		// 엘베 안으로 들어가면
+		if (pt.x - ftime * 5.0f < 490.0f)
+		{
+			products.erase(products.begin() + i);
+			boxGoods.erase(boxGoods.begin() + i);
+			lastMove.erase(lastMove.begin() + i);
+		}
+	}
+	
 }
