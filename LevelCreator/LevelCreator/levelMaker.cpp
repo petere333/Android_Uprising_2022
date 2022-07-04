@@ -48,9 +48,15 @@ float truckX = 1.8f, truckY = 2.0f, truckZ = 6.0f;
 
 int main()
 {
-	createObjects(list, bList);
+	createObjects(list,bList);
 
 
+	
+	/*file = fopen("result/objects2-1.txt", "w");
+	FILE* bf = fopen("result/box2-1.txt", "w");
+	FILE* hf = fopen("result/height2-1.txt", "w");
+	
+	writeHeight(hf, height2_1);*/
 
 	file = fopen("result/1_3/objects1-3.txt", "w");
 	FILE* bf = fopen("result/1_3/box1-3.txt", "w");
@@ -4758,6 +4764,8 @@ void createObstacles1_2(vector<Object>& list, vector<BoundingBox>& blist)
 	}
 }
 
+
+
 void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 {
 	//컨테이너
@@ -4767,13 +4775,12 @@ void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 	cont->type = Container13;
 
 	BoundingBox* boxcont = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcont->start = f3(530.0f - 2.0f, 0.0f, 290.0f - 1.0f);
-	boxcont->end = f3(530.0f + 2.0f, 2.0f, 290.0f + 1.0f);
-	setAreaHeight(height1_3, x13, z13, 530.0f - 2.0f, 290.0f - 1.0f, 530.0f + 2.0f, 290.0f + 1.0f, 2.0f);
+	boxcont->start = f3(530.0f - 2.0f, 0.0f, 281.0f - 1.0f);
+	boxcont->end = f3(530.0f + 2.0f, 2.0f, 281.0f + 1.0f);
+	setAreaHeight(height1_3, x13, z13, 530.0f - 2.0f, 281.0f - 1.0f, 530.0f + 2.0f, 281.0f + 1.0f, 2.0f);
 
 	list.push_back(*cont);
 	blist.push_back(*boxcont);
-
 
 	Object* cont2 = (Object*)malloc(sizeof(Object));
 	cont2->location = f3(400.0f, -10.0f, 200.0f);
@@ -4785,22 +4792,9 @@ void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 	boxcont2->end = f3(400.0f + 2.0f, 2.0f, 200.0f + 1.0f);
 	setAreaHeight(height1_3, x13, z13, 400.0f - 2.0f, 200.0f - 1.0f, 400.0f + 2.0f, 200.0f + 1.0f, 2.0f);
 
+
 	list.push_back(*cont2);
 	blist.push_back(*boxcont2);
-
-
-	Object* cont3 = (Object*)malloc(sizeof(Object));
-	cont3->location = f3(530.0f, -10.0f, 400.0f);
-	cont3->rotation = f3(90.0f, 90.0f, 0.0f);
-	cont3->type = Container13;
-
-	BoundingBox* boxcont3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	boxcont3->start = f3(530.0f - 2.0f, 0.0f, 400.0f - 1.0f);
-	boxcont3->end = f3(530.0f + 2.0f, 2.0f, 400.0f + 1.0f);
-	setAreaHeight(height1_3, x13, z13, 530.0f - 2.0f, 400.0f - 1.0f, 530.0f + 2.0f, 400.0f + 1.0f, 2.0f);
-
-	list.push_back(*cont3);
-	blist.push_back(*boxcont3);
 
 	//선반
 
@@ -4820,94 +4814,6 @@ void createObstacles1_3(vector<Object>& list, vector<BoundingBox>& blist)
 			blist.push_back(*boxshelf2);
 		}
 	}
-
-	for (float z = 310.0f; z < 360.0f; z += 8.0f) {
-		for (float x = 450.0f; x < 500.0f; x += 15.0f) {
-			Object* shelf2 = (Object*)malloc(sizeof(Object));
-			shelf2->location = f3(x, 2.5f, z);
-			shelf2->rotation = f3(-90.0f, 0.0f, -90.0f);
-			shelf2->type = Shelf02;
-
-			BoundingBox* boxshelf2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-			boxshelf2->start = f3(x - 2.0f, 2.5f, z - 1.0f);
-			boxshelf2->end = f3(x + 2.0f, 5.0f, z + 1.0f);
-			setAreaHeight(height1_3, x13, z13, x - 2.0f, z - 1.0f, x + 2.0f, z + 1.0f, 2.0f);
-
-			list.push_back(*shelf2);
-			blist.push_back(*boxshelf2);
-		}
-	}
-
-	//overhead
-	//Object* overhead = (Object*)malloc(sizeof(Object));
-	//overhead->location = f3(550.0f, 10.0f, 200.0f);
-	//overhead->rotation = f3(180.0f, 0.0f, 0.0f);
-	//overhead->type = OverHead;
-
-	//BoundingBox* boxoverhead = (BoundingBox*)malloc(sizeof(BoundingBox));
-	//boxoverhead->start = f3(550.0f - 2.0f, 5.5f, 200.0f - 1.0f);
-	//boxoverhead->end = f3(550.0f + 2.0f, 7.0f, 200.0f + 1.0f);
-	//setAreaHeight(height1_3, x13, z13, 550.0f - 2.0f, 200.0f - 1.0f, 550.0f + 2.0f, 200.0f + 1.0f, 2.0f);
-
-	//list.push_back(*overhead);
-	//blist.push_back(*boxoverhead);
-
-	/*for (float z = 310.0f; z < 400.0f; z += 20.0f) {
-		for (float x = 410.0f; x < 450.0f; x += 5.0f) {
-			Object* electCar = (Object*)malloc(sizeof(Object));
-			electCar->location = f3(x, 1.0f, z);
-			electCar->rotation = f3(-90.0f, 0.0f, 0.0f);
-			electCar->type = ElecCar;
-
-			BoundingBox* boxelectCar = (BoundingBox*)malloc(sizeof(BoundingBox));
-			boxelectCar->start = f3(x - 2.0f, 0.0f, z - 1.0f);
-			boxelectCar->end = f3(x + 2.0f, 2.0f, z + 1.0f);
-			setAreaHeight(height1_3, x13, z13, x - 2.0f, z - 1.0f, x + 2.0f, z + 1.0f, 2.0f);
-
-
-			list.push_back(*electCar);
-			blist.push_back(*boxelectCar);
-		}
-	}
-
-	for (float x = 420.0f; x < 480.0f; x += 10.0f)
-	{
-		for (float z = 220.0f; z < 350.0f; z += 10.0f)
-		{
-
-			int width = rand() % 3;
-			int height = rand() % 3;
-
-			for (float dx = 0.0f; dx <= width * 1.5f + 0.1f; dx += 1.5f)
-			{
-				for (float dz = 0.0f; dz <= width * 1.5f + 0.1f; dz += 1.5f)
-				{
-
-					for (float dy = 0.0f; dy <= height * 1.5f + 0.1f; dy += 1.5f)
-					{
-						Object* box = (Object*)malloc(sizeof(Object));
-						box->location = f3(x + dx, dy, z + dz);
-						box->rotation = f3(0.0f, 0.0f, 0.0f);
-						box->type = Box1301;
-
-						BoundingBox* boxbox = (BoundingBox*)malloc(sizeof(BoundingBox));
-						boxbox->start = f3(x + dx - 0.75f, dy, z + dz - 0.75f);
-						boxbox->end = f3(x + dx + 0.75f, dy + 1.5f, z + dz + 0.75f);
-
-
-
-						list.push_back(*box);
-						blist.push_back(*boxbox);
-					}
-
-				}
-			}
-			setAreaHeight(height1_3, x13, z13, x - 1.0f, z - 1.0f, x + width * 1.5f + 1.0f, z + width * 1.5f + 1.0f, (height + 1) * 1.5f);
-
-		}
-	}*/
-
-
 }
 
 void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)

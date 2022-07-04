@@ -509,32 +509,12 @@
 #define WoodManu_Pillar2 12267
 
 
-
-//1-3
-#define Container13  13101
-#define Shelf02      13102
-#define Box1301      13103
-#define Box1302      13104
-#define CardBoard13  13105
-#define Cont1301     13106
-#define Cont1302     13107
-#define Crane		 13108
-#define ElecCar      13109
-#define FMachine     13110
-#define Lamp13       13111
-#define Metalladder  13112
-#define OverHead	 13113
-#define Palletjack   13114
-#define WaterPipe    13115
-#define WiredWindow  13116
-#define PowerBox     13117
-#define Pipe13	     13118
-#define AirFan13	 13119
-#define MetalSup	 13120
-#define GasTank		 13121
-#define TransPallet  13122
-
 //2-1
+//1-3
+#define Container13 13101
+#define Shelf02     13102
+#define Storage01	13103
+
 #define Gwanja_wall1 21001
 #define Gwanja_floor 21002
 #define Gwanja_front 21003
