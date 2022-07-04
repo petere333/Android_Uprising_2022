@@ -75,6 +75,8 @@ void ResourceManager::createTextures()
 	CTexture* tex161; CTexture* tex162; CTexture* tex163; CTexture* tex164; CTexture* tex165; CTexture* tex166; CTexture* tex167; CTexture* tex168; CTexture* tex169; CTexture* tex170;
 	CTexture* tex171; CTexture* tex172; CTexture* tex173; CTexture* tex174; CTexture* tex175; CTexture* tex176; CTexture* tex177; CTexture* tex178; CTexture* tex179; CTexture* tex180;
 	CTexture* tex181; CTexture* tex182; CTexture* tex183; CTexture* tex184; CTexture* tex185; CTexture* tex186; CTexture* tex187; CTexture* tex188; CTexture* tex189; CTexture* tex190;
+	CTexture* tex191; CTexture* tex192; CTexture* tex193; CTexture* tex194; CTexture* tex195; CTexture* tex196; CTexture* tex197; CTexture* tex198; CTexture* tex199; CTexture* tex200;\
+	CTexture* tex201; CTexture* tex202; CTexture* tex203; CTexture* tex204; CTexture* tex205; CTexture* tex206; CTexture* tex207; CTexture* tex208; CTexture* tex209; CTexture* tex210;
 
 	tex1= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/cont2.dds", RESOURCE_TEXTURE2D, 0);
@@ -746,8 +748,84 @@ void ResourceManager::createTextures()
 	textures.push_back(tex185);
 
 	tex186 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex186->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/forklift1.dds", RESOURCE_TEXTURE2D, 0);
+	tex186->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/GreeyBox_Base_Color.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex186);
+
+	tex187 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex187->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/grayconcrete.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex187);
+
+	tex188 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex188->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/graytile.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex188);
+
+	
+
+	tex189 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex189->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/cardboardboxes_BaseColor.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex189);
+
+	tex190 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex190->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/Factory Machine_Base_Color.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex190);
+
+	tex191 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex191->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/gasTank_diffuse.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex191);
+
+	tex192 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex192->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/paleteira.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex192);
+
+	tex193 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex193->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/PalletJack_diffuse_red.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex193);
+
+	tex194 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex194->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/POWERBOX_A_BaseColor.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex194);
+
+	tex195 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex195->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/T_Industrial_Lamp_02_BaseColor.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex195);
+
+	tex196 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex196->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/WaterPipe01.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex196);
+
+	tex197 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex197->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/T_map_ElektroCara1_BaseColor.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex197);
+
+	tex198 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex198->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/transpallet.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex198);
+
+	//
+
+	tex199 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex199->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/pipes_Albedo.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex199);
+
+	tex200 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex200->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/BlueBox_Base_Color.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex200);
+
+	//tex201 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	//tex201->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/MetalSup.dds", RESOURCE_TEXTURE2D, 0);
+	//textures.push_back(tex201);
+
+	//tex202 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	//tex202->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/Crane.dds", RESOURCE_TEXTURE2D, 0);
+	//textures.push_back(tex202);
+
+	/*tex203 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex203->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/WiredWindow.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex203);
+
+	tex204 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex204->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/fan.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex204);*/
 	
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
