@@ -18,6 +18,12 @@
 #define JUMP_STATE 5
 #define DEATH_STATE 6
 
+//적의 상태 아이디값.
+#define PATROL_STATE 1
+#define CHASE_STATE 2
+#define ATTACK_STATE 3
+#define DEAD_STATE 4
+
 //적, 플레이어의 공격 유형 아이디값.
 #define TYPE_MELEE 1
 #define TYPE_RANGED 2

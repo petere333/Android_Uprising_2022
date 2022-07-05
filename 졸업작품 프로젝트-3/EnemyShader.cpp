@@ -18,8 +18,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		EnemyObject* obj = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
 		obj->SetPosition(12.0f, 0.0f, 165.0f);
 		obj->origin = XMFLOAT3(12.0f, 0.0f, 165.0f);
-		obj->seekPoint.push_back(XMFLOAT2(12.0f, 165.0f));
-		obj->seekPoint.push_back(XMFLOAT2(22.0f, 165.0f));
+		obj->seekPoint.push_back(XMFLOAT2(12.0f, 164.5f));
+		obj->seekPoint.push_back(XMFLOAT2(22.0f, 164.5f));
 		obj->type = -10;
 		obj->SetTrackAnimationSet(0, 0);
 
@@ -44,7 +44,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
 			box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
 
-			enemyBoxes.push_back(box);
+			objects[i]->mbox = box;
 		}
 	}
 
@@ -268,22 +268,49 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 	
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		
-
-		
-		if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size()==0))
+		// 체력이 막 떨어진 시점에
+		if (objects[i]->bState.hp <= 0 && objects[i]->bState.stateID != DEAD_STATE)
 		{
-			objects[i]->currentPoint += 1;
-			if (objects[i]->currentPoint == objects[i]->seekPoint.size())
-				objects[i]->currentPoint = 0;
-			objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
-			objects[i]->routeIdx = 0;
+			//죽은 것으로 판정하고 죽은 시점 구하기
+			objects[i]->bState.stateID = DEAD_STATE;
+			objects[i]->deathMoment = chrono::system_clock::now();
+
+			//애니메이션도 죽는 것으로 변경
+			if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+			{
+				objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+			}
+			objects[i]->SetTrackAnimationSet(0, 0);
+		}
+		if (objects[i]->bState.stateID == PATROL_STATE)
+		{
+
+			if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
+			{
+				objects[i]->currentPoint += 1;
+				if (objects[i]->currentPoint == objects[i]->seekPoint.size())
+					objects[i]->currentPoint = 0;
+				objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
+				objects[i]->routeIdx = 0;
+
+			}
+
+
+			objects[i]->moveByRoute(objects[i]->route);
 			
 		}
 
-		
-		objects[i]->moveByRoute(objects[i]->route);
-
+		else if (objects[i]->bState.stateID == DEAD_STATE)
+		{
+			chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
+			float dt = (float)timeFromDeath.count();
+			if (dt >= 1.0f)
+			{
+				delete objects[i];
+				objects.erase(objects.begin() + i);
+			}
+		}
 
 		
 	}

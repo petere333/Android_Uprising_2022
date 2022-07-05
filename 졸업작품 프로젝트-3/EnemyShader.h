@@ -23,7 +23,7 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
 public:
-	std::vector<BoundBox*> enemyBoxes;
+	
 
 	float** height11, **height12, **height13, **height21, **height22, **height23;
 

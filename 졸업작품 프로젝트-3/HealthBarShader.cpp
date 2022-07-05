@@ -212,8 +212,25 @@ void HealthBarShader::Animate(CCamera* cam, std::vector<XMFLOAT3> pos, std::vect
 	float yaw = XMConvertToDegrees(atan(cl.x / cl.z));
 	float roll = XMConvertToDegrees(atan(cl.x / cl.y));
 
-	
+	//적의 수가 바뀐경우 체력바 다시 생성
+	if (objects.size() != enemyPos.size())
+	{
+		for (int i = 0; i < objects.size(); ++i)
+		{
+			delete objects[i];
+		}
+		objects.clear();
 
+		for (int i = 0; i < enemyPos.size(); ++i)
+		{
+			CGameObject* obj;
+			obj = new CGameObject(1);
+			obj->SetPosition(pos[i].x, pos[i].y + 2.0f, pos[i].z);
+			obj->SetMesh(hp[0]);
+			obj->SetMaterial(0, rm->materials[17]);
+			objects.push_back(obj);
+		}
+	}
 
 	if (cl.z < 0)
 	{

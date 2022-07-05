@@ -2691,14 +2691,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = enemyShader->enemyBoxes[i]->start.x;
+				p.pos = enemyShader->objects[i]->mbox->start.x;
 				checkList.push_back(p);
 			}
 			else if (n.x < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-				p.pos = enemyShader->enemyBoxes[i]->end.x;
+				p.pos = enemyShader->objects[i]->mbox->end.x;
 				checkList.push_back(p);
 			}
 
@@ -2706,14 +2706,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = enemyShader->enemyBoxes[i]->start.z;
+				p.pos = enemyShader->objects[i]->mbox->start.z;
 				checkList.push_back(p);
 			}
 			else if (n.z < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-				p.pos = enemyShader->enemyBoxes[i]->end.z;
+				p.pos = enemyShader->objects[i]->mbox->end.z;
 				checkList.push_back(p);
 			}
 
@@ -2721,14 +2721,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = enemyShader->enemyBoxes[i]->start.y;
+				p.pos = enemyShader->objects[i]->mbox->start.y;
 				checkList.push_back(p);
 			}
 			else if (n.y < 0.0f)
 			{
 				XYZPlane p;
 				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-				p.pos = enemyShader->enemyBoxes[i]->end.y;
+				p.pos = enemyShader->objects[i]->mbox->end.y;
 				checkList.push_back(p);
 			}
 
@@ -2742,9 +2742,9 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 
 				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-				if ((temp.x <= enemyShader->enemyBoxes[i]->end.x + 0.001f && temp.x >= enemyShader->enemyBoxes[i]->start.x - 0.001f) &&
-					(temp.y <= enemyShader->enemyBoxes[i]->end.y + 0.001f && temp.y >= enemyShader->enemyBoxes[i]->start.y - 0.001f) &&
-					(temp.z <= enemyShader->enemyBoxes[i]->end.z + 0.001f && temp.z >= enemyShader->enemyBoxes[i]->start.z - 0.001f))
+				if ((temp.x <= enemyShader->objects[i]->mbox->end.x + 0.001f && temp.x >= enemyShader->objects[i]->mbox->start.x - 0.001f) &&
+					(temp.y <= enemyShader->objects[i]->mbox->end.y + 0.001f && temp.y >= enemyShader->objects[i]->mbox->start.y - 0.001f) &&
+					(temp.z <= enemyShader->objects[i]->mbox->end.z + 0.001f && temp.z >= enemyShader->objects[i]->mbox->start.z - 0.001f))
 				{
 					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 					{

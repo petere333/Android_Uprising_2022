@@ -10,6 +10,8 @@
 #include "PlayerInfoManager.h"
 #include "../AUSERVER/AUSERVER/protocol.h"
 
+#include "LevelLoader.h"
+
 #define DIR_FORWARD					0x01
 #define DIR_BACKWARD				0x02
 #define DIR_LEFT					0x04
@@ -564,10 +566,12 @@ public:
 	BionicState bState;
 	KineticState kState;
 	int maxHP;
-	chrono::time_point<chrono::system_clock> timeFromDie;
+	chrono::time_point<chrono::system_clock> deathMoment;
 	bool isDead = false;
 
 	chrono::time_point<chrono::system_clock> lastMove;
+
+	BoundBox* mbox;
 
 public:
 	std::vector<XMFLOAT2> NavigateMovement(float x, float z);
@@ -576,6 +580,8 @@ public:
 	std::vector<XMFLOAT2> seekPoint;
 	int currentPoint = 0;
 	int routeIdx=0;
+
+	
 };
 
 class ParticleObject : public CGameObject

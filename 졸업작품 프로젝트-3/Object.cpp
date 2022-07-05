@@ -1326,7 +1326,7 @@ EnemyObject::~EnemyObject()
 
 std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 {
-	vector<bool> blocked;//각 경로가 높이맵에 막혀 이동이 불가능해졌는지 여부
+	
 	vector<bool> addOrNot; //각 경로에 대해 새로운 분기점이 만들어져서 경로를 새로 만들지 여부
 	vector<vector<XMFLOAT2>> route; // 시도한 모든 경로
 
@@ -1352,48 +1352,72 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 	while (quit==false)
 	{
 		dist += 1;
+		//마지막으로 구했던 위치들로부터 경로 생성
 		for (int k = 0; k < pos.size(); ++k)
 		{
+			//목적지에 도착하면 루프 종료
 			if (quit == true)
 				break;
-			vector<XMFLOAT2> available;
-			for (float dx = -0.5f; dx < 0.6f; dx += 0.5f)
-			{
-				for (float dz = -0.5f; dz < 0.6f; dz += 0.5f)
-				{
-					bool vis = false;
-					for (int i = 0; i < visitedx.size(); ++i)
-					{
-						if (pos[k].x + dx == visitedx[i] && pos[k].y + dz == visitedz[i])
-							vis = true;
-					}
-					
-					if (vis==false && pos[k].x+dx > 0.0f && pos[k].y+dz>0.0f)
-					{
-						available.push_back(XMFLOAT2(pos[k].x + dx, pos[k].y + dz));
-					}
-				}
-			}
 
+			//현 위치에서 가로세로 한칸 떨어진 곳 중 갈 수 있는 곳을 구함
+			vector<XMFLOAT2> available;
+			//좌
+			XMFLOAT2 p2 = XMFLOAT2(pos[k].x - 0.5f, pos[k].y);
+			//우
+			XMFLOAT2 p3 = XMFLOAT2(pos[k].x + 0.5f, pos[k].y);
+			//상
+			XMFLOAT2 p1 = XMFLOAT2(pos[k].x, pos[k].y + 0.5f);
+
+			//하
+			XMFLOAT2 p4 = XMFLOAT2(pos[k].x, pos[k].y - 0.5f);
+
+			int hx1 = (int)(p1.x / 0.5f);
+			int hx2 = (int)(p2.x / 0.5f);
+			int hx3 = (int)(p3.x / 0.5f);
+			int hx4 = (int)(p4.x / 0.5f);
+
+			int hy1 = (int)(p1.y / 0.5f);
+			int hy2 = (int)(p2.y / 0.5f);
+			int hy3 = (int)(p3.y / 0.5f);
+			int hy4 = (int)(p4.y / 0.5f);
+
+			bool v1 = false;
+			bool v2 = false;
+			bool v3 = false;
+			bool v4 = false;
+			//방문기록에 없고 높이가 균일한 좌표인경우 목록에 추가
+			for (int i = 0; i < visitedx.size(); ++i)
+			{
+				if ((p1.x == visitedx[i] && p1.y == visitedz[i])|| heightmap[hx1][hy1] >0.0f)
+					v1 = true;
+
+				if ((p2.x == visitedx[i] && p2.y == visitedz[i]) || heightmap[hx2][hy2] > 0.0f)
+					v2 = true;
+
+				if ((p3.x == visitedx[i] && p3.y == visitedz[i]) || heightmap[hx3][hy3] > 0.0f)
+					v3 = true;
+
+				if ((p4.x == visitedx[i] && p4.y == visitedz[i]) || heightmap[hx4][hy4] > 0.0f)
+					v4 = true;
+			}
+			if (v1 == false)
+				available.push_back(p1);
+			if (v2 == false)
+				available.push_back(p2);
+			if (v3 == false)
+				available.push_back(p3);
+			if (v4 == false)
+				available.push_back(p4);
+			
+
+			//이동 가능한 좌표들에 대해 방문기록에 추가
 			for (int i = 0; i < available.size(); ++i)
 			{
 				visitedx.push_back(available[i].x);
 				visitedz.push_back(available[i].y);
-
-				int hx = (int)(available[i].x / 0.5f);
-				int hz = (int)(available[i].y / 0.5f);
-
-				if (heightmap[hx][hz] > 0.0f)
-				{
-					blocked.push_back(true);
-				}
-				else
-				{
-					blocked.push_back(false);
-
-				}
-
 			}
+
+			//시작점에서 이동하는 경우 한칸짜리 경로 생성
 			if (pos[k].x == origin.x && pos[k].y == origin.y)
 			{
 
@@ -1409,56 +1433,68 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 				}
 
 			}
+			//시작점이 아닌 경우
 			else
 			{
+				//기존에 있던 모든 루트의 정보를 받음
 				vector<XMFLOAT2> road;
 				for (int j = 0; j < route[k].size(); ++j)
 				{
 
 					road.push_back(route[k][j]);
 				}
-				if (blocked[k] == false)
+				
+				
+				
+				//경로에 추가할 다음 위치들에 대해
+				for (int j = 0; j < available.size(); ++j)
 				{
-					for (int j = 0; j < available.size(); ++j)
+					//길이 갈라지지 않은 경우 해당 경로에 그대로 새 위치만 추가
+					if (addOrNot[k] == false)
 					{
-						if (addOrNot[k] == false)
-						{
-							route[k].push_back(available[j]);
-							addOrNot[k] = true;
-						}
-						else
-						{
+						route[k].push_back(available[j]);
+						addOrNot[k] = true;
+					}
 
-							route.push_back(road);
-							route[route.size() - 1].push_back(available[j]);
-							addOrNot.push_back(false);
-						}
+					//길이 갈라진 경우 경로를 추가로 생성하여 기존경로를 복사한 후 새 위치 추가
+					else
+					{
+
+						route.push_back(road);
+						route[route.size() - 1].push_back(available[j]);
+						addOrNot.push_back(false);
 					}
 				}
+				
 			}
-			
+			//다음 번 루프를 처리하기 위해 초기화
 			for (int i = 0; i < addOrNot.size(); ++i)
 			{
 				addOrNot[i] = false;
 			}
+			
 
-			for (int i = 0; i < route.size(); ++i)
-			{
-				float desx = (float)((int)((route[i][route[i].size() - 1].x - 0.25f) / 0.5f) + 1) * 0.5f;
-				float desz = (float)((int)((route[i][route[i].size() - 1].y - 0.25f) / 0.5f) + 1) * 0.5f;
-				
-
-				if (desx == x && desz == z)
-				{
-					result = route[i];
-					quit = true;
-					break;
-				}
-
-			}
 		}
+		//현재까지 생성한 모든 루트에 대해
+		for (int i = 0; i < route.size(); ++i)
+		{
+			float desx = (float)((int)((route[i][route[i].size() - 1].x - 0.25f) / 0.5f) + 1) * 0.5f;
+			float desz = (float)((int)((route[i][route[i].size() - 1].y - 0.25f) / 0.5f) + 1) * 0.5f;
+
+			// 목표 지점에 도달한 경로가 존재할 경우 결과값 저장 후 루프 종료
+			if (desx == x && desz == z)
+			{
+				result = route[i];
+				quit = true;
+				break;
+			}
+
+		}
+		//루프 종료 후 최종 경로 반환.
 		if (quit == true)
 			break;
+
+		//아닌 경우 현재까지 구한 경로들의 맨 마지막 이동지점들을 저장
 		pos.clear();
 		for (int i = 0; i < route.size(); ++i)
 		{
@@ -1467,27 +1503,48 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			
 		}
 	}
+	//최종 경로 반환.
 	return result;
 }
 void EnemyObject::moveByRoute(vector<XMFLOAT2> route)
 {
+	
 	if (route.size() > 0)
 	{
+		//기존 위치 구하기
 		XMFLOAT3 origin = GetPosition();
 
+		//기존위치-새위치 방향 벡터 및 거리
 		XMFLOAT2 dir = XMFLOAT2(route[routeIdx].x - origin.x, route[routeIdx].y - origin.z);
 		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
 
 
-
+		//거리가 10센티 밖인 경우, 즉 아직 더 가야 하는 경우
 		if (length >= 0.1f)
 		{
 			XMFLOAT3 origin = GetPosition();
 			XMFLOAT2 dir = XMFLOAT2(route[routeIdx].x - origin.x, route[routeIdx].y - origin.z);
 			XMFLOAT2 ndir = XMFLOAT2(dir.x / length, dir.y / length);
 
-			SetPosition(origin.x + ndir.x * 0.1f, 0.0f, origin.z + ndir.y * 0.1f);
+			float angle = atan2f(ndir.x, ndir.y);
+			angle = angle / 3.141592f * 180.0f;
+
+			if (angle >= 360.0f)
+				angle -= 360.0f;
+			Rotate(0.0f, angle, 0.0f);
+
+			float speed = 3.0f;
+			//이동한다. 프레임레이트 60 기준, 초당 6미터를 이동한다.
+			SetPosition(origin.x + ndir.x * speed / 60.0f, 0.0f, origin.z + ndir.y * speed/60.0f);
+			mbox->start.x += ndir.x * speed/60.0f;
+			mbox->end.x += ndir.x * speed / 60.0f;
+
+			mbox->start.z += ndir.y * speed / 60.0f;
+			mbox->end.z += ndir.y * speed / 60.0f;
+
+
 		}
+		//거리가 충분히 좁혀진 경우 경로에 저장된 다음 위치를 목적지로 설정
 		else
 		{
 			routeIdx += 1;
