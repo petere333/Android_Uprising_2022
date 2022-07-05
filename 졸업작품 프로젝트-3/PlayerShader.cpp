@@ -131,7 +131,7 @@ D3D12_SHADER_BYTECODE PlayerShader::CreatePixelShader()
 
 void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3 pos, ID3D12RootSignature* sig)
 {
-	CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[0], 1);
+	PlayerObject* obj = new PlayerObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[0], 1);
 	obj->type = 1;
 	obj->objType = 1;
 
@@ -139,14 +139,10 @@ void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	obj->Rotate(0.0f, 0.0f, 0.0f);
 	obj->currentRotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
-	obj->speed = 0.0f;
-	obj->direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
 	obj->lastMove = chrono::system_clock::now();
 
-	obj->pState.currHP = 100;
-	obj->pState.id = IDLE_STATE;
-	obj->pState.timeElapsed = 0.0f;
-	obj->pState.attType = TYPE_RANGED;
+
 
 	PlayerInfoManager* manager = new PlayerInfoManager();
 	

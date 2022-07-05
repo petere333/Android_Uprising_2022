@@ -231,7 +231,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	terrain2_3->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	terrain2_3->BuildObjects(pd3dDevice, pd3dCommandList);
 
-	enemyShader = new EnemyShader(rm);
+	enemyShader = new EnemyShader(rm, height11, height12, height13, height21, height22, height23);
 	enemyShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
@@ -570,7 +570,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		{
 			terrain1_2->animate(pd3dDevice, pd3dCommandList, fTimeElapsed);
 		}
-
+		if (enemyShader)
+		{
+			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed);
+		}
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
 
@@ -697,52 +700,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 		//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
 		//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
-		for (int i = 0; i < enemyShader->objects.size(); ++i)
-		{
-
-			if (enemyShader->objects[i]->bState.hp <= 0)
-			{
-				enemyShader->objects[i]->bState.stateID = DEATH_STATE;
-			}
-			if (enemyShader->objects[i]->bState.stateID == IDLE_STATE)
-			{
-				if (enemyShader->objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
-				{
-					enemyShader->objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
-					enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
-					enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
-				}
-			}
-			else if (enemyShader->objects[i]->bState.stateID == DEATH_STATE)
-			{
-
-				if (enemyShader->objects[i]->isDead == false)
-				{
-					if (enemyShader->objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
-					{
-						enemyShader->objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
-						enemyShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
-						enemyShader->objects[i]->SetTrackAnimationSet(0, 0);
-						enemyShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
-						enemyShader->objects[i]->timeFromDie = chrono::system_clock::now();
-						enemyShader->objects[i]->isDead = true;
-					}
-				}
-				else
-				{
-					chrono::duration<double> fromDie = chrono::system_clock::now() - enemyShader->objects[i]->timeFromDie;
-					float fTime = static_cast<float>(fromDie.count());
-
-					if (fTime >= 1.971666f)
-					{
-						enemyShader->objects.erase(enemyShader->objects.begin() + i);
-						enemyShader->enemyBoxes.erase(enemyShader->enemyBoxes.begin() + i);
-						barShader->objects.erase(barShader->objects.begin() + i);
-						
-					}
-				}
-			}
-		}
+		
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -1633,40 +1591,8 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 
 
 
-void CScene::setObjectSpeed(int idx, float size)
-{
-	//플레이어의 속도 크기 및 방향 벡터를 서버가 계산해줘야 한다.
-	playerShader->objects[idx]->speed = size;
 
-	float rad = XMConvertToRadians(playerShader->objects[idx]->currentRotation.y);
 
-	//dir = Vector3::Normalize(XMFLOAT3(sin(rad), 0.0f, cos(rad)));
-	// speed, direction값을 클라에게 전달하자.
-}
-
-void CScene::setObjectState(int index, int state)
-{
-	// 플레이어의 상태가 변하면 서버가 id값, 몇 번째 플레이어인지 index값을 전해준다.
-	// 어차피 timeElapsed는 클라가 상태 변화를 나타내는 패킷을 수신받은
-	// 시점을 기준으로 시간을 측정하면 되므로 서버가 전해줄 필요가 없다.
-	if (playerShader->objects[index]->objType == TYPE_PLAYER)
-	{
-		if (playerShader->objects[index]->pState.id != state)
-		{
-			playerShader->objects[index]->pState.id = state;
-			playerShader->objects[index]->pState.timeElapsed = 0.0f;
-		}
-	}
-	// 적의 경우에도 id, index값만 전해주면 된다.
-	else if (playerShader->objects[index]->objType == TYPE_ENEMY)
-	{
-		if (playerShader->objects[index]->eState.id != state)
-		{
-			playerShader->objects[index]->eState.id = state;
-			playerShader->objects[index]->eState.timeElapsed = 0.0f;
-		}
-	}
-}
 
 bool CScene::moveSuccessed(int idx)
 {
@@ -3165,7 +3091,7 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 		XMFLOAT3 direct = XMFLOAT3(x, y, z);
 		direct = Vector3::Normalize(direct);
 		
-		CGameObject* obj = new CGameObject(1);
+		ParticleObject* obj = new ParticleObject(1);
 		obj->timeCreated = std::chrono::system_clock::now();
 		obj->SetMaterial(0, rm->materials[66]);
 		obj->speed = 0.1f;

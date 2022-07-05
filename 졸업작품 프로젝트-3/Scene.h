@@ -254,14 +254,13 @@ public:
 	ID3D12Resource* m_pd3dcbMaterials = NULL;
 	MATERIAL* m_pcbMappedMaterials = NULL;
 public: 
-	void setObjectSpeed(int idx, float size);
-	void setObjectState(int index, int state);
+	
+	
 	bool moveSuccessed(int idx);
 	void jumpObject(int idx) { playerShader->objects[idx]->jump(); }
 
 
-	float getSpeed(int idx) { return playerShader->objects[idx]->speed; }
-	XMFLOAT3 getDirection(int idx) { return playerShader->objects[idx]->direction; }
+
 	//PlayerState getObjectstate(int idx) { return playerShader->objects[idx]->pState; }
 	XMFLOAT3 getPos(int idx) { return playerShader->objects[idx]->GetPosition(); }
 	void setObjectLastMove(int idx) 

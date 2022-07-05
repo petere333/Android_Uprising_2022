@@ -8,44 +8,6 @@ TerrainShader1_3::~TerrainShader1_3() {}
 
 void TerrainShader1_3::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	data = LoadObjects("res/map/area1_3/objects1-3.txt");
-	boxesWorld = LoadBoxes("res/map/area1_3/box1-3.txt", &nBox);
-	CLoadedMesh* Container = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_3/vtx_Container.txt", NULL);
-	CLoadedMesh* shelf2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_3/vtx_Shelf2.txt", NULL);
-	//CLoadedMesh* storage01 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_3/vtx_Storage01.txt", NULL);
-
-	for (int i = 0; i < data.size(); ++i)
-	{
-		CGameObject* obj = NULL;
-
-		if (data[i].type == Container13)
-		{
-
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[162]);
-			obj->SetMesh(Container);
-			obj->shadowHeight = 0.0f;
-			obj->shadowX = 0.0f;
-			obj->shadowZ = 0.0f;
-		}
-
-		else if (data[i].type == Shelf02)
-		{
-
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[163]);
-			obj->SetMesh(shelf2);
-			obj->shadowHeight = 0.0f;
-			obj->shadowX = 0.0f;
-			obj->shadowZ = 0.0f;
-		}
-
-
-		obj->type = data[i].type;
-		obj->SetPosition(data[i].position);
-		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
-		objects.push_back(obj);
-	}
 }
 
 void TerrainShader1_3::ReleaseObjects()

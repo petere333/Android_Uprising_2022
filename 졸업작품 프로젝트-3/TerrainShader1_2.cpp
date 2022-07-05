@@ -551,7 +551,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		{
 		CLoadedModelInfo* md = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, sig, "res/bin/sample.bin", NULL);
 
-		obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, md, 1);
+		obj = new CGameObject(pd3dDevice, pd3dCommandList, sig, md, 1);
 
 		obj->SetTrackAnimationSet(0, 0);
 

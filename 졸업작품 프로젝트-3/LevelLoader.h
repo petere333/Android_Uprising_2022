@@ -510,11 +510,6 @@
 
 
 //2-1
-//1-3
-#define Container13 13101
-#define Shelf02     13102
-#define Storage01	13103
-
 #define Gwanja_wall1 21001
 #define Gwanja_floor 21002
 #define Gwanja_front 21003

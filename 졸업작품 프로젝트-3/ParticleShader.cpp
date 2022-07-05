@@ -131,7 +131,7 @@ void ParticleShader::createParticles(int n, XMFLOAT3 pos, ID3D12Device* device, 
 		XMFLOAT3 direct = XMFLOAT3(x, y, z);
 		direct = Vector3::Normalize(direct);
 
-		CGameObject* obj = new CGameObject(1);
+		ParticleObject* obj = new ParticleObject(1);
 		obj->timeCreated = std::chrono::system_clock::now();
 		obj->SetMaterial(0, rm->materials[66]);
 		obj->speed = 0.1f;

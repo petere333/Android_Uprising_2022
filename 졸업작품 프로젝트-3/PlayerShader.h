@@ -27,6 +27,6 @@ public:
 
 
 public:
-	std::vector<CGameObject*>	objects;
+	std::vector<PlayerObject*>	objects;
 	ResourceManager* rm;
 };

@@ -736,18 +736,6 @@ void ResourceManager::createTextures()
 	tex183->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/Gwanja_Cabinet.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex183);
 
-	//1-3
-	tex184 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex184->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/TrashContainer.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex184);
-
-	tex185 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex185->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/Shelf_02_color.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex185);
-
-	tex186 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex186->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_3/forklift1.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex186);
 	
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

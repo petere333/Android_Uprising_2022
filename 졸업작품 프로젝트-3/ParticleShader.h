@@ -30,7 +30,7 @@ public:
 
 public:
 	ParticleMesh* partMesh = NULL;
-	std::vector<CGameObject*>	objects;
+	std::vector<ParticleObject*>	objects;
 
 	ResourceManager* rm;
 };

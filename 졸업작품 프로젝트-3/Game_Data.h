@@ -117,9 +117,7 @@ typedef struct EnemyState
 public:
 	int id=-1;					// 현재 상태 아이디값.
 	int currHP = -1;			// 현재 내구도.
-	float currX = 0.0f;			// 현재 위치 X.
-	float currY = 0.0f;			// 현재 위치 Y.
-	float currZ = 0.0f;			// 현재 위치 Z.
+
 	float timeElapsed = 0.0f;	// 이 상태로 변경된 지 얼마나 지났나?
 }EnemyState;
 

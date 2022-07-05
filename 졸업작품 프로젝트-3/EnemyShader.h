@@ -7,9 +7,9 @@
 class EnemyShader : public CShader
 {
 public:
-	EnemyShader(ResourceManager* r);
+	EnemyShader(ResourceManager* r, float**, float**, float**, float**, float**, float**);
 	virtual ~EnemyShader();
-
+	
 	virtual void BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig);
 	virtual void ReleaseObjects();
 	virtual void ReleaseUploadBuffers();
@@ -25,11 +25,15 @@ public:
 public:
 	std::vector<BoundBox*> enemyBoxes;
 
+	float** height11, **height12, **height13, **height21, **height22, **height23;
+
 
 public:
-	std::vector<CGameObject*>	objects;
+	std::vector<EnemyObject*>	objects;
 	ResourceManager* rm;
 public:
 	std::vector<XMFLOAT3> getEnemyPosition();
 	std::vector<int> getHealthRate();
+
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed);
 };

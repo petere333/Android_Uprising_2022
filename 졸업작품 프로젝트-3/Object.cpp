@@ -1271,75 +1271,9 @@ CLoadedModelInfo *CGameObject::LoadGeometryAndAnimationFromFile(ID3D12Device *pd
 	return(pLoadedModel);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CAngrybotObject::CAngrybotObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks)
-{
-	CLoadedModelInfo *pAngrybotModel = pModel;
-	if (!pAngrybotModel) pAngrybotModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Angrybot.bin", NULL);
-
-	SetChild(pAngrybotModel->m_pModelRootObject, true);
-	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pAngrybotModel);
-
-	strcpy_s(m_pstrFrameName, "Angrybot");
-
-	Rotate(-90.0f, 0.0f, 0.0f);
-	SetScale(0.2f, 0.2f, 0.2f);
-}
-
-CAngrybotObject::~CAngrybotObject()
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-CElvenWitchObject::CElvenWitchObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks)
-{
-	CLoadedModelInfo *pElvenWitchModel = pModel;
-	if (!pElvenWitchModel) pElvenWitchModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Elven_Witch.bin", NULL);
-
-	SetChild(pElvenWitchModel->m_pModelRootObject, true);
-	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pElvenWitchModel);
-
-	strcpy_s(m_pstrFrameName, "ElvenWitch");
-
-	Rotate(-90.0f, 0.0f, 0.0f);
-	SetScale(0.15f, 0.15f, 0.15f);
-
-	SetActive("elven_staff", false);
-	SetActive("elven_staff01", false);
-}
-
-CElvenWitchObject::~CElvenWitchObject()
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-CMonsterWeaponObject::CMonsterWeaponObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks)
-{
-	CLoadedModelInfo *pMonsterWeaponModel = pModel;
-	if (!pMonsterWeaponModel) pMonsterWeaponModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/MonsterWeapon.bin", NULL);
-
-	SetChild(pMonsterWeaponModel->m_pModelRootObject, true);
-	m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, nAnimationTracks, pMonsterWeaponModel);
-
-	strcpy_s(m_pstrFrameName, "MonsterWeapon");
-
-	SetScale(0.35f, 0.35f, 0.35f);
-}
-
-CMonsterWeaponObject::~CMonsterWeaponObject()
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-CLionObject::CLionObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks):CGameObject(1)
+PlayerObject::PlayerObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks):CGameObject(1)
 {
 	CLoadedModelInfo *pLionModel = pModel;
 	if (!pLionModel) pLionModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Lion.bin", NULL);
@@ -1365,13 +1299,13 @@ CLionObject::CLionObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd
 	
 }
 
-CLionObject::~CLionObject()
+PlayerObject::~PlayerObject()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CEagleObject::CEagleObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks)
+EnemyObject::EnemyObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks, float** height, float areax, float areaz)
 {
 	CLoadedModelInfo *pEagleModel = pModel;
 	if (!pEagleModel) pEagleModel = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature, "Model/Eagle.bin", NULL);
@@ -1381,10 +1315,200 @@ CEagleObject::CEagleObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *
 
 	strcpy_s(m_pstrFrameName, "Eagle");
 
-	Rotate(-90.0f, 0.0f, 0.0f);
-	SetScale(0.2f, 0.2f, 0.2f);
+	heightmap = height;
+	areaX = areax;
+	areaZ = areaz;
 }
 
-CEagleObject::~CEagleObject()
+EnemyObject::~EnemyObject()
 {
+}
+
+std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
+{
+	vector<bool> blocked;//각 경로가 높이맵에 막혀 이동이 불가능해졌는지 여부
+	vector<bool> addOrNot; //각 경로에 대해 새로운 분기점이 만들어져서 경로를 새로 만들지 여부
+	vector<vector<XMFLOAT2>> route; // 시도한 모든 경로
+
+	vector<float> visitedx;//이미 방문한 지점
+	vector<float> visitedz;//이미 방문한 지점
+
+	XMFLOAT2 origin = XMFLOAT2(GetPosition().x, GetPosition().z);
+	vector<XMFLOAT2> pos;
+	pos.push_back(origin);
+
+	int dist = 0;
+	visitedx.push_back(pos[0].x);
+	visitedz.push_back(pos[0].y);
+
+	vector<XMFLOAT2> result;
+	bool quit = false;
+
+	int hix = (int)(x / 0.5f);
+	int hiz = (int)(z / 0.5f);
+
+	if (heightmap[hix][hiz] > 0.0f)
+		return result;
+	while (quit==false)
+	{
+		dist += 1;
+		for (int k = 0; k < pos.size(); ++k)
+		{
+			if (quit == true)
+				break;
+			vector<XMFLOAT2> available;
+			for (float dx = -0.5f; dx < 0.6f; dx += 0.5f)
+			{
+				for (float dz = -0.5f; dz < 0.6f; dz += 0.5f)
+				{
+					bool vis = false;
+					for (int i = 0; i < visitedx.size(); ++i)
+					{
+						if (pos[k].x + dx == visitedx[i] && pos[k].y + dz == visitedz[i])
+							vis = true;
+					}
+					
+					if (vis==false && pos[k].x+dx > 0.0f && pos[k].y+dz>0.0f)
+					{
+						available.push_back(XMFLOAT2(pos[k].x + dx, pos[k].y + dz));
+					}
+				}
+			}
+
+			for (int i = 0; i < available.size(); ++i)
+			{
+				visitedx.push_back(available[i].x);
+				visitedz.push_back(available[i].y);
+
+				int hx = (int)(available[i].x / 0.5f);
+				int hz = (int)(available[i].y / 0.5f);
+
+				if (heightmap[hx][hz] > 0.0f)
+				{
+					blocked.push_back(true);
+				}
+				else
+				{
+					blocked.push_back(false);
+
+				}
+
+			}
+			if (pos[k].x == origin.x && pos[k].y == origin.y)
+			{
+
+				for (int i = 0; i < available.size(); ++i)
+				{
+					vector<XMFLOAT2> road;
+					road.push_back(origin);
+					road.push_back(available[i]);
+
+					route.push_back(road);
+					addOrNot.push_back(false);
+
+				}
+
+			}
+			else
+			{
+				vector<XMFLOAT2> road;
+				for (int j = 0; j < route[k].size(); ++j)
+				{
+
+					road.push_back(route[k][j]);
+				}
+				if (blocked[k] == false)
+				{
+					for (int j = 0; j < available.size(); ++j)
+					{
+						if (addOrNot[k] == false)
+						{
+							route[k].push_back(available[j]);
+							addOrNot[k] = true;
+						}
+						else
+						{
+
+							route.push_back(road);
+							route[route.size() - 1].push_back(available[j]);
+							addOrNot.push_back(false);
+						}
+					}
+				}
+			}
+			
+			for (int i = 0; i < addOrNot.size(); ++i)
+			{
+				addOrNot[i] = false;
+			}
+
+			for (int i = 0; i < route.size(); ++i)
+			{
+				float desx = (float)((int)((route[i][route[i].size() - 1].x - 0.25f) / 0.5f) + 1) * 0.5f;
+				float desz = (float)((int)((route[i][route[i].size() - 1].y - 0.25f) / 0.5f) + 1) * 0.5f;
+				
+
+				if (desx == x && desz == z)
+				{
+					result = route[i];
+					quit = true;
+					break;
+				}
+
+			}
+		}
+		if (quit == true)
+			break;
+		pos.clear();
+		for (int i = 0; i < route.size(); ++i)
+		{
+			
+			pos.push_back(route[i][route[i].size() - 1]);
+			
+		}
+	}
+	return result;
+}
+void EnemyObject::moveByRoute(vector<XMFLOAT2> route)
+{
+	if (route.size() > 0)
+	{
+		XMFLOAT3 origin = GetPosition();
+
+		XMFLOAT2 dir = XMFLOAT2(route[routeIdx].x - origin.x, route[routeIdx].y - origin.z);
+		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+
+
+
+		if (length >= 0.1f)
+		{
+			XMFLOAT3 origin = GetPosition();
+			XMFLOAT2 dir = XMFLOAT2(route[routeIdx].x - origin.x, route[routeIdx].y - origin.z);
+			XMFLOAT2 ndir = XMFLOAT2(dir.x / length, dir.y / length);
+
+			SetPosition(origin.x + ndir.x * 0.1f, 0.0f, origin.z + ndir.y * 0.1f);
+		}
+		else
+		{
+			routeIdx += 1;
+		}
+	}
+}
+
+ParticleObject::ParticleObject(int n) :CGameObject(n){}
+
+ParticleObject::~ParticleObject()
+{
+	if (m_pMesh) m_pMesh->Release();
+
+	if (m_nMaterials > 0)
+	{
+		for (int i = 0; i < m_nMaterials; i++)
+		{
+			if (m_ppMaterials[i]) m_ppMaterials[i]->Release();
+		}
+	}
+	if (m_ppMaterials) delete[] m_ppMaterials;
+
+	if (m_pSkinnedAnimationController) delete m_pSkinnedAnimationController;
 }

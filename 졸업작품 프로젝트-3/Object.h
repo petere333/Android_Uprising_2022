@@ -500,24 +500,36 @@ public:
 	static CLoadedModelInfo *LoadGeometryAndAnimationFromFile(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, char *pstrFileName, CShader *pShader);
 
 	static void PrintFrameInfo(CGameObject *pGameObject, CGameObject *pParent);
+	chrono::time_point<chrono::system_clock> timeCreated;
 
+
+	float shadowHeight;
+	float shadowX = 0.0f;
+	float shadowZ = 0.0f;
+
+
+};
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+class PlayerObject : public CGameObject
+{
 public:
-	
-	PlayerInfoManager* info=NULL;
+	PlayerObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
+	virtual ~PlayerObject();
+
+	PlayerInfoManager* info = NULL;
 	BionicState bState;
 	KineticState kState;
 	int maxHP;
 	XMFLOAT3 currentRotation;
 	int objType;
 	PlayerState pState;
-	EnemyState eState;
-	float speed=0.0f;
-	float yspeed = 0.0f;
-	XMFLOAT3 direction=XMFLOAT3(0.0f,0.0f,0.0f);
+	
 
-	float shadowHeight;
-	float shadowX=0.0f;
-	float shadowZ = 0.0f;
+
 
 	chrono::time_point<chrono::system_clock> lastMove;
 	bool lastMoveSuccess;
@@ -527,63 +539,53 @@ public:
 	bool isInAir = false;
 
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
-	chrono::time_point<chrono::system_clock> timeCreated;
+
 	chrono::time_point<chrono::system_clock> timeFromDie;
 
 	chrono::time_point<chrono::system_clock> lastDamaged;
 	bool isDead = false;
-
 public:
 	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }
 
 
+
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-class CAngrybotObject : public CGameObject
+class EnemyObject : public CGameObject
 {
 public:
-	CAngrybotObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
-	virtual ~CAngrybotObject();
+	EnemyObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks, float** height, float, float);
+	virtual ~EnemyObject();
+	XMFLOAT3 origin;
+	float** heightmap;
+	float areaX, areaZ;
+	BionicState bState;
+	KineticState kState;
+	int maxHP;
+	chrono::time_point<chrono::system_clock> timeFromDie;
+	bool isDead = false;
+
+	chrono::time_point<chrono::system_clock> lastMove;
+
+public:
+	std::vector<XMFLOAT2> NavigateMovement(float x, float z);
+	void moveByRoute(vector<XMFLOAT2> route);
+	std::vector<XMFLOAT2> route;
+	std::vector<XMFLOAT2> seekPoint;
+	int currentPoint = 0;
+	int routeIdx=0;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-class CElvenWitchObject : public CGameObject
+class ParticleObject : public CGameObject
 {
 public:
-	CElvenWitchObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
-	virtual ~CElvenWitchObject();
-};
+	ParticleObject(int n);
+	virtual ~ParticleObject();
+	float speed = 0.0f;
+	float yspeed = 0.0f;
+	XMFLOAT3 direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-class CMonsterWeaponObject : public CGameObject
-{
-public:
-	CMonsterWeaponObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
-	virtual ~CMonsterWeaponObject();
-};
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-class CLionObject : public CGameObject
-{
-public:
-	CLionObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
-	virtual ~CLionObject();
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-class CEagleObject : public CGameObject
-{
-public:
-	CEagleObject(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList, ID3D12RootSignature *pd3dGraphicsRootSignature, CLoadedModelInfo *pModel, int nAnimationTracks);
-	virtual ~CEagleObject();
 };

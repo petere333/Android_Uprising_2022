@@ -470,33 +470,10 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				//pl.send_teleport(c_id, 850.0f, 0.0f, 550.0f);
-				pl.send_teleport(c_id, 450.0f, 0.0f, 300.0f);
+				pl.send_teleport(c_id, 850.0f, 0.0f, 550.0f);
 			}
 		}
 		break;
-		}
-		//else if (p->key == VK_F5) //창고
-		//{
-		//for (auto& pl : clients)
-		//{
-		//	if (pl._use == true)
-		//	{
-		//		pl.send_teleport(c_id, 450.0f, 0.0f, 300.0f);
-		//	}
-		//}
-		//break;
-		//}
-		//else if (p->key == VK_F6) //주차장
-		//{
-		//for (auto& pl : clients)
-		//{
-		//	if (pl._use == true)
-		//	{
-		//		pl.send_teleport(c_id, 1000.0f, 0.0f, 100.0f);
-		//	}
-		//}
-		//break;
 		}
 
 		if (ks.rotation >= 360.0f)

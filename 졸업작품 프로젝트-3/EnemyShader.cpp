@@ -1,16 +1,25 @@
 #include "EnemyShader.h"
 
-EnemyShader::EnemyShader(ResourceManager* r)
+EnemyShader::EnemyShader(ResourceManager* r, float** height, float** height2, float** height3, float** height4, float** height5, float** height6)
 {
 	rm = r;
+	height11 = height;
+	height12 = height2;
+	height13 = height3;
+	height21 = height4;
+	height22 = height5;
+	height23 = height6;
 }
 EnemyShader::~EnemyShader() {}
 
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
 	{
-		CGameObject* obj = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-		obj->SetPosition(90.0f, 0.0f, 150.0f);
+		EnemyObject* obj = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+		obj->SetPosition(12.0f, 0.0f, 165.0f);
+		obj->origin = XMFLOAT3(12.0f, 0.0f, 165.0f);
+		obj->seekPoint.push_back(XMFLOAT2(12.0f, 165.0f));
+		obj->seekPoint.push_back(XMFLOAT2(22.0f, 165.0f));
 		obj->type = -10;
 		obj->SetTrackAnimationSet(0, 0);
 
@@ -19,45 +28,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		obj->maxHP = 20;
 		objects.push_back(obj);
 
-		CGameObject* obj2 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-		obj2->SetPosition(92.0f, 0.0f, 152.0f);
-		obj2->type = -10;
-		obj2->SetTrackAnimationSet(0, 0);
-
-		obj2->bState.stateID = IDLE_STATE;
-		obj2->bState.hp = 20;
-		obj2->maxHP = 20;
-		objects.push_back(obj2);
-
-		CGameObject* obj3 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-		obj3->SetPosition(94.0f, 0.0f, 150.0f);
-		obj3->type = -10;
-		obj3->SetTrackAnimationSet(0, 0);
-
-		obj3->bState.stateID = IDLE_STATE;
-		obj3->bState.hp = 20;
-		obj3->maxHP = 20;
-		objects.push_back(obj3);
-
-		CGameObject* obj4 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-		obj4->SetPosition(120.0f, 0.0f, 220.0f);
-		obj4->type = -10;
-		obj4->SetTrackAnimationSet(0, 0);
-
-		obj4->bState.stateID = IDLE_STATE;
-		obj4->bState.hp = 20;
-		obj4->maxHP = 20;
-		objects.push_back(obj4);
-
-		CGameObject* obj5 = new CLionObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1);
-		obj5->SetPosition(450.0f, 0.0f, 330.0f);
-		obj5->type = -10;
-		obj5->SetTrackAnimationSet(0, 0);
-
-		obj5->bState.stateID = IDLE_STATE;
-		obj5->bState.hp = 20;
-		obj5->maxHP = 20;
-		objects.push_back(obj5);
+	
 
 
 
@@ -290,4 +261,30 @@ std::vector<int> EnemyShader::getHealthRate()
 		result.push_back(hprate);
 	}
 	return result;
+}
+
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed)
+{
+	
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		
+
+		
+		if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size()==0))
+		{
+			objects[i]->currentPoint += 1;
+			if (objects[i]->currentPoint == objects[i]->seekPoint.size())
+				objects[i]->currentPoint = 0;
+			objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
+			objects[i]->routeIdx = 0;
+			
+		}
+
+		
+		objects[i]->moveByRoute(objects[i]->route);
+
+
+		
+	}
 }
