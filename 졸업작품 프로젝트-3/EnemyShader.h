@@ -35,5 +35,5 @@ public:
 	std::vector<XMFLOAT3> getEnemyPosition();
 	std::vector<int> getHealthRate();
 
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed);
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>);
 };

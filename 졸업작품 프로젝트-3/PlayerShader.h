@@ -29,4 +29,6 @@ public:
 public:
 	std::vector<PlayerObject*>	objects;
 	ResourceManager* rm;
+public:
+	std::vector<XMFLOAT3> getPlayerLocation();
 };

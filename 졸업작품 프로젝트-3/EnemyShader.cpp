@@ -263,7 +263,7 @@ std::vector<int> EnemyShader::getHealthRate()
 	return result;
 }
 
-void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed)
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos)
 {
 	
 	for (int i = 0; i < objects.size(); ++i)
@@ -285,7 +285,95 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		}
 		if (objects[i]->bState.stateID == PATROL_STATE)
 		{
+			int playerID = -1; // 발견한 적의 아이디
+//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
+			for (int p = 0; p < ppos.size(); ++p)
+			{
+				bool found = true;
+				XMFLOAT3 ep = objects[i]->GetPosition();
 
+
+				float ex = ep.x;
+				float ez = ep.z;
+				float px = ppos[p].x;
+				float pz = ppos[p].z;
+
+				float dx = px - ex;
+				float dz = pz - ez;
+				float dist = sqrt(dx * dx + dz * dz);
+				float nx = dx / dist;
+				float nz = dz / dist;
+				//30미터 너머의 적은 봐도 못본 것으로 처리
+				if (dist > 30.0f)
+				{
+					continue;
+				}
+				if (ex < px)
+				{
+					for (float x = ex; x < px; x += 0.5f)
+					{
+						float z = ez + nz / nx * 0.5f;
+
+						int ix = (int)(x / 0.5f);
+						int iz = (int)(z / 0.5f);
+
+						if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						{
+							found = false;
+							break;
+						}
+					}
+					if (found == true)
+					{
+						playerID = p;
+					}
+
+				}
+				else
+				{
+					for (float x = ex; x > px; x -= 0.5f)
+					{
+						float z = ez - nz / nx * 0.5f;
+						int ix = (int)(x / 0.5f);
+						int iz = (int)(z / 0.5f);
+						if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						{
+							found = false;
+							break;
+						}
+						if (found == false)
+							break;
+					}
+					if (found == true)
+						playerID = p;
+				}
+
+
+			}
+
+			//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
+			if (playerID != -1)
+			{
+				objects[i]->bState.stateID = CHASE_STATE;
+				objects[i]->chaseTargetPos = ppos[playerID];
+				float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
+				float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
+				objects[i]->chaseTarget = playerID;
+				objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+				objects[i]->routeIdx = 0;
+				continue;
+			}
+			else if (objects[i]->hitPlayerID != -1)
+			{
+				objects[i]->bState.stateID = CHASE_STATE;
+				objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
+				objects[i]->chaseTarget = objects[i]->hitPlayerID;
+				objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+				objects[i]->routeIdx = 0;
+				continue;
+			}
+
+			// 현재 가고자 하는 곳까지 경로 계산
 			if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
 			{
 				objects[i]->currentPoint += 1;
@@ -295,16 +383,141 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				objects[i]->routeIdx = 0;
 
 			}
-
-
 			objects[i]->moveByRoute(objects[i]->route);
+			//이동 애니메이션으로 변경
+			if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
+			{
+				objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+			}
+			objects[i]->SetTrackAnimationSet(0, 0);
+
 			
+
+		}
+
+		else if (objects[i]->bState.stateID == CHASE_STATE)
+		{
+			//빠르게 이동하는 애니메이션으로 변경
+			if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
+			{
+				objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+			}
+			objects[i]->SetTrackAnimationSet(0, 0);
+
+
+			//플레이어의 위치를 향해 감.
+			if (objects[i]->routeIdx < objects[i]->route.size())
+			{
+				objects[i]->moveByRoute(objects[i]->route);
+			}
+			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
+
+			float dist = Vector3::Length(Vector3::Subtract(ppos[objects[i]->chaseTarget], objects[i]->GetPosition()));
+			
+			if (dist >= 30.0f || objects[i]->routeIdx==objects[i]->route.size())
+			{
+				int playerID = -1; // 발견한 적의 아이디
+				//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
+				for (int p = 0; p < ppos.size(); ++p)
+				{
+					bool found = true;
+					XMFLOAT3 ep = objects[i]->GetPosition();
+
+
+					float ex = ep.x;
+					float ez = ep.z;
+					float px = ppos[p].x;
+					float pz = ppos[p].z;
+
+					float dx = px - ex;
+					float dz = pz - ez;
+					float dist = sqrt(dx * dx + dz * dz);
+					float nx = dx / dist;
+					float nz = dz / dist;
+					//30미터 너머의 적은 봐도 못본 것으로 처리
+					if (dist > 30.0f)
+					{
+						continue;
+					}
+					if (ex < px)
+					{
+						for (float x = ex; x < px; x += 0.5f)
+						{
+							float z = ez + nz / nx * 0.5f;
+
+							int ix = (int)(x / 0.5f);
+							int iz = (int)(z / 0.5f);
+
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
+						}
+						if (found == true)
+						{
+							playerID = p;
+						}
+
+					}
+					else
+					{
+						for (float x = ex; x > px; x -= 0.5f)
+						{
+							float z = ez - nz / nx * 0.5f;
+							int ix = (int)(x / 0.5f);
+							int iz = (int)(z / 0.5f);
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
+							if (found == false)
+								break;
+						}
+						if (found == true)
+							playerID = p;
+					}
+
+
+				}
+
+				//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
+				if (playerID != -1)
+				{
+					objects[i]->bState.stateID = CHASE_STATE;
+					objects[i]->chaseTargetPos = ppos[playerID];
+					float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
+					float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
+					objects[i]->chaseTarget = playerID;
+					objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+					objects[i]->routeIdx = 0;
+					continue;
+				}
+				else if (objects[i]->hitPlayerID != -1)
+				{
+					objects[i]->bState.stateID = CHASE_STATE;
+					objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
+					objects[i]->chaseTarget = objects[i]->hitPlayerID;
+					objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+					objects[i]->routeIdx = 0;
+					continue;
+				}
+
+			}
+
+
 		}
 
 		else if (objects[i]->bState.stateID == DEAD_STATE)
 		{
+			//죽고난 후 시점까지의 경과시간 구하기.
 			chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
 			float dt = (float)timeFromDeath.count();
+
+			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
 			if (dt >= 1.0f)
 			{
 				delete objects[i];

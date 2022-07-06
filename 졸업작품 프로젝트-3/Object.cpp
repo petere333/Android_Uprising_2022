@@ -1346,8 +1346,12 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 
 	int hix = (int)(x / 0.5f);
 	int hiz = (int)(z / 0.5f);
-
+	float dx = origin.x - x;
+	float dz = origin.y - z;
+	float dis = sqrt(dx * dx + dz * dz);
 	if (heightmap[hix][hiz] > 0.0f)
+		return result;
+	if (dis < 0.2f)
 		return result;
 	while (quit==false)
 	{
@@ -1356,6 +1360,8 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 		for (int k = 0; k < pos.size(); ++k)
 		{
 			//목적지에 도착하면 루프 종료
+			
+
 			if (quit == true)
 				break;
 

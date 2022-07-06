@@ -572,7 +572,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		if (enemyShader)
 		{
-			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed);
+			vector<XMFLOAT3> ppos = playerShader->getPlayerLocation();
+			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos);
 		}
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{

@@ -581,7 +581,9 @@ public:
 	int currentPoint = 0;
 	int routeIdx=0;
 
-	
+	int hitPlayerID = -1;
+	XMFLOAT3 chaseTargetPos;
+	int chaseTarget = -1;
 };
 
 class ParticleObject : public CGameObject

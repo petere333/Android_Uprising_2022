@@ -153,3 +153,13 @@ void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 	objects.push_back(obj);
 }
+
+std::vector<XMFLOAT3> PlayerShader::getPlayerLocation()
+{
+	vector<XMFLOAT3> location;
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		location.push_back(objects[i]->GetPosition());
+	}
+	return location;
+}

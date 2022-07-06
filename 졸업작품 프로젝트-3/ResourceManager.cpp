@@ -832,10 +832,18 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;
+	CLoadedModelInfo* e3;
+	CLoadedModelInfo* e4;
+	CLoadedModelInfo* e5;
 	
 	e1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
 	enemyModels.push_back(e1);
 	e2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_die.bin", NULL);
 	enemyModels.push_back(e2);
-	
+	e3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_walk.bin", NULL);
+	enemyModels.push_back(e3);
+	e4 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_run.bin", NULL);
+	enemyModels.push_back(e4);
+	e5 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_attack.bin", NULL);
+	enemyModels.push_back(e5);
 }
