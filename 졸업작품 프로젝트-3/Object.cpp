@@ -1334,6 +1334,9 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 	vector<float> visitedz;//이미 방문한 지점
 
 	XMFLOAT2 origin = XMFLOAT2(GetPosition().x, GetPosition().z);
+	float ox = (float)((int)((origin.x - 0.25f) / 0.5f) + 1) * 0.5f;
+	float oz = (float)((int)((origin.y - 0.25f) / 0.5f) + 1) * 0.5f;
+	
 	vector<XMFLOAT2> pos;
 	pos.push_back(origin);
 

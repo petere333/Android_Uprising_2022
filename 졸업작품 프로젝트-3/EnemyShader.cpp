@@ -319,9 +319,10 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					{
 						float z = ez + nz / nx * 0.5f;
 
-						int ix = (int)(x / 0.5f);
-						int iz = (int)(z / 0.5f);
-
+						int ix = (int)((x - 0.25f) / 0.5f) + 1;
+						int iz = (int)((z - 0.25f) / 0.5f) + 1;
+						//ix = (int)((x + 0.25f) / 0.5f);
+						//iz = (int)((z + 0.25f) / 0.5f);
 						if (objects[i]->heightmap[ix][iz] >= 2.0f)
 						{
 							found = false;
@@ -343,8 +344,10 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					for (float x = ex; x > px; x -= 0.5f)
 					{
 						float z = ez - nz / nx * 0.5f;
-						int ix = (int)(x / 0.5f);
-						int iz = (int)(z / 0.5f);
+						int ix = (int)((x - 0.25f) / 0.5f) + 1;
+						int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+						
 						if (objects[i]->heightmap[ix][iz] >= 2.0f)
 						{
 							found = false;
@@ -452,10 +455,10 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					{
 						float z = ez + nz / nx * 0.5f;
 
-						int ix = (int)(x / 0.5f);
-						int iz = (int)(z / 0.5f);
+						int ix = (int)((x - 0.25f) / 0.5f) + 1;
+						int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-						if (objects[i]->heightmap[ix][iz] >= 1.0f)
+						if (objects[i]->heightmap[ix][iz] >= 2.0f)
 						{
 							found = false;
 							break;
@@ -473,8 +476,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					for (float x = ex; x > px; x -= 0.5f)
 					{
 						float z = ez - nz / nx * 0.5f;
-						int ix = (int)(x / 0.5f);
-						int iz = (int)(z / 0.5f);
+						int ix = (int)((x - 0.25f) / 0.5f) + 1;
+						int iz = (int)((z - 0.25f) / 0.5f) + 1;
 						if (objects[i]->heightmap[ix][iz] >= 1.0f)
 						{
 							found = false;
@@ -517,6 +520,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					//30미터 너머의 적은 봐도 못본 것으로 처리
 					if (dist > 30.0f)
 					{
+						objects[i]->chaseTarget = -1;
+						objects[i]->attackTarget = -1;
+						objects[i]->bState.stateID = PATROL_STATE;
 						continue;
 					}
 					if (ex < px)
@@ -525,9 +531,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						{
 							float z = ez + nz / nx * 0.5f;
 
-							int ix = (int)(x / 0.5f);
-							int iz = (int)(z / 0.5f);
-
+							int ix = (int)((x-0.25f) / 0.5f)+1;
+							int iz = (int)((z-0.25f) / 0.5f)+1;
+							
 							if (objects[i]->heightmap[ix][iz] >= 2.0f)
 							{
 								found = false;
@@ -549,8 +555,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						for (float x = ex; x > px; x -= 0.5f)
 						{
 							float z = ez - nz / nx * 0.5f;
-							int ix = (int)(x / 0.5f);
-							int iz = (int)(z / 0.5f);
+							int ix = (int)((x - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							
 							if (objects[i]->heightmap[ix][iz] >= 2.0f)
 							{
 								found = false;
@@ -620,7 +627,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			{
 				objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
 				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
-			}
+			}				objects[i]->chaseTarget = -1;
+			objects[i]->attackTarget = -1;
+			objects[i]->bState.stateID = PATROL_STATE;
 			objects[i]->SetTrackAnimationSet(0, 0);
 			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
 			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
