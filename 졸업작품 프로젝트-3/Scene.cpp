@@ -573,7 +573,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		if (enemyShader)
 		{
 			vector<XMFLOAT3> ppos = playerShader->getPlayerLocation();
-			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos);
+			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos, playerShader, partShader);
 		}
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
@@ -676,6 +676,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					if (pID != j)
 						setObjectLastMove(j);
 				}
+			}
+
+			if (playerShader->objects[i]->info->stats.capacity <= 0)
+			{
+
+				//죽는 애니메이션으로 변경
+				// 플레이어 조작 비활성화
 			}
 
 		}
@@ -3050,33 +3057,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		
 	}
 }
-// 서버 프로그램에 구현해야 할 함수이다.
-// 바운딩박스의 한 평면과 총알의 진행 경로의 직선이 겹치는 부분을 찾아냄으로써, 총알이 맞은 지점을 알아내는 함수이다.
-XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
-{
-	float u1 = plane.normal.x * line.start.x + plane.normal.y * line.start.y + plane.normal.z * line.start.z - plane.pos;
 
-	float u2 = plane.normal.x * (line.start.x - line.end.x) + plane.normal.y * (line.start.y - line.end.y) + plane.normal.z * (line.start.z - line.end.z);
-
-	if (u1 / u2 < 1.0f && u1 / u2 > 0.0f)
-	{
-
-		XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
-		lineNorm.x *= u1 / u2;
-		lineNorm.y *= u1 / u2;
-		lineNorm.z *= u1 / u2;
-
-		lineNorm.x += line.start.x;
-		lineNorm.y += line.start.y;
-		lineNorm.z += line.start.z;
-
-		return lineNorm;
-	}
-	else
-	{
-		return XMFLOAT3(-9999.0f, -9999.0f, -9999.0f);
-	}
-}
 
 void CScene::createParticles(int n, XMFLOAT3 pos)
 {

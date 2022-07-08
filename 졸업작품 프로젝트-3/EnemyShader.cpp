@@ -22,10 +22,13 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		obj->seekPoint.push_back(XMFLOAT2(22.0f, 164.5f));
 		obj->type = -10;
 		obj->SetTrackAnimationSet(0, 0);
-
+		obj->attackRange = 2.0f;
 		obj->bState.stateID = IDLE_STATE;
 		obj->bState.hp = 20;
 		obj->maxHP = 20;
+		obj->lastAttack = chrono::system_clock::now();
+		obj->attackDuration = 0.2f;
+
 		objects.push_back(obj);
 
 	
@@ -263,7 +266,7 @@ std::vector<int> EnemyShader::getHealthRate()
 	return result;
 }
 
-void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos)
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part)
 {
 	
 	for (int i = 0; i < objects.size(); ++i)
@@ -285,6 +288,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		}
 		if (objects[i]->bState.stateID == PATROL_STATE)
 		{
+			//플레이어 발견 여부 설정
+			float minDist = 9999.0f;
 			int playerID = -1; // 발견한 적의 아이디
 //높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
 			for (int p = 0; p < ppos.size(); ++p)
@@ -325,7 +330,11 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					}
 					if (found == true)
 					{
-						playerID = p;
+						if (minDist > dist)
+						{
+							minDist = dist;
+							playerID = p;
+						}
 					}
 
 				}
@@ -345,7 +354,13 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							break;
 					}
 					if (found == true)
-						playerID = p;
+					{
+						if (minDist > dist)
+						{
+							minDist = dist;
+							playerID = p;
+						}
+					}
 				}
 
 
@@ -385,10 +400,10 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			}
 			objects[i]->moveByRoute(objects[i]->route);
 			//이동 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
+			if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
 			{
-				objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+				objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
 			}
 			objects[i]->SetTrackAnimationSet(0, 0);
 
@@ -399,10 +414,10 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		else if (objects[i]->bState.stateID == CHASE_STATE)
 		{
 			//빠르게 이동하는 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
+			if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
 			{
-				objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
+				objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
 			}
 			objects[i]->SetTrackAnimationSet(0, 0);
 
@@ -412,10 +427,73 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			{
 				objects[i]->moveByRoute(objects[i]->route);
 			}
-			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
+			
 
 			float dist = Vector3::Length(Vector3::Subtract(ppos[objects[i]->chaseTarget], objects[i]->GetPosition()));
 			
+			float minDist = 9999.0f;
+			int attackTarget = -1;
+			//추적중인 플레이어와 거리가 공격 사거리보다 짧고, 그 사이에 높이맵이 모두 0인경우
+			if (dist <= objects[i]->attackRange)
+			{
+				bool found = true;
+				float ex = objects[i]->GetPosition().x;
+				float ez = objects[i]->GetPosition().z;
+				float px = ppos[objects[i]->chaseTarget].x;
+				float pz = ppos[objects[i]->chaseTarget].z;
+				float dx = px - ex;
+				float dz = pz - ez;
+				float dist = sqrt(dx * dx + dz * dz);
+				float nx = dx / dist;
+				float nz = dz / dist;
+				if (ex < px)
+				{
+					for (float x = ex; x < px; x += 0.5f)
+					{
+						float z = ez + nz / nx * 0.5f;
+
+						int ix = (int)(x / 0.5f);
+						int iz = (int)(z / 0.5f);
+
+						if (objects[i]->heightmap[ix][iz] >= 1.0f)
+						{
+							found = false;
+							break;
+						}
+					}
+					if (found == true)
+					{
+						objects[i]->bState.stateID = ATTACK_STATE;
+						objects[i]->attackTarget = objects[i]->chaseTarget;
+					}
+
+				}
+				else
+				{
+					for (float x = ex; x > px; x -= 0.5f)
+					{
+						float z = ez - nz / nx * 0.5f;
+						int ix = (int)(x / 0.5f);
+						int iz = (int)(z / 0.5f);
+						if (objects[i]->heightmap[ix][iz] >= 1.0f)
+						{
+							found = false;
+							break;
+						}
+						if (found == false)
+							break;
+					}
+					if (found == true)
+					{
+						objects[i]->bState.stateID = ATTACK_STATE;
+						objects[i]->attackTarget = objects[i]->chaseTarget;
+					}
+				}
+
+			}
+
+
+			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
 			if (dist >= 30.0f || objects[i]->routeIdx==objects[i]->route.size())
 			{
 				int playerID = -1; // 발견한 적의 아이디
@@ -458,7 +536,11 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						}
 						if (found == true)
 						{
-							playerID = p;
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
+							}
 						}
 
 					}
@@ -478,7 +560,13 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								break;
 						}
 						if (found == true)
-							playerID = p;
+						{
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
+							}
+						}
 					}
 
 
@@ -525,6 +613,123 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			}
 		}
 
-		
+		else if (objects[i]->bState.stateID == ATTACK_STATE)
+		{
+			//공격하는 애니메이션으로 변경
+			if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+			{
+				objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
+			}
+			objects[i]->SetTrackAnimationSet(0, 0);
+			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
+			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
+
+			XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
+
+			float dist = Vector3::Length(toPlayer);
+			//공격 대상이 사거리 밖으로 벗어났을 경우
+			if (dist > objects[i]->attackRange)
+			{
+				//다시 순찰모드
+				objects[i]->chaseTarget = -1;
+				objects[i]->attackTarget = -1;
+				objects[i]->bState.stateID = PATROL_STATE;
+			}
+			else
+			{
+				float angle = atan2f(ntp.x, ntp.z);
+				angle = angle / 3.141592f * 180.0f;
+				if (angle >= 360.0f)
+					angle -= 360.0f;
+				objects[i]->Rotate(0.0f, angle, 0.0f);
+
+				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+				chrono::duration<double> fromLastAttack = moment - objects[i]->lastAttack;
+
+				float dt = (float)fromLastAttack.count();
+				if (dt > objects[i]->attackDuration)
+				{
+					Line line;
+					line.start = objects[i]->GetPosition();
+					line.end = pp;
+
+					std::vector<XYZPlane> checkList;
+
+					XYZPlane p1;
+					XYZPlane p2;
+					XYZPlane p3;
+					XYZPlane p4;
+					p1.pos = ppos[objects[i]->chaseTarget].x+0.3f;
+					p1.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					checkList.push_back(p1);
+
+					p2.pos = ppos[objects[i]->chaseTarget].x-0.3f;
+					p2.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					checkList.push_back(p2);
+
+					p3.pos = ppos[objects[i]->chaseTarget].z-0.3f;
+					p3.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					checkList.push_back(p3);
+
+					p4.pos = ppos[objects[i]->chaseTarget].z + 0.3f;
+					p4.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					checkList.push_back(p4);
+					
+					XMFLOAT3 targetPos;
+					float md = 9999.0f;
+
+					for (int c = 0; c < checkList.size(); ++c)
+					{
+						XMFLOAT3 temp = getIntersectPoint(line, checkList[c]);
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							
+							float d = Vector3::Length(Vector3::Subtract(temp, objects[i]->GetPosition()));
+
+							if (d < md)
+							{
+								targetPos = temp;
+								targetPos.y = 1.0f;
+
+							}
+							
+
+							
+						}
+					}
+					part->createParticles(100, targetPos, pd3dDevice, pd3dCommandList);
+					ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
+					objects[i]->lastAttack = chrono::system_clock::now();
+				}
+			}
+		}
+	}
+}
+
+
+XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane)
+{
+	float u1 = plane.normal.x * line.start.x + plane.normal.y * line.start.y + plane.normal.z * line.start.z - plane.pos;
+
+	float u2 = plane.normal.x * (line.start.x - line.end.x) + plane.normal.y * (line.start.y - line.end.y) + plane.normal.z * (line.start.z - line.end.z);
+
+	if (u1 / u2 < 1.0f && u1 / u2 > 0.0f)
+	{
+
+		XMFLOAT3 lineNorm = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z);
+		lineNorm.x *= u1 / u2;
+		lineNorm.y *= u1 / u2;
+		lineNorm.z *= u1 / u2;
+
+		lineNorm.x += line.start.x;
+		lineNorm.y += line.start.y;
+		lineNorm.z += line.start.z;
+
+		return lineNorm;
+	}
+	else
+	{
+		return XMFLOAT3(-9999.0f, -9999.0f, -9999.0f);
 	}
 }

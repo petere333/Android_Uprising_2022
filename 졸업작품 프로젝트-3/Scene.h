@@ -296,17 +296,8 @@ public: // client to server
 public:
 	void ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*);
 };
-typedef struct Line
-{
-	XMFLOAT3 start, end;
-}Line;
 
-typedef struct XYZPlane
-{
-	XMFLOAT3 normal;
-	float pos;
-}XYZPlane;
 
-XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane);
+
 
 XMFLOAT3 getBoxOverlapPoint(BoundBox b1, BoundBox b2, float angle);

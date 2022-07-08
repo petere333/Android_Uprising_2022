@@ -1351,7 +1351,7 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 	float dis = sqrt(dx * dx + dz * dz);
 	if (heightmap[hix][hiz] > 0.0f)
 		return result;
-	if (dis < 0.2f)
+	if (dis < 0.5f)
 		return result;
 	while (quit==false)
 	{
@@ -1377,20 +1377,40 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			//하
 			XMFLOAT2 p4 = XMFLOAT2(pos[k].x, pos[k].y - 0.5f);
 
+			XMFLOAT2 p5 = XMFLOAT2(pos[k].x - 0.5f, pos[k].y - 0.5f);
+			XMFLOAT2 p6 = XMFLOAT2(pos[k].x - 0.5f, pos[k].y + 0.5f);
+			XMFLOAT2 p7 = XMFLOAT2(pos[k].x + 0.5f, pos[k].y - 0.5f);
+			XMFLOAT2 p8 = XMFLOAT2(pos[k].x + 0.5f, pos[k].y + 0.5f);
+
+
 			int hx1 = (int)(p1.x / 0.5f);
 			int hx2 = (int)(p2.x / 0.5f);
 			int hx3 = (int)(p3.x / 0.5f);
 			int hx4 = (int)(p4.x / 0.5f);
+			int hx5 = (int)(p5.x / 0.5f);
+			int hx6 = (int)(p6.x / 0.5f);
+			int hx7 = (int)(p7.x / 0.5f);
+			int hx8 = (int)(p8.x / 0.5f);
+
 
 			int hy1 = (int)(p1.y / 0.5f);
 			int hy2 = (int)(p2.y / 0.5f);
 			int hy3 = (int)(p3.y / 0.5f);
 			int hy4 = (int)(p4.y / 0.5f);
+			int hy5 = (int)(p5.y / 0.5f);
+			int hy6 = (int)(p6.y / 0.5f);
+			int hy7 = (int)(p7.y / 0.5f);
+			int hy8 = (int)(p8.y / 0.5f);
 
 			bool v1 = false;
 			bool v2 = false;
 			bool v3 = false;
 			bool v4 = false;
+			bool v5 = false;
+			bool v6 = false;
+			bool v7 = false;
+			bool v8 = false;
+
 			//방문기록에 없고 높이가 균일한 좌표인경우 목록에 추가
 			for (int i = 0; i < visitedx.size(); ++i)
 			{
@@ -1405,6 +1425,18 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 
 				if ((p4.x == visitedx[i] && p4.y == visitedz[i]) || heightmap[hx4][hy4] > 0.0f)
 					v4 = true;
+
+				if ((p5.x == visitedx[i] && p5.y == visitedz[i]) || heightmap[hx5][hy5] > 0.0f)
+					v5 = true;
+
+				if ((p6.x == visitedx[i] && p6.y == visitedz[i]) || heightmap[hx6][hy6] > 0.0f)
+					v6 = true;
+
+				if ((p7.x == visitedx[i] && p7.y == visitedz[i]) || heightmap[hx7][hy7] > 0.0f)
+					v7 = true;
+
+				if ((p8.x == visitedx[i] && p8.y == visitedz[i]) || heightmap[hx8][hy8] > 0.0f)
+					v8 = true;
 			}
 			if (v1 == false)
 				available.push_back(p1);
@@ -1414,7 +1446,14 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 				available.push_back(p3);
 			if (v4 == false)
 				available.push_back(p4);
-			
+			if (v5 == false)
+				available.push_back(p5);
+			if (v6 == false)
+				available.push_back(p6);
+			if (v7 == false)
+				available.push_back(p7);
+			if (v8 == false)
+				available.push_back(p8);
 
 			//이동 가능한 좌표들에 대해 방문기록에 추가
 			for (int i = 0; i < available.size(); ++i)

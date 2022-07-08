@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include "ResourceManager.h"
 #include "LevelLoader.h"
+#include "ParticleShader.h"
+#include "PlayerShader.h"
 
 class EnemyShader : public CShader
 {
@@ -35,5 +37,18 @@ public:
 	std::vector<XMFLOAT3> getEnemyPosition();
 	std::vector<int> getHealthRate();
 
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>);
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*);
 };
+
+typedef struct Line
+{
+	XMFLOAT3 start, end;
+}Line;
+
+typedef struct XYZPlane
+{
+	XMFLOAT3 normal;
+	float pos;
+}XYZPlane;
+
+XMFLOAT3 getIntersectPoint(Line line, XYZPlane plane);

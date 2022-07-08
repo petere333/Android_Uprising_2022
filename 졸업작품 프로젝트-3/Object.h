@@ -569,13 +569,18 @@ public:
 	chrono::time_point<chrono::system_clock> deathMoment;
 	bool isDead = false;
 
-	chrono::time_point<chrono::system_clock> lastMove;
+	//chrono::time_point<chrono::system_clock> lastMove;
+	
 
 	BoundBox* mbox;
 
 public:
 	std::vector<XMFLOAT2> NavigateMovement(float x, float z);
 	void moveByRoute(vector<XMFLOAT2> route);
+	
+
+public:
+	//AI 판단에 필요한 변수들
 	std::vector<XMFLOAT2> route;
 	std::vector<XMFLOAT2> seekPoint;
 	int currentPoint = 0;
@@ -584,6 +589,11 @@ public:
 	int hitPlayerID = -1;
 	XMFLOAT3 chaseTargetPos;
 	int chaseTarget = -1;
+	float attackRange;
+	int attackTarget = -1;
+
+	chrono::time_point<chrono::system_clock> lastAttack;
+	float attackDuration;
 };
 
 class ParticleObject : public CGameObject
