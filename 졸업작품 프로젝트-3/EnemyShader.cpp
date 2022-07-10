@@ -627,9 +627,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			{
 				objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
 				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
-			}				objects[i]->chaseTarget = -1;
-			objects[i]->attackTarget = -1;
-			objects[i]->bState.stateID = PATROL_STATE;
+			}
 			objects[i]->SetTrackAnimationSet(0, 0);
 			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
 			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());

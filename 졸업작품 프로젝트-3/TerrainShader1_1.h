@@ -35,6 +35,6 @@ public:
 	BoundBox* boxesWorld;
 
 	std::vector<CGameObject*>	objects;
-
+	std::vector<CGameObject*> shadows;
 	ResourceManager* rm;
 };
