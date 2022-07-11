@@ -128,7 +128,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
-				rm->materials[34]->UpdateShaderVariable(pd3dCommandList);
+				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
@@ -148,7 +148,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
-				rm->materials[34]->UpdateShaderVariable(pd3dCommandList);
+				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
@@ -167,7 +167,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
-				rm->materials[34]->UpdateShaderVariable(pd3dCommandList);
+				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
@@ -186,7 +186,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
-				rm->materials[34]->UpdateShaderVariable(pd3dCommandList);
+				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
