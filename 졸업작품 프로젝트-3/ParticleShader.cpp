@@ -133,7 +133,7 @@ void ParticleShader::createParticles(int n, XMFLOAT3 pos, ID3D12Device* device, 
 
 		ParticleObject* obj = new ParticleObject(1);
 		obj->timeCreated = std::chrono::system_clock::now();
-		obj->SetMaterial(0, rm->materials[66]);
+		obj->SetMaterial(0, rm->materials[4]);
 		obj->speed = 0.1f;
 		obj->direction = direct;
 		obj->SetPosition(pos);

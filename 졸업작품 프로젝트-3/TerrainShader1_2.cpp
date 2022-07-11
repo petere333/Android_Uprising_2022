@@ -170,8 +170,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		if (data[i].type == Shield)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[114]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[44]);
 			obj->SetMesh(shield);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -179,8 +179,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == BigShield)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[115]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[45]);
 			obj->SetMesh(bigshield);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -188,8 +188,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == AirFan)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[117]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[47]);
 			obj->SetMesh(fan);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -197,8 +197,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == LongTank)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[116]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[46]);
 			obj->SetMesh(longtank);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -206,8 +206,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Machine1)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[118]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[48]);
 			obj->SetMesh(m1);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -215,8 +215,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Machine3)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[119]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[49]);
 			obj->SetMesh(m3);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -224,8 +224,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Machine4)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[120]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[50]);
 			obj->SetMesh(m4);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -233,8 +233,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Machine6)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[121]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[51]);
 			obj->SetMesh(m6);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -242,8 +242,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Machine7)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[122]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[52]);
 			obj->SetMesh(m7);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -251,8 +251,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RobotArm)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[123]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[53]);
 			obj->SetMesh(arm);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -260,8 +260,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Sewer)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[124]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[54]);
 			obj->SetMesh(sewer);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -270,8 +270,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Wall12_Left1)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[125]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[55]);
 			obj->SetMesh(left1);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -279,8 +279,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Left2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(left2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -288,8 +288,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Left3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(left3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -297,8 +297,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Right1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(right1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -306,8 +306,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Right2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(right2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -315,8 +315,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Right3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(right3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -324,8 +324,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Front)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(front);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -333,8 +333,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Back)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(back);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -342,8 +342,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Floor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(basefloor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -351,8 +351,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Ceiling)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[126]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[56]);
 		obj->SetMesh(basefloor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -360,8 +360,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_UpperFloor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(upperfloor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -369,8 +369,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Center1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(center1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -378,8 +378,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Center2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(center2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -387,8 +387,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Center3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(center3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -396,8 +396,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_Center4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(center4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -405,8 +405,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_HCenter1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(hcenter1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -414,8 +414,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_HCenter2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(hcenter2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -423,8 +423,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_HCenter3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(hcenter3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -432,8 +432,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_HCenter4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(hcenter4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -441,8 +441,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Wall12_HCenter5)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(hcenter5);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -450,8 +450,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WireFrame)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[128]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[58]);
 		obj->SetMesh(wire);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -459,8 +459,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Fence12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[80]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[10]);
 		obj->SetMesh(fence);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -468,8 +468,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Chon12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[96]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[26]);
 		obj->SetMesh(chon);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -477,8 +477,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller12_1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -486,8 +486,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller12_2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -495,8 +495,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller12_4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -504,8 +504,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Container12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[129]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[59]);
 		obj->SetMesh(contain);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -513,8 +513,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Container12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[129]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[59]);
 		obj->SetMesh(contain);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -522,8 +522,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargeSlot)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[128]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[58]);
 		obj->SetMesh(chargeSlot);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -531,8 +531,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargeFloor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(chargeFloor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -540,8 +540,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargeFloor2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(chargeFloor2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -549,9 +549,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargingRobot)
 		{
-		CLoadedModelInfo* md = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, sig, "res/bin/sample.bin", NULL);
-
-		obj = new CGameObject(pd3dDevice, pd3dCommandList, sig, md, 1);
+		obj = new (std::nothrow) CGameObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[0], 1);
 
 		obj->SetTrackAnimationSet(0, 0);
 
@@ -561,8 +559,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Box12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[78]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[8]);
 		obj->SetMesh(box);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -571,8 +569,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == WoodManu_WallFront)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodmanu_front);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -580,8 +578,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_WallBack)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodmanu_back);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -589,8 +587,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_WallRight1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodmanu_right1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -598,8 +596,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_WallRight2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodmanu_right2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -607,8 +605,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_WallRight3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodmanu_right3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -616,8 +614,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == TableBig)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[136]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[66]);
 		obj->SetMesh(table2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -625,8 +623,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Saw)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[132]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[62]);
 		obj->SetMesh(saw);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -634,8 +632,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Drill)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[131]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[61]);
 		obj->SetMesh(drill);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -643,8 +641,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Woods1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[89]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[19]);
 		obj->SetMesh(wood1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -652,8 +650,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Woods2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[89]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[19]);
 		obj->SetMesh(wood2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -661,8 +659,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PlainLog1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[137]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[67]);
 		obj->SetMesh(log1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -670,8 +668,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PlainLog2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[138]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[68]);
 		obj->SetMesh(log2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -679,8 +677,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Furniture1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[133]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[63]);
 		obj->SetMesh(furniture1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -688,8 +686,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Furniture2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[134]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[64]);
 		obj->SetMesh(furniture2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -697,8 +695,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Shelf)
 		{	
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[134]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[64]);
 		obj->SetMesh(shelf);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -706,8 +704,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ToolBox)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[139]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[69]);
 		obj->SetMesh(toolbox);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -715,8 +713,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Glue)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[140]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[70]);
 		obj->SetMesh(glue);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -724,8 +722,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Hammer)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[141]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[71]);
 		obj->SetMesh(glue);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -733,8 +731,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Bottle)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[142]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[72]);
 		obj->SetMesh(glue);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -742,8 +740,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PaintBarrel)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[136]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[66]);
 		obj->SetMesh(bucket);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -752,8 +750,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Pottery_WallFront)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_front);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -761,8 +759,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallBack1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_back1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -770,8 +768,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallBack2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_back2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -779,8 +777,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallBack3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_back3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -788,8 +786,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallRight)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_right);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -797,8 +795,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallCenter)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_center);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -806,8 +804,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_WallHCenter)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[143]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[73]);
 		obj->SetMesh(pot_hcenter);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -815,8 +813,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_UpperFloor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(pot_floor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -824,8 +822,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery_Stair)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(stair);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -834,8 +832,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Pottery1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -843,8 +841,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -852,8 +850,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -861,8 +859,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -871,8 +869,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Pottery5)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot5);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -880,8 +878,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery6)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot6);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -889,8 +887,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery7)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot7);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -898,8 +896,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery8)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot8);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -908,8 +906,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Pottery9)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot9);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -917,8 +915,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery10)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot10);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -926,8 +924,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery11)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot11);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -935,8 +933,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery12)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot12);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -945,8 +943,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == Pottery13)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot13);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -954,8 +952,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery14)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot14);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -963,8 +961,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pottery15)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(pot15);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -973,8 +971,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == PotterySoil)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[93]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[23]);
 		obj->SetMesh(cement1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -982,8 +980,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PotterySoilPallet)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[92]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[22]);
 		obj->SetMesh(wdPallet);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -991,8 +989,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PotterySoilPalletLayer)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[92]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[22]);
 		obj->SetMesh(wdPalletLayer);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1000,8 +998,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_UpperFloor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(trans_floor);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1009,8 +1007,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_HCenter)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(trans_hcenter);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1018,8 +1016,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_WallBack1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(trans_back1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1027,8 +1025,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_WallBack2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(trans_back2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1036,8 +1034,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_WallBack3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(trans_back3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1045,8 +1043,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_WallRight)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(trans_right);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1054,8 +1052,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Transfer_Stair)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[127]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
 		obj->SetMesh(trans_stair);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1064,8 +1062,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == ConveyorDoor)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[146]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[76]);
 		obj->SetMesh(ev_door);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1073,8 +1071,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ConveyorBelt)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[147]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[77]);
 		obj->SetMesh(belt);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1083,7 +1081,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Elevator)
 		{
 		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[125]);
+		obj->SetMaterial(0, rm->materials[55]);
 		obj->SetMesh(ev);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1091,8 +1089,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PotteryKlinClose)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[149]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[79]);
 		obj->SetMesh(klinclose);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1100,8 +1098,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PotteryKlinOpen)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[149]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[79]);
 		obj->SetMesh(klinopen);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1109,8 +1107,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PotteryWheel)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[150]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[80]);
 		obj->SetMesh(wheel);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1118,8 +1116,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Banner)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[148]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[78]);
 		obj->SetMesh(banner);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1127,8 +1125,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Whiteboard)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[151]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[81]);
 		obj->SetMesh(whitebd);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1136,8 +1134,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_Pillar1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodPillar1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1145,8 +1143,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodManu_Pillar2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[145]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[75]);
 		obj->SetMesh(woodPillar2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;

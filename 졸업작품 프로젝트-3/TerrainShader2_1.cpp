@@ -35,91 +35,91 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		if (data[i].type == Gwanja_wall1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[158]);
+			obj->SetMaterial(0, rm->materials[88]);
 			obj->SetMesh(Gwang_wall1);
 		}
 		else if (data[i].type == Gwanja_floor)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[161]);
+			obj->SetMaterial(0, rm->materials[91]);
 			obj->SetMesh(Gwang_floor1);
 		}
 		else if (data[i].type == Gwanja_front)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[159]);
+			obj->SetMaterial(0, rm->materials[89]);
 			obj->SetMesh(Gwang_front1);
 		}
 		else if (data[i].type == Gwanja_celing)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[165]);
+			obj->SetMaterial(0, rm->materials[95]);
 			obj->SetMesh(Gwang_Cheons1);
 		}
 		else if (data[i].type == Gwanja_floor2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[158]);
+			obj->SetMaterial(0, rm->materials[88]);
 			obj->SetMesh(Gwang_floor2);
 		}
 		else if (data[i].type == Gwanja_wall2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[160]);
+			obj->SetMaterial(0, rm->materials[90]);
 			obj->SetMesh(Gwang_front2);
 		}
 		else if (data[i].type == Gwanja_wall3)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[159]);
+			obj->SetMaterial(0, rm->materials[89]);
 			obj->SetMesh(Gwang_wall2);
 		}
 		else if (data[i].type == Gwanja_Screen)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[166]);
+			obj->SetMaterial(0, rm->materials[96]);
 			obj->SetMesh(Gwang_Screen1);
 		}
 		else if (data[i].type == Gwanja_Screen2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[180]);
+			obj->SetMaterial(0, rm->materials[110]);
 			obj->SetMesh(Gwang_Screen2);
 		}
 		else if (data[i].type == Gwanja_Screen3)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[166]);
+			obj->SetMaterial(0, rm->materials[96]);
 			obj->SetMesh(Gwang_Screen3);
 		}
 		else if (data[i].type == Gwanja_tables)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[167]);
+			obj->SetMaterial(0, rm->materials[97]);
 			obj->SetMesh(Gwang_Table1);
 		}
 		else if (data[i].type == Gwanja_tablesA)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[167]);
+			obj->SetMaterial(0, rm->materials[97]);
 			obj->SetMesh(Gwang_Table2);
 		}
 		else if (data[i].type == Gwanja_Chair)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[152]);
+			obj->SetMaterial(0, rm->materials[82]);
 			obj->SetMesh(Gwang_Chair);
 		}
 		else if (data[i].type == Recep_garomak)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[170]);
+			obj->SetMaterial(0, rm->materials[100]);
 			obj->SetMesh(Receps_Karo1);
 		}
 		else if (data[i].type == Gwanja_Cabinet)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[182]);
+			obj->SetMaterial(0, rm->materials[112]);
 			obj->SetMesh(Gwang_Cabinet);
 		}
 

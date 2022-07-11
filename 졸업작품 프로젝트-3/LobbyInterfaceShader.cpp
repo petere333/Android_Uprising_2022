@@ -27,7 +27,7 @@ void LobbyInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graphics
 	CGameObject* obj = new CGameObject(1);
 	
 	obj->SetMesh(meshes[0]);
-	obj->SetMaterial(0, rm->materials[75]);
+	obj->SetMaterial(0, rm->materials[5]);
 	obj->SetPosition(0.0f, 0.0f, 0.0f);
 	
 

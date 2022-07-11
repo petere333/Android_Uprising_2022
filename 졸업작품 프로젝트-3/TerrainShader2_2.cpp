@@ -45,151 +45,151 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		if (data[i].type == Recep_celing)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[165]);
+			obj->SetMaterial(0, rm->materials[95]);
 			obj->SetMesh(Receps_Cheons1);
 		}
 		else if (data[i].type == Recep_floor)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[172]);
+			obj->SetMaterial(0, rm->materials[102]);
 			obj->SetMesh(Receps_floor1);
 		}
 		else if (data[i].type == Recep_wall1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[174]);
+			obj->SetMaterial(0, rm->materials[104]);
 			obj->SetMesh(Receps_wall1);
 		}
 		else if (data[i].type == Recep_wall2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[174]);
+			obj->SetMaterial(0, rm->materials[104]);
 			obj->SetMesh(Receps_wall2);
 		}
 		else if (data[i].type == Recep_front)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_front1);
 		}
 		else if (data[i].type == Recep_front2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_front2);
 		}
 		else if (data[i].type == Recep_wall3)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_Lipgu);
 		}
 		else if (data[i].type == Recep_wall4)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_Lipgu2);
 		}
 		else if (data[i].type == Recep_wall5)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_Lipgu3);
 		}
 		else if (data[i].type == Recep_kidung)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[171]);
+			obj->SetMaterial(0, rm->materials[101]);
 			obj->SetMesh(Receps_kidoo1);
 		}
 		else if (data[i].type == Recep_Kanmak)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[174]);
+			obj->SetMaterial(0, rm->materials[104]);
 			obj->SetMesh(Receps_Gan1);
 		}
 		else if (data[i].type == Recep_Tables)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[181]);
+			obj->SetMaterial(0, rm->materials[111]);
 			obj->SetMesh(Recep_Takja1);
 		}
 		else if (data[i].type == Recep_Couch)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[153]);
+			obj->SetMaterial(0, rm->materials[83]);
 			obj->SetMesh(Recep_Cow1);
 		}
 		else if (data[i].type == Recep_Vending)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[154]);
+			obj->SetMaterial(0, rm->materials[84]);
 			obj->SetMesh(Recep_Bending1);
 		}
 		else if (data[i].type == Recep_Counter1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[156]);
+			obj->SetMaterial(0, rm->materials[86]);
 			obj->SetMesh(Recep_blackcow);
 		}
 		else if (data[i].type == Recep_Screened1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[157]);
+			obj->SetMaterial(0, rm->materials[87]);
 			obj->SetMesh(Recep_CCTV);
 		}
 		else if (data[i].type == Recep_MidWal)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_MedWal1);
 		}
 		else if (data[i].type == Recep_Counter2)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[175]);
+			obj->SetMaterial(0, rm->materials[105]);
 			obj->SetMesh(Recep_TwoCounter);
 		}
 		else if (data[i].type == Recep_Air)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[176]);
+			obj->SetMaterial(0, rm->materials[106]);
 			obj->SetMesh(Recep_Gonggi);
 		}
 		else if (data[i].type == Recep_DongSSang1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[177]);
+			obj->SetMaterial(0, rm->materials[107]);
 			obj->SetMesh(Recep_MalDong);
 		}
 		else if (data[i].type == Recep_Misul)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[127]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Receps_MisulWall1);
 		}
 		else if (data[i].type == Recep_Lamps)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[178]);
+			obj->SetMaterial(0, rm->materials[108]);
 			obj->SetMesh(Recep_lamped);
 		}
 		else if (data[i].type == Recep_Door1)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[179]);
+			obj->SetMaterial(0, rm->materials[109]);
 			obj->SetMesh(Recep_Door_B);
 		}
 		else if (data[i].type == Recep_DoorL)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[179]);
+			obj->SetMaterial(0, rm->materials[109]);
 			obj->SetMesh(Recep_Door_L);
 		}
 		else if (data[i].type == Recep_DoorR)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[179]);
+			obj->SetMaterial(0, rm->materials[109]);
 			obj->SetMesh(Recep_Door_R);
 		}
 

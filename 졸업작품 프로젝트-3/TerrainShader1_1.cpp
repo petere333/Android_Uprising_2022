@@ -120,96 +120,96 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		CGameObject* shd = NULL;
 		if (data[i].type == RustyMetal_Floor)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[76]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[6]);
 			obj->SetMesh(RustyFloor);
 		}
 		else if (data[i].type == RustyMetal_Ceiling)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[76]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[6]);
 			obj->SetMesh(RustyFloor);
 		}
 		else if (data[i].type == RustyMetal_Wall_Front)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallFront);
 		}
 		else if (data[i].type == RustyMetal_Wall_Back)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallBack);
 		}
 		else if (data[i].type == RustyMetal_Wall_Left)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallLeft);
 		}
 		else if (data[i].type == RustyMetal_Wall_Right)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallRight);
 		}
 		else if (data[i].type == RustyMetal_Wall_Right2)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallRight2);
 		}
 		else if (data[i].type == RustyMetal_Wall_Right3)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallRight3);
 		}
 		else if (data[i].type == RustyMetal_Wall_Left_100m)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallLeft100m);
 		}
 
 		else if (data[i].type == RustyMetal_Wall_Center_50m)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallCenter50m);
 		}
 		else if (data[i].type == RustyMetal_Wall_HCenter_50m)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallHCenter50m);
 		}
 		else if (data[i].type == RustyMetal_Wall_Bottom_50m)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallBottom50m);
 		}
 		else if (data[i].type == RustyMetal_Wall_Top_100m)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallTop100m);
 		}
 
 
 		else if (data[i].type == RustyMetal_Wall_Right)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[79]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[9]);
 			obj->SetMesh(RustyWallRight);
 		}
 
 		else if (data[i].type == RustyMetal_Box) // 밑면 -0.75f
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[78]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[8]);
 			obj->SetMesh(Metal_Box);
 
 			//원본 물체 크기의 x,y 길이
@@ -217,9 +217,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[184]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[114]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -233,8 +233,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RustyMetal_Barrel) // 밑면 - 1.125f
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[77]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[7]);
 			obj->SetMesh(RustyBarrel);
 			obj->shadowHeight = 1.125f;
 
@@ -243,9 +243,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[183]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[113]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -259,22 +259,22 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WallPipe)//밑면 1.25
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[77]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[7]);
 			obj->SetMesh(Pipe_Wall);
 			obj->shadowHeight = 1.25f;
 		}
 		else if (data[i].type == FloorPipe)//밑면 0.375
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[77]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[7]);
 			obj->SetMesh(Pipe_Floor);
 			obj->shadowHeight = 0.375f;
 		}
 		else if (data[i].type == RustyFence)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[80]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[10]);
 			obj->SetMesh(Fence);
 			obj->shadowHeight = 0.3f;
 			obj->shadowZ = 2.0f;
@@ -287,9 +287,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			if (data[i].rotation.y == 0.0f)
 			{
 				//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-				shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-				shd = new CGameObject(1);
-				shd->SetMaterial(0, rm->materials[199]);
+				shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+				shd = new (std::nothrow) CGameObject(1);
+				shd->SetMaterial(0, rm->materials[129]);
 				shd->SetMesh(shadow);
 
 				//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -303,9 +303,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			else
 			{
 				//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-				shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx, h);
-				shd = new CGameObject(1);
-				shd->SetMaterial(0, rm->materials[200]);
+				shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, h);
+				shd = new (std::nothrow) CGameObject(1);
+				shd->SetMaterial(0, rm->materials[130]);
 				shd->SetMesh(shadow);
 
 				//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -319,8 +319,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == FoodBin)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[81]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[11]);
 			obj->SetMesh(Foodbin);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -328,9 +328,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[195]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[125]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -344,8 +344,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Envelop1)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[82]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[12]);
 			obj->SetMesh(env1);
 			obj->shadowHeight = 0.25f;
 			//원본 물체 크기의 x,y 길이
@@ -353,9 +353,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[196]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[126]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -368,8 +368,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Envelop2)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[82]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[12]);
 			obj->SetMesh(env2);
 			obj->shadowHeight = 0.25f;
 			//원본 물체 크기의 x,y 길이
@@ -377,9 +377,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[197]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[127]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -392,8 +392,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Envelop3)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[82]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[12]);
 			obj->SetMesh(env3);
 			obj->shadowHeight = 0.25f;
 			//원본 물체 크기의 x,y 길이
@@ -401,9 +401,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[198]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[128]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -416,29 +416,29 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == MetalLadder)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[83]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[13]);
 			obj->SetMesh(SteelLadder);
 			obj->shadowHeight = 1.0f;
 		}
 		else if (data[i].type == RailBend)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[84]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[14]);
 			obj->SetMesh(BendRail);
 			obj->shadowHeight = 0.0f;
 		}
 		else if (data[i].type == RailStraight)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[84]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[14]);
 			obj->SetMesh(StraightRail);
 			obj->shadowHeight = 0.0f;
 		}
 		else if (data[i].type == RuinBrick1)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[85]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[15]);
 			obj->SetMesh(brick1);
 			obj->shadowHeight = 0.0f;
 
@@ -447,9 +447,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[208]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[138]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -462,8 +462,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBrick2)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[85]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[15]);
 			obj->SetMesh(brick2);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -471,9 +471,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[209]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[139]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -486,8 +486,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBrick3)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[85]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[15]);
 			obj->SetMesh(brick3);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -495,9 +495,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[210]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[140]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -510,8 +510,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBrick4)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[85]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[15]);
 			obj->SetMesh(brick4);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -519,9 +519,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[211]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[141]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -534,8 +534,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBrick5)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[85]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[15]);
 			obj->SetMesh(brick5);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -543,9 +543,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[212]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[142]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -558,8 +558,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinCeramic1)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[86]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[16]);
 			obj->SetMesh(ceramic1);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -567,9 +567,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[214]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[144]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -582,8 +582,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinCeramic2)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[86]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[16]);
 			obj->SetMesh(ceramic2);
 			obj->shadowHeight = 0.0f;
 			//원본 물체 크기의 x,y 길이
@@ -591,9 +591,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[215]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[145]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -606,8 +606,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinMix1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[87]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[17]);
 		obj->SetMesh(mix1);
 		obj->shadowHeight = 0.0f;
 		//원본 물체 크기의 x,y 길이
@@ -615,9 +615,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[217]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[147]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -630,8 +630,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinMix2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[88]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[18]);
 		obj->SetMesh(mix2);
 		obj->shadowHeight = 0.0f;
 		//원본 물체 크기의 x,y 길이
@@ -639,9 +639,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[218]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[148]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -654,8 +654,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinWood1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[89]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[19]);
 		obj->SetMesh(wood1);
 		obj->shadowHeight = 0.0f;
 
@@ -664,9 +664,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx*0.5f, w*0.5f);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[219]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx*0.5f, w*0.5f);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[149]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -679,8 +679,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinWood2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[89]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[19]);
 		obj->SetMesh(wood2);
 		obj->shadowHeight = 0.0f;
 
@@ -689,9 +689,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[220]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx * 0.5f, w * 0.5f);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[150]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -704,8 +704,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RustyStair)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[90]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[20]);
 		obj->SetMesh(rustyStair);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 1.5f;
@@ -713,8 +713,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RustyTrashCan)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[91]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[21]);
 		obj->SetMesh(trashCan);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -725,9 +725,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[201]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[131]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -740,8 +740,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBrick6)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[85]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[15]);
 		obj->SetMesh(ruinBrick6);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 1.5f;
@@ -749,8 +749,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinCeramic3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[86]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[16]);
 		obj->SetMesh(ruinCeramic3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -758,8 +758,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodenPallet)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[92]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[22]);
 		obj->SetMesh(wdPallet);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -770,9 +770,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[226]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[156]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -785,8 +785,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WoodenPalletLayer)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[92]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[22]);
 		obj->SetMesh(wdPalletLayer);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -797,9 +797,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[227]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[157]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -812,8 +812,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == CementBag1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[93]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[23]);
 		obj->SetMesh(cement1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -824,9 +824,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[189]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[119]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -839,8 +839,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == CementBag2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[93]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[23]);
 		obj->SetMesh(cement2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -850,9 +850,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[190]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[120]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -866,8 +866,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == WarningSign)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[94]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[24]);
 		obj->SetMesh(warnSign);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -878,9 +878,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[207]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[137]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -893,8 +893,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == FuelTruck)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[95]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[25]);
 		obj->SetMesh(fuelTruck);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -905,9 +905,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[223]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[153]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -920,8 +920,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Chon)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[96]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[26]);
 		obj->SetMesh(chon);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -932,9 +932,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[191]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[121]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -947,8 +947,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == GuardRail)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[97]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[27]);
 		obj->SetMesh(guardRail);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -959,9 +959,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[202]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[132]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -974,8 +974,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Truck2Wheel)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[99]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[29]);
 		obj->SetMesh(twheel);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -986,9 +986,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[225]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[155]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1001,8 +1001,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Truck2Body)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[98]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[28]);
 		obj->SetMesh(tbody);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1013,9 +1013,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[224]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[154]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1028,8 +1028,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Cardboard1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[100]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[30]);
 		obj->SetMesh(cardboard1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1040,9 +1040,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[185]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[115]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1055,8 +1055,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Cardboard2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[100]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[30]);
 		obj->SetMesh(cardboard2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1067,9 +1067,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[186]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[116]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1082,8 +1082,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Cardboard3)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[100]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[30]);
 		obj->SetMesh(cardboard3);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1094,9 +1094,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[187]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[117]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1109,8 +1109,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Cardboard4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[100]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[30]);
 		obj->SetMesh(cardboard4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1120,9 +1120,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[188]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[118]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1136,8 +1136,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller1)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont1);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1147,9 +1147,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[192]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[122]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1162,8 +1162,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller2)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont2);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1173,9 +1173,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[193]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[123]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1188,8 +1188,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Controller4)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[101]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[31]);
 		obj->SetMesh(cont4);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1199,9 +1199,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[194]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[124]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1214,8 +1214,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == LeverBody)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[90]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[20]);
 		obj->SetMesh(leverBody);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1226,9 +1226,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[203]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[133]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1241,8 +1241,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == LeverHandle)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[90]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[20]);
 		obj->SetMesh(leverHandle);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1252,9 +1252,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[204]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[134]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1268,8 +1268,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 
 		else if (data[i].type == PaperWaste)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[102]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[32]);
 		obj->SetMesh(papers);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1279,9 +1279,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[205]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[135]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1294,8 +1294,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == PizzaBox)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[103]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[33]);
 		obj->SetMesh(pizzaBox);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1306,9 +1306,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[206]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[136]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1321,8 +1321,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == SpeedBump)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[104]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[34]);
 		obj->SetMesh(speedBump);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1333,9 +1333,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx, w);
-		shd = new CGameObject(1);
-		shd->SetMaterial(0, rm->materials[221]);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, w);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[151]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1348,8 +1348,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == TrashContainer)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[105]);
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[35]);
 		obj->SetMesh(trashCont);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
@@ -1362,9 +1362,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, w, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[222]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[152]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1382,9 +1382,9 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-			shadow = new RectMesh(pd3dDevice, pd3dCommandList, dx, h);
-			shd = new CGameObject(1);
-			shd->SetMaterial(0, rm->materials[228]);
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[158]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -1398,8 +1398,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == RuinBase)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[100]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[30]);
 			obj->SetMesh(ruinbase);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
@@ -1407,8 +1407,8 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Pillar)
 		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[76]);
+			obj = new (std::nothrow) CGameObject(1);
+			obj->SetMaterial(0, rm->materials[6]);
 			obj->SetMesh(pillar);
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;

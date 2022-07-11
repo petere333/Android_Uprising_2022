@@ -63,15 +63,15 @@ void PlayerShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* p
 
 		if (i == 0)
 		{
-			rm->materials[33]->UpdateShaderVariable(pd3dCommandList);
+			rm->materials[0]->UpdateShaderVariable(pd3dCommandList);
 		}
 		else if (i == 1)
 		{
-			rm->materials[32]->UpdateShaderVariable(pd3dCommandList);
+			rm->materials[1]->UpdateShaderVariable(pd3dCommandList);
 		}
 		else if (i == 2)
 		{
-			rm->materials[65]->UpdateShaderVariable(pd3dCommandList);
+			rm->materials[3]->UpdateShaderVariable(pd3dCommandList);
 		}
 		objects[i]->Render(pd3dCommandList, pCamera);	
 	}

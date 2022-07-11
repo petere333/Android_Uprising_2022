@@ -778,7 +778,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 
 		//1-1
-		if ((cp.x >= 0.0f && cp.x <= 190.0f) && cp.z >= 0.0f && cp.z <= 200.0f)
+		if (((cp.x >= 0.0f && cp.x <= 200.0f) && (cp.z >= 0.0f && cp.z <= 150.0f)) || ((cp.x >= 0.0f && cp.x <= 190.0f) && (cp.z >= 150.0f && cp.z <= 200.0f)))
 		{
 			if (terrain1_1)
 			{
