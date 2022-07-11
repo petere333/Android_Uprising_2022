@@ -1155,7 +1155,7 @@ void ResourceManager::createTextures()
 	materials[1]->SetNormalTex(normals[1]);
 	materials[3]->SetNormalTex(normals[1]);
 
-
+	
 	materials[77]->SetNormalTex(normals[2]);
 	materials[78]->SetNormalTex(normals[3]);
 	materials[85]->SetNormalTex(normals[4]);
@@ -1185,20 +1185,24 @@ void ResourceManager::createTextures()
 	materials[89]->SetNormalTex(normals[32]);
 	materials[92]->SetNormalTex(normals[33]);
 
+	
+	//노말은 여기서부터 문제
+	
 	materials[47]->SetNormalTex(normals[34]);
-	materials[78]->SetNormalTex(normals[35]);
+	//materials[78]->SetNormalTex(normals[35]);
 	materials[45]->SetNormalTex(normals[36]);
 	materials[72]->SetNormalTex(normals[37]);
-
-	materials[66]->SetNormalTex(normals[41]);
+	//materials[66]->SetNormalTex(normals[41]);
 	materials[56]->SetNormalTex(normals[42]);
-	materials[59]->SetNormalTex(normals[43]);
+	
+	
+	//여기서부터 괜찮
 
+	materials[59]->SetNormalTex(normals[43]);
 	materials[76]->SetNormalTex(normals[44]);
 	materials[61]->SetNormalTex(normals[45]);
 	materials[57]->SetNormalTex(normals[46]);
 	materials[77]->SetNormalTex(normals[47]);
-
 	materials[63]->SetNormalTex(normals[48]);
 	materials[64]->SetNormalTex(normals[49]);
 	materials[70]->SetNormalTex(normals[50]);
@@ -1221,10 +1225,12 @@ void ResourceManager::createTextures()
 	materials[81]->SetNormalTex(normals[69]);
 	materials[58]->SetNormalTex(normals[70]);
 
-
+	
 	materials[73]->SetNormalTex(normals[38]);
 	materials[74]->SetNormalTex(normals[39]);
 	materials[75]->SetNormalTex(normals[40]);
+	
+
 
 	materials[0]->SetSpecTex(specs[0]);
 	materials[1]->SetSpecTex(specs[0]);
@@ -1258,14 +1264,18 @@ void ResourceManager::createTextures()
 	materials[99]->SetSpecTex(specs[29]);
 	materials[89]->SetSpecTex(specs[30]);
 	materials[92]->SetSpecTex(specs[31]);
+	
+	//스페큘러는 여기서부터 문제
 
-
+	
 	materials[47]->SetSpecTex(specs[32]);
-	materials[78]->SetSpecTex(specs[33]);
+	//materials[78]->SetSpecTex(specs[33]);
 	materials[45]->SetSpecTex(specs[34]);
 	materials[72]->SetSpecTex(specs[35]);
-	materials[66]->SetSpecTex(specs[39]);
+	//materials[66]->SetSpecTex(specs[39]);
 	materials[56]->SetSpecTex(specs[40]);
+	
+	//여기서부터 문제없음
 
 	materials[31]->SetSpecTex(specs[41]);
 	materials[76]->SetSpecTex(specs[42]);
@@ -1275,15 +1285,17 @@ void ResourceManager::createTextures()
 	materials[63]->SetSpecTex(specs[46]);
 	materials[64]->SetSpecTex(specs[47]);
 	materials[70]->SetSpecTex(specs[48]);
+
+
+
 	materials[71]->SetSpecTex(specs[49]);
 	materials[79]->SetSpecTex(specs[50]);
-
 	materials[67]->SetSpecTex(specs[51]);
 	materials[68]->SetSpecTex(specs[52]);
 	materials[46]->SetSpecTex(specs[53]);
-
 	materials[53]->SetSpecTex(specs[59]);
 	materials[62]->SetSpecTex(specs[60]);
+
 
 	materials[54]->SetSpecTex(specs[61]);
 	materials[44]->SetSpecTex(specs[62]);
@@ -1293,12 +1305,13 @@ void ResourceManager::createTextures()
 	materials[80]->SetSpecTex(specs[66]);
 	materials[81]->SetSpecTex(specs[67]);
 	materials[58]->SetSpecTex(specs[68]);
+	
 
 	materials[73]->SetSpecTex(specs[36]);
 	materials[74]->SetSpecTex(specs[37]);
 	materials[75]->SetSpecTex(specs[38]);
-
-
+	
+	
 }
 
 void ResourceManager::createSound(){}
