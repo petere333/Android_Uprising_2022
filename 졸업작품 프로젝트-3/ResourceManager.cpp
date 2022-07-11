@@ -662,6 +662,11 @@ void ResourceManager::createTextures()
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;
 	CTexture* norm31; CTexture* norm32; CTexture* norm33; CTexture* norm34; CTexture* norm35; CTexture* norm36; CTexture* norm37; CTexture* norm38; CTexture* norm39; CTexture* norm40;
 
+	CTexture* norm41; CTexture* norm42; CTexture* norm43; CTexture* norm44; CTexture* norm45; CTexture* norm46; CTexture* norm47; CTexture* norm48; CTexture* norm49; CTexture* norm50;
+	CTexture* norm51; CTexture* norm52; CTexture* norm53; CTexture* norm54; CTexture* norm55; CTexture* norm56; CTexture* norm57; CTexture* norm58; CTexture* norm59; CTexture* norm60;
+	CTexture* norm61; CTexture* norm62; CTexture* norm63; CTexture* norm64; CTexture* norm65; CTexture* norm66; CTexture* norm67; CTexture* norm68; CTexture* norm69; CTexture* norm70;
+	CTexture* norm71; CTexture* norm72; CTexture* norm73; CTexture* norm74; CTexture* norm75; CTexture* norm76; CTexture* norm77; CTexture* norm78; CTexture* norm79; CTexture* norm80;
+
 	norm1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
 	normals.push_back(norm1);
@@ -766,10 +771,138 @@ void ResourceManager::createTextures()
 	normals.push_back(norm34);
 	
 
+	norm35 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm35->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/airfan.dds", RESOURCE_TEXTURE2D, 0);
+	norm36 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm36->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/banner.dds", RESOURCE_TEXTURE2D, 0);
+	norm37 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm37->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/bigshield.dds", RESOURCE_TEXTURE2D, 0);
+	norm38 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm38->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/bottle.dds", RESOURCE_TEXTURE2D, 0);
+	norm39 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm39->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/brick1.dds", RESOURCE_TEXTURE2D, 0);
+	norm40 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm40->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/brick2.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm41 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm41->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/brick3.dds", RESOURCE_TEXTURE2D, 0);
+	norm42 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm42->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/bucket.dds", RESOURCE_TEXTURE2D, 0);
+	norm43 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm43->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/ceiling.dds", RESOURCE_TEXTURE2D, 0);
+	norm44 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm44->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/cont.dds", RESOURCE_TEXTURE2D, 0);
+	norm45 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm45->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/dooropen.dds", RESOURCE_TEXTURE2D, 0);
+	norm46 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm46->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/drill.dds", RESOURCE_TEXTURE2D, 0);
+	norm47 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm47->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/floor.dds", RESOURCE_TEXTURE2D, 0);
+	norm48 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm48->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/floorconvey.dds", RESOURCE_TEXTURE2D, 0);
+	norm49 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm49->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/furniture1.dds", RESOURCE_TEXTURE2D, 0);
+	norm50 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm50->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/furniture2.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm51 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm51->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/glue.dds", RESOURCE_TEXTURE2D, 0);
+	norm52 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm52->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/hammer.dds", RESOURCE_TEXTURE2D, 0);
+	norm53 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm53->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/klin.dds", RESOURCE_TEXTURE2D, 0);
+	norm54 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm54->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/log1.dds", RESOURCE_TEXTURE2D, 0);
+	norm55 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm55->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/log2.dds", RESOURCE_TEXTURE2D, 0);
+	norm56 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm56->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/longtank.dds", RESOURCE_TEXTURE2D, 0);
+	norm57 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm57->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/machine1.dds", RESOURCE_TEXTURE2D, 0);
+	norm58 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm58->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/machine3.dds", RESOURCE_TEXTURE2D, 0);
+	norm59 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm59->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/machine4.dds", RESOURCE_TEXTURE2D, 0);
+	norm60 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm60->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/machine6.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm61 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm61->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/machine7.dds", RESOURCE_TEXTURE2D, 0);
+	norm62 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm62->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/robotarm.dds", RESOURCE_TEXTURE2D, 0);
+	norm63 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm63->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/saw.dds", RESOURCE_TEXTURE2D, 0);
+	norm64 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm64->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/sewer.dds", RESOURCE_TEXTURE2D, 0);
+	norm65 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm65->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/shield.dds", RESOURCE_TEXTURE2D, 0);
+	norm66 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm66->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/table1.dds", RESOURCE_TEXTURE2D, 0);
+	norm67 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm67->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/toolbox.dds", RESOURCE_TEXTURE2D, 0);
+	norm68 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm68->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/wall.dds", RESOURCE_TEXTURE2D, 0);
+	norm69 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm69->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/wheel.dds", RESOURCE_TEXTURE2D, 0);
+	norm70 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm70->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/whiteboard.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm71 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm71->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/wireframe.dds", RESOURCE_TEXTURE2D, 0);
+
+
+	normals.push_back(norm35);
+	normals.push_back(norm36);
+	normals.push_back(norm37);
+	normals.push_back(norm38);
+	normals.push_back(norm39);
+	normals.push_back(norm40);
+
+	normals.push_back(norm41);
+	normals.push_back(norm42);
+	normals.push_back(norm43);
+	normals.push_back(norm44);
+	normals.push_back(norm45);
+	normals.push_back(norm46);
+	normals.push_back(norm47);
+	normals.push_back(norm48);
+	normals.push_back(norm49);
+	normals.push_back(norm50);
+
+	normals.push_back(norm51);
+	normals.push_back(norm52);
+	normals.push_back(norm53);
+	normals.push_back(norm54);
+	normals.push_back(norm55);
+	normals.push_back(norm56);
+	normals.push_back(norm57);
+	normals.push_back(norm58);
+	normals.push_back(norm59);
+	normals.push_back(norm60);
+
+	normals.push_back(norm61);
+	normals.push_back(norm62);
+	normals.push_back(norm63);
+	normals.push_back(norm64);
+	normals.push_back(norm65);
+	normals.push_back(norm66);
+	normals.push_back(norm67);
+	normals.push_back(norm68);
+	normals.push_back(norm69);
+	normals.push_back(norm70);
+
+	normals.push_back(norm71);
+
+
+
 	CTexture* spc1; CTexture* spc2; CTexture* spc3; CTexture* spc4; CTexture* spc5; CTexture* spc6; CTexture* spc7; CTexture* spc8; CTexture* spc9; CTexture* spc10;
 	CTexture* spc11; CTexture* spc12; CTexture* spc13; CTexture* spc14; CTexture* spc15; CTexture* spc16; CTexture* spc17; CTexture* spc18; CTexture* spc19; CTexture* spc20;
 	CTexture* spc21; CTexture* spc22; CTexture* spc23; CTexture* spc24; CTexture* spc25; CTexture* spc26; CTexture* spc27; CTexture* spc28; CTexture* spc29; CTexture* spc30;
 	CTexture* spc31; CTexture* spc32; CTexture* spc33; CTexture* spc34; CTexture* spc35; CTexture* spc36; CTexture* spc37; CTexture* spc38; CTexture* spc39; CTexture* spc40;
+	CTexture* spc41; CTexture* spc42; CTexture* spc43; CTexture* spc44; CTexture* spc45; CTexture* spc46; CTexture* spc47; CTexture* spc48; CTexture* spc49; CTexture* spc50;
+	CTexture* spc51; CTexture* spc52; CTexture* spc53; CTexture* spc54; CTexture* spc55; CTexture* spc56; CTexture* spc57; CTexture* spc58; CTexture* spc59; CTexture* spc60;
+	CTexture* spc61; CTexture* spc62; CTexture* spc63; CTexture* spc64; CTexture* spc65; CTexture* spc66; CTexture* spc67; CTexture* spc68; CTexture* spc69; CTexture* spc70;
+	CTexture* spc71; CTexture* spc72; CTexture* spc73; CTexture* spc74; CTexture* spc75; CTexture* spc76; CTexture* spc77; CTexture* spc78; CTexture* spc79; CTexture* spc80;
 
 	spc1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec2.dds", RESOURCE_TEXTURE2D, 0);
@@ -790,7 +923,7 @@ void ResourceManager::createTextures()
 	spc8 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc8->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/spec/cementbag.dds", RESOURCE_TEXTURE2D, 0);
 	spc9 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	spc9->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/spec/ceramic.dds", RESOURCE_TEXTURE2D, 0); 
+	spc9->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/spec/ceramic.dds", RESOURCE_TEXTURE2D, 0);
 	spc10 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc10->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/spec/chon.dds", RESOURCE_TEXTURE2D, 0);
 
@@ -841,6 +974,81 @@ void ResourceManager::createTextures()
 	spc32 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc32->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_1/spec/woodenPallet.dds", RESOURCE_TEXTURE2D, 0);
 
+	spc33 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc33->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/airfan.dds", RESOURCE_TEXTURE2D, 0);
+	spc34 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc34->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/banner.dds", RESOURCE_TEXTURE2D, 0);
+	spc35 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc35->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/bigshield.dds", RESOURCE_TEXTURE2D, 0);
+	spc36 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc36->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/bottle.dds", RESOURCE_TEXTURE2D, 0);
+	spc37 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc37->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/brick1.dds", RESOURCE_TEXTURE2D, 0);
+	spc38 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc38->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/brick2.dds", RESOURCE_TEXTURE2D, 0);
+	spc39 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc39->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/brick3.dds", RESOURCE_TEXTURE2D, 0);
+	spc40 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc40->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/bucket.dds", RESOURCE_TEXTURE2D, 0);
+	spc41 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc41->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/ceiling.dds", RESOURCE_TEXTURE2D, 0);
+	spc42 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc42->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/cont.dds", RESOURCE_TEXTURE2D, 0);
+	spc43 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc43->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/dooropen.dds", RESOURCE_TEXTURE2D, 0);
+	spc44 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc44->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/drill.dds", RESOURCE_TEXTURE2D, 0);
+	spc45 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc45->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/floor.dds", RESOURCE_TEXTURE2D, 0);
+	spc46 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc46->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/floorconvey.dds", RESOURCE_TEXTURE2D, 0);
+	spc47 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc47->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/furniture1.dds", RESOURCE_TEXTURE2D, 0);
+	spc48 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc48->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/furniture2.dds", RESOURCE_TEXTURE2D, 0);
+	spc49 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc49->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/glue.dds", RESOURCE_TEXTURE2D, 0);
+	spc50 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc50->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/hammer.dds", RESOURCE_TEXTURE2D, 0);
+	spc51 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc51->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/klin.dds", RESOURCE_TEXTURE2D, 0);
+	spc52 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc52->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/log1.dds", RESOURCE_TEXTURE2D, 0);
+	spc53 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc53->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/log2.dds", RESOURCE_TEXTURE2D, 0);
+	spc54 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc54->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/longtank.dds", RESOURCE_TEXTURE2D, 0);
+	spc55 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc55->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/machine1.dds", RESOURCE_TEXTURE2D, 0);
+	spc56 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc56->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/machine3.dds", RESOURCE_TEXTURE2D, 0);
+	spc57 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc57->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/machine4.dds", RESOURCE_TEXTURE2D, 0);
+	spc58 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc58->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/machine6.dds", RESOURCE_TEXTURE2D, 0);
+	spc59 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc59->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/machine7.dds", RESOURCE_TEXTURE2D, 0);
+	spc60 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc60->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/robotarm.dds", RESOURCE_TEXTURE2D, 0);
+	spc61 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc61->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/saw.dds", RESOURCE_TEXTURE2D, 0);
+	spc62 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc62->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/sewer.dds", RESOURCE_TEXTURE2D, 0);
+	spc63 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc63->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/shield.dds", RESOURCE_TEXTURE2D, 0);
+	spc64 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc64->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/table1.dds", RESOURCE_TEXTURE2D, 0);
+	spc65 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc65->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/toolbox.dds", RESOURCE_TEXTURE2D, 0);
+	spc66 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc66->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/wall.dds", RESOURCE_TEXTURE2D, 0);
+	spc67 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc67->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/wheel.dds", RESOURCE_TEXTURE2D, 0);
+	spc68 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc68->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/whiteboard.dds", RESOURCE_TEXTURE2D, 0);
+	spc69 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc69->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/wireframe.dds", RESOURCE_TEXTURE2D, 0);
+
 	specs.push_back(spc1);
 	specs.push_back(spc2);
 	specs.push_back(spc3);
@@ -875,7 +1083,46 @@ void ResourceManager::createTextures()
 
 	specs.push_back(spc31);
 	specs.push_back(spc32);
+	specs.push_back(spc33);
+	specs.push_back(spc34);
+	specs.push_back(spc35);
+	specs.push_back(spc36);
+	specs.push_back(spc37);
+	specs.push_back(spc38);
+	specs.push_back(spc39);
+	specs.push_back(spc40);
 
+	specs.push_back(spc41);
+	specs.push_back(spc42);
+	specs.push_back(spc43);
+	specs.push_back(spc44);
+	specs.push_back(spc45);
+	specs.push_back(spc46);
+	specs.push_back(spc47);
+	specs.push_back(spc48);
+	specs.push_back(spc49);
+	specs.push_back(spc50);
+
+	specs.push_back(spc51);
+	specs.push_back(spc52);
+	specs.push_back(spc53);
+	specs.push_back(spc54);
+	specs.push_back(spc55);
+	specs.push_back(spc56);
+	specs.push_back(spc57);
+	specs.push_back(spc58);
+	specs.push_back(spc59);
+	specs.push_back(spc60);
+
+	specs.push_back(spc61);
+	specs.push_back(spc62);
+	specs.push_back(spc63);
+	specs.push_back(spc64);
+	specs.push_back(spc65);
+	specs.push_back(spc66);
+	specs.push_back(spc67);
+	specs.push_back(spc68);
+	specs.push_back(spc69);
 	
 
 	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
@@ -904,8 +1151,7 @@ void ResourceManager::createTextures()
 	}
 	
 
-
-	materials[0]->SetNormalTex(normals[1]);		
+	materials[0]->SetNormalTex(normals[1]);
 	materials[1]->SetNormalTex(normals[1]);
 	materials[3]->SetNormalTex(normals[1]);
 
@@ -939,6 +1185,47 @@ void ResourceManager::createTextures()
 	materials[89]->SetNormalTex(normals[32]);
 	materials[92]->SetNormalTex(normals[33]);
 
+	materials[47]->SetNormalTex(normals[34]);
+	materials[78]->SetNormalTex(normals[35]);
+	materials[45]->SetNormalTex(normals[36]);
+	materials[72]->SetNormalTex(normals[37]);
+
+	materials[66]->SetNormalTex(normals[41]);
+	materials[56]->SetNormalTex(normals[42]);
+	materials[59]->SetNormalTex(normals[43]);
+
+	materials[76]->SetNormalTex(normals[44]);
+	materials[61]->SetNormalTex(normals[45]);
+	materials[57]->SetNormalTex(normals[46]);
+	materials[77]->SetNormalTex(normals[47]);
+
+	materials[63]->SetNormalTex(normals[48]);
+	materials[64]->SetNormalTex(normals[49]);
+	materials[70]->SetNormalTex(normals[50]);
+
+	materials[71]->SetNormalTex(normals[51]);
+	materials[79]->SetNormalTex(normals[52]);
+	materials[67]->SetNormalTex(normals[53]);
+	materials[68]->SetNormalTex(normals[54]);
+	materials[46]->SetNormalTex(normals[55]);
+
+
+	materials[53]->SetNormalTex(normals[61]);
+	materials[62]->SetNormalTex(normals[62]);
+	materials[54]->SetNormalTex(normals[63]);
+	materials[44]->SetNormalTex(normals[64]);
+	materials[66]->SetNormalTex(normals[65]);
+	materials[69]->SetNormalTex(normals[66]);
+	materials[55]->SetNormalTex(normals[67]);
+	materials[80]->SetNormalTex(normals[68]);
+	materials[81]->SetNormalTex(normals[69]);
+	materials[58]->SetNormalTex(normals[70]);
+
+
+	materials[73]->SetNormalTex(normals[38]);
+	materials[74]->SetNormalTex(normals[39]);
+	materials[75]->SetNormalTex(normals[40]);
+
 	materials[0]->SetSpecTex(specs[0]);
 	materials[1]->SetSpecTex(specs[0]);
 	materials[3]->SetSpecTex(specs[0]);
@@ -971,6 +1258,46 @@ void ResourceManager::createTextures()
 	materials[99]->SetSpecTex(specs[29]);
 	materials[89]->SetSpecTex(specs[30]);
 	materials[92]->SetSpecTex(specs[31]);
+
+
+	materials[47]->SetSpecTex(specs[32]);
+	materials[78]->SetSpecTex(specs[33]);
+	materials[45]->SetSpecTex(specs[34]);
+	materials[72]->SetSpecTex(specs[35]);
+	materials[66]->SetSpecTex(specs[39]);
+	materials[56]->SetSpecTex(specs[40]);
+
+	materials[31]->SetSpecTex(specs[41]);
+	materials[76]->SetSpecTex(specs[42]);
+	materials[61]->SetSpecTex(specs[43]);
+	materials[57]->SetSpecTex(specs[44]);
+	materials[77]->SetSpecTex(specs[45]);
+	materials[63]->SetSpecTex(specs[46]);
+	materials[64]->SetSpecTex(specs[47]);
+	materials[70]->SetSpecTex(specs[48]);
+	materials[71]->SetSpecTex(specs[49]);
+	materials[79]->SetSpecTex(specs[50]);
+
+	materials[67]->SetSpecTex(specs[51]);
+	materials[68]->SetSpecTex(specs[52]);
+	materials[46]->SetSpecTex(specs[53]);
+
+	materials[53]->SetSpecTex(specs[59]);
+	materials[62]->SetSpecTex(specs[60]);
+
+	materials[54]->SetSpecTex(specs[61]);
+	materials[44]->SetSpecTex(specs[62]);
+	materials[66]->SetSpecTex(specs[63]);
+	materials[69]->SetSpecTex(specs[64]);
+	materials[55]->SetSpecTex(specs[65]);
+	materials[80]->SetSpecTex(specs[66]);
+	materials[81]->SetSpecTex(specs[67]);
+	materials[58]->SetSpecTex(specs[68]);
+
+	materials[73]->SetSpecTex(specs[36]);
+	materials[74]->SetSpecTex(specs[37]);
+	materials[75]->SetSpecTex(specs[38]);
+
 
 }
 
