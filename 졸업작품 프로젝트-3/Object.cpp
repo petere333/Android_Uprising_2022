@@ -659,7 +659,13 @@ CGameObject::CGameObject(int nMaterials) : CGameObject()
 
 CGameObject::~CGameObject()
 {
-	if (m_pMesh) m_pMesh->Release();
+	if (m_pMesh)
+	{
+		if (m_pMesh->m_nReferences >= 0)
+		{
+			m_pMesh->Release();
+		}
+	}
 
 	if (m_nMaterials > 0)
 	{
@@ -1616,4 +1622,17 @@ ParticleObject::~ParticleObject()
 	if (m_ppMaterials) delete[] m_ppMaterials;
 
 	if (m_pSkinnedAnimationController) delete m_pSkinnedAnimationController;
+}
+
+BoomObject::BoomObject(int n, XMFLOAT3 ori, XMFLOAT3 dir, float spd, chrono::time_point<chrono::system_clock> time) : CGameObject(n)
+{
+	origin = ori;
+	direction = dir;
+	speed = spd;
+	created = time;
+	SetPosition(origin);
+}
+BoomObject::~BoomObject()
+{
+
 }

@@ -1499,6 +1499,8 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* model3;
 	CLoadedModelInfo* model4;
 	CLoadedModelInfo* model5;
+	CLoadedModelInfo* model6;
+	CLoadedModelInfo* model7;
 
 	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
 	playerModels.push_back(model1);
@@ -1510,6 +1512,11 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	playerModels.push_back(model4);
 	model5 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
 	playerModels.push_back(model5);
+	model6 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/bazuka_attack.bin", NULL);
+	playerModels.push_back(model6);
+	model7 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/bazuka_run.bin", NULL);
+	playerModels.push_back(model7);
+
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;

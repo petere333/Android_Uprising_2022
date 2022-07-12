@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 typedef struct GrowthMelee
 {
 	int exp;

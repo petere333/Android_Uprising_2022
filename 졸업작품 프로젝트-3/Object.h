@@ -530,7 +530,7 @@ public:
 	int objType;
 	PlayerState pState;
 	
-
+	bool attack = false;
 
 
 	chrono::time_point<chrono::system_clock> lastMove;
@@ -606,4 +606,16 @@ public:
 	XMFLOAT3 direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 
+};
+
+class BoomObject : public CGameObject
+{
+public:
+	BoomObject(int n, XMFLOAT3, XMFLOAT3 dir, float spd, chrono::time_point<chrono::system_clock>);
+	virtual ~BoomObject();
+	float speed = 0.0f;
+	XMFLOAT3 direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	XMFLOAT3 origin = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	chrono::time_point<chrono::system_clock> created;
+	chrono::time_point<chrono::system_clock> lastMove;
 };

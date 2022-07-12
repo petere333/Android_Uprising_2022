@@ -23,6 +23,7 @@
 #include "LobbyInterfaceShader.h"
 #include "HealthBarShader.h"
 
+#include "BoomShader.h"
 
 
 #include "LevelLoader.h"
@@ -138,6 +139,8 @@ public:
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
 
+	BoomShader* boomShader = NULL;
+
 	TerrainShader1_1* terrain1_1 = NULL;
 	TerrainShader1_2* terrain1_2 = NULL;
 	TerrainShader1_3* terrain1_3 = NULL;
@@ -145,7 +148,7 @@ public:
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
 
-	
+	CLoadedMesh* boomMesh = NULL;
 
 	float** height11;
 	float** height12;
@@ -182,6 +185,8 @@ public:
 	CMaterial* dirtMaterials[nDirMat];
 
 	ParticleMesh* partMesh=NULL;
+
+	
 
 	CTexture* shadowTex[nShadows];
 	CMaterial* shadowMats[nShadows];
@@ -280,6 +285,7 @@ public:
 
 
 	void attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list);
+	void shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list);
 	bool mouseDown = false;
 	void createParticles(int n, XMFLOAT3 pos);
 	

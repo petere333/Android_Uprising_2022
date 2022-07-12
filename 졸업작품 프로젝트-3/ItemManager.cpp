@@ -19,6 +19,8 @@ void ItemManager::init()
 	basicGun->stats.hardness = 0;
 	basicGun->stats.power = 0;
 	basicGun->stats.precision = 0;
+	basicGun->type = BAZUKA;
+
 
 	basicHammer->stats.attack = 30;
 	basicHammer->stats.capacity = 0;
@@ -26,6 +28,8 @@ void ItemManager::init()
 	basicHammer->stats.hardness = 0;
 	basicHammer->stats.power = 0;
 	basicHammer->stats.precision = 0;
+	basicHammer->type = BLUNT;
+
 
 	basicArmor->stats.attack = 0;
 	basicArmor->stats.capacity = 5;
@@ -33,6 +37,7 @@ void ItemManager::init()
 	basicArmor->stats.hardness = 10;
 	basicArmor->stats.power = 5;
 	basicArmor->stats.precision = 5;
+	basicArmor->type = ARMOR;
 
 	items.push_back(basicHammer);
 	items.push_back(basicGun);

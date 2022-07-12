@@ -51,7 +51,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		}
 	}
 
-
+	
 }
 
 void EnemyShader::ReleaseObjects()
@@ -190,7 +190,11 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
+
+		
 	}
+
+	
 }
 
 D3D12_INPUT_LAYOUT_DESC EnemyShader::CreateInputLayout()
@@ -712,6 +716,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			}
 		}
 	}
+
+	
+	
 }
 
 

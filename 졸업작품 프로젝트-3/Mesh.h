@@ -32,7 +32,7 @@ public:
 	CMesh(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *pd3dCommandList);
 	virtual ~CMesh();
 
-private:
+public:
 	int								m_nReferences = 0;
 
 public:

@@ -26,12 +26,14 @@ public:
 
 public:
 	
-
+	
 	float** height11, **height12, **height13, **height21, **height22, **height23;
 
 
 public:
 	std::vector<EnemyObject*>	objects;
+	
+
 	ResourceManager* rm;
 public:
 	std::vector<XMFLOAT3> getEnemyPosition();

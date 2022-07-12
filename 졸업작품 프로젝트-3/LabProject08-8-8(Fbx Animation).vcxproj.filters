@@ -126,6 +126,9 @@
     <ClCompile Include="TerrainShader2_3.cpp">
       <Filter>Shader\2-3</Filter>
     </ClCompile>
+    <ClCompile Include="BoomShader.cpp">
+      <Filter>Shader\etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -240,6 +243,9 @@
     <ClInclude Include="TerrainShader2_3.h">
       <Filter>Shader\2-3</Filter>
     </ClInclude>
+    <ClInclude Include="BoomShader.h">
+      <Filter>Shader\etc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -321,6 +327,9 @@
     </Filter>
     <Filter Include="Shader\space">
       <UniqueIdentifier>{cd4e4fb9-7095-403f-b726-75a9a92bafc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\etc">
+      <UniqueIdentifier>{cf70b954-09dc-41ae-9f84-92290188d616}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

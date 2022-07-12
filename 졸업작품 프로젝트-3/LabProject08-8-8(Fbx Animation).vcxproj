@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\AUSERVER\AUSERVER\protocol.h" />
+    <ClInclude Include="BoomShader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CNet.h" />
     <ClInclude Include="CSound.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="WICTextureLoader12.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoomShader.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CNet.cpp" />
     <ClCompile Include="CSound.cpp" />
