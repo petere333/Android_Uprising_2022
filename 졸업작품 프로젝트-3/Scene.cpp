@@ -650,7 +650,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				setObjectLastMove(i);
 
 			}
-			else if (playerShader->objects[i]->bState.stateID == ATTACK_STATE)
+			if (playerShader->objects[i]->bState.attacking==1)
 			{
 				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 				{
@@ -663,6 +663,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 					playerShader->objects[i]->SetTrackAnimationSet(0, 2);
 					cam->rotateUp();
+					
 					attack(i, pd3dDevice, pd3dCommandList);
 				}
 				else if (playerShader->objects[i]->bState.attackID == TYPE_MELEE)
@@ -670,6 +671,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					cam->rotateUp();
 					swingHammer(i, pd3dDevice, pd3dCommandList);
 				}
+				
 				setObjectLastMove(i);
 				for (int j = 0; j < playerShader->objects.size(); ++j)
 				{
@@ -706,9 +708,6 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 		}
 
-		//각 적의 상태 변화와 그에 따라 적이 취하는 행동들을 나타낸다. 클라는 적이 현재 어떤 상태인지만 알면 되므로
-		//서버는 적의 eState 구조체에 들어있는 변수들만 클라로 전달하면 된다.
-		
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -1806,6 +1805,10 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		if (p.bState.hp != -9999)
 		{
 			playerShader->objects[id]->bState.hp = p.bState.hp;
+		}
+		if (p.bState.attacking != -9999)
+		{
+			playerShader->objects[id]->bState.attacking = p.bState.attacking;
 		}
 		printf("client player bionic state change complete\n");
 		break;

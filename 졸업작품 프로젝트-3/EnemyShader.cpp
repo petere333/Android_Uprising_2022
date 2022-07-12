@@ -466,7 +466,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					}
 					if (found == true)
 					{
-						objects[i]->bState.stateID = ATTACK_STATE;
+						objects[i]->bState.stateID = BATTLE_STATE;
 						objects[i]->attackTarget = objects[i]->chaseTarget;
 					}
 
@@ -488,7 +488,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					}
 					if (found == true)
 					{
-						objects[i]->bState.stateID = ATTACK_STATE;
+						objects[i]->bState.stateID = BATTLE_STATE;
 						objects[i]->attackTarget = objects[i]->chaseTarget;
 					}
 				}
@@ -620,7 +620,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			}
 		}
 
-		else if (objects[i]->bState.stateID == ATTACK_STATE)
+		else if (objects[i]->bState.stateID == BATTLE_STATE)
 		{
 			//공격하는 애니메이션으로 변경
 			if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)

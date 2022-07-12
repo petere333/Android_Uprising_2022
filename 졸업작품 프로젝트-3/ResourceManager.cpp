@@ -657,6 +657,182 @@ void ResourceManager::createTextures()
 	tex159 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex159->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_1/sdw_trashContainer_front.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex159);
+
+	//1-2 shadow
+
+	tex160 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex160->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_airfan_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex160);
+	tex161 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex161->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_banner_front.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex161);
+	tex162 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex162->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_bigshield_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex162);
+	tex163 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex163->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_bottle_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex163);
+	tex164 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex164->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_box_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex164);
+	tex165 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex165->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_bucket_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex165);
+	tex166 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex166->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_chon_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex166);
+	tex167 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex167->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_container_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex167);
+	tex168 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex168->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_control1_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex168);
+	tex169 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex169->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_control2_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex169);
+
+	tex170 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex170->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_control4_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex170);
+
+	tex171 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex171->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_drill_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex171);
+	tex172 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex172->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_energyshield_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex172);
+	tex173 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex173->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_fence_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex173);
+	tex174 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex174->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_fence_front.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex174);
+	tex175 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex175->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_furniture1_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex175);
+	tex176 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex176->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_furniture2_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex176);
+	tex177 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex177->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_glue_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex177);
+	tex178 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex178->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_hammer_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex178);
+	tex179 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex179->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_heater_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex179);
+
+	tex180 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex180->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_kilnclose_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex180);
+	tex181 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex181->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_kilnopen_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex181);
+	tex182 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex182->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_log1_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex182);
+	tex183 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex183->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_log2_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex183);
+	tex184 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex184->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_longtank_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex184);
+	tex185 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex185->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_machine1_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex185);
+	tex186 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex186->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_machine3_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex186);
+	tex187 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex187->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_machine4_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex187);
+	tex188 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex188->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_machine6_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex188);
+	tex189 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex189->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_machine7_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex189);
+
+	tex190 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex190->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_robotarm_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex190);
+	tex191 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex191->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_saw_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex191);
+	tex192 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex192->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_sewer_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex192);
+	tex193 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex193->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_shelf_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex193);
+	tex194 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex194->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_shield_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex194);
+	tex195 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex195->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_table_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex195);
+	tex196 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex196->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_toolbox_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex196);
+	tex197 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex197->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase1_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex197);
+	tex198 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex198->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase2_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex198);
+	tex199 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex199->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase3_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex199);
+
+	tex200 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex200->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase4_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex200);
+	tex201 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex201->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase5_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex201);
+	tex202 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex202->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase6_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex202);
+	tex203 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex203->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase7_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex203);
+	tex204 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex204->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase8_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex204);
+	tex205 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex205->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase9_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex205);
+	tex206 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex206->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase10_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex206);
+	tex207 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex207->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase11_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex207);
+	tex208 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex208->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase12_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex208);
+	tex209 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex209->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase13_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex209);
+
+	tex210 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex210->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase14_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex210);
+	tex211 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex211->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_vase15_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex211);
+	tex212 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex212->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_wheel_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex212);
+	tex213 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex213->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_whiteboard_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex213);
+	tex214 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex214->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_woods_right.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex214);
+
+
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;
@@ -1150,7 +1326,7 @@ void ResourceManager::createTextures()
 		materials.push_back(mat);
 	}
 	
-
+	
 	materials[0]->SetNormalTex(normals[1]);
 	materials[1]->SetNormalTex(normals[1]);
 	materials[3]->SetNormalTex(normals[1]);
@@ -1202,7 +1378,7 @@ void ResourceManager::createTextures()
 	materials[76]->SetNormalTex(normals[44]);
 	materials[61]->SetNormalTex(normals[45]);
 	materials[57]->SetNormalTex(normals[46]);
-	materials[77]->SetNormalTex(normals[47]);
+	//materials[77]->SetNormalTex(normals[47]);
 	materials[63]->SetNormalTex(normals[48]);
 	materials[64]->SetNormalTex(normals[49]);
 	materials[70]->SetNormalTex(normals[50]);
@@ -1221,8 +1397,8 @@ void ResourceManager::createTextures()
 	materials[66]->SetNormalTex(normals[65]);
 	materials[69]->SetNormalTex(normals[66]);
 	materials[55]->SetNormalTex(normals[67]);
-	materials[80]->SetNormalTex(normals[68]);
-	materials[81]->SetNormalTex(normals[69]);
+	//materials[80]->SetNormalTex(normals[68]);
+	//materials[81]->SetNormalTex(normals[69]);
 	materials[58]->SetNormalTex(normals[70]);
 
 	
@@ -1278,10 +1454,10 @@ void ResourceManager::createTextures()
 	//여기서부터 문제없음
 
 	materials[31]->SetSpecTex(specs[41]);
-	materials[76]->SetSpecTex(specs[42]);
+	//materials[76]->SetSpecTex(specs[42]);
 	materials[61]->SetSpecTex(specs[43]);
 	materials[57]->SetSpecTex(specs[44]);
-	materials[77]->SetSpecTex(specs[45]);
+	//materials[77]->SetSpecTex(specs[45]);
 	materials[63]->SetSpecTex(specs[46]);
 	materials[64]->SetSpecTex(specs[47]);
 	materials[70]->SetSpecTex(specs[48]);
@@ -1302,8 +1478,8 @@ void ResourceManager::createTextures()
 	materials[66]->SetSpecTex(specs[63]);
 	materials[69]->SetSpecTex(specs[64]);
 	materials[55]->SetSpecTex(specs[65]);
-	materials[80]->SetSpecTex(specs[66]);
-	materials[81]->SetSpecTex(specs[67]);
+	//materials[80]->SetSpecTex(specs[66]);
+	//materials[81]->SetSpecTex(specs[67]);
 	materials[58]->SetSpecTex(specs[68]);
 	
 

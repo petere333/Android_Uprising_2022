@@ -419,10 +419,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			}
 			case VK_UP:
 			{
-				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-				{
-					break;
-				}
+
 
 				packet.key = VK_UP;
 				if (keydown == false)
@@ -434,10 +431,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 			case VK_DOWN:
 			{
-				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-				{
-					break;
-				}
+
 
 				packet.key = VK_DOWN;
 
@@ -450,10 +444,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 			case VK_LEFT:
 			{
-				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-				{
-					break;
-				}
+
 
 				packet.key = VK_LEFT;
 				if (keydown == false)
@@ -465,10 +456,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 			case VK_RIGHT:
 			{
-				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-				{
-					break;
-				}
+
 
 				packet.key = VK_RIGHT;
 				if (keydown == false)
@@ -481,10 +469,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			case VK_SPACE:
 			{
 
-				if (m_pScene->playerShader->objects[m_pScene->pID]->pState.id == ATTACK_STATE)
-				{
-					break;
-				}
+
 				// 플레이어에 대한 점프 명령
 				//m_pScene->jumpObject(0);
 				packet.key = VK_SPACE;

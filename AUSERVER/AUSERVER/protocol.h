@@ -29,6 +29,7 @@ struct BionicState
 	int stateID;
 	int attackID;
 	int hp;
+	int attacking;
 	//PlayerInfoManager* manager;
 };
 

@@ -167,6 +167,9 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
+		RectMesh* shadow = NULL;
+		CGameObject* shd = NULL;
+
 
 		if (data[i].type == Shield)
 		{
@@ -176,6 +179,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[171]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == BigShield)
 		{
@@ -185,6 +206,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[161]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == AirFan)
 		{
@@ -194,6 +233,25 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[159]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
+
 		}
 		else if (data[i].type == LongTank)
 		{
@@ -203,6 +261,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[183]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Machine1)
 		{
@@ -212,6 +288,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[184]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Machine3)
 		{
@@ -221,6 +315,23 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[185]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Machine4)
 		{
@@ -230,6 +341,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[186]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Machine6)
 		{
@@ -239,6 +368,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[187]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Machine7)
 		{
@@ -248,6 +395,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[188]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == RobotArm)
 		{
@@ -257,6 +422,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[189]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Sewer)
 		{
@@ -266,6 +449,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->shadowHeight = 0.0f;
 			obj->shadowX = 0.0f;
 			obj->shadowZ = 0.0f;
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[191]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * dx , data[i].position.y, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 
 		else if (data[i].type == Wall12_Left1)
@@ -465,6 +666,44 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+
+		if (data[i].rotation.y == 0.0f)
+		{
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[172]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
+		}
+		else
+		{
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[173]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.5f * w - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+			shadows.push_back(shd);
+		}
 		}
 		else if (data[i].type == Chon12)
 		{
@@ -474,6 +713,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[165]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Controller12_1)
 		{
@@ -483,6 +740,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[167]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Controller12_2)
 		{
@@ -492,6 +767,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[168]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Controller12_4)
 		{
@@ -501,6 +794,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[169]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Container12)
 		{
@@ -510,16 +821,26 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[166]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
-		else if (data[i].type == Container12)
-		{
-		obj = new (std::nothrow) CGameObject(1);
-		obj->SetMaterial(0, rm->materials[59]);
-		obj->SetMesh(contain);
-		obj->shadowHeight = 0.0f;
-		obj->shadowX = 0.0f;
-		obj->shadowZ = 0.0f;
-		}
+
 		else if (data[i].type == ChargeSlot)
 		{
 		obj = new (std::nothrow) CGameObject(1);
@@ -565,6 +886,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[163]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == WoodManu_WallFront)
@@ -620,6 +959,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[194]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Saw)
 		{
@@ -629,6 +986,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[190]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Drill)
 		{
@@ -638,6 +1013,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[170]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Woods1)
 		{
@@ -665,6 +1058,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[181]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == PlainLog2)
 		{
@@ -674,6 +1085,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[182]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Furniture1)
 		{
@@ -683,6 +1112,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[174]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Furniture2)
 		{
@@ -692,6 +1139,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[175]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Shelf)
 		{	
@@ -701,6 +1166,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[192]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == ToolBox)
 		{
@@ -710,6 +1193,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[195]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Glue)
 		{
@@ -719,6 +1220,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[176]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Hammer)
 		{
@@ -728,6 +1247,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[177]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Bottle)
 		{
@@ -737,6 +1274,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[162]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == PaintBarrel)
 		{
@@ -746,6 +1301,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[164]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == Pottery_WallFront)
@@ -838,6 +1411,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[196]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx , data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery2)
 		{
@@ -847,6 +1438,26 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[197]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
+
 		}
 		else if (data[i].type == Pottery3)
 		{
@@ -856,6 +1467,25 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[198]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery4)
 		{
@@ -865,6 +1495,25 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[199]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == Pottery5)
@@ -875,6 +1524,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[200]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery6)
 		{
@@ -884,6 +1551,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[201]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery7)
 		{
@@ -893,6 +1578,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[202]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery8)
 		{
@@ -902,6 +1605,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[203]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == Pottery9)
@@ -912,6 +1633,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[204]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery10)
 		{
@@ -921,6 +1660,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[205]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery11)
 		{
@@ -930,6 +1687,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[206]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery12)
 		{
@@ -939,6 +1714,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[207]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == Pottery13)
@@ -949,6 +1742,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[208]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery14)
 		{
@@ -958,6 +1769,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[209]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Pottery15)
 		{
@@ -967,6 +1796,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[210]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx, data[i].position.y, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 
 		else if (data[i].type == PotterySoil)
@@ -977,6 +1824,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[119]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == PotterySoilPallet)
 		{
@@ -986,6 +1851,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[156]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == PotterySoilPalletLayer)
 		{
@@ -995,6 +1878,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[157]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Transfer_UpperFloor)
 		{
@@ -1095,6 +1996,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[179]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == PotteryKlinOpen)
 		{
@@ -1104,6 +2023,25 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[180]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
+
 		}
 		else if (data[i].type == PotteryWheel)
 		{
@@ -1113,6 +2051,25 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[211]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
+
 		}
 		else if (data[i].type == Banner)
 		{
@@ -1122,6 +2079,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[160]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == Whiteboard)
 		{
@@ -1131,6 +2106,24 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
+
+		//원본 물체 크기의 x,y 길이
+		float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shd = new (std::nothrow) CGameObject(1);
+		shd->SetMaterial(0, rm->materials[212]);
+		shd->SetMesh(shadow);
+
+		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+		shd->SetPosition(data[i].position.x - 0.5f * h - data[i].position.y, 0.0f, data[i].position.z);
+		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
+
+		shadows.push_back(shd);
 		}
 		else if (data[i].type == WoodManu_Pillar1)
 		{
@@ -1313,6 +2306,35 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 		}
 	}
 	
+	for (int i = 0; i < shadows.size(); ++i)
+	{
+		if (shadows[i])
+		{
+			XMFLOAT3 pos = shadows[i]->GetPosition();
+			XMFLOAT3 direction = XMFLOAT3(pos.x - cp.x, pos.y - cp.y, pos.z - cp.z);
+			float dist = Vector3::Length(direction);
+			XMFLOAT3 dir = Vector3::Normalize(direction);
+			float cosAngle = Vector3::DotProduct(look, dir);
+
+			//그림자의 위치가 카메라로부터 10미터 이내이거나, 카메라 방향으로부터 70도 이내에 있는 경우에만 그림
+			if (dist <= 10.0f)
+			{
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				shadows[i]->Render(pd3dCommandList, pCamera);
+			}
+			else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
+			{
+				if (m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+				}
+				shadows[i]->Render(pd3dCommandList, pCamera);
+			}
+		}
+	}
 }
 
 D3D12_INPUT_LAYOUT_DESC TerrainShader1_2::CreateInputLayout()

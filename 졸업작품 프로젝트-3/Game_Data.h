@@ -13,7 +13,7 @@
 //플레이어의 상태 아이디값.
 #define IDLE_STATE 1
 #define MOVE_STATE 2
-#define ATTACK_STATE 3
+
 #define MOVE_ATTACK_STATE 4
 #define JUMP_STATE 5
 #define DEATH_STATE 6
@@ -21,8 +21,8 @@
 //적의 상태 아이디값.
 #define PATROL_STATE 1
 #define CHASE_STATE 2
-#define ATTACK_STATE 3
-#define DEAD_STATE 4
+#define BATTLE_STATE 4
+#define DEAD_STATE 3
 
 //적, 플레이어의 공격 유형 아이디값.
 #define TYPE_MELEE 1

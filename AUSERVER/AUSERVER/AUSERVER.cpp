@@ -267,6 +267,7 @@ void process_packet(int c_id, char* packet)
 				clients[c_id].bState.hp = 10;
 				clients[c_id].bState.isIntelligent = true;
 				clients[c_id].bState.stateID = IDLE_STATE;
+				clients[c_id].bState.attacking = 0;
 				clients[c_id].cameraAngle = 270.0f;
 				clients[c_id].cameraUp = 0.0f;
 
@@ -605,15 +606,18 @@ void process_packet(int c_id, char* packet)
 		bs.hp = -9999;
 		bs.attackID = -9999;
 		bs.isIntelligent = -9999;
+		bs.attacking = -9999;
 		if (p->down == true)
 		{
-			bs.stateID = ATTACK_STATE;
-			clients[c_id].bState.attackID = ATTACK_STATE;
+			//bs.stateID = ATTACK_STATE;
+			//clients[c_id].bState.attackID = ATTACK_STATE;
+			bs.attacking = 1;
 		}
 		else
 		{
-			bs.stateID = IDLE_STATE;
-			clients[c_id].bState.attackID = IDLE_STATE;
+			//bs.stateID = IDLE_STATE;
+			//clients[c_id].bState.attackID = IDLE_STATE;
+			bs.attacking = 0;
 		}
 		clients[c_id].bState = bs;
 		for (auto& pl : clients)
