@@ -541,11 +541,13 @@ public:
 	bool isInAir = false;
 
 	chrono::time_point<chrono::system_clock> lastAttack = chrono::system_clock::now();
-
+	chrono::time_point<chrono::system_clock> lastWave = chrono::system_clock::now();
 	chrono::time_point<chrono::system_clock> timeFromDie;
 
 	chrono::time_point<chrono::system_clock> lastDamaged;
 	bool isDead = false;
+
+	int comboCount = 0;
 public:
 	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }
 
@@ -586,6 +588,8 @@ public:
 	int currentPoint = 0;
 	int routeIdx=0;
 
+
+	// 공격에 관한 내용
 	int hitPlayerID = -1;
 	XMFLOAT3 chaseTargetPos;
 	int chaseTarget = -1;
@@ -594,6 +598,11 @@ public:
 
 	chrono::time_point<chrono::system_clock> lastAttack;
 	float attackDuration;
+
+	//기절에 관한 내용
+	bool stunned = false;
+	chrono::time_point<chrono::system_clock> lastStun;
+	float stunDuration=0.0f;
 };
 
 class ParticleObject : public CGameObject

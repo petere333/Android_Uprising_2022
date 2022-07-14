@@ -480,9 +480,17 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				//}
 				break;
 			}
+
+
 			case '2':
 			{
 				packet.key = '2';
+				SendPacket(&packet);
+				break;
+			}
+			case '3':
+			{
+				packet.key = '3';
 				SendPacket(&packet);
 				break;
 			}
@@ -569,6 +577,17 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			case '2':
 			{
 				uppac.key = '2';
+				if (keydown == true)
+				{
+					SendPacket(&uppac);
+					keydown = false;
+				}
+				break;
+			}
+
+			case '3':
+			{
+				uppac.key = '3';
 				if (keydown == true)
 				{
 					SendPacket(&uppac);

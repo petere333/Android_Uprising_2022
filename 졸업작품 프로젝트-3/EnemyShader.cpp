@@ -280,6 +280,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		{
 			//죽은 것으로 판정하고 죽은 시점 구하기
 			objects[i]->bState.stateID = DEAD_STATE;
+			objects[i]->stunned = false;
 			objects[i]->deathMoment = chrono::system_clock::now();
 
 			//애니메이션도 죽는 것으로 변경
@@ -289,6 +290,29 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
 			}
 			objects[i]->SetTrackAnimationSet(0, 0);
+		}
+
+		if (objects[i]->stunned == true)
+		{
+			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+			chrono::duration<double> dt = moment - objects[i]->lastStun;
+			//기절 애니메이션으로 변경
+			if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+			{
+				objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
+				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
+			}
+			objects[i]->SetTrackAnimationSet(0, 0);
+
+			//기절 지속시간이 끝난 경우
+			if ((float)dt.count() >= objects[i]->stunDuration)
+			{
+				objects[i]->stunned = false;
+				objects[i]->stunDuration = 0.0f;
+				objects[i]->bState.stateID = PATROL_STATE;
+			}
+
+			break;
 		}
 		if (objects[i]->bState.stateID == PATROL_STATE)
 		{

@@ -432,6 +432,15 @@ void process_packet(int c_id, char* packet)
 				ks.xzspeed = 0.0f;
 			}
 		}
+		else if (p->key == '3')
+		{
+			if (bs.attackID != TYPE_MICROWAVE && ks.isInAir == 0)
+			{
+				bs.attackID = TYPE_MICROWAVE;
+				bs.stateID = IDLE_STATE;
+				ks.xzspeed = 0.0f;
+			}
+		}
 		else if (p->key == VK_F1)
 		{
 			for (auto& pl : clients)
@@ -567,6 +576,14 @@ void process_packet(int c_id, char* packet)
 			bs.attackID = TYPE_MELEE;
 			clients[c_id].bState.attackID = TYPE_MELEE;
 		}
+		else if (p->key == '3')
+		{
+			cout << "Code: " << p->key << endl;
+
+			bs.attackID = TYPE_MICROWAVE;
+			clients[c_id].bState.attackID = TYPE_MICROWAVE;
+		}
+
 		else if (p->key == VK_SPACE)
 		{
 			

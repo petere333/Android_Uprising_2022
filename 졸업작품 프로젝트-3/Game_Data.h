@@ -25,6 +25,7 @@
 #define CHASE_STATE 2
 #define BATTLE_STATE 4
 #define DEAD_STATE 3
+#define STUN_STATE 5
 
 //적, 플레이어의 공격 유형 아이디값.
 #define TYPE_MELEE 1

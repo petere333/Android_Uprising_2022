@@ -129,6 +129,9 @@
     <ClCompile Include="BoomShader.cpp">
       <Filter>Shader\etc</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyInfoManager.cpp">
+      <Filter>CharacterData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -245,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="BoomShader.h">
       <Filter>Shader\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>CharacterData</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyInfoManager.h">
+      <Filter>CharacterData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

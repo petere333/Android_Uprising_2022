@@ -293,6 +293,9 @@ public:
 	void createSounds();
 	void delSounds();
 	void swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	void swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+	void useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
+
 public: // client to server
 	virtual void recv_packet(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, CCamera*); // (receive packet);
 	virtual void ClientNet(SOCKET& sock) {}

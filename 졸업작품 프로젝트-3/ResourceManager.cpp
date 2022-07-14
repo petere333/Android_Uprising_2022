@@ -1501,6 +1501,9 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* model5;
 	CLoadedModelInfo* model6;
 	CLoadedModelInfo* model7;
+	CLoadedModelInfo* model8;
+	CLoadedModelInfo* model9;
+	CLoadedModelInfo* model10;
 
 	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
 	playerModels.push_back(model1);
@@ -1517,12 +1520,22 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	model7 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/bazuka_run.bin", NULL);
 	playerModels.push_back(model7);
 
+	model8 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/radio_run.bin", NULL);
+	playerModels.push_back(model8);
+	model9 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/radio_attack.bin", NULL);
+	playerModels.push_back(model9);
+	
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;
 	CLoadedModelInfo* e3;
 	CLoadedModelInfo* e4;
 	CLoadedModelInfo* e5;
+	CLoadedModelInfo* e6;
+	CLoadedModelInfo* e7;
+	CLoadedModelInfo* e8;
+	CLoadedModelInfo* e9;
+	CLoadedModelInfo* e10;
 	
 	e1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
 	enemyModels.push_back(e1);
@@ -1534,4 +1547,9 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	enemyModels.push_back(e4);
 	e5 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_attack.bin", NULL);
 	enemyModels.push_back(e5);
+
+	e6 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_stun.bin", NULL);
+	enemyModels.push_back(e6);
+	e7 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_stun.bin", NULL);
+	enemyModels.push_back(e7);
 }
