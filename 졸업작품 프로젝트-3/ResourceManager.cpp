@@ -842,6 +842,7 @@ void ResourceManager::createTextures()
 	CTexture* norm51; CTexture* norm52; CTexture* norm53; CTexture* norm54; CTexture* norm55; CTexture* norm56; CTexture* norm57; CTexture* norm58; CTexture* norm59; CTexture* norm60;
 	CTexture* norm61; CTexture* norm62; CTexture* norm63; CTexture* norm64; CTexture* norm65; CTexture* norm66; CTexture* norm67; CTexture* norm68; CTexture* norm69; CTexture* norm70;
 	CTexture* norm71; CTexture* norm72; CTexture* norm73; CTexture* norm74; CTexture* norm75; CTexture* norm76; CTexture* norm77; CTexture* norm78; CTexture* norm79; CTexture* norm80;
+	CTexture* norm81; CTexture* norm82; CTexture* norm83; CTexture* norm84; CTexture* norm85; CTexture* norm86; CTexture* norm87; CTexture* norm88; CTexture* norm89; CTexture* norm90;
 
 	norm1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -1026,6 +1027,38 @@ void ResourceManager::createTextures()
 	norm71 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm71->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/wireframe.dds", RESOURCE_TEXTURE2D, 0);
 
+	norm72 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm72->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwangjae1.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm73 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm73->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanja_hwalls.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm74 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm74->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanja_Tabe.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm75 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm75->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanja_walls.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm76 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm76->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_badak1.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm77 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm77->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_badak2.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm78 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm78->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_beok1.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm79 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm79->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_CheonJang1.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm80 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm80->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_Screen.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm81 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm81->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_Screen2.dds", RESOURCE_TEXTURE2D, 0);
+
+	norm82 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	norm82->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/norm/Gwanjae_Takza.dds", RESOURCE_TEXTURE2D, 0);
 
 	normals.push_back(norm35);
 	normals.push_back(norm36);
@@ -1069,6 +1102,20 @@ void ResourceManager::createTextures()
 
 	normals.push_back(norm71);
 
+	// 2-1
+
+	normals.push_back(norm72);
+	normals.push_back(norm73);
+	normals.push_back(norm74);
+	normals.push_back(norm75);
+	normals.push_back(norm76);
+	normals.push_back(norm77);
+	normals.push_back(norm78);
+	normals.push_back(norm79);
+	normals.push_back(norm80);
+
+	normals.push_back(norm81);
+
 
 
 	CTexture* spc1; CTexture* spc2; CTexture* spc3; CTexture* spc4; CTexture* spc5; CTexture* spc6; CTexture* spc7; CTexture* spc8; CTexture* spc9; CTexture* spc10;
@@ -1079,6 +1126,7 @@ void ResourceManager::createTextures()
 	CTexture* spc51; CTexture* spc52; CTexture* spc53; CTexture* spc54; CTexture* spc55; CTexture* spc56; CTexture* spc57; CTexture* spc58; CTexture* spc59; CTexture* spc60;
 	CTexture* spc61; CTexture* spc62; CTexture* spc63; CTexture* spc64; CTexture* spc65; CTexture* spc66; CTexture* spc67; CTexture* spc68; CTexture* spc69; CTexture* spc70;
 	CTexture* spc71; CTexture* spc72; CTexture* spc73; CTexture* spc74; CTexture* spc75; CTexture* spc76; CTexture* spc77; CTexture* spc78; CTexture* spc79; CTexture* spc80;
+	CTexture* spc81; CTexture* spc82; CTexture* spc83; CTexture* spc84; CTexture* spc85; CTexture* spc86; CTexture* spc87; CTexture* spc88; CTexture* spc89; CTexture* spc90;
 
 	spc1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec2.dds", RESOURCE_TEXTURE2D, 0);
@@ -1225,6 +1273,39 @@ void ResourceManager::createTextures()
 	spc69 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc69->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/wireframe.dds", RESOURCE_TEXTURE2D, 0);
 
+	spc70 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc70->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwangjae1.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc71 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc71->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanja_hwalls.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc72 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc72->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanja_Tabe.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc73 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc73->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanja_walls.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc74 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc74->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_badak1.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc75 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc75->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_badak2.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc76 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc76->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_beok1.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc77 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc77->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_CheonJang1.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc78 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc78->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_Screen.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc79 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc79->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_Screen2.dds", RESOURCE_TEXTURE2D, 0);
+
+	spc80 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	spc80->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_Takza.dds", RESOURCE_TEXTURE2D, 0);
+
 	specs.push_back(spc1);
 	specs.push_back(spc2);
 	specs.push_back(spc3);
@@ -1299,7 +1380,19 @@ void ResourceManager::createTextures()
 	specs.push_back(spc67);
 	specs.push_back(spc68);
 	specs.push_back(spc69);
-	
+
+	specs.push_back(spc70);
+	specs.push_back(spc71);
+	specs.push_back(spc72);
+	specs.push_back(spc73);
+	specs.push_back(spc74);
+	specs.push_back(spc75);
+	specs.push_back(spc76);
+	specs.push_back(spc77);
+	specs.push_back(spc78);
+	specs.push_back(spc79);
+	specs.push_back(spc80);
+
 
 	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
 
@@ -1332,34 +1425,34 @@ void ResourceManager::createTextures()
 	materials[3]->SetNormalTex(normals[1]);
 
 	
-	materials[77]->SetNormalTex(normals[2]);
-	materials[78]->SetNormalTex(normals[3]);
+	materials[77]->SetNormalTex(normals[92]);
+	materials[78]->SetNormalTex(normals[93]);
 	materials[85]->SetNormalTex(normals[4]);
 	materials[98]->SetNormalTex(normals[5]);
 	materials[100]->SetNormalTex(normals[6]);
-	materials[93]->SetNormalTex(normals[7]);
+	materials[93]->SetNormalTex(normals[77]);
 	materials[86]->SetNormalTex(normals[8]);
 	materials[96]->SetNormalTex(normals[9]);
 	materials[101]->SetNormalTex(normals[10]);
 	materials[82]->SetNormalTex(normals[11]);
-	materials[80]->SetNormalTex(normals[12]);
-	materials[81]->SetNormalTex(normals[14]);
+	materials[80]->SetNormalTex(normals[96]);
+	materials[81]->SetNormalTex(normals[110]);
 	materials[97]->SetNormalTex(normals[16]);
 	materials[83]->SetNormalTex(normals[17]);
 	materials[87]->SetNormalTex(normals[19]);
-	materials[88]->SetNormalTex(normals[20]);
+	materials[88]->SetNormalTex(normals[72]);
 	materials[102]->SetNormalTex(normals[21]);
 	materials[103]->SetNormalTex(normals[22]);
 	materials[84]->SetNormalTex(normals[23]);
-	materials[76]->SetNormalTex(normals[24]);
+	materials[76]->SetNormalTex(normals[91]);
 	materials[104]->SetNormalTex(normals[26]);
-	materials[91]->SetNormalTex(normals[27]);
+	materials[91]->SetNormalTex(normals[75]);
 	materials[105]->SetNormalTex(normals[28]);
-	materials[95]->SetNormalTex(normals[29]);
+	materials[95]->SetNormalTex(normals[78]);
 	materials[99]->SetNormalTex(normals[30]);
 	materials[94]->SetNormalTex(normals[31]);
-	materials[89]->SetNormalTex(normals[32]);
-	materials[92]->SetNormalTex(normals[33]);
+	materials[89]->SetNormalTex(normals[73]);
+	materials[92]->SetNormalTex(normals[76]);
 
 	
 	//노말은 여기서부터 문제
@@ -1367,7 +1460,7 @@ void ResourceManager::createTextures()
 	materials[47]->SetNormalTex(normals[34]);
 	//materials[78]->SetNormalTex(normals[35]);
 	materials[45]->SetNormalTex(normals[36]);
-	materials[72]->SetNormalTex(normals[37]);
+	materials[72]->SetNormalTex(normals[88]);
 	//materials[66]->SetNormalTex(normals[41]);
 	materials[56]->SetNormalTex(normals[42]);
 	
@@ -1384,7 +1477,7 @@ void ResourceManager::createTextures()
 	materials[70]->SetNormalTex(normals[50]);
 
 	materials[71]->SetNormalTex(normals[51]);
-	materials[79]->SetNormalTex(normals[52]);
+	materials[79]->SetNormalTex(normals[95]);
 	materials[67]->SetNormalTex(normals[53]);
 	materials[68]->SetNormalTex(normals[54]);
 	materials[46]->SetNormalTex(normals[55]);
@@ -1402,12 +1495,10 @@ void ResourceManager::createTextures()
 	materials[58]->SetNormalTex(normals[70]);
 
 	
-	materials[73]->SetNormalTex(normals[38]);
-	materials[74]->SetNormalTex(normals[39]);
-	materials[75]->SetNormalTex(normals[40]);
+	materials[73]->SetNormalTex(normals[89]);
+	materials[74]->SetNormalTex(normals[111]);
+	materials[75]->SetNormalTex(normals[90]);
 	
-
-
 	materials[0]->SetSpecTex(specs[0]);
 	materials[1]->SetSpecTex(specs[0]);
 	materials[3]->SetSpecTex(specs[0]);
@@ -1419,7 +1510,7 @@ void ResourceManager::createTextures()
 	materials[100]->SetSpecTex(specs[6]);
 	materials[93]->SetSpecTex(specs[7]);
 	materials[86]->SetSpecTex(specs[8]);
-	materials[96]->SetSpecTex(specs[9]);
+	materials[96]->SetSpecTex(specs[79]);
 	materials[101]->SetSpecTex(specs[10]);
 	materials[82]->SetSpecTex(specs[11]);
 	materials[80]->SetSpecTex(specs[12]);
@@ -1430,7 +1521,7 @@ void ResourceManager::createTextures()
 	materials[88]->SetSpecTex(specs[19]);
 	materials[102]->SetSpecTex(specs[20]);
 	materials[103]->SetSpecTex(specs[21]);
-	materials[84]->SetSpecTex(specs[22]);
+	materials[84]->SetSpecTex(specs[81]);
 	materials[76]->SetSpecTex(specs[23]);
 	materials[104]->SetSpecTex(specs[24]);
 	materials[91]->SetSpecTex(specs[25]);
@@ -1440,6 +1531,9 @@ void ResourceManager::createTextures()
 	materials[99]->SetSpecTex(specs[29]);
 	materials[89]->SetSpecTex(specs[30]);
 	materials[92]->SetSpecTex(specs[31]);
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////
 	
 	//스페큘러는 여기서부터 문제
 
