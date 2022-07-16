@@ -24,7 +24,7 @@
 #include "HealthBarShader.h"
 
 #include "BoomShader.h"
-
+#include "MainInterfaceShader.h"
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -148,6 +148,9 @@ public:
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
 
+	MainInterfaceShader* mainInter = NULL;
+
+
 	CLoadedMesh* boomMesh = NULL;
 
 	float** height11;
@@ -219,7 +222,7 @@ public:
 	
 	void setPlayerAnimation(int a);
 
-	int currentScreen = LOBBY_STATE;
+	int currentScreen = LOGIN_STATE;
 
 	int									m_nGameObjects = 0;
 	CGameObject							**m_ppGameObjects = NULL;

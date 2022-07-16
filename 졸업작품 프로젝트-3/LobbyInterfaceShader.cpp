@@ -16,15 +16,16 @@ void LobbyInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graphics
 	//위치는 화면 정중앙으로부터 y방향으로 -225픽셀만큼 이동
 	// 즉 버튼의 중점이 (600,675)
 	//즉, 이 버튼의 클릭 영역은 가로 478~722, 세로 623~722임.
-	UIMesh* startBtnMesh = new UIMesh(pd3dDevice, pd3dCommandList, 3.0f, 2.5f, false, 0.0f, 0.0f);
-	UIMesh* startBtnMeshRev = new UIMesh(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, true, 0.5f, 0.5f);
+	CubeMeshOffset* startBtnMesh = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 3.0f, 2.5f, 0.01f, 0.0f, 0.0f, false);
+	CubeMeshOffset* startBtnMeshrev = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 3.0f, 2.5f, 0.01f, 0.0f, 0.0f, true);
+	
 
 	meshes.push_back(startBtnMesh);
-	meshesRev.push_back(startBtnMeshRev);
+	meshesRev.push_back(startBtnMeshrev);
 
 	
 
-	CGameObject* obj = new CGameObject(1);
+	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
 	
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[5]);
@@ -171,8 +172,16 @@ void LobbyInterfaceShader::Animate(CCamera* cam)
 
 	for (int i = 0; i < objects.size(); ++i)
 	{
+		if (cl.z < 0)
+		{
+			objects[i]->SetMesh(meshesRev[i]);
+		}
+		else
+		{
+			objects[i]->SetMesh(meshes[i]);
+		}
 		objects[i]->Rotate(-pitch, yaw, 0.0f);
-		objects[i]->SetPosition(cp.x + cl.x, cp.y + cl.y, cp.z + cl.z);
+		objects[i]->SetPosition(cp.x + cl.x*1.0f, cp.y + cl.y*1.0f, cp.z + cl.z*1.0f);
 	}
 	//	XMFLOAT3 p = objects[1]->GetPosition();
 	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);

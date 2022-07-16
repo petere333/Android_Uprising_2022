@@ -350,7 +350,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		}
 	}
-	else if (m_pScene->currentScreen == LOBBY_STATE)
+	else if (m_pScene->currentScreen == LOGIN_STATE)
 	{
 		
 		switch (nMessageID)
@@ -367,6 +367,32 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			int wx = rect.left;
 			int wy = rect.top;
 			if ((pnt.x >= 478+wx && pnt.x <= 722+wx) && (pnt.y >= 623+wy && pnt.y <= 722+wy))
+			{
+				m_pScene->currentScreen = LOBBY_STATE;
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	else if (m_pScene->currentScreen == LOBBY_STATE)
+	{
+		switch (nMessageID)
+		{
+		case WM_LBUTTONUP:
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
+			int px1 = m_pScene->mainInter->objects[4]->x1;
+			int px2 = m_pScene->mainInter->objects[4]->x2;
+			int py1 = m_pScene->mainInter->objects[4]->y1;
+			int py2 = m_pScene->mainInter->objects[4]->y2;
+			if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
 			{
 				m_pScene->currentScreen = IN_GAME_STATE;
 			}
@@ -759,6 +785,41 @@ void CGameFramework::ProcessInput()
 		prevX = 500;
 		prevY = 500;
 		//서버 처리 끝
+	}
+	else if (m_pScene->currentScreen == LOBBY_STATE)
+	{
+		POINT pnt;
+		GetCursorPos(&pnt);
+		RECT rect;
+		GetWindowRect(m_hWnd, &rect);
+		int wx = rect.left;
+		int wy = rect.top;
+		for (int i = 0; i < m_pScene->mainInter->objects.size(); ++i)
+		{
+			int px1 = m_pScene->mainInter->objects[i]->x1;
+			int px2 = m_pScene->mainInter->objects[i]->x2;
+			int py1 = m_pScene->mainInter->objects[i]->y1;
+			int py2 = m_pScene->mainInter->objects[i]->y2;
+
+			if (m_pScene->mainInter->objects[i]->defaultMesh != -1)
+			{
+				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+				{
+					m_pScene->mainInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[i]->defaultMesh + 1];
+
+					m_pScene->mainInter->objects[i]->mouseOn = true;
+					m_pScene->mainInter->objects[i]->meshChanged = false;
+				}
+				else
+				{
+					m_pScene->mainInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[i]->defaultMesh];
+					m_pScene->mainInter->objects[i]->mouseOn = false;
+					m_pScene->mainInter->objects[i]->meshChanged = false;
+
+				}
+			}
+		}
 	}
 }
 

@@ -24,5 +24,7 @@ public:
 
 public:
 	std::vector<CGameObject*>	objects;
+	std::vector<CMesh*>	meshes;
+	std::vector<CMesh*>	revmeshes;
 	ResourceManager* rm;
 };

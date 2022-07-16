@@ -22,13 +22,13 @@ void ItemManager::init()
 	basicGun->type = BAZUKA;
 
 
-	basicHammer->stats.attack = 30;
+	basicHammer->stats.attack = 10;
 	basicHammer->stats.capacity = 0;
 	basicHammer->stats.entrophy = 0;
 	basicHammer->stats.hardness = 0;
 	basicHammer->stats.power = 0;
 	basicHammer->stats.precision = 0;
-	basicHammer->type = BLUNT;
+	basicHammer->type = DUALBLADE;
 
 
 	basicArmor->stats.attack = 0;

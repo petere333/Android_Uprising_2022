@@ -29,13 +29,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -172,6 +172,7 @@
     <ClInclude Include="LabProject08-8-8(Fbx Animation).h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LobbyInterfaceShader.h" />
+    <ClInclude Include="MainInterfaceShader.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ParticleShader.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="LabProject08-8-8(Fbx Animation).cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LobbyInterfaceShader.cpp" />
+    <ClCompile Include="MainInterfaceShader.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ParticleShader.cpp" />

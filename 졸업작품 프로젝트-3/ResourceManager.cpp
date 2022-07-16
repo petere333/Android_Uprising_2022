@@ -832,6 +832,48 @@ void ResourceManager::createTextures()
 	tex214->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_woods_right.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex214);
 
+	//여기까지 1-1, 1-2구역 그림자. 이제부터 메인화면 인터페이스
+
+	tex215 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex215->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/lobby.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex215);
+	tex216 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex216->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex216);
+	tex217 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex217->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex217);
+	tex218 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex218->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex218);
+	tex219 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex219->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex219);
+	tex220 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex220->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex220);
+	tex221 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex221->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex221);
+	tex222 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex222->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex222);
+	tex223 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex223->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex223);
+	tex224 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex224->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex224);
+	tex225 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex225->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex225);
+	tex226 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex226->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex226);
+	tex227 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex227->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex227);
+
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
@@ -1416,6 +1458,7 @@ void ResourceManager::createTextures()
 		mat->SetTexture(textures[i], 0);
 		mat->SetNormalTex(normals[0]);
 		mat->SetSpecTex(specs[1]);
+		
 		materials.push_back(mat);
 	}
 	
@@ -1598,6 +1641,16 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* model8;
 	CLoadedModelInfo* model9;
 	CLoadedModelInfo* model10;
+	CLoadedModelInfo* model11;
+	CLoadedModelInfo* model12;
+	CLoadedModelInfo* model13;
+	CLoadedModelInfo* model14;
+	CLoadedModelInfo* model15;
+	CLoadedModelInfo* model16;
+	CLoadedModelInfo* model17;
+	CLoadedModelInfo* model18;
+	CLoadedModelInfo* model19;
+	CLoadedModelInfo* model20;
 
 	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
 	playerModels.push_back(model1);
@@ -1605,9 +1658,9 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	playerModels.push_back(model2);
 	model3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
 	playerModels.push_back(model3);
-	model4 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing1.bin", NULL);
+	model4 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_attack1.bin", NULL);
 	playerModels.push_back(model4);
-	model5 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_swing2.bin", NULL);
+	model5 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_attack2.bin", NULL);
 	playerModels.push_back(model5);
 	model6 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/bazuka_attack.bin", NULL);
 	playerModels.push_back(model6);
@@ -1618,7 +1671,28 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	playerModels.push_back(model8);
 	model9 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/radio_attack.bin", NULL);
 	playerModels.push_back(model9);
-	
+	model10 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/radio_init.bin", NULL);
+	playerModels.push_back(model10);
+
+	model11 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/radio_init.bin", NULL);
+	playerModels.push_back(model11);
+	model12 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/bazuka_init.bin", NULL);
+	playerModels.push_back(model12);
+	model13 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blade_init.bin", NULL);
+	playerModels.push_back(model13);
+	model14 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blade_swing_left.bin", NULL);
+	playerModels.push_back(model14);
+	model15 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blade_swing_right.bin", NULL);
+	playerModels.push_back(model15);
+
+	model16 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_run.bin", NULL);
+	playerModels.push_back(model16);
+
+	model17 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_attack_run.bin", NULL);
+	playerModels.push_back(model17);
+	model18 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_attack_run.bin", NULL);
+	playerModels.push_back(model18);
+
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;

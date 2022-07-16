@@ -892,17 +892,17 @@ RectMeshOffset::RectMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 
 RectMeshOffset::~RectMeshOffset(){}
 
-CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth, float ox, float oy) : CMesh(pd3dDevice, pd3dCommandList)
+CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth, float ox, float oy, bool rev) : CMesh(pd3dDevice, pd3dCommandList)
 {
-	m_nVertices = 36;
+	m_nVertices = 12;
 	m_nOffset = 0;
 	m_nSlot = 0;
 	m_d3dPrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
 	float fx = fWidth * 0.5f, fy = fHeight * 0.5f, fz = fDepth * 0.5f;
 
-	XMFLOAT3* pos = new XMFLOAT3[36];
-	XMFLOAT2* uv = new XMFLOAT2[36];
+	XMFLOAT3* pos = new XMFLOAT3[12];
+	XMFLOAT2* uv = new XMFLOAT2[12];
 
 
 	int i = 0;
@@ -914,7 +914,7 @@ CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	pos[i++] = XMFLOAT3(-fx, +fy, -fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, -fz);
 	pos[i++] = XMFLOAT3(-fx, -fy, -fz);
-
+	/*
 	pos[i++] = XMFLOAT3(-fx, +fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, +fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, +fy, -fz);
@@ -922,7 +922,7 @@ CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	pos[i++] = XMFLOAT3(-fx, +fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, +fy, -fz);
 	pos[i++] = XMFLOAT3(-fx, +fy, -fz);
-
+	*/
 	pos[i++] = XMFLOAT3(-fx, -fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, +fy, +fz);
@@ -930,7 +930,7 @@ CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	pos[i++] = XMFLOAT3(-fx, -fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, +fy, +fz);
 	pos[i++] = XMFLOAT3(-fx, +fy, +fz);
-
+	/*
 	pos[i++] = XMFLOAT3(-fx, -fy, -fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, -fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, +fz);
@@ -954,58 +954,117 @@ CubeMeshOffset::CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	pos[i++] = XMFLOAT3(+fx, +fy, -fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, +fz);
 	pos[i++] = XMFLOAT3(+fx, -fy, -fz);
+	*/
+	
+	if (rev == false)
+	{
+		int i = 0;
 
-	i = 0;
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		/*
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		*/
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		/*
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
-
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
-
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
 
 
-	uv[i++] = XMFLOAT2(0.0f, 0.0f);
-	uv[i++] = XMFLOAT2(1.0f, 1.0f);
-	uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		*/
+	}
+	else
+	{
+		int i = 0;
 
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+
+		/*
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		*/
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		/*
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+
+
+		uv[i++] = XMFLOAT2(1.0f, 1.0f);
+		uv[i++] = XMFLOAT2(0.0f, 0.0f);
+		uv[i++] = XMFLOAT2(1.0f, 0.0f);
+		*/
+	}
 	for (int i = 0; i < m_nVertices; ++i)
 	{
 		pos[i].x += ox;
