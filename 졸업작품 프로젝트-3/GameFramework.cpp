@@ -392,10 +392,44 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			int px2 = m_pScene->mainInter->objects[4]->x2;
 			int py1 = m_pScene->mainInter->objects[4]->y1;
 			int py2 = m_pScene->mainInter->objects[4]->y2;
+
+			int x1 = m_pScene->mainInter->objects[2]->x1;
+			int x2 = m_pScene->mainInter->objects[2]->x2;
+			int y1 = m_pScene->mainInter->objects[2]->y1;
+			int y2 = m_pScene->mainInter->objects[2]->y2;
+
 			if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
 			{
 				m_pScene->currentScreen = IN_GAME_STATE;
 			}
+			else if ((pnt.x >= x1 + wx && pnt.x <= x2 + wx) && (pnt.y >= y1 + wy && pnt.y <= y2 + wy))
+			{
+				m_pScene->currentScreen = PROFILE_STATE;
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	else if (m_pScene->currentScreen == PROFILE_STATE)
+	{
+		switch (nMessageID)
+		{
+		case WM_LBUTTONUP:
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
+			//메인으로 버튼
+			if ((pnt.x >= 92 + wx && pnt.x <= 296 + wx) && (pnt.y >= 134 + wy && pnt.y <= 180 + wy))
+			{
+				m_pScene->currentScreen = LOBBY_STATE;
+			}
+			
 			break;
 		}
 		default:
@@ -816,6 +850,40 @@ void CGameFramework::ProcessInput()
 					m_pScene->mainInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[i]->defaultMesh];
 					m_pScene->mainInter->objects[i]->mouseOn = false;
 					m_pScene->mainInter->objects[i]->meshChanged = false;
+
+				}
+			}
+		}
+	}
+	else if (m_pScene->currentScreen == PROFILE_STATE)
+	{
+		POINT pnt;
+		GetCursorPos(&pnt);
+		RECT rect;
+		GetWindowRect(m_hWnd, &rect);
+		int wx = rect.left;
+		int wy = rect.top;
+		for (int i = 0; i < m_pScene->profileInter->objects.size(); ++i)
+		{
+			int px1 = m_pScene->profileInter->objects[i]->x1;
+			int px2 = m_pScene->profileInter->objects[i]->x2;
+			int py1 = m_pScene->profileInter->objects[i]->y1;
+			int py2 = m_pScene->profileInter->objects[i]->y2;
+
+			if (m_pScene->profileInter->objects[i]->defaultMesh != -1)
+			{
+				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+				{
+					m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+					m_pScene->profileInter->objects[i]->mouseOn = true;
+					m_pScene->profileInter->objects[i]->meshChanged = false;
+				}			  
+				else		  
+				{			  
+					m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+					m_pScene->profileInter->objects[i]->mouseOn = false;
+					m_pScene->profileInter->objects[i]->meshChanged = false;
 
 				}
 			}

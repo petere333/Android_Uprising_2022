@@ -17,19 +17,19 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	
 
 	//로그아웃 버튼 위치 184, 152 클릭 범위 = 111, 86
-	//즉 위치 = (184-600)/450, (152-450)/450
+	//즉 위치 = -(184-600)/450, -(152-450)/450
 	//범위 = (111*2)/450, 86/450
-	CubeMeshOffset* logout = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f/450.0f, 86.0f/450.0f, 0.02f, -416.0f/450.0f, -298.0f/450.0f, false);
-	CubeMeshOffset* logoutr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f / 450.0f, 86.0f / 450.0f, 0.02f, -416.0f/450.0f, -298.0f/450.0f, true);
+	CubeMeshOffset* logout = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f/450.0f, 86.0f/450.0f, 0.02f, 416.0f/450.0f, 298.0f/450.0f, false);
+	CubeMeshOffset* logoutr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f / 450.0f, 86.0f / 450.0f, 0.02f, 416.0f/450.0f, 298.0f/450.0f, true);
 
-	CubeMeshOffset* info = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f-600.0f) / 450.0f, (745.0f-450.0f) / 450.0f, false);
-	CubeMeshOffset* infor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f - 600.0f) / 450.0f, (745.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* info = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f-600.0f) / 450.0f, -(745.0f-450.0f) / 450.0f, false);
+	CubeMeshOffset* infor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f - 600.0f) / 450.0f, -(745.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* shop = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, (747.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* shopr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, (747.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* shop = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* shopr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, (750.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, (750.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, true);
 
 	meshes.push_back(main);
 	meshesRev.push_back(main2);

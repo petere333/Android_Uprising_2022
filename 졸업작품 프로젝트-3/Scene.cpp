@@ -268,6 +268,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	mainInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	mainInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
+	profileInter = new ProfileShader(rm);
+	profileInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	profileInter->BuildObjects(pd3dDevice, pd3dCommandList);
+
 
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
@@ -1073,6 +1077,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	{
 		mainInter->Animate(cam);
 	}
+	else if (currentScreen == PROFILE_STATE)
+	{
+		profileInter->Animate(cam);
+	}
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -1274,6 +1282,19 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 			mainInter->Render(pd3dCommandList, pCamera);
 		}
+	}
+	else if (currentScreen == PROFILE_STATE)
+	{
+	if (profileInter)
+	{
+		profileInter->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+		}
+
+		profileInter->Render(pd3dCommandList, pCamera);
+	}
 	}
 }
 

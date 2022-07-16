@@ -7,6 +7,8 @@
 //게임 스테이트 아이디값. 현재 스테이트에 따라 계산 및 출력할 내용이 달라진다.
 #define LOGIN_STATE 1
 #define LOBBY_STATE 2
+#define STAGE_SELECT_STATE 3
+#define PROFILE_STATE 4
 #define IN_GAME_STATE 10
 
 

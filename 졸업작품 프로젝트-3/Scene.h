@@ -25,6 +25,8 @@
 
 #include "BoomShader.h"
 #include "MainInterfaceShader.h"
+#include "ProfileShader.h"
+
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -149,7 +151,7 @@ public:
 	TerrainShader2_3* terrain2_3 = NULL;
 
 	MainInterfaceShader* mainInter = NULL;
-
+	ProfileShader* profileInter = NULL;
 
 	CLoadedMesh* boomMesh = NULL;
 

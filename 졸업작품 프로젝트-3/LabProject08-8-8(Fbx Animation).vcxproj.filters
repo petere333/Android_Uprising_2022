@@ -135,6 +135,12 @@
     <ClCompile Include="MainInterfaceShader.cpp">
       <Filter>Shader\mainlobby</Filter>
     </ClCompile>
+    <ClCompile Include="StageSelectShader.cpp">
+      <Filter>Shader\stageSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfileShader.cpp">
+      <Filter>Shader\Profile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -261,6 +267,12 @@
     <ClInclude Include="MainInterfaceShader.h">
       <Filter>Shader\mainlobby</Filter>
     </ClInclude>
+    <ClInclude Include="StageSelectShader.h">
+      <Filter>Shader\stageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfileShader.h">
+      <Filter>Shader\Profile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -357,6 +369,12 @@
     </Filter>
     <Filter Include="Shader\in-game\global">
       <UniqueIdentifier>{7c6642eb-0309-4be7-a885-d0df293c1185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\stageSelect">
+      <UniqueIdentifier>{bd70be4f-992f-4bc7-a5ef-8d5564a48ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Profile">
+      <UniqueIdentifier>{49592642-de03-498e-aea5-dcd50b59dbfe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
