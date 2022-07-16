@@ -9,25 +9,23 @@ InterfaceShader::~InterfaceShader() {}
 
 void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	CubeMeshOffset* mesh = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1.0f, 0.3f, 0.01f, 0.0f, -0.5f);
-	CubeMeshOffset* mesh2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 0.2f, 1.0f, 0.01f, 0.0f, 0.0f);
+	CubeMeshOffset* mesh = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 0.1f, 0.3f, 0.01f, 0.0f, -0.5f, false);
+	CubeMeshOffset* mesh2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 0.1f, 0.3f, 0.01f, 0.0f, -0.5f, true);
 
-	
-	
+	meshes.push_back(mesh);
+	revmeshes.push_back(mesh2);
 
 	CGameObject* obj = new CGameObject(1);
-	CGameObject* obj2 = new CGameObject(1);
+	
 
 	obj->SetMesh(mesh);
-	obj->SetMaterial(0, rm->materials[10]);
+	obj->SetMaterial(0, rm->materials[215]);
 	obj->SetPosition(100.0f, 2.0f, 105.0f);
 
-	obj2->SetMesh(mesh2);
-	obj2->SetMaterial(0, rm->materials[11]);
-	obj2->SetPosition(100.0f, 3.0f, 106.0f);
+	
 
-	//objects.push_back(obj);
-	//objects.push_back(obj2);
+	objects.push_back(obj);
+	
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -166,6 +164,14 @@ void InterfaceShader::Animate(CCamera* cam)
 
 	for (int i = 0; i < objects.size(); ++i)
 	{
+		if (cl.z < 0.0f)
+		{
+			objects[i]->SetMesh(revmeshes[i]);
+		}
+		else
+		{
+			objects[i]->SetMesh(meshes[i]);
+		}
 		objects[i]->Rotate(-pitch, yaw, 0.0f);
 		objects[i]->SetPosition(cp.x + cl.x, cp.y+cl.y, cp.z+cl.z);
 	}

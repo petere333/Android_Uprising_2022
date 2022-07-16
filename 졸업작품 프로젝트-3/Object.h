@@ -628,3 +628,19 @@ public:
 	chrono::time_point<chrono::system_clock> created;
 	chrono::time_point<chrono::system_clock> lastMove;
 };
+
+class UIObject : public CGameObject
+{
+public:
+	UIObject(int n, int,int,int,int, int);
+	virtual ~UIObject();
+	
+	bool mouseOn = false;
+	bool meshChanged = true;
+	int x1;
+	int y1; 
+	int x2; 
+	int y2;
+	int defaultMesh;
+
+};

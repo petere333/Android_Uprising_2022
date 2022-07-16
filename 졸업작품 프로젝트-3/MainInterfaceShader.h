@@ -1,14 +1,14 @@
 #pragma once
-#pragma once
+
 
 #include "Shader.h"
 #include "ResourceManager.h"
 
-class LobbyInterfaceShader : public CShader
+class MainInterfaceShader : public CShader
 {
 public:
-	LobbyInterfaceShader(ResourceManager* r);
-	virtual ~LobbyInterfaceShader();
+	MainInterfaceShader(ResourceManager* r);
+	virtual ~MainInterfaceShader();
 
 	virtual void BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
 	virtual void ReleaseObjects();

@@ -19,7 +19,7 @@ void ItemManager::init()
 	basicGun->stats.hardness = 0;
 	basicGun->stats.power = 0;
 	basicGun->stats.precision = 0;
-	basicGun->type = RIFLE;
+	basicGun->type = BAZUKA;
 
 
 	basicHammer->stats.attack = 10;
@@ -28,7 +28,7 @@ void ItemManager::init()
 	basicHammer->stats.hardness = 0;
 	basicHammer->stats.power = 0;
 	basicHammer->stats.precision = 0;
-	basicHammer->type = BLUNT;
+	basicHammer->type = DUALBLADE;
 
 
 	basicArmor->stats.attack = 0;

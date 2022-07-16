@@ -281,7 +281,7 @@ public:
 class CubeMeshOffset : public CMesh
 {
 public:
-	CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth, float ox, float oy);
+	CubeMeshOffset(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float fWidth, float fHeight, float fDepth, float ox, float oy,bool rev);
 	virtual ~CubeMeshOffset();
 };
 

@@ -768,8 +768,9 @@ void CGameObject::SetSkinnedAnimationWireFrameShader()
 
 void CGameObject::SetMaterial(int nMaterial, CMaterial *pMaterial)
 {
+	CMaterial *t = pMaterial;
 	if (m_ppMaterials[nMaterial]) m_ppMaterials[nMaterial]->Release();
-	m_ppMaterials[nMaterial] = pMaterial;
+	m_ppMaterials[nMaterial] = t;
 	if (m_ppMaterials[nMaterial]) m_ppMaterials[nMaterial]->AddRef();
 }
 
@@ -1636,3 +1637,15 @@ BoomObject::~BoomObject()
 {
 
 }
+
+
+UIObject::UIObject(int n, int sx, int sy, int ex, int ey, int def) : CGameObject(n)
+{
+	x1 = sx;
+	x2 = ex;
+	y1 = sy;
+	y2 = ey;
+	defaultMesh = def;
+}
+UIObject::~UIObject(){}
+

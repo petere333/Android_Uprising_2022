@@ -832,6 +832,48 @@ void ResourceManager::createTextures()
 	tex214->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area1_2/sdw_woods_right.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex214);
 
+	//여기까지 1-1, 1-2구역 그림자. 이제부터 메인화면 인터페이스
+
+	tex215 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex215->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/lobby.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex215);
+	tex216 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex216->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex216);
+	tex217 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex217->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex217);
+	tex218 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex218->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_out_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex218);
+	tex219 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex219->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex219);
+	tex220 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex220->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex220);
+	tex221 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex221->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_shop_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex221);
+	tex222 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex222->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex222);
+	tex223 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex223->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex223);
+	tex224 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex224->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stage_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex224);
+	tex225 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex225->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex225);
+	tex226 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex226->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex226);
+	tex227 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex227->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/btn_stats_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex227);
+
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
@@ -1323,6 +1365,7 @@ void ResourceManager::createTextures()
 		mat->SetTexture(textures[i], 0);
 		mat->SetNormalTex(normals[0]);
 		mat->SetSpecTex(specs[1]);
+		
 		materials.push_back(mat);
 	}
 	

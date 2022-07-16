@@ -200,6 +200,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	interShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	interShader->BuildObjects(pd3dDevice, pd3dCommandList);
 
+	
+
 	playerShader = new PlayerShader(rm);
 	playerShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	playerShader->BuildObjects(pd3dDevice, pd3dCommandList);
@@ -261,6 +263,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	lobbyInter = new LobbyInterfaceShader(rm);
 	lobbyInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	lobbyInter->BuildObjects(pd3dDevice, pd3dCommandList);
+
+	mainInter = new MainInterfaceShader(rm);
+	mainInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	mainInter->BuildObjects(pd3dDevice, pd3dCommandList);
+
 
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
@@ -656,7 +663,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
 						float df = static_cast<float>(dt.count());
-						if (df >= 0.4f)
+						if (df >= 0.666666f)
 						{
 							if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
 							{
@@ -831,13 +838,24 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 					else if (playerShader->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 					{
-
-						if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
+						if (playerShader->objects[i]->attack == false)
 						{
-							playerShader->objects[i]->setRoot(rm->playerModels[12]->m_pModelRootObject, true);
-							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
+							if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
+							{
+								playerShader->objects[i]->setRoot(rm->playerModels[12]->m_pModelRootObject, true);
+								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
+							}
+							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
 						}
-						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+						else
+						{
+							if (playerShader->objects[i]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
+							{
+								playerShader->objects[i]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
+								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
+							}
+							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+						}
 					}
 				}
 				else if (playerShader->objects[i]->bState.attackID == TYPE_MICROWAVE)
@@ -915,7 +933,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						chrono::duration<double> dt = moment - playerShader->objects[i]->lastAttack;
 
 						//마지막 공격은 마저 수행하고서 중지.
-						if ((float)dt.count() > 0.4f)
+						if ((float)dt.count() >= 0.666666f)
 						{
 							playerShader->objects[i]->attack = false;
 						}
@@ -1047,9 +1065,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		
 		UpdateShaderVariables(pd3dCommandList);
 	}
-	else if (currentScreen == LOBBY_STATE)
+	else if (currentScreen == LOGIN_STATE)
 	{
 		lobbyInter->Animate(cam);
+	}
+	else if (currentScreen == LOBBY_STATE)
+	{
+		mainInter->Animate(cam);
 	}
 }
 
@@ -1227,7 +1249,7 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 	}
 	
-	else if (currentScreen == LOBBY_STATE)
+	else if (currentScreen == LOGIN_STATE)
 	{
 		if (lobbyInter)
 		{
@@ -1238,6 +1260,19 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			}
 			
 			lobbyInter->Render(pd3dCommandList, pCamera);
+		}
+	}
+	else if (currentScreen == LOBBY_STATE)
+	{
+		if (mainInter)
+		{
+			mainInter->OnPrepareRender(pd3dCommandList);
+			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+			}
+
+			mainInter->Render(pd3dCommandList, pCamera);
 		}
 	}
 }
@@ -3424,7 +3459,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 
 	//그전 칼휘두르기 동작이 완료되고 그리 오랜 시간이 지나지 않은 경우, 즉 0.5초~1초 경과 시 콤보카운트를 증가시킴.
-	if (fTime >= 0.333333f && fTime <= 1.0f)
+	if (fTime >= 0.666666f && fTime <= 1.5f)
 	{
 		playerShader->objects[idx]->comboCount += 1;
 		if (playerShader->objects[idx]->comboCount >= 4)
@@ -3442,7 +3477,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	
 
 	//그전 칼휘두르기 동작이 완료되고 난 후 호출되었으면, 콤보카운트에 따라 애니메이션 적용, 공격 시점 갱신.
-	if (fTime >= 0.4f)
+	if (fTime >= 0.666666f)
 	{
 
 
@@ -3467,10 +3502,10 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		}
 		else if (r == 1)
 		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[14]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
 			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[14]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[14]);
+				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
@@ -3485,10 +3520,10 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		}
 		else if (r == 3)
 		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[14]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
 			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[14]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[14]);
+				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
 			}
 		}
@@ -3497,7 +3532,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	}
 
 	//공격이 진행중인 경우, 즉 0~0.5초인 경우 중에서, 애니메이션의 흐름상 공격 판정이 발생해야 자연스러울 타이밍에 적 타격 및 파티클 발생.
-	else if (fTime >= 0.233333f && fTime <= 0.266666f)
+	else if (fTime >= 0.466666f && fTime <= 0.5f)
 	{
 
 		BoundBox bx;
@@ -3539,7 +3574,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	}
 
 	//그전 칼휘두르기 동작이 완료되면, 즉 0.333333초 경과 직전에 대기모션으로 일단 전환.
-	else if (fTime >= 0.333333f && fTime<=0.4f)
+	else if (fTime >= 0.666666f && fTime<=0.7f)
 	{
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
 		{
