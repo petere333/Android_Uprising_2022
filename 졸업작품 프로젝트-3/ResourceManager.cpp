@@ -1314,7 +1314,7 @@ void ResourceManager::createTextures()
 	spc68->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/whiteboard.dds", RESOURCE_TEXTURE2D, 0);
 	spc69 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc69->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/spec/wireframe.dds", RESOURCE_TEXTURE2D, 0);
-
+	/*
 	spc70 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc70->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwangjae1.dds", RESOURCE_TEXTURE2D, 0);
 
@@ -1347,7 +1347,7 @@ void ResourceManager::createTextures()
 
 	spc80 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc80->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-1/spec/Gwanjae_Takza.dds", RESOURCE_TEXTURE2D, 0);
-
+	*/
 	specs.push_back(spc1);
 	specs.push_back(spc2);
 	specs.push_back(spc3);
@@ -1423,6 +1423,7 @@ void ResourceManager::createTextures()
 	specs.push_back(spc68);
 	specs.push_back(spc69);
 
+	/*
 	specs.push_back(spc70);
 	specs.push_back(spc71);
 	specs.push_back(spc72);
@@ -1434,7 +1435,7 @@ void ResourceManager::createTextures()
 	specs.push_back(spc78);
 	specs.push_back(spc79);
 	specs.push_back(spc80);
-
+	*/
 
 	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
 
@@ -1468,8 +1469,8 @@ void ResourceManager::createTextures()
 	materials[3]->SetNormalTex(normals[1]);
 
 	
-	materials[77]->SetNormalTex(normals[92]);
-	materials[78]->SetNormalTex(normals[93]);
+	materials[77]->SetNormalTex(normals[62]);
+	materials[78]->SetNormalTex(normals[63]);
 	materials[85]->SetNormalTex(normals[4]);
 	materials[98]->SetNormalTex(normals[5]);
 	materials[100]->SetNormalTex(normals[6]);
@@ -1478,8 +1479,8 @@ void ResourceManager::createTextures()
 	materials[96]->SetNormalTex(normals[9]);
 	materials[101]->SetNormalTex(normals[10]);
 	materials[82]->SetNormalTex(normals[11]);
-	materials[80]->SetNormalTex(normals[96]);
-	materials[81]->SetNormalTex(normals[110]);
+	materials[80]->SetNormalTex(normals[66]);
+	materials[81]->SetNormalTex(normals[60]);
 	materials[97]->SetNormalTex(normals[16]);
 	materials[83]->SetNormalTex(normals[17]);
 	materials[87]->SetNormalTex(normals[19]);
@@ -1487,7 +1488,7 @@ void ResourceManager::createTextures()
 	materials[102]->SetNormalTex(normals[21]);
 	materials[103]->SetNormalTex(normals[22]);
 	materials[84]->SetNormalTex(normals[23]);
-	materials[76]->SetNormalTex(normals[91]);
+	materials[76]->SetNormalTex(normals[61]);
 	materials[104]->SetNormalTex(normals[26]);
 	materials[91]->SetNormalTex(normals[75]);
 	materials[105]->SetNormalTex(normals[28]);
@@ -1503,7 +1504,7 @@ void ResourceManager::createTextures()
 	materials[47]->SetNormalTex(normals[34]);
 	//materials[78]->SetNormalTex(normals[35]);
 	materials[45]->SetNormalTex(normals[36]);
-	materials[72]->SetNormalTex(normals[88]);
+	materials[72]->SetNormalTex(normals[58]);
 	//materials[66]->SetNormalTex(normals[41]);
 	materials[56]->SetNormalTex(normals[42]);
 	
@@ -1520,7 +1521,7 @@ void ResourceManager::createTextures()
 	materials[70]->SetNormalTex(normals[50]);
 
 	materials[71]->SetNormalTex(normals[51]);
-	materials[79]->SetNormalTex(normals[95]);
+	materials[79]->SetNormalTex(normals[65]);
 	materials[67]->SetNormalTex(normals[53]);
 	materials[68]->SetNormalTex(normals[54]);
 	materials[46]->SetNormalTex(normals[55]);
@@ -1538,9 +1539,9 @@ void ResourceManager::createTextures()
 	materials[58]->SetNormalTex(normals[70]);
 
 	
-	materials[73]->SetNormalTex(normals[89]);
-	materials[74]->SetNormalTex(normals[111]);
-	materials[75]->SetNormalTex(normals[90]);
+	materials[73]->SetNormalTex(normals[69]);
+	materials[74]->SetNormalTex(normals[76]);
+	materials[75]->SetNormalTex(normals[50]);
 	
 	materials[0]->SetSpecTex(specs[0]);
 	materials[1]->SetSpecTex(specs[0]);
@@ -1553,7 +1554,7 @@ void ResourceManager::createTextures()
 	materials[100]->SetSpecTex(specs[6]);
 	materials[93]->SetSpecTex(specs[7]);
 	materials[86]->SetSpecTex(specs[8]);
-	materials[96]->SetSpecTex(specs[79]);
+	materials[96]->SetSpecTex(specs[44]);
 	materials[101]->SetSpecTex(specs[10]);
 	materials[82]->SetSpecTex(specs[11]);
 	materials[80]->SetSpecTex(specs[12]);
@@ -1564,7 +1565,7 @@ void ResourceManager::createTextures()
 	materials[88]->SetSpecTex(specs[19]);
 	materials[102]->SetSpecTex(specs[20]);
 	materials[103]->SetSpecTex(specs[21]);
-	materials[84]->SetSpecTex(specs[81]);
+	materials[84]->SetSpecTex(specs[41]);
 	materials[76]->SetSpecTex(specs[23]);
 	materials[104]->SetSpecTex(specs[24]);
 	materials[91]->SetSpecTex(specs[25]);
