@@ -590,6 +590,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	uppac.c_id = m_pScene->pID; //GetPlayerid();
 	uppac.size = sizeof(CS_KEYUP_PACKET);
 	uppac.type = PACKET_TYPE::CS_KEYUP;
+
+	CS_POSITION_PACKET ppac;
+	ppac.c_id = m_pScene->pID;
+	ppac.size = sizeof(CS_POSITION_PACKET);
+	ppac.type = PACKET_TYPE::CS_POSITION;
+
 	// lastOrder::마지막으로 이동했던 방향이 어느 방향인가?
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
 	if (m_pScene->currentScreen == IN_GAME_STATE)
@@ -615,7 +621,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				m_pScene->UpdateShaderVariables(m_pd3dCommandList);
 				break;
 			}
-			case VK_UP:
+			
+			case 'W':
 			{
 
 
@@ -627,7 +634,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				}
 			}
 			break;
-			case VK_DOWN:
+			
+			case 'S':
 			{
 
 
@@ -640,7 +648,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				}
 			}
 			break;
-			case VK_LEFT:
+			
+			case 'A':
 			{
 
 
@@ -652,7 +661,8 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				}
 			}
 			break;
-			case VK_RIGHT:
+			
+			case 'D':
 			{
 
 
@@ -726,7 +736,15 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				break;
 
 				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
-			case VK_UP:
+
+			case VK_F5:
+			{
+				ppac.x = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().x;
+				ppac.z = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().z;
+				SendPacket(&ppac);
+				break;
+			}
+			case 'W':
 
 				uppac.key = VK_UP;
 				if (keydown == true)
@@ -735,7 +753,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					keydown = false;
 				}
 				break;
-			case VK_DOWN:
+			case 'S':
 
 				uppac.key = VK_DOWN;
 				if (keydown == true)
@@ -744,7 +762,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					keydown = false;
 				}
 				break;
-			case VK_LEFT:
+			case 'A':
 
 				uppac.key = VK_LEFT;
 				if (keydown == true)
@@ -753,7 +771,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					keydown = false;
 				}
 				break;
-			case VK_RIGHT:
+			case 'D':
 
 				uppac.key = VK_RIGHT;
 				if (keydown == true)

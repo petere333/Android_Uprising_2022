@@ -340,9 +340,16 @@ void process_packet(int c_id, char* packet)
 		}
 		break;
 	}
+	case PACKET_TYPE::CS_POSITION:
+	{
+		CS_POSITION_PACKET* p = reinterpret_cast<CS_POSITION_PACKET*>(packet);
+		cout << "ÇöÀ§Ä¡ : (" << p->x << ", " << p->z << ")" << endl;
+		break;
+	}
+
 	case PACKET_TYPE::CS_KEYDOWN: 
 	{
-		cout << "Key down received from " <<c_id<< endl;
+		//cout << "Key down received from " <<c_id<< endl;
 
 		CS_KEYDOWN_PACKET* p = reinterpret_cast<CS_KEYDOWN_PACKET*>(packet);
 		
@@ -520,11 +527,13 @@ void process_packet(int c_id, char* packet)
 		BionicState bs=clients[c_id].bState;
 
 
-		cout << "Key up received: from "<<c_id;
+	//	cout << "Key up received: from "<<c_id;
+		
+
 
 		if (p->key == VK_UP)
 		{
-			cout << " Code: " << p->key << endl;
+		//	cout << " Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
@@ -534,7 +543,7 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_DOWN)
 		{
-			cout << "Code: " << p->key << endl;
+		//	cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
@@ -544,7 +553,7 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_LEFT)
 		{
-			cout << "Code: " << p->key << endl;
+		//	cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
@@ -554,7 +563,7 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_RIGHT)
 		{
-			cout << "Code: " << p->key << endl;
+			//cout << "Code: " << p->key << endl;
 			ks.xzspeed = 0.0f;
 			ks.yspeed = -9999.0f;
 			bs.stateID = IDLE_STATE;
@@ -564,21 +573,21 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == '2')
 		{
-			cout << "Code: " << p->key << endl;
+		//	cout << "Code: " << p->key << endl;
 
 			bs.attackID = TYPE_RANGED;
 			clients[c_id].bState.attackID = TYPE_RANGED;
 		}
 		else if (p->key == '1')
 		{
-			cout << "Code: " << p->key << endl;
+			//cout << "Code: " << p->key << endl;
 
 			bs.attackID = TYPE_MELEE;
 			clients[c_id].bState.attackID = TYPE_MELEE;
 		}
 		else if (p->key == '3')
 		{
-			cout << "Code: " << p->key << endl;
+			//cout << "Code: " << p->key << endl;
 
 			bs.attackID = TYPE_MICROWAVE;
 			clients[c_id].bState.attackID = TYPE_MICROWAVE;

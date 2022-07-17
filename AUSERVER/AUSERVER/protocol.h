@@ -42,6 +42,7 @@ enum class PACKET_TYPE : short
 	CS_MOUSE,
 	CS_CAMERA_CHANGE,
 	CS_ATTACK,
+	CS_POSITION,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -79,6 +80,16 @@ struct CS_MOUSE_PACKET
 	PACKET_TYPE type;
 	bool down;
 	short c_id;
+};
+
+struct CS_POSITION_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+
+	float x;
+	float z;
 };
 
 struct CS_CAMERA_PACKET
