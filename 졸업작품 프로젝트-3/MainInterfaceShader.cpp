@@ -44,7 +44,7 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	meshes.push_back(stage);
 	meshesRev.push_back(stager);
 	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
-	UIObject* obj2 = new UIObject(1, 73, 109, 295, 195, 215);
+	UIObject* obj2 = new UIObject(1, 905, 109, 1127, 195, 215);
 	UIObject* obj3 = new UIObject(1, 99, 702, 373, 788, 224);
 	UIObject* obj4 = new UIObject(1, 467, 704, 741, 790, 218);
 	UIObject* obj5 = new UIObject(1, 835, 707, 1109, 793, 221);

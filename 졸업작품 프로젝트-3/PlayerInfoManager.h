@@ -32,6 +32,7 @@ public:
 	Item inventory[18];
 	EquipSlot slot;
 	ItemManager* manager;
+	int extraPoint;
 
 public:
 	void initGrowth();

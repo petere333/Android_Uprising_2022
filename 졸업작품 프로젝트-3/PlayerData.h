@@ -1,6 +1,9 @@
 #pragma once
 
-
+static int expNeed[9] =
+{
+	100,200,300,400,500,600,700,800,900
+};
 
 typedef struct GrowthMelee
 {
@@ -29,6 +32,7 @@ typedef struct Growth
 
 typedef struct Stat
 {
+	int maxhp;
 	int attack;
 	int capacity;
 	int hardness;

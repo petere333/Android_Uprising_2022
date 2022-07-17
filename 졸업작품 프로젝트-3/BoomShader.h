@@ -27,7 +27,7 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
 public:
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part)
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl)
 	{
 		for (int i = 0; i < objects.size(); ++i)
 		{
@@ -103,6 +103,23 @@ public:
 								if (Vector3::Length(ds) <= 1.0f)
 								{
 									enemy->objects[a]->bState.hp -= 10;
+
+									if (enemy->objects[a]->bState.hp <= 0)
+									{
+										if (enemy->objects[a]->expGiven == false)
+										{
+											for (int ii = 0; ii < pl->objects.size(); ++ii)
+											{
+												pl->objects[ii]->info->growth.ranged.exp += 50;
+												if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
+												{
+													pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
+													pl->objects[ii]->info->growth.ranged.level += 1;
+												}
+											}
+											enemy->objects[a]->expGiven = true;
+										}
+									}
 									/*
 									if (a == k)
 									{

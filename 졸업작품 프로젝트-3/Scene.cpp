@@ -272,6 +272,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	profileInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	profileInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
+	stageInter = new StageSelectShader(rm);
+	stageInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	stageInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
@@ -582,7 +585,26 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		cam->move(playerShader->objects[pID]->GetPosition());
 		m_fElapsedTime = fTimeElapsed;
 		//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
-		interShader->Animate(cam);
+		interShader->Animate(cam, playerShader->objects[pID]->info);
+
+		if (playerShader->objects[pID]->bState.attackID == TYPE_RANGED)
+		{
+			interShader->objects[1]->m_ppMaterials[0] = rm->materials[interShader->objects[1]->defaultMesh];
+			interShader->objects[2]->m_ppMaterials[0] = rm->materials[interShader->objects[2]->defaultMesh + 1];
+			interShader->objects[3]->m_ppMaterials[0] = rm->materials[interShader->objects[3]->defaultMesh];
+		}
+		else if (playerShader->objects[pID]->bState.attackID == TYPE_MELEE)
+		{
+			interShader->objects[1]->m_ppMaterials[0] = rm->materials[interShader->objects[1]->defaultMesh + 1];
+			interShader->objects[2]->m_ppMaterials[0] = rm->materials[interShader->objects[2]->defaultMesh];
+			interShader->objects[3]->m_ppMaterials[0] = rm->materials[interShader->objects[3]->defaultMesh];
+		}
+		if (playerShader->objects[pID]->bState.attackID == TYPE_MICROWAVE)
+		{
+			interShader->objects[1]->m_ppMaterials[0] = rm->materials[interShader->objects[1]->defaultMesh];
+			interShader->objects[2]->m_ppMaterials[0] = rm->materials[interShader->objects[2]->defaultMesh];
+			interShader->objects[3]->m_ppMaterials[0] = rm->materials[interShader->objects[3]->defaultMesh + 1];
+		}
 
 
 		if (terrain1_2)
@@ -1051,7 +1073,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		
 		if (boomShader)
-			boomShader->animate(pd3dDevice, pd3dCommandList, partShader);
+			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader);
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -1079,8 +1101,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	}
 	else if (currentScreen == PROFILE_STATE)
 	{
-		profileInter->Animate(cam);
+		profileInter->Animate(cam, playerShader->objects[pID]->info);
 	}
+	else if (currentScreen == STAGE_SELECT_STATE)
+	{
+	stageInter->Animate(cam);
+ }
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -1296,6 +1322,19 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		profileInter->Render(pd3dCommandList, pCamera);
 	}
 	}
+	else if (currentScreen == STAGE_SELECT_STATE)
+	{
+	if (stageInter)
+	{
+		stageInter->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+		}
+
+		stageInter->Render(pd3dCommandList, pCamera);
+	}
+	}
 }
 
 
@@ -1460,7 +1499,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 							cout << "착지 높이" << height11[ix][iz] << endl;
@@ -1478,7 +1517,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 						}
@@ -1506,7 +1545,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 						}
@@ -1595,7 +1634,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 							cout << "착지 높이" << height12[ix][iz] << endl;
@@ -1613,7 +1652,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 						}
@@ -1641,7 +1680,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 							if (idx == pID)
 							{
 								pCamera->move(playerShader->objects[idx]->GetPosition());
-								interShader->Animate(pCamera);
+								interShader->Animate(pCamera, playerShader->objects[pID]->info);
 							}
 							crash = true;
 						}
@@ -1730,7 +1769,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 						cout << "착지 높이" << height21[ix][iz] << endl;
@@ -1748,7 +1787,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 					}
@@ -1776,7 +1815,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 					}
@@ -1865,7 +1904,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 						cout << "착지 높이" << height22[ix][iz] << endl;
@@ -1883,7 +1922,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 					}
@@ -1911,7 +1950,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 						if (idx == pID)
 						{
 							pCamera->move(playerShader->objects[idx]->GetPosition());
-							interShader->Animate(pCamera);
+							interShader->Animate(pCamera, playerShader->objects[pID]->info);
 						}
 						crash = true;
 					}
@@ -1934,7 +1973,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				if (idx == pID)
 				{
 					pCamera->move(playerShader->objects[idx]->GetPosition());
-					interShader->Animate(pCamera);
+					interShader->Animate(pCamera, playerShader->objects[pID]->info);
 				}
 				//m_ppShadows[idx]->SetPosition(tx, -0.01f, tz);
 				playerShader->objects[idx]->lastMoveSuccess = true;
@@ -1953,7 +1992,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 				{
 					playerShader->objects[idx]->SetPosition(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
 					pCamera->move(playerShader->objects[idx]->GetPosition().x, ty, playerShader->objects[idx]->GetPosition().z);
-					interShader->Animate(pCamera);
+					interShader->Animate(pCamera, playerShader->objects[pID]->info);
 					playerShader->objects[idx]->lastMoveSuccess = true;
 
 
@@ -3336,6 +3375,22 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		{
 			p.isAlive = true;
 			enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage();
+			if (enemyShader->objects[target]->bState.hp <= 0)
+			{
+				if (enemyShader->objects[target]->expGiven == false)
+				{
+					for (int ii = 0; ii < playerShader->objects.size(); ++ii)
+					{
+						playerShader->objects[ii]->info->growth.ranged.exp += 50;
+						if (playerShader->objects[ii]->info->growth.ranged.exp >= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1])
+						{
+							playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
+							playerShader->objects[ii]->info->growth.ranged.level += 1;
+						}
+					}
+					enemyShader->objects[target]->expGiven = true;
+				}
+			}
 		}
 		else if (type == 1)
 		{
@@ -3436,6 +3491,22 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
 				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
 
+				if (enemyShader->objects[i]->bState.hp <= 0)
+				{
+					if (enemyShader->objects[i]->expGiven == false)
+					{
+						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
+						{
+							playerShader->objects[ii]->info->growth.melee.exp += 50;
+							if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
+							{
+								playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
+								playerShader->objects[ii]->info->growth.melee.level += 1;
+							}
+						}
+						enemyShader->objects[i]->expGiven = true;
+					}
+				}
 				//피해 후 0.2초간 기절
 				enemyShader->objects[i]->stunDuration = 0.2f;
 				enemyShader->objects[i]->lastStun = chrono::system_clock::now();
@@ -3585,6 +3656,24 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 				playerShader->objects[idx]->hammerHit = true;
 				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
 				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
+
+				if (enemyShader->objects[i]->bState.hp <= 0)
+				{
+					if (enemyShader->objects[i]->expGiven == false)
+					{
+						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
+						{
+							playerShader->objects[ii]->info->growth.melee.exp += 50;
+							if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
+							{
+								playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
+								playerShader->objects[ii]->info->growth.melee.level += 1;
+							}
+						}
+						enemyShader->objects[i]->expGiven = true;
+					}
+
+				}
 				break;
 			}
 

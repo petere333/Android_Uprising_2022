@@ -570,7 +570,7 @@ public:
 	int maxHP;
 	chrono::time_point<chrono::system_clock> deathMoment;
 	bool isDead = false;
-
+	bool expGiven = false;
 	//chrono::time_point<chrono::system_clock> lastMove;
 	
 

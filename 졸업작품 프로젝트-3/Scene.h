@@ -26,7 +26,7 @@
 #include "BoomShader.h"
 #include "MainInterfaceShader.h"
 #include "ProfileShader.h"
-
+#include "StageSelectShader.h"
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -152,6 +152,8 @@ public:
 
 	MainInterfaceShader* mainInter = NULL;
 	ProfileShader* profileInter = NULL;
+	StageSelectShader* stageInter = NULL;
+
 
 	CLoadedMesh* boomMesh = NULL;
 

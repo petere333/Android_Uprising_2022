@@ -14,7 +14,7 @@ public:
 	virtual void ReleaseUploadBuffers();
 	virtual void ReleaseShaderVariables();
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera);
-	virtual void Animate(CCamera* cam);
+	virtual void Animate(CCamera* cam, PlayerInfoManager* in);
 	virtual D3D12_INPUT_LAYOUT_DESC CreateInputLayout();
 	virtual D3D12_RASTERIZER_DESC CreateRasterizerState();
 	virtual D3D12_DEPTH_STENCIL_DESC CreateDepthStencilState();
@@ -23,7 +23,8 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
 public:
-	std::vector<CGameObject*>	objects;
+	PlayerInfoManager* info;
+	std::vector<UIObject*>	objects;
 	std::vector<CMesh*>	meshes;
 	std::vector<CMesh*>	revmeshes;
 	ResourceManager* rm;

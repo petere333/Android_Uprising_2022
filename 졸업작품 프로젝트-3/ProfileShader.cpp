@@ -4,6 +4,7 @@
 ProfileShader::ProfileShader(ResourceManager* r)
 {
 	rm = r;
+	
 }
 ProfileShader::~ProfileShader() {}
 
@@ -12,11 +13,24 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 	//윈도우 크기 450픽셀당 1.0f로 환산.
 
+	// 메쉬 생성자 인자 : x크기, y크기, z크기, x중점, y중점
+
+	//크기는 픽셀수/450, x중점은 (위치-600)/450, y중점은 크기 -(위치-450)/450
+
+	//UI 개체 생성자 인자 : 1, x1, y1, x2, y2, idx
+
+	// x1, y1, x2, y2는 클릭 영역의 시작점과 끝점 픽셀
+	// idx는 버튼의 기본상태 텍스처 번호
+	// 버튼이 아닌 객체들은 전부 -1로 설정
+	
 	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
 	CubeMeshOffset* mainr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
 
 	CubeMeshOffset* storage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 203.0f / 450.0f, 46.0f / 450.0f, 0.01f, (202.0f - 600.0f) / 450.0f, -(697.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* storager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 203.0f / 450.0f, 46.0f / 450.0f, 0.01f, (202.0f - 600.0f) / 450.0f, -(697.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* back = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 203.0f / 450.0f, 46.0f / 450.0f, 0.01f, (194.0f - 600.0f) / 450.0f, -(157.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* backr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 203.0f / 450.0f, 46.0f / 450.0f, 0.01f, (194.0f - 600.0f) / 450.0f, -(157.0f - 450.0f) / 450.0f, true);
 
 
 	meshes.push_back(main);
@@ -25,9 +39,15 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	meshes.push_back(storage);
 	meshesRev.push_back(storager);
 
+	meshes.push_back(back);
+	meshesRev.push_back(backr);
+
+
+	
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, 100, 674,  304, 720, 228);
+	UIObject* obj3 = new UIObject(1, 92, 134, 296, 180, 235);
 	
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[227]);
@@ -37,10 +57,13 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	obj2->SetMaterial(0, rm->materials[228]);
 	obj2->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj3->SetMesh(meshes[1]);
+	obj3->SetMaterial(0, rm->materials[235]);
+	obj3->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
-
+	objects.push_back(obj3);
 }
 
 void ProfileShader::ReleaseObjects()
@@ -160,8 +183,9 @@ D3D12_SHADER_BYTECODE ProfileShader::CreatePixelShader()
 	return(CShader::CompileShaderFromFile(L"interface.hlsl", "psInterface", "ps_5_1", &m_pd3dPixelShaderBlob));
 }
 
-void ProfileShader::Animate(CCamera* cam)
+void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 {
+	info = in;
 	XMFLOAT3 cp = cam->getPosition();
 	XMFLOAT3 cl = cam->getLook();
 	XMFLOAT3 cr = cam->getRight();

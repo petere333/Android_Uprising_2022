@@ -12,68 +12,127 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 
 	//윈도우 크기 450픽셀당 1.0f로 환산.
 
-	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
-	CubeMeshOffset* main2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
+	CubeMeshOffset* inter = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
+	CubeMeshOffset* inter2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
 
 
 	//로그아웃 버튼 위치 184, 152 클릭 범위 = 111, 86
 	//즉 위치 = -(184-600)/450, -(152-450)/450
 	//범위 = (111*2)/450, 86/450
-	CubeMeshOffset* logout = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f / 450.0f, 86.0f / 450.0f, 0.02f, 416.0f / 450.0f, 298.0f / 450.0f, false);
-	CubeMeshOffset* logoutr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 222.0f / 450.0f, 86.0f / 450.0f, 0.02f, 416.0f / 450.0f, 298.0f / 450.0f, true);
+	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 178.0f / 450.0f, 59.0f / 450.0f, 0.02f, (178.0f - 600.0f) / 450.0f, -(175.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* mainr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 178.0f / 450.0f, 59.0f / 450.0f, 0.02f, (178.0f - 600.0f) / 450.0f, -(175.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* info = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f - 600.0f) / 450.0f, -(745.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* infor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f - 600.0f) / 450.0f, -(745.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* join1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 153.0f / 450.0f, 56.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 153.0f / 450.0f, 56.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* shop = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* shopr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* cowork1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (624.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cowork1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (624.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* cosend1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (847.0f - 600.0f) / 450.0f, -(409.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cosend1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (847.0f - 600.0f) / 450.0f, -(409.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* join2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 52.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(653.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 52.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(653.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* cowork2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (625.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cowork2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (625.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* cosend2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (848.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cosend2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (848.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* select1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (934.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* select1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (934.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* select2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* select2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, true);
+
+	
+	meshes.push_back(inter);
+	meshesRev.push_back(inter2);
 	meshes.push_back(main);
-	meshesRev.push_back(main2);
+	meshesRev.push_back(mainr);
+	meshes.push_back(join1);
+	meshesRev.push_back(join1r);
+	meshes.push_back(cowork1);
+	meshesRev.push_back(cowork1r);
+	meshes.push_back(cosend1);
+	meshesRev.push_back(cosend1r);
 
-	meshes.push_back(logout);
-	meshesRev.push_back(logoutr);
+	meshes.push_back(join2);
+	meshesRev.push_back(join2r);
+	meshes.push_back(cowork2);
+	meshesRev.push_back(cowork2r);
+	meshes.push_back(cosend2);
+	meshesRev.push_back(cosend2r);
 
-	meshes.push_back(info);
-	meshesRev.push_back(infor);
-	meshes.push_back(shop);
-	meshesRev.push_back(shopr);
-	meshes.push_back(stage);
-	meshesRev.push_back(stager);
+	meshes.push_back(select1);
+	meshesRev.push_back(select1r);
+	meshes.push_back(select2);
+	meshesRev.push_back(select2r);
+	
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj2 = new UIObject(1, 73, 109, 295, 195, 215);
-	UIObject* obj3 = new UIObject(1, 99, 702, 373, 788, 224);
-	UIObject* obj4 = new UIObject(1, 467, 704, 741, 790, 218);
-	UIObject* obj5 = new UIObject(1, 835, 707, 1109, 793, 221);
+	UIObject* obj2 = new UIObject(1, 81, 175, 259, 234, 239);
+	UIObject* obj3 = new UIObject(1, 333, 410, 487, 466, 248);
+	UIObject* obj4 = new UIObject(1, 551, 410, 697, 464, 245);
+	UIObject* obj5 = new UIObject(1, 772, 409, 922, 463, 242);
+
+	UIObject* obj6 = new UIObject(1, 335, 653, 485, 705, 248);
+	UIObject* obj7 = new UIObject(1, 552, 654, 698, 708, 245);
+	UIObject* obj8 = new UIObject(1, 773, 654, 923, 707, 242);
+
+	UIObject* obj9 = new UIObject(1, 917, 334, 951, 373, -1);
+	UIObject* obj10 = new UIObject(1, 919, 579, 953, 618, -1);
 
 	obj->SetMesh(meshes[0]);
-	obj->SetMaterial(0, rm->materials[214]);
+	obj->SetMaterial(0, rm->materials[238]);
 	obj->SetPosition(0.0f, 0.0f, 0.0f);
 
 	obj2->SetMesh(meshes[1]);
-	obj2->SetMaterial(0, rm->materials[215]);
+	obj2->SetMaterial(0, rm->materials[239]);
 	obj2->SetPosition(0.0f, 0.0f, 0.0f);
 
 	obj3->SetMesh(meshes[2]);
-	obj3->SetMaterial(0, rm->materials[224]);
+	obj3->SetMaterial(0, rm->materials[248]);
 	obj3->SetPosition(0.0f, 0.0f, 0.0f);
 
 	obj4->SetMesh(meshes[3]);
-	obj4->SetMaterial(0, rm->materials[218]);
+	obj4->SetMaterial(0, rm->materials[245]);
 	obj4->SetPosition(0.0f, 0.0f, 0.0f);
 
 	obj5->SetMesh(meshes[4]);
-	obj5->SetMaterial(0, rm->materials[221]);
+	obj5->SetMaterial(0, rm->materials[242]);
 	obj5->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj6->SetMesh(meshes[5]);
+	obj6->SetMaterial(0, rm->materials[248]);
+	obj6->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj7->SetMesh(meshes[6]);
+	obj7->SetMaterial(0, rm->materials[245]);
+	obj7->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj8->SetMesh(meshes[7]);
+	obj8->SetMaterial(0, rm->materials[242]);
+	obj8->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj9->SetMesh(meshes[8]);
+	obj9->SetMaterial(0, rm->materials[251]);
+	obj9->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj10->SetMesh(meshes[9]);
+	obj10->SetMaterial(0, rm->materials[251]);
+	obj10->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
 	objects.push_back(obj4);
 	objects.push_back(obj5);
+	objects.push_back(obj6);
+	objects.push_back(obj7);
+	objects.push_back(obj8);
+	objects.push_back(obj9);
+	objects.push_back(obj10);
 }
 
 void StageSelectShader::ReleaseObjects()
