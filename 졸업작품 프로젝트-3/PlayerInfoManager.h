@@ -33,7 +33,7 @@ public:
 	EquipSlot slot;
 	ItemManager* manager;
 	int extraPoint;
-
+	int gold;
 public:
 	void initGrowth();
 	void initStats();
