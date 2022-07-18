@@ -47,102 +47,189 @@ public:
 			}
 			else
 			{
-
-
 				float tx = objects[i]->origin.x + objects[i]->direction.x * objects[i]->speed * (float)dt.count();
 				float tz = objects[i]->origin.z + objects[i]->direction.z * objects[i]->speed * (float)dt.count();
-				int ix = (int)(tx / 0.5f);
-				int iz = (int)(tz / 0.5f);
 
-				//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
-				if (enemy->height11[ix][iz] >= objects[i]->origin.y)
+				int ix, iz;
+				if (tx > 0.0f && tx < 200.0f && tz>0.0f && tz < 200.0f)
 				{
-					// 폭발 반경 인근의 적들에게 피해
+					ix = (int)(tx / 0.5f);
+					iz = (int)(tz / 0.5f);
 
-					for (int k = 0; k < enemy->objects.size(); ++k)
+					//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+					if (enemy->height11[ix][iz] >= objects[i]->origin.y)
 					{
-						XMFLOAT3 op = objects[i]->GetPosition();
-						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
-
-						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						// 폭발 반경 인근의 적들에게 피해
+						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
-							enemy->objects[k]->bState.hp -= 10;
-							enemy->objects[k]->stunned = true;
-							enemy->objects[k]->stunDuration = 1.0f;
-							enemy->objects[k]->lastStun = chrono::system_clock::now();
+							XMFLOAT3 op = objects[i]->GetPosition();
+							XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+							{
+								enemy->objects[k]->bState.hp -= 10;
+								enemy->objects[k]->stunned = true;
+								enemy->objects[k]->stunDuration = 1.0f;
+								enemy->objects[k]->lastStun = chrono::system_clock::now();
+							}
 						}
+						part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
+						delete objects[i];
+						objects.erase(objects.begin() + i);
+						erased = true;
 					}
 
-
-					part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-					delete objects[i];
-					objects.erase(objects.begin() + i);
-					erased = true;
-
-
-				}
-
-				//물체랑은 충돌하지 않았지만 적과 박은 경우
-				else
-				{
-
-					for (int k = 0; k < enemy->objects.size(); ++k)
+					//물체랑은 충돌하지 않았지만 적과 박은 경우
+					else
 					{
-						XMFLOAT3 pos = objects[i]->GetPosition();
-						//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
-						XMFLOAT3 ep = enemy->objects[k]->GetPosition();
-						XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
-						if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
-							//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
-							//또한 그 적들을 1초간 기절.
-							for (int a = 0; a < enemy->objects.size(); ++a)
+							XMFLOAT3 pos = objects[i]->GetPosition();
+							//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+							XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+							XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+							if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
 							{
-								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
-								XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
-								if (Vector3::Length(ds) <= 1.0f)
+								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+								//또한 그 적들을 1초간 기절.
+								for (int a = 0; a < enemy->objects.size(); ++a)
 								{
-									enemy->objects[a]->bState.hp -= 10;
-
-									if (enemy->objects[a]->bState.hp <= 0)
-									{
-										if (enemy->objects[a]->expGiven == false)
-										{
-											for (int ii = 0; ii < pl->objects.size(); ++ii)
-											{
-												pl->objects[ii]->info->growth.ranged.exp += 50;
-												if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
-												{
-													pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
-													pl->objects[ii]->info->growth.ranged.level += 1;
-												}
-											}
-											enemy->objects[a]->expGiven = true;
-										}
-									}
-									/*
-									if (a == k)
+									XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+									XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+									if (Vector3::Length(ds) <= 1.0f)
 									{
 										enemy->objects[a]->bState.hp -= 10;
-										
-									}
-									*/
-									enemy->objects[a]->stunDuration = 1.0f;
-									enemy->objects[a]->lastStun = chrono::system_clock::now();
-									enemy->objects[a]->stunned = true;
-								}
-							}
-							part->createParticles(100, pos, pd3dDevice, pd3dCommandList);
-							delete objects[i];
-							objects.erase(objects.begin() + i);
 
-							erased = true;
-							break;
+										if (enemy->objects[a]->bState.hp <= 0)
+										{
+											if (enemy->objects[a]->expGiven == false)
+											{
+												for (int ii = 0; ii < pl->objects.size(); ++ii)
+												{
+													pl->objects[ii]->info->growth.ranged.exp += 50;
+													if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
+													{
+														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
+														pl->objects[ii]->info->growth.ranged.level += 1;
+													}
+												}
+												enemy->objects[a]->expGiven = true;
+											}
+										}
+										/*
+										if (a == k)
+										{
+											enemy->objects[a]->bState.hp -= 10;
+
+										}
+										*/
+										enemy->objects[a]->stunDuration = 1.0f;
+										enemy->objects[a]->lastStun = chrono::system_clock::now();
+										enemy->objects[a]->stunned = true;
+									}
+								}
+								part->createParticles(100, pos, pd3dDevice, pd3dCommandList);
+								delete objects[i];
+								objects.erase(objects.begin() + i);
+
+								erased = true;
+								break;
+							}
 						}
 					}
-
-
 				}
+				else if(tx > 200.0f && tx < 600.0f && tz>0.0f && tz < 200.0f)
+				{
+					ix = (int)((tx-200.0f) / 0.5f);
+					iz = (int)((tz) / 0.5f);
+					//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+					if (enemy->height12[ix][iz] >= objects[i]->origin.y)
+					{
+						// 폭발 반경 인근의 적들에게 피해
+
+						for (int k = 0; k < enemy->objects.size(); ++k)
+						{
+							XMFLOAT3 op = objects[i]->GetPosition();
+							XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+							{
+								enemy->objects[k]->bState.hp -= 10;
+								enemy->objects[k]->stunned = true;
+								enemy->objects[k]->stunDuration = 1.0f;
+								enemy->objects[k]->lastStun = chrono::system_clock::now();
+							}
+						}
+						part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
+						delete objects[i];
+						objects.erase(objects.begin() + i);
+						erased = true;
+					}
+					//물체랑은 충돌하지 않았지만 적과 박은 경우
+					else
+					{
+						for (int k = 0; k < enemy->objects.size(); ++k)
+						{
+							XMFLOAT3 pos = objects[i]->GetPosition();
+							//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+							XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+							XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+							if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+							{
+								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+								//또한 그 적들을 1초간 기절.
+								for (int a = 0; a < enemy->objects.size(); ++a)
+								{
+									XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+									XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+									if (Vector3::Length(ds) <= 1.0f)
+									{
+										enemy->objects[a]->bState.hp -= 10;
+
+										if (enemy->objects[a]->bState.hp <= 0)
+										{
+											if (enemy->objects[a]->expGiven == false)
+											{
+												for (int ii = 0; ii < pl->objects.size(); ++ii)
+												{
+													pl->objects[ii]->info->growth.ranged.exp += 50;
+													if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
+													{
+														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
+														pl->objects[ii]->info->growth.ranged.level += 1;
+													}
+												}
+												enemy->objects[a]->expGiven = true;
+											}
+										}
+										/*
+										if (a == k)
+										{
+											enemy->objects[a]->bState.hp -= 10;
+
+										}
+										*/
+										enemy->objects[a]->stunDuration = 1.0f;
+										enemy->objects[a]->lastStun = chrono::system_clock::now();
+										enemy->objects[a]->stunned = true;
+									}
+								}
+								part->createParticles(100, pos, pd3dDevice, pd3dCommandList);
+								delete objects[i];
+								objects.erase(objects.begin() + i);
+
+								erased = true;
+								break;
+							}
+						}
+					}
+				}
+
+				
+
+				
+
+				
 			}
 			if (erased == true)
 			{

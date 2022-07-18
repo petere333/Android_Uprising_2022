@@ -8,7 +8,7 @@
 #include "InterfaceShader.h"
 #include "PlayerShader.h"
 
-#include "TerrainShader.h"
+
 #include "TerrainShader1_1.h"
 #include "TerrainShader1_2.h"
 #include "TerrainShader1_3.h"
@@ -137,7 +137,7 @@ public:
 
 	InterfaceShader* interShader = NULL;
 	PlayerShader* playerShader = NULL;
-	TerrainShader* terrainShader = NULL;
+
 	EnemyShader* enemyShader = NULL;
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;

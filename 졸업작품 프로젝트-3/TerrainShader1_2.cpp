@@ -55,7 +55,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	PillarMesh* wire = new PillarMesh(pd3dDevice, pd3dCommandList, 100, 50, 5);
 
 
-	GridMesh* basefloor = new GridMesh(pd3dDevice, pd3dCommandList, 200.0f, 200.0f);
+	GridMesh* basefloor = new GridMesh(pd3dDevice, pd3dCommandList, 400.0f, 200.0f);
 	GridMesh* upperfloor = new GridMesh(pd3dDevice, pd3dCommandList, 100.0f, 50.0f);
 
 	CLoadedMesh* fence = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_fence.txt", NULL);

@@ -30,7 +30,7 @@ void ItemManager::init()
 	basicHammer->stats.hardness = 0;
 	basicHammer->stats.power = 0;
 	basicHammer->stats.precision = 0;
-	basicHammer->type = DUALBLADE;
+	basicHammer->type = BLUNT;
 
 
 	basicArmor->stats.attack = 0;
