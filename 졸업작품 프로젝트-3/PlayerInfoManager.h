@@ -43,4 +43,25 @@ public:
 
 	int getMeleeDamage();
 	int getRangedDamage();
+
+	int getCapacity()
+	{
+		return slot.armor->stats.maxhp + slot.meleeWeapon->stats.maxhp + slot.rangedWeapon->stats.maxhp + stats.maxhp;
+	}
+	int getHardness()
+	{
+		return slot.armor->stats.hardness + slot.meleeWeapon->stats.hardness + slot.rangedWeapon->stats.hardness + stats.hardness;
+	}
+	int getPower()
+	{
+		return slot.armor->stats.power + slot.meleeWeapon->stats.power + slot.rangedWeapon->stats.power + stats.power;
+	}
+	int getPrecision()
+	{
+		return slot.armor->stats.precision + slot.meleeWeapon->stats.precision + slot.rangedWeapon->stats.precision + stats.precision;
+	}
+	int getEntrophy()
+	{
+		return slot.armor->stats.entrophy + slot.meleeWeapon->stats.entrophy + slot.rangedWeapon->stats.entrophy + stats.entrophy;
+	}
 };

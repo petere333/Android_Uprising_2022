@@ -276,6 +276,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	stageInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	stageInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
+	waitInter = new WaitShader(rm);
+	waitInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	waitInter->BuildObjects(pd3dDevice, pd3dCommandList);
+
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
 
@@ -633,7 +637,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 11);
-
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						if (playerShader->objects[i]->kState.yspeed != 0.0f)
 						{
 							moveObject(i, cam);
@@ -655,6 +659,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[11]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 						if (playerShader->objects[i]->kState.yspeed != 0.0f)
 						{
@@ -678,6 +683,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 						if (playerShader->objects[i]->kState.yspeed != 0.0f)
 						{
@@ -689,7 +695,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
 						float df = static_cast<float>(dt.count());
-						if (df >= 0.666666f)
+						if (df >= 0.833333f)
 						{
 							if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
 							{
@@ -697,6 +703,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 						if (playerShader->objects[i]->kState.yspeed != 0.0f)
 						{
@@ -714,7 +721,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 					//마지막 공격으로부터 공격애니메이션 재생 시간 이상 경과한 경우에만 애니메이션 변경.
 					//즉, 이미 진행중인 공격은 애니메이션을 모두 재생할 것.
-					if (df >= 0.5f)
+					if (df >= 1.0f)
 					{
 
 						if (playerShader->objects[i]->m_pChild != rm->playerModels[9]->m_pModelRootObject)
@@ -723,6 +730,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[9]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					}
 					if (playerShader->objects[i]->kState.yspeed != 0.0f)
 					{
@@ -746,6 +754,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 20);
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 						moveObject(i, cam);
 						setObjectLastMove(i);
@@ -759,6 +768,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[6]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 						moveObject(i, cam);
 						setObjectLastMove(i);
@@ -768,28 +778,36 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				{
 					if (playerShader->objects[i]->info->slot.meleeWeapon->type == BLUNT)
 					{
-
-						if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
+						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
+						float df = static_cast<float>(dt.count());
+						if (df >= 1.0f)
 						{
-							playerShader->objects[i]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
-							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
+							if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
+							{
+								playerShader->objects[i]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
+								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
+							}
+							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
-						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-
 						moveObject(i, cam);
 						setObjectLastMove(i);
 					}
 
 					else if (playerShader->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 					{
-
-						if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
+						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
+						float df = static_cast<float>(dt.count());
+						if (df >= 1.0f)
 						{
-							playerShader->objects[i]->setRoot(rm->playerModels[12]->m_pModelRootObject, true);
-							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
+							if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
+							{
+								playerShader->objects[i]->setRoot(rm->playerModels[12]->m_pModelRootObject, true);
+								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
+							}
+							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
-						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-
 						moveObject(i, cam);
 						setObjectLastMove(i);
 					}
@@ -802,7 +820,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[7]);
 					}
 					playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-
+					playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					moveObject(i, cam);
 					setObjectLastMove(i);
 				}
@@ -822,6 +840,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 20);
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					}
 
 					else if (playerShader->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
@@ -835,6 +854,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[6]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 					}
 				}
@@ -842,7 +862,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				{
 					if (playerShader->objects[i]->info->slot.meleeWeapon->type == BLUNT)
 					{
-						if (playerShader->objects[i]->attack == false)
+						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
+						float df = static_cast<float>(dt.count());
+						if (df >= 1.0f)
 						{
 							if (playerShader->objects[i]->m_pChild != rm->playerModels[1]->m_pModelRootObject)
 							{
@@ -850,21 +872,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
-						else
-						{
-							if (playerShader->objects[i]->m_pChild != rm->playerModels[17]->m_pModelRootObject)
-							{
-								playerShader->objects[i]->setRoot(rm->playerModels[17]->m_pModelRootObject, true);
-								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[17]);
-							}
-							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-						}
+
 					}
 
 					else if (playerShader->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 					{
-						if (playerShader->objects[i]->attack == false)
+						std::chrono::duration<double> dt = std::chrono::system_clock::now() - playerShader->objects[i]->lastAttack;
+						float df = static_cast<float>(dt.count());
+						if (df >= 1.0f)
 						{
 							if (playerShader->objects[i]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
 							{
@@ -872,16 +889,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
-						else
-						{
-							if (playerShader->objects[i]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
-							{
-								playerShader->objects[i]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
-								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
-							}
-							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-						}
+						
 					}
 				}
 				else if (playerShader->objects[i]->bState.attackID == TYPE_MICROWAVE)
@@ -896,6 +906,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[7]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					}
 				}
 				moveObject(i, cam);
@@ -959,7 +970,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						chrono::duration<double> dt = moment - playerShader->objects[i]->lastAttack;
 
 						//마지막 공격은 마저 수행하고서 중지.
-						if ((float)dt.count() >= 0.666666f)
+						if ((float)dt.count() >= 1.0f)
 						{
 							playerShader->objects[i]->attack = false;
 						}
@@ -993,6 +1004,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							}
 
 							playerShader->objects[i]->SetTrackAnimationSet(0, 2);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 						else
 						{
@@ -1004,6 +1016,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							}
 
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 						}
 						cam->rotateUp();
 
@@ -1013,7 +1026,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					else if (playerShader->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
 					{
 						cam->rotateUp();
-
+						playerShader->objects[i]->bState.stateID = IDLE_STATE;
+						playerShader->objects[i]->kState.xzspeed = 0.0f;
 						shootBazuka(i, pd3dDevice, pd3dCommandList);
 					}
 				}
@@ -1023,11 +1037,15 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					if (playerShader->objects[i]->info->slot.meleeWeapon->type == BLUNT)
 					{
 						cam->rotateUp();
+						playerShader->objects[i]->bState.stateID = IDLE_STATE;
+						playerShader->objects[i]->kState.xzspeed = 0.0f;
 						swingHammer(i, pd3dDevice, pd3dCommandList);
 					}
 					else if (playerShader->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 					{
 						cam->rotateUp();
+						playerShader->objects[i]->bState.stateID = IDLE_STATE;
+						playerShader->objects[i]->kState.xzspeed = 0.0f;
 						swingBlade(i, pd3dDevice, pd3dCommandList);
 					}
 				}
@@ -1105,8 +1123,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	}
 	else if (currentScreen == STAGE_SELECT_STATE)
 	{
-	stageInter->Animate(cam);
- }
+		stageInter->Animate(cam);
+	}
+	else if (currentScreen == WAIT_STATE)
+	{
+		waitInter->Animate(cam);
+		
+	}
 }
 
 void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera)
@@ -1333,6 +1356,19 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		}
 
 		stageInter->Render(pd3dCommandList, pCamera);
+	}
+	}
+	else if (currentScreen == WAIT_STATE)
+	{
+	if (waitInter)
+	{
+		waitInter->OnPrepareRender(pd3dCommandList);
+		if (rm->m_pd3dCbvSrvDescriptorHeap)
+		{
+			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+		}
+
+		waitInter->Render(pd3dCommandList, pCamera);
 	}
 	}
 }
@@ -3415,7 +3451,15 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 	if (fTime >= 1.0f)
 	{
-		
+		//이동속도 원래대로
+		if (playerShader->objects[idx]->bState.attacking == false)
+		{
+			playerShader->objects[idx]->kState.xzspeed = PLAYER_SPEED;
+		}
+		else
+		{
+			playerShader->objects[idx]->kState.xzspeed = 0.0f;
+		}
 
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
@@ -3424,34 +3468,25 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 		soundEffect[3]->Update();
 
 		int r = rand() % 2;
-		if (playerShader->objects[idx]->kState.xzspeed == 0.0f)
+
+		if (r)
 		{
-			if (r)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[3]->m_pModelRootObject)
 			{
-				if (playerShader->objects[idx]->m_pChild != rm->playerModels[3]->m_pModelRootObject)
-				{
-					playerShader->objects[idx]->setRoot(rm->playerModels[3]->m_pModelRootObject, true);
-					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[3]);
-					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-				}
-			}
-			else
-			{
-				if (playerShader->objects[idx]->m_pChild != rm->playerModels[4]->m_pModelRootObject)
-				{
-					playerShader->objects[idx]->setRoot(rm->playerModels[4]->m_pModelRootObject, true);
-					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[4]);
-					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-				}
+				playerShader->objects[idx]->setRoot(rm->playerModels[3]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[3]);
+				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 			}
 		}
 		else
 		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[17]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[4]->m_pModelRootObject)
 			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[17]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[17]);
+				playerShader->objects[idx]->setRoot(rm->playerModels[4]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[4]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 			}
 		}
 	}
@@ -3481,7 +3516,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			float cosAngle = Vector3::DotProduct(Vector3::Normalize(vec), look);
 
 			//공격 범위 내에 적이 있으면
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 1.5f && playerShader->objects[idx]->hammerHit==false)
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 2.0f && playerShader->objects[idx]->hammerHit==false)
 			{
 				//사운드 및 파티클 이펙트 발생
 				printf("Enemy [%d] hit\n", i);
@@ -3529,6 +3564,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				playerShader->objects[idx]->setRoot(rm->playerModels[2]->m_pModelRootObject, true);
 				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[2]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 			}
 		}
@@ -3539,6 +3575,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				playerShader->objects[idx]->setRoot(rm->playerModels[1]->m_pModelRootObject, true);
 				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 			}
 		}
 	}
@@ -3548,83 +3585,50 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 {
 	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - playerShader->objects[idx]->lastAttack;
 	float fTime = static_cast<float>(fromLastAttack.count());
-
-
-	//그전 칼휘두르기 동작이 완료되고 그리 오랜 시간이 지나지 않은 경우, 즉 0.5초~1초 경과 시 콤보카운트를 증가시킴.
-	if (fTime >= 0.666666f && fTime <= 1.5f)
+	//이동속도 원래대로
+	if (fTime >= 1.0f)
 	{
-		playerShader->objects[idx]->comboCount += 1;
-		if (playerShader->objects[idx]->comboCount >= 4)
+		//이동속도 원래대로
+		if (playerShader->objects[idx]->bState.attacking == false)
 		{
-			playerShader->objects[idx]->comboCount = 0;
+			playerShader->objects[idx]->kState.xzspeed = PLAYER_SPEED;
 		}
-	}
-	//그전 공격 후 1초이상 경과되었으면 콤보 초기화.
-	else if (fTime > 1.0f)
-	{
-		playerShader->objects[idx]->comboCount = 0;
-		
-	}
+		else
+		{
+			playerShader->objects[idx]->kState.xzspeed = 0.0f;
+		}
 
-	
-
-	//그전 칼휘두르기 동작이 완료되고 난 후 호출되었으면, 콤보카운트에 따라 애니메이션 적용, 공격 시점 갱신.
-	if (fTime >= 0.666666f)
-	{
-
-
-		printf("Time elapsed from last blade attack : %f\n", fTime);
+		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
 		playerShader->objects[idx]->hammerHit = false;
 		soundEffect[3]->play();
 		soundEffect[3]->Update();
 
+		int r = rand() % 2;
 
-		//플레이어의 콤보카운트에 따라 다른 애니메이션 사용
-		int r = playerShader->objects[idx]->comboCount;
-
-		if (r==0)
+		if (r)
 		{
 			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
 			{
 				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
 				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 			}
 		}
-		else if (r == 1)
+		else
 		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
+			if (playerShader->objects[idx]->m_pChild != rm->playerModels[14]->m_pModelRootObject)
 			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
+				playerShader->objects[idx]->setRoot(rm->playerModels[14]->m_pModelRootObject, true);
+				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[14]);
 				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+				playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 			}
 		}
-		else if (r == 2)
-		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
-			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
-				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-			}
-		}
-		else if (r == 3)
-		{
-			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
-			{
-				playerShader->objects[idx]->setRoot(rm->playerModels[13]->m_pModelRootObject, true);
-				playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[13]);
-				playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-			}
-		}
-
-
 	}
 
-	//공격이 진행중인 경우, 즉 0~0.5초인 경우 중에서, 애니메이션의 흐름상 공격 판정이 발생해야 자연스러울 타이밍에 적 타격 및 파티클 발생.
-	else if (fTime >= 0.466666f && fTime <= 0.5f)
+	else if (fTime >= 0.233333f && fTime <= 0.266666f)
 	{
 
 		BoundBox bx;
@@ -3648,8 +3652,10 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			float dist = Vector3::Length(vec);
 			float cosAngle = Vector3::DotProduct(Vector3::Normalize(vec), look);
 
+			//공격 범위 내에 적이 있으면
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(45.0f)) && dist <= 1.5f && playerShader->objects[idx]->hammerHit == false)
 			{
+				//사운드 및 파티클 이펙트 발생
 				printf("Enemy [%d] hit\n", i);
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
@@ -3672,8 +3678,8 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 						}
 						enemyShader->objects[i]->expGiven = true;
 					}
-
 				}
+
 				break;
 			}
 
@@ -3682,18 +3688,15 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 
 	}
-
-	//그전 칼휘두르기 동작이 완료되면, 즉 0.333333초 경과 직전에 대기모션으로 일단 전환.
-	else if (fTime >= 0.666666f && fTime<=0.7f)
+	else if (fTime >= 0.833333f && fTime < 1.0f)
 	{
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[12]->m_pModelRootObject)
 		{
 			playerShader->objects[idx]->setRoot(rm->playerModels[12]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-
+			playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 		}
-
 	}
 }
 
@@ -3828,6 +3831,7 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 			playerShader->objects[idx]->setRoot(rm->playerModels[11]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(device, list, 1, rm->playerModels[11]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+			playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 		}
 		//이동속도 원래대로
@@ -3850,6 +3854,7 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 			playerShader->objects[idx]->setRoot(rm->playerModels[5]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(device, list, 1, rm->playerModels[5]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+			playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 		}
 		playerShader->objects[idx]->kState.xzspeed = 0.0f;
@@ -3886,13 +3891,14 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	//그전 사용으로부터 애니메이션 완료 시간까지 경과한 경우 대기 모션으로 전환.
 
 
-	if (dt > 0.5f && dt < 10.0f)
+	if (dt > 1.0f && dt < 10.0f)
 	{
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[9]->m_pModelRootObject)
 		{
 			playerShader->objects[idx]->setRoot(rm->playerModels[9]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[9]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+			playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 		}
 		//이동속도 원래대로
@@ -3914,6 +3920,7 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			playerShader->objects[idx]->setRoot(rm->playerModels[8]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[8]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
+			playerShader->objects[idx]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 
 		}
 		playerShader->objects[idx]->kState.xzspeed = 0.0f;

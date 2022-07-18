@@ -9,6 +9,7 @@
 #define LOBBY_STATE 2
 #define STAGE_SELECT_STATE 3
 #define PROFILE_STATE 4
+#define WAIT_STATE 5
 #define IN_GAME_STATE 10
 
 

@@ -106,6 +106,35 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CubeMeshOffset* gold9 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (1070.0f - 600.0f) / 450.0f, -(155.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* gold10 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (1090.0f - 600.0f) / 450.0f, -(155.0f - 450.0f) / 450.0f, false);
 
+	CubeMeshOffset* cap_stat1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (625.0f - 600.0f) / 450.0f, -(382.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cap_stat2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (645.0f - 600.0f) / 450.0f, -(382.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cap_plus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (687.0f - 600.0f) / 450.0f, -(382.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cap_minus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (714.0f - 600.0f) / 450.0f, -(382.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* hard_stat1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (625.0f - 600.0f) / 450.0f, -(440.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* hard_stat2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (645.0f - 600.0f) / 450.0f, -(440.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* hard_plus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (687.0f - 600.0f) / 450.0f, -(440.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* hard_minus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (714.0f - 600.0f) / 450.0f, -(440.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* out_stat1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (625.0f - 600.0f) / 450.0f, -(498.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* out_stat2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (645.0f - 600.0f) / 450.0f, -(498.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* out_plus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (687.0f - 600.0f) / 450.0f, -(498.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* out_minus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (714.0f - 600.0f) / 450.0f, -(498.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* prec_stat1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (625.0f - 600.0f) / 450.0f, -(556.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* prec_stat2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (645.0f - 600.0f) / 450.0f, -(556.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* prec_plus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (687.0f - 600.0f) / 450.0f, -(556.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* prec_minus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (714.0f - 600.0f) / 450.0f, -(556.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* ent_stat1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (625.0f - 600.0f) / 450.0f, -(614.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ent_stat2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (645.0f - 600.0f) / 450.0f, -(614.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ent_plus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (687.0f - 600.0f) / 450.0f, -(614.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ent_minus = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 20.0f / 450.0f, 0.01f, (714.0f - 600.0f) / 450.0f, -(614.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* extra1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (682.0f - 600.0f) / 450.0f, -(655.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* extra2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (702.0f - 600.0f) / 450.0f, -(655.0f - 450.0f) / 450.0f, false);
+	
+
 	meshes.push_back(main);
 	meshesRev.push_back(mainr);
 
@@ -169,6 +198,36 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	meshes.push_back(gold8);
 	meshes.push_back(gold9);
 	meshes.push_back(gold10);
+
+	meshes.push_back(cap_stat1);
+	meshes.push_back(cap_stat2);
+	meshes.push_back(cap_plus);
+	meshes.push_back(cap_minus);
+
+	meshes.push_back(hard_stat1);
+	meshes.push_back(hard_stat2);
+	meshes.push_back(hard_plus);
+	meshes.push_back(hard_minus);
+
+	meshes.push_back(out_stat1);
+	meshes.push_back(out_stat2);
+	meshes.push_back(out_plus);
+	meshes.push_back(out_minus);
+
+	meshes.push_back(prec_stat1);
+	meshes.push_back(prec_stat2);
+	meshes.push_back(prec_plus);
+	meshes.push_back(prec_minus);
+
+	meshes.push_back(ent_stat1);
+	meshes.push_back(ent_stat2);
+	meshes.push_back(ent_plus);
+	meshes.push_back(ent_minus);
+
+	meshes.push_back(extra1);
+	meshes.push_back(extra2);
+	
+
 
 	meshesRev.push_back(lv_total1);
 	meshesRev.push_back(lv_total2);
@@ -284,6 +343,41 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	UIObject* obj51 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj52 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj53 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	//여기서부터 스탯
+	//cap
+	UIObject* obj54 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj55 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj56 = new UIObject(1, 677, 402, 697, 422, 233);
+	UIObject* obj57 = new UIObject(1, 704, 402, 724, 422, 231);
+	//hard
+	UIObject* obj58 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj59 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj60 = new UIObject(1, 677, 460, 697, 480, 233);
+	UIObject* obj61 = new UIObject(1, 704, 460, 724, 480, 231);
+	//out
+	UIObject* obj62 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj63 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj64 = new UIObject(1, 677, 518, 697, 538, 233);
+	UIObject* obj65 = new UIObject(1, 704, 518, 724, 538, 231);
+
+	//prec
+	UIObject* obj66 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj67 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj68 = new UIObject(1, 677, 576, 697, 596, 233);
+	UIObject* obj69 = new UIObject(1, 704, 576, 724, 596, 231);
+
+	//entrophy
+	UIObject* obj70 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj71 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj72 = new UIObject(1, 677, 634, 697, 654, 233);
+	UIObject* obj73 = new UIObject(1, 704, 634, 724, 654, 231);
+
+	//extra point
+	//out
+	UIObject* obj74 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj75 = new UIObject(1, -1, -1, -1, -1, -1);
+	
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[227]);
@@ -459,6 +553,79 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	obj53->SetMaterial(0, rm->materials[252]);
 	obj53->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj54->SetMesh(meshes[53]);
+	obj54->SetMaterial(0, rm->materials[252]);
+	obj54->SetPosition(0.0f, 0.0f, 0.0f);
+	obj55->SetMesh(meshes[54]);
+	obj55->SetMaterial(0, rm->materials[252]);
+	obj55->SetPosition(0.0f, 0.0f, 0.0f);
+	obj56->SetMesh(meshes[55]);
+	obj56->SetMaterial(0, rm->materials[233]);
+	obj56->SetPosition(0.0f, 0.0f, 0.0f);
+	obj57->SetMesh(meshes[56]);
+	obj57->SetMaterial(0, rm->materials[231]);
+	obj57->SetPosition(0.0f, 0.0f, 0.0f);
+
+
+	obj58->SetMesh(meshes[57]);
+	obj58->SetMaterial(0, rm->materials[252]);
+	obj58->SetPosition(0.0f, 0.0f, 0.0f);
+	obj59->SetMesh(meshes[58]);
+	obj59->SetMaterial(0, rm->materials[252]);
+	obj59->SetPosition(0.0f, 0.0f, 0.0f);
+	obj60->SetMesh(meshes[59]);
+	obj60->SetMaterial(0, rm->materials[233]);
+	obj60->SetPosition(0.0f, 0.0f, 0.0f);
+	obj61->SetMesh(meshes[60]);
+	obj61->SetMaterial(0, rm->materials[231]);
+	obj61->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj62->SetMesh(meshes[61]);
+	obj62->SetMaterial(0, rm->materials[252]);
+	obj62->SetPosition(0.0f, 0.0f, 0.0f);
+	obj63->SetMesh(meshes[62]);
+	obj63->SetMaterial(0, rm->materials[252]);
+	obj63->SetPosition(0.0f, 0.0f, 0.0f);
+	obj64->SetMesh(meshes[63]);
+	obj64->SetMaterial(0, rm->materials[233]);
+	obj64->SetPosition(0.0f, 0.0f, 0.0f);
+	obj65->SetMesh(meshes[64]);
+	obj65->SetMaterial(0, rm->materials[231]);
+	obj65->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj66->SetMesh(meshes[65]);
+	obj66->SetMaterial(0, rm->materials[252]);
+	obj66->SetPosition(0.0f, 0.0f, 0.0f);
+	obj67->SetMesh(meshes[66]);
+	obj67->SetMaterial(0, rm->materials[252]);
+	obj67->SetPosition(0.0f, 0.0f, 0.0f);
+	obj68->SetMesh(meshes[67]);
+	obj68->SetMaterial(0, rm->materials[233]);
+	obj68->SetPosition(0.0f, 0.0f, 0.0f);
+	obj69->SetMesh(meshes[68]);
+	obj69->SetMaterial(0, rm->materials[231]);
+	obj69->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj70->SetMesh(meshes[69]);
+	obj70->SetMaterial(0, rm->materials[252]);
+	obj70->SetPosition(0.0f, 0.0f, 0.0f);
+	obj71->SetMesh(meshes[70]);
+	obj71->SetMaterial(0, rm->materials[252]);
+	obj71->SetPosition(0.0f, 0.0f, 0.0f);
+	obj72->SetMesh(meshes[71]);
+	obj72->SetMaterial(0, rm->materials[233]);
+	obj72->SetPosition(0.0f, 0.0f, 0.0f);
+	obj73->SetMesh(meshes[72]);
+	obj73->SetMaterial(0, rm->materials[231]);
+	obj73->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj74->SetMesh(meshes[73]);
+	obj74->SetMaterial(0, rm->materials[252]);
+	obj74->SetPosition(0.0f, 0.0f, 0.0f);
+	obj75->SetMesh(meshes[74]);
+	obj75->SetMaterial(0, rm->materials[252]);
+	obj75->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -517,6 +684,30 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	objects.push_back(obj51);
 	objects.push_back(obj52);
 	objects.push_back(obj53);
+	objects.push_back(obj54);
+	objects.push_back(obj55);
+	objects.push_back(obj56);
+	objects.push_back(obj57);
+	objects.push_back(obj58);
+	objects.push_back(obj59);
+
+	objects.push_back(obj60);
+	objects.push_back(obj61);
+	objects.push_back(obj62);
+	objects.push_back(obj63);
+	objects.push_back(obj64);
+	objects.push_back(obj65);
+	objects.push_back(obj66);
+	objects.push_back(obj67);
+	objects.push_back(obj68);
+	objects.push_back(obj69);
+
+	objects.push_back(obj70);
+	objects.push_back(obj71);
+	objects.push_back(obj72);
+	objects.push_back(obj73);
+	objects.push_back(obj74);
+	objects.push_back(obj75);
 }
 
 void ProfileShader::ReleaseObjects()
@@ -684,16 +875,16 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		int t9 = (totalExpNeed[info->growth.total.level - 1] % 100) / 10;
 		int t10 = totalExpNeed[info->growth.total.level - 1] % 10;
 
-		objects[3]->m_ppMaterials[0] = rm->materials[252 + t1];
-		objects[4]->m_ppMaterials[0] = rm->materials[252 + t2];
-		objects[5]->m_ppMaterials[0] = rm->materials[252 + t3];
-		objects[6]->m_ppMaterials[0] = rm->materials[252 + t4];
-		objects[7]->m_ppMaterials[0] = rm->materials[252 + t5];
-		objects[8]->m_ppMaterials[0] = rm->materials[252 + t6];
-		objects[9]->m_ppMaterials[0] = rm->materials[252 + t7];
-		objects[10]->m_ppMaterials[0] = rm->materials[252 + t8];
-		objects[11]->m_ppMaterials[0] = rm->materials[252 + t9];
-		objects[12]->m_ppMaterials[0] = rm->materials[252 + t10];
+		objects[3]->m_ppMaterials[0] = rm->materials[273 + t1];
+		objects[4]->m_ppMaterials[0] = rm->materials[273 + t2];
+		objects[5]->m_ppMaterials[0] = rm->materials[273 + t3];
+		objects[6]->m_ppMaterials[0] = rm->materials[273 + t4];
+		objects[7]->m_ppMaterials[0] = rm->materials[273 + t5];
+		objects[8]->m_ppMaterials[0] = rm->materials[273 + t6];
+		objects[9]->m_ppMaterials[0] = rm->materials[273 + t7];
+		objects[10]->m_ppMaterials[0] = rm->materials[273 + t8];
+		objects[11]->m_ppMaterials[0] = rm->materials[273 + t9];
+		objects[12]->m_ppMaterials[0] = rm->materials[273 + t10];
 	}
 	//근접 레벨 숫자설정
 	{
@@ -710,16 +901,16 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		int t9 = (expNeed[info->growth.melee.level - 1] % 100) / 10;
 		int t10 = expNeed[info->growth.melee.level - 1] % 10;
 
-		objects[13]->m_ppMaterials[0] = rm->materials[252 + t1];
-		objects[14]->m_ppMaterials[0] = rm->materials[252 + t2];
-		objects[15]->m_ppMaterials[0] = rm->materials[252 + t3];
-		objects[16]->m_ppMaterials[0] = rm->materials[252 + t4];
-		objects[17]->m_ppMaterials[0] = rm->materials[252 + t5];
-		objects[18]->m_ppMaterials[0] = rm->materials[252 + t6];
-		objects[19]->m_ppMaterials[0] = rm->materials[252 + t7];
-		objects[20]->m_ppMaterials[0] = rm->materials[252 + t8];
-		objects[21]->m_ppMaterials[0] = rm->materials[252 + t9];
-		objects[22]->m_ppMaterials[0] = rm->materials[252 + t10];
+		objects[13]->m_ppMaterials[0] = rm->materials[273 + t1];
+		objects[14]->m_ppMaterials[0] = rm->materials[273 + t2];
+		objects[15]->m_ppMaterials[0] = rm->materials[273 + t3];
+		objects[16]->m_ppMaterials[0] = rm->materials[273 + t4];
+		objects[17]->m_ppMaterials[0] = rm->materials[273 + t5];
+		objects[18]->m_ppMaterials[0] = rm->materials[273 + t6];
+		objects[19]->m_ppMaterials[0] = rm->materials[273 + t7];
+		objects[20]->m_ppMaterials[0] = rm->materials[273 + t8];
+		objects[21]->m_ppMaterials[0] = rm->materials[273 + t9];
+		objects[22]->m_ppMaterials[0] = rm->materials[273 + t10];
 
 	}
 	//원거리 레벨 숫자설정
@@ -737,16 +928,16 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		int t9 = (expNeed[info->growth.ranged.level - 1] % 100) / 10;
 		int t10 = expNeed[info->growth.ranged.level - 1] % 10;
 
-		objects[23]->m_ppMaterials[0] = rm->materials[252 + t1];
-		objects[24]->m_ppMaterials[0] = rm->materials[252 + t2];
-		objects[25]->m_ppMaterials[0] = rm->materials[252 + t3];
-		objects[26]->m_ppMaterials[0] = rm->materials[252 + t4];
-		objects[27]->m_ppMaterials[0] = rm->materials[252 + t5];
-		objects[28]->m_ppMaterials[0] = rm->materials[252 + t6];
-		objects[29]->m_ppMaterials[0] = rm->materials[252 + t7];
-		objects[30]->m_ppMaterials[0] = rm->materials[252 + t8];
-		objects[31]->m_ppMaterials[0] = rm->materials[252 + t9];
-		objects[32]->m_ppMaterials[0] = rm->materials[252 + t10];
+		objects[23]->m_ppMaterials[0] = rm->materials[273 + t1];
+		objects[24]->m_ppMaterials[0] = rm->materials[273 + t2];
+		objects[25]->m_ppMaterials[0] = rm->materials[273 + t3];
+		objects[26]->m_ppMaterials[0] = rm->materials[273 + t4];
+		objects[27]->m_ppMaterials[0] = rm->materials[273 + t5];
+		objects[28]->m_ppMaterials[0] = rm->materials[273 + t6];
+		objects[29]->m_ppMaterials[0] = rm->materials[273 + t7];
+		objects[30]->m_ppMaterials[0] = rm->materials[273 + t8];
+		objects[31]->m_ppMaterials[0] = rm->materials[273 + t9];
+		objects[32]->m_ppMaterials[0] = rm->materials[273 + t10];
 	}
 	//전파레벨 숫자설정
 	{
@@ -763,16 +954,16 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		int t9 = (expNeed[info->growth.radio.level - 1] % 100) / 10;
 		int t10 = expNeed[info->growth.radio.level - 1] % 10;
 
-		objects[33]->m_ppMaterials[0] = rm->materials[252 + t1];
-		objects[34]->m_ppMaterials[0] = rm->materials[252 + t2];
-		objects[35]->m_ppMaterials[0] = rm->materials[252 + t3];
-		objects[36]->m_ppMaterials[0] = rm->materials[252 + t4];
-		objects[37]->m_ppMaterials[0] = rm->materials[252 + t5];
-		objects[38]->m_ppMaterials[0] = rm->materials[252 + t6];
-		objects[39]->m_ppMaterials[0] = rm->materials[252 + t7];
-		objects[40]->m_ppMaterials[0] = rm->materials[252 + t8];
-		objects[41]->m_ppMaterials[0] = rm->materials[252 + t9];
-		objects[42]->m_ppMaterials[0] = rm->materials[252 + t10];
+		objects[33]->m_ppMaterials[0] = rm->materials[273 + t1];
+		objects[34]->m_ppMaterials[0] = rm->materials[273 + t2];
+		objects[35]->m_ppMaterials[0] = rm->materials[273 + t3];
+		objects[36]->m_ppMaterials[0] = rm->materials[273 + t4];
+		objects[37]->m_ppMaterials[0] = rm->materials[273 + t5];
+		objects[38]->m_ppMaterials[0] = rm->materials[273 + t6];
+		objects[39]->m_ppMaterials[0] = rm->materials[273 + t7];
+		objects[40]->m_ppMaterials[0] = rm->materials[273 + t8];
+		objects[41]->m_ppMaterials[0] = rm->materials[273 + t9];
+		objects[42]->m_ppMaterials[0] = rm->materials[273 + t10];
 	}
 	//골드 숫자설정
 	{
@@ -787,15 +978,61 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		int t9 = info->gold / 10;
 		int t10 = info->gold % 10;
 
-		objects[43]->m_ppMaterials[0] = rm->materials[252 + t1];
-		objects[44]->m_ppMaterials[0] = rm->materials[252 + t2];
-		objects[45]->m_ppMaterials[0] = rm->materials[252 + t3];
-		objects[46]->m_ppMaterials[0] = rm->materials[252 + t4];
-		objects[47]->m_ppMaterials[0] = rm->materials[252 + t5];
-		objects[48]->m_ppMaterials[0] = rm->materials[252 + t6];
-		objects[49]->m_ppMaterials[0] = rm->materials[252 + t7];
-		objects[50]->m_ppMaterials[0] = rm->materials[252 + t8];
-		objects[51]->m_ppMaterials[0] = rm->materials[252 + t9];
-		objects[52]->m_ppMaterials[0] = rm->materials[252 + t10];
+		objects[43]->m_ppMaterials[0] = rm->materials[273 + t1];
+		objects[44]->m_ppMaterials[0] = rm->materials[273 + t2];
+		objects[45]->m_ppMaterials[0] = rm->materials[273 + t3];
+		objects[46]->m_ppMaterials[0] = rm->materials[273 + t4];
+		objects[47]->m_ppMaterials[0] = rm->materials[273 + t5];
+		objects[48]->m_ppMaterials[0] = rm->materials[273 + t6];
+		objects[49]->m_ppMaterials[0] = rm->materials[273 + t7];
+		objects[50]->m_ppMaterials[0] = rm->materials[273 + t8];
+		objects[51]->m_ppMaterials[0] = rm->materials[273 + t9];
+		objects[52]->m_ppMaterials[0] = rm->materials[273 + t10];
 	}
+
+	//능력치창. 여기서부터 숫자는 검은색.
+	{
+		int t1 = info->getCapacity() / 10;
+		int t2 = info->getCapacity() % 10;
+
+		objects[53]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[54]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+	{
+		int t1 = info->getHardness() / 10;
+		int t2 = info->getHardness() % 10;
+
+		objects[57]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[58]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+
+	{
+		int t1 = info->getPower() / 10;
+		int t2 = info->getPower() % 10;
+
+		objects[61]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[62]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+	{
+		int t1 = info->getPrecision() / 10;
+		int t2 = info->getPrecision() % 10;
+
+		objects[65]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[66]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+	{
+		int t1 = info->getEntrophy() / 10;
+		int t2 = info->getEntrophy() % 10;
+
+		objects[69]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[70]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+	{
+		int t1 = info->extraPoint / 10;
+		int t2 = info->extraPoint % 10;
+
+		objects[73]->m_ppMaterials[0] = rm->materials[252 + t1];
+		objects[74]->m_ppMaterials[0] = rm->materials[252 + t2];
+	}
+
 }

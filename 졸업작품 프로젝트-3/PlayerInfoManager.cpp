@@ -6,6 +6,7 @@ PlayerInfoManager::PlayerInfoManager()
 	initGrowth();
 	initStats();
 	gold = 0;
+	extraPoint = 2;
 	
 }
 

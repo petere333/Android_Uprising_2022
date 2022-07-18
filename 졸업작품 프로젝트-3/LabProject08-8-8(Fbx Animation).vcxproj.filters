@@ -141,6 +141,9 @@
     <ClCompile Include="ProfileShader.cpp">
       <Filter>Shader\Profile</Filter>
     </ClCompile>
+    <ClCompile Include="WaitShader.cpp">
+      <Filter>Shader\wait</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -273,6 +276,9 @@
     <ClInclude Include="ProfileShader.h">
       <Filter>Shader\Profile</Filter>
     </ClInclude>
+    <ClInclude Include="WaitShader.h">
+      <Filter>Shader\wait</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -375,6 +381,9 @@
     </Filter>
     <Filter Include="Shader\Profile">
       <UniqueIdentifier>{49592642-de03-498e-aea5-dcd50b59dbfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\wait">
+      <UniqueIdentifier>{49e0aae0-3846-4d0c-b3ef-0fe29964dc73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
