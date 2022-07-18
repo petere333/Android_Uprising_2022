@@ -573,7 +573,7 @@ public:
 	bool expGiven = false;
 	//chrono::time_point<chrono::system_clock> lastMove;
 	
-
+	int weapon;
 	BoundBox* mbox;
 
 public:

@@ -1841,6 +1841,8 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* e8;
 	CLoadedModelInfo* e9;
 	CLoadedModelInfo* e10;
+	CLoadedModelInfo* e11;
+	CLoadedModelInfo* e12;
 	
 	e1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
 	enemyModels.push_back(e1);
@@ -1857,4 +1859,15 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	enemyModels.push_back(e6);
 	e7 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_stun.bin", NULL);
 	enemyModels.push_back(e7);
+
+	e8 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_attack.bin", NULL);
+	enemyModels.push_back(e8);
+	e9 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_die.bin", NULL);
+	enemyModels.push_back(e9);
+	e10 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_walk.bin", NULL);
+	enemyModels.push_back(e10);
+	e11 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_idle.bin", NULL);
+	enemyModels.push_back(e11);
+	e12 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_run.bin", NULL);
+	enemyModels.push_back(e12);
 }

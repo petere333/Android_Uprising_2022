@@ -21,13 +21,18 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		obj->seekPoint.push_back(XMFLOAT2(12.0f, 164.5f));
 		obj->seekPoint.push_back(XMFLOAT2(22.0f, 164.5f));
 		obj->type = -10;
+		obj->weapon = 2;
+		//근접 : 2, 원거리 : 1
 		obj->SetTrackAnimationSet(0, 0);
 		obj->attackRange = 2.0f;
+
+		//근접 : 2, 원거리 : 8
 		obj->bState.stateID = IDLE_STATE;
 		obj->bState.hp = 20;
 		obj->maxHP = 20;
 		obj->lastAttack = chrono::system_clock::now();
-		obj->attackDuration = 0.2f;
+		obj->attackDuration = 0.833333f;
+		//근접 : 0.833333, 원거리 : 0.2
 
 		objects.push_back(obj);
 
@@ -282,14 +287,27 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			objects[i]->bState.stateID = DEAD_STATE;
 			objects[i]->stunned = false;
 			objects[i]->deathMoment = chrono::system_clock::now();
-
-			//애니메이션도 죽는 것으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+				//애니메이션도 죽는 것으로 변경
+				if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
+			else
+			{
+				//애니메이션도 죽는 것으로 변경
+				if (objects[i]->m_pChild != rm->enemyModels[8]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[8]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[8]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
+			
 		}
 
 		if (objects[i]->stunned == true)
@@ -297,13 +315,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 			chrono::duration<double> dt = moment - objects[i]->lastStun;
 			//기절 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
+				if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			//기절 지속시간이 끝난 경우
 			if ((float)dt.count() >= objects[i]->stunDuration)
 			{
@@ -431,13 +460,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			}
 			objects[i]->moveByRoute(objects[i]->route);
 			//이동 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
+				if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			
 
 		}
@@ -445,14 +485,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		else if (objects[i]->bState.stateID == CHASE_STATE)
 		{
 			//빠르게 이동하는 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
+				if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			//플레이어의 위치를 향해 감.
 			if (objects[i]->routeIdx < objects[i]->route.size())
 			{
@@ -651,12 +701,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		else if (objects[i]->bState.stateID == BATTLE_STATE)
 		{
 			//공격하는 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
+				if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
 			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
 

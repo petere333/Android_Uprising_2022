@@ -696,6 +696,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						if (i == 2)
 						{
 							m_pScene->currentScreen = WAIT_STATE;
+							
 						}
 						else if (i == 1)
 						{
