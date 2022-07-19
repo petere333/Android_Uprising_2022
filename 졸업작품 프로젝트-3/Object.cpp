@@ -1356,13 +1356,14 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 
 	int hix, hiz;
 
-
+	//대상지점이 구역 좌표 범위를 벗어난 경우
 	if (ox >= 0.0f && ox < 200.0f && oz>=0.0f && oz < 200.0f)
 	{
 		hix = (int)(x / 0.5f);
 		hiz = (int)(z / 0.5f);
 		if (x < 0.5f || x >= 199.5f || oz < 0.5f || oz >= 199.5f)
 		{
+			printf("맵 밖에 목표 지정\n");
 			return result;
 		}
 	}
@@ -1376,16 +1377,27 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			hiz = 0;
 		if (x < 200.5f || x >= 599.5f || oz < 0.5f || oz >= 199.5f)
 		{
+			printf("맵 밖에 목표 지정\n");
 			return result;
 		}
 	}
+
 	float dx = origin.x - x;
 	float dz = origin.y - z;
 	float dis = sqrt(dx * dx + dz * dz);
+
+	//대상 지점이 이동 불가능한 위치인 경우
 	if (heightmap[hix][hiz] > 0.0f)
+	{
+		printf("물체에 막힌 곳에 목표 지정\n");
 		return result;
+	}
+	//대상 지점이 너무 가까워서 굳이 이동할 이유가 없는 경우
 	if (dis < 0.5f)
+	{
+		printf("너무 가까운 곳에 목표 지정\n");
 		return result;
+	}
 	while (quit==false)
 	{
 		dist += 1;
@@ -1397,7 +1409,7 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 
 			if (quit == true)
 				break;
-
+			
 			//현 위치에서 가로세로 한칸 떨어진 곳 중 갈 수 있는 곳을 구함
 			vector<XMFLOAT2> available;
 			//좌
@@ -1647,27 +1659,56 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			if (v8 == false)
 				available.push_back(p8);
 
-			//이동 가능한 좌표들에 대해 방문기록에 추가
-			for (int i = 0; i < available.size(); ++i)
+			printf("이동 가능한 곳 : %d\n", available.size());
+			//이동가능한 좌표들의 목록을 목표지점과 가장 가까운 것을 구함
+			if (available.size() == 0)
 			{
-				visitedx.push_back(available[i].x);
-				visitedz.push_back(available[i].y);
+				quit = true;
+				break;
+			}
+			float mdis=9999.0f;
+			int mindex = 0;
+			
+			for (int k1 = 0; k1 < available.size(); ++k1)
+			{
+
+					// 한 원소로부터 목표지점 거리
+					float dx1 = available[k1].x - x;
+					float dy1 = available[k1].y - z;
+
+					float dist1 = sqrt(dx1 * dx1 + dy1 * dy1);
+					
+
+					//최소 거리의 위치인 경우
+					if (dist1 < mdis)
+					{
+						mindex = k1;
+						mdis = dist1;
+					}
+
 			}
 
+
+			//이동 가능한 좌표들에 대해 방문기록에 추가
+			for (int k1 = 0; k1 < available.size(); ++k1)
+			{
+				visitedx.push_back(available[k1].x);
+				visitedz.push_back(available[k1].y);
+			}
+			
 			//시작점에서 이동하는 경우 한칸짜리 경로 생성
 			if (pos[k].x == origin.x && pos[k].y == origin.y)
 			{
 
-				for (int i = 0; i < available.size(); ++i)
-				{
-					vector<XMFLOAT2> road;
-					road.push_back(origin);
-					road.push_back(available[i]);
 
-					route.push_back(road);
-					addOrNot.push_back(false);
+				vector<XMFLOAT2> road;
+				road.push_back(origin);
+				road.push_back(available[mindex]);
 
-				}
+				route.push_back(road);
+				addOrNot.push_back(false);
+
+				
 
 			}
 			//시작점이 아닌 경우
@@ -1677,19 +1718,17 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 				vector<XMFLOAT2> road;
 				for (int j = 0; j < route[k].size(); ++j)
 				{
-
 					road.push_back(route[k][j]);
 				}
 				
 				
 				
 				//경로에 추가할 다음 위치들에 대해
-				for (int j = 0; j < available.size(); ++j)
-				{
+
 					//길이 갈라지지 않은 경우 해당 경로에 그대로 새 위치만 추가
 					if (addOrNot[k] == false)
 					{
-						route[k].push_back(available[j]);
+						route[k].push_back(available[mindex]);
 						addOrNot[k] = true;
 					}
 
@@ -1698,10 +1737,10 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 					{
 
 						route.push_back(road);
-						route[route.size() - 1].push_back(available[j]);
+						route[route.size() - 1].push_back(available[mindex]);
 						addOrNot.push_back(false);
 					}
-				}
+				
 				
 			}
 			//다음 번 루프를 처리하기 위해 초기화
@@ -1709,7 +1748,7 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			{
 				addOrNot[i] = false;
 			}
-			
+			printf("%d번째 경로 생성 완료\n", route[0].size()-1); 
 
 		}
 		//현재까지 생성한 모든 루트에 대해
@@ -1723,6 +1762,7 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			{
 				result = route[i];
 				quit = true;
+				printf("목적지 도착\n");
 				break;
 			}
 

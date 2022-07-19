@@ -731,118 +731,215 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				float nx = dx / dist;
 				float nz = dz / dist;
 				//30미터 너머의 적은 봐도 못본 것으로 처리
-				if (dist > 11.0f)
+				if (dist > 20.0f)
 				{
 					continue;
 				}
-				if (ex < px)
-				{
-					for (float x = ex; x < px; x += 0.5f)
-					{
-						
-						float z = ez + dz / dx * 0.5f * (x - ex) * 2.0f;
-						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							//ix = (int)((x + 0.25f) / 0.5f);
-							//iz = (int)((z + 0.25f) / 0.5f);
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							//ix = (int)((x + 0.25f) / 0.5f);
-							//iz = (int)((z + 0.25f) / 0.5f);
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-						if (found == false)
-							break;
-					}
-					if (found == true)
-					{
-						if (minDist > dist)
-						{
-							minDist = dist;
-							playerID = p;
-						}
-					}
 
+				
+				if (abs(dx) > abs(dz))
+				{
+					if (ex < px)
+					{
+						for (float x = ex; x < px; x += 0.5f)
+						{
+
+							float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+							{
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							if (found == false)
+								break;
+						}
+						if (found == true)
+						{
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
+							}
+						}
+
+					}
+					else
+					{
+						for (float x = ex; x > px; x -= 0.5f)
+						{
+							float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
+
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+							{
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+
+							if (found == false)
+								break;
+						}
+						if (found == true)
+						{
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
+							}
+						}
+					}
 				}
 				else
 				{
-					for (float x = ex; x > px; x -= 0.5f)
+					if (ez < pz)
 					{
-						float z = ez - nz / nx * 0.5f * (x - ex) * 2.0f;
-
-						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+						for (float z = ez; z < pz; z += 0.5f)
 						{
-							int ix = (int)((x - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							//ix = (int)((x + 0.25f) / 0.5f);
-							//iz = (int)((z + 0.25f) / 0.5f);
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							float x = ex + dx / dz * 0.5f * (z - ez) * 2.0f;
+
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 							{
-								found = false;
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							if (found == false)
 								break;
+
+						}
+						if (found == true)
+						{
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
 							}
 						}
-						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							//ix = (int)((x + 0.25f) / 0.5f);
-							//iz = (int)((z + 0.25f) / 0.5f);
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-
-						if (found == false)
-							break;
 					}
-					if (found == true)
+					else
 					{
-						if (minDist > dist)
+						for (float z = ez; z > pz; z -= 0.5f)
 						{
-							minDist = dist;
-							playerID = p;
+							float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+							{
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								//ix = (int)((x + 0.25f) / 0.5f);
+								//iz = (int)((z + 0.25f) / 0.5f);
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+
+							if (found == false)
+								break;
+						}
+						if (found == true)
+						{
+							if (minDist > dist)
+							{
+								minDist = dist;
+								playerID = p;
+							}
 						}
 					}
 				}
-
 
 			}
 
 			//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
 			if (playerID != -1)
 			{
+				printf("적이 플레이어 찾음\n");
 				objects[i]->bState.stateID = CHASE_STATE;
 				objects[i]->chaseTargetPos = ppos[playerID];
 				float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
 				float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
 				objects[i]->chaseTarget = playerID;
 				objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+				objects[i]->lastSearch = chrono::system_clock::now();
 				objects[i]->routeIdx = 0;
 				continue;
 			}
 			else if (objects[i]->hitPlayerID != -1)
 			{
+				printf("적이 플레이어 찾음\n");
 				objects[i]->bState.stateID = CHASE_STATE;
 				objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
 				objects[i]->chaseTarget = objects[i]->hitPlayerID;
 				objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+				objects[i]->lastSearch = chrono::system_clock::now();
 				objects[i]->routeIdx = 0;
 				continue;
 			}
@@ -906,6 +1003,246 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				}
 				objects[i]->SetTrackAnimationSet(0, 0);
 			}
+
+			//2초에 한번 경로 재설정
+			chrono::time_point<chrono::system_clock> moment =  chrono::system_clock::now();
+			chrono::duration<double> dtm = moment - objects[i]->lastSearch;
+			if ((float)dtm.count() >= 2.0f)
+			{
+				//플레이어 발견 여부 설정
+				float minDist = 9999.0f;
+				int playerID = -1; // 발견한 적의 아이디
+				for (int p = 0; p < ppos.size(); ++p)
+				{
+					bool found = true;
+					XMFLOAT3 ep = objects[i]->GetPosition();
+
+
+					float ex = ep.x;
+					float ez = ep.z;
+					float px = ppos[p].x;
+					float pz = ppos[p].z;
+
+					float dx = px - ex;
+					float dz = pz - ez;
+					float dist = sqrt(dx * dx + dz * dz);
+					float nx = dx / dist;
+					float nz = dz / dist;
+					//30미터 너머의 적은 봐도 못본 것으로 처리
+					if (dist > 20.0f)
+					{
+						continue;
+					}
+
+
+					if (abs(dx) > abs(dz))
+					{
+						if (ex < px)
+						{
+							for (float x = ex; x < px; x += 0.5f)
+							{
+
+								float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								if (found == false)
+									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
+								}
+							}
+
+						}
+						else
+						{
+							for (float x = ex; x > px; x -= 0.5f)
+							{
+								float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
+
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+								{
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+
+								if (found == false)
+									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
+								}
+							}
+						}
+					}
+					else
+					{
+						if (ez < pz)
+						{
+							for (float z = ez; z < pz; z += 0.5f)
+							{
+								float x = ex + dx / dz * 0.5f * (z - ez) * 2.0f;
+
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								if (found == false)
+									break;
+
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
+								}
+							}
+						}
+						else
+						{
+							for (float z = ez; z > pz; z -= 0.5f)
+							{
+								float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+
+								if (found == false)
+									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
+								}
+							}
+						}
+					}
+
+				}
+
+				//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
+				if (playerID != -1)
+				{
+					printf("적이 플레이어 찾음\n");
+					objects[i]->bState.stateID = CHASE_STATE;
+					objects[i]->chaseTargetPos = ppos[playerID];
+					float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
+					float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
+					objects[i]->chaseTarget = playerID;
+					objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+					objects[i]->lastSearch = chrono::system_clock::now();
+					objects[i]->routeIdx = 0;
+					continue;
+				}
+				else if (objects[i]->hitPlayerID != -1)
+				{
+					printf("적이 플레이어 찾음\n");
+					objects[i]->bState.stateID = CHASE_STATE;
+					objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
+					objects[i]->chaseTarget = objects[i]->hitPlayerID;
+					objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+					objects[i]->lastSearch = chrono::system_clock::now();
+					objects[i]->routeIdx = 0;
+					continue;
+				}
+			}
+
 			//플레이어의 위치를 향해 감.
 			if (objects[i]->routeIdx < objects[i]->route.size())
 			{
@@ -934,7 +1271,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				{
 					for (float x = ex; x < px; x += 0.5f)
 					{
-						float z = ez + nz / nx * 0.5f;
+						float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
 						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
 							int ix = (int)((x - 0.25f) / 0.5f) + 1;
@@ -969,7 +1306,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				{
 					for (float x = ex; x > px; x -= 0.5f)
 					{
-						float z = ez - nz / nx * 0.5f;
+						float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
 
 						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
@@ -1005,7 +1342,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
-			if (dist >= 15.0f || objects[i]->routeIdx==objects[i]->route.size())
+			if (dist >= 20.0f || objects[i]->routeIdx==objects[i]->route.size())
 			{
 				int playerID = -1; // 발견한 적의 아이디
 				//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
@@ -1026,89 +1363,188 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					float nx = dx / dist;
 					float nz = dz / dist;
 					//15미터 너머의 적은 봐도 못본 것으로 처리
-					if (dist > 11.0f)
+					if (dist > 20.0f)
 					{
 						objects[i]->chaseTarget = -1;
 						objects[i]->attackTarget = -1;
 						objects[i]->bState.stateID = PATROL_STATE;
 						continue;
 					}
-					if (ex < px)
+					if (abs(dx) > abs(dz))
 					{
-						for (float x = ex; x < px; x += 0.5f)
+						if (ex < px)
 						{
-							float z = ez + nz / nx * 0.5f;
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+							for (float x = ex; x < px; x += 0.5f)
 							{
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 								{
-									found = false;
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								if (found == false)
 									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
 								}
 							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-							{
-								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						}
+						else
+						{
+							for (float x = ex; x > px; x -= 0.5f)
+							{
+								float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 								{
-									found = false;
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+
+								if (found == false)
 									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
 								}
 							}
 						}
-						if (found == true)
-						{
-							if (minDist > dist)
-							{
-								minDist = dist;
-								playerID = p;
-							}
-						}
-
 					}
 					else
 					{
-						for (float x = ex; x > px; x -= 0.5f)
+						if (ez < pz)
 						{
-							float z = ez - nz / nx * 0.5f;
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+							for (float z = ez; z < pz; z += 0.5f)
 							{
+								float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
 
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 								{
-									found = false;
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								if (found == false)
 									break;
+
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
 								}
 							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-							{
-
-								int ix = (int)((x - 200.0f-0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							if (found == false)
-								break;
 						}
-						if (found == true)
+						else
 						{
-							if (minDist > dist)
+							for (float z = ez; z > pz; z -= 0.5f)
 							{
-								minDist = dist;
-								playerID = p;
+								float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+								{
+									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+
+								if (found == false)
+									break;
+							}
+							if (found == true)
+							{
+								if (minDist > dist)
+								{
+									minDist = dist;
+									playerID = p;
+								}
 							}
 						}
 					}
@@ -1152,6 +1588,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
 			if (dt >= 1.0f)
 			{
+				objects[i]->m_pMesh = NULL;
 				
 				objects.erase(objects.begin() + i);
 			}

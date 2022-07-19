@@ -569,6 +569,9 @@ public:
 	KineticState kState;
 	int maxHP;
 	chrono::time_point<chrono::system_clock> deathMoment;
+	chrono::time_point<chrono::system_clock> lastSearch = chrono::system_clock::now();
+
+
 	bool isDead = false;
 	bool expGiven = false;
 	//chrono::time_point<chrono::system_clock> lastMove;
