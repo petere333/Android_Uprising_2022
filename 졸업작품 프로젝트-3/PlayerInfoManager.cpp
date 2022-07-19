@@ -5,6 +5,8 @@ PlayerInfoManager::PlayerInfoManager()
 	manager = new ItemManager();
 	initGrowth();
 	initStats();
+	gold = 0;
+	extraPoint = 2;
 	
 }
 
@@ -21,6 +23,9 @@ void PlayerInfoManager::initGrowth()
 
 	growth.radio.level = 1;
 	growth.radio.exp = 0;
+
+	growth.total.level = 1;
+	growth.total.exp = 0;
 }
 
 void PlayerInfoManager::initStats()

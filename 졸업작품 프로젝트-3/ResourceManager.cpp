@@ -89,8 +89,13 @@ void ResourceManager::createTextures()
 	CTexture* tex251; CTexture* tex252; CTexture* tex253; CTexture* tex254; CTexture* tex255; CTexture* tex256; CTexture* tex257; CTexture* tex258; CTexture* tex259; CTexture* tex260;
 	CTexture* tex261; CTexture* tex262; CTexture* tex263; CTexture* tex264; CTexture* tex265; CTexture* tex266; CTexture* tex267; CTexture* tex268; CTexture* tex269; CTexture* tex270;
 	CTexture* tex271; CTexture* tex272; CTexture* tex273; CTexture* tex274; CTexture* tex275; CTexture* tex276; CTexture* tex277; CTexture* tex278; CTexture* tex279; CTexture* tex280;
+	CTexture* tex281; CTexture* tex282; CTexture* tex283; CTexture* tex284; CTexture* tex285; CTexture* tex286; CTexture* tex287; CTexture* tex288; CTexture* tex289; CTexture* tex290;
+	CTexture* tex291; CTexture* tex292; CTexture* tex293; CTexture* tex294; CTexture* tex295; CTexture* tex296; CTexture* tex297; CTexture* tex298; CTexture* tex299; CTexture* tex300;
 	
-	
+	CTexture* tex301; CTexture* tex302; CTexture* tex303; CTexture* tex304; CTexture* tex305; CTexture* tex306; CTexture* tex307; CTexture* tex308; CTexture* tex309; CTexture* tex310;
+	CTexture* tex311; CTexture* tex312; CTexture* tex313; CTexture* tex314; CTexture* tex315; CTexture* tex316; CTexture* tex317; CTexture* tex318; CTexture* tex319; CTexture* tex320;
+	CTexture* tex321; CTexture* tex322; CTexture* tex323; CTexture* tex324; CTexture* tex325; CTexture* tex326; CTexture* tex327; CTexture* tex328; CTexture* tex329; CTexture* tex330;
+	CTexture* tex331; CTexture* tex332; CTexture* tex333; CTexture* tex334; CTexture* tex335; CTexture* tex336; CTexture* tex337; CTexture* tex338; CTexture* tex339; CTexture* tex340;
 	
 	tex1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
@@ -1032,6 +1037,75 @@ void ResourceManager::createTextures()
 	tex273 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex273->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/exp_micro.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex273);
+
+	//여기서부터 숫자 텍스처
+	tex274 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex274->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/0.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex274);
+	tex275 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex275->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex275);
+	tex276 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex276->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex276);
+	tex277 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex277->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex277);
+	tex278 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex278->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex278);
+	tex279 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex279->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex279);
+	tex280 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex280->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/6.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex280);
+	tex281 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex281->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/7.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex281);
+	tex282 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex282->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/8.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex282);
+	tex283 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex283->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/digit/white/9.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex283);
+
+	//여기서부터 대기실 인터페이스
+
+	tex284= new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex284->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/room.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex284);
+
+	tex285 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex285->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_main_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex285);
+	tex286 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex286->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_main_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex286);
+	tex287 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex287->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_main_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex287);
+
+	tex288 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex288->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_ready_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex288);
+	tex289 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex289->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_ready_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex289);
+	tex290 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex290->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_ready_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex290);
+
+	tex291 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex291->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_start_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex291);
+	tex292 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex292->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_start_on.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex292);
+	tex293 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex293->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_start_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex293);
+
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;
@@ -2042,7 +2116,7 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 
 	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
 	playerModels.push_back(model1);
-	model2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_walk.bin", NULL);
+	model2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_run.bin", NULL);
 	playerModels.push_back(model2);
 	model3 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rescale4.bin", NULL);
 	playerModels.push_back(model3);
@@ -2078,7 +2152,7 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 
 	model17 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_attack_run.bin", NULL);
 	playerModels.push_back(model17);
-	model18 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_attack_run.bin", NULL);
+	model18 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_run_attack.bin", NULL);
 	playerModels.push_back(model18);
 
 
@@ -2092,6 +2166,8 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* e8;
 	CLoadedModelInfo* e9;
 	CLoadedModelInfo* e10;
+	CLoadedModelInfo* e11;
+	CLoadedModelInfo* e12;
 	
 	e1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_gun_idle.bin", NULL);
 	enemyModels.push_back(e1);
@@ -2108,4 +2184,15 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	enemyModels.push_back(e6);
 	e7 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_stun.bin", NULL);
 	enemyModels.push_back(e7);
+
+	e8 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_attack.bin", NULL);
+	enemyModels.push_back(e8);
+	e9 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_die.bin", NULL);
+	enemyModels.push_back(e9);
+	e10 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_walk.bin", NULL);
+	enemyModels.push_back(e10);
+	e11 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_idle.bin", NULL);
+	enemyModels.push_back(e11);
+	e12 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_run.bin", NULL);
+	enemyModels.push_back(e12);
 }

@@ -8,7 +8,7 @@
 #include "InterfaceShader.h"
 #include "PlayerShader.h"
 
-#include "TerrainShader.h"
+
 #include "TerrainShader1_1.h"
 #include "TerrainShader1_2.h"
 #include "TerrainShader1_3.h"
@@ -27,6 +27,7 @@
 #include "MainInterfaceShader.h"
 #include "ProfileShader.h"
 #include "StageSelectShader.h"
+#include "WaitShader.h"
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -136,7 +137,7 @@ public:
 
 	InterfaceShader* interShader = NULL;
 	PlayerShader* playerShader = NULL;
-	TerrainShader* terrainShader = NULL;
+
 	EnemyShader* enemyShader = NULL;
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
@@ -153,7 +154,7 @@ public:
 	MainInterfaceShader* mainInter = NULL;
 	ProfileShader* profileInter = NULL;
 	StageSelectShader* stageInter = NULL;
-
+	WaitShader* waitInter = NULL;
 
 	CLoadedMesh* boomMesh = NULL;
 

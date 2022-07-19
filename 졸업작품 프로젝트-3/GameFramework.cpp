@@ -467,6 +467,83 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		}
 	}
+	else if (m_pScene->currentScreen == WAIT_STATE)
+	{
+		switch (nMessageID)
+		{
+		case WM_LBUTTONUP:
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
+
+			int mx = pnt.x;
+			int my = pnt.y;
+
+			for (int i = 0; i < m_pScene->waitInter->objects.size(); ++i)
+			{
+				if (m_pScene->waitInter->objects[i]->defaultMesh != -1)
+				{
+					int px1 = m_pScene->waitInter->objects[i]->x1;
+					int px2 = m_pScene->waitInter->objects[i]->x2;
+					int py1 = m_pScene->waitInter->objects[i]->y1;
+					int py2 = m_pScene->waitInter->objects[i]->y2;
+
+					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					{
+						m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+						if (i == 1)
+						{
+							m_pScene->currentScreen = STAGE_SELECT_STATE;
+						}
+						else if (i == 2)
+						{
+							m_pScene->currentScreen = IN_GAME_STATE;
+						}
+					}
+				}
+			}
+
+			break;
+		}
+		case WM_LBUTTONDOWN:
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
+
+			int mx = pnt.x;
+			int my = pnt.y;
+
+			for (int i = 0; i < m_pScene->waitInter->objects.size(); ++i)
+			{
+				if (m_pScene->waitInter->objects[i]->defaultMesh != -1)
+				{
+					int px1 = m_pScene->waitInter->objects[i]->x1;
+					int px2 = m_pScene->waitInter->objects[i]->x2;
+					int py1 = m_pScene->waitInter->objects[i]->y1;
+					int py2 = m_pScene->waitInter->objects[i]->y2;
+
+					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					{
+						m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 2];
+
+					}
+				}
+			}
+
+			break;
+		}
+
+		}
+	}
+
 	else if (m_pScene->currentScreen == PROFILE_STATE)
 	{
 		switch (nMessageID)
@@ -479,13 +556,98 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			GetWindowRect(hWnd, &rect);
 			int wx = rect.left;
 			int wy = rect.top;
+
+			int mx = pnt.x;
+			int my = pnt.y;
 			//메인으로 버튼
-			if ((pnt.x >= 92 + wx && pnt.x <= 296 + wx) && (pnt.y >= 134 + wy && pnt.y <= 180 + wy))
+			if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 134 + wy && my <= 180 + wy))
 			{
 				m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
 				m_pScene->currentScreen = LOBBY_STATE;
 			}
 			
+			else
+			{
+				for (int i = 55; i < 73; i += 4)
+				{
+					int x1 = m_pScene->profileInter->objects[i]->x1;
+					int x2 = m_pScene->profileInter->objects[i]->x2;
+					int y1 = m_pScene->profileInter->objects[i]->y1;
+					int y2 = m_pScene->profileInter->objects[i]->y2;
+
+					int px1 = m_pScene->profileInter->objects[i+1]->x1;
+					int px2 = m_pScene->profileInter->objects[i+1]->x2;
+					int py1 = m_pScene->profileInter->objects[i+1]->y1;
+					int py2 = m_pScene->profileInter->objects[i+1]->y2;
+
+					//plus버튼
+					if ((mx >= x1+wx && mx <= x2+wx) && (my >= y1+wy && my <= y2+wy))
+					{
+						//잔여 포인트가 존재할 경우에만 스탯 추가.
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint > 0)
+						{
+							if (i == 55)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity += 1;
+							}
+							else if (i == 59)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 1;
+							}
+							else if (i == 63)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 1;
+							}
+							else if (i == 67)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 1;
+							}
+							else if (i == 71)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
+							}
+						}
+					}
+					else if ((mx >= px1+wx && mx <= px2+wx) && (my >= py1+wy && my <= py2+wy))
+					{
+						//현재 레벨까지 주어진 총 포인트보다 잔여포인트가 적을경우에만 스탯 회수.
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint < (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1) * 5)
+						{
+							if (i == 55)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity -= 1;
+							}
+							else if (i == 59)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness -= 1;
+							}
+							else if (i == 63)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power -= 1;
+							}
+							else if (i == 67)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision -= 1;
+							}
+							else if (i == 71)
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy -= 1;
+							}
+						}
+					}
+				}
+			}
+
 			break;
 		}
 		case WM_LBUTTONDOWN:
@@ -533,7 +695,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh];
 						if (i == 2)
 						{
-							m_pScene->currentScreen = IN_GAME_STATE;
+							m_pScene->currentScreen = WAIT_STATE;
+							
 						}
 						else if (i == 1)
 						{
@@ -1076,6 +1239,42 @@ void CGameFramework::ProcessInput()
 					m_pScene->stageInter->objects[i]->mouseOn = false;
 					m_pScene->stageInter->objects[i]->meshChanged = false;
 
+				}
+			}
+		}
+	}
+	else if (m_pScene->currentScreen == WAIT_STATE)
+	{
+		POINT pnt;
+		GetCursorPos(&pnt);
+		RECT rect;
+		GetWindowRect(m_hWnd, &rect);
+		int wx = rect.left;
+		int wy = rect.top;
+
+		for (int i = 0; i < m_pScene->waitInter->objects.size(); ++i)
+		{
+			int px1 = m_pScene->waitInter->objects[i]->x1;
+			int px2 = m_pScene->waitInter->objects[i]->x2;
+			int py1 = m_pScene->waitInter->objects[i]->y1;
+			int py2 = m_pScene->waitInter->objects[i]->y2;
+
+			if (m_pScene->waitInter->objects[i]->defaultMesh != -1)
+			{
+				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+				{
+					m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 1];
+					m_pScene->waitInter->objects[i]->mouseOn = true;
+					m_pScene->waitInter->objects[i]->meshChanged = false;
+				}
+				else
+				{
+					m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+					m_pScene->waitInter->objects[i]->mouseOn = false;
+					m_pScene->waitInter->objects[i]->meshChanged = false;
+
+					
 				}
 			}
 		}

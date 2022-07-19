@@ -15,23 +15,26 @@ void ItemManager::init()
 
 	basicGun->stats.attack = 30;
 	basicGun->stats.capacity = 0;
+	basicGun->stats.maxhp = 0;
 	basicGun->stats.entrophy = 0;
 	basicGun->stats.hardness = 0;
 	basicGun->stats.power = 0;
 	basicGun->stats.precision = 0;
-	basicGun->type = BAZUKA;
+	basicGun->type = RIFLE;
 
 
 	basicHammer->stats.attack = 10;
 	basicHammer->stats.capacity = 0;
+	basicHammer->stats.maxhp = 0;
 	basicHammer->stats.entrophy = 0;
 	basicHammer->stats.hardness = 0;
 	basicHammer->stats.power = 0;
 	basicHammer->stats.precision = 0;
-	basicHammer->type = DUALBLADE;
+	basicHammer->type = BLUNT;
 
 
 	basicArmor->stats.attack = 0;
+	basicArmor->stats.maxhp = 5;
 	basicArmor->stats.capacity = 5;
 	basicArmor->stats.entrophy = 0;
 	basicArmor->stats.hardness = 10;

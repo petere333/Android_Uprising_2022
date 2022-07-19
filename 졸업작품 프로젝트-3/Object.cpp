@@ -1354,8 +1354,31 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 	vector<XMFLOAT2> result;
 	bool quit = false;
 
-	int hix = (int)(x / 0.5f);
-	int hiz = (int)(z / 0.5f);
+	int hix, hiz;
+
+
+	if (ox >= 0.0f && ox < 200.0f && oz>=0.0f && oz < 200.0f)
+	{
+		hix = (int)(x / 0.5f);
+		hiz = (int)(z / 0.5f);
+		if (x < 0.5f || x >= 199.5f || oz < 0.5f || oz >= 199.5f)
+		{
+			return result;
+		}
+	}
+	else if (ox >= 200.0f && ox < 600.0f && oz>=0.0f && oz < 200.0f)
+	{
+		hix = (int)((x -200.0f)/ 0.5f);
+		if (hix < 0)
+			hix = 0;
+		hiz = (int)((z) / 0.5f);
+		if (hiz < 0)
+			hiz = 0;
+		if (x < 200.5f || x >= 599.5f || oz < 0.5f || oz >= 199.5f)
+		{
+			return result;
+		}
+	}
 	float dx = origin.x - x;
 	float dz = origin.y - z;
 	float dis = sqrt(dx * dx + dz * dz);
@@ -1392,26 +1415,185 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			XMFLOAT2 p7 = XMFLOAT2(pos[k].x + 0.5f, pos[k].y - 0.5f);
 			XMFLOAT2 p8 = XMFLOAT2(pos[k].x + 0.5f, pos[k].y + 0.5f);
 
+			int hx1, hx2, hx3, hx4, hx5, hx6, hx7, hx8;
+			int hy1, hy2, hy3, hy4, hy5, hy6, hy7, hy8;
 
-			int hx1 = (int)(p1.x / 0.5f);
-			int hx2 = (int)(p2.x / 0.5f);
-			int hx3 = (int)(p3.x / 0.5f);
-			int hx4 = (int)(p4.x / 0.5f);
-			int hx5 = (int)(p5.x / 0.5f);
-			int hx6 = (int)(p6.x / 0.5f);
-			int hx7 = (int)(p7.x / 0.5f);
-			int hx8 = (int)(p8.x / 0.5f);
+			if (x > 0.0f && x < 200.0f && z>0.0f && z < 200.0f)
+			{
+				hx1 = (int)(p1.x / 0.5f);
+				hx2 = (int)(p2.x / 0.5f);
+				hx3 = (int)(p3.x / 0.5f);
+				hx4 = (int)(p4.x / 0.5f);
+				hx5 = (int)(p5.x / 0.5f);
+				hx6 = (int)(p6.x / 0.5f);
+				hx7 = (int)(p7.x / 0.5f);
+				hx8 = (int)(p8.x / 0.5f);
+
+				if (hx1 < 0)
+					hx1 = 0;
+				if (hx2 < 0)
+					hx2 = 0;
+				if (hx3 < 0)
+					hx3 = 0;
+				if (hx4 < 0)
+					hx4 = 0;
+				if (hx5 < 0)
+					hx5 = 0;
+				if (hx6 < 0)
+					hx6 = 0;
+				if (hx7 < 0)
+					hx7 = 0;
+				if (hx8 < 0)
+					hx8 = 0;
 
 
-			int hy1 = (int)(p1.y / 0.5f);
-			int hy2 = (int)(p2.y / 0.5f);
-			int hy3 = (int)(p3.y / 0.5f);
-			int hy4 = (int)(p4.y / 0.5f);
-			int hy5 = (int)(p5.y / 0.5f);
-			int hy6 = (int)(p6.y / 0.5f);
-			int hy7 = (int)(p7.y / 0.5f);
-			int hy8 = (int)(p8.y / 0.5f);
+				if (hx1 >= 400)
+					hx1 = 399;
+				if (hx2 >= 400)
+					hx2 = 399;
+				if (hx3 >= 400)
+					hx3 = 399;
+				if (hx4 >= 400)
+					hx4 = 399;
+				if (hx5 >= 400)
+					hx5 = 399;
+				if (hx6 >= 400)
+					hx6 = 399;
+				if (hx7 >= 400)
+					hx7 = 399;
+				if (hx8 >= 400)
+					hx8 = 399;
 
+				hy1 = (int)(p1.y / 0.5f);
+				hy2 = (int)(p2.y / 0.5f);
+				hy3 = (int)(p3.y / 0.5f);
+				hy4 = (int)(p4.y / 0.5f);
+				hy5 = (int)(p5.y / 0.5f);
+				hy6 = (int)(p6.y / 0.5f);
+				hy7 = (int)(p7.y / 0.5f);
+				hy8 = (int)(p8.y / 0.5f);
+				if (hy1 < 0)
+					hy1 = 0;
+				if (hy2 < 0)
+					hy2 = 0;
+				if (hy3 < 0)
+					hy3 = 0;
+				if (hy4 < 0)
+					hy4 = 0;
+				if (hy5 < 0)
+					hy5 = 0;
+				if (hy6 < 0)
+					hy6 = 0;
+				if (hy7 < 0)
+					hy7 = 0;
+				if (hy8 < 0)
+					hy8 = 0;
+
+
+				if (hy1 >= 400)
+					hy1 = 399;
+				if (hy2 >= 400)
+					hy2 = 399;
+				if (hy3 >= 400)
+					hy3 = 399;
+				if (hy4 >= 400)
+					hy4 = 399;
+				if (hy5 >= 400)
+					hy5 = 399;
+				if (hy6 >= 400)
+					hy6 = 399;
+				if (hy7 >= 400)
+					hy7 = 399;
+				if (hy8 >= 400)
+					hy8 = 399;
+			}
+			else if (x > 200.0f && x < 600.0f && z>0.0f && z < 200.0f)
+			{
+				hx1 = (int)((p1.x -200.0f)/ 0.5f);
+				
+				hx2 = (int)((p2.x -200.0f)/ 0.5f);
+				hx3 = (int)((p3.x -200.0f)/ 0.5f);
+				hx4 = (int)((p4.x -200.0f)/ 0.5f);
+				hx5 = (int)((p5.x -200.0f)/ 0.5f);
+				hx6 = (int)((p6.x -200.0f)/ 0.5f);
+				hx7 = (int)((p7.x -200.0f)/ 0.5f);
+				hx8 = (int)((p8.x -200.0f)/ 0.5f);
+
+				if (hx1 < 0)
+					hx1 = 0;
+				if (hx2 < 0)
+					hx2 = 0;
+				if (hx3 < 0)
+					hx3 = 0;
+				if (hx4 < 0)
+					hx4 = 0;
+				if (hx5 < 0)
+					hx5 = 0;
+				if (hx6 < 0)
+					hx6 = 0;
+				if (hx7 < 0)
+					hx7 = 0;
+				if (hx8 < 0)
+					hx8 = 0;
+
+				if (hx1 >= 800)
+					hx1 = 799;
+				if (hx2 >= 800)
+					hx2 = 799;
+				if (hx3 >= 800)
+					hx3 = 799;
+				if (hx4 >= 800)
+					hx4 = 799;
+				if (hx5 >= 800)
+					hx5 = 799;
+				if (hx6 >= 800)
+					hx6 = 799;
+				if (hx7 >= 800)
+					hx7 = 799;
+				if (hx8 >= 800)
+					hx8 = 799;
+				hy1 = (int)((p1.y )/ 0.5f);
+				hy2 = (int)((p2.y )/ 0.5f);
+				hy3 = (int)((p3.y )/ 0.5f);
+				hy4 = (int)((p4.y )/ 0.5f);
+				hy5 = (int)((p5.y )/ 0.5f);
+				hy6 = (int)((p6.y )/ 0.5f);
+				hy7 = (int)((p7.y )/ 0.5f);
+				hy8 = (int)((p8.y )/ 0.5f);
+				if (hy1 < 0)
+					hy1 = 0;
+				if (hy2 < 0)
+					hy2 = 0;
+				if (hy3 < 0)
+					hy3 = 0;
+				if (hy4 < 0)
+					hy4 = 0;
+				if (hy5 < 0)
+					hy5 = 0;
+				if (hy6 < 0)
+					hy6 = 0;
+				if (hy7 < 0)
+					hy7 = 0;
+				if (hy8 < 0)
+					hy8 = 0;
+
+				if (hy1 >= 400)
+					hy1 = 399;
+				if (hy2 >= 400)
+					hy2 = 399;
+				if (hy3 >= 400)
+					hy3 = 399;
+				if (hy4 >= 400)
+					hy4 = 399;
+				if (hy5 >= 400)
+					hy5 = 399;
+				if (hy6 >= 400)
+					hy6 = 399;
+				if (hy7 >= 400)
+					hy7 = 399;
+				if (hy8 >= 400)
+					hy8 = 399;
+			}
 			bool v1 = false;
 			bool v2 = false;
 			bool v3 = false;

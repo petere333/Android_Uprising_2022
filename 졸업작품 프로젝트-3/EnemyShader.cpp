@@ -14,43 +14,480 @@ EnemyShader::~EnemyShader() {}
 
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
-	{
-		EnemyObject* obj = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-		obj->SetPosition(12.0f, 0.0f, 165.0f);
-		obj->origin = XMFLOAT3(12.0f, 0.0f, 165.0f);
-		obj->seekPoint.push_back(XMFLOAT2(12.0f, 164.5f));
-		obj->seekPoint.push_back(XMFLOAT2(22.0f, 164.5f));
-		obj->type = -10;
-		obj->SetTrackAnimationSet(0, 0);
-		obj->attackRange = 2.0f;
-		obj->bState.stateID = IDLE_STATE;
-		obj->bState.hp = 20;
-		obj->maxHP = 20;
-		obj->lastAttack = chrono::system_clock::now();
-		obj->attackDuration = 0.2f;
+	int mhp = 20;
+	int rhp = 20;
+	float mdur = 0.833333f;
+	float mrange = 2.0f;
+	float rrange = 8.0f;
+	float rdur = 0.2f;
+	EnemyObject* obj1 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj1->SetPosition      (170.0f, 0.0f, 20.0f);
+	obj1->origin = XMFLOAT3(170.0f, 0.0f, 20.0f);
+	obj1->bState.hp = mhp;
+	obj1->weapon = 2;
+	obj1->maxHP = mhp;
+	obj1->attackRange = mrange;
+	obj1->attackDuration = mdur;
 
-		objects.push_back(obj);
+	EnemyObject* obj3 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj3->SetPosition		(170.0f, 0.0f, 30.0f);
+	obj3->origin = XMFLOAT3	(170.0f, 0.0f, 30.0f);
+	obj3->bState.hp = mhp;
+	obj3->weapon = 2;
+	obj3->maxHP = mhp;
+	obj3->attackRange = mrange;
+	obj3->attackDuration = mdur;
 
+	EnemyObject* obj4 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj4->SetPosition(12.5f, 0.0f, 145.0f);
+	obj4->origin = XMFLOAT3(37.5f, 0.0f, 145.0f);
+	obj4->bState.hp = mhp;
+	obj4->weapon = 2;
+	obj4->maxHP = mhp;
+	obj4->attackRange = mrange;
+	obj4->attackDuration = mdur;
+
+	EnemyObject* obj5 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj5->SetPosition(55.0f, 0.0f, 88.0f);
+	obj5->origin = XMFLOAT3(55.0f, 0.0f, 88.0f);
+	obj5->bState.hp = mhp;
+	obj5->weapon = 2;
+	obj5->maxHP = mhp;
+	obj5->attackRange = mrange;
+	obj5->attackDuration = mdur;
+
+	EnemyObject* obj6 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj6->SetPosition(17.0f, 0.0f, 86.0f);
+	obj6->origin = XMFLOAT3(17.0f, 0.0f, 86.0f);
+	obj6->bState.hp = mhp;
+	obj6->weapon = 2;
+	obj6->maxHP = mhp;
+	obj6->attackRange = mrange;
+	obj6->attackDuration = mdur;
 	
+	EnemyObject* obj7 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj7->SetPosition(103.0f, 0.0f, 18.0f);
+	obj7->origin = XMFLOAT3(103.0f, 0.0f, 18.0f);
+	obj7->bState.hp = mhp;
+	obj7->weapon = 2;
+	obj7->maxHP = mhp;
+	obj7->attackRange = mrange;
+	obj7->attackDuration = mdur;
+
+	EnemyObject* obj8 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj8->SetPosition(103.0f, 0.0f, 32.0f);
+	obj8->origin = XMFLOAT3(103.0f, 0.0f, 32.0f);
+	obj8->bState.hp = mhp;
+	obj8->weapon = 2;
+	obj8->maxHP = mhp;
+	obj8->attackRange = mrange;
+	obj8->attackDuration = mdur;
+
+	EnemyObject* obj9 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj9->SetPosition(184.0f, 0.0f, 102.0f);
+	obj9->origin = XMFLOAT3(184.0f, 0.0f, 102.0f);
+	obj9->bState.hp = mhp;
+	obj9->weapon = 2;
+	obj9->maxHP = mhp;
+	obj9->attackRange = mrange;
+	obj9->attackDuration = mdur;
+
+	EnemyObject* obj10 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj10->SetPosition(195.0f, 0.0f, 102.0f);
+	obj10->origin = XMFLOAT3(185.0f, 0.0f, 102.0f);
+	obj10->bState.hp = mhp;
+	obj10->weapon = 2;
+	obj10->maxHP = mhp;
+	obj10->attackRange = mrange;
+	obj10->attackDuration = mdur;
+
+	EnemyObject* obj11 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj11->SetPosition(162.0f, 0.0f, 137.0f);
+	obj11->origin = XMFLOAT3(162.0f, 0.0f, 137.0f);
+	obj11->bState.hp = mhp;
+	obj11->weapon = 2;
+	obj11->maxHP = mhp;
+	obj11->attackRange = mrange;
+	obj11->attackDuration = mdur;
+
+	EnemyObject* obj12 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj12->SetPosition(162.0f, 0.0f, 145.0f);
+	obj12->origin = XMFLOAT3(162.0f, 0.0f, 145.0f);
+	obj12->bState.hp = mhp;
+	obj12->weapon = 2;
+	obj12->maxHP = mhp;
+	obj12->attackRange = mrange;
+	obj12->attackDuration = mdur;
+
+	EnemyObject* obj13 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj13->SetPosition(86.0f, 0.0f, 138.0f);
+	obj13->origin = XMFLOAT3(86.0f, 0.0f, 138.0f);
+	obj13->bState.hp = mhp;
+	obj13->weapon = 2;
+	obj13->maxHP = mhp;
+	obj13->attackRange = mrange;
+	obj13->attackDuration = mdur;
+
+	EnemyObject* obj14 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj14->SetPosition(97.0f, 0.0f, 146.0f);
+	obj14->origin = XMFLOAT3(97.0f, 0.0f, 146.0f);
+	obj14->bState.hp = mhp;
+	obj14->weapon = 2;
+	obj14->maxHP = mhp;
+	obj14->attackRange = mrange;
+	obj14->attackDuration = mdur;
+
+	EnemyObject* obj15 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj15->SetPosition(122.0f, 0.0f, 185.0f);
+	obj15->origin = XMFLOAT3(122.0f, 0.0f, 185.0f);
+	obj15->bState.hp = mhp;
+	obj15->weapon = 2;
+	obj15->maxHP = mhp;
+	obj15->attackRange = mrange;
+	obj15->attackDuration = mdur;
+
+	EnemyObject* obj16 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj16->SetPosition(122.0f, 0.0f, 175.0f);
+	obj16->origin = XMFLOAT3(122.0f, 0.0f, 175.0f);
+	obj16->bState.hp = mhp;
+	obj16->weapon = 2;
+	obj16->maxHP = mhp;
+	obj16->attackRange = mrange;
+	obj16->attackDuration = mdur;
+
+	EnemyObject* obj17 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj17->SetPosition(122.0f, 0.0f, 165.0f);
+	obj17->origin = XMFLOAT3(122.0f, 0.0f, 165.0f);
+	obj17->bState.hp = mhp;
+	obj17->weapon = 2;
+	obj17->maxHP = mhp;
+	obj17->attackRange = mrange;
+	obj17->attackDuration = mdur;
+
+	EnemyObject* obj18 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj18->SetPosition(122.0f, 0.0f, 155.0f);
+	obj18->origin = XMFLOAT3(122.0f, 0.0f, 155.0f);
+	obj18->bState.hp = mhp;
+	obj18->weapon = 2;
+	obj18->maxHP = mhp;
+	obj18->attackRange = mrange;
+	obj18->attackDuration = mdur;
+
+	EnemyObject* obj19 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj19->SetPosition(165.0f, 0.0f, 195.0f);
+	obj19->origin = XMFLOAT3(165.0f, 0.0f, 195.0f);
+	obj19->bState.hp = mhp;
+	obj19->weapon = 2;
+	obj19->maxHP = mhp;
+	obj19->attackRange = mrange;
+	obj19->attackDuration = mdur;
+
+	EnemyObject* obj20 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj20->SetPosition(165.0f, 0.0f, 174.0f);
+	obj20->origin = XMFLOAT3(165.0f, 0.0f, 174.0f);
+	obj20->bState.hp = mhp;
+	obj20->weapon = 2;
+	obj20->maxHP = mhp;
+	obj20->attackRange = mrange;
+	obj20->attackDuration = mdur;
+
+	EnemyObject* obj21 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj21->SetPosition(165.0f, 0.0f, 156.0f);
+	obj21->origin = XMFLOAT3(165.0f, 0.0f, 156.0f);
+	obj21->bState.hp = mhp;
+	obj21->weapon = 2;
+	obj21->maxHP = mhp;
+	obj21->attackRange = mrange;
+	obj21->attackDuration = mdur;
+
+	EnemyObject* obj2 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj2->SetPosition(185.0f, 0.0f, 16.0f);
+	obj2->origin = XMFLOAT3(185.0f, 0.0f, 16.0f);
+	obj2->bState.hp = rhp;
+	obj2->weapon = 1;
+	obj2->maxHP = rhp;
+	obj2->attackRange = rrange;
+	obj2->attackDuration = rdur;
+
+	EnemyObject* obj22 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj22->SetPosition(185.0f, 0.0f, 27.0f);
+	obj22->origin = XMFLOAT3(185.0f, 0.0f, 27.0f);
+	obj22->bState.hp = rhp;
+	obj22->weapon = 1;
+	obj22->maxHP = rhp;
+	obj22->attackRange = rrange;
+	obj22->attackDuration = rdur;
+
+	EnemyObject* obj23 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj23->SetPosition(185.0f, 0.0f, 36.0f);
+	obj23->origin = XMFLOAT3(185.0f, 0.0f, 36.0f);
+	obj23->bState.hp = rhp;
+	obj23->weapon = 1;
+	obj23->maxHP = rhp;
+	obj23->attackRange = rrange;
+	obj23->attackDuration = rdur;
+
+	EnemyObject* obj24 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj24->SetPosition(21.0f, 0.0f, 135.0f);
+	obj24->origin = XMFLOAT3(21.0f, 0.0f, 135.0f);
+	obj24->bState.hp = rhp;
+	obj24->weapon = 1;
+	obj24->maxHP = rhp;
+	obj24->attackRange = rrange;
+	obj24->attackDuration = rdur;
+
+	EnemyObject* obj25 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj25->SetPosition(28.0f, 0.0f, 135.0f);
+	obj25->origin = XMFLOAT3(28.0f, 0.0f, 135.0f);
+	obj25->bState.hp = rhp;
+	obj25->weapon = 1;
+	obj25->maxHP = rhp;
+	obj25->attackRange = rrange;
+	obj25->attackDuration = rdur;
+
+	EnemyObject* obj26 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj26->SetPosition(36.0f, 0.0f, 68.0f);
+	obj26->origin = XMFLOAT3(36.0f, 0.0f, 68.0f);
+	obj26->bState.hp = rhp;
+	obj26->weapon = 1;
+	obj26->maxHP = rhp;
+	obj26->attackRange = rrange;
+	obj26->attackDuration = rdur;
+
+	EnemyObject* obj27 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj27->SetPosition(64.0f, 0.0f, 64.0f);
+	obj27->origin = XMFLOAT3(64.0f, 0.0f, 64.0f);
+	obj27->bState.hp = rhp;
+	obj27->weapon = 1;
+	obj27->maxHP = rhp;
+	obj27->attackRange = rrange;
+	obj27->attackDuration = rdur;
+
+	EnemyObject* obj28 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj28->SetPosition(120.0f, 0.0f, 40.0f);
+	obj28->origin = XMFLOAT3(120.0f, 0.0f, 40.0f);
+	obj28->bState.hp = rhp;
+	obj28->weapon = 1;
+	obj28->maxHP = rhp;
+	obj28->attackRange = rrange;
+	obj28->attackDuration = rdur;
+
+	EnemyObject* obj29 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj29->SetPosition(120.0f, 0.0f, 30.0f);
+	obj29->origin = XMFLOAT3(120.0f, 0.0f, 30.0f);
+	obj29->bState.hp = rhp;
+	obj29->weapon = 1;
+	obj29->maxHP = rhp;
+	obj29->attackRange = rrange;
+	obj29->attackDuration = rdur;
+
+	EnemyObject* obj30 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj30->SetPosition(120.0f, 0.0f, 22.0f);
+	obj30->origin = XMFLOAT3(120.0f, 0.0f, 22.0f);
+	obj30->bState.hp = rhp;
+	obj30->weapon = 1;
+	obj30->maxHP = rhp;
+	obj30->attackRange = rrange;
+	obj30->attackDuration = rdur;
+
+	EnemyObject* obj31 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj31->SetPosition(120.0f, 0.0f, 13.0f);
+	obj31->origin = XMFLOAT3(120.0f, 0.0f, 13.0f);
+	obj31->bState.hp = rhp;
+	obj31->weapon = 1;
+	obj31->maxHP = rhp;
+	obj31->attackRange = rrange;
+	obj31->attackDuration = rdur;
+
+	EnemyObject* obj32 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj32->SetPosition(192.0f, 0.0f, 110.0f);
+	obj32->origin = XMFLOAT3(192.0f, 0.0f, 110.0f);
+	obj32->bState.hp = rhp;
+	obj32->weapon = 1;
+	obj32->maxHP = rhp;
+	obj32->attackRange = rrange;
+	obj32->attackDuration = rdur;
+
+	EnemyObject* obj33 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj33->SetPosition(184.0f, 0.0f, 110.0f);
+	obj33->origin = XMFLOAT3(184.0f, 0.0f, 110.0f);
+	obj33->bState.hp = rhp;
+	obj33->weapon = 1;
+	obj33->maxHP = rhp;
+	obj33->attackRange = rrange;
+	obj33->attackDuration = rdur;
+
+	EnemyObject* obj34 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj34->SetPosition(151.0f, 0.0f, 144.0f);
+	obj34->origin = XMFLOAT3(151.0f, 0.0f, 144.0f);
+	obj34->bState.hp = rhp;
+	obj34->weapon = 1;
+	obj34->maxHP = rhp;
+	obj34->attackRange = rrange;
+	obj34->attackDuration = rdur;
+
+	EnemyObject* obj35 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj35->SetPosition(151.0f, 0.0f, 135.0f);
+	obj35->origin = XMFLOAT3(151.0f, 0.0f, 135.0f);
+	obj35->bState.hp = rhp;
+	obj35->weapon = 1;
+	obj35->maxHP = rhp;
+	obj35->attackRange = rrange;
+	obj35->attackDuration = rdur;
+
+	EnemyObject* obj36 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj36->SetPosition(93.0f, 0.0f, 132.0f);
+	obj36->origin = XMFLOAT3(93.0f, 0.0f, 132.0f);
+	obj36->bState.hp = rhp;
+	obj36->weapon = 1;
+	obj36->maxHP = rhp;
+	obj36->attackRange = rrange;
+	obj36->attackDuration = rdur;
+
+	EnemyObject* obj37 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj37->SetPosition(85.0f, 0.0f, 132.0f);
+	obj37->origin = XMFLOAT3(85.0f, 0.0f, 132.0f);
+	obj37->bState.hp = rhp;
+	obj37->weapon = 1;
+	obj37->maxHP = rhp;
+	obj37->attackRange = rrange;
+	obj37->attackDuration = rdur;
+
+	EnemyObject* obj38 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj38->SetPosition(76.0f, 0.0f, 132.0f);
+	obj38->origin = XMFLOAT3(76.0f, 0.0f, 132.0f);
+	obj38->bState.hp = rhp;
+	obj38->weapon = 1;
+	obj38->maxHP = rhp;
+	obj38->attackRange = rrange;
+	obj38->attackDuration = rdur;
+
+	EnemyObject* obj39 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj39->SetPosition(142.0f, 0.0f, 185.0f);
+	obj39->origin = XMFLOAT3(142.0f, 0.0f, 185.0f);
+	obj39->bState.hp = rhp;
+	obj39->weapon = 1;
+	obj39->maxHP = rhp;
+	obj39->attackRange = rrange;
+	obj39->attackDuration = rdur;
+
+	EnemyObject* obj40 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj40->SetPosition(142.0f, 0.0f, 175.0f);
+	obj40->origin = XMFLOAT3(142.0f, 0.0f, 175.0f);
+	obj40->bState.hp = rhp;
+	obj40->weapon = 1;
+	obj40->maxHP = rhp;
+	obj40->attackRange = rrange;
+	obj40->attackDuration = rdur;
+
+	EnemyObject* obj41 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj41->SetPosition(142.0f, 0.0f, 165.0f);
+	obj41->origin = XMFLOAT3(142.0f, 0.0f, 165.0f);
+	obj41->bState.hp = rhp;
+	obj41->weapon = 1;
+	obj41->maxHP = rhp;
+	obj41->attackRange = rrange;
+	obj41->attackDuration = rdur;
+
+	EnemyObject* obj42 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj42->SetPosition(142.0f, 0.0f, 155.0f);
+	obj42->origin = XMFLOAT3(142.0f, 0.0f, 155.0f);
+	obj42->bState.hp = rhp;
+	obj42->weapon = 1;
+	obj42->maxHP = rhp;
+	obj42->attackRange = rrange;
+	obj42->attackDuration = rdur;
+
+	EnemyObject* obj43 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj43->SetPosition(173.0f, 0.0f, 165.0f);
+	obj43->origin = XMFLOAT3(173.0f, 0.0f, 165.0f);
+	obj43->bState.hp = rhp;
+	obj43->weapon = 1;
+	obj43->maxHP = rhp;
+	obj43->attackRange = rrange;
+	obj43->attackDuration = rdur;
+
+	EnemyObject* obj44 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
+	obj44->SetPosition(174.0f, 0.0f, 182.0f);
+	obj44->origin = XMFLOAT3(174.0f, 0.0f, 182.0f);
+	obj44->bState.hp = rhp;
+	obj44->weapon = 1;
+	obj44->maxHP = rhp;
+	obj44->attackRange = rrange;
+	obj44->attackDuration = rdur;
 
 
+	objects.push_back(obj1);
+	objects.push_back(obj2);
+	objects.push_back(obj3);
+	objects.push_back(obj4);
+	objects.push_back(obj5);
+	objects.push_back(obj6);
+	objects.push_back(obj7);
+	objects.push_back(obj8);
+	objects.push_back(obj9);
+	objects.push_back(obj10);
+	objects.push_back(obj11);
+	objects.push_back(obj12);
+	objects.push_back(obj13);
+	objects.push_back(obj14);
+	objects.push_back(obj15);
+	objects.push_back(obj16);
+	objects.push_back(obj17);
+	objects.push_back(obj18);
+	objects.push_back(obj19);
+	objects.push_back(obj20);
+	objects.push_back(obj21);
+	objects.push_back(obj22);
+	objects.push_back(obj23);
+	objects.push_back(obj24);
+	objects.push_back(obj25);
+	objects.push_back(obj26);
+	objects.push_back(obj27);
+	objects.push_back(obj28);
+	objects.push_back(obj29);
+	objects.push_back(obj30);
+	objects.push_back(obj31);
+	objects.push_back(obj32);
+	objects.push_back(obj33);
+	objects.push_back(obj34);
+	objects.push_back(obj35);
+	objects.push_back(obj36);
+	objects.push_back(obj37);
+	objects.push_back(obj38);
+	objects.push_back(obj39);
+	objects.push_back(obj40);
+	objects.push_back(obj41);
+	objects.push_back(obj42);
+	objects.push_back(obj43);
+	objects.push_back(obj44);
 
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		objects[i]->type = -10;
+		objects[i]->SetTrackAnimationSet(0, 0);
+		objects[i]->bState.stateID = IDLE_STATE;
+		objects[i]->lastAttack = chrono::system_clock::now();
 
-		// 각 적들의 위치에 바운딩 박스 생성
-		for (int i = 0; i < objects.size(); ++i)
-		{
-			//x,y=-0.25~0.25 z=0.0~1.7
-
-			XMFLOAT3 pos = objects[i]->GetPosition();
-
-			BoundBox* box = new BoundBox;
-			box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
-			box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
-
-			objects[i]->mbox = box;
-		}
 	}
 
+
+
+
+	// 각 적들의 위치에 바운딩 박스 생성
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		//x,y=-0.25~0.25 z=0.0~1.7
+
+		XMFLOAT3 pos = objects[i]->GetPosition();
+
+		BoundBox* box = new BoundBox;
+		box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
+		box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
+
+		objects[i]->mbox = box;
+	}
+	
 	
 }
 
@@ -93,9 +530,6 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 	
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		
-
-
 		XMFLOAT3 pos = objects[i]->GetPosition();
 		XMFLOAT3 camPos = pCamera->getPosition();
 
@@ -114,84 +548,20 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
 
-		if ((px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f) &&
-			(ex >= 0.0f && ex <= 400.0f && ez >= 0.0f && ez <= 200.0f))//1-1
+		if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+			objects[i]->Animate(elapsed);
+			if (objects[i]->m_pSkinnedAnimationController)
 			{
-				objects[i]->Animate(elapsed);
-				if (objects[i]->m_pSkinnedAnimationController)
-				{
-					objects[i]->UpdateTransform(NULL);
-				}
-				if (heap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &heap);
-				}
-				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-				objects[i]->Render(pd3dCommandList, pCamera);
+				objects[i]->UpdateTransform(NULL);
 			}
-		}
-
-
-		else if ((px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f) &&
-			(ex >= 0.0f && ex <= 200.0f && ez >= 200.0f && ez <= 600.0f))//1-2
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+			if (heap)
 			{
-				objects[i]->Animate(elapsed);
-				if (objects[i]->m_pSkinnedAnimationController)
-				{
-					objects[i]->UpdateTransform(NULL);
-				}
-				if (heap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &heap);
-				}
-				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-				objects[i]->Render(pd3dCommandList, pCamera);
+				pd3dCommandList->SetDescriptorHeaps(1, &heap);
 			}
+			rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
+			objects[i]->Render(pd3dCommandList, pCamera);
 		}
-
-		else if ((px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f) &&
-			(ex >= 280.0f && ex <= 400.0f && ez >= 200.0f && ez <= 600.0f))//1-3
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				objects[i]->Animate(elapsed);
-				if (objects[i]->m_pSkinnedAnimationController)
-				{
-					objects[i]->UpdateTransform(NULL);
-				}
-				if (heap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &heap);
-				}
-				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-				objects[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-
-		else if ((px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f) &&
-			(ex >= 400.0f && ex <= 600.0f && ez >= 0.0f && ez <= 600.0f))//1-4
-		{
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
-			{
-				objects[i]->Animate(elapsed);
-				if (objects[i]->m_pSkinnedAnimationController)
-				{
-					objects[i]->UpdateTransform(NULL);
-				}
-				if (heap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &heap);
-				}
-				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-				objects[i]->Render(pd3dCommandList, pCamera);
-			}
-		}
-
-		
 	}
 
 	
@@ -282,14 +652,27 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			objects[i]->bState.stateID = DEAD_STATE;
 			objects[i]->stunned = false;
 			objects[i]->deathMoment = chrono::system_clock::now();
-
-			//애니메이션도 죽는 것으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+				//애니메이션도 죽는 것으로 변경
+				if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
+			else
+			{
+				//애니메이션도 죽는 것으로 변경
+				if (objects[i]->m_pChild != rm->enemyModels[8]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[8]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[8]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
+			
 		}
 
 		if (objects[i]->stunned == true)
@@ -297,13 +680,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 			chrono::duration<double> dt = moment - objects[i]->lastStun;
 			//기절 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
+				if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			//기절 지속시간이 끝난 경우
 			if ((float)dt.count() >= objects[i]->stunDuration)
 			{
@@ -337,7 +731,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				float nx = dx / dist;
 				float nz = dz / dist;
 				//30미터 너머의 적은 봐도 못본 것으로 처리
-				if (dist > 30.0f)
+				if (dist > 11.0f)
 				{
 					continue;
 				}
@@ -345,17 +739,34 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				{
 					for (float x = ex; x < px; x += 0.5f)
 					{
-						float z = ez + nz / nx * 0.5f;
-
-						int ix = (int)((x - 0.25f) / 0.5f) + 1;
-						int iz = (int)((z - 0.25f) / 0.5f) + 1;
-						//ix = (int)((x + 0.25f) / 0.5f);
-						//iz = (int)((z + 0.25f) / 0.5f);
-						if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						
+						float z = ez + dz / dx * 0.5f * (x - ex) * 2.0f;
+						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
-							found = false;
-							break;
+							int ix = (int)((x - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							//ix = (int)((x + 0.25f) / 0.5f);
+							//iz = (int)((z + 0.25f) / 0.5f);
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
 						}
+						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+						{
+							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							//ix = (int)((x + 0.25f) / 0.5f);
+							//iz = (int)((z + 0.25f) / 0.5f);
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
+						}
+						if (found == false)
+							break;
 					}
 					if (found == true)
 					{
@@ -371,16 +782,33 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				{
 					for (float x = ex; x > px; x -= 0.5f)
 					{
-						float z = ez - nz / nx * 0.5f;
-						int ix = (int)((x - 0.25f) / 0.5f) + 1;
-						int iz = (int)((z - 0.25f) / 0.5f) + 1;
+						float z = ez - nz / nx * 0.5f * (x - ex) * 2.0f;
 
-						
-						if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
-							found = false;
-							break;
+							int ix = (int)((x - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							//ix = (int)((x + 0.25f) / 0.5f);
+							//iz = (int)((z + 0.25f) / 0.5f);
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
 						}
+						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+						{
+							int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							//ix = (int)((x + 0.25f) / 0.5f);
+							//iz = (int)((z + 0.25f) / 0.5f);
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
+						}
+
 						if (found == false)
 							break;
 					}
@@ -423,21 +851,36 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
 			{
 				objects[i]->currentPoint += 1;
-				if (objects[i]->currentPoint == objects[i]->seekPoint.size())
-					objects[i]->currentPoint = 0;
-				objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
-				objects[i]->routeIdx = 0;
+				if (objects[i]->seekPoint.size() != 0)
+				{
+					if (objects[i]->currentPoint == objects[i]->seekPoint.size())
+						objects[i]->currentPoint = 0;
+					objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
+					objects[i]->routeIdx = 0;
+				}
+				
 
 			}
 			objects[i]->moveByRoute(objects[i]->route);
 			//이동 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
+				if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			
 
 		}
@@ -445,14 +888,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		else if (objects[i]->bState.stateID == CHASE_STATE)
 		{
 			//빠르게 이동하는 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
+				if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
-
-
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			//플레이어의 위치를 향해 감.
 			if (objects[i]->routeIdx < objects[i]->route.size())
 			{
@@ -482,14 +935,27 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					for (float x = ex; x < px; x += 0.5f)
 					{
 						float z = ez + nz / nx * 0.5f;
-
-						int ix = (int)((x - 0.25f) / 0.5f) + 1;
-						int iz = (int)((z - 0.25f) / 0.5f) + 1;
-
-						if (objects[i]->heightmap[ix][iz] >= 2.0f)
+						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
-							found = false;
-							break;
+							int ix = (int)((x - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
+						}
+						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+						{
+							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							{
+								found = false;
+								break;
+							}
 						}
 					}
 					if (found == true)
@@ -504,12 +970,26 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					for (float x = ex; x > px; x -= 0.5f)
 					{
 						float z = ez - nz / nx * 0.5f;
-						int ix = (int)((x - 0.25f) / 0.5f) + 1;
-						int iz = (int)((z - 0.25f) / 0.5f) + 1;
-						if (objects[i]->heightmap[ix][iz] >= 1.0f)
+
+						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 						{
-							found = false;
-							break;
+							int ix = (int)((x - 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							if (objects[i]->heightmap[ix][iz] >= 1.0f)
+							{
+								found = false;
+								break;
+							}
+						}
+						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+						{
+							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
+							int iz = (int)((z - 0.25f) / 0.5f) + 1;
+							if (objects[i]->heightmap[ix][iz] >= 1.0f)
+							{
+								found = false;
+								break;
+							}
 						}
 						if (found == false)
 							break;
@@ -525,7 +1005,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
-			if (dist >= 30.0f || objects[i]->routeIdx==objects[i]->route.size())
+			if (dist >= 15.0f || objects[i]->routeIdx==objects[i]->route.size())
 			{
 				int playerID = -1; // 발견한 적의 아이디
 				//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
@@ -545,8 +1025,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					float dist = sqrt(dx * dx + dz * dz);
 					float nx = dx / dist;
 					float nz = dz / dist;
-					//30미터 너머의 적은 봐도 못본 것으로 처리
-					if (dist > 30.0f)
+					//15미터 너머의 적은 봐도 못본 것으로 처리
+					if (dist > 11.0f)
 					{
 						objects[i]->chaseTarget = -1;
 						objects[i]->attackTarget = -1;
@@ -558,14 +1038,27 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						for (float x = ex; x < px; x += 0.5f)
 						{
 							float z = ez + nz / nx * 0.5f;
-
-							int ix = (int)((x-0.25f) / 0.5f)+1;
-							int iz = (int)((z-0.25f) / 0.5f)+1;
-							
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 							{
-								found = false;
-								break;
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
 							}
 						}
 						if (found == true)
@@ -583,13 +1076,29 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						for (float x = ex; x > px; x -= 0.5f)
 						{
 							float z = ez - nz / nx * 0.5f;
-							int ix = (int)((x - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 							{
-								found = false;
-								break;
+
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+							{
+
+								int ix = (int)((x - 200.0f-0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								{
+									found = false;
+									break;
+								}
 							}
 							if (found == false)
 								break;
@@ -643,7 +1152,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
 			if (dt >= 1.0f)
 			{
-				delete objects[i];
+				
 				objects.erase(objects.begin() + i);
 			}
 		}
@@ -651,12 +1160,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 		else if (objects[i]->bState.stateID == BATTLE_STATE)
 		{
 			//공격하는 애니메이션으로 변경
-			if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+			if (objects[i]->weapon == 1)
 			{
-				objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
-				objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
+				if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
 			}
-			objects[i]->SetTrackAnimationSet(0, 0);
+			else
+			{
+				if (objects[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
+				{
+					objects[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7]);
+				}
+				objects[i]->SetTrackAnimationSet(0, 0);
+			}
 			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
 			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
 
