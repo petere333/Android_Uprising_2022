@@ -54,6 +54,7 @@ enum class PACKET_TYPE : short
 	SC_ATTACK,
 	SC_JUMP,
 	SC_TELEPORT,
+	SC_POSITION,
 };
 
 // client to server packet
@@ -80,6 +81,8 @@ struct CS_MOUSE_PACKET
 	PACKET_TYPE type;
 	bool down;
 	short c_id;
+
+	int attackID;
 };
 
 struct CS_POSITION_PACKET
@@ -88,8 +91,16 @@ struct CS_POSITION_PACKET
 	PACKET_TYPE type;
 	short c_id;
 
+
+	
+	
+	int attackID;
+	float angle;
 	float x;
+	float y;
 	float z;
+
+	
 };
 
 struct CS_CAMERA_PACKET
@@ -235,4 +246,18 @@ struct SC_TELEPORT_PACKET
 	short id;
 	float x, y, z;
 };
+
+struct SC_POSITION_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+	float angle;
+	float x, y, z;
+
+	
+	
+	int attackid;
+};
+
 #pragma pack (pop)

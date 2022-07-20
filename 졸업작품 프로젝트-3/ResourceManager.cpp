@@ -1302,6 +1302,7 @@ void ResourceManager::createTextures()
 	norm71 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm71->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area1_2/norm/wireframe.dds", RESOURCE_TEXTURE2D, 0);
 
+
 	// 2-1
 
 	norm72 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -1395,8 +1396,6 @@ void ResourceManager::createTextures()
 
 	norm101 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm101->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/norm/Receps_wall1.dds", RESOURCE_TEXTURE2D, 0);
-
-
 	normals.push_back(norm35);
 	normals.push_back(norm36);
 	normals.push_back(norm37);
@@ -1481,9 +1480,9 @@ void ResourceManager::createTextures()
 	CTexture* spc51; CTexture* spc52; CTexture* spc53; CTexture* spc54; CTexture* spc55; CTexture* spc56; CTexture* spc57; CTexture* spc58; CTexture* spc59; CTexture* spc60;
 	CTexture* spc61; CTexture* spc62; CTexture* spc63; CTexture* spc64; CTexture* spc65; CTexture* spc66; CTexture* spc67; CTexture* spc68; CTexture* spc69; CTexture* spc70;
 	CTexture* spc71; CTexture* spc72; CTexture* spc73; CTexture* spc74; CTexture* spc75; CTexture* spc76; CTexture* spc77; CTexture* spc78; CTexture* spc79; CTexture* spc80;
+	
 	CTexture* spc81; CTexture* spc82; CTexture* spc83; CTexture* spc84; CTexture* spc85; CTexture* spc86; CTexture* spc87; CTexture* spc88; CTexture* spc89; CTexture* spc90;
 	CTexture* spc91; CTexture* spc92; CTexture* spc93; CTexture* spc94; CTexture* spc95; CTexture* spc96; CTexture* spc97; CTexture* spc98; CTexture* spc99; CTexture* spc100;
-
 	spc1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec2.dds", RESOURCE_TEXTURE2D, 0);
 
@@ -1830,9 +1829,6 @@ void ResourceManager::createTextures()
 	specs.push_back(spc97);
 	specs.push_back(spc98);
 	specs.push_back(spc99);
-	
-
-	
 
 	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
 
@@ -1866,34 +1862,34 @@ void ResourceManager::createTextures()
 	materials[3]->SetNormalTex(normals[1]);
 
 	
-	materials[77]->SetNormalTex(normals[2]);
-	materials[78]->SetNormalTex(normals[3]);
-	materials[85]->SetNormalTex(normals[4]);
-	materials[98]->SetNormalTex(normals[5]);
-	materials[100]->SetNormalTex(normals[6]);
-	materials[93]->SetNormalTex(normals[7]);
-	materials[86]->SetNormalTex(normals[8]);
-	materials[96]->SetNormalTex(normals[9]);
-	materials[101]->SetNormalTex(normals[10]);
-	materials[82]->SetNormalTex(normals[11]);
-	materials[80]->SetNormalTex(normals[12]);
-	materials[81]->SetNormalTex(normals[14]);
-	materials[97]->SetNormalTex(normals[16]);
-	materials[83]->SetNormalTex(normals[17]);
-	materials[87]->SetNormalTex(normals[19]);
-	materials[88]->SetNormalTex(normals[20]);
-	materials[102]->SetNormalTex(normals[21]);
-	materials[103]->SetNormalTex(normals[22]);
-	materials[84]->SetNormalTex(normals[23]);
-	materials[76]->SetNormalTex(normals[24]);
-	materials[104]->SetNormalTex(normals[26]);
-	materials[91]->SetNormalTex(normals[27]);
-	materials[105]->SetNormalTex(normals[28]);
-	materials[95]->SetNormalTex(normals[29]);
-	materials[99]->SetNormalTex(normals[30]);
-	materials[94]->SetNormalTex(normals[31]);
-	materials[89]->SetNormalTex(normals[32]);
-	materials[92]->SetNormalTex(normals[33]);
+	materials[7]->SetNormalTex(normals[2]);
+	materials[8]->SetNormalTex(normals[3]);
+	materials[15]->SetNormalTex(normals[4]);
+	materials[28]->SetNormalTex(normals[5]);
+	materials[30]->SetNormalTex(normals[6]);
+	materials[23]->SetNormalTex(normals[7]);
+	materials[16]->SetNormalTex(normals[8]);
+	materials[26]->SetNormalTex(normals[9]);
+	materials[31]->SetNormalTex(normals[10]);
+	materials[12]->SetNormalTex(normals[11]);
+	materials[10]->SetNormalTex(normals[12]);
+	materials[11]->SetNormalTex(normals[14]);
+	materials[27]->SetNormalTex(normals[16]);
+	materials[13]->SetNormalTex(normals[17]);
+	materials[17]->SetNormalTex(normals[19]);
+	materials[18]->SetNormalTex(normals[20]);
+	materials[32]->SetNormalTex(normals[21]);
+	materials[33]->SetNormalTex(normals[22]);
+	materials[14]->SetNormalTex(normals[23]);
+	materials[6]->SetNormalTex(normals[24]);
+	materials[34]->SetNormalTex(normals[26]);
+	materials[21]->SetNormalTex(normals[27]);
+	materials[35]->SetNormalTex(normals[28]);
+	materials[25]->SetNormalTex(normals[29]);
+	materials[29]->SetNormalTex(normals[30]);
+	materials[24]->SetNormalTex(normals[31]);
+	materials[19]->SetNormalTex(normals[32]);
+	materials[22]->SetNormalTex(normals[33]);
 
 	
 	//노말은 여기서부터 문제
@@ -1939,71 +1935,6 @@ void ResourceManager::createTextures()
 	materials[73]->SetNormalTex(normals[38]);
 	materials[74]->SetNormalTex(normals[39]);
 	materials[75]->SetNormalTex(normals[40]);
-
-
-	materials[88]->SetNormalTex(normals[71]);
-	materials[89]->SetNormalTex(normals[72]);
-	materials[111]->SetNormalTex(normals[73]);
-	materials[90]->SetNormalTex(normals[74]);
-	materials[91]->SetNormalTex(normals[75]);
-	materials[92]->SetNormalTex(normals[76]);
-	materials[93]->SetNormalTex(normals[77]);
-	materials[95]->SetNormalTex(normals[78]);
-	materials[96]->SetNormalTex(normals[79]);
-	materials[110]->SetNormalTex(normals[80]);
-	materials[85]->SetNormalTex(normals[81]);
-	materials[112]->SetNormalTex(normals[83]);
-	materials[82]->SetNormalTex(normals[82]);
-
-
-	// 2=2
-	materials[106]->SetNormalTex(normals[84]);
-	materials[103]->SetNormalTex(normals[85]);
-	materials[102]->SetNormalTex(normals[86]);
-	materials[83]->SetNormalTex(normals[87]);
-	materials[86]->SetNormalTex(normals[88]);
-	materials[105]->SetNormalTex(normals[89]);
-	materials[107]->SetNormalTex(normals[90]);
-	materials[109]->SetNormalTex(normals[91]);
-	materials[100]->SetNormalTex(normals[93]);
-	materials[101]->SetNormalTex(normals[94]);
-	materials[108]->SetNormalTex(normals[96]);
-	materials[87]->SetNormalTex(normals[98]);
-	materials[84]->SetNormalTex(normals[99]);
-	materials[104]->SetNormalTex(normals[100]);
-
-	// 2-1
-	materials[88]->SetNormalTex(specs[69]);
-	materials[89]->SetNormalTex(specs[70]);
-	materials[111]->SetNormalTex(specs[71]);
-	materials[90]->SetNormalTex(specs[72]);
-	materials[91]->SetNormalTex(specs[73]);
-	materials[92]->SetNormalTex(specs[74]);
-	materials[93]->SetNormalTex(specs[75]);
-	materials[95]->SetNormalTex(specs[76]);
-	materials[96]->SetNormalTex(specs[77]);
-	materials[110]->SetNormalTex(specs[78]);
-	materials[85]->SetNormalTex(specs[79]);
-	materials[112]->SetNormalTex(specs[81]);
-	materials[82]->SetNormalTex(specs[80]);
-
-
-	//2-2
-
-	materials[106]->SetNormalTex(specs[82]);
-	materials[103]->SetNormalTex(specs[83]);
-	materials[102]->SetNormalTex(specs[84]);
-	materials[83]->SetNormalTex(specs[85]);
-	materials[86]->SetNormalTex(specs[86]);
-	materials[105]->SetNormalTex(specs[87]);
-	materials[107]->SetNormalTex(specs[88]);
-	materials[109]->SetNormalTex(specs[89]);
-	materials[100]->SetNormalTex(specs[91]);
-	materials[101]->SetNormalTex(specs[92]);
-	materials[108]->SetNormalTex(specs[94]);
-	materials[87]->SetNormalTex(specs[96]);
-	materials[84]->SetNormalTex(specs[97]);
-	materials[104]->SetNormalTex(specs[98]);
 	
 
 
@@ -2011,34 +1942,34 @@ void ResourceManager::createTextures()
 	materials[1]->SetSpecTex(specs[0]);
 	materials[3]->SetSpecTex(specs[0]);
 
-	materials[77]->SetSpecTex(specs[2]);
-	materials[78]->SetSpecTex(specs[3]);
-	materials[85]->SetSpecTex(specs[4]);
-	materials[98]->SetSpecTex(specs[5]);
-	materials[100]->SetSpecTex(specs[6]);
-	materials[93]->SetSpecTex(specs[7]);
-	materials[86]->SetSpecTex(specs[8]);
-	materials[96]->SetSpecTex(specs[9]);
-	materials[101]->SetSpecTex(specs[10]);
-	materials[82]->SetSpecTex(specs[11]);
-	materials[80]->SetSpecTex(specs[12]);
-	materials[81]->SetSpecTex(specs[14]);
-	materials[97]->SetSpecTex(specs[15]);
-	materials[83]->SetSpecTex(specs[16]);
-	materials[87]->SetSpecTex(specs[18]);
-	materials[88]->SetSpecTex(specs[19]);
-	materials[102]->SetSpecTex(specs[20]);
-	materials[103]->SetSpecTex(specs[21]);
-	materials[84]->SetSpecTex(specs[22]);
-	materials[76]->SetSpecTex(specs[23]);
-	materials[104]->SetSpecTex(specs[24]);
-	materials[91]->SetSpecTex(specs[25]);
-	materials[105]->SetSpecTex(specs[26]);
-	materials[95]->SetSpecTex(specs[27]);
-	materials[94]->SetSpecTex(specs[28]);
-	materials[99]->SetSpecTex(specs[29]);
-	materials[89]->SetSpecTex(specs[30]);
-	materials[92]->SetSpecTex(specs[31]);
+	materials[7]->SetSpecTex(specs[2]);
+	materials[8]->SetSpecTex(specs[3]);
+	materials[15]->SetSpecTex(specs[4]);
+	materials[28]->SetSpecTex(specs[5]);
+	materials[30]->SetSpecTex(specs[6]);
+	materials[23]->SetSpecTex(specs[7]);
+	materials[16]->SetSpecTex(specs[8]);
+	materials[26]->SetSpecTex(specs[9]);
+	materials[31]->SetSpecTex(specs[10]);
+	materials[12]->SetSpecTex(specs[11]);
+	materials[10]->SetSpecTex(specs[12]);
+	materials[11]->SetSpecTex(specs[14]);
+	materials[27]->SetSpecTex(specs[15]);
+	materials[13]->SetSpecTex(specs[16]);
+	materials[17]->SetSpecTex(specs[18]);
+	materials[18]->SetSpecTex(specs[19]);
+	materials[32]->SetSpecTex(specs[20]);
+	materials[33]->SetSpecTex(specs[21]);
+	materials[14]->SetSpecTex(specs[22]);
+	materials[6]->SetSpecTex(specs[23]);
+	materials[34]->SetSpecTex(specs[24]);
+	materials[21]->SetSpecTex(specs[25]);
+	materials[35]->SetSpecTex(specs[26]);
+	materials[25]->SetSpecTex(specs[27]);
+	materials[24]->SetSpecTex(specs[28]);
+	materials[29]->SetSpecTex(specs[29]);
+	materials[19]->SetSpecTex(specs[30]);
+	materials[12]->SetSpecTex(specs[31]);
 	
 	//스페큘러는 여기서부터 문제
 
@@ -2087,6 +2018,72 @@ void ResourceManager::createTextures()
 	materials[75]->SetSpecTex(specs[38]);
 	
 	
+	//2-1
+	materials[88]->SetSpecTex(normals[71]);
+	materials[89]->SetSpecTex(normals[72]);
+	materials[111]->SetSpecTex(normals[73]);
+	materials[90]->SetSpecTex(normals[74]);
+	materials[91]->SetSpecTex(normals[75]);
+	materials[92]->SetSpecTex(normals[76]);
+	materials[93]->SetSpecTex(normals[77]);
+	materials[95]->SetSpecTex(normals[78]);
+	materials[96]->SetSpecTex(normals[79]);
+	materials[110]->SetSpecTex(normals[80]);
+	materials[85]->SetSpecTex(normals[81]);
+	materials[112]->SetSpecTex(normals[83]);
+	materials[82]->SetSpecTex(normals[82]);
+
+
+	// 2=2
+	materials[106]->SetSpecTex(normals[84]);
+	materials[103]->SetSpecTex(normals[85]);
+	materials[102]->SetSpecTex(normals[86]);
+	materials[83]->SetSpecTex(normals[87]);
+	materials[86]->SetSpecTex(normals[88]);
+	materials[105]->SetSpecTex(normals[89]);
+	materials[107]->SetSpecTex(normals[90]);
+	materials[109]->SetSpecTex(normals[91]);
+	materials[100]->SetSpecTex(normals[93]);
+	materials[101]->SetSpecTex(normals[94]);
+	materials[108]->SetSpecTex(normals[96]);
+	materials[87]->SetSpecTex(normals[98]);
+	materials[84]->SetSpecTex(normals[99]);
+	materials[104]->SetSpecTex(normals[100]);
+
+
+	// 2-1
+	materials[88]->SetNormalTex(specs[69]);
+	materials[89]->SetNormalTex(specs[70]);
+	materials[111]->SetNormalTex(specs[71]);
+	materials[90]->SetNormalTex(specs[72]);
+	materials[91]->SetNormalTex(specs[73]);
+	materials[92]->SetNormalTex(specs[74]);
+	materials[93]->SetNormalTex(specs[75]);
+	materials[95]->SetNormalTex(specs[76]);
+	materials[96]->SetNormalTex(specs[77]);
+	materials[110]->SetNormalTex(specs[78]);
+	materials[85]->SetNormalTex(specs[79]);
+	materials[112]->SetNormalTex(specs[81]);
+	materials[82]->SetNormalTex(specs[80]);
+
+
+	//2-2
+
+	materials[106]->SetNormalTex(specs[82]);
+	materials[103]->SetNormalTex(specs[83]);
+	materials[102]->SetNormalTex(specs[84]);
+	materials[83]->SetNormalTex(specs[85]);
+	materials[86]->SetNormalTex(specs[86]);
+	materials[105]->SetNormalTex(specs[87]);
+	materials[107]->SetNormalTex(specs[88]);
+	materials[109]->SetNormalTex(specs[89]);
+	materials[100]->SetNormalTex(specs[91]);
+	materials[101]->SetNormalTex(specs[92]);
+	materials[108]->SetNormalTex(specs[94]);
+	materials[87]->SetNormalTex(specs[96]);
+	materials[84]->SetNormalTex(specs[97]);
+	materials[104]->SetNormalTex(specs[98]);
+
 }
 
 void ResourceManager::createSound(){}

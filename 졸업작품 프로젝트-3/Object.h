@@ -532,6 +532,7 @@ public:
 	
 	bool attack = false;
 
+	char key = 0;
 
 	chrono::time_point<chrono::system_clock> lastMove;
 	bool lastMoveSuccess;

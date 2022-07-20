@@ -172,6 +172,7 @@ public:
 	int x13 = 400;
 	int z13 = 800;
 
+	int moving=0;
 
 	int x21 = 200;
 	int z21 = 474;
@@ -292,7 +293,7 @@ public:
 	XMFLOAT3 getObjectRotation(int idx) { return playerShader->objects[idx]->currentRotation; }
 
 
-	void attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list);
+	void attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list, CCamera*);
 	void shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list);
 	bool mouseDown = false;
 	void createParticles(int n, XMFLOAT3 pos);

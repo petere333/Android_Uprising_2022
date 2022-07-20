@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "GameFramework.h"
 
-
+#include "CNet.h"
 
 CScene::CScene()
 {
@@ -736,6 +736,29 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					}
 					setObjectLastMove(i);
 				}
+
+				
+
+				if (moving == 1)
+				{
+					
+					playerShader->objects[i]->Rotate(0.0f, playerShader->objects[i]->kState.rotation+90.0f, 0.0f);
+				}
+				else if (moving == 2)
+				{
+					
+					playerShader->objects[i]->Rotate(0.0f, playerShader->objects[i]->kState.rotation+90.0f, 0.0f);
+				}
+				else if (moving == 3)
+				{
+					
+					playerShader->objects[i]->Rotate(0.0f, playerShader->objects[i]->kState.rotation+90.0f, 0.0f);
+				}
+				else if (moving == 4)
+				{
+					
+					playerShader->objects[i]->Rotate(0.0f, playerShader->objects[i]->kState.rotation+90.0f, 0.0f);
+				}
 			}
 
 			else if (playerShader->objects[i]->bState.stateID == JUMP_STATE)
@@ -821,6 +844,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
 					moveObject(i, cam);
 					setObjectLastMove(i);
+
+
 				}
 			}
 
@@ -838,7 +863,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[0]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 20);
-						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+						
 					}
 
 					else if (playerShader->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
@@ -852,7 +877,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[6]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+							
 						}
 					}
 				}
@@ -870,7 +895,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[1]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+							
 						}
 
 					}
@@ -887,7 +912,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[12]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-							playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+							
 						}
 						
 					}
@@ -904,7 +929,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[7]);
 						}
 						playerShader->objects[i]->SetTrackAnimationSet(0, 0);
-						playerShader->objects[i]->m_pSkinnedAnimationController->m_fTime = 0.0f;
+						
 					}
 				}
 				moveObject(i, cam);
@@ -988,6 +1013,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 			if (playerShader->objects[i]->attack==true)
 			{
+				if (playerShader->objects[i]->bState.attackID < 0)
+				{
+					playerShader->objects[i]->bState.attackID = TYPE_RANGED;
+				}
+
 				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
 				{
 					if (playerShader->objects[i]->info->slot.rangedWeapon->type == RIFLE)
@@ -1018,7 +1048,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						}
 						cam->rotateUp();
 
-						attack(i, pd3dDevice, pd3dCommandList);
+						attack(i, pd3dDevice, pd3dCommandList, cam);
 					}
 
 					else if (playerShader->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
@@ -1444,8 +1474,13 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 	float tx, ty, tz;
 	bool stepOn;
 	
+	XMFLOAT3 lk = pCamera->getLook();
+	float ag = atan2f(lk.x, lk.z);
+	ag = ag / 3.141592f * 180.0f;
+	
+	
 
-		if (playerShader->objects[idx]->kState.xzspeed > 0.0f || playerShader->objects[idx]->kState.yspeed != 0.0f)
+	if (playerShader->objects[idx]->kState.xzspeed > 0.0f || playerShader->objects[idx]->kState.yspeed != 0.0f)
 		{
 			
 			float rd = XMConvertToRadians(playerShader->objects[idx]->kState.rotation);
@@ -2033,15 +2068,27 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 			}
 
 		}
-		else
+	else
 		{
-			playerShader->objects[idx]->bState.stateID = IDLE_STATE;
-			playerShader->objects[idx]->kState.isInAir = 0;
-		}
+		playerShader->objects[idx]->bState.stateID = IDLE_STATE;
+		playerShader->objects[idx]->kState.isInAir = 0;
+	}
 	cout << "(" << playerShader->objects[idx]->GetPosition().x << ", " << playerShader->objects[idx]->GetPosition().y << ", " << playerShader->objects[idx]->GetPosition().z << ")" << endl;
 	cout << "yspeed : " << playerShader->objects[pID]->kState.yspeed << endl;
 	
+		CS_POSITION_PACKET pac;
+		pac.c_id = pID;
+		pac.size = sizeof(CS_POSITION_PACKET);
+		pac.type = PACKET_TYPE::CS_POSITION;
+
+		pac.angle = playerShader->objects[idx]->kState.rotation;
+		pac.x = playerShader->objects[idx]->GetPosition().x;
+		pac.y = playerShader->objects[idx]->GetPosition().y;
+		pac.z = playerShader->objects[idx]->GetPosition().z;
+
+		SendPacket(&pac);
 	
+
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
 	// 변경 완료된 위치 값을 클라로 전송.
 	// moveObject 함수는 매 프레임마다 호출되므로 서버에서도 약 0.016초(초당 60프레임 기준)마다 전송해주는게 좋음.
@@ -2153,6 +2200,21 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+
+
+	case PACKET_TYPE::SC_POSITION:
+	{
+		SC_POSITION_PACKET pac;
+		memcpy(&pac, p_buf, p_buf[0]);
+		
+		
+		playerShader->objects[pac.id]->SetPosition(pac.x, pac.y, pac.z);
+		playerShader->objects[pac.id]->Rotate(0.0f, pac.angle + 90.0f, 0.0f);
+		playerShader->objects[pac.id]->kState.rotation = pac.angle;		
+		
+		break;
+
+	}
 	case PACKET_TYPE::SC_LOGIN_INFO:
 	{
 		SC_LOGIN_INFO_PACKET p_login;
@@ -2220,7 +2282,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 			
 			
-			playerShader->objects[ID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
+			//playerShader->objects[ID]->Rotate(0.0f, -p.kState.rotation+90.0f, 0.0f);
 		}
 		if (p.kState.yspeed != -9999.0f)
 		{
@@ -2280,7 +2342,9 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			pCamera->rotate(og.x, og.z);
 			pCamera->rotateUp();
 			pCamera->GenerateViewMatrix();
-			//playerShader->objects[pID]->Rotate(0.0f, -dangle, 0.0f);
+			
+			
+			
 
 			printf("client player camera transform complete\n");
 		}
@@ -2314,8 +2378,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_TELEPORT_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 		cout << "teleport player" << endl;
-		playerShader->objects[p.id]->SetPosition(p.x+p.id*5.0f, p.y, p.z);
-		playerShader->objects[p.id]->bState.stateID = IDLE_STATE;
+		playerShader->objects[p.id]->SetPosition(p.x, p.y, p.z);
 		break;
 
 	default:
@@ -2325,11 +2388,13 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 }
 
-void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list)
+void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* list, CCamera* cam)
 {
 	chrono::duration<double> fromLastAttack = chrono::system_clock::now() - playerShader->objects[idx]->lastAttack;
 	float fTime = static_cast<float>(fromLastAttack.count());
 	
+
+
 	if (fTime >= 1.0f / 6.0f)
 	{
 		soundEffect[0]->play();
@@ -2337,9 +2402,20 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		printf("time elapsed from last shot : %f\n", fTime);
 		setObjectLastAttack(idx);
 
-		float rad = XMConvertToRadians(playerShader->objects[idx]->kState.rotation-270.0f);
+		
+		XMFLOAT3 lk = cam->getLook();
+		
 		//printf("발사 각도 %f  ", playerShader->objects[idx]->currentRotation.y);
-		XMFLOAT3 dir = XMFLOAT3(sin(rad), 0.0f, cos(rad)); // 사격 방향
+		XMFLOAT3 dir;
+
+		float a = playerShader->objects[idx]->kState.rotation;
+		
+		dir = XMFLOAT3(cos(XMConvertToRadians(a)), 0.0f, -sin(XMConvertToRadians(a)));
+		
+		
+
+
+
 
 		Line line;
 		line.start = playerShader->objects[idx]->GetPosition(); // 사격 위치

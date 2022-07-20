@@ -316,6 +316,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = true;
 				p.type = PACKET_TYPE::CS_MOUSE;
+				p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
 				SendPacket(&p);
 				mousedown = true;
 			}
@@ -336,6 +337,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = false;
 				p.type = PACKET_TYPE::CS_MOUSE;
+				p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
 				SendPacket(&p);
 				mousedown = false;
 			}
@@ -368,7 +370,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			GetWindowRect(hWnd, &rect);
 			int wx = rect.left;
 			int wy = rect.top;
-			if ((pnt.x >= 478+wx && pnt.x <= 722+wx) && (pnt.y >= 623+wy && pnt.y <= 722+wy))
+			if ((pnt.x >= 0+wx && pnt.x <= 1200+wx) && (pnt.y >= 0+wy && pnt.y <= 900+wy))
 			{
 				m_pScene->currentScreen = LOBBY_STATE;
 			}
@@ -787,68 +789,89 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			
 			case 'W':
 			{
+				m_pScene->moving = 1;
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+
+				XMFLOAT3 lk = m_pCamera->getLook();
+				float ag = atan2f(lk.x, lk.z);
+				ag = ag / 3.141592f * 180.0f;
+				ag = ag + 270.0f;
+				if (ag >= 360.0f)
+					ag -= 360.0f;
+				else if (ag < 0.0f)
+					ag += 360.0f;
+				
+				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 
 
-				packet.key = VK_UP;
-				if (keydown == false)
-				{
-					SendPacket(&packet);
-					keydown = true;
-				}
 			}
 			break;
 			
 			case 'S':
 			{
-
-
-				packet.key = VK_DOWN;
-
-				if (keydown == false)
-				{
-					SendPacket(&packet);
-					keydown = true;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+				m_pScene->moving = 2;
+				XMFLOAT3 lk = m_pCamera->getLook();
+				float ag = atan2f(lk.x, lk.z);
+				ag = ag / 3.141592f * 180.0f;
+				ag = ag + 90.0f;
+				if (ag >= 360.0f)
+					ag -= 360.0f;
+				else if (ag < 0.0f)
+					ag += 360.0f;
+				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 			}
 			break;
 			
 			case 'A':
 			{
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+				m_pScene->moving = 3;
+				XMFLOAT3 lk = m_pCamera->getLook();
+				float ag = atan2f(lk.x, lk.z);
+				ag = ag / 3.141592f * 180.0f;
+				ag = ag + 180.0f;
+				if (ag >= 360.0f)
+					ag -= 360.0f;
+				else if (ag < 0.0f)
+					ag += 360.0f;
 
-
-				packet.key = VK_LEFT;
-				if (keydown == false)
-				{
-					SendPacket(&packet);
-					keydown = true;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 			}
 			break;
 			
 			case 'D':
 			{
-
-
-				packet.key = VK_RIGHT;
-				if (keydown == false)
-				{
-					SendPacket(&packet);
-					keydown = true;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+				m_pScene->moving = 4;
+				XMFLOAT3 lk = m_pCamera->getLook();
+				float ag = atan2f(lk.x, lk.z);
+				ag = ag / 3.141592f * 180.0f;
+				ag = ag + 0.0f;
+				if (ag >= 360.0f)
+					ag -= 360.0f;
+				else if (ag < 0.0f)
+					ag += 360.0f;
+				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 			}
 			break;
 			case VK_SPACE:
 			{
+				if (m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed == 0.0f)
+				{
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed = 15.0f;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.isInAir = 1;
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = JUMP_STATE;
+				}
 
-
-				// 플레이어에 대한 점프 명령
-				//m_pScene->jumpObject(0);
-				packet.key = VK_SPACE;
-				//if (keydown == false)
-				//{
-				SendPacket(&packet);
-				//	keydown = true;
-				//}
 				break;
 			}
 
@@ -908,40 +931,24 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				break;
 			}
 			case 'W':
-
-				uppac.key = VK_UP;
-				if (keydown == true)
-				{
-					SendPacket(&uppac);
-					keydown = false;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+				m_pScene->moving = 1;
 				break;
 			case 'S':
-
-				uppac.key = VK_DOWN;
-				if (keydown == true)
-				{
-					SendPacket(&uppac);
-					keydown = false;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+				m_pScene->moving = 2;
 				break;
 			case 'A':
-
-				uppac.key = VK_LEFT;
-				if (keydown == true)
-				{
-					SendPacket(&uppac);
-					keydown = false;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+				m_pScene->moving = 3;
 				break;
 			case 'D':
-
-				uppac.key = VK_RIGHT;
-				if (keydown == true)
-				{
-					SendPacket(&uppac);
-					keydown = false;
-				}
+				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+				m_pScene->moving = 4;
 				break;
 			case '1':
 			{
@@ -1131,12 +1138,12 @@ void CGameFramework::ProcessInput()
 
 		//여기서부터 서버에서 처리
 
-		//prevX = pnt.x;
-		//prevY = pnt.y;
+		prevX = pnt.x;
+		prevY = pnt.y;
 
-		SetCursorPos(500, 500);
-		prevX = 500;
-		prevY = 500;
+		//SetCursorPos(500, 500);
+		//prevX = 500;
+		//prevY = 500;
 		//서버 처리 끝
 	}
 	else if (m_pScene->currentScreen == LOBBY_STATE)
@@ -1292,6 +1299,7 @@ void CGameFramework::AnimateObjects()
 	if (m_pScene) m_pScene->AnimateObjects(m_pd3dDevice, m_pd3dCommandList, fTimeElapsed, m_pCamera);
 
 	
+
 }
 
 void CGameFramework::WaitForGpuComplete()

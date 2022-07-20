@@ -962,19 +962,19 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			//이동 애니메이션으로 변경
 			if (objects[i]->weapon == 1)
 			{
-				if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+				if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
 				{
-					objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2]);
+					objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
 				}
 				objects[i]->SetTrackAnimationSet(0, 0);
 			}
 			else
 			{
-				if (objects[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
+				if (objects[i]->m_pChild != rm->enemyModels[10]->m_pModelRootObject)
 				{
-					objects[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9]);
+					objects[i]->setRoot(rm->enemyModels[10]->m_pModelRootObject, true);
+					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[10]);
 				}
 				objects[i]->SetTrackAnimationSet(0, 0);
 			}

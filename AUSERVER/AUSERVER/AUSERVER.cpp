@@ -115,10 +115,26 @@ public:
 	void send_attack_info(int c_id, float x, float, float, int);
 	void send_jump(int c_id);
 	void send_teleport(int c_id, float x, float y, float z);
+	void send_move(int c_id, float x, float y, float z, float a);
 	
 };
 
  array<SESSION, MAXUSER> clients;
+
+ void SESSION::send_move(int c_id, float x, float y, float z, float a)
+ {
+	 SC_POSITION_PACKET pac;
+	 pac.id = c_id;
+	 pac.size = sizeof(SC_POSITION_PACKET);
+	 pac.type = PACKET_TYPE::SC_POSITION;
+	 pac.angle = a;
+	 pac.x = x;
+	 pac.y = y;
+	 pac.z = z;
+
+	 
+	 do_send(&pac);
+ }
 
  void SESSION::send_kinetic_change(int c_id, KineticState state)
  {
@@ -127,6 +143,7 @@ public:
 	pl.size = sizeof(SC_KINETIC_PACKET);
 	pl.type = PACKET_TYPE::SC_KINETIC_CHANGE;
 	pl.kState = state;
+	
 
 	do_send(&pl);
 
@@ -343,7 +360,23 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_POSITION:
 	{
 		CS_POSITION_PACKET* p = reinterpret_cast<CS_POSITION_PACKET*>(packet);
-		cout << "ÇöÀ§Ä¡ : (" << p->x << ", " << p->z << ")" << endl;
+		float pa = p->angle;
+		float px = p->x;
+		float py = p->y;
+		float pz = p->z;
+
+
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				
+				pl.send_move(c_id, px, py, pz, pa);
+				
+			}
+		}
+		break;
+
 		break;
 	}
 
@@ -376,6 +409,9 @@ void process_packet(int c_id, char* packet)
 			clients[c_id].kState.rotation = ks.rotation;
 			clients[c_id].kState.xzspeed = PLAYER_SPEED;
 			clients[c_id].bState.stateID = MOVE_STATE;
+
+
+			
 
 		}
 		else if (p->key == VK_DOWN)
@@ -694,11 +730,13 @@ void process_packet(int c_id, char* packet)
 		ks2.yspeed = -9999.0f;
 		ks2.isInAir = -9999;
 		ks2.isMobile = -9999;
+		
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
 				pl.send_camera_change(c_id, clients[c_id].cameraAngle, clients[c_id].cameraUp);
+				ks2.rotation = -9999.0f;
 				pl.send_kinetic_change(c_id, ks2);
 			}
 		}
