@@ -85,23 +85,7 @@ struct CS_MOUSE_PACKET
 	int attackID;
 };
 
-struct CS_POSITION_PACKET
-{
-	unsigned char size;
-	PACKET_TYPE type;
-	short c_id;
 
-
-	
-	
-	int attackID;
-	float angle;
-	float x;
-	float y;
-	float z;
-
-	
-};
 
 struct CS_CAMERA_PACKET
 {
@@ -245,6 +229,22 @@ struct SC_TELEPORT_PACKET
 	PACKET_TYPE type;
 	short id;
 	float x, y, z;
+};
+
+struct CS_POSITION_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+
+	int stateID;
+	int attackID;
+	float angle;
+	float x;
+	float y;
+	float z;
+
+
 };
 
 struct SC_POSITION_PACKET

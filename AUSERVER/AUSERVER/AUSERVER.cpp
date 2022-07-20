@@ -365,14 +365,23 @@ void process_packet(int c_id, char* packet)
 		float py = p->y;
 		float pz = p->z;
 
+		BionicState b;
+		b.attackID = p->attackID;
+		b.stateID = p->stateID;
+		b.attacking = -9999;
+		b.hp = -9999;
+		b.isIntelligent = -9999;
+		
 
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
-				
 				pl.send_move(c_id, px, py, pz, pa);
-				
+				if (pl._id != c_id)
+				{
+					pl.send_bionic_change(c_id, b);
+				}
 			}
 		}
 		break;

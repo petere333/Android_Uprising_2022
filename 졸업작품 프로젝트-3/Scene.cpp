@@ -1097,7 +1097,23 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				// 플레이어 조작 비활성화
 			}
 
+
 		}
+
+		CS_POSITION_PACKET pac;
+		pac.c_id = pID;
+		pac.size = sizeof(CS_POSITION_PACKET);
+		pac.type = PACKET_TYPE::CS_POSITION;
+
+		pac.angle = playerShader->objects[pID]->kState.rotation;
+		pac.x = playerShader->objects[pID]->GetPosition().x;
+		pac.y = playerShader->objects[pID]->GetPosition().y;
+		pac.z = playerShader->objects[pID]->GetPosition().z;
+		pac.attackID = playerShader->objects[pID]->bState.attackID;
+		pac.stateID = playerShader->objects[pID]->bState.stateID;
+		SendPacket(&pac);
+
+
 		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 
 		for (int i = 0; i < partShader->objects.size(); ++i)
@@ -1136,6 +1152,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		m_pLights[1].m_xmf3Direction = Vector3::Normalize(XMFLOAT3(cl.x, cl.y, cl.z));
 		
 		UpdateShaderVariables(pd3dCommandList);
+
+
+
+
 	}
 	else if (currentScreen == LOGIN_STATE)
 	{
@@ -2076,17 +2096,7 @@ void CScene::moveObject(int idx,CCamera* pCamera)
 	cout << "(" << playerShader->objects[idx]->GetPosition().x << ", " << playerShader->objects[idx]->GetPosition().y << ", " << playerShader->objects[idx]->GetPosition().z << ")" << endl;
 	cout << "yspeed : " << playerShader->objects[pID]->kState.yspeed << endl;
 	
-		CS_POSITION_PACKET pac;
-		pac.c_id = pID;
-		pac.size = sizeof(CS_POSITION_PACKET);
-		pac.type = PACKET_TYPE::CS_POSITION;
-
-		pac.angle = playerShader->objects[idx]->kState.rotation;
-		pac.x = playerShader->objects[idx]->GetPosition().x;
-		pac.y = playerShader->objects[idx]->GetPosition().y;
-		pac.z = playerShader->objects[idx]->GetPosition().z;
-
-		SendPacket(&pac);
+	
 	
 
 	// 여기까지 완료한 후, 몇번째 클라이언트의 플레이어인지 나타내는 idx값, 
