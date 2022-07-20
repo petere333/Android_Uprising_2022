@@ -549,6 +549,9 @@ public:
 	bool isDead = false;
 
 	int comboCount = 0;
+
+	bool readyToGo = false;
+
 public:
 	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }
 
@@ -605,6 +608,7 @@ public:
 
 	//기절에 관한 내용
 	bool stunned = false;
+	bool erased = false;
 	chrono::time_point<chrono::system_clock> lastStun;
 	float stunDuration=0.0f;
 };

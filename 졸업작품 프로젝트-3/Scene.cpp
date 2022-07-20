@@ -1096,7 +1096,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//죽는 애니메이션으로 변경
 				// 플레이어 조작 비활성화
 			}
-
+			
 
 		}
 
@@ -1153,7 +1153,68 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		
 		UpdateShaderVariables(pd3dCommandList);
 
+		bool cleared = true;
+		if (interShader->stageClear == false)
+		{
+			for (int i = 0; i < playerShader->objects.size(); ++i)
+			{
+				XMFLOAT3 pp = playerShader->objects[i]->GetPosition();
 
+				if (waitInter->selectedStage == 1)
+				{
+					if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
+					{
+						cleared = false;
+						break;
+					}
+				}
+			}
+
+			//if (enemyShader->objects.size() > 10)
+			//{
+				//cleared = false;
+			//}
+			if (cleared == true)
+			{
+				interShader->stageClear = true;
+				interShader->clearTime = chrono::system_clock::now();
+			}
+		}
+
+		
+		else if (interShader->stageClear == true)
+		{
+			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+			chrono::duration<double> dt = moment - interShader->clearTime;
+
+			if ((float)dt.count() > 5.0f)
+			{
+				
+				//플레이어의 상태 초기화
+				for (int k = 0; k < playerShader->objects.size(); ++k)
+				{
+					playerShader->objects[k]->bState.attacking = false;
+					playerShader->objects[k]->info->stats.capacity = playerShader->objects[k]->info->stats.maxhp;
+					playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+					playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+					playerShader->objects[k]->kState.isInAir = 0;
+					playerShader->objects[k]->kState.isMobile = 0;
+					playerShader->objects[k]->kState.rotation = 0.0f;
+					playerShader->objects[k]->kState.xzspeed = 0.0f;
+					playerShader->objects[k]->kState.yspeed = 0.0f;
+				}
+				enemyShader->objects.clear();
+				enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+
+				//선택된 스테이지에 관한 정보 초기화.
+				interShader->stageClear = false;
+				waitInter->selectedStage = -1;
+				currentScreen = LOBBY_STATE;
+				//스테이지 클리어 완료
+			}
+		}
+		
 
 
 	}
@@ -1175,7 +1236,45 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	}
 	else if (currentScreen == WAIT_STATE)
 	{
+		// 모든 플레이어가 시작버튼을 눌렀을 때 비로소 시작.
 		waitInter->Animate(cam);
+		bool ready = true;
+		for (int i = 0; i < playerShader->objects.size(); ++i)
+		{
+			if (playerShader->objects[i]->readyToGo == false)
+			{
+				ready = false;
+			}
+		}
+		if (ready == true)
+		{
+			currentScreen = IN_GAME_STATE;
+			for (int idx = 0; idx < playerShader->objects.size(); ++idx)
+			{
+				//1-1스테이지
+				if (waitInter->selectedStage == 1)
+				{
+					//playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
+					playerShader->objects[idx]->SetPosition(515.0f + idx * 5.0f, 0.0f, 175.0f);
+					if (idx == pID)
+					{
+						cam->move(playerShader->objects[idx]->GetPosition());
+						interShader->Animate(cam, playerShader->objects[pID]->info);
+					}
+				}
+				else if (waitInter->selectedStage == 2)
+				{
+					//1-2스테이지인경우 2-1
+					playerShader->objects[idx]->SetPosition(810.0f, 0.0f, 190.0f - idx * 5.0f);
+					if (idx == pID)
+					{
+						cam->move(playerShader->objects[idx]->GetPosition());
+						interShader->Animate(cam, playerShader->objects[pID]->info);
+					}
+				}
+				playerShader->objects[idx]->readyToGo = false;
+			}
+		}
 		
 	}
 }
@@ -2211,7 +2310,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	switch (type)
 	{
 
+	case PACKET_TYPE::SC_READY:
+	{
+		SC_READY_PACKET pac;
+		memcpy(&pac, p_buf, p_buf[0]);
 
+		playerShader->objects[pac.id]->readyToGo = pac.ready;
+		break;
+	}
 	case PACKET_TYPE::SC_POSITION:
 	{
 		SC_POSITION_PACKET pac;
@@ -2389,6 +2495,11 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		memcpy(&p, p_buf, p_buf[0]);
 		cout << "teleport player" << endl;
 		playerShader->objects[p.id]->SetPosition(p.x, p.y, p.z);
+		if (p.id == pID)
+		{
+			pCamera->move(playerShader->objects[pID]->GetPosition());
+			interShader->Animate(pCamera, playerShader->objects[pID]->info);
+		}
 		break;
 
 	default:

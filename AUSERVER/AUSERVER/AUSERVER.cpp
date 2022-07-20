@@ -116,10 +116,21 @@ public:
 	void send_jump(int c_id);
 	void send_teleport(int c_id, float x, float y, float z);
 	void send_move(int c_id, float x, float y, float z, float a);
-	
+	void send_ready(int c_id, bool ready);
 };
 
  array<SESSION, MAXUSER> clients;
+
+ void SESSION::send_ready(int cid, bool rd)
+ {
+	 SC_READY_PACKET pac;
+	 pac.size = sizeof(SC_READY_PACKET);
+	 pac.type = PACKET_TYPE::SC_READY;
+	 pac.id = cid;
+	 pac.ready = rd;
+
+	 do_send(&pac);
+ }
 
  void SESSION::send_move(int c_id, float x, float y, float z, float a)
  {
@@ -296,67 +307,24 @@ void process_packet(int c_id, char* packet)
 				pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
 				clients[i].do_send(&pc);
 			}
-			/*
-			for (auto pl : clients) { //새 클라이언트의 정보 전송
-				if (pl._use == false) continue;
-				if (pl._id == c_id) continue;
-
-				SC_ADD_PLAYER_PACKET add_packet;
-				PACKET_TYPE pt;
-				add_packet.id = c_id;
-				add_packet.x = clients[c_id].set.x;
-				add_packet.y = clients[c_id].set.y;
-				add_packet.z = clients[c_id].set.z;
-				strcpy_s(add_packet.name, p->name);
-				add_packet.size = sizeof(add_packet);
-				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-				add_packet.kState.xzspeed = 0.0f;
-				add_packet.kState.yspeed = 0.0f;
-				add_packet.kState.isMobile = true;
-				add_packet.kState.isInAir = false;
-				add_packet.kState.rotation = 0.0f;
-				add_packet.kState.lastMove = std::chrono::system_clock::now();
-
-				add_packet.bState.attackID = TYPE_RANGED;
-				add_packet.bState.hp = 10;
-				add_packet.bState.isIntelligent = true;
-				add_packet.bState.stateID = IDLE_STATE;
-				add_packet.cam = 0.0f;
-				pl.do_send(&add_packet);
-			}
-
-			for (auto pl : clients) { //기존 클라이언트의 정보 전송 (수정중)
-				if (pl._use == false) continue;
-				if (pl._id == c_id) continue;
-
-				SC_ADD_PLAYER_PACKET add_packet;
-				add_packet.id = pl._id;
-				add_packet.x = pl.set.x;
-				add_packet.y = pl.set.y;
-				add_packet.z = pl.set.z;
-				strcpy_s(add_packet.name, p->name);
-				add_packet.size = sizeof(add_packet);
-				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-				add_packet.kState.xzspeed = 0.0f;
-				add_packet.kState.yspeed = 0.0f;
-				add_packet.kState.isMobile = true;
-				add_packet.kState.isInAir = false;
-				add_packet.kState.rotation = 0.0f;
-				add_packet.kState.lastMove = std::chrono::system_clock::now();
-
-				add_packet.bState.attackID = TYPE_RANGED;
-				add_packet.bState.hp = 10;
-				add_packet.bState.isIntelligent = true;
-				add_packet.bState.stateID = IDLE_STATE;
-				add_packet.size = sizeof(add_packet);
-				add_packet.type = PACKET_TYPE::SC_ADD_PLAYER;
-				add_packet.cam = 0.0f;
-				clients[c_id].do_send(&add_packet);
-			}*/
 			
 		}
 		break;
 	}
+	case PACKET_TYPE::CS_READY:
+	{
+		CS_READY_PACKET* p = reinterpret_cast<CS_READY_PACKET*>(packet);
+		bool ready = p->ready;
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_ready(c_id, ready);
+			}
+		}
+		break;
+	}
+
 	case PACKET_TYPE::CS_POSITION:
 	{
 		CS_POSITION_PACKET* p = reinterpret_cast<CS_POSITION_PACKET*>(packet);
@@ -521,7 +489,8 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 297.0f, 6.0f, 25.0f);
+					pl.send_move(c_id, 297.0f, 6.0f, 25.0f, 0.0f);
+					
 				}
 			}
 			break;

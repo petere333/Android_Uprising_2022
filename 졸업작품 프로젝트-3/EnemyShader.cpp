@@ -550,17 +550,21 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 		if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 		{
-			objects[i]->Animate(elapsed);
-			if (objects[i]->m_pSkinnedAnimationController)
+
+			if (objects[i]->erased == false)
 			{
-				objects[i]->UpdateTransform(NULL);
+				objects[i]->Animate(elapsed);
+				if (objects[i]->m_pSkinnedAnimationController)
+				{
+					objects[i]->UpdateTransform(NULL);
+				}
+				if (heap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &heap);
+				}
+				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
+				objects[i]->Render(pd3dCommandList, pCamera);
 			}
-			if (heap)
-			{
-				pd3dCommandList->SetDescriptorHeaps(1, &heap);
-			}
-			rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-			objects[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
 
@@ -645,6 +649,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 	
 	for (int i = 0; i < objects.size(); ++i)
 	{
+		if(objects[i]->erased==false)
+		{
+
 		// 체력이 막 떨어진 시점에
 		if (objects[i]->bState.hp <= 0 && objects[i]->bState.stateID != DEAD_STATE)
 		{
@@ -1584,13 +1591,14 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			//죽고난 후 시점까지의 경과시간 구하기.
 			chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
 			float dt = (float)timeFromDeath.count();
-
+			objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+			objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
 			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
 			if (dt >= 1.0f)
 			{
 				objects[i]->m_pMesh = NULL;
 				
-				objects.erase(objects.begin() + i);
+				objects[i]->erased = true;
 			}
 		}
 
@@ -1696,6 +1704,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					objects[i]->lastAttack = chrono::system_clock::now();
 				}
 			}
+		}
 		}
 	}
 

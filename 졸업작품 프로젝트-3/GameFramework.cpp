@@ -503,7 +503,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						}
 						else if (i == 2)
 						{
-							m_pScene->currentScreen = IN_GAME_STATE;
+							CS_READY_PACKET pac;
+							pac.size = sizeof(CS_READY_PACKET);
+							pac.type = PACKET_TYPE::CS_READY;
+							pac.id = m_pScene->pID;
+							pac.ready = true;
+							SendPacket(&pac);
+							
 						}
 					}
 				}
@@ -698,6 +704,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						if (i == 2)
 						{
 							m_pScene->currentScreen = WAIT_STATE;
+							//1-1스테이지 선택됨
+							m_pScene->waitInter->selectedStage = 1;
 							
 						}
 						else if (i == 1)
@@ -905,6 +913,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			case VK_F3:
 				packet.key = VK_F3;
 				SendPacket(&packet);
+				
 				break;
 			case VK_F4:
 				packet.key = VK_F4;
@@ -1136,15 +1145,15 @@ void CGameFramework::ProcessInput()
 			SendPacket(&p);
 		}
 
-		//여기서부터 서버에서 처리
+		
 
 		prevX = pnt.x;
 		prevY = pnt.y;
 
-		//SetCursorPos(500, 500);
-		//prevX = 500;
-		//prevY = 500;
-		//서버 처리 끝
+		SetCursorPos(500, 500);
+		prevX = 500;
+		prevY = 500;
+		
 	}
 	else if (m_pScene->currentScreen == LOBBY_STATE)
 	{

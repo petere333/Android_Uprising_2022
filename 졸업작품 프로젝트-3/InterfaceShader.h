@@ -28,4 +28,7 @@ public:
 	std::vector<CMesh*>	meshes;
 	std::vector<CMesh*>	revmeshes;
 	ResourceManager* rm;
+
+	bool stageClear = false;
+	chrono::time_point<chrono::system_clock> clearTime;
 };

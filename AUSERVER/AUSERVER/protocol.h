@@ -43,6 +43,7 @@ enum class PACKET_TYPE : short
 	CS_CAMERA_CHANGE,
 	CS_ATTACK,
 	CS_POSITION,
+	CS_READY,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -55,6 +56,7 @@ enum class PACKET_TYPE : short
 	SC_JUMP,
 	SC_TELEPORT,
 	SC_POSITION,
+	SC_READY,
 };
 
 // client to server packet
@@ -259,5 +261,22 @@ struct SC_POSITION_PACKET
 	
 	int attackid;
 };
+struct CS_READY_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	bool ready;
+};
+struct SC_READY_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	bool ready;
+};
 
 #pragma pack (pop)
+
