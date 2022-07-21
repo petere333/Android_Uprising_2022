@@ -1105,6 +1105,50 @@ void ResourceManager::createTextures()
 	tex293 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex293->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/btn_start_press.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex293);
+	tex294 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex294->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/preview1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex294);
+	tex295 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex295->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/preview2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex295);
+	tex296 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex296->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/preview3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex296);
+	tex297 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex297->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/melee.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex297);
+	tex298 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex298->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/ranged.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex298);
+	tex299 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex299->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/radio.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex299);
+
+	tex300 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex300->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/stage1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex300);
+	tex301 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex301->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/stage2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex301);
+
+
+	//추가된 인게임 인터페이스 텍스처
+	tex302 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex302->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/success.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex302);
+	tex303 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex303->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/retry_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex303);
+	tex304 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex304->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/retry_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex304);
+	tex305 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex305->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/back_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex305);
+	tex306 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex306->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/back_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex306);
+
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

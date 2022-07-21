@@ -34,6 +34,11 @@ public:
 	ItemManager* manager;
 	int extraPoint;
 	int gold;
+
+	int co_melee=0;
+	int co_ranged=0;
+	int co_radio=0;
+
 public:
 	void initGrowth();
 	void initStats();

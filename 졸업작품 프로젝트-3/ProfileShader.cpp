@@ -968,14 +968,14 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 	//골드 숫자설정
 	{
 		int t1 = info->gold / 1000000000;
-		int t2 = info->gold / 100000000;
-		int t3 = info->gold / 10000000;
-		int t4 = info->gold / 1000000;
-		int t5 = info->gold / 100000;
-		int t6 = info->gold / 10000;
-		int t7 = info->gold / 1000;
-		int t8 = info->gold / 100;
-		int t9 = info->gold / 10;
+		int t2 = (info->gold % 1000000000) / 100000000;
+		int t3 = (info->gold % 100000000) / 10000000;
+		int t4 = (info->gold % 10000000) / 1000000;
+		int t5 = (info->gold % 1000000) / 100000;
+		int t6 = (info->gold % 100000) / 10000;
+		int t7 = (info->gold % 10000) / 1000;
+		int t8 = (info->gold % 1000) / 100;
+		int t9 = (info->gold % 100) / 10;
 		int t10 = info->gold % 10;
 
 		objects[43]->m_ppMaterials[0] = rm->materials[273 + t1];

@@ -1178,6 +1178,55 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				interShader->stageClear = true;
 				interShader->clearTime = chrono::system_clock::now();
+
+				interShader->objects[11]->m_ppMaterials[0] = rm->materials[276];
+				interShader->objects[12]->m_ppMaterials[0] = rm->materials[273];
+				interShader->objects[13]->m_ppMaterials[0] = rm->materials[273];
+
+				interShader->objects[14]->m_ppMaterials[0] = rm->materials[276];
+				interShader->objects[15]->m_ppMaterials[0] = rm->materials[273];
+				interShader->objects[16]->m_ppMaterials[0] = rm->materials[273];
+
+				interShader->objects[17]->m_ppMaterials[0] = rm->materials[276];
+				interShader->objects[18]->m_ppMaterials[0] = rm->materials[273];
+				interShader->objects[19]->m_ppMaterials[0] = rm->materials[273];
+
+				interShader->objects[20]->m_ppMaterials[0] = rm->materials[278];
+				interShader->objects[21]->m_ppMaterials[0] = rm->materials[273];
+				interShader->objects[22]->m_ppMaterials[0] = rm->materials[273];
+
+				//경험치 제공
+				for (int i = 0; i < playerShader->objects.size(); ++i)
+				{
+					playerShader->objects[i]->info->growth.melee.exp += 300;
+					playerShader->objects[i]->info->growth.ranged.exp += 300;
+					playerShader->objects[i]->info->growth.radio.exp += 300;
+
+					playerShader->objects[i]->info->gold += 500;
+
+					//경험치가 최대치를 넘어서면 레벨 업
+					while (playerShader->objects[i]->info->growth.melee.exp >= expNeed[playerShader->objects[i]->info->growth.melee.level - 1])
+					{
+						playerShader->objects[i]->info->growth.melee.exp -= expNeed[playerShader->objects[i]->info->growth.melee.level - 1];
+						playerShader->objects[i]->info->growth.melee.level += 1;
+					}
+					while (playerShader->objects[i]->info->growth.ranged.exp >= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1])
+					{
+						playerShader->objects[i]->info->growth.ranged.exp -= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1];
+						playerShader->objects[i]->info->growth.ranged.level += 1;
+					}
+					while (playerShader->objects[i]->info->growth.radio.exp >= expNeed[playerShader->objects[i]->info->growth.radio.level - 1])
+					{
+						playerShader->objects[i]->info->growth.radio.exp -= expNeed[playerShader->objects[i]->info->growth.radio.level - 1];
+						playerShader->objects[i]->info->growth.radio.level += 1;
+					}
+
+					//동료 지급
+					playerShader->objects[i]->info->co_melee += 5;
+					playerShader->objects[i]->info->co_ranged += 5;
+					playerShader->objects[i]->info->co_radio += 3;
+				}
+				
 			}
 		}
 
@@ -1187,7 +1236,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 			chrono::duration<double> dt = moment - interShader->clearTime;
 
-			if ((float)dt.count() > 5.0f)
+			if ((float)dt.count() > 15.0f)
 			{
 				
 				//플레이어의 상태 초기화
@@ -1237,8 +1286,25 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	else if (currentScreen == WAIT_STATE)
 	{
 		// 모든 플레이어가 시작버튼을 눌렀을 때 비로소 시작.
-		waitInter->Animate(cam);
+		waitInter->Animate(cam, playerShader->objects[pID]->info);
 		bool ready = true;
+
+		for (int i = playerShader->objects.size(); i < 3; ++i)
+		{
+			waitInter->objects[28 + i * 5]->SetMesh(NULL);
+		}
+		for (int i = 0; i < playerShader->objects.size(); ++i)
+		{
+			if (playerShader->objects[i]->readyToGo == false)
+			{
+				waitInter->objects[28+i*5]->SetMesh(NULL);
+			}
+			else
+			{
+				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28*i+5]);
+			}
+		}
+
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
 			if (playerShader->objects[i]->readyToGo == false)

@@ -305,6 +305,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	if (m_pScene) m_pScene->OnProcessingMouseMessage(hWnd, nMessageID, wParam, lParam);
 	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
+		
 		switch (nMessageID)
 		{
 		case WM_LBUTTONDOWN:
@@ -320,6 +321,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				SendPacket(&p);
 				mousedown = true;
 			}
+
+			
 			break;
 		case WM_RBUTTONDOWN:
 
@@ -329,17 +332,79 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		case WM_LBUTTONUP:
 		{
-
-			if (mousedown == true)
+			if (m_pScene->interShader->stageClear == false)
 			{
-				CS_MOUSE_PACKET p;
-				p.c_id = m_pScene->pID; //GetPlayerid();
-				p.size = sizeof(CS_MOUSE_PACKET);
-				p.down = false;
-				p.type = PACKET_TYPE::CS_MOUSE;
-				p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
-				SendPacket(&p);
-				mousedown = false;
+				if (mousedown == true)
+				{
+					CS_MOUSE_PACKET p;
+					p.c_id = m_pScene->pID; //GetPlayerid();
+					p.size = sizeof(CS_MOUSE_PACKET);
+					p.down = false;
+					p.type = PACKET_TYPE::CS_MOUSE;
+					p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
+					SendPacket(&p);
+					mousedown = false;
+				}
+				//버튼 클릭 시 처리
+			}
+			else
+			{
+				POINT pnt;
+				GetCursorPos(&pnt);
+				RECT rect;
+				GetWindowRect(hWnd, &rect);
+				int wx = rect.left;
+				int wy = rect.top;
+				//retry
+				if ((pnt.x >= 656 + wx && pnt.x <= 786 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+				{
+					//플레이어의 상태 초기화
+					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+					{
+						m_pScene->playerShader->objects[k]->bState.attacking = false;
+						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+						m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+						
+						m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+						m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+						m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+					}
+					m_pScene->enemyShader->objects.clear();
+					m_pScene->enemyShader->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature);
+
+					//선택된 스테이지에 관한 정보 초기화.
+					m_pScene->interShader->stageClear = false;
+					m_pScene->waitInter->selectedStage = -1;
+
+					m_pScene->currentScreen = STAGE_SELECT_STATE;
+				}
+				else if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+				{
+					//플레이어의 상태 초기화
+					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+					{
+						m_pScene->playerShader->objects[k]->bState.attacking = false;
+						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+						m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+						m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+						m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+						m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+					}
+					m_pScene->enemyShader->objects.clear();
+					m_pScene->enemyShader->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature);
+
+					//선택된 스테이지에 관한 정보 초기화.
+					m_pScene->interShader->stageClear = false;
+					m_pScene->waitInter->selectedStage = -1;
+					m_pScene->currentScreen = LOBBY_STATE;
+				}
 			}
 			break;
 		}
@@ -597,7 +662,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							if (i == 55)
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 1;
 							}
 							else if (i == 59)
 							{
@@ -629,7 +694,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							if (i == 55)
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity -= 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp -= 1;
 							}
 							else if (i == 59)
 							{
@@ -773,243 +838,246 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 	// 값은 위, 아래, 왼쪽, 오른쪽 각각 1,2,3,4
 	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
-		switch (nMessageID)
-		{
-		case WM_KEYDOWN:
-			switch (wParam)
-			{
 
-			case VK_F12:
+			switch (nMessageID)
 			{
-				if (m_pScene->m_pLights[0].m_bEnable == false)
+			case WM_KEYDOWN:
+				switch (wParam)
 				{
-					m_pScene->m_pLights[0].m_bEnable = true;
-					m_pScene->m_pLights[1].m_bEnable = false;
-				}
-				else
+
+				case VK_F12:
 				{
-					m_pScene->m_pLights[0].m_bEnable = false;
-					m_pScene->m_pLights[1].m_bEnable = true;
-				}
-				m_pScene->UpdateShaderVariables(m_pd3dCommandList);
-				break;
-			}
-			
-			case 'W':
-			{
-				m_pScene->moving = 1;
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
-
-				XMFLOAT3 lk = m_pCamera->getLook();
-				float ag = atan2f(lk.x, lk.z);
-				ag = ag / 3.141592f * 180.0f;
-				ag = ag + 270.0f;
-				if (ag >= 360.0f)
-					ag -= 360.0f;
-				else if (ag < 0.0f)
-					ag += 360.0f;
-				
-				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
-
-
-			}
-			break;
-			
-			case 'S':
-			{
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
-				m_pScene->moving = 2;
-				XMFLOAT3 lk = m_pCamera->getLook();
-				float ag = atan2f(lk.x, lk.z);
-				ag = ag / 3.141592f * 180.0f;
-				ag = ag + 90.0f;
-				if (ag >= 360.0f)
-					ag -= 360.0f;
-				else if (ag < 0.0f)
-					ag += 360.0f;
-				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
-			}
-			break;
-			
-			case 'A':
-			{
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
-				m_pScene->moving = 3;
-				XMFLOAT3 lk = m_pCamera->getLook();
-				float ag = atan2f(lk.x, lk.z);
-				ag = ag / 3.141592f * 180.0f;
-				ag = ag + 180.0f;
-				if (ag >= 360.0f)
-					ag -= 360.0f;
-				else if (ag < 0.0f)
-					ag += 360.0f;
-
-				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
-			}
-			break;
-			
-			case 'D':
-			{
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
-				m_pScene->moving = 4;
-				XMFLOAT3 lk = m_pCamera->getLook();
-				float ag = atan2f(lk.x, lk.z);
-				ag = ag / 3.141592f * 180.0f;
-				ag = ag + 0.0f;
-				if (ag >= 360.0f)
-					ag -= 360.0f;
-				else if (ag < 0.0f)
-					ag += 360.0f;
-				m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag+90.0f, 0.0f);
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
-			}
-			break;
-			case VK_SPACE:
-			{
-				if (m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed == 0.0f)
-				{
-					m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed = 15.0f;
-					m_pScene->playerShader->objects[m_pScene->pID]->kState.isInAir = 1;
-					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = JUMP_STATE;
+					if (m_pScene->m_pLights[0].m_bEnable == false)
+					{
+						m_pScene->m_pLights[0].m_bEnable = true;
+						m_pScene->m_pLights[1].m_bEnable = false;
+					}
+					else
+					{
+						m_pScene->m_pLights[0].m_bEnable = false;
+						m_pScene->m_pLights[1].m_bEnable = true;
+					}
+					m_pScene->UpdateShaderVariables(m_pd3dCommandList);
+					break;
 				}
 
-				break;
-			}
-
-
-			case '2':
-			{
-				packet.key = '2';
-				SendPacket(&packet);
-				break;
-			}
-			case '3':
-			{
-				packet.key = '3';
-				SendPacket(&packet);
-				break;
-			}
-			case '1':
-			{
-				packet.key = '1';
-				SendPacket(&packet);
-				break;
-			}
-			case VK_F1:
-				packet.key = VK_F1;
-				SendPacket(&packet);
-				break;
-			case VK_F2:
-				packet.key = VK_F2;
-				SendPacket(&packet);
-				break;
-			case VK_F3:
-				packet.key = VK_F3;
-				SendPacket(&packet);
-				
-				break;
-			case VK_F4:
-				packet.key = VK_F4;
-				SendPacket(&packet);
-				break;
-			}
-			break;
-		case WM_KEYUP:
-			switch (wParam)
-			{
-			case VK_ESCAPE:
-				::PostQuitMessage(0);
-				break;
-			case VK_RETURN:
-				break;
-
-				// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
-
-			case VK_F5:
-			{
-				ppac.x = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().x;
-				ppac.z = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().z;
-				SendPacket(&ppac);
-				break;
-			}
-			case 'W':
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
-				m_pScene->moving = 1;
-				break;
-			case 'S':
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
-				m_pScene->moving = 2;
-				break;
-			case 'A':
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
-				m_pScene->moving = 3;
-				break;
-			case 'D':
-				m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
-				m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
-				m_pScene->moving = 4;
-				break;
-			case '1':
-			{
-				uppac.key = '1';
-				if (keydown == true)
+				case 'W':
 				{
-					SendPacket(&uppac);
-					keydown = false;
+					m_pScene->moving = 1;
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+
+					XMFLOAT3 lk = m_pCamera->getLook();
+					float ag = atan2f(lk.x, lk.z);
+					ag = ag / 3.141592f * 180.0f;
+					ag = ag + 270.0f;
+					if (ag >= 360.0f)
+						ag -= 360.0f;
+					else if (ag < 0.0f)
+						ag += 360.0f;
+
+					m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag + 90.0f, 0.0f);
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
+
+
 				}
 				break;
-			}
-			case '2':
-			{
-				uppac.key = '2';
-				if (keydown == true)
-				{
-					SendPacket(&uppac);
-					keydown = false;
-				}
-				break;
-			}
 
-			case '3':
-			{
-				uppac.key = '3';
-				if (keydown == true)
+				case 'S':
 				{
-					SendPacket(&uppac);
-					keydown = false;
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+					m_pScene->moving = 2;
+					XMFLOAT3 lk = m_pCamera->getLook();
+					float ag = atan2f(lk.x, lk.z);
+					ag = ag / 3.141592f * 180.0f;
+					ag = ag + 90.0f;
+					if (ag >= 360.0f)
+						ag -= 360.0f;
+					else if (ag < 0.0f)
+						ag += 360.0f;
+					m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag + 90.0f, 0.0f);
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 				}
 				break;
-			}
-			/*
-			case VK_SPACE:
-			{
 
-				uppac.key = VK_SPACE;
-				if (keydown == true)
+				case 'A':
 				{
-					SendPacket(&uppac);
-					keydown = false;
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+					m_pScene->moving = 3;
+					XMFLOAT3 lk = m_pCamera->getLook();
+					float ag = atan2f(lk.x, lk.z);
+					ag = ag / 3.141592f * 180.0f;
+					ag = ag + 180.0f;
+					if (ag >= 360.0f)
+						ag -= 360.0f;
+					else if (ag < 0.0f)
+						ag += 360.0f;
+
+					m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag + 90.0f, 0.0f);
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
 				}
 				break;
-			}
-			*/
+
+				case 'D':
+				{
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
+					m_pScene->moving = 4;
+					XMFLOAT3 lk = m_pCamera->getLook();
+					float ag = atan2f(lk.x, lk.z);
+					ag = ag / 3.141592f * 180.0f;
+					ag = ag + 0.0f;
+					if (ag >= 360.0f)
+						ag -= 360.0f;
+					else if (ag < 0.0f)
+						ag += 360.0f;
+					m_pScene->playerShader->objects[m_pScene->pID]->Rotate(0.0f, ag + 90.0f, 0.0f);
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.rotation = ag;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = PLAYER_SPEED;
+				}
+				break;
+				case VK_SPACE:
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed == 0.0f)
+					{
+						m_pScene->playerShader->objects[m_pScene->pID]->kState.yspeed = 15.0f;
+						m_pScene->playerShader->objects[m_pScene->pID]->kState.isInAir = 1;
+						m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = JUMP_STATE;
+					}
+
+					break;
+				}
+
+
+				case '2':
+				{
+					packet.key = '2';
+					SendPacket(&packet);
+					break;
+				}
+				case '3':
+				{
+					packet.key = '3';
+					SendPacket(&packet);
+					break;
+				}
+				case '1':
+				{
+					packet.key = '1';
+					SendPacket(&packet);
+					break;
+				}
+				case VK_F1:
+					packet.key = VK_F1;
+					SendPacket(&packet);
+					break;
+				case VK_F2:
+					packet.key = VK_F2;
+					SendPacket(&packet);
+					break;
+				case VK_F3:
+					packet.key = VK_F3;
+					SendPacket(&packet);
+
+					break;
+				case VK_F4:
+					packet.key = VK_F4;
+					SendPacket(&packet);
+					break;
+				}
+				break;
+			case WM_KEYUP:
+				switch (wParam)
+				{
+				case VK_ESCAPE:
+					::PostQuitMessage(0);
+					break;
+				case VK_RETURN:
+					break;
+
+					// 상하좌우 키가 떼어진 경우 정지 상태로 변경, 속도를 0으로 변경.
+
+				case VK_F5:
+				{
+					ppac.x = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().x;
+					ppac.z = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().z;
+					SendPacket(&ppac);
+					break;
+				}
+				case 'W':
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+					m_pScene->moving = 1;
+					break;
+				case 'S':
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+					m_pScene->moving = 2;
+					break;
+				case 'A':
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+					m_pScene->moving = 3;
+					break;
+				case 'D':
+					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
+					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
+					m_pScene->moving = 4;
+					break;
+				case '1':
+				{
+					uppac.key = '1';
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
+				case '2':
+				{
+					uppac.key = '2';
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
+
+				case '3':
+				{
+					uppac.key = '3';
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
+				/*
+				case VK_SPACE:
+				{
+
+					uppac.key = VK_SPACE;
+					if (keydown == true)
+					{
+						SendPacket(&uppac);
+						keydown = false;
+					}
+					break;
+				}
+				*/
+				default:
+					break;
+				}
+				break;
 			default:
 				break;
 			}
-			break;
-		default:
-			break;
-		}
+		
+		
 	}
 }
 
@@ -1127,32 +1195,68 @@ void CGameFramework::ProcessInput()
 	//마우스 이동 시 플레이어의 위치 변경.
 	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
-		POINT pnt;
-		GetCursorPos(&pnt);
-
-		XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
-		float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
-		float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
-		if (deltaX != 0.0f || deltaY != 0.0f)
+		if (m_pScene->interShader->stageClear == false)
 		{
-			CS_CAMERA_PACKET p;
-			p.size = sizeof(CS_CAMERA_PACKET);
-			p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
-			p.c_id = m_pScene->pID;
-			p.camAngle = deltaX;
-			p.camUp = deltaY;
+			POINT pnt;
+			GetCursorPos(&pnt);
 
-			SendPacket(&p);
+			XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
+			float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
+			float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+			if (deltaX != 0.0f || deltaY != 0.0f)
+			{
+				CS_CAMERA_PACKET p;
+				p.size = sizeof(CS_CAMERA_PACKET);
+				p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
+				p.c_id = m_pScene->pID;
+				p.camAngle = deltaX;
+				p.camUp = deltaY;
+
+				SendPacket(&p);
+			}
+
+			
+			
+				prevX = pnt.x;
+				prevY = pnt.y;
+
+				SetCursorPos(500, 500);
+				prevX = 500;
+				prevY = 500;
 		}
+		else
+		{
+			POINT pnt;
+			GetCursorPos(&pnt);
+			RECT rect;
+			GetWindowRect(m_hWnd, &rect);
+			int wx = rect.left;
+			int wy = rect.top;
 
-		
+			//재도전 버튼 위에 있으면
+			if ((pnt.x >= 656+wx && pnt.x <= 786+wx) && (pnt.y >= 559+wy && pnt.y <= 625+wy))
+			{
+				m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[303];
+			}
+			else
+			{
+				m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[302];
+			}
 
-		prevX = pnt.x;
-		prevY = pnt.y;
-
-		SetCursorPos(500, 500);
-		prevX = 500;
-		prevY = 500;
+			//돌아가기 버튼 위에 있으면
+			if ((pnt.x >= 801+wx && pnt.x <= 931+wx) && (pnt.y >= 559+wy && pnt.y <= 625+wy))
+			{
+				m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[305];
+				m_pScene->interShader->objects[10]->mouseOn = true;
+				m_pScene->interShader->objects[10]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[304];
+				m_pScene->interShader->objects[10]->mouseOn = false;
+				m_pScene->interShader->objects[10]->meshChanged = false;
+			}
+		}
 		
 	}
 	else if (m_pScene->currentScreen == LOBBY_STATE)
