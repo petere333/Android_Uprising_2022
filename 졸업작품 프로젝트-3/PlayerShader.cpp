@@ -131,7 +131,7 @@ D3D12_SHADER_BYTECODE PlayerShader::CreatePixelShader()
 
 void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, XMFLOAT3 pos, ID3D12RootSignature* sig)
 {
-	PlayerObject* obj = new PlayerObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[0], 1);
+	PlayerObject* obj = new PlayerObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[12], 1);
 	obj->type = 1;
 	obj->objType = 1;
 
@@ -148,7 +148,7 @@ void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	
 
 	obj->info = manager;
-	obj->SetTrackAnimationSet(0, 11);
+	obj->SetTrackAnimationSet(0, 0);
 
 
 	objects.push_back(obj);

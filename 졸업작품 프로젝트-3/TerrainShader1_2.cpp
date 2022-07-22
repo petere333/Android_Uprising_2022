@@ -870,8 +870,9 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargingRobot)
 		{
-		obj = new (std::nothrow) CGameObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[0], 1);
-
+		obj = new (std::nothrow) CGameObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[20], 1);
+		obj->setRoot(rm->playerModels[20]->m_pModelRootObject, true);
+		obj->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[20]);
 		obj->SetTrackAnimationSet(0, 0);
 
 		obj->shadowHeight = 0.0f;
@@ -2215,6 +2216,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 	XMFLOAT3 cp = pCamera->getPosition();
 
 	XMFLOAT3 look = pCamera->getLook();
+	
 	for (int i = 0; i < products.size(); ++i)
 	{
 		if (products[i])
@@ -2237,7 +2239,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			}
 		}
 	}
-
+	
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		if (objects[i])
@@ -2249,8 +2251,10 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			float cosAngle = Vector3::DotProduct(look, dir);
 
 			//벽인경우 그냥 그림
+
 			if ((objects[i]->type >= 12000 && objects[i]->type < 12200))
 			{
+
 				if (m_pd3dCbvSrvDescriptorHeap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
@@ -2259,7 +2263,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			}
 
 			//아닌경우
-			else
+			else if (objects[i]->type>=12200 && objects[i]->type<12268)
 			{
 				if (dist <= 10.0f)
 				{
@@ -2335,6 +2339,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			}
 		}
 	}
+	
 }
 
 D3D12_INPUT_LAYOUT_DESC TerrainShader1_2::CreateInputLayout()

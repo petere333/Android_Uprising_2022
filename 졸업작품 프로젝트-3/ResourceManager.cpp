@@ -2207,8 +2207,19 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	CLoadedModelInfo* model18;
 	CLoadedModelInfo* model19;
 	CLoadedModelInfo* model20;
+	
+	CLoadedModelInfo* model21;
+	CLoadedModelInfo* model22;
+	CLoadedModelInfo* model23;
+	CLoadedModelInfo* model24;
+	CLoadedModelInfo* model25;
+	CLoadedModelInfo* model26;
+	CLoadedModelInfo* model27;
+	CLoadedModelInfo* model28;
+	CLoadedModelInfo* model29;
+	CLoadedModelInfo* model30;
 
-	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/sample.bin", NULL);
+	model1 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_idle.bin", NULL);
 	playerModels.push_back(model1);
 	model2 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_run.bin", NULL);
 	playerModels.push_back(model2);
@@ -2249,6 +2260,14 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	model18 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blunt_run_attack.bin", NULL);
 	playerModels.push_back(model18);
 
+	model19 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_run.bin", NULL);
+	playerModels.push_back(model19);
+
+	model20 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_attack.bin", NULL);
+	playerModels.push_back(model20);
+
+	model21 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_idle.bin", NULL);
+	playerModels.push_back(model21);
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;
