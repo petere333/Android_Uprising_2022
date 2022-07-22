@@ -15,11 +15,12 @@ EnemyShader::~EnemyShader() {}
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
 	int mhp = 20;
-	int rhp = 20;
+	int rhp = 10;
 	float mdur = 0.833333f;
 	float mrange = 2.0f;
 	float rrange = 8.0f;
 	float rdur = 0.2f;
+
 	EnemyObject* obj1 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
 	obj1->SetPosition      (170.0f, 0.0f, 20.0f);
 	obj1->origin = XMFLOAT3(170.0f, 0.0f, 20.0f);

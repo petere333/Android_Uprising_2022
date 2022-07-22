@@ -25,38 +25,38 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* succeedr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* retry = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (721.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* retryr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (721.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* retryr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(721.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* back = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (866.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* backr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (866.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* backr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(866.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* exp_melee1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_melee2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_melee3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* exp_melee1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_melee2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_melee3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_melee1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(487.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_melee2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_melee3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* exp_ranged1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_ranged2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_ranged3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* exp_ranged1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_ranged2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_ranged3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_ranged1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(487.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_ranged2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_ranged3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(456.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* exp_radio1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_radio2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_radio3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* exp_radio1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_radio2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* exp_radio3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_radio1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(487.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_radio2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exp_radio3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(496.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* gold1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* gold2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* gold3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* gold1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* gold2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
-	CubeMeshOffset* gold3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (527.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* gold1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(487.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* gold2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* gold3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
 
 
 	meshes.push_back(mesh);

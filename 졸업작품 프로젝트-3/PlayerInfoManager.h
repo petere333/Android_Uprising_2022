@@ -29,7 +29,7 @@ public:
 	char name[13];
 	Growth growth;
 	Stats stats;
-	Item inventory[18];
+	std::vector<EquipItem> inventory;
 	EquipSlot slot;
 	ItemManager* manager;
 	int extraPoint;

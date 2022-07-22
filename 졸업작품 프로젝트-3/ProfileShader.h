@@ -31,4 +31,8 @@ public:
 	std::vector<CubeMeshOffset*> meshes;
 	std::vector<CubeMeshOffset*> meshesRev;
 	ResourceManager* rm;
+
+	bool storageShow = false;
+
+	int items = 0;
 };

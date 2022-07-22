@@ -379,7 +379,15 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
 
+					m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+					m_pCamera->lx = 0.0f;
+					m_pCamera->ly = 0.0f;
+					m_pCamera->lz = 1.0f;
+					m_pCamera->GenerateViewMatrix();
+					m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 					m_pScene->currentScreen = STAGE_SELECT_STATE;
+
+
 				}
 				else if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
 				{
@@ -403,7 +411,15 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
+
+					m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+					m_pCamera->lx = 0.0f;
+					m_pCamera->ly = 0.0f;
+					m_pCamera->lz = 1.0f;
+					m_pCamera->GenerateViewMatrix();
+					m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 					m_pScene->currentScreen = LOBBY_STATE;
+
 				}
 			}
 			break;
@@ -632,95 +648,110 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 			int mx = pnt.x;
 			int my = pnt.y;
-			//메인으로 버튼
-			if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 134 + wy && my <= 180 + wy))
+
+			if (m_pScene->profileInter->storageShow == false)
 			{
-				m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
-				m_pScene->currentScreen = LOBBY_STATE;
-			}
-			
-			else
-			{
-				for (int i = 55; i < 73; i += 4)
+
+				//메인으로 버튼
+				if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 134 + wy && my <= 180 + wy))
 				{
-					int x1 = m_pScene->profileInter->objects[i]->x1;
-					int x2 = m_pScene->profileInter->objects[i]->x2;
-					int y1 = m_pScene->profileInter->objects[i]->y1;
-					int y2 = m_pScene->profileInter->objects[i]->y2;
-
-					int px1 = m_pScene->profileInter->objects[i+1]->x1;
-					int px2 = m_pScene->profileInter->objects[i+1]->x2;
-					int py1 = m_pScene->profileInter->objects[i+1]->y1;
-					int py2 = m_pScene->profileInter->objects[i+1]->y2;
-
-					//plus버튼
-					if ((mx >= x1+wx && mx <= x2+wx) && (my >= y1+wy && my <= y2+wy))
+					m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
+					m_pScene->currentScreen = LOBBY_STATE;
+				}
+				//storage
+				else if ((mx >= 100 + wx && mx <= 304 + wx) && (my >= 674 + wy && my <= 720 + wy))
+				{
+					m_pScene->profileInter->storageShow = true;
+				}
+				else
+				{
+					for (int i = 55; i < 73; i += 4)
 					{
-						//잔여 포인트가 존재할 경우에만 스탯 추가.
-						if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint > 0)
+						int x1 = m_pScene->profileInter->objects[i]->x1;
+						int x2 = m_pScene->profileInter->objects[i]->x2;
+						int y1 = m_pScene->profileInter->objects[i]->y1;
+						int y2 = m_pScene->profileInter->objects[i]->y2;
+
+						int px1 = m_pScene->profileInter->objects[i + 1]->x1;
+						int px2 = m_pScene->profileInter->objects[i + 1]->x2;
+						int py1 = m_pScene->profileInter->objects[i + 1]->y1;
+						int py2 = m_pScene->profileInter->objects[i + 1]->y2;
+
+						//plus버튼
+						if ((mx >= x1 + wx && mx <= x2 + wx) && (my >= y1 + wy && my <= y2 + wy))
 						{
-							if (i == 55)
+							//잔여 포인트가 존재할 경우에만 스탯 추가.
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint > 0)
 							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 1;
-							}
-							else if (i == 59)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 1;
-							}
-							else if (i == 63)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 1;
-							}
-							else if (i == 67)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 1;
-							}
-							else if (i == 71)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
+								if (i == 55)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 1;
+								}
+								else if (i == 59)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 1;
+								}
+								else if (i == 63)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 1;
+								}
+								else if (i == 67)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 1;
+								}
+								else if (i == 71)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
+								}
 							}
 						}
-					}
-					else if ((mx >= px1+wx && mx <= px2+wx) && (my >= py1+wy && my <= py2+wy))
-					{
-						//현재 레벨까지 주어진 총 포인트보다 잔여포인트가 적을경우에만 스탯 회수.
-						if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint < (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1) * 5)
+						else if ((mx >= px1 + wx && mx <= px2 + wx) && (my >= py1 + wy && my <= py2 + wy))
 						{
-							if (i == 55)
+							//현재 레벨까지 주어진 총 포인트보다 잔여포인트가 적을경우에만 스탯 회수.
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint < (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1) * 5)
 							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp -= 1;
-							}
-							else if (i == 59)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness -= 1;
-							}
-							else if (i == 63)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power -= 1;
-							}
-							else if (i == 67)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision -= 1;
-							}
-							else if (i == 71)
-							{
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy -= 1;
+								if (i == 55)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp -= 1;
+								}
+								else if (i == 59)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness -= 1;
+								}
+								else if (i == 63)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power -= 1;
+								}
+								else if (i == 67)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision -= 1;
+								}
+								else if (i == 71)
+								{
+									m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+									m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy -= 1;
+								}
 							}
 						}
 					}
 				}
 			}
-
+			else
+			{
+				if ((mx >= 854 + wx && mx <= 894 + wx) && (my >= 249 + wy && my <= 289 + wy))
+				{
+					m_pScene->profileInter->storageShow = false;
+				}
+			}
 			break;
 		}
 		case WM_LBUTTONDOWN:
@@ -754,33 +785,145 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			GetWindowRect(hWnd, &rect);
 			int wx = rect.left;
 			int wy = rect.top;
-			for (int i = 0; i < m_pScene->stageInter->objects.size(); ++i)
-			{
-				if (m_pScene->stageInter->objects[i]->defaultMesh != -1)
-				{
-					int px1 = m_pScene->stageInter->objects[i]->x1;
-					int px2 = m_pScene->stageInter->objects[i]->x2;
-					int py1 = m_pScene->stageInter->objects[i]->y1;
-					int py2 = m_pScene->stageInter->objects[i]->y2;
 
-					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+
+
+			if (m_pScene->stageInter->coworkShow == false)
+			{
+
+				if (m_pScene->stageInter->list1Show == true)
+				{
+					//easy	x 818~918	y 354~393
+					//normal			y 393~432
+					//hard				y 432~471
+					//extreme			y 471~510
+					if ((pnt.x >= 818 + wx && pnt.y <= 918 + wx) && (pnt.y >= 374 + wy && pnt.y <= 413 + wy))
 					{
-						m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh];
-						if (i == 2)
+						m_pScene->stageInter->mode1 = 1;
+					}
+					else if ((pnt.x >= 818 + wx && pnt.y <= 918 + wx) && (pnt.y >= 413 + wy && pnt.y <= 452 + wy))
+					{
+						m_pScene->stageInter->mode1 = 2;
+					}
+					else if ((pnt.x >= 818 + wx && pnt.y <= 918 + wx) && (pnt.y >= 452 + wy && pnt.y <= 491 + wy))
+					{
+						m_pScene->stageInter->mode1 = 3;
+					}
+					else if ((pnt.x >= 818 + wx && pnt.y <= 918 + wx) && (pnt.y >= 491 + wy && pnt.y <= 530 + wy))
+					{
+						m_pScene->stageInter->mode1 = 4;
+					}
+					m_pScene->stageInter->list1Show = false;
+				}
+				else if (m_pScene->stageInter->list2Show == true)
+				{
+					//easy	x 820~920	y 599~638
+					//normal			y 638~677
+					//hard				y 677~716
+					//extreme			y 716~755
+
+					if ((pnt.x >= 820 + wx && pnt.y <= 920 + wx) && (pnt.y >= 619 + wy && pnt.y <= 658 + wy))
+					{
+						m_pScene->stageInter->mode2 = 1;
+					}
+					else if ((pnt.x >= 820 + wx && pnt.y <= 920 + wx) && (pnt.y >= 658 + wy && pnt.y <= 697 + wy))
+					{
+						m_pScene->stageInter->mode2 = 2;
+					}
+					else if ((pnt.x >= 820 + wx && pnt.y <= 920 + wx) && (pnt.y >= 697 + wy && pnt.y <= 736 + wy))
+					{
+						m_pScene->stageInter->mode2 = 3;
+					}
+					else if ((pnt.x >= 820 + wx && pnt.y <= 920 + wx) && (pnt.y >= 736 + wy && pnt.y <= 775 + wy))
+					{
+						m_pScene->stageInter->mode2 = 4;
+					}
+					m_pScene->stageInter->list2Show = false;
+				}
+				else
+				{
+					//stage1 list open
+					if ((pnt.x >= 917 + wx && pnt.y <= 951 + wx) && (pnt.y >= 334 + wy && pnt.y <= 374 + wy))
+					{
+						if (m_pScene->stageInter->list1Show == false)
 						{
-							m_pScene->currentScreen = WAIT_STATE;
-							//1-1스테이지 선택됨
-							m_pScene->waitInter->selectedStage = 1;
-							
+							m_pScene->stageInter->list1Show = true;
 						}
-						else if (i == 1)
+						else
 						{
-							m_pScene->currentScreen = LOBBY_STATE;
+							m_pScene->stageInter->list1Show = false;
 						}
+					}
+					//stage2 list open
+					else if ((pnt.x >= 919 + wx && pnt.y <= 953 + wx) && (pnt.y >= 579 + wy && pnt.y <= 619 + wy))
+					{
+						if (m_pScene->stageInter->list2Show == false)
+						{
+							m_pScene->stageInter->list2Show = true;
+						}
+						else
+						{
+							m_pScene->stageInter->list2Show = false;
+						}
+					}
+					else
+					{
+						for (int i = 0; i < m_pScene->stageInter->objects.size(); ++i)
+						{
+							if (m_pScene->stageInter->objects[i]->defaultMesh != -1)
+							{
+								int px1 = m_pScene->stageInter->objects[i]->x1;
+								int px2 = m_pScene->stageInter->objects[i]->x2;
+								int py1 = m_pScene->stageInter->objects[i]->y1;
+								int py2 = m_pScene->stageInter->objects[i]->y2;
+
+								if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+								{
+									m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh];
+									if (i == 2)
+									{
+										m_pScene->currentScreen = WAIT_STATE;
+										//1-1스테이지 선택됨
+										m_pScene->waitInter->selectedStage = 1;
+										m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+									}
+									else if (i == 1)
+									{
+										m_pScene->currentScreen = LOBBY_STATE;
+									}
+									else if (i == 3 || i == 4)
+									{
+										m_pScene->stageInter->coworkShow = true;
+									}
+									else if (i == 5)
+									{
+										m_pScene->currentScreen = WAIT_STATE;
+										//1-2스테이지 선택됨
+										m_pScene->waitInter->selectedStage = 2;
+										m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode2;
+									}
+									else if (i == 6 || i == 7)
+									{
+										m_pScene->stageInter->coworkShow = true;
+									}
+								}
+							}
+						}
+
 					}
 				}
 			}
-			
+			else
+			{
+				if ((pnt.x >= 261 + wx && pnt.x <= 1139 + wx) && (pnt.y >= 304 + wy && pnt.y <= 596 + wy))
+				{
+					
+				}
+				else
+				{
+					m_pScene->stageInter->coworkShow = false;
+				}
+			}
 			break;
 		}
 		case WM_LBUTTONDOWN:

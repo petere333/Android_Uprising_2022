@@ -1259,8 +1259,18 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//선택된 스테이지에 관한 정보 초기화.
 				interShader->stageClear = false;
 				waitInter->selectedStage = -1;
+
+				cam->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+				cam->lx = 0.0f;
+				cam->ly = 0.0f;
+				cam->lz = 1.0f;
+				cam->GenerateViewMatrix();
+				cam->UpdateShaderVariables(pd3dCommandList);
+
 				currentScreen = LOBBY_STATE;
 				//스테이지 클리어 완료
+
+				//플레이어 정보 서버로 전송하여 저장하도록 하기
 			}
 		}
 		
@@ -1315,6 +1325,14 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		if (ready == true)
 		{
 			currentScreen = IN_GAME_STATE;
+
+			for (int e = 0; e < enemyShader->objects.size(); ++e)
+			{
+				
+				enemyShader->objects[e]->maxHP *= waitInter->selectedMode;
+				enemyShader->objects[e]->bState.hp *= waitInter->selectedMode;
+			}
+
 			for (int idx = 0; idx < playerShader->objects.size(); ++idx)
 			{
 				//1-1스테이지

@@ -32,4 +32,5 @@ public:
 	ResourceManager* rm;
 	
 	int selectedStage;
+	int selectedMode;
 };

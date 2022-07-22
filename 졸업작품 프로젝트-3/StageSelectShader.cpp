@@ -46,7 +46,23 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	CubeMeshOffset* select2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* select2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, true);
 
-	
+	CubeMeshOffset* mode1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (868.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* mode1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (868.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* mode2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (870.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* mode2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (870.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* list1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (868.0f - 600.0f) / 450.0f, -(432.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* list1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (868.0f - 600.0f) / 450.0f, -(432.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* list2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (870.0f - 600.0f) / 450.0f, -(677.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* list2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (870.0f - 600.0f) / 450.0f, -(677.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* cointer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* cointerr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+
+
+
 	meshes.push_back(inter);
 	meshesRev.push_back(inter2);
 	meshes.push_back(main);
@@ -70,6 +86,20 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	meshes.push_back(select2);
 	meshesRev.push_back(select2r);
 	
+	meshes.push_back(mode1);
+	meshesRev.push_back(mode1r);
+	meshes.push_back(mode2);
+	meshesRev.push_back(mode2r);
+
+	meshes.push_back(list1);
+	meshesRev.push_back(list1r);
+	meshes.push_back(list2);
+	meshesRev.push_back(list2r);
+
+	meshes.push_back(cointer);
+	meshesRev.push_back(cointerr);
+
+
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, 81, 175, 259, 234, 239);
 	UIObject* obj3 = new UIObject(1, 333, 410, 487, 466, 248);
@@ -82,6 +112,16 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 
 	UIObject* obj9 = new UIObject(1, 917, 334, 951, 373, -1);
 	UIObject* obj10 = new UIObject(1, 919, 579, 953, 618, -1);
+
+	//mode
+	UIObject* obj11 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj12 = new UIObject(1, -1, -1, -1, -1, -1);
+	//list
+	UIObject* obj13 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj14 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	//coworker
+	UIObject* obj15 = new UIObject(1, -1, -1, -1, -1, -1);
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[238]);
@@ -123,6 +163,26 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	obj10->SetMaterial(0, rm->materials[251]);
 	obj10->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj11->SetMesh(meshes[10]);
+	obj11->SetMaterial(0, rm->materials[309]);
+	obj11->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj12->SetMesh(meshes[11]);
+	obj12->SetMaterial(0, rm->materials[309]);
+	obj12->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj13->SetMesh(meshes[12]);
+	obj13->SetMaterial(0, rm->materials[313]);
+	obj13->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj14->SetMesh(meshes[13]);
+	obj14->SetMaterial(0, rm->materials[313]);
+	obj14->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj15->SetMesh(meshes[14]);
+	obj15->SetMaterial(0, rm->materials[314]);
+	obj15->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -133,6 +193,12 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	objects.push_back(obj8);
 	objects.push_back(obj9);
 	objects.push_back(obj10);
+
+	objects.push_back(obj11);
+	objects.push_back(obj12);
+	objects.push_back(obj13);
+	objects.push_back(obj14);
+	objects.push_back(obj15);
 }
 
 void StageSelectShader::ReleaseObjects()
@@ -307,4 +373,36 @@ void StageSelectShader::Animate(CCamera* cam)
 	}
 	//	XMFLOAT3 p = objects[1]->GetPosition();
 	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
+
+	if (list1Show == false)
+	{
+		objects[12]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[12]->SetMesh(meshes[12]);
+	}
+	
+	if (list2Show == false)
+	{
+		objects[13]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[13]->SetMesh(meshes[13]);
+	}
+
+	
+	objects[10]->m_ppMaterials[0] = rm->materials[309 + mode1 - 1];
+	objects[11]->m_ppMaterials[0] = rm->materials[309 + mode2 - 1];
+	
+	if (coworkShow == false)
+	{
+		objects[14]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[14]->SetMesh(meshes[14]);
+	}
+
 }

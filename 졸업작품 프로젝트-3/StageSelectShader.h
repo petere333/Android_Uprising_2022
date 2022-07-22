@@ -29,4 +29,13 @@ public:
 	std::vector<CubeMeshOffset*> meshes;
 	std::vector<CubeMeshOffset*> meshesRev;
 	ResourceManager* rm;
+
+	bool list1Show = false;
+	bool list2Show = false;
+
+	int mode1 = 1;
+	int mode2 = 1;
+
+	bool coworkShow = false;
+
 };
