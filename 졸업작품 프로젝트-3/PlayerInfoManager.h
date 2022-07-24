@@ -29,11 +29,16 @@ public:
 	char name[13];
 	Growth growth;
 	Stats stats;
-	Item inventory[18];
+	std::vector<EquipItem> inventory;
 	EquipSlot slot;
 	ItemManager* manager;
 	int extraPoint;
 	int gold;
+
+	int co_melee=0;
+	int co_ranged=0;
+	int co_radio=0;
+
 public:
 	void initGrowth();
 	void initStats();

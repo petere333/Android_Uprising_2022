@@ -68,9 +68,40 @@ public:
 							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
 							{
 								enemy->objects[k]->bState.hp -= 10;
-								enemy->objects[k]->stunned = true;
-								enemy->objects[k]->stunDuration = 1.0f;
-								enemy->objects[k]->lastStun = chrono::system_clock::now();
+
+								if (enemy->objects[k]->bState.hp <= 0)
+								{
+									if (enemy->objects[k]->expGiven == false)
+									{
+										for (int ii = 0; ii < pl->objects.size(); ++ii)
+										{
+											pl->objects[ii]->info->growth.ranged.exp += 50;
+											if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
+											{
+												pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
+												pl->objects[ii]->info->growth.ranged.level += 1;
+											}
+											pl->objects[ii]->info->growth.total.exp += 50;
+
+											if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
+											{
+												pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
+												pl->objects[ii]->info->growth.total.level += 1;
+												pl->objects[ii]->info->extraPoint += 3;
+											}
+
+
+										}
+										enemy->objects[k]->expGiven = true;
+									}
+								}
+								else
+								{
+
+									enemy->objects[k]->stunned = true;
+									enemy->objects[k]->stunDuration = 1.0f;
+									enemy->objects[k]->lastStun = chrono::system_clock::now();
+								}
 							}
 						}
 						part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
@@ -112,6 +143,16 @@ public:
 														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
 														pl->objects[ii]->info->growth.ranged.level += 1;
 													}
+													pl->objects[ii]->info->growth.total.exp += 50;
+
+													if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
+													{								 
+														pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
+														pl->objects[ii]->info->growth.total.level += 1;
+														pl->objects[ii]->info->extraPoint += 3;
+													}
+
+
 												}
 												enemy->objects[a]->expGiven = true;
 											}
@@ -155,6 +196,34 @@ public:
 							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
 							{
 								enemy->objects[k]->bState.hp -= 10;
+
+								if (enemy->objects[k]->bState.hp <= 0)
+								{
+									if (enemy->objects[k]->expGiven == false)
+									{
+										for (int ii = 0; ii < pl->objects.size(); ++ii)
+										{
+											pl->objects[ii]->info->growth.ranged.exp += 50;
+											if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
+											{
+												pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
+												pl->objects[ii]->info->growth.ranged.level += 1;
+											}
+											pl->objects[ii]->info->growth.total.exp += 50;
+
+											if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
+											{
+												pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
+												pl->objects[ii]->info->growth.total.level += 1;
+												pl->objects[ii]->info->extraPoint += 3;
+											}
+
+
+										}
+										enemy->objects[k]->expGiven = true;
+									}
+								}
+
 								enemy->objects[k]->stunned = true;
 								enemy->objects[k]->stunDuration = 1.0f;
 								enemy->objects[k]->lastStun = chrono::system_clock::now();
@@ -198,8 +267,18 @@ public:
 														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
 														pl->objects[ii]->info->growth.ranged.level += 1;
 													}
+													pl->objects[ii]->info->growth.total.exp += 50;
+
+													if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
+													{
+														pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
+														pl->objects[ii]->info->growth.total.level += 1;
+														pl->objects[ii]->info->extraPoint += 3;
+													}
 												}
 												enemy->objects[a]->expGiven = true;
+
+
 											}
 										}
 										/*

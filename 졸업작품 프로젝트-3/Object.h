@@ -551,6 +551,9 @@ public:
 	int comboCount = 0;
 
 	bool readyToGo = false;
+	float amp_melee = 1.0f;
+	float amp_ranged = 1.0f;
+	float amp_radio = 1.0f;
 
 public:
 	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }

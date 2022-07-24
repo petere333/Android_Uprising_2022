@@ -24,7 +24,7 @@ protected:
 
 	ID3D12Resource* m_pd3dcbCamera = NULL;
 	VS_CB_CAMERA_INFO* m_pcbMappedCamera = NULL;
-private:
+public:
 	
 	XMFLOAT3 m_xmf3Position;
 	float lx, ly, lz;

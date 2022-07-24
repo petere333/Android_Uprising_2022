@@ -8,6 +8,8 @@ PlayerInfoManager::PlayerInfoManager()
 	gold = 0;
 	extraPoint = 2;
 	
+	inventory.push_back(*manager->items[0]);
+	inventory.push_back(*manager->items[1]);
 }
 
 PlayerInfoManager::~PlayerInfoManager()

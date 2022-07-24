@@ -134,580 +134,718 @@ void ProfileShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 	CubeMeshOffset* extra1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (682.0f - 600.0f) / 450.0f, -(655.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* extra2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.01f, (702.0f - 600.0f) / 450.0f, -(655.0f - 450.0f) / 450.0f, false);
 	
+	CubeMeshOffset* inv = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 615.0f / 450.0f, 864.0f / 450.0f, 0.02f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 
-	meshes.push_back(main);
-	meshesRev.push_back(mainr);
+	CubeMeshOffset* btnX = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.02f, (874.0f - 600.0f) / 450.0f, -(269.0f - 450.0f) / 450.0f, false);
 
-	meshes.push_back(storage);
-	meshesRev.push_back(storager);
+	CubeMeshOffset* item1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (405.0f - 600.0f) / 450.0f, -(330.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (601.0f - 600.0f) / 450.0f, -(330.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (796.0f - 600.0f) / 450.0f, -(330.0f - 450.0f) / 450.0f, false);
 
-	meshes.push_back(back);
-	meshesRev.push_back(backr);
+	CubeMeshOffset* item4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (405.0f - 600.0f) / 450.0f, -(446.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (601.0f - 600.0f) / 450.0f, -(446.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item6 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (796.0f - 600.0f) / 450.0f, -(446.0f - 450.0f) / 450.0f, false);
 
-	meshes.push_back(lv_total1);
-	meshes.push_back(lv_total2);
-	meshes.push_back(exp_total1);
-	meshes.push_back(exp_total2);
-	meshes.push_back(exp_total3);
-	meshes.push_back(exp_total4);
-	meshes.push_back(exp_total5);
-	meshes.push_back(exp_total6);
-	meshes.push_back(exp_total7);
-	meshes.push_back(exp_total8);
+	CubeMeshOffset* item7 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (405.0f - 600.0f) / 450.0f, -(562.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item8 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (601.0f - 600.0f) / 450.0f, -(562.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* item9 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 117.0f / 450.0f, 82.0f / 450.0f, 0.02f, (796.0f - 600.0f) / 450.0f, -(562.0f - 450.0f) / 450.0f, false);
 
-	meshes.push_back(lv_melee1);
-	meshes.push_back(lv_melee2);
-	meshes.push_back(exp_melee1);
-	meshes.push_back(exp_melee2);
-	meshes.push_back(exp_melee3);
-	meshes.push_back(exp_melee4);
-	meshes.push_back(exp_melee5);
-	meshes.push_back(exp_melee6);
-	meshes.push_back(exp_melee7);
-	meshes.push_back(exp_melee8);
 	
-	meshes.push_back(lv_ranged1);
-	meshes.push_back(lv_ranged2);
-	meshes.push_back(exp_ranged1);
-	meshes.push_back(exp_ranged2);
-	meshes.push_back(exp_ranged3);
-	meshes.push_back(exp_ranged4);
-	meshes.push_back(exp_ranged5);
-	meshes.push_back(exp_ranged6);
-	meshes.push_back(exp_ranged7);
-	meshes.push_back(exp_ranged8);
+	{
+		meshes.push_back(main);
+		meshesRev.push_back(mainr);
 
-	meshes.push_back(lv_radio1);
-	meshes.push_back(lv_radio2);
-	meshes.push_back(exp_radio1);
-	meshes.push_back(exp_radio2);
-	meshes.push_back(exp_radio3);
-	meshes.push_back(exp_radio4);
-	meshes.push_back(exp_radio5);
-	meshes.push_back(exp_radio6);
-	meshes.push_back(exp_radio7);
-	meshes.push_back(exp_radio8);
+		meshes.push_back(storage);
+		meshesRev.push_back(storager);
 
-	meshes.push_back(gold1);
-	meshes.push_back(gold2);
-	meshes.push_back(gold3);
-	meshes.push_back(gold4);
-	meshes.push_back(gold5);
-	meshes.push_back(gold6);
-	meshes.push_back(gold7);
-	meshes.push_back(gold8);
-	meshes.push_back(gold9);
-	meshes.push_back(gold10);
+		meshes.push_back(back);
+		meshesRev.push_back(backr);
 
-	meshes.push_back(cap_stat1);
-	meshes.push_back(cap_stat2);
-	meshes.push_back(cap_plus);
-	meshes.push_back(cap_minus);
+		meshes.push_back(lv_total1);
+		meshes.push_back(lv_total2);
+		meshes.push_back(exp_total1);
+		meshes.push_back(exp_total2);
+		meshes.push_back(exp_total3);
+		meshes.push_back(exp_total4);
+		meshes.push_back(exp_total5);
+		meshes.push_back(exp_total6);
+		meshes.push_back(exp_total7);
+		meshes.push_back(exp_total8);
 
-	meshes.push_back(hard_stat1);
-	meshes.push_back(hard_stat2);
-	meshes.push_back(hard_plus);
-	meshes.push_back(hard_minus);
+		meshes.push_back(lv_melee1);
+		meshes.push_back(lv_melee2);
+		meshes.push_back(exp_melee1);
+		meshes.push_back(exp_melee2);
+		meshes.push_back(exp_melee3);
+		meshes.push_back(exp_melee4);
+		meshes.push_back(exp_melee5);
+		meshes.push_back(exp_melee6);
+		meshes.push_back(exp_melee7);
+		meshes.push_back(exp_melee8);
 
-	meshes.push_back(out_stat1);
-	meshes.push_back(out_stat2);
-	meshes.push_back(out_plus);
-	meshes.push_back(out_minus);
+		meshes.push_back(lv_ranged1);
+		meshes.push_back(lv_ranged2);
+		meshes.push_back(exp_ranged1);
+		meshes.push_back(exp_ranged2);
+		meshes.push_back(exp_ranged3);
+		meshes.push_back(exp_ranged4);
+		meshes.push_back(exp_ranged5);
+		meshes.push_back(exp_ranged6);
+		meshes.push_back(exp_ranged7);
+		meshes.push_back(exp_ranged8);
 
-	meshes.push_back(prec_stat1);
-	meshes.push_back(prec_stat2);
-	meshes.push_back(prec_plus);
-	meshes.push_back(prec_minus);
+		meshes.push_back(lv_radio1);
+		meshes.push_back(lv_radio2);
+		meshes.push_back(exp_radio1);
+		meshes.push_back(exp_radio2);
+		meshes.push_back(exp_radio3);
+		meshes.push_back(exp_radio4);
+		meshes.push_back(exp_radio5);
+		meshes.push_back(exp_radio6);
+		meshes.push_back(exp_radio7);
+		meshes.push_back(exp_radio8);
 
-	meshes.push_back(ent_stat1);
-	meshes.push_back(ent_stat2);
-	meshes.push_back(ent_plus);
-	meshes.push_back(ent_minus);
+		meshes.push_back(gold1);
+		meshes.push_back(gold2);
+		meshes.push_back(gold3);
+		meshes.push_back(gold4);
+		meshes.push_back(gold5);
+		meshes.push_back(gold6);
+		meshes.push_back(gold7);
+		meshes.push_back(gold8);
+		meshes.push_back(gold9);
+		meshes.push_back(gold10);
 
-	meshes.push_back(extra1);
-	meshes.push_back(extra2);
-	
+		meshes.push_back(cap_stat1);
+		meshes.push_back(cap_stat2);
+		meshes.push_back(cap_plus);
+		meshes.push_back(cap_minus);
 
+		meshes.push_back(hard_stat1);
+		meshes.push_back(hard_stat2);
+		meshes.push_back(hard_plus);
+		meshes.push_back(hard_minus);
 
-	meshesRev.push_back(lv_total1);
-	meshesRev.push_back(lv_total2);
-	meshesRev.push_back(exp_total1);
-	meshesRev.push_back(exp_total2);
-	meshesRev.push_back(exp_total3);
-	meshesRev.push_back(exp_total4);
-	meshesRev.push_back(exp_total5);
-	meshesRev.push_back(exp_total6);
-	meshesRev.push_back(exp_total7);
-	meshesRev.push_back(exp_total8);
+		meshes.push_back(out_stat1);
+		meshes.push_back(out_stat2);
+		meshes.push_back(out_plus);
+		meshes.push_back(out_minus);
 
-	meshesRev.push_back(lv_melee1);
-	meshesRev.push_back(lv_melee2);
-	meshesRev.push_back(exp_melee1);
-	meshesRev.push_back(exp_melee2);
-	meshesRev.push_back(exp_melee3);
-	meshesRev.push_back(exp_melee4);
-	meshesRev.push_back(exp_melee5);
-	meshesRev.push_back(exp_melee6);
-	meshesRev.push_back(exp_melee7);
-	meshesRev.push_back(exp_melee8);
+		meshes.push_back(prec_stat1);
+		meshes.push_back(prec_stat2);
+		meshes.push_back(prec_plus);
+		meshes.push_back(prec_minus);
 
-	meshesRev.push_back(lv_ranged1);
-	meshesRev.push_back(lv_ranged2);
-	meshesRev.push_back(exp_ranged1);
-	meshesRev.push_back(exp_ranged2);
-	meshesRev.push_back(exp_ranged3);
-	meshesRev.push_back(exp_ranged4);
-	meshesRev.push_back(exp_ranged5);
-	meshesRev.push_back(exp_ranged6);
-	meshesRev.push_back(exp_ranged7);
-	meshesRev.push_back(exp_ranged8);
+		meshes.push_back(ent_stat1);
+		meshes.push_back(ent_stat2);
+		meshes.push_back(ent_plus);
+		meshes.push_back(ent_minus);
 
-	meshesRev.push_back(lv_radio1);
-	meshesRev.push_back(lv_radio2);
-	meshesRev.push_back(exp_radio1);
-	meshesRev.push_back(exp_radio2);
-	meshesRev.push_back(exp_radio3);
-	meshesRev.push_back(exp_radio4);
-	meshesRev.push_back(exp_radio5);
-	meshesRev.push_back(exp_radio6);
-	meshesRev.push_back(exp_radio7);
-	meshesRev.push_back(exp_radio8);
+		meshes.push_back(extra1);
+		meshes.push_back(extra2);
 
-	meshesRev.push_back(gold1);
-	meshesRev.push_back(gold2);
-	meshesRev.push_back(gold3);
-	meshesRev.push_back(gold4);
-	meshesRev.push_back(gold5);
-	meshesRev.push_back(gold6);
-	meshesRev.push_back(gold7);
-	meshesRev.push_back(gold8);
-	meshesRev.push_back(gold9);
-	meshesRev.push_back(gold10);
+		meshes.push_back(inv);
+		meshes.push_back(btnX);
 
-	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj2 = new UIObject(1, 100, 674,  304, 720, 228);
-	UIObject* obj3 = new UIObject(1, 92, 134, 296, 180, 235);
-	
-	UIObject* obj4 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj5 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj7 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj8 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj9 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj10 = new UIObject(1, -1, -1, -1, -1, -1);
+		meshes.push_back(item1);
+		meshes.push_back(item2);
+		meshes.push_back(item3);
+		meshes.push_back(item4);
+		meshes.push_back(item5);
+		meshes.push_back(item6);
+		meshes.push_back(item7);
+		meshes.push_back(item8);
+		meshes.push_back(item9);
+	}
 
-	UIObject* obj11 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj12 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj13 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj14 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj15 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj16 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj17 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj18 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj19 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj20 = new UIObject(1, -1, -1, -1, -1, -1);
+	{
+		meshesRev.push_back(lv_total1);
+		meshesRev.push_back(lv_total2);
+		meshesRev.push_back(exp_total1);
+		meshesRev.push_back(exp_total2);
+		meshesRev.push_back(exp_total3);
+		meshesRev.push_back(exp_total4);
+		meshesRev.push_back(exp_total5);
+		meshesRev.push_back(exp_total6);
+		meshesRev.push_back(exp_total7);
+		meshesRev.push_back(exp_total8);
 
-	UIObject* obj21 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj22 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj24 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj25 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj26 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj27 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj28 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj29 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj30 = new UIObject(1, -1, -1, -1, -1, -1);
+		meshesRev.push_back(lv_melee1);
+		meshesRev.push_back(lv_melee2);
+		meshesRev.push_back(exp_melee1);
+		meshesRev.push_back(exp_melee2);
+		meshesRev.push_back(exp_melee3);
+		meshesRev.push_back(exp_melee4);
+		meshesRev.push_back(exp_melee5);
+		meshesRev.push_back(exp_melee6);
+		meshesRev.push_back(exp_melee7);
+		meshesRev.push_back(exp_melee8);
 
-	UIObject* obj31 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj32 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj33 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj34 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj35 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj36 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj37 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj38 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj39 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj40 = new UIObject(1, -1, -1, -1, -1, -1);
+		meshesRev.push_back(lv_ranged1);
+		meshesRev.push_back(lv_ranged2);
+		meshesRev.push_back(exp_ranged1);
+		meshesRev.push_back(exp_ranged2);
+		meshesRev.push_back(exp_ranged3);
+		meshesRev.push_back(exp_ranged4);
+		meshesRev.push_back(exp_ranged5);
+		meshesRev.push_back(exp_ranged6);
+		meshesRev.push_back(exp_ranged7);
+		meshesRev.push_back(exp_ranged8);
 
-	UIObject* obj41 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj42 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj43 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj44 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj45 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj46 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj47 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj48 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj49 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj50 = new UIObject(1, -1, -1, -1, -1, -1);
+		meshesRev.push_back(lv_radio1);
+		meshesRev.push_back(lv_radio2);
+		meshesRev.push_back(exp_radio1);
+		meshesRev.push_back(exp_radio2);
+		meshesRev.push_back(exp_radio3);
+		meshesRev.push_back(exp_radio4);
+		meshesRev.push_back(exp_radio5);
+		meshesRev.push_back(exp_radio6);
+		meshesRev.push_back(exp_radio7);
+		meshesRev.push_back(exp_radio8);
 
-	UIObject* obj51 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj52 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj53 = new UIObject(1, -1, -1, -1, -1, -1);
+		meshesRev.push_back(gold1);
+		meshesRev.push_back(gold2);
+		meshesRev.push_back(gold3);
+		meshesRev.push_back(gold4);
+		meshesRev.push_back(gold5);
+		meshesRev.push_back(gold6);
+		meshesRev.push_back(gold7);
+		meshesRev.push_back(gold8);
+		meshesRev.push_back(gold9);
+		meshesRev.push_back(gold10);
 
-	//여기서부터 스탯
-	//cap
-	UIObject* obj54 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj55 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj56 = new UIObject(1, 677, 402, 697, 422, 233);
-	UIObject* obj57 = new UIObject(1, 704, 402, 724, 422, 231);
-	//hard
-	UIObject* obj58 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj59 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj60 = new UIObject(1, 677, 460, 697, 480, 233);
-	UIObject* obj61 = new UIObject(1, 704, 460, 724, 480, 231);
-	//out
-	UIObject* obj62 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj63 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj64 = new UIObject(1, 677, 518, 697, 538, 233);
-	UIObject* obj65 = new UIObject(1, 704, 518, 724, 538, 231);
+		meshesRev.push_back(cap_stat1);
+		meshesRev.push_back(cap_stat2);
+		meshesRev.push_back(cap_plus);
+		meshesRev.push_back(cap_minus);
 
-	//prec
-	UIObject* obj66 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj67 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj68 = new UIObject(1, 677, 576, 697, 596, 233);
-	UIObject* obj69 = new UIObject(1, 704, 576, 724, 596, 231);
+		meshesRev.push_back(hard_stat1);
+		meshesRev.push_back(hard_stat2);
+		meshesRev.push_back(hard_plus);
+		meshesRev.push_back(hard_minus);
 
-	//entrophy
-	UIObject* obj70 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj71 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj72 = new UIObject(1, 677, 634, 697, 654, 233);
-	UIObject* obj73 = new UIObject(1, 704, 634, 724, 654, 231);
+		meshesRev.push_back(out_stat1);
+		meshesRev.push_back(out_stat2);
+		meshesRev.push_back(out_plus);
+		meshesRev.push_back(out_minus);
 
-	//extra point
-	//out
-	UIObject* obj74 = new UIObject(1, -1, -1, -1, -1, -1);
-	UIObject* obj75 = new UIObject(1, -1, -1, -1, -1, -1);
-	
+		meshesRev.push_back(prec_stat1);
+		meshesRev.push_back(prec_stat2);
+		meshesRev.push_back(prec_plus);
+		meshesRev.push_back(prec_minus);
 
-	obj->SetMesh(meshes[0]);
-	obj->SetMaterial(0, rm->materials[227]);
-	obj->SetPosition(0.0f, 0.0f, 0.0f);
+		meshesRev.push_back(ent_stat1);
+		meshesRev.push_back(ent_stat2);
+		meshesRev.push_back(ent_plus);
+		meshesRev.push_back(ent_minus);
 
-	obj2->SetMesh(meshes[1]);
-	obj2->SetMaterial(0, rm->materials[228]);
-	obj2->SetPosition(0.0f, 0.0f, 0.0f);
+		meshesRev.push_back(extra1);
+		meshesRev.push_back(extra2);
 
-	obj3->SetMesh(meshes[1]);
-	obj3->SetMaterial(0, rm->materials[235]);
-	obj3->SetPosition(0.0f, 0.0f, 0.0f);
+		meshesRev.push_back(inv);
+		meshesRev.push_back(btnX);
 
-	obj4->SetMesh(meshes[3]);
-	obj4->SetMaterial(0, rm->materials[252]);
-	obj4->SetPosition(0.0f, 0.0f, 0.0f);
+		meshesRev.push_back(item1);
+		meshesRev.push_back(item2);
+		meshesRev.push_back(item3);
+		meshesRev.push_back(item4);
+		meshesRev.push_back(item5);
+		meshesRev.push_back(item6);
+		meshesRev.push_back(item7);
+		meshesRev.push_back(item8);
+		meshesRev.push_back(item9);
+	}
 
-	obj5->SetMesh(meshes[4]);
-	obj5->SetMaterial(0, rm->materials[252]);
-	obj5->SetPosition(0.0f, 0.0f, 0.0f);
+	{
+		UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj2 = new UIObject(1, 100, 674, 304, 720, 228);
+		UIObject* obj3 = new UIObject(1, 92, 134, 296, 180, 235);
 
-	obj6->SetMesh(meshes[5]);
-	obj6->SetMaterial(0, rm->materials[252]);
-	obj6->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj4 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj5 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj7 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj8 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj9 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj10 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj7->SetMesh(meshes[6]);
-	obj7->SetMaterial(0, rm->materials[252]);
-	obj7->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj11 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj12 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj13 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj14 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj15 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj16 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj17 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj18 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj19 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj20 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj8->SetMesh(meshes[7]);
-	obj8->SetMaterial(0, rm->materials[252]);
-	obj8->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj21 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj22 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj24 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj25 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj26 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj27 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj28 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj29 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj30 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj9->SetMesh(meshes[8]);
-	obj9->SetMaterial(0, rm->materials[252]);
-	obj9->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj31 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj32 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj33 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj34 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj35 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj36 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj37 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj38 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj39 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj40 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj10->SetMesh(meshes[9]);
-	obj10->SetMaterial(0, rm->materials[252]);
-	obj10->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj41 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj42 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj43 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj44 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj45 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj46 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj47 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj48 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj49 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj50 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj11->SetMesh(meshes[10]);
-	obj11->SetMaterial(0, rm->materials[252]);
-	obj11->SetPosition(0.0f, 0.0f, 0.0f);
-	obj12->SetMesh(meshes[11]);
-	obj12->SetMaterial(0, rm->materials[252]);
-	obj12->SetPosition(0.0f, 0.0f, 0.0f);
-	obj13->SetMesh(meshes[12]);
-	obj13->SetMaterial(0, rm->materials[252]);
-	obj13->SetPosition(0.0f, 0.0f, 0.0f);
-	obj14->SetMesh(meshes[13]);
-	obj14->SetMaterial(0, rm->materials[252]);
-	obj14->SetPosition(0.0f, 0.0f, 0.0f);
-	obj15->SetMesh(meshes[14]);
-	obj15->SetMaterial(0, rm->materials[252]);
-	obj15->SetPosition(0.0f, 0.0f, 0.0f);
-	obj16->SetMesh(meshes[15]);
-	obj16->SetMaterial(0, rm->materials[252]);
-	obj16->SetPosition(0.0f, 0.0f, 0.0f);
-	obj17->SetMesh(meshes[16]);
-	obj17->SetMaterial(0, rm->materials[252]);
-	obj17->SetPosition(0.0f, 0.0f, 0.0f);
-	obj18->SetMesh(meshes[17]);
-	obj18->SetMaterial(0, rm->materials[252]);
-	obj18->SetPosition(0.0f, 0.0f, 0.0f);
-	obj19->SetMesh(meshes[18]);
-	obj19->SetMaterial(0, rm->materials[252]);
-	obj19->SetPosition(0.0f, 0.0f, 0.0f);
-	obj20->SetMesh(meshes[19]);
-	obj20->SetMaterial(0, rm->materials[252]);
-	obj20->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj51 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj52 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj53 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj21->SetMesh(meshes[20]);
-	obj21->SetMaterial(0, rm->materials[252]);
-	obj21->SetPosition(0.0f, 0.0f, 0.0f);
-	obj22->SetMesh(meshes[21]);
-	obj22->SetMaterial(0, rm->materials[252]);
-	obj22->SetPosition(0.0f, 0.0f, 0.0f);
-	obj23->SetMesh(meshes[22]);
-	obj23->SetMaterial(0, rm->materials[252]);
-	obj23->SetPosition(0.0f, 0.0f, 0.0f);
-	obj24->SetMesh(meshes[23]);
-	obj24->SetMaterial(0, rm->materials[252]);
-	obj24->SetPosition(0.0f, 0.0f, 0.0f);
-	obj25->SetMesh(meshes[24]);
-	obj25->SetMaterial(0, rm->materials[252]);
-	obj25->SetPosition(0.0f, 0.0f, 0.0f);
-	obj26->SetMesh(meshes[25]);
-	obj26->SetMaterial(0, rm->materials[252]);
-	obj26->SetPosition(0.0f, 0.0f, 0.0f);
-	obj27->SetMesh(meshes[26]);
-	obj27->SetMaterial(0, rm->materials[252]);
-	obj27->SetPosition(0.0f, 0.0f, 0.0f);
-	obj28->SetMesh(meshes[27]);
-	obj28->SetMaterial(0, rm->materials[252]);
-	obj28->SetPosition(0.0f, 0.0f, 0.0f);
-	obj29->SetMesh(meshes[28]);
-	obj29->SetMaterial(0, rm->materials[252]);
-	obj29->SetPosition(0.0f, 0.0f, 0.0f);
-	obj30->SetMesh(meshes[29]);
-	obj30->SetMaterial(0, rm->materials[252]);
-	obj30->SetPosition(0.0f, 0.0f, 0.0f);
+		//여기서부터 스탯
+		//cap
+		UIObject* obj54 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj55 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj56 = new UIObject(1, 677, 402, 697, 422, 233);
+		UIObject* obj57 = new UIObject(1, 704, 402, 724, 422, 231);
+		//hard
+		UIObject* obj58 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj59 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj60 = new UIObject(1, 677, 460, 697, 480, 233);
+		UIObject* obj61 = new UIObject(1, 704, 460, 724, 480, 231);
+		//out
+		UIObject* obj62 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj63 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj64 = new UIObject(1, 677, 518, 697, 538, 233);
+		UIObject* obj65 = new UIObject(1, 704, 518, 724, 538, 231);
 
-	obj31->SetMesh(meshes[30]);
-	obj31->SetMaterial(0, rm->materials[252]);
-	obj31->SetPosition(0.0f, 0.0f, 0.0f);
-	obj32->SetMesh(meshes[31]);
-	obj32->SetMaterial(0, rm->materials[252]);
-	obj32->SetPosition(0.0f, 0.0f, 0.0f);
-	obj33->SetMesh(meshes[32]);
-	obj33->SetMaterial(0, rm->materials[252]);
-	obj33->SetPosition(0.0f, 0.0f, 0.0f);
-	obj34->SetMesh(meshes[33]);
-	obj34->SetMaterial(0, rm->materials[252]);
-	obj34->SetPosition(0.0f, 0.0f, 0.0f);
-	obj35->SetMesh(meshes[34]);
-	obj35->SetMaterial(0, rm->materials[252]);
-	obj35->SetPosition(0.0f, 0.0f, 0.0f);
-	obj36->SetMesh(meshes[35]);
-	obj36->SetMaterial(0, rm->materials[252]);
-	obj36->SetPosition(0.0f, 0.0f, 0.0f);
-	obj37->SetMesh(meshes[36]);
-	obj37->SetMaterial(0, rm->materials[252]);
-	obj37->SetPosition(0.0f, 0.0f, 0.0f);
-	obj38->SetMesh(meshes[37]);
-	obj38->SetMaterial(0, rm->materials[252]);
-	obj38->SetPosition(0.0f, 0.0f, 0.0f);
-	obj39->SetMesh(meshes[38]);
-	obj39->SetMaterial(0, rm->materials[252]);
-	obj39->SetPosition(0.0f, 0.0f, 0.0f);
-	obj40->SetMesh(meshes[39]);
-	obj40->SetMaterial(0, rm->materials[252]);
-	obj40->SetPosition(0.0f, 0.0f, 0.0f);
+		//prec
+		UIObject* obj66 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj67 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj68 = new UIObject(1, 677, 576, 697, 596, 233);
+		UIObject* obj69 = new UIObject(1, 704, 576, 724, 596, 231);
 
-	obj41->SetMesh(meshes[40]);
-	obj41->SetMaterial(0, rm->materials[252]);
-	obj41->SetPosition(0.0f, 0.0f, 0.0f);
-	obj42->SetMesh(meshes[41]);
-	obj42->SetMaterial(0, rm->materials[252]);
-	obj42->SetPosition(0.0f, 0.0f, 0.0f);
-	obj43->SetMesh(meshes[42]);
-	obj43->SetMaterial(0, rm->materials[252]);
-	obj43->SetPosition(0.0f, 0.0f, 0.0f);
-	obj44->SetMesh(meshes[43]);
-	obj44->SetMaterial(0, rm->materials[252]);
-	obj44->SetPosition(0.0f, 0.0f, 0.0f);
-	obj45->SetMesh(meshes[44]);
-	obj45->SetMaterial(0, rm->materials[252]);
-	obj45->SetPosition(0.0f, 0.0f, 0.0f);
-	obj46->SetMesh(meshes[45]);
-	obj46->SetMaterial(0, rm->materials[252]);
-	obj46->SetPosition(0.0f, 0.0f, 0.0f);
-	obj47->SetMesh(meshes[46]);
-	obj47->SetMaterial(0, rm->materials[252]);
-	obj47->SetPosition(0.0f, 0.0f, 0.0f);
-	obj48->SetMesh(meshes[47]);
-	obj48->SetMaterial(0, rm->materials[252]);
-	obj48->SetPosition(0.0f, 0.0f, 0.0f);
-	obj49->SetMesh(meshes[48]);
-	obj49->SetMaterial(0, rm->materials[252]);
-	obj49->SetPosition(0.0f, 0.0f, 0.0f);
-	obj50->SetMesh(meshes[49]);
-	obj50->SetMaterial(0, rm->materials[252]);
-	obj50->SetPosition(0.0f, 0.0f, 0.0f);
+		//entrophy
+		UIObject* obj70 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj71 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj72 = new UIObject(1, 677, 634, 697, 654, 233);
+		UIObject* obj73 = new UIObject(1, 704, 634, 724, 654, 231);
 
-	obj51->SetMesh(meshes[50]);
-	obj51->SetMaterial(0, rm->materials[252]);
-	obj51->SetPosition(0.0f, 0.0f, 0.0f);
-	obj52->SetMesh(meshes[51]);
-	obj52->SetMaterial(0, rm->materials[252]);
-	obj52->SetPosition(0.0f, 0.0f, 0.0f);
-	obj53->SetMesh(meshes[52]);
-	obj53->SetMaterial(0, rm->materials[252]);
-	obj53->SetPosition(0.0f, 0.0f, 0.0f);
+		//extra point
+		//out
+		UIObject* obj74 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj75 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	obj54->SetMesh(meshes[53]);
-	obj54->SetMaterial(0, rm->materials[252]);
-	obj54->SetPosition(0.0f, 0.0f, 0.0f);
-	obj55->SetMesh(meshes[54]);
-	obj55->SetMaterial(0, rm->materials[252]);
-	obj55->SetPosition(0.0f, 0.0f, 0.0f);
-	obj56->SetMesh(meshes[55]);
-	obj56->SetMaterial(0, rm->materials[233]);
-	obj56->SetPosition(0.0f, 0.0f, 0.0f);
-	obj57->SetMesh(meshes[56]);
-	obj57->SetMaterial(0, rm->materials[231]);
-	obj57->SetPosition(0.0f, 0.0f, 0.0f);
+		UIObject* obj76 = new UIObject(1, -1, -1, -1, -1, -1);
+		UIObject* obj77 = new UIObject(1, 854, 249, 894, 289, 307);
+
+		//items
+
+		UIObject* obj78 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj79 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj80 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj81 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj82 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj83 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj84 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj85 = new UIObject(1, -1,-1,-1,-1,-1);
+		UIObject* obj86 = new UIObject(1, -1,-1,-1,-1,-1);
 
 
-	obj58->SetMesh(meshes[57]);
-	obj58->SetMaterial(0, rm->materials[252]);
-	obj58->SetPosition(0.0f, 0.0f, 0.0f);
-	obj59->SetMesh(meshes[58]);
-	obj59->SetMaterial(0, rm->materials[252]);
-	obj59->SetPosition(0.0f, 0.0f, 0.0f);
-	obj60->SetMesh(meshes[59]);
-	obj60->SetMaterial(0, rm->materials[233]);
-	obj60->SetPosition(0.0f, 0.0f, 0.0f);
-	obj61->SetMesh(meshes[60]);
-	obj61->SetMaterial(0, rm->materials[231]);
-	obj61->SetPosition(0.0f, 0.0f, 0.0f);
+		obj->SetMesh(meshes[0]);
+		obj->SetMaterial(0, rm->materials[227]);
+		obj->SetPosition(0.0f, 0.0f, 0.0f);
 
-	obj62->SetMesh(meshes[61]);
-	obj62->SetMaterial(0, rm->materials[252]);
-	obj62->SetPosition(0.0f, 0.0f, 0.0f);
-	obj63->SetMesh(meshes[62]);
-	obj63->SetMaterial(0, rm->materials[252]);
-	obj63->SetPosition(0.0f, 0.0f, 0.0f);
-	obj64->SetMesh(meshes[63]);
-	obj64->SetMaterial(0, rm->materials[233]);
-	obj64->SetPosition(0.0f, 0.0f, 0.0f);
-	obj65->SetMesh(meshes[64]);
-	obj65->SetMaterial(0, rm->materials[231]);
-	obj65->SetPosition(0.0f, 0.0f, 0.0f);
+		obj2->SetMesh(meshes[1]);
+		obj2->SetMaterial(0, rm->materials[228]);
+		obj2->SetPosition(0.0f, 0.0f, 0.0f);
 
-	obj66->SetMesh(meshes[65]);
-	obj66->SetMaterial(0, rm->materials[252]);
-	obj66->SetPosition(0.0f, 0.0f, 0.0f);
-	obj67->SetMesh(meshes[66]);
-	obj67->SetMaterial(0, rm->materials[252]);
-	obj67->SetPosition(0.0f, 0.0f, 0.0f);
-	obj68->SetMesh(meshes[67]);
-	obj68->SetMaterial(0, rm->materials[233]);
-	obj68->SetPosition(0.0f, 0.0f, 0.0f);
-	obj69->SetMesh(meshes[68]);
-	obj69->SetMaterial(0, rm->materials[231]);
-	obj69->SetPosition(0.0f, 0.0f, 0.0f);
+		obj3->SetMesh(meshes[1]);
+		obj3->SetMaterial(0, rm->materials[235]);
+		obj3->SetPosition(0.0f, 0.0f, 0.0f);
 
-	obj70->SetMesh(meshes[69]);
-	obj70->SetMaterial(0, rm->materials[252]);
-	obj70->SetPosition(0.0f, 0.0f, 0.0f);
-	obj71->SetMesh(meshes[70]);
-	obj71->SetMaterial(0, rm->materials[252]);
-	obj71->SetPosition(0.0f, 0.0f, 0.0f);
-	obj72->SetMesh(meshes[71]);
-	obj72->SetMaterial(0, rm->materials[233]);
-	obj72->SetPosition(0.0f, 0.0f, 0.0f);
-	obj73->SetMesh(meshes[72]);
-	obj73->SetMaterial(0, rm->materials[231]);
-	obj73->SetPosition(0.0f, 0.0f, 0.0f);
+		obj4->SetMesh(meshes[3]);
+		obj4->SetMaterial(0, rm->materials[252]);
+		obj4->SetPosition(0.0f, 0.0f, 0.0f);
 
-	obj74->SetMesh(meshes[73]);
-	obj74->SetMaterial(0, rm->materials[252]);
-	obj74->SetPosition(0.0f, 0.0f, 0.0f);
-	obj75->SetMesh(meshes[74]);
-	obj75->SetMaterial(0, rm->materials[252]);
-	obj75->SetPosition(0.0f, 0.0f, 0.0f);
+		obj5->SetMesh(meshes[4]);
+		obj5->SetMaterial(0, rm->materials[252]);
+		obj5->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj);
-	objects.push_back(obj2);
-	objects.push_back(obj3);
-	objects.push_back(obj4);
-	objects.push_back(obj5);
-	objects.push_back(obj6);
-	objects.push_back(obj7);
-	objects.push_back(obj8);
-	objects.push_back(obj9);
+		obj6->SetMesh(meshes[5]);
+		obj6->SetMaterial(0, rm->materials[252]);
+		obj6->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj10);
-	objects.push_back(obj11);
-	objects.push_back(obj12);
-	objects.push_back(obj13);
-	objects.push_back(obj14);
-	objects.push_back(obj15);
-	objects.push_back(obj16);
-	objects.push_back(obj17);
-	objects.push_back(obj18);
-	objects.push_back(obj19);
+		obj7->SetMesh(meshes[6]);
+		obj7->SetMaterial(0, rm->materials[252]);
+		obj7->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj20);
-	objects.push_back(obj21);
-	objects.push_back(obj22);
-	objects.push_back(obj23);
-	objects.push_back(obj24);
-	objects.push_back(obj25);
-	objects.push_back(obj26);
-	objects.push_back(obj27);
-	objects.push_back(obj28);
-	objects.push_back(obj29);
+		obj8->SetMesh(meshes[7]);
+		obj8->SetMaterial(0, rm->materials[252]);
+		obj8->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj30);
-	objects.push_back(obj31);
-	objects.push_back(obj32);
-	objects.push_back(obj33);
-	objects.push_back(obj34);
-	objects.push_back(obj35);
-	objects.push_back(obj36);
-	objects.push_back(obj37);
-	objects.push_back(obj38);
-	objects.push_back(obj39);
+		obj9->SetMesh(meshes[8]);
+		obj9->SetMaterial(0, rm->materials[252]);
+		obj9->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj40);
-	objects.push_back(obj41);
-	objects.push_back(obj42);
-	objects.push_back(obj43);
-	objects.push_back(obj44);
-	objects.push_back(obj45);
-	objects.push_back(obj46);
-	objects.push_back(obj47);
-	objects.push_back(obj48);
-	objects.push_back(obj49);
+		obj10->SetMesh(meshes[9]);
+		obj10->SetMaterial(0, rm->materials[252]);
+		obj10->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj50);
-	objects.push_back(obj51);
-	objects.push_back(obj52);
-	objects.push_back(obj53);
-	objects.push_back(obj54);
-	objects.push_back(obj55);
-	objects.push_back(obj56);
-	objects.push_back(obj57);
-	objects.push_back(obj58);
-	objects.push_back(obj59);
+		obj11->SetMesh(meshes[10]);
+		obj11->SetMaterial(0, rm->materials[252]);
+		obj11->SetPosition(0.0f, 0.0f, 0.0f);
+		obj12->SetMesh(meshes[11]);
+		obj12->SetMaterial(0, rm->materials[252]);
+		obj12->SetPosition(0.0f, 0.0f, 0.0f);
+		obj13->SetMesh(meshes[12]);
+		obj13->SetMaterial(0, rm->materials[252]);
+		obj13->SetPosition(0.0f, 0.0f, 0.0f);
+		obj14->SetMesh(meshes[13]);
+		obj14->SetMaterial(0, rm->materials[252]);
+		obj14->SetPosition(0.0f, 0.0f, 0.0f);
+		obj15->SetMesh(meshes[14]);
+		obj15->SetMaterial(0, rm->materials[252]);
+		obj15->SetPosition(0.0f, 0.0f, 0.0f);
+		obj16->SetMesh(meshes[15]);
+		obj16->SetMaterial(0, rm->materials[252]);
+		obj16->SetPosition(0.0f, 0.0f, 0.0f);
+		obj17->SetMesh(meshes[16]);
+		obj17->SetMaterial(0, rm->materials[252]);
+		obj17->SetPosition(0.0f, 0.0f, 0.0f);
+		obj18->SetMesh(meshes[17]);
+		obj18->SetMaterial(0, rm->materials[252]);
+		obj18->SetPosition(0.0f, 0.0f, 0.0f);
+		obj19->SetMesh(meshes[18]);
+		obj19->SetMaterial(0, rm->materials[252]);
+		obj19->SetPosition(0.0f, 0.0f, 0.0f);
+		obj20->SetMesh(meshes[19]);
+		obj20->SetMaterial(0, rm->materials[252]);
+		obj20->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj60);
-	objects.push_back(obj61);
-	objects.push_back(obj62);
-	objects.push_back(obj63);
-	objects.push_back(obj64);
-	objects.push_back(obj65);
-	objects.push_back(obj66);
-	objects.push_back(obj67);
-	objects.push_back(obj68);
-	objects.push_back(obj69);
+		obj21->SetMesh(meshes[20]);
+		obj21->SetMaterial(0, rm->materials[252]);
+		obj21->SetPosition(0.0f, 0.0f, 0.0f);
+		obj22->SetMesh(meshes[21]);
+		obj22->SetMaterial(0, rm->materials[252]);
+		obj22->SetPosition(0.0f, 0.0f, 0.0f);
+		obj23->SetMesh(meshes[22]);
+		obj23->SetMaterial(0, rm->materials[252]);
+		obj23->SetPosition(0.0f, 0.0f, 0.0f);
+		obj24->SetMesh(meshes[23]);
+		obj24->SetMaterial(0, rm->materials[252]);
+		obj24->SetPosition(0.0f, 0.0f, 0.0f);
+		obj25->SetMesh(meshes[24]);
+		obj25->SetMaterial(0, rm->materials[252]);
+		obj25->SetPosition(0.0f, 0.0f, 0.0f);
+		obj26->SetMesh(meshes[25]);
+		obj26->SetMaterial(0, rm->materials[252]);
+		obj26->SetPosition(0.0f, 0.0f, 0.0f);
+		obj27->SetMesh(meshes[26]);
+		obj27->SetMaterial(0, rm->materials[252]);
+		obj27->SetPosition(0.0f, 0.0f, 0.0f);
+		obj28->SetMesh(meshes[27]);
+		obj28->SetMaterial(0, rm->materials[252]);
+		obj28->SetPosition(0.0f, 0.0f, 0.0f);
+		obj29->SetMesh(meshes[28]);
+		obj29->SetMaterial(0, rm->materials[252]);
+		obj29->SetPosition(0.0f, 0.0f, 0.0f);
+		obj30->SetMesh(meshes[29]);
+		obj30->SetMaterial(0, rm->materials[252]);
+		obj30->SetPosition(0.0f, 0.0f, 0.0f);
 
-	objects.push_back(obj70);
-	objects.push_back(obj71);
-	objects.push_back(obj72);
-	objects.push_back(obj73);
-	objects.push_back(obj74);
-	objects.push_back(obj75);
+		obj31->SetMesh(meshes[30]);
+		obj31->SetMaterial(0, rm->materials[252]);
+		obj31->SetPosition(0.0f, 0.0f, 0.0f);
+		obj32->SetMesh(meshes[31]);
+		obj32->SetMaterial(0, rm->materials[252]);
+		obj32->SetPosition(0.0f, 0.0f, 0.0f);
+		obj33->SetMesh(meshes[32]);
+		obj33->SetMaterial(0, rm->materials[252]);
+		obj33->SetPosition(0.0f, 0.0f, 0.0f);
+		obj34->SetMesh(meshes[33]);
+		obj34->SetMaterial(0, rm->materials[252]);
+		obj34->SetPosition(0.0f, 0.0f, 0.0f);
+		obj35->SetMesh(meshes[34]);
+		obj35->SetMaterial(0, rm->materials[252]);
+		obj35->SetPosition(0.0f, 0.0f, 0.0f);
+		obj36->SetMesh(meshes[35]);
+		obj36->SetMaterial(0, rm->materials[252]);
+		obj36->SetPosition(0.0f, 0.0f, 0.0f);
+		obj37->SetMesh(meshes[36]);
+		obj37->SetMaterial(0, rm->materials[252]);
+		obj37->SetPosition(0.0f, 0.0f, 0.0f);
+		obj38->SetMesh(meshes[37]);
+		obj38->SetMaterial(0, rm->materials[252]);
+		obj38->SetPosition(0.0f, 0.0f, 0.0f);
+		obj39->SetMesh(meshes[38]);
+		obj39->SetMaterial(0, rm->materials[252]);
+		obj39->SetPosition(0.0f, 0.0f, 0.0f);
+		obj40->SetMesh(meshes[39]);
+		obj40->SetMaterial(0, rm->materials[252]);
+		obj40->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj41->SetMesh(meshes[40]);
+		obj41->SetMaterial(0, rm->materials[252]);
+		obj41->SetPosition(0.0f, 0.0f, 0.0f);
+		obj42->SetMesh(meshes[41]);
+		obj42->SetMaterial(0, rm->materials[252]);
+		obj42->SetPosition(0.0f, 0.0f, 0.0f);
+		obj43->SetMesh(meshes[42]);
+		obj43->SetMaterial(0, rm->materials[252]);
+		obj43->SetPosition(0.0f, 0.0f, 0.0f);
+		obj44->SetMesh(meshes[43]);
+		obj44->SetMaterial(0, rm->materials[252]);
+		obj44->SetPosition(0.0f, 0.0f, 0.0f);
+		obj45->SetMesh(meshes[44]);
+		obj45->SetMaterial(0, rm->materials[252]);
+		obj45->SetPosition(0.0f, 0.0f, 0.0f);
+		obj46->SetMesh(meshes[45]);
+		obj46->SetMaterial(0, rm->materials[252]);
+		obj46->SetPosition(0.0f, 0.0f, 0.0f);
+		obj47->SetMesh(meshes[46]);
+		obj47->SetMaterial(0, rm->materials[252]);
+		obj47->SetPosition(0.0f, 0.0f, 0.0f);
+		obj48->SetMesh(meshes[47]);
+		obj48->SetMaterial(0, rm->materials[252]);
+		obj48->SetPosition(0.0f, 0.0f, 0.0f);
+		obj49->SetMesh(meshes[48]);
+		obj49->SetMaterial(0, rm->materials[252]);
+		obj49->SetPosition(0.0f, 0.0f, 0.0f);
+		obj50->SetMesh(meshes[49]);
+		obj50->SetMaterial(0, rm->materials[252]);
+		obj50->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj51->SetMesh(meshes[50]);
+		obj51->SetMaterial(0, rm->materials[252]);
+		obj51->SetPosition(0.0f, 0.0f, 0.0f);
+		obj52->SetMesh(meshes[51]);
+		obj52->SetMaterial(0, rm->materials[252]);
+		obj52->SetPosition(0.0f, 0.0f, 0.0f);
+		obj53->SetMesh(meshes[52]);
+		obj53->SetMaterial(0, rm->materials[252]);
+		obj53->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj54->SetMesh(meshes[53]);
+		obj54->SetMaterial(0, rm->materials[252]);
+		obj54->SetPosition(0.0f, 0.0f, 0.0f);
+		obj55->SetMesh(meshes[54]);
+		obj55->SetMaterial(0, rm->materials[252]);
+		obj55->SetPosition(0.0f, 0.0f, 0.0f);
+		obj56->SetMesh(meshes[55]);
+		obj56->SetMaterial(0, rm->materials[233]);
+		obj56->SetPosition(0.0f, 0.0f, 0.0f);
+		obj57->SetMesh(meshes[56]);
+		obj57->SetMaterial(0, rm->materials[231]);
+		obj57->SetPosition(0.0f, 0.0f, 0.0f);
+
+
+		obj58->SetMesh(meshes[57]);
+		obj58->SetMaterial(0, rm->materials[252]);
+		obj58->SetPosition(0.0f, 0.0f, 0.0f);
+		obj59->SetMesh(meshes[58]);
+		obj59->SetMaterial(0, rm->materials[252]);
+		obj59->SetPosition(0.0f, 0.0f, 0.0f);
+		obj60->SetMesh(meshes[59]);
+		obj60->SetMaterial(0, rm->materials[233]);
+		obj60->SetPosition(0.0f, 0.0f, 0.0f);
+		obj61->SetMesh(meshes[60]);
+		obj61->SetMaterial(0, rm->materials[231]);
+		obj61->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj62->SetMesh(meshes[61]);
+		obj62->SetMaterial(0, rm->materials[252]);
+		obj62->SetPosition(0.0f, 0.0f, 0.0f);
+		obj63->SetMesh(meshes[62]);
+		obj63->SetMaterial(0, rm->materials[252]);
+		obj63->SetPosition(0.0f, 0.0f, 0.0f);
+		obj64->SetMesh(meshes[63]);
+		obj64->SetMaterial(0, rm->materials[233]);
+		obj64->SetPosition(0.0f, 0.0f, 0.0f);
+		obj65->SetMesh(meshes[64]);
+		obj65->SetMaterial(0, rm->materials[231]);
+		obj65->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj66->SetMesh(meshes[65]);
+		obj66->SetMaterial(0, rm->materials[252]);
+		obj66->SetPosition(0.0f, 0.0f, 0.0f);
+		obj67->SetMesh(meshes[66]);
+		obj67->SetMaterial(0, rm->materials[252]);
+		obj67->SetPosition(0.0f, 0.0f, 0.0f);
+		obj68->SetMesh(meshes[67]);
+		obj68->SetMaterial(0, rm->materials[233]);
+		obj68->SetPosition(0.0f, 0.0f, 0.0f);
+		obj69->SetMesh(meshes[68]);
+		obj69->SetMaterial(0, rm->materials[231]);
+		obj69->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj70->SetMesh(meshes[69]);
+		obj70->SetMaterial(0, rm->materials[252]);
+		obj70->SetPosition(0.0f, 0.0f, 0.0f);
+		obj71->SetMesh(meshes[70]);
+		obj71->SetMaterial(0, rm->materials[252]);
+		obj71->SetPosition(0.0f, 0.0f, 0.0f);
+		obj72->SetMesh(meshes[71]);
+		obj72->SetMaterial(0, rm->materials[233]);
+		obj72->SetPosition(0.0f, 0.0f, 0.0f);
+		obj73->SetMesh(meshes[72]);
+		obj73->SetMaterial(0, rm->materials[231]);
+		obj73->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj74->SetMesh(meshes[73]);
+		obj74->SetMaterial(0, rm->materials[252]);
+		obj74->SetPosition(0.0f, 0.0f, 0.0f);
+		obj75->SetMesh(meshes[74]);
+		obj75->SetMaterial(0, rm->materials[252]);
+		obj75->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj76->SetMesh(meshes[75]);
+		obj76->SetMaterial(0, rm->materials[306]);
+		obj76->SetPosition(0.0f, 0.0f, 0.0f);
+		obj77->SetMesh(meshes[76]);
+		obj77->SetMaterial(0, rm->materials[307]);
+		obj77->SetPosition(0.0f, 0.0f, 0.0f);
+
+		obj78->SetMesh(meshes[77]);
+		obj79->SetMesh(meshes[78]);
+		obj80->SetMesh(meshes[79]);
+		obj81->SetMesh(meshes[80]);
+		obj82->SetMesh(meshes[81]);
+		obj83->SetMesh(meshes[82]);
+		obj84->SetMesh(meshes[83]);
+		obj85->SetMesh(meshes[84]);
+		obj86->SetMesh(meshes[85]);
+
+		obj78->SetMaterial(0, rm->materials[296]);
+		obj79->SetMaterial(0, rm->materials[296]);
+		obj80->SetMaterial(0, rm->materials[296]);
+		obj81->SetMaterial(0, rm->materials[296]);
+		obj82->SetMaterial(0, rm->materials[296]);
+		obj83->SetMaterial(0, rm->materials[296]);
+		obj84->SetMaterial(0, rm->materials[296]);
+		obj85->SetMaterial(0, rm->materials[296]);
+		obj86->SetMaterial(0, rm->materials[296]);
+
+		obj78->SetPosition(0.0f, 0.0f, 0.0f);
+		obj79->SetPosition(0.0f, 0.0f, 0.0f);
+		obj80->SetPosition(0.0f, 0.0f, 0.0f);
+		obj81->SetPosition(0.0f, 0.0f, 0.0f);
+		obj82->SetPosition(0.0f, 0.0f, 0.0f);
+		obj83->SetPosition(0.0f, 0.0f, 0.0f);
+		obj84->SetPosition(0.0f, 0.0f, 0.0f);
+		obj85->SetPosition(0.0f, 0.0f, 0.0f);
+		obj86->SetPosition(0.0f, 0.0f, 0.0f);
+
+		objects.push_back(obj);
+		objects.push_back(obj2);
+		objects.push_back(obj3);
+		objects.push_back(obj4);
+		objects.push_back(obj5);
+		objects.push_back(obj6);
+		objects.push_back(obj7);
+		objects.push_back(obj8);
+		objects.push_back(obj9);
+
+		objects.push_back(obj10);
+		objects.push_back(obj11);
+		objects.push_back(obj12);
+		objects.push_back(obj13);
+		objects.push_back(obj14);
+		objects.push_back(obj15);
+		objects.push_back(obj16);
+		objects.push_back(obj17);
+		objects.push_back(obj18);
+		objects.push_back(obj19);
+
+		objects.push_back(obj20);
+		objects.push_back(obj21);
+		objects.push_back(obj22);
+		objects.push_back(obj23);
+		objects.push_back(obj24);
+		objects.push_back(obj25);
+		objects.push_back(obj26);
+		objects.push_back(obj27);
+		objects.push_back(obj28);
+		objects.push_back(obj29);
+
+		objects.push_back(obj30);
+		objects.push_back(obj31);
+		objects.push_back(obj32);
+		objects.push_back(obj33);
+		objects.push_back(obj34);
+		objects.push_back(obj35);
+		objects.push_back(obj36);
+		objects.push_back(obj37);
+		objects.push_back(obj38);
+		objects.push_back(obj39);
+
+		objects.push_back(obj40);
+		objects.push_back(obj41);
+		objects.push_back(obj42);
+		objects.push_back(obj43);
+		objects.push_back(obj44);
+		objects.push_back(obj45);
+		objects.push_back(obj46);
+		objects.push_back(obj47);
+		objects.push_back(obj48);
+		objects.push_back(obj49);
+
+		objects.push_back(obj50);
+		objects.push_back(obj51);
+		objects.push_back(obj52);
+		objects.push_back(obj53);
+		objects.push_back(obj54);
+		objects.push_back(obj55);
+		objects.push_back(obj56);
+		objects.push_back(obj57);
+		objects.push_back(obj58);
+		objects.push_back(obj59);
+
+		objects.push_back(obj60);
+		objects.push_back(obj61);
+		objects.push_back(obj62);
+		objects.push_back(obj63);
+		objects.push_back(obj64);
+		objects.push_back(obj65);
+		objects.push_back(obj66);
+		objects.push_back(obj67);
+		objects.push_back(obj68);
+		objects.push_back(obj69);
+
+		objects.push_back(obj70);
+		objects.push_back(obj71);
+		objects.push_back(obj72);
+		objects.push_back(obj73);
+		objects.push_back(obj74);
+		objects.push_back(obj75);
+		objects.push_back(obj76);
+		objects.push_back(obj77);
+		objects.push_back(obj78);
+		objects.push_back(obj79);
+
+		objects.push_back(obj80);
+		objects.push_back(obj81);
+		objects.push_back(obj82);
+		objects.push_back(obj83);
+		objects.push_back(obj84);
+		objects.push_back(obj85);
+		objects.push_back(obj86);
+	}
 }
 
 void ProfileShader::ReleaseObjects()
@@ -968,14 +1106,14 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 	//골드 숫자설정
 	{
 		int t1 = info->gold / 1000000000;
-		int t2 = info->gold / 100000000;
-		int t3 = info->gold / 10000000;
-		int t4 = info->gold / 1000000;
-		int t5 = info->gold / 100000;
-		int t6 = info->gold / 10000;
-		int t7 = info->gold / 1000;
-		int t8 = info->gold / 100;
-		int t9 = info->gold / 10;
+		int t2 = (info->gold % 1000000000) / 100000000;
+		int t3 = (info->gold % 100000000) / 10000000;
+		int t4 = (info->gold % 10000000) / 1000000;
+		int t5 = (info->gold % 1000000) / 100000;
+		int t6 = (info->gold % 100000) / 10000;
+		int t7 = (info->gold % 10000) / 1000;
+		int t8 = (info->gold % 1000) / 100;
+		int t9 = (info->gold % 100) / 10;
 		int t10 = info->gold % 10;
 
 		objects[43]->m_ppMaterials[0] = rm->materials[273 + t1];
@@ -1035,4 +1173,47 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		objects[74]->m_ppMaterials[0] = rm->materials[252 + t2];
 	}
 
+	if (storageShow == false)
+	{
+		objects[75]->SetMesh(NULL);
+		objects[76]->SetMesh(NULL);
+
+		objects[77]->SetMesh(NULL);
+		objects[78]->SetMesh(NULL);
+		objects[79]->SetMesh(NULL);
+		objects[80]->SetMesh(NULL);
+		objects[81]->SetMesh(NULL);
+		objects[82]->SetMesh(NULL);
+		objects[83]->SetMesh(NULL);
+		objects[84]->SetMesh(NULL);
+		objects[85]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[75]->SetMesh(meshes[75]);
+		objects[76]->SetMesh(meshes[76]);
+
+		items = info->inventory.size();
+
+		for (int i = 0; i < info->inventory.size(); ++i)
+		{
+			if (info->inventory[i].type == RIFLE)
+			{
+				objects[77 + i]->SetMesh(meshes[77 + i]);
+				objects[77 + i]->m_ppMaterials[0] = rm->materials[297];
+			}
+			else if (info->inventory[i].type == DUALBLADE)
+			{
+				objects[77 + i]->SetMesh(meshes[77 + i]);
+				objects[77 + i]->m_ppMaterials[0] = rm->materials[296];
+			}
+		}
+		for (int i = info->inventory.size(); i < 9; ++i)
+		{
+			objects[77 + i]->SetMesh(NULL);
+		}
+	}
+
+	
+	
 }

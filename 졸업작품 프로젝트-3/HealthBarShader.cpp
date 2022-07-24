@@ -172,7 +172,7 @@ D3D12_DEPTH_STENCIL_DESC HealthBarShader::CreateDepthStencilState()
 	::ZeroMemory(&d3dDepthStencilDesc, sizeof(D3D12_DEPTH_STENCIL_DESC));
 	d3dDepthStencilDesc.DepthEnable = TRUE;
 	d3dDepthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	d3dDepthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	d3dDepthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	d3dDepthStencilDesc.StencilEnable = FALSE;
 	d3dDepthStencilDesc.StencilReadMask = 0x00;
 	d3dDepthStencilDesc.StencilWriteMask = 0x00;
@@ -237,9 +237,13 @@ void HealthBarShader::Animate(CCamera* cam, std::vector<XMFLOAT3> pos, std::vect
 		pitch = -pitch;
 		for (int i = 0; i < objects.size(); ++i)
 		{
-			if (enemyHealth[i] >= 0)
+			if (enemyHealth[i] > 0)
 			{
 				objects[i]->SetMesh(hpReversed[enemyHealth[i]]);
+			}
+			else
+			{
+				objects[i]->SetMesh(NULL);
 			}
 			
 		}
@@ -248,9 +252,13 @@ void HealthBarShader::Animate(CCamera* cam, std::vector<XMFLOAT3> pos, std::vect
 	{
 		for (int i = 0; i < objects.size(); ++i)
 		{
-			if (enemyHealth[i] >= 0)
+			if (enemyHealth[i] > 0)
 			{
 				objects[i]->SetMesh(hp[enemyHealth[i]]);
+			}
+			else
+			{
+				objects[i]->SetMesh(NULL);
 			}
 		}
 	}
