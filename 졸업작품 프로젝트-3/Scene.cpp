@@ -191,6 +191,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	LoadHeight("res/map/area1_2/height1-2.txt", height12);
 	LoadHeight("res/map/area2-1/height2-1.txt", height21);
 	LoadHeight("res/map/area2-2/height2-2.txt", height22);
+	LoadHeight("res/map/area2-3/height2-3.txt", height23);
 
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
@@ -1255,7 +1256,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				if (waitInter->selectedStage == 1)
 				{
 					//playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
-					playerShader->objects[idx]->SetPosition(515.0f + idx * 5.0f, 0.0f, 175.0f);
+					// playerShader->objects[idx]->SetPosition(515.0f + idx * 5.0f, 0.0f, 175.0f);  기존의 시작 위치
+
+					playerShader->objects[idx]->SetPosition(880.0f + idx * 5.0f, 0.0f, 110.0f);
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
@@ -1265,6 +1268,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				else if (waitInter->selectedStage == 2)
 				{
 					//1-2스테이지인경우 2-1
+				//	playerShader->objects[idx]->SetPosition(810.0f, 0.0f, 190.0f - idx * 5.0f);
 					playerShader->objects[idx]->SetPosition(810.0f, 0.0f, 190.0f - idx * 5.0f);
 					if (idx == pID)
 					{
@@ -1397,11 +1401,17 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			{
 				terrain2_2->OnPrepareRender(pd3dCommandList);
 				terrain2_2->Render(pd3dCommandList, pCamera);
+
+				if (terrain2_3)
+				{
+					terrain2_3->OnPrepareRender(pd3dCommandList);
+					terrain2_3->Render(pd3dCommandList, pCamera);
+				}
 			}
 		}
 
 		//2-3
-		else if ((cp.x >= 900.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
+		else if ((cp.x >= 875.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
 		{
 			if (terrain2_3)
 			{
@@ -3117,7 +3127,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 		}
 
 		//2-3
-		if (px >= 900.0f && px <= 1200.0f && pz >= 60.0f && pz <= 150.0f)
+		if (px >= 875.0f && px <= 1200.0f && pz >= 60.0f && pz <= 150.0f)
 		{
 			for (int i = 0; i < terrain2_3->nBox; ++i)
 			{

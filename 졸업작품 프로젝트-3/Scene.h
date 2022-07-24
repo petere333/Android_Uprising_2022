@@ -180,7 +180,7 @@ public:
 	int x22 = 200;
 	int z22 = 606;
 
-	int x23 = 600;
+	int x23 = 650;
 	int z23 = 180;
 
 	LobbyInterfaceShader* lobbyInter = NULL;

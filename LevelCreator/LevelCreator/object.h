@@ -194,6 +194,7 @@
 #define Recep_front2 21013
 #define Recep_wall3 21014
 #define Recep_wall4 21015
+#define Recep_wall4_F 21999
 #define Recep_wall5 21016
 #define Recep_garomak 21017
 #define Recep_kidung 21018
@@ -212,6 +213,14 @@
 #define Recep_Door1 21035
 #define Recep_DoorL 21036
 #define Recep_DoorR 21037
+
+#define Parking_floor1 23999
+#define Parking_Wall1 23998
+#define Parking_FWall1 23997
+#define Parking_Fence 23996
+#define Parking_Area 23995
+#define Parking_Area2 23994
+
 
 
 using namespace std;
