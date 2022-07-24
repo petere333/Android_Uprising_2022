@@ -361,6 +361,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					//플레이어의 상태 초기화
 					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
 					{
+						m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+						m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+						m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
+
 						m_pScene->playerShader->objects[k]->bState.attacking = false;
 						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
 						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
@@ -394,6 +398,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					//플레이어의 상태 초기화
 					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
 					{
+						m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+						m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+						m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
 						m_pScene->playerShader->objects[k]->bState.attacking = false;
 						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
 						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
@@ -473,36 +480,36 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			GetWindowRect(hWnd, &rect);
 			int wx = rect.left;
 			int wy = rect.top;
-			int px1 = m_pScene->mainInter->objects[4]->x1;
-			int px2 = m_pScene->mainInter->objects[4]->x2;
-			int py1 = m_pScene->mainInter->objects[4]->y1;
-			int py2 = m_pScene->mainInter->objects[4]->y2;
+			int px1 = m_pScene->mainInter->objects[5]->x1;
+			int px2 = m_pScene->mainInter->objects[5]->x2;
+			int py1 = m_pScene->mainInter->objects[5]->y1;
+			int py2 = m_pScene->mainInter->objects[5]->y2;
 
-			int x1 = m_pScene->mainInter->objects[2]->x1;
-			int x2 = m_pScene->mainInter->objects[2]->x2;
-			int y1 = m_pScene->mainInter->objects[2]->y1;
-			int y2 = m_pScene->mainInter->objects[2]->y2;
+			int x1 = m_pScene->mainInter->objects[3]->x1;
+			int x2 = m_pScene->mainInter->objects[3]->x2;
+			int y1 = m_pScene->mainInter->objects[3]->y1;
+			int y2 = m_pScene->mainInter->objects[3]->y2;
 
-			int xx1 = m_pScene->mainInter->objects[1]->x1;
-			int xx2 = m_pScene->mainInter->objects[1]->x2;
-			int yy1 = m_pScene->mainInter->objects[1]->y1;
-			int yy2 = m_pScene->mainInter->objects[1]->y2;
+			int xx1 = m_pScene->mainInter->objects[2]->x1;
+			int xx2 = m_pScene->mainInter->objects[2]->x2;
+			int yy1 = m_pScene->mainInter->objects[2]->y1;
+			int yy2 = m_pScene->mainInter->objects[2]->y2;
 
 
 
 			if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
 			{
-				m_pScene->mainInter->objects[4]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[4]->defaultMesh];
+				m_pScene->mainInter->objects[5]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[5]->defaultMesh];
 				m_pScene->currentScreen = STAGE_SELECT_STATE;
 			}
 			else if ((pnt.x >= x1 + wx && pnt.x <= x2 + wx) && (pnt.y >= y1 + wy && pnt.y <= y2 + wy))
 			{
-				m_pScene->mainInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[2]->defaultMesh];
+				m_pScene->mainInter->objects[3]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[3]->defaultMesh];
 				m_pScene->currentScreen = PROFILE_STATE;
 			}
 			else if ((pnt.x >= xx1 + wx && pnt.x <= xx2 + wx) && (pnt.y >= yy1 + wy && pnt.y <= yy2 + wy))
 			{
-				m_pScene->mainInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[1]->defaultMesh];
+				m_pScene->mainInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->mainInter->objects[2]->defaultMesh];
 				m_pScene->currentScreen = LOGIN_STATE;
 			}
 			break;
@@ -653,13 +660,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			{
 
 				//메인으로 버튼
-				if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 134 + wy && my <= 180 + wy))
+				if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 167 + wy && my <= 213 + wy))
 				{
 					m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
 					m_pScene->currentScreen = LOBBY_STATE;
 				}
 				//storage
-				else if ((mx >= 100 + wx && mx <= 304 + wx) && (my >= 674 + wy && my <= 720 + wy))
+				else if ((mx >= 100 + wx && mx <= 304 + wx) && (my >= 707 + wy && my <= 763 + wy))
 				{
 					m_pScene->profileInter->storageShow = true;
 				}
@@ -884,27 +891,48 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 									{
 										m_pScene->currentScreen = WAIT_STATE;
 										//1-1스테이지 선택됨
+										m_pScene->stageInter->coworkShow = false;
+										m_pScene->stageInter->together = false;
 										m_pScene->waitInter->selectedStage = 1;
 										m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
 									}
 									else if (i == 1)
 									{
 										m_pScene->currentScreen = LOBBY_STATE;
+										m_pScene->stageInter->coworkShow = false;
+										m_pScene->stageInter->together = false;
 									}
-									else if (i == 3 || i == 4)
+									else if (i == 3)
 									{
 										m_pScene->stageInter->coworkShow = true;
+										m_pScene->stageInter->together = true;
+										m_pScene->stageInter->select = 1;
+									}
+									else if (i == 4)
+									{
+										m_pScene->stageInter->coworkShow = true;
+										m_pScene->stageInter->together = false;
 									}
 									else if (i == 5)
 									{
 										m_pScene->currentScreen = WAIT_STATE;
 										//1-2스테이지 선택됨
 										m_pScene->waitInter->selectedStage = 2;
+										m_pScene->stageInter->coworkShow = false;
+										m_pScene->stageInter->together = false;
 										m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode2;
 									}
-									else if (i == 6 || i == 7)
+									else if (i == 6)
 									{
 										m_pScene->stageInter->coworkShow = true;
+										m_pScene->stageInter->together = true;
+										m_pScene->stageInter-> select = 2;
+									}
+									else if (i == 7)
+									{
+										m_pScene->stageInter->coworkShow = true;
+										m_pScene->stageInter->together = false;
+
 									}
 								}
 							}
@@ -917,7 +945,272 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			{
 				if ((pnt.x >= 261 + wx && pnt.x <= 1139 + wx) && (pnt.y >= 304 + wy && pnt.y <= 596 + wy))
 				{
-					
+					if (m_pScene->stageInter->together == false)
+					{
+						if (pnt.x >= 320 + wx && pnt.x <= 360 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp += 30;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 377 + wx && pnt.x <= 417 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp += 60;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 434 + wx && pnt.x <= 474 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp += 100;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+
+						else if (pnt.x >= 534 + wx && pnt.x <= 574 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp += 30;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 591 + wx && pnt.x <= 631 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp += 60;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 648 + wx && pnt.x <= 688 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp += 100;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+							}
+
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+							{
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							}
+							m_pScene->stageInter->coworkShow = false;
+						}
+
+						else if (pnt.x >= 738 + wx && pnt.x <= 778 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp += 30;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+						}
+
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+						}
+						m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 795 + wx && pnt.x <= 835 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp += 60;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+						}
+
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+						}
+						m_pScene->stageInter->coworkShow = false;
+						}
+						else if (pnt.x >= 852 + wx && pnt.x <= 892 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+						{
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp += 100;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp >= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+						}
+
+						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp >= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1])
+						{
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+						}
+						m_pScene->stageInter->coworkShow = false;
+						}
+					}
+					else
+					{
+					if (pnt.x >= 320 + wx && pnt.x <= 360 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+						
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_melee = 1.5f;
+						
+						
+					}
+					else if (pnt.x >= 377 + wx && pnt.x <= 417 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_melee = 2.0f;
+					}
+					else if (pnt.x >= 434 + wx && pnt.x <= 474 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_melee = 2.5f;
+						
+					}
+
+					else if (pnt.x >= 534 + wx && pnt.x <= 574 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_ranged = 1.5f;
+					}
+					else if (pnt.x >= 591 + wx && pnt.x <= 631 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_ranged = 2.0f;
+					}
+					else if (pnt.x >= 648 + wx && pnt.x <= 688 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_ranged = 2.5f;
+					}
+
+					else if (pnt.x >= 738 + wx && pnt.x <= 778 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_radio = 1.5f;
+					}
+					else if (pnt.x >= 795 + wx && pnt.x <= 835 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_radio = 2.0f;
+					}
+					else if (pnt.x >= 852 + wx && pnt.x <= 892 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+					{
+						m_pScene->currentScreen = WAIT_STATE;
+						//1-1스테이지 선택됨
+						m_pScene->stageInter->coworkShow = false;
+						m_pScene->stageInter->together = false;
+
+						m_pScene->waitInter->selectedStage = m_pScene->stageInter->select;
+						m_pScene->waitInter->selectedMode = m_pScene->stageInter->mode1;
+						m_pScene->playerShader->objects[m_pScene->pID]->amp_radio = 2.5f;
+						
+					}
+					}
 				}
 				else
 				{
@@ -1455,18 +1748,37 @@ void CGameFramework::ProcessInput()
 			if (m_pScene->profileInter->objects[i]->defaultMesh != -1)
 			{
 				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
-				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+				if (i < 53)
 				{
-					m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
-					m_pScene->profileInter->objects[i]->mouseOn = true;
-					m_pScene->profileInter->objects[i]->meshChanged = false;
-				}			  
-				else		  
-				{			  
-					m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
-					m_pScene->profileInter->objects[i]->mouseOn = false;
-					m_pScene->profileInter->objects[i]->meshChanged = false;
+					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy+33 && pnt.y <= py2 + wy+33))
+					{
+						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+						m_pScene->profileInter->objects[i]->mouseOn = true;
+						m_pScene->profileInter->objects[i]->meshChanged = false;
+					}
+					else
+					{
+						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+						m_pScene->profileInter->objects[i]->mouseOn = false;
+						m_pScene->profileInter->objects[i]->meshChanged = false;
 
+					}
+				}
+				else
+				{
+					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					{
+						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+						m_pScene->profileInter->objects[i]->mouseOn = true;
+						m_pScene->profileInter->objects[i]->meshChanged = false;
+					}
+					else
+					{
+						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+						m_pScene->profileInter->objects[i]->mouseOn = false;
+						m_pScene->profileInter->objects[i]->meshChanged = false;
+
+					}
 				}
 			}
 		}
@@ -1479,30 +1791,152 @@ void CGameFramework::ProcessInput()
 		GetWindowRect(m_hWnd, &rect);
 		int wx = rect.left;
 		int wy = rect.top;
-
-		for (int i = 0; i < m_pScene->stageInter->objects.size(); ++i)
+		if (m_pScene->stageInter->coworkShow == false)
 		{
-			int px1 = m_pScene->stageInter->objects[i]->x1;
-			int px2 = m_pScene->stageInter->objects[i]->x2;
-			int py1 = m_pScene->stageInter->objects[i]->y1;
-			int py2 = m_pScene->stageInter->objects[i]->y2;
-
-			if (m_pScene->stageInter->objects[i]->defaultMesh != -1)
+			for (int i = 0; i < m_pScene->stageInter->objects.size(); ++i)
 			{
-				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
-				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
-				{
-					m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh + 1];
-					m_pScene->stageInter->objects[i]->mouseOn = true;
-					m_pScene->stageInter->objects[i]->meshChanged = false;
-				}
-				else
-				{
-					m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh];
-					m_pScene->stageInter->objects[i]->mouseOn = false;
-					m_pScene->stageInter->objects[i]->meshChanged = false;
+				int px1 = m_pScene->stageInter->objects[i]->x1;
+				int px2 = m_pScene->stageInter->objects[i]->x2;
+				int py1 = m_pScene->stageInter->objects[i]->y1;
+				int py2 = m_pScene->stageInter->objects[i]->y2;
 
+				if (m_pScene->stageInter->objects[i]->defaultMesh != -1)
+				{
+					//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					{
+						m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh + 1];
+						m_pScene->stageInter->objects[i]->mouseOn = true;
+						m_pScene->stageInter->objects[i]->meshChanged = false;
+					}
+
+
+					else
+					{
+						m_pScene->stageInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[i]->defaultMesh];
+						m_pScene->stageInter->objects[i]->mouseOn = false;
+						m_pScene->stageInter->objects[i]->meshChanged = false;
+
+					}
 				}
+			}
+		}
+		else
+		{
+			if (pnt.x >= 320+wx && pnt.x <= 360 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[15]->defaultMesh + 1];
+				m_pScene->stageInter->objects[15]->mouseOn = true;
+				m_pScene->stageInter->objects[15]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[15]->defaultMesh];
+				m_pScene->stageInter->objects[15]->mouseOn = false;
+				m_pScene->stageInter->objects[15]->meshChanged = false;
+			}
+
+			if (pnt.x >= 377 + wx && pnt.x <= 417 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[16]->defaultMesh + 1];
+				m_pScene->stageInter->objects[16]->mouseOn = true;
+				m_pScene->stageInter->objects[16]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[16]->defaultMesh];
+				m_pScene->stageInter->objects[16]->mouseOn = false;
+				m_pScene->stageInter->objects[16]->meshChanged = false;
+			}
+
+			if (pnt.x >= 434 + wx && pnt.x <= 474 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[17]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[17]->defaultMesh + 1];
+				m_pScene->stageInter->objects[17]->mouseOn = true;
+				m_pScene->stageInter->objects[17]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[17]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[17]->defaultMesh];
+				m_pScene->stageInter->objects[17]->mouseOn = false;
+				m_pScene->stageInter->objects[17]->meshChanged = false;
+			}
+
+			if (pnt.x >= 534 + wx && pnt.x <= 574 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[18]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[18]->defaultMesh + 1];
+				m_pScene->stageInter->objects[18]->mouseOn = true;
+				m_pScene->stageInter->objects[18]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[18]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[18]->defaultMesh];
+				m_pScene->stageInter->objects[18]->mouseOn = false;
+				m_pScene->stageInter->objects[18]->meshChanged = false;
+			}
+
+			if (pnt.x >= 591 + wx && pnt.x <= 631 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[19]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[19]->defaultMesh + 1];
+				m_pScene->stageInter->objects[19]->mouseOn = true;
+				m_pScene->stageInter->objects[19]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[19]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[19]->defaultMesh];
+				m_pScene->stageInter->objects[19]->mouseOn = false;
+				m_pScene->stageInter->objects[19]->meshChanged = false;
+			}
+
+			if (pnt.x >= 648 + wx && pnt.x <= 688 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[20]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[20]->defaultMesh + 1];
+				m_pScene->stageInter->objects[20]->mouseOn = true;
+				m_pScene->stageInter->objects[20]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[20]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[20]->defaultMesh];
+				m_pScene->stageInter->objects[20]->mouseOn = false;
+				m_pScene->stageInter->objects[20]->meshChanged = false;
+			}
+
+			if (pnt.x >= 738 + wx && pnt.x <= 778 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[21]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[21]->defaultMesh + 1];
+				m_pScene->stageInter->objects[21]->mouseOn = true;
+				m_pScene->stageInter->objects[21]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[21]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[21]->defaultMesh];
+				m_pScene->stageInter->objects[21]->mouseOn = false;
+				m_pScene->stageInter->objects[21]->meshChanged = false;
+			}
+
+			if (pnt.x >= 795 + wx && pnt.x <= 835 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[22]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[22]->defaultMesh + 1];
+				m_pScene->stageInter->objects[22]->mouseOn = true;
+				m_pScene->stageInter->objects[22]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[22]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[22]->defaultMesh];
+				m_pScene->stageInter->objects[22]->mouseOn = false;
+				m_pScene->stageInter->objects[22]->meshChanged = false;
+			}
+			if (pnt.x >= 852 + wx && pnt.x <= 892 + wx && pnt.y >= 497 + wy && pnt.y <= 537 + wy)
+			{
+				m_pScene->stageInter->objects[23]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[23]->defaultMesh + 1];
+				m_pScene->stageInter->objects[23]->mouseOn = true;
+				m_pScene->stageInter->objects[23]->meshChanged = false;
+			}
+			else
+			{
+				m_pScene->stageInter->objects[23]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->stageInter->objects[23]->defaultMesh];
+				m_pScene->stageInter->objects[23]->mouseOn = false;
+				m_pScene->stageInter->objects[23]->meshChanged = false;
 			}
 		}
 	}

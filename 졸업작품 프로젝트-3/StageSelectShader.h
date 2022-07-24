@@ -37,5 +37,9 @@ public:
 	int mode2 = 1;
 
 	bool coworkShow = false;
+	bool together = false;
+
+	int select=1;
+	
 
 };

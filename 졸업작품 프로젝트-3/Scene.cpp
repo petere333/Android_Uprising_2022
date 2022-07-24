@@ -885,10 +885,6 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					if (playerShader->objects[i]->m_pChild != rm->playerModels[7]->m_pModelRootObject)
 					{
 						
-						
-
-						
-
 						playerShader->objects[i]->setRoot(rm->playerModels[7]->m_pModelRootObject, true);
 						playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[7]);
 					}
@@ -1029,6 +1025,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								playerShader->objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[7]);
 							}
 							playerShader->objects[i]->SetTrackAnimationSet(0, 0);
+							moveObject(i, cam);
+							setObjectLastMove(i);
 
 						}
 					}
@@ -1296,12 +1294,20 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				interShader->objects[21]->m_ppMaterials[0] = rm->materials[273];
 				interShader->objects[22]->m_ppMaterials[0] = rm->materials[273];
 
+				
+
 				//경험치 제공
 				for (int i = 0; i < playerShader->objects.size(); ++i)
 				{
+					playerShader->objects[i]->amp_melee = 1.0f;
+					playerShader->objects[i]->amp_ranged = 1.0f;
+					playerShader->objects[i]->amp_radio = 1.0f;
+
 					playerShader->objects[i]->info->growth.melee.exp += 300;
 					playerShader->objects[i]->info->growth.ranged.exp += 300;
 					playerShader->objects[i]->info->growth.radio.exp += 300;
+
+					playerShader->objects[i]->info->growth.total.exp += 300;
 
 					playerShader->objects[i]->info->gold += 500;
 
@@ -1320,6 +1326,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						playerShader->objects[i]->info->growth.radio.exp -= expNeed[playerShader->objects[i]->info->growth.radio.level - 1];
 						playerShader->objects[i]->info->growth.radio.level += 1;
+					}
+					while (playerShader->objects[i]->info->growth.total.exp >= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1])
+					{
+						playerShader->objects[i]->info->growth.total.exp -= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1];
+						playerShader->objects[i]->info->growth.total.level += 1;
+						playerShader->objects[i]->info->extraPoint += 3;
 					}
 
 					//동료 지급
@@ -1343,6 +1355,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//플레이어의 상태 초기화
 				for (int k = 0; k < playerShader->objects.size(); ++k)
 				{
+					playerShader->objects[k]->amp_melee = 1.0f;
+					playerShader->objects[k]->amp_ranged = 1.0f;
+					playerShader->objects[k]->amp_radio = 1.0f;
 					playerShader->objects[k]->bState.attacking = false;
 					playerShader->objects[k]->info->stats.capacity = playerShader->objects[k]->info->stats.maxhp;
 					playerShader->objects[k]->bState.attackID = TYPE_RANGED;
@@ -1410,6 +1425,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 		for (int i = playerShader->objects.size(); i < 3; ++i)
 		{
+			waitInter->objects[24 + i * 5]->SetMesh(NULL);
+			waitInter->objects[25 + i * 5]->SetMesh(NULL);
+			waitInter->objects[26 + i * 5]->SetMesh(NULL);
+			waitInter->objects[27 + i * 5]->SetMesh(NULL);
 			waitInter->objects[28 + i * 5]->SetMesh(NULL);
 		}
 		for (int i = 0; i < playerShader->objects.size(); ++i)
@@ -1423,6 +1442,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28*i+5]);
 			}
 		}
+
+		if (waitInter->selectedStage == 1)
+		{
+			waitInter->objects[23]->m_ppMaterials[0] = rm->materials[299];
+		}
+		else if (waitInter->selectedStage == 2)
+		{
+			waitInter->objects[23]->m_ppMaterials[0] = rm->materials[300];
+		}
+
 
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
@@ -1447,8 +1476,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//1-1스테이지
 				if (waitInter->selectedStage == 1)
 				{
-					//playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
-					playerShader->objects[idx]->SetPosition(515.0f + idx * 5.0f, 0.0f, 175.0f);
+					playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
+					//playerShader->objects[idx]->SetPosition(198.0f + idx * 5.0f, 0.0f, 198.0f);
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
@@ -3582,7 +3611,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			if (type == 2)
 			{
 				p.isAlive = true;
-				enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage();
+				enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage()*playerShader->objects[idx]->amp_ranged;
 				if (enemyShader->objects[target]->bState.hp <= 0)
 				{
 					if (enemyShader->objects[target]->expGiven == false)
@@ -3594,6 +3623,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 							{
 								playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
 								playerShader->objects[ii]->info->growth.ranged.level += 1;
+							}
+
+							playerShader->objects[ii]->info->growth.total.exp += 50;
+							if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
+							{
+								playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
+								playerShader->objects[ii]->info->growth.total.level += 1;
+								playerShader->objects[ii]->info->extraPoint += 3;
 							}
 						}
 						enemyShader->objects[target]->expGiven = true;
@@ -3703,7 +3740,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 					soundEffect[4]->Update();
 					playerShader->objects[idx]->hammerHit = true;
 					partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-					enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
+					enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
 
 					if (enemyShader->objects[i]->bState.hp <= 0)
 					{
@@ -3716,6 +3753,14 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 								{
 									playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
 									playerShader->objects[ii]->info->growth.melee.level += 1;
+								}
+
+								playerShader->objects[ii]->info->growth.total.exp += 50;
+								if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
+								{
+									playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
+									playerShader->objects[ii]->info->growth.total.level += 1;
+									playerShader->objects[ii]->info->extraPoint += 3;
 								}
 							}
 							enemyShader->objects[i]->expGiven = true;
@@ -3851,7 +3896,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage();
+				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
 
 				if (enemyShader->objects[i]->bState.hp <= 0)
 				{
@@ -4078,7 +4123,6 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 		boomShader->objects.push_back(boom);
 		setObjectLastAttack(idx);
 	}
-
 }
 void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
@@ -4142,7 +4186,7 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			XMFLOAT3 dp = XMFLOAT3(ep.x - ppos.x, ep.y - ppos.y, ep.z - ppos.z);
 			if (Vector3::Length(dp) <= 5.0f)
 			{
-				enemyShader->objects[p]->stunDuration = 5.0f;
+				enemyShader->objects[p]->stunDuration = 5.0f*playerShader->objects[idx]->amp_radio;
 				enemyShader->objects[p]->lastStun = chrono::system_clock::now();
 				enemyShader->objects[p]->stunned = true;
 			}

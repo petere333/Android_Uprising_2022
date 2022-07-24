@@ -12,8 +12,11 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	
 	//윈도우 크기 450픽셀당 1.0f로 환산.
 
-	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
-	CubeMeshOffset* main2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
+	CubeMeshOffset* bg = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
+	CubeMeshOffset* bg2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
+
+	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.02f, 0.0f, 0.0f, false);
+	CubeMeshOffset* main2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.02f, 0.0f, 0.0f, true);
 	
 
 	//로그아웃 버튼 위치 184, 152 클릭 범위 = 111, 86
@@ -31,6 +34,11 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, true);
 
+	
+	meshes.push_back(bg);
+	meshesRev.push_back(bg2);
+
+
 	meshes.push_back(main);
 	meshesRev.push_back(main2);
 
@@ -43,12 +51,15 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	meshesRev.push_back(shopr);
 	meshes.push_back(stage);
 	meshesRev.push_back(stager);
-	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
-	UIObject* obj2 = new UIObject(1, 905, 109, 1127, 195, 215);
-	UIObject* obj3 = new UIObject(1, 99, 702, 373, 788, 224);
-	UIObject* obj4 = new UIObject(1, 467, 704, 741, 790, 218);
-	UIObject* obj5 = new UIObject(1, 835, 707, 1109, 793, 221);
 
+	
+	UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
+	UIObject* obj2 = new UIObject(1, 905, 132, 1127, 218, 215);
+	UIObject* obj3 = new UIObject(1, 99, 725, 373, 811, 224);
+	UIObject* obj4 = new UIObject(1, 467, 727, 741, 813, 218);
+	UIObject* obj5 = new UIObject(1, 835, 730, 1109, 816, 221);
+	
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[214]);
 	obj->SetPosition(0.0f, 0.0f, 0.0f);
@@ -69,11 +80,17 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	obj5->SetMaterial(0, rm->materials[221]);
 	obj5->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj6->SetMesh(meshes[5]);
+	obj6->SetMaterial(0, rm->materials[322]);
+	obj6->SetPosition(0.0f, 0.0f, 0.0f);
+
+	objects.push_back(obj6);
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
 	objects.push_back(obj4);
 	objects.push_back(obj5);
+	
 }
 
 void MainInterfaceShader::ReleaseObjects()

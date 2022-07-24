@@ -61,6 +61,18 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	CubeMeshOffset* cointer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* cointerr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* co_melee_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (340.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_melee_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (397.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_melee_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (454.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* co_ranged_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (554.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_ranged_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (611.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_ranged_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (668.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* co_radio_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (758.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_radio_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (815.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* co_radio_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (872.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+
 
 
 	meshes.push_back(inter);
@@ -99,6 +111,27 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	meshes.push_back(cointer);
 	meshesRev.push_back(cointerr);
 
+	meshes.push_back(co_melee_1);
+	meshes.push_back(co_melee_2);
+	meshes.push_back(co_melee_3);
+	meshes.push_back(co_ranged_1);
+	meshes.push_back(co_ranged_2);
+	meshes.push_back(co_ranged_3);
+	meshes.push_back(co_radio_1);
+	meshes.push_back(co_radio_2);
+	meshes.push_back(co_radio_3);
+
+	meshesRev.push_back(co_melee_1);
+	meshesRev.push_back(co_melee_2);
+	meshesRev.push_back(co_melee_3);
+	meshesRev.push_back(co_ranged_1);
+	meshesRev.push_back(co_ranged_2);
+	meshesRev.push_back(co_ranged_3);
+	meshesRev.push_back(co_radio_1);
+	meshesRev.push_back(co_radio_2);
+	meshesRev.push_back(co_radio_3);
+
+	
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, 81, 175, 259, 234, 239);
@@ -122,6 +155,20 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 
 	//coworker
 	UIObject* obj15 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	//melee
+	UIObject* obj16 = new UIObject(1, -1, -1, -1, -1, 315);
+	UIObject* obj17 = new UIObject(1, -1, -1, -1, -1, 317);
+	UIObject* obj18 = new UIObject(1, -1, -1, -1, -1, 319);
+	//ranged
+	UIObject* obj19 = new UIObject(1, -1, -1, -1, -1, 315);
+	UIObject* obj20 = new UIObject(1, -1, -1, -1, -1, 317);
+	UIObject* obj21 = new UIObject(1, -1, -1, -1, -1, 319);
+	//radio
+	UIObject* obj22 = new UIObject(1, -1, -1, -1, -1, 315);
+	UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, 317);
+	UIObject* obj24 = new UIObject(1, -1, -1, -1, -1, 319);
+
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[238]);
@@ -183,6 +230,42 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	obj15->SetMaterial(0, rm->materials[314]);
 	obj15->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj16->SetMesh(meshes[15]);
+	obj16->SetMaterial(0, rm->materials[315]);
+	obj16->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj17->SetMesh(meshes[16]);
+	obj17->SetMaterial(0, rm->materials[317]);
+	obj17->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj18->SetMesh(meshes[17]);
+	obj18->SetMaterial(0, rm->materials[319]);
+	obj18->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj19->SetMesh(meshes[18]);
+	obj19->SetMaterial(0, rm->materials[315]);
+	obj19->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj20->SetMesh(meshes[19]);
+	obj20->SetMaterial(0, rm->materials[317]);
+	obj20->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj21->SetMesh(meshes[20]);
+	obj21->SetMaterial(0, rm->materials[319]);
+	obj21->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj22->SetMesh(meshes[21]);
+	obj22->SetMaterial(0, rm->materials[315]);
+	obj22->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj23->SetMesh(meshes[22]);
+	obj23->SetMaterial(0, rm->materials[317]);
+	obj23->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj24->SetMesh(meshes[23]);
+	obj24->SetMaterial(0, rm->materials[319]);
+	obj24->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -199,6 +282,16 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	objects.push_back(obj13);
 	objects.push_back(obj14);
 	objects.push_back(obj15);
+	objects.push_back(obj16);
+	objects.push_back(obj17);
+	objects.push_back(obj18);
+	objects.push_back(obj19);
+	objects.push_back(obj20);
+
+	objects.push_back(obj21);
+	objects.push_back(obj22);
+	objects.push_back(obj23);
+	objects.push_back(obj24);
 }
 
 void StageSelectShader::ReleaseObjects()
@@ -399,10 +492,29 @@ void StageSelectShader::Animate(CCamera* cam)
 	if (coworkShow == false)
 	{
 		objects[14]->SetMesh(NULL);
+		objects[15]->SetMesh(NULL);
+		objects[16]->SetMesh(NULL);
+		objects[17]->SetMesh(NULL);
+		objects[18]->SetMesh(NULL);
+		objects[19]->SetMesh(NULL);
+		objects[20]->SetMesh(NULL);
+		objects[21]->SetMesh(NULL);
+		objects[22]->SetMesh(NULL);
+		objects[23]->SetMesh(NULL);
+
 	}
 	else
 	{
 		objects[14]->SetMesh(meshes[14]);
+		objects[15]->SetMesh(meshes[15]);
+		objects[16]->SetMesh(meshes[16]);
+		objects[17]->SetMesh(meshes[17]);
+		objects[18]->SetMesh(meshes[18]);
+		objects[19]->SetMesh(meshes[19]);
+		objects[20]->SetMesh(meshes[20]);
+		objects[21]->SetMesh(meshes[21]);
+		objects[22]->SetMesh(meshes[22]);
+		objects[23]->SetMesh(meshes[23]);
 	}
 
 }
