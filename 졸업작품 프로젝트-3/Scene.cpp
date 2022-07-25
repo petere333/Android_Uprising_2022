@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "GameFramework.h"
 
+
 #include "CNet.h"
 
 CScene::CScene()
@@ -236,6 +237,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	enemyShader = new EnemyShader(rm, height11, height12, height13, height21, height22, height23);
 	enemyShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+
+	enemyDying = new DyingEnemyShader(rm);
+	enemyDying->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	enemyDying->BuildObjects(pd3dDevice, pd3dCommandList);
 
 	
 
@@ -616,8 +621,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		if (enemyShader)
 		{
 			vector<XMFLOAT3> ppos = playerShader->getPlayerLocation();
-			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos, playerShader, partShader);
+			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos, playerShader, partShader, enemyDying);
 		}
+		if (enemyDying)
+		{
+			enemyDying->animate();
+		}
+
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
 
@@ -1316,16 +1326,23 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						playerShader->objects[i]->info->growth.melee.exp -= expNeed[playerShader->objects[i]->info->growth.melee.level - 1];
 						playerShader->objects[i]->info->growth.melee.level += 1;
+						playerShader->objects[i]->info->stats.maxhp += 3;
+						playerShader->objects[i]->info->stats.capacity += 3;
+						playerShader->objects[i]->info->stats.power += 2;
 					}
 					while (playerShader->objects[i]->info->growth.ranged.exp >= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1])
 					{
 						playerShader->objects[i]->info->growth.ranged.exp -= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1];
 						playerShader->objects[i]->info->growth.ranged.level += 1;
+						playerShader->objects[i]->info->stats.hardness += 2;
+						playerShader->objects[i]->info->stats.precision += 3;
+
 					}
 					while (playerShader->objects[i]->info->growth.radio.exp >= expNeed[playerShader->objects[i]->info->growth.radio.level - 1])
 					{
 						playerShader->objects[i]->info->growth.radio.exp -= expNeed[playerShader->objects[i]->info->growth.radio.level - 1];
 						playerShader->objects[i]->info->growth.radio.level += 1;
+						playerShader->objects[i]->info->stats.entrophy += 1;
 					}
 					while (playerShader->objects[i]->info->growth.total.exp >= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1])
 					{
@@ -1636,6 +1653,12 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 		{
 			enemyShader->OnPrepareRender(pd3dCommandList);
 			enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+		}
+
+		if (enemyDying)
+		{
+			enemyDying->OnPrepareRender(pd3dCommandList);
+			enemyDying->Render(pd3dCommandList, pCamera);
 		}
 		if (partShader)
 		{
@@ -3623,6 +3646,8 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 							{
 								playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
 								playerShader->objects[ii]->info->growth.ranged.level += 1;
+								playerShader->objects[ii]->info->stats.hardness += 2;
+								playerShader->objects[ii]->info->stats.precision += 3;
 							}
 
 							playerShader->objects[ii]->info->growth.total.exp += 50;
@@ -3753,6 +3778,9 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 								{
 									playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
 									playerShader->objects[ii]->info->growth.melee.level += 1;
+									playerShader->objects[ii]->info->stats.maxhp += 3;
+									playerShader->objects[ii]->info->stats.capacity += 3;
+									playerShader->objects[ii]->info->stats.power+=2;
 								}
 
 								playerShader->objects[ii]->info->growth.total.exp += 50;
@@ -3909,6 +3937,9 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 							{
 								playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
 								playerShader->objects[ii]->info->growth.melee.level += 1;
+								playerShader->objects[ii]->info->stats.maxhp += 3;
+								playerShader->objects[ii]->info->stats.capacity += 3;
+								playerShader->objects[ii]->info->stats.power += 2;
 							}
 						}
 						enemyShader->objects[i]->expGiven = true;

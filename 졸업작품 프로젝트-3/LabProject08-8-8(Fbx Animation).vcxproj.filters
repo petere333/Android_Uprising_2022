@@ -144,6 +144,9 @@
     <ClCompile Include="WaitShader.cpp">
       <Filter>Shader\wait</Filter>
     </ClCompile>
+    <ClCompile Include="DyingEnemyShader.cpp">
+      <Filter>Shader\in-game\global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="WaitShader.h">
       <Filter>Shader\wait</Filter>
+    </ClInclude>
+    <ClInclude Include="DyingEnemyShader.h">
+      <Filter>Shader\in-game\global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

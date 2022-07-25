@@ -1631,45 +1631,50 @@ void EnemyShader::ReleaseShaderVariables()
 	}
 }
 
+
+
 void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed, ID3D12DescriptorHeap* heap)
 {
 	
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		XMFLOAT3 pos = objects[i]->GetPosition();
-		XMFLOAT3 camPos = pCamera->getPosition();
-
-		float px = camPos.x;
-		float pz = camPos.z;
-
-		float ex = pos.x;
-		float ez = pos.z;
-		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
-
-		float dist = Vector3::Length(fromCamera);
-
-		XMFLOAT3 look = pCamera->getLook();
-		look.y = 0.0f;
-		fromCamera.y = 0.0f;
-
-		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
-
-		if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+		if (objects[i]->erased == false)
 		{
+			XMFLOAT3 pos = objects[i]->GetPosition();
+			XMFLOAT3 camPos = pCamera->getPosition();
 
-			if (objects[i]->erased == false)
+			float px = camPos.x;
+			float pz = camPos.z;
+
+			float ex = pos.x;
+			float ez = pos.z;
+			XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
+
+			float dist = Vector3::Length(fromCamera);
+
+			XMFLOAT3 look = pCamera->getLook();
+			look.y = 0.0f;
+			fromCamera.y = 0.0f;
+
+			float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
+
+			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 			{
-				objects[i]->Animate(1.0f/36.0f);
+
+				
+				objects[i]->Animate(1.0f / 36.0f);
 				if (objects[i]->m_pSkinnedAnimationController)
 				{
 					objects[i]->UpdateTransform(NULL);
 				}
+
 				if (heap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
 				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
+			
 			}
 		}
 	}
@@ -1750,7 +1755,7 @@ std::vector<int> EnemyShader::getHealthRate()
 	return result;
 }
 
-void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part)
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die)
 {
 	
 	for (int i = 0; i < objects.size(); ++i)
@@ -1765,26 +1770,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			objects[i]->bState.stateID = DEAD_STATE;
 			objects[i]->stunned = false;
 			objects[i]->deathMoment = chrono::system_clock::now();
-			if (objects[i]->weapon == 1)
-			{
-				//애니메이션도 죽는 것으로 변경
-				if (objects[i]->m_pChild != rm->enemyModels[1]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[1]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[1]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			else
-			{
-				//애니메이션도 죽는 것으로 변경
-				if (objects[i]->m_pChild != rm->enemyModels[8]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[8]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[8]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
+			objects[i]->erased = true;
+			
 			
 		}
 
@@ -2697,15 +2684,40 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 			//죽고난 후 시점까지의 경과시간 구하기.
 			chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
 			float dt = (float)timeFromDeath.count();
+
+			
 			objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 			objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
 			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
-			if (dt >= 2.0f)
+
+			CGameObject* tmp = new CGameObject(1);
+
+			
+
+
+			tmp->SetPosition(objects[i]->GetPosition());
+			if (objects[i]->attackTarget != -1)
 			{
-				objects[i]->m_pMesh = NULL;
-				
-				objects[i]->erased = true;
+				XMFLOAT3 toPlayer = Vector3::Subtract(ps->objects[objects[i]->attackTarget]->GetPosition(), objects[i]->GetPosition());
+				XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
+				float angle = atan2f(ntp.x, ntp.z);
+				angle = angle / 3.141592f * 180.0f;
+				if (angle >= 360.0f)
+					angle -= 360.0f;
+
+				tmp->Rotate(0.0f, angle, 0.0f);
 			}
+			
+			
+
+
+			tmp->SetMesh(rm->enemyBluntDie[0]);
+			tmp->SetMaterial(0, rm->materials[2]);
+
+			die->objects.push_back(tmp);
+			chrono::time_point<chrono::system_clock> m = chrono::system_clock::now();
+			die->created.push_back(m);
+
 		}
 
 		else if (objects[i]->bState.stateID == BATTLE_STATE)

@@ -160,6 +160,7 @@
     <ClInclude Include="CNet.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="DDSTextureLoader12.h" />
+    <ClInclude Include="DyingEnemyShader.h" />
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="EnemyInfoManager.h" />
     <ClInclude Include="EnemyShader.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="CNet.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="DDSTextureLoader12.cpp" />
+    <ClCompile Include="DyingEnemyShader.cpp" />
     <ClCompile Include="EnemyInfoManager.cpp" />
     <ClCompile Include="EnemyShader.cpp" />
     <ClCompile Include="GameFramework.cpp" />

@@ -954,6 +954,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
@@ -961,6 +965,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -971,6 +976,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
@@ -978,6 +986,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -988,6 +997,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.melee.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.capacity += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
@@ -995,6 +1007,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -1006,6 +1019,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
@@ -1013,6 +1028,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -1023,6 +1039,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
@@ -1030,6 +1048,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -1040,6 +1059,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.ranged.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 3;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 2;
 							}
 
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
@@ -1047,6 +1068,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -1058,6 +1080,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
@@ -1065,6 +1088,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 						}
 						m_pScene->stageInter->coworkShow = false;
 						}
@@ -1075,6 +1099,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
@@ -1082,6 +1107,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 						}
 						m_pScene->stageInter->coworkShow = false;
 						}
@@ -1092,6 +1118,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
@@ -1099,6 +1126,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
+							m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 						}
 						m_pScene->stageInter->coworkShow = false;
 						}

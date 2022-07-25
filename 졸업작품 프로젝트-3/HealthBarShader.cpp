@@ -34,7 +34,7 @@ void HealthBarShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 		obj = new CGameObject(1);
 		obj->SetPosition(pos[i].x, pos[i].y+2.0f, pos[i].z);
 		obj->SetMesh(hp[0]);
-		obj->SetMaterial(0, rm->materials[17]);
+		obj->SetMaterial(0, rm->materials[270]);
 		objects.push_back(obj);
 	}
 
@@ -227,7 +227,7 @@ void HealthBarShader::Animate(CCamera* cam, std::vector<XMFLOAT3> pos, std::vect
 			obj = new CGameObject(1);
 			obj->SetPosition(pos[i].x, pos[i].y + 2.0f, pos[i].z);
 			obj->SetMesh(hp[0]);
-			obj->SetMaterial(0, rm->materials[17]);
+			obj->SetMaterial(0, rm->materials[270]);
 			objects.push_back(obj);
 		}
 	}
