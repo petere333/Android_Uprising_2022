@@ -18,10 +18,12 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CCubeMeshTextured* Receps_wall2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 1.0f, 5.0f, 20.0f);
 	CCubeMeshTextured* Receps_front1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 10.0f, 20.833f);
 	CCubeMeshTextured* Receps_front2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, 15.0f);
-	CCubeMeshTextured* Receps_Lipgu = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 10.0f, 25.0f);
-	CCubeMeshTextured* Receps_Lipgu2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, 18.125f);
-	CCubeMeshTextured* Receps_Lipgu3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 2.5f, 25.0f); // 벽 하단
+	CCubeMeshTextured* Receps_Lipgu = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 8.0f, 25.0f);
+	CCubeMeshTextured* Receps_Lipgu2 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 4.5f, 18.125f);
+	CCubeMeshTextured* Receps_Lipgu3 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 4.5f, 25.0f); // 벽 하단
+	CCubeMeshTextured* Receps_Lipgu4 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 2.0f, 4.5f, 17.125f);
 	CCubeMeshTextured* Receps_kidoo1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 10.0f, 2.5f, 10.0f);
+
 	CCubeMeshTextured* Receps_Gan1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 30.0f, 6.0f, 10.0f);
 	CLoadedMesh* Recep_Takja1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_Table.txt", NULL);
 	CLoadedMesh* Recep_Cow1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_Couch.txt", NULL);
@@ -30,7 +32,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* Recep_CCTV = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_Screen2.txt", NULL);
 	CCubeMeshTextured* Receps_MedWal1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 12.5f, 4.0f);
 	CLoadedMesh* Recep_TwoCounter = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_Counters2.txt", NULL);
-	CLoadedMesh* Recep_Gonggi = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_airfan.txt", NULL);
+	PillarMesh* Recep_Gonggi = new PillarMesh(pd3dDevice, pd3dCommandList, 8, 8, 15);
 	CLoadedMesh* Recep_MalDong = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_Dongsang.txt", NULL);
 	CCubeMeshTextured* Receps_MisulWall1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 40.0f, 12.5f, 16.0f);
 	CLoadedMesh* Recep_lamped = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_2/vtx_lamp.txt", NULL);
@@ -153,7 +155,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Recep_Air)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[106]);
+			obj->SetMaterial(0, rm->materials[57]);
 			obj->SetMesh(Recep_Gonggi);
 		}
 		else if (data[i].type == Recep_DongSSang1)
@@ -192,7 +194,12 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			obj->SetMaterial(0, rm->materials[109]);
 			obj->SetMesh(Recep_Door_R);
 		}
-
+		else if (data[i].type == Recep_wall4_F)
+		{
+		obj = new CGameObject(1);
+		obj->SetMaterial(0, rm->materials[57]);
+		obj->SetMesh(Receps_Lipgu4);
+		}
 
 
 		obj->SetPosition(data[i].position);

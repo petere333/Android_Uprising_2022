@@ -192,6 +192,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	LoadHeight("res/map/area1_2/height1-2.txt", height12);
 	LoadHeight("res/map/area2-1/height2-1.txt", height21);
 	LoadHeight("res/map/area2-2/height2-2.txt", height22);
+	LoadHeight("res/map/area2-3/height2-3.txt", height23);
 
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
@@ -1493,8 +1494,15 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//1-1스테이지
 				if (waitInter->selectedStage == 1)
 				{
+
+					//playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
+					// playerShader->objects[idx]->SetPosition(515.0f + idx * 5.0f, 0.0f, 175.0f);  기존의 시작 위치
+
+					playerShader->objects[idx]->SetPosition(880.0f + idx * 5.0f, 0.0f, 110.0f);
+
 					playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
 					//playerShader->objects[idx]->SetPosition(198.0f + idx * 5.0f, 0.0f, 198.0f);
+
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
@@ -1504,7 +1512,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				else if (waitInter->selectedStage == 2)
 				{
 					//1-2스테이지인경우 2-1
+
+				//	playerShader->objects[idx]->SetPosition(810.0f, 0.0f, 190.0f - idx * 5.0f);
+					playerShader->objects[idx]->SetPosition(810.0f, 0.0f, 190.0f - idx * 5.0f);
+
 					playerShader->objects[idx]->SetPosition(830.0f, 0.0f, 580.0f - idx * 5.0f);
+
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
@@ -1636,11 +1649,17 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 			{
 				terrain2_2->OnPrepareRender(pd3dCommandList);
 				terrain2_2->Render(pd3dCommandList, pCamera);
+
+				if (terrain2_3)
+				{
+					terrain2_3->OnPrepareRender(pd3dCommandList);
+					terrain2_3->Render(pd3dCommandList, pCamera);
+				}
 			}
 		}
 
 		//2-3
-		else if ((cp.x >= 900.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
+		else if ((cp.x >= 875.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
 		{
 			if (terrain2_3)
 			{
@@ -3674,6 +3693,912 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
 		}
 	
+
+
+	if (fTime >= 1.0f / 6.0f)
+	{
+		soundEffect[0]->play();
+		soundEffect[0]->Update();
+		printf("time elapsed from last shot : %f\n", fTime);
+		setObjectLastAttack(idx);
+
+		
+		XMFLOAT3 lk = cam->getLook();
+		
+		//printf("발사 각도 %f  ", playerShader->objects[idx]->currentRotation.y);
+		XMFLOAT3 dir;
+
+		float a = playerShader->objects[idx]->kState.rotation;
+		
+		dir = XMFLOAT3(cos(XMConvertToRadians(a)), 0.0f, -sin(XMConvertToRadians(a)));
+		
+		
+
+
+
+
+		Line line;
+		line.start = playerShader->objects[idx]->GetPosition(); // 사격 위치
+		line.start.y += 1.0f;
+		line.end = XMFLOAT3(line.start.x + dir.x * 3000.0f, line.start.y + dir.y * 3000.0f, line.start.z + dir.z * 3000.0f); // 사격 위치로부터 최대 사거리 1km에 도달한 지점
+
+		printf("(%f, %f, %f) - (%f, %f, %f)\n", line.start.x, line.start.y, line.start.z, line.end.x, line.end.y, line.end.z);
+
+		float minDist = 3000.0f; // 현재까지 구해진 타격 대상과의 거리, 초기값은 최대 사거리 100미터
+
+		XMFLOAT3 d;
+		float dist;
+		XMFLOAT3 temp;
+
+		int target = -1;  // 대상 객체
+		XMFLOAT3 targetPos; // 타격 발생 지점
+		int type = 0;
+		XMFLOAT3 n = XMFLOAT3(line.end.x - line.start.x, line.end.y - line.start.y, line.end.z - line.start.z); // 사격 방향 노말벡터
+		//printf("발사 방향 : %f, %f, %f\n", n.x, n.y, n.z);
+
+
+
+		float px = playerShader->objects[idx]->GetPosition().x;
+		float pz = playerShader->objects[idx]->GetPosition().z;
+
+		//1-1구역인 경우
+		if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
+		{
+			for (int i = 0; i < terrain1_1->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_1->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_1->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_1->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_1->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_1->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_1->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_1->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+		//1-2
+		if (px >= 200.0f && px <= 600.0f && pz >= 0.0f && pz <= 200.0f)
+		{
+			for (int i = 0; i < terrain1_2->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_2->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_2->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_2->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_2->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_2->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_2->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_2->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//1-3
+		if (px >= 400.0f && px <= 600.0f && pz >= 200.0f && pz <= 600.0f)
+		{
+			for (int i = 0; i < terrain1_3->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain1_3->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain1_3->boxesWorld[i].end.x + 0.001f && temp.x >= terrain1_3->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain1_3->boxesWorld[i].end.y + 0.001f && temp.y >= terrain1_3->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain1_3->boxesWorld[i].end.z + 0.001f && temp.z >= terrain1_3->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-1
+		if (px >= 800.0f && px <= 900.0f && pz >= 363.0f && pz <= 600.0f)
+		{
+			for (int i = 0; i < terrain2_1->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_1->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_1->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_1->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_1->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_1->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_1->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_1->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-2
+		if (px >= 800.0f && px <= 900.0f && pz >= 60.0f && pz <= 363.0f)
+		{
+			for (int i = 0; i < terrain2_2->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_2->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_2->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_2->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_2->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_2->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_2->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_2->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//2-3
+		if (px >= 875.0f && px <= 1200.0f && pz >= 60.0f && pz <= 150.0f)
+		{
+			for (int i = 0; i < terrain2_3->nBox; ++i)
+			{
+				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+				std::vector<XYZPlane> checkList;
+
+
+				if (n.x > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.x;
+					checkList.push_back(p);
+				}
+				else if (n.x < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.x;
+					checkList.push_back(p);
+				}
+
+				if (n.z > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.z;
+					checkList.push_back(p);
+				}
+				else if (n.z < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.z;
+					checkList.push_back(p);
+				}
+
+				if (n.y > 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].start.y;
+					checkList.push_back(p);
+				}
+				else if (n.y < 0.0f)
+				{
+					XYZPlane p;
+					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+					p.pos = terrain2_3->boxesWorld[i].end.y;
+					checkList.push_back(p);
+				}
+
+
+				//체크리스트에 들어있는 모든 평면들에 대해
+
+				for (int j = 0; j < checkList.size(); ++j)
+				{
+					// 충돌 지점을 확보한다.
+					temp = getIntersectPoint(line, checkList[j]);
+
+
+					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+					if ((temp.x <= terrain2_3->boxesWorld[i].end.x + 0.001f && temp.x >= terrain2_3->boxesWorld[i].start.x - 0.001f) &&
+						(temp.y <= terrain2_3->boxesWorld[i].end.y + 0.001f && temp.y >= terrain2_3->boxesWorld[i].start.y - 0.001f) &&
+						(temp.z <= terrain2_3->boxesWorld[i].end.z + 0.001f && temp.z >= terrain2_3->boxesWorld[i].start.z - 0.001f))
+					{
+						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+						{
+							//그 지점과의 거리를 구한 후,
+							// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+							d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+							dist = Vector3::Length(d);
+							printf("사거리 내에 위치, 거리 %f\n", dist);
+							break;
+						}
+						else
+						{
+							printf("직선 앞 혹은 뒤에 위치\n");
+							dist = 3000.0f;
+						}
+					}
+					else
+					{
+						dist = 3000.0f;
+					}
+				}
+				/*
+				if (dist != 3000.0f)
+				{
+					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+					printf("%d번째 박스와 거리 %f\n", i, dist);
+				}
+				*/
+				// 총알은 관통 기능이 없다. 즉,
+				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+				// 그 지점이 새로운 충돌지점이다.
+
+				if (dist < minDist)
+				{
+					minDist = dist;
+					targetPos = temp;
+					target = i;
+					type = 1;
+				}
+
+			}
+		}
+
+		//===============================================================================//
+
+		soundEffect[1]->play();
+		soundEffect[1]->Update();
+		// 적한테 총알이 박혔나?
+		for (int i = 0; i < enemyShader->objects.size(); ++i)
+		{
+			// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
+
+			std::vector<XYZPlane> checkList;
+
+
+			if (n.x > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = enemyShader->objects[i]->mbox->start.x;
+				checkList.push_back(p);
+			}
+			else if (n.x < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+				p.pos = enemyShader->objects[i]->mbox->end.x;
+				checkList.push_back(p);
+			}
+
+			if (n.z > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = enemyShader->objects[i]->mbox->start.z;
+				checkList.push_back(p);
+			}
+			else if (n.z < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+				p.pos = enemyShader->objects[i]->mbox->end.z;
+				checkList.push_back(p);
+			}
+
+			if (n.y > 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = enemyShader->objects[i]->mbox->start.y;
+				checkList.push_back(p);
+			}
+			else if (n.y < 0.0f)
+			{
+				XYZPlane p;
+				p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+				p.pos = enemyShader->objects[i]->mbox->end.y;
+				checkList.push_back(p);
+			}
+
+
+			//체크리스트에 들어있는 모든 평면들에 대해
+
+			for (int j = 0; j < checkList.size(); ++j)
+			{
+				// 충돌 지점을 확보한다.
+				temp = getIntersectPoint(line, checkList[j]);
+
+
+				//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
+				if ((temp.x <= enemyShader->objects[i]->mbox->end.x + 0.001f && temp.x >= enemyShader->objects[i]->mbox->start.x - 0.001f) &&
+					(temp.y <= enemyShader->objects[i]->mbox->end.y + 0.001f && temp.y >= enemyShader->objects[i]->mbox->start.y - 0.001f) &&
+					(temp.z <= enemyShader->objects[i]->mbox->end.z + 0.001f && temp.z >= enemyShader->objects[i]->mbox->start.z - 0.001f))
+				{
+					if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
+					{
+						//그 지점과의 거리를 구한 후,
+						// 어차피 실제 충돌 지점은 한 곳 뿐이므로 루프를 빠져나온다.
+						d = XMFLOAT3(temp.x - line.start.x, temp.y - line.start.y, temp.z - line.start.z);
+						dist = Vector3::Length(d);
+						printf("사거리 내에 위치, 거리 %f\n", dist);
+						break;
+					}
+					else
+					{
+						printf("직선 앞 혹은 뒤에 위치\n");
+						dist = 3000.0f;
+					}
+				}
+				else
+				{
+					dist = 3000.0f;
+				}
+			}
+			/*
+			if (dist != 3000.0f)
+			{
+				printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
+				printf("%d번째 박스와 거리 %f\n", i, dist);
+			}
+			*/
+			// 총알은 관통 기능이 없다. 즉,
+			// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
+			// 그 지점이 새로운 충돌지점이다.
+
+			if (dist < minDist)
+			{
+				minDist = dist;
+				targetPos = temp;
+				target = i;
+				type = 2;
+			}
+
+		}
+
+		
+
+		// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
+		// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
+
+		// 이제, 서버는  총알의 충돌 지점을 나타내는 targetPos, 맞은 객체의 유형을 나타내는 type, 몇 번째 객체에 맞았는지 나타내는 target값을 전송해야 한다.
+	
+		if (type == 1)
+		{
+
+
+			printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
+			/*
+			if (terrainShader->objects[target]->type == 21217)
+			{
+				float ox = terrainShader->objects[target]->GetPosition().x;
+				float oy = terrainShader->objects[target]->GetPosition().y;
+				float oz = terrainShader->objects[target]->GetPosition().z;
+
+				terrainShader->objects[target] = NULL;
+				terrainShader->boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
+				terrainShader->boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+
+
+
+				for (float x = ox - 15.0f; x < ox + 15.0f; x += 1.5f)
+				{
+					for (float y = oy - 4.5f; y < oy + 5.0f; y += 1.5f)
+					{
+						for (float z = oz - 0.5f; z < oz + 1.0f; z += 0.6f)
+						{
+							XMFLOAT3 tmp = XMFLOAT3(x, y, z);
+							partShader->createParticles(10, tmp, device, list);
+						}
+					}
+				}
+			}
+			*/
+		}
+
+		CS_ATTACK_PACKET p;
+		p.type = PACKET_TYPE::CS_ATTACK;
+		p.size = sizeof(CS_ATTACK_PACKET);
+		p.target = target;
+		p.x = targetPos.x;
+		p.y = targetPos.y;
+		p.z = targetPos.z;
+		if (type == 2)
+		{
+			p.isAlive = true;
+			enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage();
+			if (enemyShader->objects[target]->bState.hp <= 0)
+			{
+				if (enemyShader->objects[target]->expGiven == false)
+				{
+					for (int ii = 0; ii < playerShader->objects.size(); ++ii)
+					{
+						playerShader->objects[ii]->info->growth.ranged.exp += 50;
+						if (playerShader->objects[ii]->info->growth.ranged.exp >= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1])
+						{
+							playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
+							playerShader->objects[ii]->info->growth.ranged.level += 1;
+						}
+					}
+					enemyShader->objects[target]->expGiven = true;
+				}
+			}
+		}
+		else if (type == 1)
+		{
+			p.isAlive = false;
+		}
+		SendPacket(&p);
+
+		// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
+		// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
+		partShader->createParticles(50, targetPos, device, list);
+		// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
+	}
+
+
 
 }
 

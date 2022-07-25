@@ -22,7 +22,7 @@ int z21 = 474;
 int x22 = 200;
 int z22 = 606;
 
-int x23 = 600;
+int x23 = 650;
 int z23 = 180;
 
 
@@ -58,11 +58,11 @@ int main()
 	
 	writeHeight(hf, height2_1);*/
 
-	file = fopen("result/1_3/objects1-3.txt", "w");
-	FILE* bf = fopen("result/1_3/box1-3.txt", "w");
-	FILE* hf = fopen("result/1_3/height1-3.txt", "w");
+	file = fopen("result/2_1/objects2-2.txt", "w");
+	FILE* bf = fopen("result/2_1/box2-2.txt", "w");
+	FILE* hf = fopen("result/2_1/height2-2.txt", "w");
 
-	writeHeight(hf, height1_3);
+	writeHeight(hf, height2_2);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -97,7 +97,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles1_3(list, blist);
+	createObstacles2_2(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -5802,8 +5802,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables1->start = f3(830.0f, 0.0f, 496.5f);
-	Gwangjae_tables1->end = f3(834.0f, 2.0f, 526.5f);
-	setAreaHeight(height2_1, x21, z21, 29.5f, 133.0f, 34.5f, 164.0f, 2.0f);
+	Gwangjae_tables1->end = f3(834.0f, 1.3f, 526.5f);
+	setAreaHeight(height2_1, x21, z21, 29.5f, 133.0f, 34.5f, 164.0f, 1.3f);
 
 	Object* Kwan_tables2 = (Object*)malloc(sizeof(Object));
 	Kwan_tables2->location = f3(822.0f, 0.0f, 511.5f); // 30
@@ -5812,8 +5812,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables2->start = f3(820.0f, 0.0f, 496.5f);
-	Gwangjae_tables2->end = f3(824.0f, 2.0f, 526.5f);
-	setAreaHeight(height2_1, x21, z21, 19.5f, 133.0f, 24.5f, 164.0f, 2.0f);
+	Gwangjae_tables2->end = f3(824.0f, 1.3f, 526.5f);
+	setAreaHeight(height2_1, x21, z21, 19.5f, 133.0f, 24.5f, 164.0f, 1.3f);
 
 	Object* Kwan_tables3 = (Object*)malloc(sizeof(Object));
 	Kwan_tables3->location = f3(842.0f, 0.0f, 511.5f); // 30
@@ -5822,8 +5822,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables3->start = f3(840.0f, 0.0f, 496.5f);
-	Gwangjae_tables3->end = f3(844.0f, 2.0f, 526.5f);
-	setAreaHeight(height2_1, x21, z21, 39.5f, 133.0f, 44.5f, 164.0f, 2.0f);
+	Gwangjae_tables3->end = f3(844.0f, 1.3f, 526.5f);
+	setAreaHeight(height2_1, x21, z21, 39.5f, 133.0f, 44.5f, 164.0f, 1.3f);
 
 	Object* Kwan_tables4 = (Object*)malloc(sizeof(Object));
 	Kwan_tables4->location = f3(852.0f, 0.0f, 511.5f); // 30
@@ -5832,8 +5832,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables4 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables4->start = f3(850.0f, 0.0f, 496.5f);
-	Gwangjae_tables4->end = f3(854.0f, 2.0f, 526.5f);
-	setAreaHeight(height2_1, x21, z21, 49.5f, 133.0f, 54.5f, 164.0f, 2.0f);
+	Gwangjae_tables4->end = f3(854.0f, 1.3f, 526.5f);
+	setAreaHeight(height2_1, x21, z21, 49.5f, 133.0f, 54.5f, 164.0f,1.3f);
 
 	/////////////////////////////////////////////////////////////////////////////////
 
@@ -5844,8 +5844,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables5 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables5->start = f3(857.0f, 0.0f, 437.5f);
-	Gwangjae_tables5->end = f3(861.0f, 2.0f, 467.5f);
-	setAreaHeight(height2_1, x21, z21, 56.5f, 74.0f, 61.5f, 105.0f, 2.0f);
+	Gwangjae_tables5->end = f3(861.0f, 1.3f, 467.5f);
+	setAreaHeight(height2_1, x21, z21, 56.5f, 74.0f, 61.5f, 105.0f, 1.3f);
 
 	Object* Kwan_tables6 = (Object*)malloc(sizeof(Object));
 	Kwan_tables6->location = f3(840.0f, 0.0f, 438.5f); // 30
@@ -5854,8 +5854,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables6 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables6->start = f3(825.0f, 0.0f, 436.5f);
-	Gwangjae_tables6->end = f3(855.0f, 2.0f, 440.5f);
-	setAreaHeight(height2_1, x21, z21, 24.5f, 73.0f, 55.5f, 78.0f, 2.0f);
+	Gwangjae_tables6->end = f3(855.0f, 1.3f, 440.5f);
+	setAreaHeight(height2_1, x21, z21, 24.5f, 73.0f, 55.5f, 78.0f, 1.3f);
 
 	Object* Kwan_tables7 = (Object*)malloc(sizeof(Object));
 	Kwan_tables7->location = f3(840.0f, 0.0f, 465.5f); // 30
@@ -5864,8 +5864,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables7 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables7->start = f3(825.0f, 0.0f, 463.5f);
-	Gwangjae_tables7->end = f3(855.0f, 2.0f, 467.5f);
-	setAreaHeight(height2_1, x21, z21, 24.5f, 100.0f, 55.5f, 105.0f, 2.0f);
+	Gwangjae_tables7->end = f3(855.0f, 1.3f, 467.5f);
+	setAreaHeight(height2_1, x21, z21, 24.5f, 100.0f, 55.5f, 105.0f, 1.3f);
 
 	//////////////////////////////////////////////////////////////////////////////////
 
@@ -5877,8 +5877,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables8 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables8->start = f3(853.0f, 0.0f, 402.0f);
-	Gwangjae_tables8->end = f3(857.0f, 2.0f, 410.0f);
-	setAreaHeight(height2_1, x21, z21, 52.5f, 38.5f, 57.5f, 47.5f, 2.0f);
+	Gwangjae_tables8->end = f3(857.0f, 1.3f, 410.0f);
+	setAreaHeight(height2_1, x21, z21, 52.5f, 38.5f, 57.5f, 47.5f, 1.3f);
 
 	Object* Kwan_tables9 = (Object*)malloc(sizeof(Object));
 	Kwan_tables9->location = f3(855.0f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -5887,8 +5887,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables9 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables9->start = f3(853.0f, 0.0f, 389.0f);
-	Gwangjae_tables9->end = f3(857.0f, 2.0f, 397.0f);
-	setAreaHeight(height2_1, x21, z21, 52.5f, 25.5f, 57.5f, 34.5f, 2.0f);
+	Gwangjae_tables9->end = f3(857.0f, 1.3f, 397.0f);
+	setAreaHeight(height2_1, x21, z21, 52.5f, 25.5f, 57.5f, 34.5f, 1.3f);
 
 	Object* Kwan_tables10 = (Object*)malloc(sizeof(Object));
 	Kwan_tables10->location = f3(855.0f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -5897,8 +5897,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables10 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables10->start = f3(853.0f, 0.0f, 376.0f);
-	Gwangjae_tables10->end = f3(857.0f, 2.0f, 384.0f);
-	setAreaHeight(height2_1, x21, z21, 52.5f, 12.5f, 57.5f, 21.5f, 2.0f);
+	Gwangjae_tables10->end = f3(857.0f, 1.3f, 384.0f);
+	setAreaHeight(height2_1, x21, z21, 52.5f, 12.5f, 57.5f, 21.5f, 1.3f);
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -5909,8 +5909,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables11 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables11->start = f3(841.0f, 0.0f, 402.0f);
-	Gwangjae_tables11->end = f3(845.0f, 2.0f, 410.0f);
-	setAreaHeight(height2_1, x21, z21, 40.5f, 38.5f, 45.5f, 47.5f, 2.0f);
+	Gwangjae_tables11->end = f3(845.0f, 1.3f, 410.0f);
+	setAreaHeight(height2_1, x21, z21, 40.5f, 38.5f, 45.5f, 47.5f, 1.3f);
 
 	Object* Kwan_tables12 = (Object*)malloc(sizeof(Object));
 	Kwan_tables12->location = f3(843.0f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -5919,8 +5919,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables12 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables12->start = f3(841.0f, 0.0f, 389.0f);
-	Gwangjae_tables12->end = f3(845.0f, 2.0f, 397.0f);
-	setAreaHeight(height2_1, x21, z21, 40.5f, 25.5f, 45.5f, 34.5f, 2.0f);
+	Gwangjae_tables12->end = f3(845.0f, 1.3f, 397.0f);
+	setAreaHeight(height2_1, x21, z21, 40.5f, 25.5f, 45.5f, 34.5f, 1.3f);
 
 	Object* Kwan_tables13 = (Object*)malloc(sizeof(Object));
 	Kwan_tables13->location = f3(843.0f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -5929,8 +5929,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables13 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables13->start = f3(841.0f, 0.0f, 376.0f);
-	Gwangjae_tables13->end = f3(845.0f, 2.0f, 384.0f);
-	setAreaHeight(height2_1, x21, z21, 40.5f, 12.5f, 45.5f, 21.5f, 2.0f);
+	Gwangjae_tables13->end = f3(845.0f, 1.3f, 384.0f);
+	setAreaHeight(height2_1, x21, z21, 40.5f, 12.5f, 45.5f, 21.5f, 1.3f);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -5941,8 +5941,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables14 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables14->start = f3(829.0f, 0.0f, 402.0f);
-	Gwangjae_tables14->end = f3(833.0f, 2.0f, 410.0f);
-	setAreaHeight(height2_1, x21, z21, 28.5f, 38.5f, 33.5f, 47.5f, 2.0f);
+	Gwangjae_tables14->end = f3(833.0f, 1.3f, 410.0f);
+	setAreaHeight(height2_1, x21, z21, 28.5f, 38.5f, 33.5f, 47.5f, 1.3f);
 
 	Object* Kwan_tables15 = (Object*)malloc(sizeof(Object));
 	Kwan_tables15->location = f3(831.0f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -5951,8 +5951,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables15 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables15->start = f3(829.0f, 0.0f, 389.0f);
-	Gwangjae_tables15->end = f3(833.0f, 2.0f, 397.0f);
-	setAreaHeight(height2_1, x21, z21, 28.5f, 25.5f, 33.5f, 34.5f, 2.0f);
+	Gwangjae_tables15->end = f3(833.0f, 1.3f, 397.0f);
+	setAreaHeight(height2_1, x21, z21, 28.5f, 25.5f, 33.5f, 34.5f, 1.3f);
 
 	Object* Kwan_tables16 = (Object*)malloc(sizeof(Object));
 	Kwan_tables16->location = f3(831.0f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -5961,8 +5961,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_tables16 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_tables16->start = f3(829.0f, 0.0f, 376.0f);
-	Gwangjae_tables16->end = f3(833.0f, 2.0f, 384.0f);
-	setAreaHeight(height2_1, x21, z21, 28.5f, 12.5f, 33.5f, 21.5f, 2.0f);
+	Gwangjae_tables16->end = f3(833.0f, 1.3f, 384.0f);
+	setAreaHeight(height2_1, x21, z21, 28.5f, 12.5f, 33.5f, 21.5f, 1.3f);
 
 	///////////////////////////////////////////////////////////////////////////////////
 
@@ -5973,8 +5973,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair1->start = f3(848.0f, 0.0f, 499.5f);
-	Gwangjae_Chair1->end = f3(851.6f, 2.0f, 501.5f);
-	setAreaHeight(height2_1, x21, z21, 48.0f, 136.5f, 52.0f, 138.5f, 2.0f);
+	Gwangjae_Chair1->end = f3(851.6f, 1.3f, 501.5f);
+	setAreaHeight(height2_1, x21, z21, 48.0f, 136.5f, 52.0f, 138.5f, 1.3f);
 
 	Object* Kwan_Chair2 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair2->location = f3(849.8f, 0.0f, 506.5f); // 8 4 (4 8)
@@ -5983,8 +5983,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair2->start = f3(848.0f, 0.0f, 505.5f);
-	Gwangjae_Chair2->end = f3(851.6f, 2.0f, 507.5f);
-	setAreaHeight(height2_1, x21, z21, 48.0f, 142.5f, 52.0f, 144.5f, 2.0f);
+	Gwangjae_Chair2->end = f3(851.6f, 1.3f, 507.5f);
+	setAreaHeight(height2_1, x21, z21, 48.0f, 142.5f, 52.0f, 144.5f, 1.3f);
 
 	Object* Kwan_Chair3 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair3->location = f3(849.8f, 0.0f, 512.5f); // 8 4 (4 8)
@@ -5993,8 +5993,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair3->start = f3(848.0f, 0.0f, 511.5f);
-	Gwangjae_Chair3->end = f3(851.6f, 2.0f, 513.5f);
-	setAreaHeight(height2_1, x21, z21, 48.0f, 148.5f, 52.0f, 150.5f, 2.0f);
+	Gwangjae_Chair3->end = f3(851.6f, 1.3f, 513.5f);
+	setAreaHeight(height2_1, x21, z21, 48.0f, 148.5f, 52.0f, 150.5f, 1.3f);
 
 	Object* Kwan_Chair4 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair4->location = f3(849.8f, 0.0f, 518.5f); // 8 4 (4 8)
@@ -6003,8 +6003,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair4 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair4->start = f3(848.0f, 0.0f, 517.5f);
-	Gwangjae_Chair4->end = f3(851.6f, 2.0f, 519.5f);
-	setAreaHeight(height2_1, x21, z21, 48.0f, 154.5f, 52.0f, 156.5f, 2.0f);
+	Gwangjae_Chair4->end = f3(851.6f, 1.3f, 519.5f);
+	setAreaHeight(height2_1, x21, z21, 48.0f, 154.5f, 52.0f, 156.5f, 1.3f);
 
 	Object* Kwan_Chair5 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair5->location = f3(849.8f, 0.0f, 524.5f); // 8 4 (4 8)
@@ -6013,8 +6013,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair5 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair5->start = f3(848.0f, 0.0f, 523.5f);
-	Gwangjae_Chair5->end = f3(851.6f, 2.0f, 525.5f);
-	setAreaHeight(height2_1, x21, z21, 48.0f, 160.5f, 52.0f, 162.5f, 2.0f);
+	Gwangjae_Chair5->end = f3(851.6f, 1.3f, 525.5f);
+	setAreaHeight(height2_1, x21, z21, 48.0f, 160.5f, 52.0f, 162.5f, 1.3f);
 
 	/////////////////////////////////////////////////////////////////////////////////
 
@@ -6025,8 +6025,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair6 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair6->start = f3(838.0f, 0.0f, 499.5f);
-	Gwangjae_Chair6->end = f3(841.6f, 2.0f, 501.5f);
-	setAreaHeight(height2_1, x21, z21, 38.0f, 136.5f, 42.0f, 138.5f, 2.0f);
+	Gwangjae_Chair6->end = f3(841.6f, 1.3f, 501.5f);
+	setAreaHeight(height2_1, x21, z21, 38.0f, 136.5f, 42.0f, 138.5f, 1.3f);
 
 	Object* Kwan_Chair7 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair7->location = f3(839.8f, 0.0f, 506.5f); // 8 4 (4 8)
@@ -6035,8 +6035,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair7 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair7->start = f3(838.0f, 0.0f, 505.5f);
-	Gwangjae_Chair7->end = f3(841.6f, 2.0f, 507.5f);
-	setAreaHeight(height2_1, x21, z21, 38.0f, 142.5f, 42.0f, 144.5f, 2.0f);
+	Gwangjae_Chair7->end = f3(841.6f, 1.3f, 507.5f);
+	setAreaHeight(height2_1, x21, z21, 38.0f, 142.5f, 42.0f, 144.5f, 1.3f);
 
 	Object* Kwan_Chair8 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair8->location = f3(839.8f, 0.0f, 512.5f); // 8 4 (4 8)
@@ -6045,8 +6045,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair8 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair8->start = f3(838.0f, 0.0f, 511.5f);
-	Gwangjae_Chair8->end = f3(841.6f, 2.0f, 513.5f);
-	setAreaHeight(height2_1, x21, z21, 38.0f, 148.5f, 42.0f, 150.5f, 2.0f);
+	Gwangjae_Chair8->end = f3(841.6f, 1.3f, 513.5f);
+	setAreaHeight(height2_1, x21, z21, 38.0f, 148.5f, 42.0f, 150.5f, 1.3f);
 
 	Object* Kwan_Chair9 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair9->location = f3(839.8f, 0.0f, 518.5f); // 8 4 (4 8)
@@ -6055,8 +6055,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair9 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair9->start = f3(838.0f, 0.0f, 517.5f);
-	Gwangjae_Chair9->end = f3(841.6f, 2.0f, 519.5f);
-	setAreaHeight(height2_1, x21, z21, 38.0f, 154.5f, 42.0f, 156.5f, 2.0f);
+	Gwangjae_Chair9->end = f3(841.6f, 1.3f, 519.5f);
+	setAreaHeight(height2_1, x21, z21, 38.0f, 154.5f, 42.0f, 156.5f, 1.3f);
 
 	Object* Kwan_Chair10 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair10->location = f3(839.8f, 0.0f, 524.5f); // 8 4 (4 8)
@@ -6065,8 +6065,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair10 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair10->start = f3(838.0f, 0.0f, 523.5f);
-	Gwangjae_Chair10->end = f3(841.6f, 2.0f, 525.5f);
-	setAreaHeight(height2_1, x21, z21, 38.0f, 160.5f, 42.0f, 162.5f, 2.0f);
+	Gwangjae_Chair10->end = f3(841.6f, 1.3f, 525.5f);
+	setAreaHeight(height2_1, x21, z21, 38.0f, 160.5f, 42.0f, 162.5f, 1.3f);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -6077,8 +6077,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair11 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair11->start = f3(828.0f, 0.0f, 499.5f);
-	Gwangjae_Chair11->end = f3(831.6f, 2.0f, 501.5f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 136.5f, 32.0f, 138.5f, 2.0f);
+	Gwangjae_Chair11->end = f3(831.6f, 1.3f, 501.5f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 136.5f, 32.0f, 138.5f, 1.3f);
 
 	Object* Kwan_Chair12 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair12->location = f3(829.8f, 0.0f, 506.5f); // 8 4 (4 8)
@@ -6087,8 +6087,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair12 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair12->start = f3(828.0f, 0.0f, 505.5f);
-	Gwangjae_Chair12->end = f3(831.6f, 2.0f, 507.5f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 142.5f, 32.0f, 144.5f, 2.0f);
+	Gwangjae_Chair12->end = f3(831.6f, 1.3f, 507.5f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 142.5f, 32.0f, 144.5f, 1.3f);
 
 	Object* Kwan_Chair13 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair13->location = f3(829.8f, 0.0f, 512.5f); // 8 4 (4 8)
@@ -6097,8 +6097,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair13 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair13->start = f3(828.0f, 0.0f, 511.5f);
-	Gwangjae_Chair13->end = f3(831.6f, 2.0f, 513.5f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 148.5f, 32.0f, 150.5f, 2.0f);
+	Gwangjae_Chair13->end = f3(831.6f, 1.3f, 513.5f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 148.5f, 32.0f, 150.5f, 1.3f);
 
 	Object* Kwan_Chair14 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair14->location = f3(829.8f, 0.0f, 518.5f); // 8 4 (4 8)
@@ -6107,8 +6107,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair14 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair14->start = f3(828.0f, 0.0f, 517.5f);
-	Gwangjae_Chair14->end = f3(831.6f, 2.0f, 519.5f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 154.5f, 32.0f, 156.5f, 2.0f);
+	Gwangjae_Chair14->end = f3(831.6f, 1.3f, 519.5f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 154.5f, 32.0f, 156.5f, 1.3f);
 
 	Object* Kwan_Chair15 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair15->location = f3(829.8f, 0.0f, 524.5f); // 8 4 (4 8)
@@ -6117,8 +6117,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair15 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair15->start = f3(828.0f, 0.0f, 523.5f);
-	Gwangjae_Chair15->end = f3(831.6f, 2.0f, 525.5f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 160.5f, 32.0f, 162.5f, 2.0f);
+	Gwangjae_Chair15->end = f3(831.6f, 1.3f, 525.5f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 160.5f, 32.0f, 162.5f, 1.3f);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -6129,8 +6129,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair16 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair16->start = f3(818.0f, 0.0f, 499.5f);
-	Gwangjae_Chair16->end = f3(821.6f, 2.0f, 501.5f);
-	setAreaHeight(height2_1, x21, z21, 18.0f, 136.5f, 22.0f, 138.5f, 2.0f);
+	Gwangjae_Chair16->end = f3(821.6f, 1.3f, 501.5f);
+	setAreaHeight(height2_1, x21, z21, 18.0f, 136.5f, 22.0f, 138.5f, 1.3f);
 
 	Object* Kwan_Chair17 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair17->location = f3(819.8f, 0.0f, 506.5f); // 8 4 (4 8)
@@ -6139,8 +6139,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair17 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair17->start = f3(818.0f, 0.0f, 505.5f);
-	Gwangjae_Chair17->end = f3(821.6f, 2.0f, 507.5f);
-	setAreaHeight(height2_1, x21, z21, 18.0f, 142.5f, 22.0f, 144.5f, 2.0f);
+	Gwangjae_Chair17->end = f3(821.6f, 1.3f, 507.5f);
+	setAreaHeight(height2_1, x21, z21, 18.0f, 142.5f, 22.0f, 144.5f, 1.3f);
 
 	Object* Kwan_Chair18 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair18->location = f3(819.8f, 0.0f, 512.5f); // 8 4 (4 8)
@@ -6149,8 +6149,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair18 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair18->start = f3(818.0f, 0.0f, 511.5f);
-	Gwangjae_Chair18->end = f3(821.6f, 2.0f, 513.5f);
-	setAreaHeight(height2_1, x21, z21, 18.0f, 148.5f, 22.0f, 150.5f, 2.0f);
+	Gwangjae_Chair18->end = f3(821.6f, 1.3f, 513.5f);
+	setAreaHeight(height2_1, x21, z21, 18.0f, 148.5f, 22.0f, 150.5f, 1.3f);
 
 	Object* Kwan_Chair19 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair19->location = f3(819.8f, 0.0f, 518.5f); // 8 4 (4 8)
@@ -6159,8 +6159,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair19 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair19->start = f3(818.0f, 0.0f, 517.5f);
-	Gwangjae_Chair19->end = f3(821.6f, 2.0f, 519.5f);
-	setAreaHeight(height2_1, x21, z21, 18.0f, 154.5f, 22.0f, 156.5f, 2.0f);
+	Gwangjae_Chair19->end = f3(821.6f, 1.3f, 519.5f);
+	setAreaHeight(height2_1, x21, z21, 18.0f, 154.5f, 22.0f, 156.5f, 1.3f);
 
 	Object* Kwan_Chair20 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair20->location = f3(819.8f, 0.0f, 524.5f); // 8 4 (4 8)
@@ -6169,8 +6169,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair20 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair20->start = f3(818.0f, 0.0f, 523.5f);
-	Gwangjae_Chair20->end = f3(821.6f, 2.0f, 525.5f);
-	setAreaHeight(height2_1, x21, z21, 18.0f, 160.5f, 22.0f, 162.5f, 2.0f);
+	Gwangjae_Chair20->end = f3(821.6f, 1.3f, 525.5f);
+	setAreaHeight(height2_1, x21, z21, 18.0f, 160.5f, 22.0f, 162.5f, 1.3f);
 
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -6181,8 +6181,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair21 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair21->start = f3(828.0f, 0.0f, 464.2f);
-	Gwangjae_Chair21->end = f3(830.0f, 2.0f, 467.8f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 101.5f, 30.0f, 105.0f, 2.0f);
+	Gwangjae_Chair21->end = f3(830.0f, 1.3f, 467.8f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 101.5f, 30.0f, 105.0f, 1.3f);
 
 	Object* Kwan_Chair22 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair22->location = f3(835.0f, 0.0f, 466.0f); // 8 4 (4 8)
@@ -6191,8 +6191,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair22 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair22->start = f3(834.0f, 0.0f, 464.2f);
-	Gwangjae_Chair22->end = f3(836.0f, 2.0f, 467.8f);
-	setAreaHeight(height2_1, x21, z21, 34.0f, 101.5f, 36.0f, 105.0f, 2.0f);
+	Gwangjae_Chair22->end = f3(836.0f, 1.3f, 467.8f);
+	setAreaHeight(height2_1, x21, z21, 34.0f, 101.5f, 36.0f, 105.0f, 1.3f);
 
 	Object* Kwan_Chair23 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair23->location = f3(841.0f, 0.0f, 466.0f); // 8 4 (4 8)
@@ -6201,8 +6201,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair23 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair23->start = f3(840.0f, 0.0f, 464.2f);
-	Gwangjae_Chair23->end = f3(842.0f, 2.0f, 467.8f);
-	setAreaHeight(height2_1, x21, z21, 40.0f, 101.5f, 42.0f, 105.0f, 2.0f);
+	Gwangjae_Chair23->end = f3(842.0f, 1.3f, 467.8f);
+	setAreaHeight(height2_1, x21, z21, 40.0f, 101.5f, 42.0f, 105.0f, 1.3f);
 
 	Object* Kwan_Chair24 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair24->location = f3(847.0f, 0.0f, 466.0f); // 8 4 (4 8)
@@ -6211,8 +6211,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair24 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair24->start = f3(846.0f, 0.0f, 464.2f);
-	Gwangjae_Chair24->end = f3(848.0f, 2.0f, 467.8f);
-	setAreaHeight(height2_1, x21, z21, 46.0f, 101.5f, 48.0f, 105.0f, 2.0f);
+	Gwangjae_Chair24->end = f3(848.0f, 1.3f, 467.8f);
+	setAreaHeight(height2_1, x21, z21, 46.0f, 101.5f, 48.0f, 105.0f, 1.3f);
 
 	Object* Kwan_Chair25 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair25->location = f3(853.0f, 0.0f, 466.0f); // 8 4 (4 8)
@@ -6221,8 +6221,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair25 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair25->start = f3(852.0f, 0.0f, 464.2f);
-	Gwangjae_Chair25->end = f3(854.0f, 2.0f, 467.8f);
-	setAreaHeight(height2_1, x21, z21, 52.0f, 101.5f, 54.0f, 105.0f, 2.0f);
+	Gwangjae_Chair25->end = f3(854.0f, 1.3f, 467.8f);
+	setAreaHeight(height2_1, x21, z21, 52.0f, 101.5f, 54.0f, 105.0f, 1.3f);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -6233,8 +6233,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair26 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair26->start = f3(828.0f, 0.0f, 433.0f);
-	Gwangjae_Chair26->end = f3(830.0f, 2.0f, 436.6f);
-	setAreaHeight(height2_1, x21, z21, 28.0f, 70.0f, 30.0f, 74.0f, 2.0f);
+	Gwangjae_Chair26->end = f3(830.0f, 1.3f, 436.6f);
+	setAreaHeight(height2_1, x21, z21, 28.0f, 70.0f, 30.0f, 74.0f, 1.3f);
 
 	Object* Kwan_Chair27 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair27->location = f3(835.0f, 0.0f, 434.8f); // 8 4 (4 8)
@@ -6243,8 +6243,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair27 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair27->start = f3(834.0f, 0.0f, 433.0f);
-	Gwangjae_Chair27->end = f3(836.0f, 2.0f, 436.6f);
-	setAreaHeight(height2_1, x21, z21, 34.0f, 70.0f, 36.0f, 74.0f, 2.0f);
+	Gwangjae_Chair27->end = f3(836.0f, 1.3f, 436.6f);
+	setAreaHeight(height2_1, x21, z21, 34.0f, 70.0f, 36.0f, 74.0f, 1.3f);
 
 	Object* Kwan_Chair28 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair28->location = f3(841.0f, 0.0f, 434.8f); // 8 4 (4 8)
@@ -6253,8 +6253,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair28 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair28->start = f3(840.0f, 0.0f, 433.0f);
-	Gwangjae_Chair28->end = f3(842.0f, 2.0f, 436.6f);
-	setAreaHeight(height2_1, x21, z21, 40.0f, 70.0f, 42.0f, 74.0f, 2.0f);
+	Gwangjae_Chair28->end = f3(842.0f, 1.3f, 436.6f);
+	setAreaHeight(height2_1, x21, z21, 40.0f, 70.0f, 42.0f, 74.0f, 1.3f);
 
 	Object* Kwan_Chair29 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair29->location = f3(847.0f, 0.0f, 434.8f); // 8 4 (4 8)
@@ -6263,8 +6263,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair29 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair29->start = f3(846.0f, 0.0f, 433.0f);
-	Gwangjae_Chair29->end = f3(848.0f, 2.0f, 436.6f);
-	setAreaHeight(height2_1, x21, z21, 46.0f, 70.0f, 48.0f, 74.0f, 2.0f);
+	Gwangjae_Chair29->end = f3(848.0f, 1.3f, 436.6f);
+	setAreaHeight(height2_1, x21, z21, 46.0f, 70.0f, 48.0f, 74.0f, 1.3f);
 
 	Object* Kwan_Chair30 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair30->location = f3(853.0f, 0.0f, 434.8f); // 8 4 (4 8)
@@ -6273,8 +6273,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair30 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair30->start = f3(852.0f, 0.0f, 433.0f);
-	Gwangjae_Chair30->end = f3(854.0f, 2.0f, 436.6f);
-	setAreaHeight(height2_1, x21, z21, 52.0f, 70.0f, 54.0f, 74.0f, 2.0f);
+	Gwangjae_Chair30->end = f3(854.0f, 1.3f, 436.6f);
+	setAreaHeight(height2_1, x21, z21, 52.0f, 70.0f, 54.0f, 74.0f, 1.3f);
 
 	///////////////////////////////////////////////////////////////////////////////
 
@@ -6285,8 +6285,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair31 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair31->start = f3(860.8f, 0.0f, 440.5f);
-	Gwangjae_Chair31->end = f3(864.4f, 2.0f, 442.5f);
-	setAreaHeight(height2_1, x21, z21, 61.0f, 77.5f, 64.5f, 79.5f, 2.0f);
+	Gwangjae_Chair31->end = f3(864.4f, 1.3f, 442.5f);
+	setAreaHeight(height2_1, x21, z21, 61.0f, 77.5f, 64.5f, 79.5f, 1.3f);
 
 	Object* Kwan_Chair32 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair32->location = f3(862.6f, 0.0f, 447.5f); // 8 4 (4 8)
@@ -6295,8 +6295,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair32 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair32->start = f3(860.8f, 0.0f, 446.5f);
-	Gwangjae_Chair32->end = f3(864.4f, 2.0f, 448.5f);
-	setAreaHeight(height2_1, x21, z21, 61.0f, 83.5f, 64.5f, 85.5f, 2.0f);
+	Gwangjae_Chair32->end = f3(864.4f, 1.3f, 448.5f);
+	setAreaHeight(height2_1, x21, z21, 61.0f, 83.5f, 64.5f, 85.5f, 1.3f);
 
 	Object* Kwan_Chair33 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair33->location = f3(862.6f, 0.0f, 453.5f); // 8 4 (4 8)
@@ -6305,8 +6305,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair33 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair33->start = f3(860.8f, 0.0f, 452.5f);
-	Gwangjae_Chair33->end = f3(864.4f, 2.0f, 454.5f);
-	setAreaHeight(height2_1, x21, z21, 61.0f, 89.5f, 64.5f, 91.5f, 2.0f);
+	Gwangjae_Chair33->end = f3(864.4f, 1.3f, 454.5f);
+	setAreaHeight(height2_1, x21, z21, 61.0f, 89.5f, 64.5f, 91.5f, 1.3f);
 
 	Object* Kwan_Chair34 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair34->location = f3(862.6f, 0.0f, 459.5f); // 8 4 (4 8)
@@ -6315,8 +6315,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair34 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair34->start = f3(860.8f, 0.0f, 458.5f);
-	Gwangjae_Chair34->end = f3(864.4f, 2.0f, 460.5f);
-	setAreaHeight(height2_1, x21, z21, 61.0f, 95.5f, 64.5f, 97.5f, 2.0f);
+	Gwangjae_Chair34->end = f3(864.4f, 1.3f, 460.5f);
+	setAreaHeight(height2_1, x21, z21, 61.0f, 95.5f, 64.5f, 97.5f, 1.3f);
 
 	Object* Kwan_Chair35 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair35->location = f3(862.6f, 0.0f, 465.5f); // 8 4 (4 8)
@@ -6325,8 +6325,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair35 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair35->start = f3(860.8f, 0.0f, 464.5f);
-	Gwangjae_Chair35->end = f3(864.4f, 2.0f, 466.5f);
-	setAreaHeight(height2_1, x21, z21, 61.0f, 101.5f, 64.5f, 103.5f, 2.0f);
+	Gwangjae_Chair35->end = f3(864.4f, 1.3f, 466.5f);
+	setAreaHeight(height2_1, x21, z21, 61.0f, 101.5f, 64.5f, 103.5f, 1.3f);
 
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -6337,8 +6337,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair36 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair36->start = f3(849.8f, 0.0f, 405.0f);
-	Gwangjae_Chair36->end = f3(853.4f, 2.0f, 407.0f);
-	setAreaHeight(height2_1, x21, z21, 50.0f, 42.0f, 53.5f, 44.0f, 2.0f);
+	Gwangjae_Chair36->end = f3(853.4f, 1.3f, 407.0f);
+	setAreaHeight(height2_1, x21, z21, 50.0f, 42.0f, 53.5f, 44.0f, 1.3f);
 
 	Object* Kwan_Chair37 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair37->location = f3(851.6f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -6347,8 +6347,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair37 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair37->start = f3(849.8f, 0.0f, 392.0f);
-	Gwangjae_Chair37->end = f3(853.4f, 2.0f, 394.0f);
-	setAreaHeight(height2_1, x21, z21, 50.0f, 29.0f, 53.5f, 31.0f, 2.0f);
+	Gwangjae_Chair37->end = f3(853.4f, 1.3f, 394.0f);
+	setAreaHeight(height2_1, x21, z21, 50.0f, 29.0f, 53.5f, 31.0f, 1.3f);
 
 	Object* Kwan_Chair38 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair38->location = f3(851.6f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -6357,8 +6357,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair38 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair38->start = f3(849.8f, 0.0f, 379.0f);
-	Gwangjae_Chair38->end = f3(853.4f, 2.0f, 381.0f);
-	setAreaHeight(height2_1, x21, z21, 50.0f, 16.0f, 53.5f, 18.0f, 2.0f);
+	Gwangjae_Chair38->end = f3(853.4f, 1.3f, 381.0f);
+	setAreaHeight(height2_1, x21, z21, 50.0f, 16.0f, 53.5f, 18.0f, 1.3f);
 
 	/////////////////////////////////////////////////////////////////////////
 
@@ -6369,8 +6369,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair39 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair39->start = f3(836.8f, 0.0f, 405.0f);
-	Gwangjae_Chair39->end = f3(840.4f, 2.0f, 407.0f);
-	setAreaHeight(height2_1, x21, z21, 37.0f, 42.0f, 40.5f, 44.0f, 2.0f);
+	Gwangjae_Chair39->end = f3(840.4f, 1.3f, 407.0f);
+	setAreaHeight(height2_1, x21, z21, 37.0f, 42.0f, 40.5f, 44.0f, 1.3f);
 
 	Object* Kwan_Chair40 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair40->location = f3(838.6f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -6379,8 +6379,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair40 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair40->start = f3(836.8f, 0.0f, 392.0f);
-	Gwangjae_Chair40->end = f3(840.4f, 2.0f, 394.0f);
-	setAreaHeight(height2_1, x21, z21, 37.0f, 29.0f, 40.5f, 31.0f, 2.0f);
+	Gwangjae_Chair40->end = f3(840.4f, 1.3f, 394.0f);
+	setAreaHeight(height2_1, x21, z21, 37.0f, 29.0f, 40.5f, 31.0f, 1.3f);
 
 	Object* Kwan_Chair41 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair41->location = f3(838.6f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -6389,8 +6389,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair41 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair41->start = f3(836.8f, 0.0f, 379.0f);
-	Gwangjae_Chair41->end = f3(840.4f, 2.0f, 381.0f);
-	setAreaHeight(height2_1, x21, z21, 37.0f, 16.0f, 40.5f, 18.0f, 2.0f);
+	Gwangjae_Chair41->end = f3(840.4f, 1.3f, 381.0f);
+	setAreaHeight(height2_1, x21, z21, 37.0f, 16.0f, 40.5f, 18.0f, 1.3f);
 
 	////////////////////////////////////////////////////////////////////////////////////
 
@@ -6401,8 +6401,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair42 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair42->start = f3(826.8f, 0.0f, 405.0f);
-	Gwangjae_Chair42->end = f3(830.4f, 2.0f, 407.0f);
-	setAreaHeight(height2_1, x21, z21, 27.0f, 42.0f, 30.5f, 44.0f, 2.0f);
+	Gwangjae_Chair42->end = f3(830.4f, 1.3f, 407.0f);
+	setAreaHeight(height2_1, x21, z21, 27.0f, 42.0f, 30.5f, 44.0f, 1.3f);
 
 	Object* Kwan_Chair43 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair43->location = f3(828.6f, 0.0f, 393.0f); // 8 4 (4 8)
@@ -6411,8 +6411,8 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair43 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair43->start = f3(826.8f, 0.0f, 392.0f);
-	Gwangjae_Chair43->end = f3(830.4f, 2.0f, 394.0f);
-	setAreaHeight(height2_1, x21, z21, 27.0f, 29.0f, 30.5f, 31.0f, 2.0f);
+	Gwangjae_Chair43->end = f3(830.4f, 1.3f, 394.0f);
+	setAreaHeight(height2_1, x21, z21, 27.0f, 29.0f, 30.5f, 31.0f, 1.3f);
 
 	Object* Kwan_Chair44 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair44->location = f3(828.6f, 0.0f, 380.0f); // 8 4 (4 8)
@@ -6421,70 +6421,70 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Gwangjae_Chair44 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair44->start = f3(826.8f, 0.0f, 379.0f);
-	Gwangjae_Chair44->end = f3(830.4f, 2.0f, 381.0f);
-	setAreaHeight(height2_1, x21, z21, 27.0f, 16.0f, 30.5f, 18.0f, 2.0f);
+	Gwangjae_Chair44->end = f3(830.4f, 1.3f, 381.0f);
+	setAreaHeight(height2_1, x21, z21, 27.0f, 16.0f, 30.5f, 18.0f, 1.3f);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	Object* Receps_gar1 = (Object*)malloc(sizeof(Object));
-	Receps_gar1->location = f3(843.75f, 1.5f, 534.5f);
+	Receps_gar1->location = f3(833.75f, 0.0f, 532.0f);
 	Receps_gar1->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar1->type = Recep_garomak;
 
 	BoundingBox* Receps_garo1 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo1->start = f3(833.75f, 0.0f, 533.0f);
-	Receps_garo1->end = f3(853.75f, 3.0f, 536.0f);
-	setAreaHeight(height2_1, x21, z21, 33.5f, 169.5f, 54.5f, 173.5f, 3.0f);
+	Receps_garo1->start = f3(833.75f, 0.0f, 532.0f);
+	Receps_garo1->end = f3(853.75f, 3.0f, 533.0f);
+	setAreaHeight(height2_1, x21, z21, 33.5f, 168.5f, 54.5f, 170.5f, 3.0f);
 
 	Object* Receps_gar2 = (Object*)malloc(sizeof(Object));
-	Receps_gar2->location = f3(843.75f, 1.5f, 488.5f);
+	Receps_gar2->location = f3(833.75f, 0.0f, 490.0f);
 	Receps_gar2->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar2->type = Recep_garomak;
 
 	BoundingBox* Receps_garo2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo2->start = f3(833.75f, 0.0f, 487.0f);
-	Receps_garo2->end = f3(853.75f, 3.0f, 490.0f); // 44 더하기
-	setAreaHeight(height2_1, x21, z21, 33.5f, 123.5f, 54.5f, 127.5f, 3.0f);
+	Receps_garo2->start = f3(833.75f, 0.0f, 490.0f);
+	Receps_garo2->end = f3(853.75f, 3.0f, 491.0f); // 44 더하기
+	setAreaHeight(height2_1, x21, z21, 33.5f, 126.5f, 54.5f, 128.5f, 3.0f);
 
 	Object* Receps_gar3 = (Object*)malloc(sizeof(Object));
-	Receps_gar3->location = f3(843.75f, 1.5f, 473.5f);
+	Receps_gar3->location = f3(833.75f, 0.0f, 471.0f);
 	Receps_gar3->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar3->type = Recep_garomak;
 
 	BoundingBox* Receps_garo3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo3->start = f3(833.75f, 0.0f, 472.0f);
-	Receps_garo3->end = f3(853.75f, 3.0f, 475.0f);
-	setAreaHeight(height2_1, x21, z21, 33.5f, 108.5f, 54.5f, 112.5f, 3.0f);
+	Receps_garo3->start = f3(833.75f, 0.0f, 471.0f);
+	Receps_garo3->end = f3(853.75f, 3.0f, 472.0f);
+	setAreaHeight(height2_1, x21, z21, 33.5f, 107.5f, 54.5f, 109.5f, 3.0f);
 
 	Object* Receps_gar4 = (Object*)malloc(sizeof(Object));
-	Receps_gar4->location = f3(843.75f, 1.5f, 430.5f);
+	Receps_gar4->location = f3(833.75f, 0.0f, 432.0f);
 	Receps_gar4->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar4->type = Recep_garomak;
 
 	BoundingBox* Receps_garo4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo4->start = f3(833.75f, 0.0f, 429.0f);
-	Receps_garo4->end = f3(853.75f, 3.0f, 432.0f);
-	setAreaHeight(height2_1, x21, z21, 33.5f, 65.5f, 54.5f, 69.5f, 3.0f);
+	Receps_garo4->start = f3(833.75f, 0.0f, 432.0f);
+	Receps_garo4->end = f3(853.75f, 3.0f, 433.0f);
+	setAreaHeight(height2_1, x21, z21, 33.5f, 68.5f, 54.5f, 70.5f, 3.0f);
 
 	Object* Receps_gar5 = (Object*)malloc(sizeof(Object));
-	Receps_gar5->location = f3(843.75f, 1.5f, 415.5f);
+	Receps_gar5->location = f3(833.75f, 0.0f, 413.0f);
 	Receps_gar5->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar5->type = Recep_garomak;
 
 	BoundingBox* Receps_garo5 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo5->start = f3(833.75f, 0.0f, 414.0f);
-	Receps_garo5->end = f3(853.75f, 3.0f, 417.0f);
-	setAreaHeight(height2_1, x21, z21, 33.5f, 50.5f, 54.5f, 54.5f, 3.0f);
+	Receps_garo5->start = f3(833.75f, 0.0f, 413.0f);
+	Receps_garo5->end = f3(853.75f, 3.0f, 414.0f);
+	setAreaHeight(height2_1, x21, z21, 33.5f, 49.5f, 54.5f, 51.5f, 3.0f);
 
 	Object* Receps_gar6 = (Object*)malloc(sizeof(Object));
-	Receps_gar6->location = f3(843.75f, 1.5f, 371.5f);
+	Receps_gar6->location = f3(833.75f, 0.0f, 373.0f);
 	Receps_gar6->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_gar6->type = Recep_garomak;
 
 	BoundingBox* Receps_garo6 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_garo6->start = f3(833.75f, 0.0f, 370.0f);
-	Receps_garo6->end = f3(853.75f, 3.0f, 373.0f);
-	setAreaHeight(height2_1, x21, z21, 33.5f, 6.5f, 54.5f, 10.5f, 3.0f);
+	Receps_garo6->start = f3(833.75f, 0.0f, 373.0f);
+	Receps_garo6->end = f3(853.75f, 3.0f, 374.0f);
+	setAreaHeight(height2_1, x21, z21, 33.5f, 9.5f, 54.5f, 11.5f, 3.0f);
 
 	// 540 482
 	Object* Kwan_Cabin = (Object*)malloc(sizeof(Object));
@@ -7508,96 +7508,96 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	Object* Receps_ipgu = (Object*)malloc(sizeof(Object));
-	Receps_ipgu->location = f3(874.0f, 7.5f, 87.5f);
+	Receps_ipgu->location = f3(874.0f, 8.5f, 87.5f);
 	Receps_ipgu->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu->type = Recep_wall3;
 
 	BoundingBox* Receps_iping = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping->start = f3(873.0f, 2.5f, 75.0f);
+	Receps_iping->start = f3(873.0f, 4.5f, 75.0f);
 	Receps_iping->end = f3(875.0f, 12.5f, 100.0f);
 	setAreaHeight(height2_2, x22, z22, 72.5f, 15.0f, 75.5f, 40.0f, 12.5f);
 
 	Object* Receps_ipgu2 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu2->location = f3(874.0f, 7.5f, 112.5f);
+	Receps_ipgu2->location = f3(874.0f, 8.5f, 112.5f);
 	Receps_ipgu2->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu2->type = Recep_wall3;
 
 	BoundingBox* Receps_iping2 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping2->start = f3(873.0f, 2.5f, 100.0f);
+	Receps_iping2->start = f3(873.0f, 4.5f, 100.0f);
 	Receps_iping2->end = f3(875.0f, 12.5f, 125.0f);
-	setAreaHeight(height2_2, x22, z22, 72.5f, 40.0f, 75.5f, 65.0f, 12.5f);
+	setAreaHeight(height2_2, x22, z22, 72.5f, 40.0f, 75.5f, 65.0f, 0.0f);
 
 	Object* Receps_ipgu3 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu3->location = f3(874.0f, 7.5f, 137.5f);
+	Receps_ipgu3->location = f3(874.0f, 8.5f, 137.5f);
 	Receps_ipgu3->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu3->type = Recep_wall3;
 
 	BoundingBox* Receps_iping3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping3->start = f3(873.0f, 2.5f, 125.0f);
+	Receps_iping3->start = f3(873.0f, 4.5f, 125.0f);
 	Receps_iping3->end = f3(875.0f, 12.5f, 150.0f);
 	setAreaHeight(height2_2, x22, z22, 72.5f, 65.0f, 75.5f, 90.0f, 12.5f);
 
 	Object* Receps_ipgu4 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu4->location = f3(874.0f, 7.5f, 162.5f);
+	Receps_ipgu4->location = f3(874.0f, 8.5f, 162.5f);
 	Receps_ipgu4->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu4->type = Recep_wall3;
 
 	BoundingBox* Receps_iping4 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping4->start = f3(873.0f, 2.5f, 150.0f);
+	Receps_iping4->start = f3(873.0f, 4.5f, 150.0f);
 	Receps_iping4->end = f3(875.0f, 12.5f, 175.0f);
 	setAreaHeight(height2_2, x22, z22, 72.5f, 90.0f, 75.5f, 115.0f, 12.5f);
 
 	Object* Receps_ipgu5 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu5->location = f3(874.0f, 7.5f, 187.5f);
+	Receps_ipgu5->location = f3(874.0f, 8.5f, 187.5f);
 	Receps_ipgu5->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu5->type = Recep_wall3;
 
 	BoundingBox* Receps_iping5 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping5->start = f3(873.0f, 2.5f, 175.0f);
+	Receps_iping5->start = f3(873.0f, 4.5f, 175.0f);
 	Receps_iping5->end = f3(875.0f, 12.5f, 200.0f);
 	setAreaHeight(height2_2, x22, z22, 72.5f, 115.0f, 75.5f, 140.0f, 12.5f);
 
 	Object* Receps_ipgu6 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu6->location = f3(874.0f, 7.5f, 212.5f);
+	Receps_ipgu6->location = f3(874.0f, 8.5f, 212.5f);
 	Receps_ipgu6->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu6->type = Recep_wall3;
 
 	BoundingBox* Receps_iping6 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping6->start = f3(873.0f, 2.5f, 200.0f);
+	Receps_iping6->start = f3(873.0f, 4.5f, 200.0f);
 	Receps_iping6->end = f3(875.0f, 12.5f, 225.0f);
 	setAreaHeight(height2_2, x22, z22, 72.5f, 140.0f, 75.5f, 165.0f, 12.5f);
 
 	////////////////////////////////////////////////////////////////////////////////////
 
 	Object* Receps_ipgu4_l = (Object*)malloc(sizeof(Object));
-	Receps_ipgu4_l->location = f3(874.0f, 1.25f, 162.5f);
+	Receps_ipgu4_l->location = f3(874.0f, 2.25f, 162.5f);
 	Receps_ipgu4_l->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu4_l->type = Recep_wall5;
 
 	BoundingBox* Receps_iping4_l = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping4_l->start = f3(873.0f, 0.0f, 150.0f);
-	Receps_iping4_l->end = f3(875.0f, 2.5f, 175.0f);
-	setAreaHeight(height2_2, x22, z22, 72.5f, 90.0f, 75.5f, 115.0f, 2.5f);
+	Receps_iping4_l->end = f3(875.0f, 4.5f, 175.0f);
+	setAreaHeight(height2_2, x22, z22, 72.5f, 90.0f, 75.5f, 115.0f, 4.5f);
 
 	Object* Receps_ipgu5_l = (Object*)malloc(sizeof(Object));
-	Receps_ipgu5_l->location = f3(874.0f, 1.25f, 187.5f);
+	Receps_ipgu5_l->location = f3(874.0f, 2.25f, 187.5f);
 	Receps_ipgu5_l->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu5_l->type = Recep_wall5;
 
 	BoundingBox* Receps_iping5_l = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping5_l->start = f3(873.0f, 0.0f, 175.0f);
-	Receps_iping5_l->end = f3(875.0f, 2.5f, 200.0f);
-	setAreaHeight(height2_2, x22, z22, 72.5f, 115.0f, 75.5f, 140.0f, 2.5f);
+	Receps_iping5_l->end = f3(875.0f, 4.5f, 200.0f);
+	setAreaHeight(height2_2, x22, z22, 72.5f, 115.0f, 75.5f, 140.0f, 4.5f);
 
 	Object* Receps_ipgu6_l = (Object*)malloc(sizeof(Object));
-	Receps_ipgu6_l->location = f3(874.0f, 1.25f, 212.5f);
+	Receps_ipgu6_l->location = f3(874.0f, 2.25f, 212.5f);
 	Receps_ipgu6_l->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu6_l->type = Recep_wall5;
 
 	BoundingBox* Receps_iping6_l = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping6_l->start = f3(873.0f, 0.0f, 200.0f);
-	Receps_iping6_l->end = f3(875.0f, 2.5f, 225.0f);
-	setAreaHeight(height2_2, x22, z22, 72.5f,140.0f, 75.5f, 165.0f, 2.5f);
+	Receps_iping6_l->end = f3(875.0f, 4.5f, 225.0f);
+	setAreaHeight(height2_2, x22, z22, 72.5f,140.0f, 75.5f, 165.0f, 4.5f);
 
 	////////////////////////////////////////////////////////////////////////////////////
 
@@ -7791,44 +7791,44 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	///////////////////////////////////////////////////////////////////////////////////
 
 	Object* Receps_ipgu_1 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu_1->location = f3(874.0f, 1.25f, 84.0625f);
+	Receps_ipgu_1->location = f3(874.0f, 2.25f, 84.0625f);
 	Receps_ipgu_1->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu_1->type = Recep_wall4;
 
 	BoundingBox* Receps_iping_1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping_1->start = f3(873.0f, 0.0f, 75.0f);
-	Receps_iping_1->end = f3(875.0f, 2.5f, 93.125f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 15.0f, 75.0f, 33.5f, 2.5f);
+	Receps_iping_1->end = f3(875.0f, 4.5f, 93.125f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 15.0f, 75.0f, 33.5f, 4.5f); // 입구쪽
 
 	Object* Receps_ipgu_2 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu_2->location = f3(874.0f, 1.25f, 102.1875f);
+	Receps_ipgu_2->location = f3(874.0f, 2.25f, 101.6875f);
 	Receps_ipgu_2->rotation = f3(0.0f, 0.0f, 0.0f);
-	Receps_ipgu_2->type = Recep_wall4;
+	Receps_ipgu_2->type = Recep_wall4_F;
 
 	BoundingBox* Receps_iping_2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping_2->start = f3(873.0f, 0.0f, 93.125f);
-	Receps_iping_2->end = f3(875.0f, 2.5f, 111.25f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 33.5f, 75.0f, 51.5f, 2.5f);
+	Receps_iping_2->end = f3(875.0f, 4.5f, 110.25f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 33.5f, 75.0f, 50.5f, 4.5f);
 
 	Object* Receps_ipgu_3 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu_3->location = f3(874.0f, 1.25f, 122.8125f);
+	Receps_ipgu_3->location = f3(874.0f, 2.25f, 123.3125f);
 	Receps_ipgu_3->rotation = f3(0.0f, 0.0f, 0.0f);
-	Receps_ipgu_3->type = Recep_wall4;
+	Receps_ipgu_3->type = Recep_wall4_F;
 
 	BoundingBox* Receps_iping_3 = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_iping_3->start = f3(873.0f, 0.0f, 113.75f);
-	Receps_iping_3->end = f3(875.0f, 2.5f, 131.875f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 53.5f, 75.0f, 72.0f, 2.5f);
+	Receps_iping_3->start = f3(873.0f, 0.0f, 114.75f);
+	Receps_iping_3->end = f3(875.0f, 4.5f, 131.875f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 54.5f, 75.0f, 72.0f, 4.5f);
 
 	Object* Receps_ipgu_4 = (Object*)malloc(sizeof(Object));
-	Receps_ipgu_4->location = f3(874.0f, 1.25f, 140.9375f);
+	Receps_ipgu_4->location = f3(874.0f, 2.25f, 140.9375f);
 	Receps_ipgu_4->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_ipgu_4->type = Recep_wall4;
 
 	BoundingBox* Receps_iping_4 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_iping_4->start = f3(873.0f, 0.0f, 131.875f);
-	Receps_iping_4->end = f3(875.0f, 2.5f, 150.0f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 72.0f, 75.0f, 90.0f, 2.5f);
+	Receps_iping_4->end = f3(875.0f, 4.5f, 150.0f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 72.0f, 75.0f, 90.0f, 4.5f);
 
 	////////////////////////////////////////////////////////////////////////
 
@@ -9103,8 +9103,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_table1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_table1->start = f3(828.0f, 0.0f, 206.0f);
-	Receps_table1->end = f3(840.0f, 1.8f, 212.0f);
-	setAreaHeight(height2_2, x22, z22, 27.5f, 145.5f, 40.0f, 152.5f, 1.8f);
+	Receps_table1->end = f3(840.0f, 1.4f, 212.0f);
+	setAreaHeight(height2_2, x22, z22, 27.5f, 145.5f, 40.0f, 152.5f, 1.4f);
 
 	Object* Receps_dables2 = (Object*)malloc(sizeof(Object));
 	Receps_dables2->location = f3(860.0f, 0.00f, 209.0f);
@@ -9113,8 +9113,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_table2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_table2->start = f3(854.0f, 0.0f, 206.0f);
-	Receps_table2->end = f3(866.0f, 1.8f, 212.0f);
-	setAreaHeight(height2_2, x22, z22, 53.5f, 145.5f, 66.5f, 152.5f, 1.8f);
+	Receps_table2->end = f3(866.0f, 1.4f, 212.0f);
+	setAreaHeight(height2_2, x22, z22, 53.5f, 145.5f, 66.5f, 152.5f, 1.4f);
 
 	Object* Receps_Cou1 = (Object*)malloc(sizeof(Object));
 	Receps_Cou1->location = f3(857.0f, 0.00f, 214.0f);
@@ -9123,8 +9123,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch1->start = f3(855.2f, 0.0f, 212.2f);
-	Receps_Couch1->end = f3(858.8f, 1.8f, 215.8f);
-	setAreaHeight(height2_2, x22, z22, 55.5f, 152.5f, 59.0f, 156.0f, 1.8f);
+	Receps_Couch1->end = f3(858.8f, 1.4f, 215.8f);
+	setAreaHeight(height2_2, x22, z22, 55.5f, 152.5f, 59.0f, 156.0f, 1.4f);
 
 	Object* Receps_Cou1_1 = (Object*)malloc(sizeof(Object));
 	Receps_Cou1_1->location = f3(861.20f, 0.00f, 214.0f);
@@ -9133,8 +9133,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch1_1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch1_1->start = f3(859.4f, 0.0f, 212.2f);
-	Receps_Couch1_1->end = f3(863.0f, 1.8f, 215.8f);
-	setAreaHeight(height2_2, x22, z22, 59.5f, 152.5f, 63.0f, 156.0f, 1.8f);
+	Receps_Couch1_1->end = f3(863.0f, 1.4f, 215.8f);
+	setAreaHeight(height2_2, x22, z22, 59.5f, 152.5f, 63.0f, 156.0f, 1.4f);
 
 	Object* Receps_Cou2 = (Object*)malloc(sizeof(Object));
 	Receps_Cou2->location = f3(857.0f, 0.00f, 204.0f);
@@ -9143,8 +9143,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch2->start = f3(855.2f, 0.0f, 202.2f);
-	Receps_Couch2->end = f3(858.8f, 1.8f, 205.8f);
-	setAreaHeight(height2_2, x22, z22, 55.5f, 142.5f, 59.0f, 146.0f, 1.8f);
+	Receps_Couch2->end = f3(858.8f, 1.4f, 205.8f);
+	setAreaHeight(height2_2, x22, z22, 55.5f, 142.5f, 59.0f, 146.0f, 1.4f);
 
 	Object* Receps_Cou2_1 = (Object*)malloc(sizeof(Object));
 	Receps_Cou2_1->location = f3(861.2f, 0.00f, 204.0f);
@@ -9153,8 +9153,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch2_1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch2_1->start = f3(859.4f, 0.0f, 202.2f);
-	Receps_Couch2_1->end = f3(863.0f, 1.8f, 205.8f);
-	setAreaHeight(height2_2, x22, z22, 59.5f, 142.5f, 63.0f, 146.0f, 1.8f);
+	Receps_Couch2_1->end = f3(863.0f, 1.4f, 205.8f);
+	setAreaHeight(height2_2, x22, z22, 59.5f, 142.5f, 63.0f, 146.0f, 1.4f);
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -9165,8 +9165,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch3->start = f3(829.2f, 0.0f, 212.2f);
-	Receps_Couch3->end = f3(832.8f, 1.8f, 215.8f);
-	setAreaHeight(height2_2, x22, z22, 29.5f, 152.5f, 33.0f, 156.0f, 1.8f);
+	Receps_Couch3->end = f3(832.8f, 1.4f, 215.8f);
+	setAreaHeight(height2_2, x22, z22, 29.5f, 152.5f, 33.0f, 156.0f, 1.4f);
 
 	Object* Receps_Cou3_1 = (Object*)malloc(sizeof(Object));
 	Receps_Cou3_1->location = f3(837.0f, 0.00f, 214.0f);
@@ -9175,8 +9175,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch3_1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch3_1->start = f3(835.2f, 0.0f, 212.2f);
-	Receps_Couch3_1->end = f3(838.8f, 1.8f, 215.8f);
-	setAreaHeight(height2_2, x22, z22, 35.5f, 152.5f, 39.0f, 156.0f, 1.8f);
+	Receps_Couch3_1->end = f3(838.8f, 1.4f, 215.8f);
+	setAreaHeight(height2_2, x22, z22, 35.5f, 152.5f, 39.0f, 156.0f, 1.4f);
 
 	Object* Receps_Cou4 = (Object*)malloc(sizeof(Object));
 	Receps_Cou4->location = f3(831.0f, 0.00f, 204.0f);
@@ -9185,8 +9185,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch4 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch4->start = f3(829.2f, 0.0f, 202.2f);
-	Receps_Couch4->end = f3(832.8f, 1.8f, 205.8f);
-	setAreaHeight(height2_2, x22, z22, 29.5f, 142.5f, 33.0f, 146.0f, 1.8f);
+	Receps_Couch4->end = f3(832.8f, 1.4f, 205.8f);
+	setAreaHeight(height2_2, x22, z22, 29.5f, 142.5f, 33.0f, 146.0f, 1.4f);
 
 	Object* Receps_Cou4_1 = (Object*)malloc(sizeof(Object));
 	Receps_Cou4_1->location = f3(837.0f, 0.00f, 204.0f);
@@ -9195,8 +9195,8 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	BoundingBox* Receps_Couch4_1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_Couch4_1->start = f3(835.2f, 0.0f, 202.2f);
-	Receps_Couch4_1->end = f3(837.0f, 1.8f, 205.8f);
-	setAreaHeight(height2_2, x22, z22, 35.5f, 142.5f, 39.0f, 146.0f, 1.8f);
+	Receps_Couch4_1->end = f3(837.0f, 1.4f, 205.8f);
+	setAreaHeight(height2_2, x22, z22, 35.5f, 142.5f, 39.0f, 146.0f, 1.4f);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -9320,34 +9320,34 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	//////////////////////////////////////////////////////////////////////////////
 
 	Object* Receps_Airs1 = (Object*)malloc(sizeof(Object));
-	Receps_Airs1->location = f3(866.0f, 0.0f, 175.0f);
-	Receps_Airs1->rotation = f3(0.0f, 180.0f, 0.0f);
+	Receps_Airs1->location = f3(862.0f, 0.0f, 173.5f);
+	Receps_Airs1->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_Airs1->type = Recep_Air;
 
 	BoundingBox* Receps_air1 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air1->start = f3(862.0f, 0.0f, 173.5f);
-	Receps_air1->end = f3(870.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 61.5f, 111.0f, 70.5f, 119.0f, 2.2f);
+	Receps_air1->end = f3(870.00f, 15.0f, 181.5f);
+	setAreaHeight(height2_2, x22, z22, 61.5f, 113.0f, 70.5f, 122.0f, 15.0f);
 
 	Object* Receps_Airs2 = (Object*)malloc(sizeof(Object));
-	Receps_Airs2->location = f3(858.0f, 0.0f, 175.0f);
-	Receps_Airs2->rotation = f3(0.0f, 180.0f, 0.0f);
+	Receps_Airs2->location = f3(854.0f, 0.0f, 173.5f);
+	Receps_Airs2->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_Airs2->type = Recep_Air;
 
 	BoundingBox* Receps_air2 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air2->start = f3(854.0f, 0.0f, 173.5f);
-	Receps_air2->end = f3(862.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 53.5f, 111.0f, 62.5f, 119.0f, 2.2f);
+	Receps_air2->end = f3(862.00f, 15.0f, 181.5f);
+	setAreaHeight(height2_2, x22, z22, 53.5f, 113.0f, 62.5f, 122.0f, 15.0f);
 
 	Object* Receps_Airs3 = (Object*)malloc(sizeof(Object));
-	Receps_Airs3->location = f3(850.0f, 0.0f, 175.0f);
-	Receps_Airs3->rotation = f3(0.0f, 180.0f, 0.0f);
+	Receps_Airs3->location = f3(846.0f, 0.0f, 173.5f);
+	Receps_Airs3->rotation = f3(0.0f, 0.0f, 0.0f);
 	Receps_Airs3->type = Recep_Air;
 
 	BoundingBox* Receps_air3 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Receps_air3->start = f3(846.0f, 0.0f, 173.5f);
-	Receps_air3->end = f3(854.00f, 2.2f, 176.5f);
-	setAreaHeight(height2_2, x22, z22, 45.5f, 111.0f, 54.5f, 119.0f, 2.2f);
+	Receps_air3->end = f3(854.00f, 15.0f, 181.5f);
+	setAreaHeight(height2_2, x22, z22, 45.5f, 113.0f, 54.5f, 122.0f, 15.0f);
 
 	Object* Receps_Dosang1 = (Object*)malloc(sizeof(Object));
 	Receps_Dosang1->location = f3(822.5f, 0.0f, 165.0f);
@@ -9820,6 +9820,29 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+	Object* Receps_Moon_L = (Object*)malloc(sizeof(Object));
+	Receps_Moon_L->location = f3(874.0f, 0.0f, 111.375f);
+	Receps_Moon_L->rotation = f3(0.0f, 0.0f, 0.0f);
+	Receps_Moon_L->type = Recep_DoorL;
+
+	BoundingBox* Receps_MoonLeft = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Receps_MoonLeft->start = f3(873.0f, 0.0f, 110.25f);
+	Receps_MoonLeft->end = f3(875.0f, 4.5f, 112.5f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 110.0f, 75.0f, 112.5f, 4.5f); // 4.5
+
+
+	Object* Receps_Moon_R = (Object*)malloc(sizeof(Object));
+	Receps_Moon_R->location = f3(874.0f, 0.0f, 113.625f);
+	Receps_Moon_R->rotation = f3(0.0f, 0.0f, 0.0f);
+	Receps_Moon_R->type = Recep_DoorL;
+
+	BoundingBox* Receps_MoonRight = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Receps_MoonRight->start = f3(873.0f, 0.0f, 112.5f);
+	Receps_MoonRight->end = f3(875.0f, 4.5f, 114.75f);
+	setAreaHeight(height2_2, x22, z22, 73.0f, 112.5f, 75.0f, 115.0f, 4.5f);
+
 	Object* Receps_MoonBonchae = (Object*)malloc(sizeof(Object));
 	Receps_MoonBonchae->location = f3(874.0f, 0.0f, 112.5f);
 	Receps_MoonBonchae->rotation = f3(0.0f, 0.0f, 0.0f);
@@ -9827,30 +9850,9 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 
 	BoundingBox* Receps_MoonBonchaes = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_MoonBonchaes->start = f3(872.0f, 0.0f, 111.25f);
-	Receps_MoonBonchaes->end = f3(876.0f, 2.5f, 113.75f);
-	setAreaHeight(height2_2, x22, z22, 72.0f, 111.5f, 76.0f, 114.0f, 2.5f);
-
-	Object* Receps_Moon_L = (Object*)malloc(sizeof(Object));
-	Receps_Moon_L->location = f3(874.0f, 0.0f, 111.875f);
-	Receps_Moon_L->rotation = f3(0.0f, 0.0f, 0.0f);
-	Receps_Moon_L->type = Recep_DoorL;
-
-	BoundingBox* Receps_MoonLeft = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_MoonLeft->start = f3(873.0f, 0.0f, 111.25f);
-	Receps_MoonLeft->end = f3(875.0f, 2.5f, 112.5f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 111.5f, 75.0f, 112.5f, 2.5f);
-
-
-	Object* Receps_Moon_R = (Object*)malloc(sizeof(Object));
-	Receps_Moon_R->location = f3(874.0f, 0.0f, 113.125f);
-	Receps_Moon_R->rotation = f3(0.0f, 0.0f, 0.0f);
-	Receps_Moon_R->type = Recep_DoorL;
-
-	BoundingBox* Receps_MoonRight = (BoundingBox*)malloc(sizeof(BoundingBox));
-	Receps_MoonRight->start = f3(873.0f, 0.0f, 112.5f);
-	Receps_MoonRight->end = f3(875.0f, 2.5f, 113.75f);
-	setAreaHeight(height2_2, x22, z22, 73.0f, 112.5f, 75.0f, 114.0f, 2.5f);
+	Receps_MoonBonchaes->start = f3(872.0f, 0.0f, 110.25f);
+	Receps_MoonBonchaes->end = f3(876.0f, 0.0f, 114.75f); // 높이 4.5
+	setAreaHeight(height2_2, x22, z22, 72.0f, 110.5f, 76.0f, 114.0f, 0.0f);
 
 
 
@@ -10701,8 +10703,7 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 
 	////////////////////////////////////////
 
-	list.push_back(*Receps_MoonBonchae);
-	blist.push_back(*Receps_MoonBonchaes);
+
 
 	list.push_back(*Receps_Moon_L);
 	blist.push_back(*Receps_MoonLeft);
@@ -10710,9 +10711,1040 @@ void createObstacles2_2(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(*Receps_Moon_R);
 	blist.push_back(*Receps_MoonRight);
 
+	list.push_back(*Receps_MoonBonchae);
+	blist.push_back(*Receps_MoonBonchaes);
 }
 
 void createObstacles2_3(vector<Object>& list, vector<BoundingBox>& blist)
 {
+	Object* Parking_area_floor = (Object*)malloc(sizeof(Object));
+	Parking_area_floor->location = f3(875.0f, 0.001f, 60.0f);
+	Parking_area_floor->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_floor->type = Parking_floor1;
+
+
+	BoundingBox* Parking_area_floors = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_floors->start = f3(875.0f, 0.000f, 60.00f);
+	Parking_area_floors->end = f3(1200.0f, 0.0001f, 150.0f);
+	setAreaHeight(height2_3, x23, z23, 0.0f, 0.0f, 325.0f, 90.0f, 0.5f);
+
+	Object* Parking_area_wall1 = (Object*)malloc(sizeof(Object));
+	Parking_area_wall1->location = f3(875.0f, 0.0f, 75.0f);
+	Parking_area_wall1->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_wall1->type = Parking_Wall1;
+
+
+	BoundingBox* Parking_area_walls1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_walls1->start = f3(875.0f, 0.000f, 75.00f);
+	Parking_area_walls1->end = f3(1200.0f, 10.0f, 79.0f);
+	setAreaHeight(height2_3, x23, z23, 0.0f, 15.0f, 325.0f, 19.0f, 10.0f);
+
+
+	Object* Parking_area_wall2 = (Object*)malloc(sizeof(Object));
+	Parking_area_wall2->location = f3(875.0f, 0.0f, 146.0f);
+	Parking_area_wall2->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_wall2->type = Parking_Wall1;
+
+
+	BoundingBox* Parking_area_walls2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_walls2->start = f3(875.0f, 0.000f, 146.00f);
+	Parking_area_walls2->end = f3(1200.0f, 10.0f, 150.0f);
+	setAreaHeight(height2_3, x23, z23, 0.0f, 86.0f, 325.0f, 90.0f, 10.0f);
+
+	Object* Parking_area_floor2 = (Object*)malloc(sizeof(Object));
+	Parking_area_floor2->location = f3(875.0f, 10.00f, 60.0f);
+	Parking_area_floor2->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_floor2->type = Parking_floor1;
+
+
+	BoundingBox* Parking_area_floors2= (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_floors2->start = f3(875.0f, 10.000f, 60.00f);
+	Parking_area_floors2->end = f3(1200.0f, 10.0f, 150.0f);
+	setAreaHeight(height2_3, x23, z23, 0.0f, 0.0f, 325.0f, 90.0f, 10.0f);
+
+	Object* Parking_area_Fwall1 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fwall1->location = f3(1200.0f, 0.0f, 79.0f);
+	Parking_area_Fwall1->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Fwall1->type = Parking_FWall1;
+
+
+	BoundingBox* Parking_area_Fwalls1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fwalls1->start = f3(1200.0f, 0.000f, 79.00f);
+	Parking_area_Fwalls1->end = f3(1200.0f, 10.0f, 146.0f);
+	setAreaHeight(height2_3, x23, z23, 325.0f, 19.0f, 325.0f, 86.0f, 10.0f);
+
+	//////////////////////////////////
+
+	Object* Parking_area_Fence1 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence1->location = f3(890.0f, 1.0f, 84.0f);
+	Parking_area_Fence1->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence1->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences1->start = f3(889.0f, 0.000f,79.0f);
+	Parking_area_Fences1->end = f3(891.0f, 2.0f, 89.0f);
+	setAreaHeight(height2_3, x23, z23, 13.5f, 18.5f, 15.5f, 29.5f, 2.0f);
+
+	Object* Parking_area_Fence2 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence2->location = f3(890.0f, 1.0f, 94.0f);
+	Parking_area_Fence2->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence2->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences2->start = f3(889.0f, 0.000f, 89.0f);
+	Parking_area_Fences2->end = f3(891.0f, 2.0f, 99.0f);
+	setAreaHeight(height2_3, x23, z23, 13.5f, 28.5f, 15.5f, 39.5f, 2.0f);
+
+	Object* Parking_area_Fence3 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence3->location = f3(890.0f, 1.0f, 104.0f);
+	Parking_area_Fence3->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence3->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences3->start = f3(889.0f, 0.000f, 99.0f);
+	Parking_area_Fences3->end = f3(891.0f, 2.0f, 109.0f);
+	setAreaHeight(height2_3, x23, z23, 13.5f, 38.5f, 15.5f, 49.5f, 2.0f);
+
+	Object* Parking_area_Fence4 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence4->location = f3(890.0f, 1.0f, 114.0f);
+	Parking_area_Fence4->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence4->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences4->start = f3(889.0f, 0.000f, 109.0f);
+	Parking_area_Fences4->end = f3(891.0f, 2.0f, 119.0f);
+	setAreaHeight(height2_3, x23, z23, 13.5f, 48.5f, 15.5f, 59.5f, 2.0f);
+
+	Object* Parking_area_Fence5 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence5->location = f3(890.0f, 1.0f, 124.0f);
+	Parking_area_Fence5->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence5->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences5 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences5->start = f3(889.0f, 0.000f, 119.0f);
+	Parking_area_Fences5->end = f3(891.0f, 2.0f, 129.0f);
+	setAreaHeight(height2_3, x23, z23, 13.5f, 58.5f, 15.5f, 69.5f, 2.0f);
+
+	////////////////////////////////////////////////////////////////////////
+
+	// 주차장 앞쪽
+
+	Object* Parking_area_Fence6 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence6->location = f3(1040.0f, 1.0f, 84.0f);
+	Parking_area_Fence6->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence6->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences6 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences6->start = f3(1039.0f, 0.000f, 79.0f);
+	Parking_area_Fences6->end = f3(1041.0f, 2.0f, 89.0f);
+	setAreaHeight(height2_3, x23, z23, 163.5f, 18.5f, 165.5f, 29.5f, 2.0f);
+
+	Object* Parking_area_Fence7 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence7->location = f3(1040.0f, 1.0f, 94.0f);
+	Parking_area_Fence7->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence7->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences7 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences7->start = f3(1039.0f, 0.000f, 89.0f);
+	Parking_area_Fences7->end = f3(1041.0f, 2.0f, 99.0f);
+	setAreaHeight(height2_3, x23, z23, 163.5f, 28.5f, 165.5f, 39.5f, 2.0f);
+
+	Object* Parking_area_Fence8 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence8->location = f3(1040.0f, 1.0f, 104.0f);
+	Parking_area_Fence8->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence8->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences8 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences8->start = f3(1039.0f, 0.000f, 99.0f);
+	Parking_area_Fences8->end = f3(1041.0f, 2.0f, 109.0f);
+	setAreaHeight(height2_3, x23, z23, 163.5f, 38.5f, 165.5f, 49.5f, 2.0f);
+
+	Object* Parking_area_Fence9 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence9->location = f3(1040.0f, 1.0f, 114.0f);
+	Parking_area_Fence9->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence9->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences9 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences9->start = f3(1039.0f, 0.000f, 109.0f);
+	Parking_area_Fences9->end = f3(1041.0f, 2.0f, 119.0f);
+	setAreaHeight(height2_3, x23, z23, 163.5f, 48.5f, 165.5f, 59.5f, 2.0f);
+
+	Object* Parking_area_Fence10 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence10->location = f3(1040.0f, 1.0f, 124.0f);
+	Parking_area_Fence10->rotation = f3(90.0f, -90.0f, 90.0f);
+	Parking_area_Fence10->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences10 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences10->start = f3(1039.0f, 0.000f, 119.0f);
+	Parking_area_Fences10->end = f3(1041.0f, 2.0f, 129.0f);
+	setAreaHeight(height2_3, x23, z23, 163.5f, 58.5f, 165.5f, 69.5f, 2.0f);
+
+	///////////////////////////////////////////////////////////////////////
+
+	Object* Parking_area_Fence11 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence11->location = f3(900.0f, 1.0f, 123.0f);
+	Parking_area_Fence11->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence11->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences11 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences11->start = f3(895.0f, 0.000f, 122.0f);
+	Parking_area_Fences11->end = f3(905.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 19.5f, 61.5f, 30.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence12 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence12->location = f3(910.0f, 1.0f, 123.0f);
+	Parking_area_Fence12->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence12->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences12 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences12->start = f3(905.0f, 0.000f, 122.0f);
+	Parking_area_Fences12->end = f3(915.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 29.5f, 61.5f, 40.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence13 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence13->location = f3(920.0f, 1.0f, 123.0f);
+	Parking_area_Fence13->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence13->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences13 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences13->start = f3(915.0f, 0.000f, 122.0f);
+	Parking_area_Fences13->end = f3(925.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 39.5f, 61.5f, 50.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence14 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence14->location = f3(930.0f, 1.0f, 123.0f);
+	Parking_area_Fence14->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence14->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences14 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences14->start = f3(925.0f, 0.000f, 122.0f);
+	Parking_area_Fences14->end = f3(935.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 49.5f, 61.5f, 60.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence15 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence15->location = f3(940.0f, 1.0f, 123.0f);
+	Parking_area_Fence15->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence15->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences15 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences15->start = f3(935.0f, 0.000f, 122.0f);
+	Parking_area_Fences15->end = f3(945.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 59.5f, 61.5f, 70.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence16 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence16->location = f3(950.0f, 1.0f, 123.0f);
+	Parking_area_Fence16->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence16->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences16 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences16->start = f3(945.0f, 0.000f, 122.0f);
+	Parking_area_Fences16->end = f3(955.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 69.5f, 61.5f, 80.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence17 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence17->location = f3(980.0f, 1.0f, 123.0f);
+	Parking_area_Fence17->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence17->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences17 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences17->start = f3(975.0f, 0.000f, 122.0f);
+	Parking_area_Fences17->end = f3(985.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 99.5f, 61.5f, 110.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence18 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence18->location = f3(990.0f, 1.0f, 123.0f);
+	Parking_area_Fence18->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence18->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences18 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences18->start = f3(985.0f, 0.000f, 122.0f);
+	Parking_area_Fences18->end = f3(995.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 109.5f, 61.5f, 120.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence19 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence19->location = f3(1000.0f, 1.0f, 123.0f);
+	Parking_area_Fence19->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence19->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences19 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences19->start = f3(995.0f, 0.000f, 122.0f);
+	Parking_area_Fences19->end = f3(1005.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 119.5f, 61.5f, 130.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence20 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence20->location = f3(1010.0f, 1.0f, 123.0f);
+	Parking_area_Fence20->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence20->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences20 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences20->start = f3(1005.0f, 0.000f, 122.0f);
+	Parking_area_Fences20->end = f3(1015.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 129.5f, 61.5f, 140.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence21 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence21->location = f3(1020.0f, 1.0f, 123.0f);
+	Parking_area_Fence21->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence21->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences21 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences21->start = f3(1015.0f, 0.000f, 122.0f);
+	Parking_area_Fences21->end = f3(1025.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 139.5f, 61.5f, 150.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence22 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence22->location = f3(1030.0f, 1.0f, 123.0f);
+	Parking_area_Fence22->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence22->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences22 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences22->start = f3(1025.0f, 0.000f, 122.0f);
+	Parking_area_Fences22->end = f3(1035.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 149.5f, 61.5f, 160.5f, 64.5f, 2.0f);
+
+	Object* Parking_area_Fence23 = (Object*)malloc(sizeof(Object));
+	Parking_area_Fence23->location = f3(1040.0f, 1.0f, 123.0f);
+	Parking_area_Fence23->rotation = f3(90.0f, -90.0f, 0.0f);
+	Parking_area_Fence23->type = Parking_Fence;
+
+	BoundingBox* Parking_area_Fences23 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Fences23->start = f3(1035.0f, 0.000f, 122.0f);
+	Parking_area_Fences23->end = f3(1045.0f, 2.0f, 124.0f);
+	setAreaHeight(height2_3, x23, z23, 159.5f, 61.5f, 170.5f, 64.5f, 2.0f);
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	Object* Parking_area_Canmak1 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak1->location = f3(900.0f, 0.0f, 84.0f);
+	Parking_area_Canmak1->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak1->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake1 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake1->start = f3(900.0f, 0.000f, 84.0f);
+	Parking_area_Canmake1->end = f3(902.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 23.5f, 27.5f, 56.5f, 3.0f);
+
+	Object* Parking_area_Canmak2 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak2->location = f3(920.0f, 0.0f, 84.0f);
+	Parking_area_Canmak2->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak2->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake2 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake2->start = f3(920.0f, 0.000f, 84.0f);
+	Parking_area_Canmake2->end = f3(922.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 23.5f, 47.5f, 56.5f, 3.0f);
+
+	Object* Parking_area_Canmak3 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak3->location = f3(940.0f, 0.0f, 84.0f);
+	Parking_area_Canmak3->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak3->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake3 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake3->start = f3(940.0f, 0.000f, 84.0f);
+	Parking_area_Canmake3->end = f3(942.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 23.5f, 67.5f, 56.5f, 3.0f);
+
+	Object* Parking_area_Canmak4 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak4->location = f3(980.0f, 0.0f, 84.0f);
+	Parking_area_Canmak4->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak4->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake4 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake4->start = f3(980.0f, 0.000f, 84.0f);
+	Parking_area_Canmake4->end = f3(982.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 23.5f, 107.5f, 56.5f, 3.0f);
+
+	Object* Parking_area_Canmak5 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak5->location = f3(1000.0f, 0.0f, 84.0f);
+	Parking_area_Canmak5->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak5->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake5 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake5->start = f3(1000.0f, 0.000f, 84.0f);
+	Parking_area_Canmake5->end = f3(1002.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 23.5f, 127.5f, 56.5f, 3.0f);
+
+	Object* Parking_area_Canmak6 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak6->location = f3(1020.0f, 0.0f, 84.0f);
+	Parking_area_Canmak6->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak6->type = Parking_Area;
+
+	BoundingBox* Parking_area_Canmake6 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake6->start = f3(1020.0f, 0.000f, 84.0f);
+	Parking_area_Canmake6->end = f3(1022.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 23.5f, 147.5f, 56.5f, 3.0f);
+
+	/////////////////////////////////////////
+
+	Object* Parking_area_Canmak7= (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak7->location = f3(900.0f, 0.0f, 84.0f);
+	Parking_area_Canmak7->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak7->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake7 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake7->start = f3(900.0f, 0.000f, 84.0f);
+	Parking_area_Canmake7->end = f3(910.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 23.5f, 35.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak8 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak8->location = f3(900.0f, 0.0f, 90.0f);
+	Parking_area_Canmak8->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak8->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake8 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake8->start = f3(900.0f, 0.000f, 90.0f);
+	Parking_area_Canmake8->end = f3(910.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 29.5f, 35.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak9 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak9->location = f3(900.0f, 0.0f, 96.0f);
+	Parking_area_Canmak9->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak9->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake9 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake9->start = f3(900.0f, 0.000f, 96.0f);
+	Parking_area_Canmake9->end = f3(910.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 35.5f, 35.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak10 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak10->location = f3(900.0f, 0.0f, 102.0f);
+	Parking_area_Canmak10->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak10->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake10 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake10->start = f3(900.0f, 0.000f, 102.0f);
+	Parking_area_Canmake10->end = f3(910.0f, 3.0f,104.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 41.5f, 35.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak11 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak11->location = f3(900.0f, 0.0f, 108.0f);
+	Parking_area_Canmak11->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak11->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake11 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake11->start = f3(900.0f, 0.000f, 108.0f);
+	Parking_area_Canmake11->end = f3(910.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 47.5f, 35.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak12 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak12->location = f3(900.0f, 0.0f, 114.0f);
+	Parking_area_Canmak12->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak12->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake12 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake12->start = f3(900.0f, 0.000f, 114.0f);
+	Parking_area_Canmake12->end = f3(910.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 24.5f, 47.5f, 35.5f, 50.5f, 3.0f);
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	Object* Parking_area_Canmak13 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak13->location = f3(920.0f, 0.0f, 84.0f);
+	Parking_area_Canmak13->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak13->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake13 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake13->start = f3(920.0f, 0.000f, 84.0f);
+	Parking_area_Canmake13->end = f3(930.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 23.5f, 55.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak14 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak14->location = f3(920.0f, 0.0f, 90.0f);
+	Parking_area_Canmak14->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak14->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake14 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake14->start = f3(920.0f, 0.000f, 90.0f);
+	Parking_area_Canmake14->end = f3(930.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 29.5f, 55.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak15 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak15->location = f3(920.0f, 0.0f, 96.0f);
+	Parking_area_Canmak15->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak15->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake15 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake15->start = f3(920.0f, 0.000f, 96.0f);
+	Parking_area_Canmake15->end = f3(930.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 35.5f, 55.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak16 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak16->location = f3(920.0f, 0.0f, 102.0f);
+	Parking_area_Canmak16->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak16->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake16 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake16->start = f3(920.0f, 0.000f, 102.0f);
+	Parking_area_Canmake16->end = f3(930.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 41.5f, 55.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak17 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak17->location = f3(920.0f, 0.0f, 108.0f);
+	Parking_area_Canmak17->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak17->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake17 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake17->start = f3(920.0f, 0.000f, 108.0f);
+	Parking_area_Canmake17->end = f3(930.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 47.5f, 55.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak18 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak18->location = f3(920.0f, 0.0f, 114.0f);
+	Parking_area_Canmak18->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak18->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake18 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake18->start = f3(920.0f, 0.000f, 114.0f);
+	Parking_area_Canmake18->end = f3(930.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 47.5f, 55.5f, 50.5f, 3.0f);
+
+	//////////////////////////////////////////////////////////
+
+	Object* Parking_area_Canmak19 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak19->location = f3(920.0f, 0.0f, 84.0f);
+	Parking_area_Canmak19->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak19->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake19 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake19->start = f3(920.0f, 0.000f, 84.0f);
+	Parking_area_Canmake19->end = f3(930.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 23.5f, 55.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak20 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak20->location = f3(920.0f, 0.0f, 90.0f);
+	Parking_area_Canmak20->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak20->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake20 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake20->start = f3(920.0f, 0.000f, 90.0f);
+	Parking_area_Canmake20->end = f3(930.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 29.5f, 55.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak21 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak21->location = f3(920.0f, 0.0f, 96.0f);
+	Parking_area_Canmak21->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak21->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake21 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake21->start = f3(920.0f, 0.000f, 96.0f);
+	Parking_area_Canmake21->end = f3(930.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 35.5f, 55.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak22 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak22->location = f3(920.0f, 0.0f, 102.0f);
+	Parking_area_Canmak22->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak22->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake22 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake22->start = f3(920.0f, 0.000f, 102.0f);
+	Parking_area_Canmake22->end = f3(930.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 41.5f, 55.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak23 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak23->location = f3(920.0f, 0.0f, 108.0f);
+	Parking_area_Canmak23->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak23->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake23 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake23->start = f3(920.0f, 0.000f, 108.0f);
+	Parking_area_Canmake23->end = f3(930.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 47.5f, 55.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak24 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak24->location = f3(920.0f, 0.0f, 114.0f);
+	Parking_area_Canmak24->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak24->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake24 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake24->start = f3(920.0f, 0.000f, 114.0f);
+	Parking_area_Canmake24->end = f3(930.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 44.5f, 47.5f, 55.5f, 50.5f, 3.0f);
+
+	///////////////////////////////////////////////////////////////////////////////////////
+
+	Object* Parking_area_Canmak25 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak25->location = f3(940.0f, 0.0f, 84.0f);
+	Parking_area_Canmak25->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak25->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake25 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake25->start = f3(940.0f, 0.000f, 84.0f);
+	Parking_area_Canmake25->end = f3(950.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 23.5f, 75.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak26 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak26->location = f3(940.0f, 0.0f, 90.0f);
+	Parking_area_Canmak26->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak26->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake26 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake26->start = f3(940.0f, 0.000f, 90.0f);
+	Parking_area_Canmake26->end = f3(950.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 29.5f, 75.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak27 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak27->location = f3(940.0f, 0.0f, 96.0f);
+	Parking_area_Canmak27->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak27->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake27 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake27->start = f3(940.0f, 0.000f, 96.0f);
+	Parking_area_Canmake27->end = f3(950.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 35.5f, 75.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak28 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak28->location = f3(940.0f, 0.0f, 102.0f);
+	Parking_area_Canmak28->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak28->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake28 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake28->start = f3(940.0f, 0.000f, 102.0f);
+	Parking_area_Canmake28->end = f3(950.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 41.5f, 75.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak29 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak29->location = f3(940.0f, 0.0f, 108.0f);
+	Parking_area_Canmak29->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak29->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake29 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake29->start = f3(940.0f, 0.000f, 108.0f);
+	Parking_area_Canmake29->end = f3(950.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 47.5f, 75.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak30 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak30->location = f3(940.0f, 0.0f, 114.0f);
+	Parking_area_Canmak30->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak30->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake30 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake30->start = f3(940.0f, 0.000f, 114.0f);
+	Parking_area_Canmake30->end = f3(950.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 64.5f, 47.5f, 75.5f, 50.5f, 3.0f);
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	Object* Parking_area_Canmak31 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak31->location = f3(980.0f, 0.0f, 84.0f);
+	Parking_area_Canmak31->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak31->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake31 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake31->start = f3(980.0f, 0.000f, 84.0f);
+	Parking_area_Canmake31->end = f3(990.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 23.5f, 115.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak32 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak32->location = f3(980.0f, 0.0f, 90.0f);
+	Parking_area_Canmak32->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak32->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake32 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake32->start = f3(980.0f, 0.000f, 90.0f);
+	Parking_area_Canmake32->end = f3(990.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 29.5f, 115.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak33 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak33->location = f3(980.0f, 0.0f, 96.0f);
+	Parking_area_Canmak33->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak33->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake33 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake33->start = f3(980.0f, 0.000f, 96.0f);
+	Parking_area_Canmake33->end = f3(990.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 35.5f, 115.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak34 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak34->location = f3(980.0f, 0.0f, 102.0f);
+	Parking_area_Canmak34->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak34->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake34 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake34->start = f3(980.0f, 0.000f, 102.0f);
+	Parking_area_Canmake34->end = f3(990.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 41.5f, 115.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak35 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak35->location = f3(980.0f, 0.0f, 108.0f);
+	Parking_area_Canmak35->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak35->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake35 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake35->start = f3(980.0f, 0.000f, 108.0f);
+	Parking_area_Canmake35->end = f3(990.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 47.5f, 115.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak36 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak36->location = f3(980.0f, 0.0f, 114.0f);
+	Parking_area_Canmak36->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak36->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake36 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake36->start = f3(980.0f, 0.000f, 114.0f);
+	Parking_area_Canmake36->end = f3(990.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 104.5f, 47.5f, 115.5f, 50.5f, 3.0f);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	Object* Parking_area_Canmak37 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak37->location = f3(1000.0f, 0.0f, 84.0f);
+	Parking_area_Canmak37->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak37->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake37 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake37->start = f3(1000.0f, 0.000f, 84.0f);
+	Parking_area_Canmake37->end = f3(1010.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 23.5f, 135.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak38 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak38->location = f3(1000.0f, 0.0f, 90.0f);
+	Parking_area_Canmak38->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak38->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake38 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake38->start = f3(1000.0f, 0.000f, 90.0f);
+	Parking_area_Canmake38->end = f3(1010.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 29.5f, 135.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak39 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak39->location = f3(1000.0f, 0.0f, 96.0f);
+	Parking_area_Canmak39->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak39->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake39 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake39->start = f3(1000.0f, 0.000f, 96.0f);
+	Parking_area_Canmake39->end = f3(1010.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 35.5f, 135.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak40 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak40->location = f3(1000.0f, 0.0f, 102.0f);
+	Parking_area_Canmak40->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak40->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake40 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake40->start = f3(1000.0f, 0.000f, 102.0f);
+	Parking_area_Canmake40->end = f3(1010.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 41.5f, 135.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak41 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak41->location = f3(1000.0f, 0.0f, 108.0f);
+	Parking_area_Canmak41->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak41->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake41 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake41->start = f3(1000.0f, 0.000f, 108.0f);
+	Parking_area_Canmake41->end = f3(1010.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 47.5f, 135.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak42 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak42->location = f3(1000.0f, 0.0f, 114.0f);
+	Parking_area_Canmak42->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak42->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake42 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake42->start = f3(1000.0f, 0.000f, 114.0f);
+	Parking_area_Canmake42->end = f3(1010.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 124.5f, 47.5f, 135.5f, 50.5f, 3.0f);
+
+	////////////////////////////////////////////////////////////////////////////////////////
+
+
+	Object* Parking_area_Canmak43 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak43->location = f3(1020.0f, 0.0f, 84.0f);
+	Parking_area_Canmak43->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak43->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake43 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake43->start = f3(1020.0f, 0.000f, 84.0f);
+	Parking_area_Canmake43->end = f3(1030.0f, 3.0f, 86.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 23.5f, 155.5f, 26.5f, 3.0f);
+
+	Object* Parking_area_Canmak44 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak44->location = f3(1020.0f, 0.0f, 90.0f);
+	Parking_area_Canmak44->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak44->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake44 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake44->start = f3(1020.0f, 0.000f, 90.0f);
+	Parking_area_Canmake44->end = f3(1030.0f, 3.0f, 92.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 29.5f, 155.5f, 32.5f, 3.0f);
+
+	Object* Parking_area_Canmak45 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak45->location = f3(1020.0f, 0.0f, 96.0f);
+	Parking_area_Canmak45->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak45->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake45 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake45->start = f3(1020.0f, 0.000f, 96.0f);
+	Parking_area_Canmake45->end = f3(1030.0f, 3.0f, 98.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 35.5f, 155.5f, 38.5f, 3.0f);
+
+	Object* Parking_area_Canmak46 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak46->location = f3(1020.0f, 0.0f, 102.0f);
+	Parking_area_Canmak46->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak46->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake46 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake46->start = f3(1020.0f, 0.000f, 102.0f);
+	Parking_area_Canmake46->end = f3(1030.0f, 3.0f, 104.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 41.5f, 155.5f, 44.5f, 3.0f);
+
+	Object* Parking_area_Canmak47 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak47->location = f3(1020.0f, 0.0f, 108.0f);
+	Parking_area_Canmak47->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak47->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake47 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake47->start = f3(1020.0f, 0.000f, 108.0f);
+	Parking_area_Canmake47->end = f3(1030.0f, 3.0f, 110.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 47.5f, 155.5f, 50.5f, 3.0f);
+
+	Object* Parking_area_Canmak48 = (Object*)malloc(sizeof(Object));
+	Parking_area_Canmak48->location = f3(1020.0f, 0.0f, 114.0f);
+	Parking_area_Canmak48->rotation = f3(0.0f, 0.0f, 0.0f);
+	Parking_area_Canmak48->type = Parking_Area2;
+
+	BoundingBox* Parking_area_Canmake48 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Parking_area_Canmake48->start = f3(1020.0f, 0.000f, 114.0f);
+	Parking_area_Canmake48->end = f3(1030.0f, 3.0f, 116.0f);
+	setAreaHeight(height2_3, x23, z23, 144.5f, 47.5f, 155.5f, 50.5f, 3.0f);
+
+
+
+
+	list.push_back(*Parking_area_floor);
+	blist.push_back(*Parking_area_floors);
+
+	list.push_back(*Parking_area_wall1);
+	blist.push_back(*Parking_area_walls1);
+
+	list.push_back(*Parking_area_wall2);
+	blist.push_back(*Parking_area_walls2);
+
+	list.push_back(*Parking_area_floor2);
+	blist.push_back(*Parking_area_floors2);
+
+	list.push_back(*Parking_area_Fwall1);
+	blist.push_back(*Parking_area_Fwalls1);
+
+	///////////////////////////////////////////////////////////////
+
+	list.push_back(*Parking_area_Fence1);
+	blist.push_back(*Parking_area_Fences1);
+
+	list.push_back(*Parking_area_Fence2);
+	blist.push_back(*Parking_area_Fences2);
+
+	list.push_back(*Parking_area_Fence3);
+	blist.push_back(*Parking_area_Fences3);
+
+	list.push_back(*Parking_area_Fence4);
+	blist.push_back(*Parking_area_Fences4);
+
+	list.push_back(*Parking_area_Fence5);
+	blist.push_back(*Parking_area_Fences5);
+
+	list.push_back(*Parking_area_Fence6);
+	blist.push_back(*Parking_area_Fences6);
+
+	list.push_back(*Parking_area_Fence7);
+	blist.push_back(*Parking_area_Fences7);
+
+	list.push_back(*Parking_area_Fence8);
+	blist.push_back(*Parking_area_Fences8);
+
+	list.push_back(*Parking_area_Fence9);
+	blist.push_back(*Parking_area_Fences9);
+
+	list.push_back(*Parking_area_Fence10);
+	blist.push_back(*Parking_area_Fences10);
+
+	list.push_back(*Parking_area_Fence11);
+	blist.push_back(*Parking_area_Fences11);
+
+	list.push_back(*Parking_area_Fence12);
+	blist.push_back(*Parking_area_Fences12);
+
+	list.push_back(*Parking_area_Fence13);
+	blist.push_back(*Parking_area_Fences13);
+
+	list.push_back(*Parking_area_Fence14);
+	blist.push_back(*Parking_area_Fences14);
+
+	list.push_back(*Parking_area_Fence15);
+	blist.push_back(*Parking_area_Fences15);
+
+	list.push_back(*Parking_area_Fence16);
+	blist.push_back(*Parking_area_Fences16);
+
+	list.push_back(*Parking_area_Fence17);
+	blist.push_back(*Parking_area_Fences17);
+
+	list.push_back(*Parking_area_Fence18);
+	blist.push_back(*Parking_area_Fences18);
+
+	list.push_back(*Parking_area_Fence19);
+	blist.push_back(*Parking_area_Fences19);
+
+	list.push_back(*Parking_area_Fence20);
+	blist.push_back(*Parking_area_Fences20);
+
+	list.push_back(*Parking_area_Fence21);
+	blist.push_back(*Parking_area_Fences21);
+
+	list.push_back(*Parking_area_Fence22);
+	blist.push_back(*Parking_area_Fences22);
+
+	list.push_back(*Parking_area_Fence23);
+	blist.push_back(*Parking_area_Fences23);
+
+	list.push_back(*Parking_area_Canmak1);
+	blist.push_back(*Parking_area_Canmake1);
+
+	list.push_back(*Parking_area_Canmak2);
+	blist.push_back(*Parking_area_Canmake2);
+
+	list.push_back(*Parking_area_Canmak3);
+	blist.push_back(*Parking_area_Canmake3);
+
+	list.push_back(*Parking_area_Canmak4);
+	blist.push_back(*Parking_area_Canmake4);
+
+	list.push_back(*Parking_area_Canmak5);
+	blist.push_back(*Parking_area_Canmake5);
+
+	list.push_back(*Parking_area_Canmak6);
+	blist.push_back(*Parking_area_Canmake6);
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+
+	list.push_back(*Parking_area_Canmak7);
+	blist.push_back(*Parking_area_Canmake7);
+
+	list.push_back(*Parking_area_Canmak8);
+	blist.push_back(*Parking_area_Canmake8);
+
+	list.push_back(*Parking_area_Canmak9);
+	blist.push_back(*Parking_area_Canmake9);
+
+	list.push_back(*Parking_area_Canmak10);
+	blist.push_back(*Parking_area_Canmake10);
+
+	list.push_back(*Parking_area_Canmak11);
+	blist.push_back(*Parking_area_Canmake11);
+
+	list.push_back(*Parking_area_Canmak12);
+	blist.push_back(*Parking_area_Canmake12);
+
+	list.push_back(*Parking_area_Canmak13);
+	blist.push_back(*Parking_area_Canmake13);
+
+	list.push_back(*Parking_area_Canmak14);
+	blist.push_back(*Parking_area_Canmake14);
+
+	list.push_back(*Parking_area_Canmak15);
+	blist.push_back(*Parking_area_Canmake15);
+
+	list.push_back(*Parking_area_Canmak16);
+	blist.push_back(*Parking_area_Canmake16);
+
+	list.push_back(*Parking_area_Canmak17);
+	blist.push_back(*Parking_area_Canmake17);
+
+	list.push_back(*Parking_area_Canmak18);
+	blist.push_back(*Parking_area_Canmake18);
+
+	list.push_back(*Parking_area_Canmak19);
+	blist.push_back(*Parking_area_Canmake19);
+
+	list.push_back(*Parking_area_Canmak20);
+	blist.push_back(*Parking_area_Canmake20);
+
+	list.push_back(*Parking_area_Canmak21);
+	blist.push_back(*Parking_area_Canmake21);
+
+	list.push_back(*Parking_area_Canmak22);
+	blist.push_back(*Parking_area_Canmake22);
+
+	list.push_back(*Parking_area_Canmak23);
+	blist.push_back(*Parking_area_Canmake23);
+
+	list.push_back(*Parking_area_Canmak24);
+	blist.push_back(*Parking_area_Canmake24);
+
+	list.push_back(*Parking_area_Canmak25);
+	blist.push_back(*Parking_area_Canmake25);
+
+	list.push_back(*Parking_area_Canmak26);
+	blist.push_back(*Parking_area_Canmake26);
+
+	list.push_back(*Parking_area_Canmak27);
+	blist.push_back(*Parking_area_Canmake27);
+
+	list.push_back(*Parking_area_Canmak28);
+	blist.push_back(*Parking_area_Canmake28);
+
+	list.push_back(*Parking_area_Canmak29);
+	blist.push_back(*Parking_area_Canmake29);
+
+	list.push_back(*Parking_area_Canmak30);
+	blist.push_back(*Parking_area_Canmake30);
+
+	list.push_back(*Parking_area_Canmak31);
+	blist.push_back(*Parking_area_Canmake31);
+
+	list.push_back(*Parking_area_Canmak32);
+	blist.push_back(*Parking_area_Canmake32);
+
+	list.push_back(*Parking_area_Canmak33);
+	blist.push_back(*Parking_area_Canmake33);
+
+	list.push_back(*Parking_area_Canmak34);
+	blist.push_back(*Parking_area_Canmake34);
+
+	list.push_back(*Parking_area_Canmak35);
+	blist.push_back(*Parking_area_Canmake35);
+
+	list.push_back(*Parking_area_Canmak36);
+	blist.push_back(*Parking_area_Canmake36);
+
+	list.push_back(*Parking_area_Canmak37);
+	blist.push_back(*Parking_area_Canmake37);
+
+	list.push_back(*Parking_area_Canmak38);
+	blist.push_back(*Parking_area_Canmake38);
+
+	list.push_back(*Parking_area_Canmak39);
+	blist.push_back(*Parking_area_Canmake39);
+
+	list.push_back(*Parking_area_Canmak40);
+	blist.push_back(*Parking_area_Canmake40);
+
+	list.push_back(*Parking_area_Canmak41);
+	blist.push_back(*Parking_area_Canmake41);
+
+	list.push_back(*Parking_area_Canmak42);
+	blist.push_back(*Parking_area_Canmake42);
+
+	list.push_back(*Parking_area_Canmak43);
+	blist.push_back(*Parking_area_Canmake43);
+
+	list.push_back(*Parking_area_Canmak44);
+	blist.push_back(*Parking_area_Canmake44);
+
+	list.push_back(*Parking_area_Canmak45);
+	blist.push_back(*Parking_area_Canmake45);
+
+	list.push_back(*Parking_area_Canmak46);
+	blist.push_back(*Parking_area_Canmake46);
+
+	list.push_back(*Parking_area_Canmak47);
+	blist.push_back(*Parking_area_Canmake47);
+
+	list.push_back(*Parking_area_Canmak48);
+	blist.push_back(*Parking_area_Canmake48);
+
 
 }
