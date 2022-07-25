@@ -12,14 +12,14 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* mesh = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
 	CubeMeshOffset* meshr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
 
-	CubeMeshOffset* melee = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* meleer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* melee = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* meleer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 	
-	CubeMeshOffset* range = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* ranger = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* range = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ranger = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* micro = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* micror = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* micro = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* micror = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* succeed = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* succeedr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
@@ -58,7 +58,12 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* gold2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* gold3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
 
+	//0~3 ui
 
+	//4~23 hp bar
+	// 24~123 melee
+	//124~223 range
+	//224~323 radio
 	meshes.push_back(mesh);
 	revmeshes.push_back(meshr);
 
@@ -72,39 +77,61 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 
 
+
+
 	//플레이어 체력바
 	for (float i = 0.0f; i < 20.0f; i += 1.0f)
 	{
-		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, -(0.0f + 5.0f * (20.0f - i + 1.0f)) / 450.0f, -(500.0f - 450.0f) / 450.0f, false);
-		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, (0.0f + 5.0f * (20.0f - i + 1.0f)) / 450.0f, -(500.0f - 450.0f) / 450.0f, true);
+		float nLength = 15.35f;
+		int totalN = 20;
+		float ox = 133.0f;
+		float oz = 781.7;
+		float z = 63.0f;
+		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength/2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
+		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
 
 		meshes.push_back(hp);
 		revmeshes.push_back(hpr);
 	}
 
 	//근접경험치
-	for (float i = 0.0f; i < 10.0f; i += 1.0f)
+	for (float i = 0.0f; i < 100.0f; i += 1.0f)
 	{
-		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, (50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(500.0f - 450.0f) / 450.0f, false);
-		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, -(50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(500.0f - 450.0f) / 450.0f, true);
+		float nLength = 12.0f;
+		int totalN = 100;
+		float ox = 600.0f;
+		float oz = 896.0f;
+		float z = 10.0f;
+		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
+		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength / 2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
 
 		meshes.push_back(hp);
 		revmeshes.push_back(hpr);
 	}
 	//원거리경험치
-	for (float i = 0.0f; i < 10.0f; i += 1.0f)
+	for (float i = 0.0f; i < 100.0f; i += 1.0f)
 	{
-		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, (50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(515.0f - 450.0f) / 450.0f, false);
-		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, -(50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(515.0f - 450.0f) / 450.0f, true);
+		float nLength = 12.0f;
+		int totalN = 100;
+		float ox = 600.0f;
+		float oz = 886.0f;
+		float z = 10.0f;
+		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
+		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength / 2.0f) * (totalN - i + 1.0f))-600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
 
 		meshes.push_back(hp);
 		revmeshes.push_back(hpr);
 	}
 	//전파경험치
-	for (float i = 0.0f; i < 10.0f; i += 1.0f)
+	for (float i = 0.0f; i < 100.0f; i += 1.0f)
 	{
-		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, (50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(530.0f - 450.0f) / 450.0f, false);
-		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 10.0f * (i + 1.0f) / 450.0f, 15.0f / 450.0f, 0.02f, -(50.0f + 5.0f * (10.0f - i + 1.0f) - 600.0f) / 450.0f, -(530.0f - 450.0f) / 450.0f, true);
+		float nLength = 12.0f;
+		int totalN = 100;
+		float ox = 600.0f;
+		float oz = 876.0f;
+		float z = 10.0f;
+		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (totalN - i + 1.0f)) - 600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
+		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength / 2.0f) * (totalN - i + 1.0f)) - 600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
 
 		meshes.push_back(hp);
 		revmeshes.push_back(hpr);
@@ -450,13 +477,13 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 				objects[i]->SetMesh(meshes[i]);
 			}
 		}
-		else if (i>=4 && i<54)
+		else if (i>=4 && i<8)
 		{
 			int cap = (info->stats.capacity * 100 / info->stats.maxhp - 2) / 5; //백분율로 나타낸 뒤 5로 나눔. 20분율
 
-			int melee = (info->growth.melee.exp * 100 / expNeed[info->growth.melee.level-1] - 5) / 10; // 최대량 대비 현재량을 10분율로
-			int ranged = (info->growth.ranged.exp * 100 / expNeed[info->growth.ranged.level - 1]-5) / 10; // 최대량 대비 현재량을 10분율로
-			int radio = (info->growth.radio.exp * 100 / expNeed[info->growth.radio.level - 1]-5) / 10; // 최대량 대비 현재량을 10분율로
+			int melee = (info->growth.melee.exp * 100 / expNeed[info->growth.melee.level-1] ); // 최대량 대비 현재량을 100분율로
+			int ranged = (info->growth.ranged.exp * 100 / expNeed[info->growth.ranged.level - 1]); // 최대량 대비 현재량을 100분율로
+			int radio = (info->growth.radio.exp * 100 / expNeed[info->growth.radio.level - 1]); // 최대량 대비 현재량을 100분율로
 
 			if (cap < 0)
 				cap = 0;
@@ -496,22 +523,22 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 			{
 				if (cl.z < 0.0f)
 				{
-					objects[i]->SetMesh(revmeshes[34 + ranged]);
+					objects[i]->SetMesh(revmeshes[124 + ranged]);
 				}
 				else
 				{
-					objects[i]->SetMesh(meshes[34 + ranged]);
+					objects[i]->SetMesh(meshes[124 + ranged]);
 				}
 			}
 			else if (i == 7)
 			{
 				if (cl.z < 0.0f)
 				{
-					objects[i]->SetMesh(revmeshes[44 + radio]);
+					objects[i]->SetMesh(revmeshes[224 + radio]);
 				}
 				else
 				{
-					objects[i]->SetMesh(meshes[44 + radio]);
+					objects[i]->SetMesh(meshes[224 + radio]);
 				}
 			}
 		}
@@ -533,11 +560,11 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		{
 			if (cl.z < 0.0f)
 			{
-				objects[i]->SetMesh(revmeshes[46 + i]);
+				objects[i]->SetMesh(revmeshes[316 + i]);
 			}
 			else
 			{
-				objects[i]->SetMesh(meshes[46 + i]);
+				objects[i]->SetMesh(meshes[316 + i]);
 			}
 		}
 	}

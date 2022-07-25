@@ -57,6 +57,7 @@ public:
 	ID3DBlob							*m_pd3dPixelShaderBlob = NULL;
 
 	ID3D12PipelineState					*m_pd3dPipelineState = NULL;
+	
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC	m_d3dPipelineStateDesc;
 

@@ -18,6 +18,7 @@
 
 
 #include "EnemyShader.h"
+#include "DyingEnemyShader.h"
 #include "ParticleShader.h"
 #include "ShadowShader.h"
 #include "LobbyInterfaceShader.h"
@@ -139,6 +140,7 @@ public:
 	PlayerShader* playerShader = NULL;
 
 	EnemyShader* enemyShader = NULL;
+	DyingEnemyShader* enemyDying = NULL;
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
 

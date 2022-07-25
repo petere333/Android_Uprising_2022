@@ -1001,7 +1001,7 @@ void ResourceManager::createTextures()
 	//여기서부터 인게임 인터페이스
 
 	tex263 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex263->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/inter.dds", RESOURCE_TEXTURE2D, 0);
+	tex263->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/ingame.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex263);
 
 	tex264 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -2388,4 +2388,27 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	enemyModels.push_back(e11);
 	e12 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_run.bin", NULL);
 	enemyModels.push_back(e12);
+
+
+	CLoadedMesh* blunt1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_blunt1.txt", NULL);
+	CLoadedMesh* blunt2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_box.txt", NULL);
+	CLoadedMesh* blunt3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_barrel.txt", NULL);
+	CLoadedMesh* blunt4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_fence.txt", NULL);
+	CLoadedMesh* blunt5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_foodBin.txt", NULL);
+	CLoadedMesh* blunt6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ladder.txt", NULL);
+	CLoadedMesh* blunt7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_garbageCan.txt", NULL);
+	CLoadedMesh* blunt8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_Cement1.txt", NULL);
+	CLoadedMesh* blunt9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_box.txt", NULL);
+	CLoadedMesh* blunt10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_trashContainer.txt", NULL);
+
+	enemyBluntDie.push_back(blunt1);
+	enemyBluntDie.push_back(blunt2);
+	enemyBluntDie.push_back(blunt3);
+	enemyBluntDie.push_back(blunt4);
+	enemyBluntDie.push_back(blunt5);
+	enemyBluntDie.push_back(blunt6);
+	enemyBluntDie.push_back(blunt7);
+	enemyBluntDie.push_back(blunt8);
+	enemyBluntDie.push_back(blunt9);
+	enemyBluntDie.push_back(blunt10);
 }
