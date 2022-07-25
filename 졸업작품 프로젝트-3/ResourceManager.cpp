@@ -1209,30 +1209,17 @@ void ResourceManager::createTextures()
 	tex323 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex323->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/stage1.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex323);
+	tex324 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex324->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/blunt.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex324);
 
+	tex325 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex325->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/bazuka.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex325);
 	
 
 
 	
-
-
-
-
-	
-
-	tex294 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex294->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/Parking_Road.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex294);
-
-	tex295 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex295->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/Parking_Wall.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex295);
-
-
-	tex296 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex296->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/Parking_fence.dds", RESOURCE_TEXTURE2D, 0);
-	textures.push_back(tex296);
-
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
@@ -1246,7 +1233,6 @@ void ResourceManager::createTextures()
 	CTexture* norm81; CTexture* norm82; CTexture* norm83; CTexture* norm84; CTexture* norm85; CTexture* norm86; CTexture* norm87; CTexture* norm88; CTexture* norm89; CTexture* norm90;
 	CTexture* norm91; CTexture* norm92; CTexture* norm93; CTexture* norm94; CTexture* norm95; CTexture* norm96; CTexture* norm97; CTexture* norm98; CTexture* norm99; CTexture* norm100;
 	CTexture* norm101; CTexture* norm102; CTexture* norm103; CTexture* norm104; CTexture* norm105; CTexture* norm106; CTexture* norm107; CTexture* norm108; CTexture* norm109; CTexture* norm110;
-	CTexture* norm111;
 
 	norm1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/none.dds", RESOURCE_TEXTURE2D, 0);
@@ -1525,17 +1511,6 @@ void ResourceManager::createTextures()
 
 	norm101 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	norm101->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/norm/Receps_wall1.dds", RESOURCE_TEXTURE2D, 0);
-	/*
-	norm102 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	norm102->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/norm/Parking_Road.dds", RESOURCE_TEXTURE2D, 0);
-
-	norm103 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	norm103->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/norm/Parking_Wall.dds", RESOURCE_TEXTURE2D, 0);
-
-	norm104 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	norm104->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/norm/Parking_fence.dds", RESOURCE_TEXTURE2D, 0);
-	*/
-
 	normals.push_back(norm35);
 	normals.push_back(norm36);
 	normals.push_back(norm37);
@@ -1609,13 +1584,9 @@ void ResourceManager::createTextures()
 	normals.push_back(norm99);
 	normals.push_back(norm100);
 
-
 	normals.push_back(norm101);
-	/*
-	normals.push_back(norm102);
-	normals.push_back(norm103);
-	normals.push_back(norm104);
-	*/
+
+
 	CTexture* spc1; CTexture* spc2; CTexture* spc3; CTexture* spc4; CTexture* spc5; CTexture* spc6; CTexture* spc7; CTexture* spc8; CTexture* spc9; CTexture* spc10;
 	CTexture* spc11; CTexture* spc12; CTexture* spc13; CTexture* spc14; CTexture* spc15; CTexture* spc16; CTexture* spc17; CTexture* spc18; CTexture* spc19; CTexture* spc20;
 	CTexture* spc21; CTexture* spc22; CTexture* spc23; CTexture* spc24; CTexture* spc25; CTexture* spc26; CTexture* spc27; CTexture* spc28; CTexture* spc29; CTexture* spc30;
@@ -1627,8 +1598,6 @@ void ResourceManager::createTextures()
 	
 	CTexture* spc81; CTexture* spc82; CTexture* spc83; CTexture* spc84; CTexture* spc85; CTexture* spc86; CTexture* spc87; CTexture* spc88; CTexture* spc89; CTexture* spc90;
 	CTexture* spc91; CTexture* spc92; CTexture* spc93; CTexture* spc94; CTexture* spc95; CTexture* spc96; CTexture* spc97; CTexture* spc98; CTexture* spc99; CTexture* spc100;
-	CTexture* spc101;	CTexture* spc102;
-
 	spc1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample_spec2.dds", RESOURCE_TEXTURE2D, 0);
 
@@ -1868,16 +1837,6 @@ void ResourceManager::createTextures()
 	spc99 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	spc99->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-2/spec/Receps_wall1.dds", RESOURCE_TEXTURE2D, 0);
 
-	/*
-	spc100 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	spc100->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/spec/Parking_Road.dds", RESOURCE_TEXTURE2D, 0);
-
-	spc101 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	spc101->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/spec/Parking_Wall.dds", RESOURCE_TEXTURE2D, 0);
-
-	spc102 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	spc102->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/area2-3/spec/Parking_fence.dds", RESOURCE_TEXTURE2D, 0);
-	*/
 	specs.push_back(spc1);
 	specs.push_back(spc2);
 	specs.push_back(spc3);
@@ -1985,11 +1944,7 @@ void ResourceManager::createTextures()
 	specs.push_back(spc97);
 	specs.push_back(spc98);
 	specs.push_back(spc99);
-	/*
-	specs.push_back(spc100);
-	specs.push_back(spc101);
-	specs.push_back(spc102);
-	*/
+
 	createSRV(pd3dDevice, 0, textures.size() + normals.size() + specs.size());
 
 	for (int i = 0; i < textures.size(); ++i)
@@ -2095,17 +2050,7 @@ void ResourceManager::createTextures()
 	materials[73]->SetNormalTex(normals[38]);
 	materials[74]->SetNormalTex(normals[39]);
 	materials[75]->SetNormalTex(normals[40]);
-
-	/*
-	////////////// 2-3³ë¸»
-	materials[293]->SetNormalTex(normals[101]);
-	materials[294]->SetNormalTex(normals[102]);
-	materials[295]->SetNormalTex(normals[103]);
-	*/
-
-
-
-
+	
 
 
 	materials[0]->SetSpecTex(specs[0]);
@@ -2254,13 +2199,6 @@ void ResourceManager::createTextures()
 	materials[84]->SetNormalTex(specs[97]);
 	materials[104]->SetNormalTex(specs[98]);
 
-
-	// 2=3
-	/*
-	materials[293]->SetNormalTex(specs[99]);
-	materials[294]->SetNormalTex(specs[100]);
-	materials[295]->SetNormalTex(specs[101]);
-	*/
 }
 
 void ResourceManager::createSound(){}
@@ -2348,6 +2286,8 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 
 	model21 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/rifle_idle.bin", NULL);
 	playerModels.push_back(model21);
+	model22 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/blade_run.bin", NULL);
+	playerModels.push_back(model22);
 
 	CLoadedModelInfo* e1;
 	CLoadedModelInfo* e2;
@@ -2388,27 +2328,34 @@ void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignat
 	enemyModels.push_back(e11);
 	e12 = CGameObject::LoadGeometryAndAnimationFromFile(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, "res/bin/enemy_blunt_run.bin", NULL);
 	enemyModels.push_back(e12);
+	
+	CAnimationController* cont1 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[0]);
+	CAnimationController* cont2 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[1]);
+	CAnimationController* cont3 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[2]);
+	CAnimationController* cont4 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[3]);
+	CAnimationController* cont5 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[4]);
+	CAnimationController* cont6 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[5]);
+	CAnimationController* cont7 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[6]);
+	CAnimationController* cont8 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[7]);
+	CAnimationController* cont9 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[8]);
+	CAnimationController* cont10 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[9]);
+	CAnimationController* cont11 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[10]);
+	CAnimationController* cont12 = new CAnimationController(pd3dDevice, pd3dCommandList, 1, enemyModels[11]);
+
+	conts.push_back(cont1);
+	conts.push_back(cont2);
+	conts.push_back(cont3);
+	conts.push_back(cont4);
+	conts.push_back(cont5);
+	conts.push_back(cont6);
+	conts.push_back(cont7);
+	conts.push_back(cont8);
+	conts.push_back(cont9);
+	conts.push_back(cont10);
+	conts.push_back(cont11);
+	conts.push_back(cont12);
+	
 
 
-	CLoadedMesh* blunt1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_blunt1.txt", NULL);
-	CLoadedMesh* blunt2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_box.txt", NULL);
-	CLoadedMesh* blunt3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_barrel.txt", NULL);
-	CLoadedMesh* blunt4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_fence.txt", NULL);
-	CLoadedMesh* blunt5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_foodBin.txt", NULL);
-	CLoadedMesh* blunt6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_ladder.txt", NULL);
-	CLoadedMesh* blunt7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_garbageCan.txt", NULL);
-	CLoadedMesh* blunt8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_Cement1.txt", NULL);
-	CLoadedMesh* blunt9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_box.txt", NULL);
-	CLoadedMesh* blunt10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_trashContainer.txt", NULL);
 
-	enemyBluntDie.push_back(blunt1);
-	enemyBluntDie.push_back(blunt2);
-	enemyBluntDie.push_back(blunt3);
-	enemyBluntDie.push_back(blunt4);
-	enemyBluntDie.push_back(blunt5);
-	enemyBluntDie.push_back(blunt6);
-	enemyBluntDie.push_back(blunt7);
-	enemyBluntDie.push_back(blunt8);
-	enemyBluntDie.push_back(blunt9);
-	enemyBluntDie.push_back(blunt10);
 }

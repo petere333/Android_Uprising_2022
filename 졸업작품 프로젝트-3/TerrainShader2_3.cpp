@@ -8,67 +8,6 @@ TerrainShader2_3::~TerrainShader2_3() {}
 
 void TerrainShader2_3::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	data = LoadObjects("res/map/area2-3/objects2-3.txt");
-	boxesWorld = LoadBoxes("res/map/area2-3/box2-3.txt", &nBox);
-
-
-	GridMesh* Parkingarea = new GridMesh(pd3dDevice, pd3dCommandList, 325.0f, 90.0f);
-	PillarMesh* Parkingwall = new PillarMesh(pd3dDevice, pd3dCommandList, 325, 4, 10);
-	PillarMesh* Parkingfwall = new PillarMesh(pd3dDevice, pd3dCommandList, 2, 67, 10);
-	CLoadedMesh* Parkingfence = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_3/vtx_fence.txt", NULL);
-	PillarMesh* Parkingareas = new PillarMesh(pd3dDevice, pd3dCommandList, 2, 32, 2);
-	PillarMesh* Parkingareas2 = new PillarMesh(pd3dDevice, pd3dCommandList, 10, 2, 2);
-
-
-	for (int i = 0; i < data.size(); ++i)
-	{
-		CGameObject* obj = NULL;
-
-		if (data[i].type == Parking_floor1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[293]);
-			obj->SetMesh(Parkingarea);
-		}
-		else if (data[i].type == Parking_Wall1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[294]);
-			obj->SetMesh(Parkingwall);
-		}
-		else if (data[i].type == Parking_FWall1)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[294]);
-			obj->SetMesh(Parkingfwall);
-		}
-		else if (data[i].type == Parking_Fence)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[295]);
-			obj->SetMesh(Parkingfence);
-		}
-		else if (data[i].type == Parking_Area)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[295]);
-			obj->SetMesh(Parkingareas);
-		}
-		else if (data[i].type == Parking_Area2)
-		{
-			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[295]);
-			obj->SetMesh(Parkingareas2);
-		}
-
-
-	
-		obj->SetPosition(data[i].position);
-		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
-		objects.push_back(obj);
-	}
-
-
 }
 
 void TerrainShader2_3::ReleaseObjects()

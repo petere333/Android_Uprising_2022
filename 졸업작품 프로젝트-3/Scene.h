@@ -15,10 +15,9 @@
 #include "TerrainShader2_1.h"
 #include "TerrainShader2_2.h"
 #include "TerrainShader2_3.h"
-
+#include "DyingEnemyShader.h"
 
 #include "EnemyShader.h"
-#include "DyingEnemyShader.h"
 #include "ParticleShader.h"
 #include "ShadowShader.h"
 #include "LobbyInterfaceShader.h"
@@ -140,7 +139,6 @@ public:
 	PlayerShader* playerShader = NULL;
 
 	EnemyShader* enemyShader = NULL;
-	DyingEnemyShader* enemyDying = NULL;
 	ParticleShader* partShader = NULL;
 	ShadowShader* sdwShader = NULL;
 
@@ -157,7 +155,7 @@ public:
 	ProfileShader* profileInter = NULL;
 	StageSelectShader* stageInter = NULL;
 	WaitShader* waitInter = NULL;
-
+	DyingEnemyShader* enemyDying = NULL;
 	CLoadedMesh* boomMesh = NULL;
 
 	float** height11;
@@ -182,7 +180,7 @@ public:
 	int x22 = 200;
 	int z22 = 606;
 
-	int x23 = 650;
+	int x23 = 600;
 	int z23 = 180;
 
 	LobbyInterfaceShader* lobbyInter = NULL;

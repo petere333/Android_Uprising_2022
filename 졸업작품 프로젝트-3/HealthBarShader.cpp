@@ -106,21 +106,27 @@ void HealthBarShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera
 			if ((px >= 0.0f && px <= 400.0f && pz >= 0.0f && pz <= 200.0f) &&
 				(ex >= 0.0f && ex <= 400.0f && ez >= 0.0f && ez <= 200.0f))//1-1
 			{
-				objects[i]->Render(pd3dCommandList, pCamera);
+				if (dist < 10.0f)
+				{
+					objects[i]->Render(pd3dCommandList, pCamera);
+				}
 			}
 			else if ((px >= 0.0f && px <= 200.0f && pz >= 200.0f && pz <= 600.0f) &&
 				(ex >= 0.0f && ex <= 200.0f && ez >= 200.0f && ez <= 600.0f))//1-2
 			{
-				objects[i]->Render(pd3dCommandList, pCamera);
+				if(dist<10.0f)
+					objects[i]->Render(pd3dCommandList, pCamera);
 			}
 			else if ((px >= 280.0f && px <= 400.0f && pz >= 200.0f && pz <= 600.0f) &&
 				(ex >= 280.0f && ex <= 400.0f && ez >= 200.0f && ez <= 600.0f))//1-3
 			{
+				if (dist < 10.0f)
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 			else if ((px >= 400.0f && px <= 600.0f && pz >= 0.0f && pz <= 600.0f) &&
 				(ex >= 400.0f && ex <= 600.0f && ez >= 0.0f && ez <= 600.0f))//1-4
 			{
+				if (dist < 10.0f)
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
@@ -227,7 +233,7 @@ void HealthBarShader::Animate(CCamera* cam, std::vector<XMFLOAT3> pos, std::vect
 			obj = new CGameObject(1);
 			obj->SetPosition(pos[i].x, pos[i].y + 2.0f, pos[i].z);
 			obj->SetMesh(hp[0]);
-			obj->SetMaterial(0, rm->materials[270]);
+			obj->SetMaterial(0, rm->materials[17]);
 			objects.push_back(obj);
 		}
 	}

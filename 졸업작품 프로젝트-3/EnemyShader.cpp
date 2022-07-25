@@ -14,11 +14,14 @@ EnemyShader::~EnemyShader() {}
 
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
+
+	
+
 	int mhp = 20;
 	int rhp = 10;
 	float mdur = 0.833333f;
-	float mrange = 2.0f;
-	float rrange = 8.0f;
+	float mrange = 1.0f;
+	float rrange = 12.0f;
 	float rdur = 0.2f;
 
 	EnemyObject* obj1 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
@@ -1570,6 +1573,9 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 						  
 	for (int i = 0; i < objects.size(); ++i)
 	{
+		XMFLOAT3 op = objects[i]->GetPosition();
+		objects[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
+		objects[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
 		objects[i]->type = -10;
 		objects[i]->SetTrackAnimationSet(0, 0);
 		objects[i]->bState.stateID = IDLE_STATE;
@@ -1631,50 +1637,45 @@ void EnemyShader::ReleaseShaderVariables()
 	}
 }
 
-
-
 void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed, ID3D12DescriptorHeap* heap)
 {
 	
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		if (objects[i]->erased == false)
+		XMFLOAT3 pos = objects[i]->GetPosition();
+		XMFLOAT3 camPos = pCamera->getPosition();
+
+		float px = camPos.x;
+		float pz = camPos.z;
+
+		float ex = pos.x;
+		float ez = pos.z;
+		XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
+
+		float dist = Vector3::Length(fromCamera);
+
+		XMFLOAT3 look = pCamera->getLook();
+		look.y = 0.0f;
+		fromCamera.y = 0.0f;
+
+		float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
+
+		if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
 		{
-			XMFLOAT3 pos = objects[i]->GetPosition();
-			XMFLOAT3 camPos = pCamera->getPosition();
 
-			float px = camPos.x;
-			float pz = camPos.z;
-
-			float ex = pos.x;
-			float ez = pos.z;
-			XMFLOAT3 fromCamera = XMFLOAT3(pos.x - camPos.x, pos.y - camPos.y, pos.z - camPos.z);
-
-			float dist = Vector3::Length(fromCamera);
-
-			XMFLOAT3 look = pCamera->getLook();
-			look.y = 0.0f;
-			fromCamera.y = 0.0f;
-
-			float cosAngle = Vector3::DotProduct(Vector3::Normalize(fromCamera), Vector3::Normalize(look));
-
-			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 250.0f)
+			if (objects[i]->erased == false)
 			{
-
-				
-				objects[i]->Animate(1.0f / 36.0f);
+				objects[i]->Animate(elapsed/2);
 				if (objects[i]->m_pSkinnedAnimationController)
 				{
 					objects[i]->UpdateTransform(NULL);
 				}
-
 				if (heap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
 				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
 				objects[i]->Render(pd3dCommandList, pCamera);
-			
 			}
 		}
 	}
@@ -1755,363 +1756,65 @@ std::vector<int> EnemyShader::getHealthRate()
 	return result;
 }
 
-void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die)
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die, ID3D12RootSignature* sig)
 {
-	
+
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		if(objects[i]->erased==false)
+		if (objects[i]->erased == false)
 		{
 
-		// 체력이 막 떨어진 시점에
-		if (objects[i]->bState.hp <= 0 && objects[i]->bState.stateID != DEAD_STATE)
-		{
-			//죽은 것으로 판정하고 죽은 시점 구하기
-			objects[i]->bState.stateID = DEAD_STATE;
-			objects[i]->stunned = false;
-			objects[i]->deathMoment = chrono::system_clock::now();
-			objects[i]->erased = true;
-			
-			
-		}
-
-		if (objects[i]->stunned == true)
-		{
-			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-			chrono::duration<double> dt = moment - objects[i]->lastStun;
-			//기절 애니메이션으로 변경
-			if (objects[i]->weapon == 1)
+			// 체력이 막 떨어진 시점에
+			if (objects[i]->bState.hp <= 0 && objects[i]->bState.stateID != DEAD_STATE)
 			{
-				if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			else
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			//기절 지속시간이 끝난 경우
-			if ((float)dt.count() >= objects[i]->stunDuration)
-			{
+				//죽은 것으로 판정하고 죽은 시점 구하기
+				objects[i]->bState.stateID = DEAD_STATE;
 				objects[i]->stunned = false;
-				objects[i]->stunDuration = 0.0f;
-				objects[i]->bState.stateID = PATROL_STATE;
+				objects[i]->deathMoment = chrono::system_clock::now();
+				objects[i]->erased = true;
+
+
 			}
 
-			break;
-		}
-		if (objects[i]->bState.stateID == PATROL_STATE)
-		{
-			//플레이어 발견 여부 설정
-			float minDist = 9999.0f;
-			int playerID = -1; // 발견한 적의 아이디
-//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
-			for (int p = 0; p < ppos.size(); ++p)
+			if (objects[i]->stunned == true)
 			{
-				bool found = true;
-				XMFLOAT3 ep = objects[i]->GetPosition();
-
-
-				float ex = ep.x;
-				float ez = ep.z;
-				float px = ppos[p].x;
-				float pz = ppos[p].z;
-
-				float dx = px - ex;
-				float dz = pz - ez;
-				float dist = sqrt(dx * dx + dz * dz);
-				float nx = dx / dist;
-				float nz = dz / dist;
-				//30미터 너머의 적은 봐도 못본 것으로 처리
-				if (dist > 20.0f)
+				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+				chrono::duration<double> dt = moment - objects[i]->lastStun;
+				//기절 애니메이션으로 변경
+				if (objects[i]->weapon == 1)
 				{
-					continue;
-				}
-
-				
-				if (abs(dx) > abs(dz))
-				{
-					if (ex < px)
+					if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
 					{
-						for (float x = ex; x < px; x += 0.5f)
-						{
-
-							float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							if (found == false)
-								break;
-						}
-						if (found == true)
-						{
-							if (minDist > dist)
-							{
-								minDist = dist;
-								playerID = p;
-							}
-						}
-
+						objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5], true);
 					}
-					else
-					{
-						for (float x = ex; x > px; x -= 0.5f)
-						{
-							float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
-
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
-							{
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-							{
-								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-
-							if (found == false)
-								break;
-						}
-						if (found == true)
-						{
-							if (minDist > dist)
-							{
-								minDist = dist;
-								playerID = p;
-							}
-						}
-					}
+					objects[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					if (ez < pz)
+					if (objects[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
 					{
-						for (float z = ez; z < pz; z += 0.5f)
-						{
-							float x = ex + dx / dz * 0.5f * (z - ez) * 2.0f;
-
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							if (found == false)
-								break;
-
-						}
-						if (found == true)
-						{
-							if (minDist > dist)
-							{
-								minDist = dist;
-								playerID = p;
-							}
-						}
+						objects[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6], true);
 					}
-					else
-					{
-						for (float z = ez; z > pz; z -= 0.5f)
-						{
-							float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
-
-							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-							{
-								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								//ix = (int)((x + 0.25f) / 0.5f);
-								//iz = (int)((z + 0.25f) / 0.5f);
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
-								{
-									found = false;
-									break;
-								}
-							}
-
-							if (found == false)
-								break;
-						}
-						if (found == true)
-						{
-							if (minDist > dist)
-							{
-								minDist = dist;
-								playerID = p;
-							}
-						}
-					}
+					objects[i]->SetTrackAnimationSet(0, 0);
 				}
-
-			}
-
-			//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
-			if (playerID != -1)
-			{
-				printf("적이 플레이어 찾음\n");
-				objects[i]->bState.stateID = CHASE_STATE;
-				objects[i]->chaseTargetPos = ppos[playerID];
-				float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
-				float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
-				objects[i]->chaseTarget = playerID;
-				objects[i]->route = objects[i]->NavigateMovement(xx, zz);
-				objects[i]->lastSearch = chrono::system_clock::now();
-				objects[i]->routeIdx = 0;
-				continue;
-			}
-			else if (objects[i]->hitPlayerID != -1)
-			{
-				printf("적이 플레이어 찾음\n");
-				objects[i]->bState.stateID = CHASE_STATE;
-				objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
-				objects[i]->chaseTarget = objects[i]->hitPlayerID;
-				objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
-				objects[i]->lastSearch = chrono::system_clock::now();
-				objects[i]->routeIdx = 0;
-				continue;
-			}
-
-			// 현재 가고자 하는 곳까지 경로 계산
-			if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
-			{
-				objects[i]->currentPoint += 1;
-				if (objects[i]->seekPoint.size() != 0)
+				//기절 지속시간이 끝난 경우
+				if ((float)dt.count() >= objects[i]->stunDuration)
 				{
-					if (objects[i]->currentPoint == objects[i]->seekPoint.size())
-						objects[i]->currentPoint = 0;
-					objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
-					objects[i]->routeIdx = 0;
+					objects[i]->stunned = false;
+					objects[i]->stunDuration = 0.0f;
+					objects[i]->bState.stateID = PATROL_STATE;
 				}
-				
 
+				break;
 			}
-			objects[i]->moveByRoute(objects[i]->route);
-			//이동 애니메이션으로 변경
-			if (objects[i]->weapon == 1)
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[0]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[0]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[0]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			else
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[10]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[10]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[10]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			
-
-		}
-
-		else if (objects[i]->bState.stateID == CHASE_STATE)
-		{
-			//빠르게 이동하는 애니메이션으로 변경
-			if (objects[i]->weapon == 1)
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			else
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-
-			//2초에 한번 경로 재설정
-			chrono::time_point<chrono::system_clock> moment =  chrono::system_clock::now();
-			chrono::duration<double> dtm = moment - objects[i]->lastSearch;
-			if ((float)dtm.count() >= 2.0f)
+			if (objects[i]->bState.stateID == PATROL_STATE)
 			{
 				//플레이어 발견 여부 설정
 				float minDist = 9999.0f;
 				int playerID = -1; // 발견한 적의 아이디
+	//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
 				for (int p = 0; p < ppos.size(); ++p)
 				{
 					bool found = true;
@@ -2129,7 +1832,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					float nx = dx / dist;
 					float nz = dz / dist;
 					//30미터 너머의 적은 봐도 못본 것으로 처리
-					if (dist > 20.0f)
+					if (dist > 30.0f)
 					{
 						continue;
 					}
@@ -2341,493 +2044,808 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					objects[i]->routeIdx = 0;
 					continue;
 				}
-			}
 
-			//플레이어의 위치를 향해 감.
-			if (objects[i]->routeIdx < objects[i]->route.size())
-			{
-				objects[i]->moveByRoute(objects[i]->route);
-			}
-			
-
-			float dist = Vector3::Length(Vector3::Subtract(ppos[objects[i]->chaseTarget], objects[i]->GetPosition()));
-			
-			float minDist = 9999.0f;
-			int attackTarget = -1;
-			//추적중인 플레이어와 거리가 공격 사거리보다 짧고, 그 사이에 높이맵이 모두 0인경우
-			if (dist <= objects[i]->attackRange)
-			{
-				bool found = true;
-				float ex = objects[i]->GetPosition().x;
-				float ez = objects[i]->GetPosition().z;
-				float px = ppos[objects[i]->chaseTarget].x;
-				float pz = ppos[objects[i]->chaseTarget].z;
-				float dx = px - ex;
-				float dz = pz - ez;
-				float dist = sqrt(dx * dx + dz * dz);
-				float nx = dx / dist;
-				float nz = dz / dist;
-				if (ex < px)
+				// 현재 가고자 하는 곳까지 경로 계산
+				if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
 				{
-					for (float x = ex; x < px; x += 0.5f)
+					objects[i]->currentPoint += 1;
+					if (objects[i]->seekPoint.size() != 0)
 					{
-						float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
-						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-
-							if (objects[i]->heightmap[ix][iz] >= 2.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-					}
-					if (found == true)
-					{
-						objects[i]->bState.stateID = BATTLE_STATE;
-						objects[i]->attackTarget = objects[i]->chaseTarget;
+						if (objects[i]->currentPoint == objects[i]->seekPoint.size())
+							objects[i]->currentPoint = 0;
+						objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
+						objects[i]->routeIdx = 0;
 					}
 
+
+				}
+				objects[i]->moveByRoute(objects[i]->route);
+				//이동 애니메이션으로 변경
+				if (objects[i]->weapon == 1)
+				{
+					if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+					{
+						objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2], true);
+						
+					}
+					objects[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					for (float x = ex; x > px; x -= 0.5f)
+					if (objects[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
 					{
-						float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
-
-						if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x - 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							if (objects[i]->heightmap[ix][iz] >= 1.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-						else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-						{
-							int ix = (int)((x -200.0f- 0.25f) / 0.5f) + 1;
-							int iz = (int)((z - 0.25f) / 0.5f) + 1;
-							if (objects[i]->heightmap[ix][iz] >= 1.0f)
-							{
-								found = false;
-								break;
-							}
-						}
-						if (found == false)
-							break;
+						objects[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9], true); 
+						
 					}
-					if (found == true)
-					{
-						objects[i]->bState.stateID = BATTLE_STATE;
-						objects[i]->attackTarget = objects[i]->chaseTarget;
-					}
+					objects[i]->SetTrackAnimationSet(0, 0);
 				}
+
 
 			}
 
-
-			//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
-			if (dist >= 20.0f || objects[i]->routeIdx==objects[i]->route.size())
+			else if (objects[i]->bState.stateID == CHASE_STATE)
 			{
-				int playerID = -1; // 발견한 적의 아이디
-				//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
-				for (int p = 0; p < ppos.size(); ++p)
+				//빠르게 이동하는 애니메이션으로 변경
+				if (objects[i]->weapon == 1)
+				{
+					if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+					{
+						objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3], true);
+					}
+					objects[i]->SetTrackAnimationSet(0, 0);
+				}
+				else
+				{
+					if (objects[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
+					{
+						objects[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11], true);
+					}
+					objects[i]->SetTrackAnimationSet(0, 0);
+				}
+
+				//2초에 한번 경로 재설정
+				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+				chrono::duration<double> dtm = moment - objects[i]->lastSearch;
+				if ((float)dtm.count() >= 2.0f)
+				{
+					//플레이어 발견 여부 설정
+					float minDist = 9999.0f;
+					int playerID = -1; // 발견한 적의 아이디
+					for (int p = 0; p < ppos.size(); ++p)
+					{
+						bool found = true;
+						XMFLOAT3 ep = objects[i]->GetPosition();
+
+
+						float ex = ep.x;
+						float ez = ep.z;
+						float px = ppos[p].x;
+						float pz = ppos[p].z;
+
+						float dx = px - ex;
+						float dz = pz - ez;
+						float dist = sqrt(dx * dx + dz * dz);
+						float nx = dx / dist;
+						float nz = dz / dist;
+						//30미터 너머의 적은 봐도 못본 것으로 처리
+						if (dist > 30.0f)
+						{
+							continue;
+						}
+
+
+						if (abs(dx) > abs(dz))
+						{
+							if (ex < px)
+							{
+								for (float x = ex; x < px; x += 0.5f)
+								{
+
+									float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
+								}
+
+							}
+							else
+							{
+								for (float x = ex; x > px; x -= 0.5f)
+								{
+									float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
+								}
+							}
+						}
+						else
+						{
+							if (ez < pz)
+							{
+								for (float z = ez; z < pz; z += 0.5f)
+								{
+									float x = ex + dx / dz * 0.5f * (z - ez) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									if (found == false)
+										break;
+
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
+								}
+							}
+							else
+							{
+								for (float z = ez; z > pz; z -= 0.5f)
+								{
+									float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
+								}
+							}
+						}
+
+					}
+
+					//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
+					if (playerID != -1)
+					{
+						printf("적이 플레이어 찾음\n");
+						objects[i]->bState.stateID = CHASE_STATE;
+						objects[i]->chaseTargetPos = ppos[playerID];
+						float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
+						float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
+						objects[i]->chaseTarget = playerID;
+						objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+						objects[i]->lastSearch = chrono::system_clock::now();
+						objects[i]->routeIdx = 0;
+						continue;
+					}
+					else if (objects[i]->hitPlayerID != -1)
+					{
+						printf("적이 플레이어 찾음\n");
+						objects[i]->bState.stateID = CHASE_STATE;
+						objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
+						objects[i]->chaseTarget = objects[i]->hitPlayerID;
+						objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+						objects[i]->lastSearch = chrono::system_clock::now();
+						objects[i]->routeIdx = 0;
+						continue;
+					}
+				}
+
+				//플레이어의 위치를 향해 감.
+				if (objects[i]->routeIdx < objects[i]->route.size())
+				{
+					objects[i]->moveByRoute(objects[i]->route);
+				}
+
+
+				float dist = Vector3::Length(Vector3::Subtract(ppos[objects[i]->chaseTarget], objects[i]->GetPosition()));
+
+				float minDist = 9999.0f;
+				int attackTarget = -1;
+				//추적중인 플레이어와 거리가 공격 사거리보다 짧고, 그 사이에 높이맵이 모두 0인경우
+				if (dist <= objects[i]->attackRange)
 				{
 					bool found = true;
-					XMFLOAT3 ep = objects[i]->GetPosition();
-
-
-					float ex = ep.x;
-					float ez = ep.z;
-					float px = ppos[p].x;
-					float pz = ppos[p].z;
-
+					float ex = objects[i]->GetPosition().x;
+					float ez = objects[i]->GetPosition().z;
+					float px = ppos[objects[i]->chaseTarget].x;
+					float pz = ppos[objects[i]->chaseTarget].z;
 					float dx = px - ex;
 					float dz = pz - ez;
 					float dist = sqrt(dx * dx + dz * dz);
 					float nx = dx / dist;
 					float nz = dz / dist;
-					//15미터 너머의 적은 봐도 못본 것으로 처리
-					if (dist > 20.0f)
+					if (ex < px)
 					{
-						objects[i]->chaseTarget = -1;
-						objects[i]->attackTarget = -1;
-						objects[i]->bState.stateID = PATROL_STATE;
-						continue;
-					}
-					if (abs(dx) > abs(dz))
-					{
-						if (ex < px)
+						for (float x = ex; x < px; x += 0.5f)
 						{
-							for (float x = ex; x < px; x += 0.5f)
+							float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
 							{
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
-								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
 								{
-									int ix = (int)((x - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-								{
-									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-								if (found == false)
+									found = false;
 									break;
-							}
-							if (found == true)
-							{
-								if (minDist > dist)
-								{
-									minDist = dist;
-									playerID = p;
 								}
 							}
-
-						}
-						else
-						{
-							for (float x = ex; x > px; x -= 0.5f)
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
 							{
-								float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+								if (objects[i]->heightmap[ix][iz] >= 2.0f)
 								{
-									int ix = (int)((x - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
-								{
-									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-
-								if (found == false)
+									found = false;
 									break;
-							}
-							if (found == true)
-							{
-								if (minDist > dist)
-								{
-									minDist = dist;
-									playerID = p;
 								}
 							}
 						}
+						if (found == true)
+						{
+							objects[i]->bState.stateID = BATTLE_STATE;
+							objects[i]->attackTarget = objects[i]->chaseTarget;
+						}
+
 					}
 					else
 					{
-						if (ez < pz)
+						for (float x = ex; x > px; x -= 0.5f)
 						{
-							for (float z = ez; z < pz; z += 0.5f)
-							{
-								float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+							float z = ez + nz / nx * 0.5f * (x - ex) * 2.0f;
 
-								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+							if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+							{
+								int ix = (int)((x - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								if (objects[i]->heightmap[ix][iz] >= 1.0f)
 								{
-									int ix = (int)((x - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-								{
-									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-								if (found == false)
+									found = false;
 									break;
+								}
+							}
+							else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+							{
+								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+								int iz = (int)((z - 0.25f) / 0.5f) + 1;
+								if (objects[i]->heightmap[ix][iz] >= 1.0f)
+								{
+									found = false;
+									break;
+								}
+							}
+							if (found == false)
+								break;
+						}
+						if (found == true)
+						{
+							objects[i]->bState.stateID = BATTLE_STATE;
+							objects[i]->attackTarget = objects[i]->chaseTarget;
+						}
+					}
+
+				}
+
+
+				//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
+				if (dist >= 30.0f || objects[i]->routeIdx == objects[i]->route.size())
+				{
+					int playerID = -1; // 발견한 적의 아이디
+					//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
+					for (int p = 0; p < ppos.size(); ++p)
+					{
+						bool found = true;
+						XMFLOAT3 ep = objects[i]->GetPosition();
+
+
+						float ex = ep.x;
+						float ez = ep.z;
+						float px = ppos[p].x;
+						float pz = ppos[p].z;
+
+						float dx = px - ex;
+						float dz = pz - ez;
+						float dist = sqrt(dx * dx + dz * dz);
+						float nx = dx / dist;
+						float nz = dz / dist;
+						//15미터 너머의 적은 봐도 못본 것으로 처리
+						if (dist > 30.0f)
+						{
+							objects[i]->chaseTarget = -1;
+							objects[i]->attackTarget = -1;
+							objects[i]->bState.stateID = PATROL_STATE;
+							continue;
+						}
+						if (abs(dx) > abs(dz))
+						{
+							if (ex < px)
+							{
+								for (float x = ex; x < px; x += 0.5f)
+								{
+
+									float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
+								}
 
 							}
-							if (found == true)
+							else
 							{
-								if (minDist > dist)
+								for (float x = ex; x > px; x -= 0.5f)
 								{
-									minDist = dist;
-									playerID = p;
+									float z = ez + (dz / dx) * 0.5f * (x - ex) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ex < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ex < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
 								}
 							}
 						}
 						else
 						{
-							for (float z = ez; z > pz; z -= 0.5f)
+							if (ez < pz)
 							{
-								float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
-
-								if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+								for (float z = ez; z < pz; z += 0.5f)
 								{
-									int ix = (int)((x - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 									{
-										found = false;
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									if (found == false)
 										break;
+
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
 									}
 								}
-								else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
-								{
-									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
-									int iz = (int)((z - 0.25f) / 0.5f) + 1;
-									//ix = (int)((x + 0.25f) / 0.5f);
-									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
-									{
-										found = false;
-										break;
-									}
-								}
-
-								if (found == false)
-									break;
 							}
-							if (found == true)
+							else
 							{
-								if (minDist > dist)
+								for (float z = ez; z > pz; z -= 0.5f)
 								{
-									minDist = dist;
-									playerID = p;
+									float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
+
+									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 200.0f && ex < 600.0f && ez >= 0.0f && ez < 200.0f)
+									{
+										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+
+									if (found == false)
+										break;
+								}
+								if (found == true)
+								{
+									if (minDist > dist)
+									{
+										minDist = dist;
+										playerID = p;
+									}
 								}
 							}
 						}
+
+
 					}
 
-
-				}
-
-				//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
-				if (playerID != -1)
-				{
-					objects[i]->bState.stateID = CHASE_STATE;
-					objects[i]->chaseTargetPos = ppos[playerID];
-					float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
-					float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
-					objects[i]->chaseTarget = playerID;
-					objects[i]->route = objects[i]->NavigateMovement(xx, zz);
-					objects[i]->routeIdx = 0;
-					continue;
-				}
-				else if (objects[i]->hitPlayerID != -1)
-				{
-					objects[i]->bState.stateID = CHASE_STATE;
-					objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
-					objects[i]->chaseTarget = objects[i]->hitPlayerID;
-					objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
-					objects[i]->routeIdx = 0;
-					continue;
-				}
-
-			}
-
-
-		}
-
-		else if (objects[i]->bState.stateID == DEAD_STATE)
-		{
-			//죽고난 후 시점까지의 경과시간 구하기.
-			chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
-			float dt = (float)timeFromDeath.count();
-
-			
-			objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
-			objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
-			//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
-
-			CGameObject* tmp = new CGameObject(1);
-
-			
-
-
-			tmp->SetPosition(objects[i]->GetPosition());
-			if (objects[i]->attackTarget != -1)
-			{
-				XMFLOAT3 toPlayer = Vector3::Subtract(ps->objects[objects[i]->attackTarget]->GetPosition(), objects[i]->GetPosition());
-				XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
-				float angle = atan2f(ntp.x, ntp.z);
-				angle = angle / 3.141592f * 180.0f;
-				if (angle >= 360.0f)
-					angle -= 360.0f;
-
-				tmp->Rotate(0.0f, angle, 0.0f);
-			}
-			
-			
-
-
-			tmp->SetMesh(rm->enemyBluntDie[0]);
-			tmp->SetMaterial(0, rm->materials[2]);
-
-			die->objects.push_back(tmp);
-			chrono::time_point<chrono::system_clock> m = chrono::system_clock::now();
-			die->created.push_back(m);
-
-		}
-
-		else if (objects[i]->bState.stateID == BATTLE_STATE)
-		{
-			//공격하는 애니메이션으로 변경
-			if (objects[i]->weapon == 1)
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			else
-			{
-				if (objects[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
-				{
-					objects[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
-					objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7]);
-				}
-				objects[i]->SetTrackAnimationSet(0, 0);
-			}
-			XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
-			XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
-
-			XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
-
-			float dist = Vector3::Length(toPlayer);
-			//공격 대상이 사거리 밖으로 벗어났을 경우
-			if (dist > objects[i]->attackRange)
-			{
-				//다시 순찰모드
-				objects[i]->chaseTarget = -1;
-				objects[i]->attackTarget = -1;
-				objects[i]->bState.stateID = PATROL_STATE;
-			}
-			else
-			{
-				float angle = atan2f(ntp.x, ntp.z);
-				angle = angle / 3.141592f * 180.0f;
-				if (angle >= 360.0f)
-					angle -= 360.0f;
-				objects[i]->Rotate(0.0f, angle, 0.0f);
-
-				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-				chrono::duration<double> fromLastAttack = moment - objects[i]->lastAttack;
-
-				float dt = (float)fromLastAttack.count();
-				if (dt > objects[i]->attackDuration)
-				{
-					Line line;
-					line.start = objects[i]->GetPosition();
-					line.end = pp;
-
-					std::vector<XYZPlane> checkList;
-
-					XYZPlane p1;
-					XYZPlane p2;
-					XYZPlane p3;
-					XYZPlane p4;
-					p1.pos = ppos[objects[i]->chaseTarget].x+0.3f;
-					p1.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-					checkList.push_back(p1);
-
-					p2.pos = ppos[objects[i]->chaseTarget].x-0.3f;
-					p2.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-					checkList.push_back(p2);
-
-					p3.pos = ppos[objects[i]->chaseTarget].z-0.3f;
-					p3.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-					checkList.push_back(p3);
-
-					p4.pos = ppos[objects[i]->chaseTarget].z + 0.3f;
-					p4.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-					checkList.push_back(p4);
-					
-					XMFLOAT3 targetPos;
-					float md = 9999.0f;
-
-					for (int c = 0; c < checkList.size(); ++c)
+					//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
+					if (playerID != -1)
 					{
-						XMFLOAT3 temp = getIntersectPoint(line, checkList[c]);
-						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
-						{
-							
-							float d = Vector3::Length(Vector3::Subtract(temp, objects[i]->GetPosition()));
+						objects[i]->bState.stateID = CHASE_STATE;
+						objects[i]->chaseTargetPos = ppos[playerID];
+						float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
+						float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
+						objects[i]->chaseTarget = playerID;
+						objects[i]->route = objects[i]->NavigateMovement(xx, zz);
+						objects[i]->routeIdx = 0;
+						continue;
+					}
+					else if (objects[i]->hitPlayerID != -1)
+					{
+						objects[i]->bState.stateID = CHASE_STATE;
+						objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
+						objects[i]->chaseTarget = objects[i]->hitPlayerID;
+						objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
+						objects[i]->routeIdx = 0;
+						continue;
+					}
 
-							if (d < md)
+				}
+
+
+			}
+
+			else if (objects[i]->bState.stateID == DEAD_STATE)
+			{
+				//죽고난 후 시점까지의 경과시간 구하기.
+				chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
+				float dt = (float)timeFromDeath.count();
+
+
+				objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+				objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
+
+				//i//f (dt > 2.0f)
+				//{
+				//	objects[i]->SetMesh(NULL);
+				//}
+
+				//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
+
+				CGameObject* tmp = new CGameObject(1);
+
+
+
+
+				tmp->SetPosition(objects[i]->GetPosition());
+				if (objects[i]->attackTarget != -1)
+				{
+					XMFLOAT3 toPlayer = Vector3::Subtract(ps->objects[objects[i]->attackTarget]->GetPosition(), objects[i]->GetPosition());
+					XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
+					float angle = atan2f(ntp.x, ntp.z);
+					angle = angle / 3.141592f * 180.0f;
+					if (angle >= 360.0f)
+						angle -= 360.0f;
+
+					tmp->Rotate(0.0f, angle, 0.0f);
+				}
+
+
+
+
+
+				tmp->SetMaterial(0, rm->materials[2]);
+				if (objects[i]->weapon == 1)
+				{
+					die->type.push_back(1);
+					tmp->SetMesh(die->enemyGunDie[0]);
+				}
+				else if (objects[i]->weapon == 2)
+				{
+					die->type.push_back(2);
+					tmp->SetMesh(die->enemyBluntDie[0]);
+				}
+				die->objects.push_back(tmp);
+				chrono::time_point<chrono::system_clock> m = chrono::system_clock::now();
+				die->created.push_back(m);
+
+			}
+
+			else if (objects[i]->bState.stateID == BATTLE_STATE)
+			{
+				//공격하는 애니메이션으로 변경
+				if (objects[i]->weapon == 1)
+				{
+					if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+					{
+						objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4], true);
+					}
+					objects[i]->SetTrackAnimationSet(0, 0);
+				}
+				else
+				{
+					if (objects[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
+					{
+						objects[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
+						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7], true);
+					}
+					objects[i]->SetTrackAnimationSet(0, 0);
+				}
+				XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
+				XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
+
+				XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
+
+				float dist = Vector3::Length(toPlayer);
+				//공격 대상이 사거리 밖으로 벗어났을 경우
+				if (dist > objects[i]->attackRange)
+				{
+					//다시 순찰모드
+					objects[i]->chaseTarget = -1;
+					objects[i]->attackTarget = -1;
+					objects[i]->bState.stateID = PATROL_STATE;
+				}
+				else
+				{
+					float angle = atan2f(ntp.x, ntp.z);
+					angle = angle / 3.141592f * 180.0f;
+					if (angle >= 360.0f)
+						angle -= 360.0f;
+					objects[i]->Rotate(0.0f, angle, 0.0f);
+
+					chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+					chrono::duration<double> fromLastAttack = moment - objects[i]->lastAttack;
+
+					float dt = (float)fromLastAttack.count();
+					if (dt > objects[i]->attackDuration)
+					{
+						Line line;
+						line.start = objects[i]->GetPosition();
+						line.end = pp;
+
+						std::vector<XYZPlane> checkList;
+
+						XYZPlane p1;
+						XYZPlane p2;
+						XYZPlane p3;
+						XYZPlane p4;
+						p1.pos = ppos[objects[i]->chaseTarget].x + 0.3f;
+						p1.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+						checkList.push_back(p1);
+
+						p2.pos = ppos[objects[i]->chaseTarget].x - 0.3f;
+						p2.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
+						checkList.push_back(p2);
+
+						p3.pos = ppos[objects[i]->chaseTarget].z - 0.3f;
+						p3.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+						checkList.push_back(p3);
+
+						p4.pos = ppos[objects[i]->chaseTarget].z + 0.3f;
+						p4.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
+						checkList.push_back(p4);
+
+						XMFLOAT3 targetPos;
+						float md = 9999.0f;
+
+						for (int c = 0; c < checkList.size(); ++c)
+						{
+							XMFLOAT3 temp = getIntersectPoint(line, checkList[c]);
+							if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 							{
-								targetPos = temp;
-								targetPos.y = 1.0f;
+
+								float d = Vector3::Length(Vector3::Subtract(temp, objects[i]->GetPosition()));
+
+								if (d < md)
+								{
+									targetPos = temp;
+									targetPos.y = 1.0f;
+
+								}
+
+
 
 							}
-							
-
-							
 						}
+						part->createParticles(100, targetPos, pd3dDevice, pd3dCommandList);
+						ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
+						objects[i]->lastAttack = chrono::system_clock::now();
 					}
-					part->createParticles(100, targetPos, pd3dDevice, pd3dCommandList);
-					ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
-					objects[i]->lastAttack = chrono::system_clock::now();
 				}
 			}
-		}
 		}
 	}
 
-	
-	
+
+
 }
 
 

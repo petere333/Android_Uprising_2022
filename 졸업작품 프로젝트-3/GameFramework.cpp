@@ -36,7 +36,7 @@ CGameFramework::CGameFramework()
 	m_pScene = NULL;
 	
 
-	_tcscpy_s(m_pszFrameRate, _T("LabProject ("));
+	_tcscpy_s(m_pszFrameRate, _T("안드로이드 업라이징 ("));
 }
 
 CGameFramework::~CGameFramework()
@@ -758,6 +758,189 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				{
 					m_pScene->profileInter->storageShow = false;
 				}
+				else if (mx >= 346 + wx && mx <= 464 + wx && my >= 330 + wy && my <= 412 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 1)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+
+				}
+				else if (mx >= 542 + wx && mx <= 660 + wx && my >= 330 + wy && my <= 412 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 2)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+				else if (mx >= 737 + wx && mx <= 855 + wx && my >= 330 + wy && my <= 412 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 3)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+
+				else if (mx >= 346 + wx && mx <= 464 + wx && my >= 446 + wy && my <= 528 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 4)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+				else if (mx >= 542 + wx && mx <= 660 + wx && my >= 446 + wy && my <= 528 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 5)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+				else if (mx >= 737 + wx && mx <= 855 + wx && my >= 446 + wy && my <= 528 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 6)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+
+				else if (mx >= 346 + wx && mx <= 464 + wx && my >= 562 + wy && my <= 644 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 7)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+				else if (mx >= 542 + wx && mx <= 660 + wx && my >= 562 + wy && my <= 644 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 8)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
+				else if (mx >= 737 + wx && mx <= 855 + wx && my >= 562 + wy && my <= 644 + wy)
+				{
+					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 9)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == BLUNT ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == DUALBLADE)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+						}
+						else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == RIFLE ||
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == BAZUKA)
+						{
+							EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8];
+							m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+							*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+						}
+					}
+				}
 			}
 			break;
 		}
@@ -965,7 +1148,6 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							{
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp -= totalExpNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1];
 								m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level += 1;
-								m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 3;
 							}
 							m_pScene->stageInter->coworkShow = false;
 						}
@@ -1080,7 +1262,6 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
-							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 30;
@@ -1099,7 +1280,6 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
-							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 60;
@@ -1118,7 +1298,6 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						{
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.exp -= expNeed[m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level - 1];
 							m_pScene->playerShader->objects[m_pScene->pID]->info->growth.radio.level += 1;
-							m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
 						}
 
 						m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.exp += 100;
