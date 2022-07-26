@@ -82,6 +82,7 @@ public:
 												pl->objects[ii]->info->growth.ranged.level += 1;
 												pl->objects[ii]->info->stats.precision += 3;
 												pl->objects[ii]->info->stats.hardness += 2;
+
 											}
 											pl->objects[ii]->info->growth.total.exp += 50;
 

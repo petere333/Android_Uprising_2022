@@ -106,6 +106,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* speedBump = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_speedbump.txt", NULL);
 	CLoadedMesh* trashCont = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_1/vtx_trashContainer.txt", NULL);
 
+
 	CLoadedMesh* enemydie = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_10.txt", NULL);     
 	                  
 
@@ -212,8 +213,12 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		{
 			obj = new (std::nothrow) CGameObject(1);
 			obj->SetMaterial(0, rm->materials[8]);
+
 			//obj->SetMesh(Metal_Box);
-			obj->SetMesh(enemydie);
+	//		obj->SetMesh(enemydie);
+
+			obj->SetMesh(Metal_Box);
+
 
 			//원본 물체 크기의 x,y 길이
 			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;

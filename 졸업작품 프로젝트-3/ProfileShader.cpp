@@ -1202,12 +1202,24 @@ void ProfileShader::Animate(CCamera* cam, PlayerInfoManager* in)
 				objects[77 + i]->SetMesh(meshes[77 + i]);
 				objects[77 + i]->m_ppMaterials[0] = rm->materials[297];
 			}
+			else if (info->inventory[i].type == BAZUKA)
+			{
+				objects[77 + i]->SetMesh(meshes[77 + i]);
+				objects[77 + i]->m_ppMaterials[0] = rm->materials[324];
+			}
 			else if (info->inventory[i].type == DUALBLADE)
 			{
 				objects[77 + i]->SetMesh(meshes[77 + i]);
 				objects[77 + i]->m_ppMaterials[0] = rm->materials[296];
 			}
+			else if (info->inventory[i].type == BLUNT)
+			{
+				objects[77 + i]->SetMesh(meshes[77 + i]);
+				objects[77 + i]->m_ppMaterials[0] = rm->materials[323];
+			}
+
 		}
+
 		for (int i = info->inventory.size(); i < 9; ++i)
 		{
 			objects[77 + i]->SetMesh(NULL);

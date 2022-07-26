@@ -196,9 +196,9 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == Recep_wall4_F)
 		{
-		obj = new CGameObject(1);
-		obj->SetMaterial(0, rm->materials[57]);
-		obj->SetMesh(Receps_Lipgu4);
+			obj = new CGameObject(1);
+			obj->SetMaterial(0, rm->materials[57]);
+			obj->SetMesh(Receps_Lipgu4);
 		}
 
 

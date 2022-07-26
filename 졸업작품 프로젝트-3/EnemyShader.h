@@ -6,8 +6,6 @@
 #include "ParticleShader.h"
 #include "PlayerShader.h"
 #include "DyingEnemyShader.h"
-
-
 class EnemyShader : public CShader
 {
 public:
@@ -18,9 +16,6 @@ public:
 	virtual void ReleaseObjects();
 	virtual void ReleaseUploadBuffers();
 	virtual void ReleaseShaderVariables();
-
-	 
-
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float t, ID3D12DescriptorHeap* heap);
 
 	virtual D3D12_INPUT_LAYOUT_DESC CreateInputLayout();
@@ -32,7 +27,6 @@ public:
 public:
 	
 	
-	
 	float** height11, **height12, **height13, **height21, **height22, **height23;
 
 
@@ -41,11 +35,14 @@ public:
 	
 
 	ResourceManager* rm;
+
+
+
 public:
 	std::vector<XMFLOAT3> getEnemyPosition();
 	std::vector<int> getHealthRate();
 
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*);
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*, ID3D12RootSignature* sig);
 };
 
 typedef struct Line

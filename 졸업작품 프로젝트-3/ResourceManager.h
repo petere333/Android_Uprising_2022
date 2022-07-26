@@ -51,6 +51,7 @@ public:
 
 	std::vector<CLoadedModelInfo*> playerModels;
 	std::vector<CLoadedModelInfo*> enemyModels;
+	std::vector<CAnimationController*> conts;
 
-	std::vector<CLoadedMesh*> enemyBluntDie;
+	
 };

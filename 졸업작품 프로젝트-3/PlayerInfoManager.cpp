@@ -8,8 +8,8 @@ PlayerInfoManager::PlayerInfoManager()
 	gold = 0;
 	extraPoint = 2;
 	
-	inventory.push_back(*manager->items[0]);
 	inventory.push_back(*manager->items[1]);
+	inventory.push_back(*manager->items[3]);
 }
 
 PlayerInfoManager::~PlayerInfoManager()
@@ -41,8 +41,8 @@ void PlayerInfoManager::initStats()
 	stats.attack = 0;
 
 	slot.meleeWeapon = manager->items[0];
-	slot.rangedWeapon = manager->items[1];
-	slot.armor = manager->items[2];
+	slot.rangedWeapon = manager->items[2];
+	slot.armor = manager->items[4];
 }
 
 float PlayerInfoManager::getAttackSpeed()

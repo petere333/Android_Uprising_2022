@@ -26,10 +26,11 @@ public:
 
 public:
 
-
+	std::vector<CLoadedMesh*> enemyBluntDie;
+	std::vector<CLoadedMesh*> enemyGunDie;
 public:
 	
-
+	std::vector<int> type;
 	std::vector<chrono::time_point<chrono::system_clock>> created;
 	std::vector<CGameObject*>	objects;
 	std::vector<CGameObject*> shadows;

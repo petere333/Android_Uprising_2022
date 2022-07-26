@@ -15,7 +15,50 @@ DyingEnemyShader::~DyingEnemyShader() {}
 
 void DyingEnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
+	CLoadedMesh* blunt1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_1.txt", NULL);
+	CLoadedMesh* blunt2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_2.txt", NULL);
+	CLoadedMesh* blunt3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_3.txt", NULL);
+	CLoadedMesh* blunt4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_4.txt", NULL);
+	CLoadedMesh* blunt5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_5.txt", NULL);
+	CLoadedMesh* blunt6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_6.txt", NULL);
+	CLoadedMesh* blunt7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_7.txt", NULL);
+	CLoadedMesh* blunt8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_8.txt", NULL);
+	CLoadedMesh* blunt9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_9.txt", NULL);
+	CLoadedMesh* blunt10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_death_10.txt", NULL);
 
+
+	CLoadedMesh* gun1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_1.txt", NULL);
+	CLoadedMesh* gun2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_2.txt", NULL);
+	CLoadedMesh* gun3 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_3.txt", NULL);
+	CLoadedMesh* gun4 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_4.txt", NULL);
+	CLoadedMesh* gun5 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_5.txt", NULL);
+	CLoadedMesh* gun6 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_6.txt", NULL);
+	CLoadedMesh* gun7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_7.txt", NULL);
+	CLoadedMesh* gun8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_8.txt", NULL);
+	CLoadedMesh* gun9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_9.txt", NULL);
+	CLoadedMesh* gun10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_10.txt", NULL);
+
+	enemyBluntDie.push_back(blunt1);
+	enemyBluntDie.push_back(blunt2);
+	enemyBluntDie.push_back(blunt3);
+	enemyBluntDie.push_back(blunt4);
+	enemyBluntDie.push_back(blunt5);
+	enemyBluntDie.push_back(blunt6);
+	enemyBluntDie.push_back(blunt7);
+	enemyBluntDie.push_back(blunt8);
+	enemyBluntDie.push_back(blunt9);
+	enemyBluntDie.push_back(blunt10);
+
+	enemyGunDie.push_back(gun1);
+	enemyGunDie.push_back(gun2);
+	enemyGunDie.push_back(gun3);
+	enemyGunDie.push_back(gun4);
+	enemyGunDie.push_back(gun5);
+	enemyGunDie.push_back(gun6);
+	enemyGunDie.push_back(gun7);
+	enemyGunDie.push_back(gun8);
+	enemyGunDie.push_back(gun9);
+	enemyGunDie.push_back(gun10);
 }
 
 void DyingEnemyShader::animate()
@@ -25,10 +68,17 @@ void DyingEnemyShader::animate()
 		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 		chrono::duration<double> dt = moment - created[i];
 		float d = (float)dt.count();
-		if (d < 1.0f)
+		if (d < 0.5f)
 		{
-			int animIdx = (int)(d * 10.0);
-			objects[i]->SetMesh(rm->enemyBluntDie[animIdx]);
+			int animIdx = (int)(d * 20.0);
+			if (type[i] == 2)
+			{
+				objects[i]->SetMesh(enemyBluntDie[animIdx]);
+			}
+			else if (type[i] == 1)
+			{
+				objects[i]->SetMesh(enemyGunDie[animIdx]);
+			}
 			if (objects[i]->m_ppMaterials == NULL)
 			{
 				objects[i]->m_ppMaterials = new CMaterial * [1];
@@ -37,14 +87,21 @@ void DyingEnemyShader::animate()
 
 			objects[i]->m_ppMaterials[0] = rm->materials[2];
 		}
-		else if (d >= 1.0f && d < 2.0f)
+		else if (d >= 0.5f && d < 2.0f)
 		{
-			objects[i]->SetMesh(rm->enemyBluntDie[9]);
+			if (type[i] == 2)
+			{
+				objects[i]->SetMesh(enemyBluntDie[9]);
+			}
+			else if (type[i] == 1)
+			{
+				objects[i]->SetMesh(enemyGunDie[9]);
+			}
 			objects[i]->m_ppMaterials[0] = rm->materials[2];
 		}
 		else if (d >= 2.0f)
 		{
-			
+			type.erase(type.begin() + i);
 			objects.erase(objects.begin() + i);
 			created.erase(created.begin() + i);
 		}

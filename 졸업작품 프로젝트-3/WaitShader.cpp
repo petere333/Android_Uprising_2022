@@ -620,4 +620,5 @@ void WaitShader::Animate(CCamera* cam, PlayerInfoManager* info)
 	objects[22]->m_ppMaterials[0] = rm->materials[273 + t10];
 
 	
+
 }

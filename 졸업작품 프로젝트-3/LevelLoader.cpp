@@ -120,7 +120,6 @@ void LoadHeight(const char* filename, float** data)
 				data[x][z] = h;
 			}
 		}
-		
 	}
 	
 	fclose(f);

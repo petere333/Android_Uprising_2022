@@ -58,7 +58,7 @@
 
 
 //플레이어 이동속도
-#define PLAYER_SPEED 23.15f
+#define PLAYER_SPEED 3.55f
 
 
 //서버 IP 정보
