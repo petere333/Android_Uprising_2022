@@ -87,7 +87,7 @@ int main()
 {
 	printf("FBX 파일 로딩 중\n");
 	FbxManager* manager = FbxManager::Create();
-	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/death/death_10.fbx");
+	FbxScene* scene = LoadFbxSceneFromFile(manager, "/fbx/death/gun death_10.fbx");
 	printf("FBX 파일 로딩 완료\n");
 	FbxNode* root = scene->GetRootNode();
 
@@ -99,7 +99,7 @@ int main()
 	printf("정점들의 정보 로딩 완료\n");
 
 	FILE* idxOut = fopen("result/death/idx_gundeath_0.txt", "w");
-	FILE* frameOut = fopen("result/death/vtx_death_10.txt", "w");
+	FILE* frameOut = fopen("result/death/vtx_gundeath_10.txt", "w");
 	
 
 	
@@ -159,9 +159,9 @@ int main()
 
 	//원본 비율을 유지하지 않고 직접 크기를 지정하는 경우
 
-	float xscale = 1.4f / (xmax - xmin);
-	float yscale = 1.7f / (max - min);
-	float zscale = 1.3f / (zmax - zmin);
+	float xscale = 2.4f / (xmax - xmin);
+	float yscale = 0.5f / (max - min);
+	float zscale = 2.0f / (zmax - zmin);
 
 	//원본 비율을 유지하고 확대 축소만 하는 경우
 	//float xscale = 1.0f;
