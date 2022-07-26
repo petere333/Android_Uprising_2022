@@ -2842,6 +2842,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				}
 			}
 		}
+
+
+		objects[i]->lastMove = chrono::system_clock::now();
 	}
 
 

@@ -1815,12 +1815,16 @@ void EnemyObject::moveByRoute(vector<XMFLOAT2> route)
 
 			float speed = 3.0f;
 			//이동한다. 프레임레이트 60 기준, 초당 6미터를 이동한다.
-			SetPosition(origin.x + ndir.x * speed / 60.0f, 0.0f, origin.z + ndir.y * speed/60.0f);
-			mbox->start.x += ndir.x * speed/60.0f;
-			mbox->end.x += ndir.x * speed / 60.0f;
 
-			mbox->start.z += ndir.y * speed / 60.0f;
-			mbox->end.z += ndir.y * speed / 60.0f;
+			//시간*속도=거리
+
+			chrono::duration<double> delta = chrono::system_clock::now() - lastMove;
+			SetPosition(origin.x + ndir.x * speed * delta.count(), 0.0f, origin.z + ndir.y * speed * delta.count());
+			mbox->start.x += ndir.x * speed* delta.count();
+			mbox->end.x += ndir.x * speed * delta.count();
+
+			mbox->start.z += ndir.y * speed * delta.count();
+			mbox->end.z += ndir.y * speed * delta.count();
 
 
 		}

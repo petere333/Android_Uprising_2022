@@ -3,6 +3,7 @@
 #include "../../졸업작품 프로젝트-3/PlayerInfoManager.h"
 
 constexpr int MAX_PLAYER = 50;
+//constexpr int SERVERPORT = 49664;
 constexpr int SERVERPORT = 9000;
 constexpr int BUFSIZE = 1024;
 constexpr int NAMESIZE = 20;
@@ -25,11 +26,11 @@ struct KineticState
 
 struct BionicState
 {
-	int isIntelligent;
-	int stateID;
-	int attackID;
+	int isIntelligent=false;
+	int stateID = 1;
+	int attackID = 2;
 	int hp;
-	int attacking;
+	int attacking=0;
 	//PlayerInfoManager* manager;
 };
 
@@ -43,6 +44,7 @@ enum class PACKET_TYPE : short
 	CS_CAMERA_CHANGE,
 	CS_ATTACK,
 	CS_POSITION,
+	CS_STATE,
 	CS_READY,
 	//server to client
 	SC_LOGIN_INFO,
@@ -57,6 +59,7 @@ enum class PACKET_TYPE : short
 	SC_TELEPORT,
 	SC_POSITION,
 	SC_READY,
+	SC_STATE,
 };
 
 // client to server packet
@@ -238,15 +241,30 @@ struct CS_POSITION_PACKET
 	unsigned char size;
 	PACKET_TYPE type;
 	short c_id;
-
-	int stateID;
-	int attackID;
 	float angle;
 	float x;
 	float y;
 	float z;
 
 
+};
+struct CS_STATE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int stateID;
+	int attackID;
+};
+struct SC_STATE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int stateID;
+	int attackID;
 };
 
 struct SC_POSITION_PACKET
@@ -257,8 +275,6 @@ struct SC_POSITION_PACKET
 	float angle;
 	float x, y, z;
 
-	
-	
 	int attackid;
 };
 struct CS_READY_PACKET
