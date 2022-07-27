@@ -7,7 +7,7 @@
 #include "LevelLoader.h"
 #include "ParticleShader.h"
 #include "EnemyShader.h"
-
+#include "InterfaceShader.h"
 class BoomShader : public CShader
 {
 public:
@@ -27,7 +27,9 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
 public:
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl)
+
+	
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl, InterfaceShader* interShader)
 	{
 		for (int i = 0; i < objects.size(); ++i)
 		{
@@ -97,6 +99,22 @@ public:
 										}
 										enemy->objects[k]->expGiven = true;
 									}
+									if (interShader->mission == 1)
+									{
+										interShader->m1_kill += 1;
+									}
+									else if (interShader->mission == 4)
+									{
+										interShader->m4_kill += 1;
+									}
+									else if (interShader->mission == 7)
+									{
+										interShader->m7_kill += 1;
+									}
+									else if (interShader->mission == 8)
+									{
+										interShader->m8_kill += 1;
+									}
 								}
 								else
 								{
@@ -160,6 +178,22 @@ public:
 
 												}
 												enemy->objects[a]->expGiven = true;
+											}
+											if (interShader->mission == 1)
+											{
+												interShader->m1_kill += 1;
+											}
+											else if (interShader->mission == 4)
+											{
+												interShader->m4_kill += 1;
+											}
+											else if (interShader->mission == 7)
+											{
+												interShader->m7_kill += 1;
+											}
+											else if (interShader->mission == 8)
+											{
+												interShader->m8_kill += 1;
 											}
 										}
 										/*
@@ -229,6 +263,22 @@ public:
 										}
 										enemy->objects[k]->expGiven = true;
 									}
+									if (interShader->mission == 1)
+									{
+										interShader->m1_kill += 1;
+									}
+									else if (interShader->mission == 4)
+									{
+										interShader->m4_kill += 1;
+									}
+									else if (interShader->mission == 7)
+									{
+										interShader->m7_kill += 1;
+									}
+									else if (interShader->mission == 8)
+									{
+										interShader->m8_kill += 1;
+									}
 								}
 
 								enemy->objects[k]->stunned = true;
@@ -288,6 +338,22 @@ public:
 												enemy->objects[a]->expGiven = true;
 
 
+											}
+											if (interShader->mission == 1)
+											{
+												interShader->m1_kill += 1;
+											}
+											else if (interShader->mission == 4)
+											{
+												interShader->m4_kill += 1;
+											}
+											else if (interShader->mission == 7)
+											{
+												interShader->m7_kill += 1;
+											}
+											else if (interShader->mission == 8)
+											{
+												interShader->m8_kill += 1;
 											}
 										}
 										/*

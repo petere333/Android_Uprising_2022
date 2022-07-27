@@ -1225,7 +1225,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		
 		if (boomShader)
-			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader);
+			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader, interShader);
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -1237,7 +1237,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 		XMFLOAT3 cp = cam->getPosition();
 
-		bool cleared = true;
+		bool cleared = false;
+
+
+
+		
 		if (interShader->stageClear == false)
 		{
 			for (int i = 0; i < playerShader->objects.size(); ++i)
@@ -1246,10 +1250,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 				if (waitInter->selectedStage == 1)
 				{
-					if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
+					if (interShader->mission == 1)
 					{
-						cleared = false;
-						break;
+						if (interShader->m1_kill >= 3)
+						{
+							cleared = true;
+						}
 					}
 				}
 				else if (waitInter->selectedStage == 2)
@@ -1853,7 +1859,7 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 				float dx = ep.x - tx;
 				float dz = ep.z - tz;
 				float de = sqrt(dx * dx + dz * dz);
-				if (de < 0.5f)
+				if (de < 0.5f && enemyShader->objects[i]->erased==false)
 				{
 					tx = ox;
 					ty = oy;
@@ -3733,6 +3739,22 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 						}
 						enemyShader->objects[target]->expGiven = true;
 					}
+					if (interShader->mission == 1)
+					{
+						interShader->m1_kill += 1;
+					}
+					else if (interShader->mission == 4)
+					{
+						interShader->m4_kill += 1;
+					}
+					else if (interShader->mission == 7)
+					{
+						interShader->m7_kill += 1;
+					}
+					else if (interShader->mission == 8)
+					{
+						interShader->m8_kill += 1;
+					}
 				}
 			}
 			else if (type == 1)
@@ -3866,11 +3888,36 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 							}
 							enemyShader->objects[i]->expGiven = true;
 						}
+						if (interShader->mission == 1)
+						{
+							interShader->m1_kill += 1;
+						}
+						else if (interShader->mission == 4)
+						{
+							interShader->m4_kill += 1;
+						}
+						else if (interShader->mission == 7)
+						{
+							interShader->m7_kill += 1;
+						}
+						else if (interShader->mission == 8)
+						{
+							interShader->m8_kill += 1;
+						}
 					}
 					//피해 후 0.2초간 기절
 					enemyShader->objects[i]->stunDuration = 0.2f;
 					enemyShader->objects[i]->lastStun = chrono::system_clock::now();
 					enemyShader->objects[i]->stunned = true;
+
+					if (interShader->mission == 2)
+					{
+						interShader->m2_stun += 1;
+					}
+					else if (interShader->mission == 9)
+					{
+						interShader->m9_stun += 1;
+					}
 					break;
 				}
 
@@ -4018,6 +4065,22 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 							}
 						}
 						enemyShader->objects[i]->expGiven = true;
+					}
+					if (interShader->mission == 1)
+					{
+						interShader->m1_kill += 1;
+					}
+					else if (interShader->mission == 4)
+					{
+						interShader->m4_kill += 1;
+					}
+					else if (interShader->mission == 7)
+					{
+						interShader->m7_kill += 1;
+					}
+					else if (interShader->mission == 8)
+					{
+						interShader->m8_kill += 1;
 					}
 				}
 
@@ -4295,8 +4358,69 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 				enemyShader->objects[p]->stunDuration = 5.0f*playerShader->objects[idx]->amp_radio;
 				enemyShader->objects[p]->lastStun = chrono::system_clock::now();
 				enemyShader->objects[p]->stunned = true;
+
+				if (interShader->mission == 2)
+				{
+					interShader->m2_stun += 1;
+				}
+				else if (interShader->mission == 9)
+				{
+					interShader->m9_stun += 1;
+				}
 			}
 		}
+		if (interShader->mission == 3)
+		{
+			for (int p = 0; p < terrain1_1->objects.size(); ++p)
+			{
+				if (terrain1_1->objects[p]->type == Controller1 || terrain1_1->objects[p]->type == Controller2 || terrain1_1->objects[p]->type == Controller4)
+				{
+					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
+					float dx = ppos.x - pp.x;
+					float dz = ppos.z - pp.z;
+					float dst = sqrt(dx * dx + dz * dz);
+					if (dst < 5.0f)
+					{
+						interShader->m3_bother += 1;
+					}
+				}
+			}
+		}
+		else if (interShader->mission == 9)
+		{
+			for (int p = 0; p < terrain1_2->objects.size(); ++p)
+			{
+				if (terrain1_2->objects[p]->type == PotteryKlinOpen || terrain1_2->objects[p]->type == PotteryKlinClose || terrain1_2->objects[p]->type == PotteryWheel)
+				{
+					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
+					float dx = ppos.x - pp.x;
+					float dz = ppos.z - pp.z;
+					float dst = sqrt(dx * dx + dz * dz);
+					if (dst < 5.0f)
+					{
+						interShader->m9_search += 1;
+					}
+				}
+			}
+		}
+		/*
+		else if (interShader->mission == 10)
+		{
+			for (int p = 0; p < terrain1_2->products.size(); ++p)
+			{
+				if (terrain1_2->objects[p]->type == PotteryKlinOpen || terrain1_2->objects[p]->type == PotteryKlinClose || terrain1_2->objects[p]->type == PotteryWheel)
+				{
+					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
+					float dx = ppos.x - pp.x;
+					float dz = ppos.z - pp.z;
+					float dst = sqrt(dx * dx + dz * dz);
+					if (dst < 5.0f)
+					{
+						interShader->m9_search += 1;
+					}
+				}
+			}
+		}*/
 		playerShader->objects[idx]->lastWave = chrono::system_clock::now();
 	}
 }

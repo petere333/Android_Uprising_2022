@@ -15,7 +15,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	{
 		productCreated[i] = chrono::system_clock::now();
 	}
-	goodsMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase1.txt", NULL);
+	goodsMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_toolbox.txt", NULL);
 	CLoadedMesh* shield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_shield.txt", NULL);
 	CLoadedMesh* bigshield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bigshield.txt", NULL);
 	CLoadedMesh* longtank = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_longtank.txt", NULL);
@@ -2430,6 +2430,7 @@ void TerrainShader1_2::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		{
 			CGameObject* goods = new CGameObject(1);
 			goods->SetMaterial(0, rm->materials[125]);
+			
 			goods->SetMesh(goodsMesh);
 			goods->shadowHeight = 0.0f;
 			goods->shadowX = 0.0f;

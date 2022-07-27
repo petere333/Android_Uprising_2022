@@ -196,7 +196,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	UIObject* obj22 = new UIObject(1, -1, -1, -1, -1, 273);
 	UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, 273);
 
-
+	//mission
 
 
 
