@@ -1154,7 +1154,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj125->attackDuration = rdur;
 
 	EnemyObject* obj126 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height12, 0.0f, 0.0f);
-	obj126->SetPosition(420.0f, 0.0f, 146.0f);
+	obj126->SetPosition(420.0f, 0.0f, 160.0f);
 	obj126->origin = XMFLOAT3(420.0f, 0.0f, 160.0f);
 	obj126->bState.hp = rhp;
 	obj126->weapon = 1;
@@ -1208,8 +1208,8 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj131->attackDuration = rdur;
 
 	EnemyObject* obj132 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height12, 0.0f, 0.0f);
-	obj132->SetPosition(450.0f, 0.0f, 135.0f);
-	obj132->origin = XMFLOAT3(450.0f, 0.0f, 135.0f);
+	obj132->SetPosition(450.0f, 0.0f, 133.0f);
+	obj132->origin = XMFLOAT3(450.0f, 0.0f, 133.0f);
 	obj132->bState.hp = rhp;
 	obj132->weapon = 1;
 	obj132->maxHP = rhp;
@@ -2059,7 +2059,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 				}
-				objects[i]->moveByRoute(objects[i]->route);
+				objects[i]->moveByRoute(objects[i]->route, objects);
 				//이동 애니메이션으로 변경
 				if (objects[i]->weapon == 1)
 				{
@@ -2349,7 +2349,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				//플레이어의 위치를 향해 감.
 				if (objects[i]->routeIdx < objects[i]->route.size())
 				{
-					objects[i]->moveByRoute(objects[i]->route);
+					objects[i]->moveByRoute(objects[i]->route, objects);
 				}
 
 

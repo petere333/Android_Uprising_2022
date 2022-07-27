@@ -590,7 +590,7 @@ public:
 
 public:
 	std::vector<XMFLOAT2> NavigateMovement(float x, float z);
-	void moveByRoute(vector<XMFLOAT2> route);
+	void moveByRoute(vector<XMFLOAT2> route, vector<EnemyObject*>);
 	
 
 public:

@@ -187,10 +187,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	}
 
 
-	//LoadHeight("res/map/area1_1/height1-1.txt", height11);
-	//LoadHeight("res/map/area1_2/height1-2.txt", height12);
-	//LoadHeight("res/map/area2-1/height2-1.txt", height21);
-	//LoadHeight("res/map/area2-2/height2-2.txt", height22);
+	LoadHeight("res/map/area1_1/height1-1.txt", height11);
+	LoadHeight("res/map/area1_2/height1-2.txt", height12);
+	LoadHeight("res/map/area2-1/height2-1.txt", height21);
+	LoadHeight("res/map/area2-2/height2-2.txt", height22);
 
 	partMesh = new ParticleMesh(pd3dDevice, pd3dCommandList);
 	
@@ -1836,6 +1836,8 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 			ty = playerShader->objects[idx]->GetPosition().y + fTime * playerShader->objects[idx]->kState.yspeed;
 			tz = playerShader->objects[idx]->GetPosition().z + fTime * playerShader->objects[idx]->kState.xzspeed * -dir.z;
 
+
+
 			float ox = playerShader->objects[idx]->GetPosition().x;
 			float oz = playerShader->objects[idx]->GetPosition().z;
 			float oy = playerShader->objects[idx]->GetPosition().y;
@@ -1844,6 +1846,22 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 
 			float px = playerShader->objects[idx]->GetPosition().x;
 			float pz = playerShader->objects[idx]->GetPosition().z;
+
+			for (int i = 0; i < enemyShader->objects.size(); ++i)
+			{
+				XMFLOAT3 ep = enemyShader->objects[i]->GetPosition();
+				float dx = ep.x - tx;
+				float dz = ep.z - tz;
+				float de = sqrt(dx * dx + dz * dz);
+				if (de < 0.5f)
+				{
+					tx = ox;
+					ty = oy;
+					tz = oz;
+					return false;
+				}
+			}
+
 			//1-1구역에 있는가?
 			if (tx >= 0.0f && tx <= 200.0f && tz >= 0.0f && tz <= 200.0f)
 			{
@@ -3858,6 +3876,8 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 
 
 			}
+
+			//
 
 
 		}
