@@ -36,7 +36,7 @@ void DyingEnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* gun7 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_7.txt", NULL);
 	CLoadedMesh* gun8 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_8.txt", NULL);
 	CLoadedMesh* gun9 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_9.txt", NULL);
-	CLoadedMesh* gun10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_10.txt", NULL);
+	CLoadedMesh* gun10 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/enemy/vtx_gundeath_10.txt", NULL); 
 
 	enemyBluntDie.push_back(blunt1);
 	enemyBluntDie.push_back(blunt2);
