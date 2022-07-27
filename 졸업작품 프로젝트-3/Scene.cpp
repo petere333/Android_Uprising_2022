@@ -1254,6 +1254,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						if (interShader->m1_kill >= 3)
 						{
+							interShader->mission += 1;
+						}
+					}
+					else if (interShader->mission == 2)
+					{
+						if (interShader->m2_stun >= 5)
+						{
 							cleared = true;
 						}
 					}
@@ -1373,12 +1380,33 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[k]->kState.rotation = 0.0f;
 					playerShader->objects[k]->kState.xzspeed = 0.0f;
 					playerShader->objects[k]->kState.yspeed = 0.0f;
+					playerShader->objects[k]->readyToGo = false;
 				}
-				enemyShader->objects.clear();
-				enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
+				
+
+				//enemyShader->objects.clear();
+				//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+				enemyShader->restart();
 				//선택된 스테이지에 관한 정보 초기화.
 				interShader->stageClear = false;
+
+
+				interShader->m10_gain = 0;
+				interShader->m10_miss = 0;
+				interShader->m1_kill = 0;
+				interShader->m2_stun = 0;
+				interShader->m3_bother = 0;
+				interShader->m4_kill = 0;
+				interShader->m5_broken = 0;
+				interShader->m6_broken = 0;
+				interShader->m7_kill = 0;
+				interShader->m8_kill = 0;
+				interShader->m9_stun = 0;
+				interShader->m9_search = 0;
+				interShader->mission = 1;
+
+
 				waitInter->selectedStage = -1;
 
 				cam->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -3910,14 +3938,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 					enemyShader->objects[i]->lastStun = chrono::system_clock::now();
 					enemyShader->objects[i]->stunned = true;
 
-					if (interShader->mission == 2)
-					{
-						interShader->m2_stun += 1;
-					}
-					else if (interShader->mission == 9)
-					{
-						interShader->m9_stun += 1;
-					}
+
 					break;
 				}
 
@@ -4308,10 +4329,6 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	{
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[9]->m_pModelRootObject)
 		{
-
-
-			
-
 			playerShader->objects[idx]->setRoot(rm->playerModels[9]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[9]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
@@ -4334,10 +4351,6 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		//공격 애니메이션 전환
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[8]->m_pModelRootObject)
 		{
-
-
-		
-
 			playerShader->objects[idx]->setRoot(rm->playerModels[8]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[8]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);

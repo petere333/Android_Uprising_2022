@@ -12,17 +12,40 @@ EnemyShader::EnemyShader(ResourceManager* r, float** height, float** height2, fl
 }
 EnemyShader::~EnemyShader() {}
 
+void EnemyShader::restart()
+{
+	for (int i = 0; i < objects.size(); ++i)
+	{
+		objects[i]->SetPosition(objects[i]->origin);
+		if (objects[i]->weapon == 2)
+		{
+			objects[i]->maxHP = mhp;
+			objects[i]->bState.hp = mhp;
+			objects[i]->attackRange = mrange;
+			objects[i]->attackDuration = mdur;
+
+		}
+		else
+		{
+			objects[i]->maxHP = rhp;
+			objects[i]->bState.hp = rhp;
+			objects[i]->attackRange = rrange;
+			objects[i]->attackDuration = rdur;
+		}
+		objects[i]->attackTarget = -1;
+		XMFLOAT3 op = objects[i]->GetPosition();
+		objects[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
+		objects[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
+		objects[i]->type = -10;
+		objects[i]->SetTrackAnimationSet(0, 0);
+		objects[i]->bState.stateID = PATROL_STATE;
+		objects[i]->lastAttack = chrono::system_clock::now();
+		objects[i]->erased = false;
+	}
+}
+
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
 {
-
-	
-
-	int mhp = 20;
-	int rhp = 10;
-	float mdur = 0.833333f;
-	float mrange = 1.0f;
-	float rrange = 12.0f;
-	float rdur = 0.2f;
 
 	EnemyObject* obj1 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
 	obj1->SetPosition      (170.0f, 0.0f, 20.0f);
