@@ -3757,16 +3757,18 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			}
 			if (type == 2)
 			{
-				CS_ATTACK_PACKET p;
-				p.type = PACKET_TYPE::CS_ATTACK;
-				p.size = sizeof(CS_ATTACK_PACKET);
-				p.target = target;
-				p.id = pID;
-				p.stuntime = 0.0f;
-				p.damage = playerShader->objects[idx]->info->getRangedDamage() * playerShader->objects[idx]->amp_ranged;
+				if (idx == pID)
+				{
+					CS_ATTACK_PACKET p;
+					p.type = PACKET_TYPE::CS_ATTACK;
+					p.size = sizeof(CS_ATTACK_PACKET);
+					p.target = target;
+					p.id = pID;
+					p.stuntime = 0.0f;
+					p.damage = playerShader->objects[idx]->info->getRangedDamage() * playerShader->objects[idx]->amp_ranged;
 
-				SendPacket(&p);
-				
+					SendPacket(&p);
+				}
 			}
 
 			
@@ -3872,27 +3874,29 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 					playerShader->objects[idx]->hammerHit = true;
 					
 					
+					if (idx == pID)
+					{
+						CS_ATTACK_PACKET ap;
+						ap.size = sizeof(CS_ATTACK_PACKET);
+						ap.type = PACKET_TYPE::CS_ATTACK;
+						ap.id = pID;
 
-					CS_ATTACK_PACKET ap;
-					ap.size = sizeof(CS_ATTACK_PACKET);
-					ap.type = PACKET_TYPE::CS_ATTACK;
-					ap.id = pID;
+						ap.target = i;
+						ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+						ap.stuntime = 0.2f;
+						SendPacket(&ap);
 
-					ap.target = i;
-					ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
-					ap.stuntime = 0.2f;
-					SendPacket(&ap);
-
-					CS_PARTICLE_PACKET p;
-					p.size = sizeof(CS_PARTICLE_PACKET);
-					p.type = PACKET_TYPE::CS_PARTICLE;
-					p.id = pID;
-					p.count = 100;
-					p.x = enemyShader->objects[i]->GetPosition().x;
-					p.y = enemyShader->objects[i]->GetPosition().y;
-					p.z = enemyShader->objects[i]->GetPosition().z;
-					p.particleType = 1;
-					SendPacket(&p);
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pID;
+						p.count = 100;
+						p.x = enemyShader->objects[i]->GetPosition().x;
+						p.y = enemyShader->objects[i]->GetPosition().y;
+						p.z = enemyShader->objects[i]->GetPosition().z;
+						p.particleType = 1;
+						SendPacket(&p);
+					}
 				}
 
 

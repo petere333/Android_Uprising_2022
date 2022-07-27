@@ -48,29 +48,7 @@ public:
 
 			//생성된지 1초가 지났거나, 그사이에 물체 혹은 적에게 박힌 경우 객체 제거.
 
-			if ((float)dt.count() >= 1.0f)
-			{
-
-				CS_PARTICLE_PACKET p;
-				p.size = sizeof(CS_PARTICLE_PACKET);
-				p.type = PACKET_TYPE::CS_PARTICLE;
-				p.id = 1;
-				p.particleType = 1;
-				p.count = 100;
-				p.x = objects[i]->GetPosition().x;
-				p.y = objects[i]->GetPosition().y;
-				p.z = objects[i]->GetPosition().z;
-
-				SendPacket(&p);
-
-
-				//delete objects[i];
-				objects.erase(objects.begin() + i);
-				erased = true;
-
-			}
-			else
-			{
+			
 				float tx = objects[i]->origin.x + objects[i]->direction.x * objects[i]->speed * (float)dt.count();
 				float tz = objects[i]->origin.z + objects[i]->direction.z * objects[i]->speed * (float)dt.count();
 
@@ -104,13 +82,13 @@ public:
 							{
 
 
-
+								
 								CS_ATTACK_PACKET ap;
 								ap.size = sizeof(CS_ATTACK_PACKET);
 								ap.type = PACKET_TYPE::CS_ATTACK;
 								ap.id = 1;
 								ap.target = k;
-								ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+								ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
 								ap.stuntime = 1.0f;
 
 								SendPacket(&ap);
@@ -160,7 +138,7 @@ public:
 										ap.type = PACKET_TYPE::CS_ATTACK;
 										ap.id = 1;
 										ap.target = i;
-										ap.damage = pl->objects[a]->info->getMeleeDamage() * pl->objects[a]->amp_melee;
+										ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
 										ap.stuntime = 1.0f;
 
 										SendPacket(&ap);
@@ -210,7 +188,7 @@ public:
 							ap.type = PACKET_TYPE::CS_ATTACK;
 							ap.id = 1;
 							ap.target = k;
-							ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+							ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
 							ap.stuntime = 1.0f;
 
 							SendPacket(&ap);
@@ -265,7 +243,7 @@ public:
 										ap.type = PACKET_TYPE::CS_ATTACK;
 										ap.id = 1;
 										ap.target = a;
-										ap.damage = pl->objects[a]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+										ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
 										ap.stuntime = 1.0f;
 
 										SendPacket(&ap);
@@ -283,7 +261,7 @@ public:
 						}
 					}
 				}
-			}
+			
 			if (erased == true)
 			{
 				continue;
