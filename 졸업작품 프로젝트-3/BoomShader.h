@@ -92,8 +92,8 @@ public:
 									ap.size = sizeof(CS_ATTACK_PACKET);
 									ap.type = PACKET_TYPE::CS_ATTACK;
 									ap.id = 1;
-									ap.target = i;
-									ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+									ap.target = k;
+									ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
 									ap.stuntime = 1.0f;
 
 									SendPacket(&ap);
@@ -148,8 +148,8 @@ public:
 											ap.size = sizeof(CS_ATTACK_PACKET);
 											ap.type = PACKET_TYPE::CS_ATTACK;
 											ap.id = 1;
-											ap.target = i;
-											ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+											ap.target = a;
+											ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
 											ap.stuntime = 1.0f;
 
 											SendPacket(&ap);
@@ -203,8 +203,8 @@ public:
 								ap.size = sizeof(CS_ATTACK_PACKET);
 								ap.type = PACKET_TYPE::CS_ATTACK;
 								ap.id = 1;
-								ap.target = i;
-								ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
 								ap.stuntime = 1.0f;
 
 								SendPacket(&ap);
@@ -266,8 +266,8 @@ public:
 											ap.size = sizeof(CS_ATTACK_PACKET);
 											ap.type = PACKET_TYPE::CS_ATTACK;
 											ap.id = 1;
-											ap.target = i;
-											ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+											ap.target = a;
+											ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
 											ap.stuntime = 1.0f;
 
 											SendPacket(&ap);
