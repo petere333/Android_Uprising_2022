@@ -1518,6 +1518,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			pac.rAttack = playerShader->objects[pID]->info->slot.rangedWeapon->stats.attack;
 			pac.mAttack = playerShader->objects[pID]->info->slot.meleeWeapon->stats.attack;
 
+			pac.mWeapon = playerShader->objects[pID]->info->slot.meleeWeapon->type;
+			pac.rWeapon = playerShader->objects[pID]->info->slot.rangedWeapon->type;
 
 			SendPacket(&pac);
 
@@ -2694,6 +2696,8 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		playerShader->objects[p.c_id]->info->stats = p.stats;
 		playerShader->objects[p.c_id]->info->slot.meleeWeapon->stats.attack = p.m;
 		playerShader->objects[p.c_id]->info->slot.rangedWeapon->stats.attack = p.r;
+		playerShader->objects[p.c_id]->info->slot.meleeWeapon->type = p.mw;
+		playerShader->objects[p.c_id]->info->slot.rangedWeapon->type = p.rw;
 		break;
 	}
 
