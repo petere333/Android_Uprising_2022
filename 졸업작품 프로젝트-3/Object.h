@@ -627,7 +627,7 @@ public:
 	float yspeed = 0.0f;
 	XMFLOAT3 direction = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
-
+	int type;
 };
 
 class BoomObject : public CGameObject

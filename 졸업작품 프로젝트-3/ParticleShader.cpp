@@ -60,11 +60,14 @@ void ParticleShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera*
 
 		if (cosAngle >= cos(XMConvertToRadians(45.0f)) && cosAngle <= 1.0f)
 		{
+			if (objects[i]->type == 1)
+			{	
+				objects[i]->m_ppMaterials[0] = rm->materials[4];
+			}
 			objects[i]->Render(pd3dCommandList, pCamera);
 		}
 
 	}
-
 }
 
 D3D12_INPUT_LAYOUT_DESC ParticleShader::CreateInputLayout()
@@ -116,7 +119,7 @@ D3D12_SHADER_BYTECODE ParticleShader::CreatePixelShader()
 	return(CShader::CompileShaderFromFile(L"Particles.hlsl", "psParticle", "ps_5_1", &m_pd3dPixelShaderBlob));
 }
 
-void ParticleShader::createParticles(int n, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list)
+void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list)
 {
 
 
@@ -132,6 +135,7 @@ void ParticleShader::createParticles(int n, XMFLOAT3 pos, ID3D12Device* device, 
 		direct = Vector3::Normalize(direct);
 
 		ParticleObject* obj = new ParticleObject(1);
+		obj->type = type;
 		obj->timeCreated = std::chrono::system_clock::now();
 		obj->SetMaterial(0, rm->materials[4]);
 		obj->speed = 0.1f;

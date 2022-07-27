@@ -378,9 +378,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
-					m_pScene->enemyShader->objects.clear();
-					m_pScene->enemyShader->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature);
-
+					m_pScene->enemyShader->restart();
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
@@ -428,11 +426,25 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
-					m_pScene->enemyShader->objects.clear();
-					m_pScene->enemyShader->BuildObjects(m_pd3dDevice, m_pd3dCommandList, m_pScene->m_pd3dGraphicsRootSignature);
+					m_pScene->enemyShader->restart();
 
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
+
+					m_pScene->interShader->m10_gain = 0;
+					m_pScene->interShader->m10_miss = 0;
+					m_pScene->interShader->m1_kill = 0;
+					m_pScene->interShader->m2_stun = 0;
+					m_pScene->interShader->m3_bother = 0;
+					m_pScene->interShader->m4_kill = 0;
+					m_pScene->interShader->m5_broken = 0;
+					m_pScene->interShader->m6_broken = 0;
+					m_pScene->interShader->m7_kill = 0;
+					m_pScene->interShader->m8_kill = 0;
+					m_pScene->interShader->m9_stun = 0;
+					m_pScene->interShader->m9_search = 0;
+					m_pScene->interShader->mission = 1;
+
 					m_pScene->waitInter->selectedStage = -1;
 
 					m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);

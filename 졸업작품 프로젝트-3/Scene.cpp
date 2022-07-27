@@ -287,7 +287,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
+	programStarted = chrono::system_clock::now();
+
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+
 }
 
 void CScene::ReleaseObjects()
@@ -1497,6 +1501,26 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		{
 			currentScreen = IN_GAME_STATE;
 
+			CS_POWER_PACKET pac;
+			pac.size = sizeof(CS_POWER_PACKET);
+			pac.type = PACKET_TYPE::CS_POWER;
+			pac.c_id = pID;
+
+			
+			
+
+			pac.stats.capacity = playerShader->objects[pID]->info->getCapacity();
+			pac.stats.maxhp = playerShader->objects[pID]->info->getCapacity();
+			pac.stats.power = playerShader->objects[pID]->info->getPower();
+			pac.stats.hardness = playerShader->objects[pID]->info->getHardness();
+			pac.stats.precision = playerShader->objects[pID]->info->getPrecision();
+			pac.stats.entrophy = playerShader->objects[pID]->info->getEntrophy();
+			pac.rAttack = playerShader->objects[pID]->info->slot.rangedWeapon->stats.attack;
+			pac.mAttack = playerShader->objects[pID]->info->slot.meleeWeapon->stats.attack;
+
+
+			SendPacket(&pac);
+
 			for (int e = 0; e < enemyShader->objects.size(); ++e)
 			{
 				
@@ -2651,6 +2675,27 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+	case PACKET_TYPE::SC_PARTICLE:
+	{
+		SC_PARTICLE_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		if (p.particleType == 1)
+		{
+			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
+		}
+		break;
+	}
+	case PACKET_TYPE::SC_POWER:
+	{
+		SC_POWER_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		playerShader->objects[p.c_id]->info->stats = p.stats;
+		playerShader->objects[p.c_id]->info->slot.meleeWeapon->stats.attack = p.m;
+		playerShader->objects[p.c_id]->info->slot.rangedWeapon->stats.attack = p.r;
+		break;
+	}
 
 	case PACKET_TYPE::SC_READY:
 	{
@@ -2823,12 +2868,38 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_ATTACK_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		cout << "attack to target" << endl;
-		partShader->createParticles(100, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
-		if (p.target != -1)
+		enemyShader->objects[p.target]->bState.hp -= p.damage;
+
+		if (enemyShader->objects[p.target]->bState.hp <= 0)
 		{
-			//enemyShader->objects[p.target]->bState.hp -= playerShader;
+			if (interShader->mission == 1)
+			{
+				interShader->m1_kill += 1;
+			}
+			else if (interShader->mission == 4)
+			{
+				interShader->m4_kill += 1;
+			}
+			else if (interShader->mission == 7)
+			{
+				interShader->m7_kill += 1;
+			}
+			else if (interShader->mission == 8)
+			{
+				interShader->m8_kill += 1;
+			}
 		}
+		else
+		{
+			if (p.stuntime > 0.0f)
+			{
+				enemyShader->objects[p.target]->stunned = true;
+				enemyShader->objects[p.target]->stunDuration = p.stuntime;
+				enemyShader->objects[p.target]->lastStun = chrono::system_clock::now();
+			}
+		}
+		
+		break;
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
 		//수정중
@@ -3670,16 +3741,6 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 						dist = 3000.0f;
 					}
 				}
-				/*
-				if (dist != 3000.0f)
-				{
-					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
-					printf("%d번째 박스와 거리 %f\n", i, dist);
-				}
-				*/
-				// 총알은 관통 기능이 없다. 즉,
-				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
-				// 그 지점이 새로운 충돌지점이다.
 
 				if (dist < minDist)
 				{
@@ -3690,110 +3751,38 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				}
 
 			}
-
-
-
-			// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
-			// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
-
-			// 이제, 서버는  총알의 충돌 지점을 나타내는 targetPos, 맞은 객체의 유형을 나타내는 type, 몇 번째 객체에 맞았는지 나타내는 target값을 전송해야 한다.
-
-			if (type == 1)
-			{
-
-
-				printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-				/*
-				if (terrainShader->objects[target]->type == 21217)
-				{
-					float ox = terrainShader->objects[target]->GetPosition().x;
-					float oy = terrainShader->objects[target]->GetPosition().y;
-					float oz = terrainShader->objects[target]->GetPosition().z;
-
-					terrainShader->objects[target] = NULL;
-					terrainShader->boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
-					terrainShader->boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
-
-
-
-					for (float x = ox - 15.0f; x < ox + 15.0f; x += 1.5f)
-					{
-						for (float y = oy - 4.5f; y < oy + 5.0f; y += 1.5f)
-						{
-							for (float z = oz - 0.5f; z < oz + 1.0f; z += 0.6f)
-							{
-								XMFLOAT3 tmp = XMFLOAT3(x, y, z);
-								partShader->createParticles(10, tmp, device, list);
-							}
-						}
-					}
-				}
-				*/
-			}
-
-			CS_ATTACK_PACKET p;
-			p.type = PACKET_TYPE::CS_ATTACK;
-			p.size = sizeof(CS_ATTACK_PACKET);
-			p.target = target;
-			p.x = targetPos.x;
-			p.y = targetPos.y;
-			p.z = targetPos.z;
 			if (type == 2)
 			{
-				p.isAlive = true;
-				enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage()*playerShader->objects[idx]->amp_ranged;
-				if (enemyShader->objects[target]->bState.hp <= 0)
-				{
-					if (enemyShader->objects[target]->expGiven == false)
-					{
-						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
-						{
-							playerShader->objects[ii]->info->growth.ranged.exp += 50;
-							if (playerShader->objects[ii]->info->growth.ranged.exp >= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1])
-							{
-								playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
-								playerShader->objects[ii]->info->growth.ranged.level += 1;
-								playerShader->objects[ii]->info->stats.hardness += 2;
-								playerShader->objects[ii]->info->stats.precision += 3;
-							}
+				CS_ATTACK_PACKET p;
+				p.type = PACKET_TYPE::CS_ATTACK;
+				p.size = sizeof(CS_ATTACK_PACKET);
+				p.target = target;
+				p.id = pID;
+				p.stuntime = 0.0f;
+				p.damage = playerShader->objects[idx]->info->getRangedDamage() * playerShader->objects[idx]->amp_ranged;
 
-							playerShader->objects[ii]->info->growth.total.exp += 50;
-							if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
-							{
-								playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
-								playerShader->objects[ii]->info->growth.total.level += 1;
-								playerShader->objects[ii]->info->extraPoint += 3;
-							}
-						}
-						enemyShader->objects[target]->expGiven = true;
-					}
-					if (interShader->mission == 1)
-					{
-						interShader->m1_kill += 1;
-					}
-					else if (interShader->mission == 4)
-					{
-						interShader->m4_kill += 1;
-					}
-					else if (interShader->mission == 7)
-					{
-						interShader->m7_kill += 1;
-					}
-					else if (interShader->mission == 8)
-					{
-						interShader->m8_kill += 1;
-					}
-				}
+				SendPacket(&p);
+				
 			}
-			else if (type == 1)
-			{
-				p.isAlive = false;
-			}
-			SendPacket(&p);
+
+			
 
 			// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
 			// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
-			partShader->createParticles(50, targetPos, device, list);
+			//partShader->createParticles(50, targetPos, device, list);
+			CS_PARTICLE_PACKET part;
+			part.size = sizeof(CS_PARTICLE_PACKET);
+			part.type = PACKET_TYPE::CS_PARTICLE;
+			part.id = pID;
+
+			part.count = 100;
+			part.x = targetPos.x;
+			part.y = targetPos.y;
+			part.z = targetPos.z;
+			part.particleType = 1;
+			SendPacket(&part);
+
+
 			// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
 		}
 	
@@ -3831,26 +3820,18 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			{
 				if (playerShader->objects[idx]->m_pChild != rm->playerModels[3]->m_pModelRootObject)
 				{
-					
-					
-
 					playerShader->objects[idx]->setRoot(rm->playerModels[3]->m_pModelRootObject, true);
 					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[3]);
-					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-					
+					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);					
 				}
 			}
 			else
 			{
 				if (playerShader->objects[idx]->m_pChild != rm->playerModels[4]->m_pModelRootObject)
 				{
-					
-				
-
 					playerShader->objects[idx]->setRoot(rm->playerModels[4]->m_pModelRootObject, true);
 					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[4]);
 					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-					
 				}
 			}
 		}
@@ -3866,8 +3847,6 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			float dx = sin(rad);
 			float dz = cos(rad);
 			XMFLOAT3 look = XMFLOAT3(dx, 0.0f, dz);
-
-
 
 			for (int i = 0; i < enemyShader->objects.size(); ++i)
 			{
@@ -3887,59 +3866,29 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 					soundEffect[4]->play();
 					soundEffect[4]->Update();
 					playerShader->objects[idx]->hammerHit = true;
-					partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-					enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+					
+					
 
-					if (enemyShader->objects[i]->bState.hp <= 0)
-					{
-						if (enemyShader->objects[i]->expGiven == false)
-						{
-							for (int ii = 0; ii < playerShader->objects.size(); ++ii)
-							{
-								playerShader->objects[ii]->info->growth.melee.exp += 50;
-								if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
-								{
-									playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
-									playerShader->objects[ii]->info->growth.melee.level += 1;
-									playerShader->objects[ii]->info->stats.maxhp += 3;
-									playerShader->objects[ii]->info->stats.capacity += 3;
-									playerShader->objects[ii]->info->stats.power += 2;
-								}
+					CS_ATTACK_PACKET ap;
+					ap.size = sizeof(CS_ATTACK_PACKET);
+					ap.type = PACKET_TYPE::CS_ATTACK;
+					ap.id = pID;
 
-								playerShader->objects[ii]->info->growth.total.exp += 50;
-								if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
-								{
-									playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
-									playerShader->objects[ii]->info->growth.total.level += 1;
-									playerShader->objects[ii]->info->extraPoint += 3;
-								}
-							}
-							enemyShader->objects[i]->expGiven = true;
-						}
-						if (interShader->mission == 1)
-						{
-							interShader->m1_kill += 1;
-						}
-						else if (interShader->mission == 4)
-						{
-							interShader->m4_kill += 1;
-						}
-						else if (interShader->mission == 7)
-						{
-							interShader->m7_kill += 1;
-						}
-						else if (interShader->mission == 8)
-						{
-							interShader->m8_kill += 1;
-						}
-					}
-					//피해 후 0.2초간 기절
-					enemyShader->objects[i]->stunDuration = 0.2f;
-					enemyShader->objects[i]->lastStun = chrono::system_clock::now();
-					enemyShader->objects[i]->stunned = true;
+					ap.target = i;
+					ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+					ap.stuntime = 0.2f;
+					SendPacket(&ap);
 
-
-					break;
+					CS_PARTICLE_PACKET p;
+					p.size = sizeof(CS_PARTICLE_PACKET);
+					p.type = PACKET_TYPE::CS_PARTICLE;
+					p.id = pID;
+					p.count = 100;
+					p.x = enemyShader->objects[i]->GetPosition().x;
+					p.y = enemyShader->objects[i]->GetPosition().y;
+					p.z = enemyShader->objects[i]->GetPosition().z;
+					p.particleType = 1;
+					SendPacket(&p);
 				}
 
 
@@ -4066,44 +4015,30 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
-				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+				
 
-				if (enemyShader->objects[i]->bState.hp <= 0)
-				{
-					if (enemyShader->objects[i]->expGiven == false)
-					{
-						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
-						{
-							playerShader->objects[ii]->info->growth.melee.exp += 50;
-							if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
-							{
-								playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
-								playerShader->objects[ii]->info->growth.melee.level += 1;
-								playerShader->objects[ii]->info->stats.maxhp += 3;
-								playerShader->objects[ii]->info->stats.capacity += 3;
-								playerShader->objects[ii]->info->stats.power += 2;
-							}
-						}
-						enemyShader->objects[i]->expGiven = true;
-					}
-					if (interShader->mission == 1)
-					{
-						interShader->m1_kill += 1;
-					}
-					else if (interShader->mission == 4)
-					{
-						interShader->m4_kill += 1;
-					}
-					else if (interShader->mission == 7)
-					{
-						interShader->m7_kill += 1;
-					}
-					else if (interShader->mission == 8)
-					{
-						interShader->m8_kill += 1;
-					}
-				}
+				CS_PARTICLE_PACKET p;
+				p.size = sizeof(CS_PARTICLE_PACKET);
+				p.type = PACKET_TYPE::CS_PARTICLE;
+				p.id = pID;
+				p.particleType = 1;
+				p.count = 100;
+				p.x = enemyShader->objects[i]->GetPosition().x;
+				p.y = enemyShader->objects[i]->GetPosition().y;
+				p.z = enemyShader->objects[i]->GetPosition().z;
+
+				SendPacket(&p);
+
+				CS_ATTACK_PACKET ap;
+				ap.size = sizeof(CS_ATTACK_PACKET);
+				ap.type = PACKET_TYPE::CS_ATTACK;
+				ap.id = pID;
+				ap.target = i;
+				ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+				ap.stuntime = 0.0f;
+
+				SendPacket(&ap);
+				
 
 				break;
 			}
@@ -4368,9 +4303,15 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			XMFLOAT3 dp = XMFLOAT3(ep.x - ppos.x, ep.y - ppos.y, ep.z - ppos.z);
 			if (Vector3::Length(dp) <= 5.0f)
 			{
-				enemyShader->objects[p]->stunDuration = 5.0f*playerShader->objects[idx]->amp_radio;
-				enemyShader->objects[p]->lastStun = chrono::system_clock::now();
-				enemyShader->objects[p]->stunned = true;
+				CS_ATTACK_PACKET pac;
+				pac.id = pID;
+				pac.size = sizeof(CS_ATTACK_PACKET);
+				pac.type = PACKET_TYPE::CS_ATTACK;
+
+				pac.damage = 0;
+				pac.stuntime = 5.0f * playerShader->objects[idx]->amp_radio;
+				pac.target = p;
+				SendPacket(&pac);
 
 				if (interShader->mission == 2)
 				{
@@ -4416,24 +4357,7 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 				}
 			}
 		}
-		/*
-		else if (interShader->mission == 10)
-		{
-			for (int p = 0; p < terrain1_2->products.size(); ++p)
-			{
-				if (terrain1_2->objects[p]->type == PotteryKlinOpen || terrain1_2->objects[p]->type == PotteryKlinClose || terrain1_2->objects[p]->type == PotteryWheel)
-				{
-					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
-					float dx = ppos.x - pp.x;
-					float dz = ppos.z - pp.z;
-					float dst = sqrt(dx * dx + dz * dz);
-					if (dst < 5.0f)
-					{
-						interShader->m9_search += 1;
-					}
-				}
-			}
-		}*/
+	
 		playerShader->objects[idx]->lastWave = chrono::system_clock::now();
 	}
 }

@@ -1830,7 +1830,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					objects[i]->bState.stateID = PATROL_STATE;
 				}
 
-				break;
+				continue;
 			}
 			if (objects[i]->bState.stateID == PATROL_STATE)
 			{
@@ -2858,7 +2858,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 							}
 						}
-						part->createParticles(100, targetPos, pd3dDevice, pd3dCommandList);
+						part->createParticles(1, 100, targetPos, pd3dDevice, pd3dCommandList);
 						ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
 						objects[i]->lastAttack = chrono::system_clock::now();
 					}

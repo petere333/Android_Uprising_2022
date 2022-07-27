@@ -46,6 +46,8 @@ enum class PACKET_TYPE : short
 	CS_POSITION,
 	CS_STATE,
 	CS_READY,
+	CS_POWER,
+	CS_PARTICLE,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -60,10 +62,40 @@ enum class PACKET_TYPE : short
 	SC_POSITION,
 	SC_READY,
 	SC_STATE,
+	SC_POWER,
+	SC_PARTICLE,
 };
 
 // client to server packet
 #pragma pack (push, 1)
+
+struct CS_PARTICLE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int count;
+	float x;
+	float y;
+	float z;
+
+	int particleType;
+};
+struct SC_PARTICLE_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int count;
+	float x;
+	float y;
+	float z;
+
+	int particleType;
+};
+
 
 struct CS_KEYDOWN_PACKET
 {
@@ -72,6 +104,30 @@ struct CS_KEYDOWN_PACKET
 	UINT key;
 	short c_id;
 };
+
+struct CS_POWER_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+
+	Stats stats;
+	int mAttack;
+	int rAttack;
+};
+
+struct SC_POWER_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short c_id;
+
+	Stats stats;
+	int m;
+	int r;
+
+};
+
 struct CS_KEYUP_PACKET
 {
 	unsigned char size;
@@ -146,11 +202,10 @@ struct CS_ATTACK_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE	type;
+	short id;
 	int target;
-	bool isAlive;
-	float x;
-	float y;
-	float z;
+	int damage;
+	float stuntime;
 };
 
 //server to client packet
@@ -217,9 +272,11 @@ struct SC_ATTACK_PACKET
 {
 	unsigned char size;
 	PACKET_TYPE type;
-
-	float x, y, z;
+	short id;
+	
 	int target;
+	int damage;
+	float stuntime;
 };
 
 struct SC_JUMP_PACKET

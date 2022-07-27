@@ -26,7 +26,7 @@ public:
 	ID3D12Device* pd3dDevice; 
 	ID3D12GraphicsCommandList* pd3dCommandList;
 
-	void createParticles(int count, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list);
+	void createParticles(int type, int count, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list);
 
 public:
 	ParticleMesh* partMesh = NULL;

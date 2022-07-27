@@ -85,6 +85,8 @@ public:
     CScene();
     ~CScene();
 
+	chrono::time_point<chrono::system_clock> programStarted;
+
 	bool OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	bool OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 
