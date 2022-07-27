@@ -1384,6 +1384,35 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			return result;
 		}
 	}
+	else if (ox >= 800.0f && ox < 900.0f && oz >= 363.0f && oz < 600.0f)
+	{
+		hix = (int)((x - 800.0f) / 0.5f);
+		if (hix < 0)
+			hix = 0;
+		hiz = (int)((z-363.0f) / 0.5f);
+		if (hiz < 0)
+			hiz = 0;
+		if (x < 800.5f || x >= 899.5f || oz < 363.5f || oz >= 599.5f)
+		{
+			printf("맵 밖에 목표 지정\n");
+			return result;
+		}
+	}
+	else if (ox >= 800.0f && ox < 900.0f && oz >= 60.0f && oz < 363.0f)
+	{
+		hix = (int)((x - 800.0f) / 0.5f);
+		if (hix < 0)
+			hix = 0;
+		hiz = (int)((z - 60.0f) / 0.5f);
+		if (hiz < 0)
+			hiz = 0;
+		if (x < 800.5f || x >= 899.5f || oz < 60.5f || oz >= 362.5f)
+		{
+			printf("맵 밖에 목표 지정\n");
+			return result;
+		}
+	}
+
 
 	float dx = origin.x - x;
 	float dz = origin.y - z;
@@ -1524,15 +1553,15 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 			}
 			else if (x > 200.0f && x < 600.0f && z>0.0f && z < 200.0f)
 			{
-				hx1 = (int)((p1.x -200.0f)/ 0.5f);
-				
-				hx2 = (int)((p2.x -200.0f)/ 0.5f);
-				hx3 = (int)((p3.x -200.0f)/ 0.5f);
-				hx4 = (int)((p4.x -200.0f)/ 0.5f);
-				hx5 = (int)((p5.x -200.0f)/ 0.5f);
-				hx6 = (int)((p6.x -200.0f)/ 0.5f);
-				hx7 = (int)((p7.x -200.0f)/ 0.5f);
-				hx8 = (int)((p8.x -200.0f)/ 0.5f);
+				hx1 = (int)((p1.x - 200.0f) / 0.5f);
+
+				hx2 = (int)((p2.x - 200.0f) / 0.5f);
+				hx3 = (int)((p3.x - 200.0f) / 0.5f);
+				hx4 = (int)((p4.x - 200.0f) / 0.5f);
+				hx5 = (int)((p5.x - 200.0f) / 0.5f);
+				hx6 = (int)((p6.x - 200.0f) / 0.5f);
+				hx7 = (int)((p7.x - 200.0f) / 0.5f);
+				hx8 = (int)((p8.x - 200.0f) / 0.5f);
 
 				if (hx1 < 0)
 					hx1 = 0;
@@ -1567,14 +1596,14 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 					hx7 = 799;
 				if (hx8 >= 800)
 					hx8 = 799;
-				hy1 = (int)((p1.y )/ 0.5f);
-				hy2 = (int)((p2.y )/ 0.5f);
-				hy3 = (int)((p3.y )/ 0.5f);
-				hy4 = (int)((p4.y )/ 0.5f);
-				hy5 = (int)((p5.y )/ 0.5f);
-				hy6 = (int)((p6.y )/ 0.5f);
-				hy7 = (int)((p7.y )/ 0.5f);
-				hy8 = (int)((p8.y )/ 0.5f);
+				hy1 = (int)((p1.y) / 0.5f);
+				hy2 = (int)((p2.y) / 0.5f);
+				hy3 = (int)((p3.y) / 0.5f);
+				hy4 = (int)((p4.y) / 0.5f);
+				hy5 = (int)((p5.y) / 0.5f);
+				hy6 = (int)((p6.y) / 0.5f);
+				hy7 = (int)((p7.y) / 0.5f);
+				hy8 = (int)((p8.y) / 0.5f);
 				if (hy1 < 0)
 					hy1 = 0;
 				if (hy2 < 0)
@@ -1608,6 +1637,180 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 					hy7 = 399;
 				if (hy8 >= 400)
 					hy8 = 399;
+			}
+			else if (x > 800.0f && x < 900.0f && z>363.0f && z < 600.0f)
+			{
+			hx1 = (int)((p1.x - 800.0f) / 0.5f);
+
+			hx2 = (int)((p2.x - 800.0f) / 0.5f);
+			hx3 = (int)((p3.x - 800.0f) / 0.5f);
+			hx4 = (int)((p4.x - 800.0f) / 0.5f);
+			hx5 = (int)((p5.x - 800.0f) / 0.5f);
+			hx6 = (int)((p6.x - 800.0f) / 0.5f);
+			hx7 = (int)((p7.x - 800.0f) / 0.5f);
+			hx8 = (int)((p8.x - 800.0f) / 0.5f);
+
+			if (hx1 < 0)
+				hx1 = 0;
+			if (hx2 < 0)
+				hx2 = 0;
+			if (hx3 < 0)
+				hx3 = 0;
+			if (hx4 < 0)
+				hx4 = 0;
+			if (hx5 < 0)
+				hx5 = 0;
+			if (hx6 < 0)
+				hx6 = 0;
+			if (hx7 < 0)
+				hx7 = 0;
+			if (hx8 < 0)
+				hx8 = 0;
+
+			if (hx1 >= 200)
+				hx1 = 199;
+			if (hx2 >= 200)
+				hx2 = 199;
+			if (hx3 >= 200)
+				hx3 = 199;
+			if (hx4 >= 200)
+				hx4 = 199;
+			if (hx5 >= 200)
+				hx5 = 199;
+			if (hx6 >= 200)
+				hx6 = 199;
+			if (hx7 >= 200)
+				hx7 = 199;
+			if (hx8 >= 200)
+				hx8 = 199;
+			hy1 = (int)((p1.y-363.0f) / 0.5f);
+			hy2 = (int)((p2.y-363.0f) / 0.5f);
+			hy3 = (int)((p3.y-363.0f) / 0.5f);
+			hy4 = (int)((p4.y-363.0f) / 0.5f);
+			hy5 = (int)((p5.y-363.0f) / 0.5f);
+			hy6 = (int)((p6.y-363.0f) / 0.5f);
+			hy7 = (int)((p7.y-363.0f) / 0.5f);
+			hy8 = (int)((p8.y-363.0f) / 0.5f);
+			if (hy1 < 0)
+				hy1 = 0;
+			if (hy2 < 0)
+				hy2 = 0;
+			if (hy3 < 0)
+				hy3 = 0;
+			if (hy4 < 0)
+				hy4 = 0;
+			if (hy5 < 0)
+				hy5 = 0;
+			if (hy6 < 0)
+				hy6 = 0;
+			if (hy7 < 0)
+				hy7 = 0;
+			if (hy8 < 0)
+				hy8 = 0;
+
+			if (hy1 >= 474)
+				hy1 = 473;
+			if (hy2 >= 474)
+				hy2 = 473;
+			if (hy3 >= 474)
+				hy3 = 473;
+			if (hy4 >= 474)
+				hy4 = 473;
+			if (hy5 >= 474)
+				hy5 = 473;
+			if (hy6 >= 474)
+				hy6 = 473;
+			if (hy7 >= 474)
+				hy7 = 473;
+			if (hy8 >= 474)
+				hy8 = 473;
+			}
+			else if (x > 800.0f && x < 900.0f && z>60.0f && z < 363.0f)
+			{
+			hx1 = (int)((p1.x - 800.0f) / 0.5f);
+
+			hx2 = (int)((p2.x - 800.0f) / 0.5f);
+			hx3 = (int)((p3.x - 800.0f) / 0.5f);
+			hx4 = (int)((p4.x - 800.0f) / 0.5f);
+			hx5 = (int)((p5.x - 800.0f) / 0.5f);
+			hx6 = (int)((p6.x - 800.0f) / 0.5f);
+			hx7 = (int)((p7.x - 800.0f) / 0.5f);
+			hx8 = (int)((p8.x - 800.0f) / 0.5f);
+
+			if (hx1 < 0)
+				hx1 = 0;
+			if (hx2 < 0)
+				hx2 = 0;
+			if (hx3 < 0)
+				hx3 = 0;
+			if (hx4 < 0)
+				hx4 = 0;
+			if (hx5 < 0)
+				hx5 = 0;
+			if (hx6 < 0)
+				hx6 = 0;
+			if (hx7 < 0)
+				hx7 = 0;
+			if (hx8 < 0)
+				hx8 = 0;
+
+			if (hx1 >= 200)
+				hx1 = 199;
+			if (hx2 >= 200)
+				hx2 = 199;
+			if (hx3 >= 200)
+				hx3 = 199;
+			if (hx4 >= 200)
+				hx4 = 199;
+			if (hx5 >= 200)
+				hx5 = 199;
+			if (hx6 >= 200)
+				hx6 = 199;
+			if (hx7 >= 200)
+				hx7 = 199;
+			if (hx8 >= 200)
+				hx8 = 199;
+			hy1 = (int)((p1.y - 60.0f) / 0.5f);
+			hy2 = (int)((p2.y - 60.0f) / 0.5f);
+			hy3 = (int)((p3.y - 60.0f) / 0.5f);
+			hy4 = (int)((p4.y - 60.0f) / 0.5f);
+			hy5 = (int)((p5.y - 60.0f) / 0.5f);
+			hy6 = (int)((p6.y - 60.0f) / 0.5f);
+			hy7 = (int)((p7.y - 60.0f) / 0.5f);
+			hy8 = (int)((p8.y - 60.0f) / 0.5f);
+			if (hy1 < 0)
+				hy1 = 0;
+			if (hy2 < 0)
+				hy2 = 0;
+			if (hy3 < 0)
+				hy3 = 0;
+			if (hy4 < 0)
+				hy4 = 0;
+			if (hy5 < 0)
+				hy5 = 0;
+			if (hy6 < 0)
+				hy6 = 0;
+			if (hy7 < 0)
+				hy7 = 0;
+			if (hy8 < 0)
+				hy8 = 0;
+
+			if (hy1 >= 606)
+				hy1 = 605;
+			if (hy2 >= 606)
+				hy2 = 605;
+			if (hy3 >= 606)
+				hy3 = 605;
+			if (hy4 >= 606)
+				hy4 = 605;
+			if (hy5 >= 606)
+				hy5 = 605;
+			if (hy6 >= 606)
+				hy6 = 605;
+			if (hy7 >= 606)
+				hy7 = 605;
+			if (hy8 >= 606)
+				hy8 = 605;
 			}
 			bool v1 = false;
 			bool v2 = false;
@@ -1645,6 +1848,10 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 				if ((p8.x == visitedx[i] && p8.y == visitedz[i]) || heightmap[hx8][hy8] > 0.0f)
 					v8 = true;
 			}
+
+
+			//다른 적들의 이동경로와 겹치지 않는 경우
+			
 			if (v1 == false)
 				available.push_back(p1);
 			if (v2 == false)
@@ -1786,7 +1993,7 @@ std::vector<XMFLOAT2> EnemyObject::NavigateMovement(float x, float z)
 	//최종 경로 반환.
 	return result;
 }
-void EnemyObject::moveByRoute(vector<XMFLOAT2> route)
+void EnemyObject::moveByRoute(vector<XMFLOAT2> route, vector<EnemyObject*> em)
 {
 	
 	if (route.size() > 0)
@@ -1815,13 +2022,43 @@ void EnemyObject::moveByRoute(vector<XMFLOAT2> route)
 
 			float speed = 3.0f;
 			//이동한다. 프레임레이트 60 기준, 초당 6미터를 이동한다.
-			SetPosition(origin.x + ndir.x * speed / 60.0f, 0.0f, origin.z + ndir.y * speed/60.0f);
-			mbox->start.x += ndir.x * speed/60.0f;
-			mbox->end.x += ndir.x * speed / 60.0f;
 
-			mbox->start.z += ndir.y * speed / 60.0f;
-			mbox->end.z += ndir.y * speed / 60.0f;
+			//시간*속도=거리
+			
+			
+			chrono::duration<double> delta = chrono::system_clock::now() - lastMove;
+			float nx = origin.x + ndir.x * speed * delta.count();
+			float nz = origin.z + ndir.y * speed * delta.count();
+			for (int i = 0; i < em.size(); ++i)
+			{
+				if (em[i] != this && em[i]->erased==false)
+				{
+					float dx = em[i]->GetPosition().x - nx;
+					float dz = em[i]->GetPosition().z - nz;
+					if (sqrt(dx * dx + dz * dz) < 0.5f)
+					{
+						if (bState.stateID == CHASE_STATE)
+						{
+							route = NavigateMovement(chaseTargetPos.x, chaseTargetPos.z);
+							routeIdx = 0;
+							lastSearch = chrono::system_clock::now();
+						}
+						else if (bState.stateID == PATROL_STATE)
+						{
+							route = NavigateMovement(seekPoint[currentPoint].x, seekPoint[currentPoint].y);
+							routeIdx = 0;
+						}
+						return;
+					}
+				}
+			}
+			SetPosition(origin.x + ndir.x * speed * delta.count(), 0.0f, origin.z + ndir.y * speed * delta.count());
+			mbox->start.x += ndir.x * speed * delta.count();
+			mbox->end.x += ndir.x * speed * delta.count();
 
+			mbox->start.z += ndir.y * speed * delta.count();
+			mbox->end.z += ndir.y * speed * delta.count();
+			
 
 		}
 		//거리가 충분히 좁혀진 경우 경로에 저장된 다음 위치를 목적지로 설정

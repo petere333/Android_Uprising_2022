@@ -224,7 +224,7 @@ public:
 
 
 	
-	void moveObject(int, CCamera*);
+	bool moveObject(int, CCamera*);
 	
 	void setPlayerAnimation(int a);
 

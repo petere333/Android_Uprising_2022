@@ -235,7 +235,7 @@ void process_packet(int c_id, char* packet)
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
 		strcpy_s(clients[c_id]._name, p->name);
 
-		
+
 
 		if (c_id < 3)
 		{
@@ -247,7 +247,7 @@ void process_packet(int c_id, char* packet)
 			cout << "client add order received" << endl;
 
 			//새로 접속한 플레이어에게만 기존 접속자들+본인의 로그인 패킷 전송
-			for(int i=0;i<=c_id;++i) // 모든 접속자의 정보 전달
+			for (int i = 0; i <= c_id; ++i) // 모든 접속자의 정보 전달
 			{
 				if (clients[i]._use == false)
 				{
@@ -268,11 +268,11 @@ void process_packet(int c_id, char* packet)
 				clients[c_id].do_send(&pc);
 			}
 
-			
+
 			//기존 플레이어에게 새 플레이어 추가를 명령하는 패킷 전송,
-			for (int i = 0; i <= c_id-1; ++i)
+			for (int i = 0; i <= c_id - 1; ++i)
 			{
-				
+
 				if (clients[i]._use == false)
 				{
 					continue;
@@ -290,7 +290,7 @@ void process_packet(int c_id, char* packet)
 				clients[c_id].kState.isInAir = false;
 				clients[c_id].kState.rotation = 0.0f;
 				clients[c_id].kState.lastMove = std::chrono::system_clock::now();
-				
+
 				clients[c_id].bState.attackID = TYPE_RANGED;
 				clients[c_id].bState.hp = 10;
 				clients[c_id].bState.isIntelligent = true;
@@ -307,7 +307,7 @@ void process_packet(int c_id, char* packet)
 				pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
 				clients[i].do_send(&pc);
 			}
-			
+
 		}
 		break;
 	}
@@ -324,7 +324,27 @@ void process_packet(int c_id, char* packet)
 		}
 		break;
 	}
+	case PACKET_TYPE::CS_STATE:
+	{
+		CS_STATE_PACKET* p = reinterpret_cast<CS_STATE_PACKET*>(packet);
+		
 
+		BionicState b;
+		b.attackID = p->attackID;
+		b.stateID = p->stateID;
+		b.attacking = -9999;
+		b.hp = -9999;
+		b.isIntelligent = -9999;
+
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{	
+				pl.send_bionic_change(c_id, b);	
+			}
+		}
+		break;
+	}
 	case PACKET_TYPE::CS_POSITION:
 	{
 		CS_POSITION_PACKET* p = reinterpret_cast<CS_POSITION_PACKET*>(packet);
@@ -333,23 +353,12 @@ void process_packet(int c_id, char* packet)
 		float py = p->y;
 		float pz = p->z;
 
-		BionicState b;
-		b.attackID = p->attackID;
-		b.stateID = p->stateID;
-		b.attacking = -9999;
-		b.hp = -9999;
-		b.isIntelligent = -9999;
-		
-
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
 				pl.send_move(c_id, px, py, pz, pa);
-				if (pl._id != c_id)
-				{
-					pl.send_bionic_change(c_id, b);
-				}
+
 			}
 		}
 		break;
