@@ -17,6 +17,9 @@ void EnemyShader::restart()
 	for (int i = 0; i < objects.size(); ++i)
 	{
 		objects[i]->SetPosition(objects[i]->origin);
+
+		objects[i]->mbox->start = XMFLOAT3(objects[i]->origin.x - 0.4f, 0.0f, objects[i]->origin.z - 0.4f);
+		objects[i]->mbox->end = XMFLOAT3(objects[i]->origin.x + 0.4f, 1.7f, objects[i]->origin.z + 0.4f);
 		if (objects[i]->weapon == 2)
 		{
 			objects[i]->maxHP = mhp;
