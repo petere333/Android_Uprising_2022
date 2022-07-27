@@ -1265,6 +1265,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						if (interShader->m2_stun >= 5)
 						{
+							interShader->mission += 1;
+						}
+					}
+					else if (interShader->mission == 3)
+					{
+						if (interShader->m3_bother >= 10)
+						{
 							cleared = true;
 						}
 					}
@@ -1284,7 +1291,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//cleared = false;
 			//}
 			if (cleared == true)
-			{
+			{	
 				interShader->stageClear = true;
 				interShader->clearTime = chrono::system_clock::now();
 
@@ -2677,6 +2684,22 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+	case PACKET_TYPE::SC_MISSION:
+	{
+		SC_MISSION_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		if (p.number == 3)
+		{
+			interShader->m3_bother += p.progress;
+			terrain1_1->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+			terrain1_1->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+			terrain1_1->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+		}
+
+		break;
+	}
+
 	case PACKET_TYPE::SC_PARTICLE:
 	{
 		SC_PARTICLE_PACKET p;
@@ -3769,8 +3792,34 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 					SendPacket(&p);
 				}
+				
 			}
+			else
+			{
+				if (interShader->mission == 3)
+				{
+					//3번째 미션 도중 제어단말을 맞힐 경우
+					if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
+					{
+						if (terrain1_1->objects[target]->type == Controller1 || terrain1_1->objects[target]->type == Controller2 || terrain1_1->objects[target]->type == Controller4)
+						{
+							if (idx == pID)
+							{
+								CS_MISSION_PACKET pac;
+								pac.id = pID;
+								pac.size = sizeof(CS_MISSION_PACKET);
+								pac.type = PACKET_TYPE::CS_MISSION;
 
+								pac.number = 3;
+								pac.progress = 1;
+								pac.target = target;
+								SendPacket(&pac);
+							}
+
+						}
+					}
+				}
+			}
 			
 
 			// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
@@ -4350,7 +4399,17 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 					float dst = sqrt(dx * dx + dz * dz);
 					if (dst < 5.0f)
 					{
-						interShader->m3_bother += 1;
+						if (idx == pID)
+						{
+							CS_MISSION_PACKET pac;
+							pac.id = pID;
+							pac.size = sizeof(CS_MISSION_PACKET);
+							pac.type = PACKET_TYPE::CS_MISSION;
+							pac.number = 3;
+							pac.progress = 1;
+							pac.target = p;
+							SendPacket(&pac);
+						}
 					}
 				}
 			}

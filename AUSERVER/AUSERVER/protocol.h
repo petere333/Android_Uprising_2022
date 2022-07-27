@@ -14,6 +14,8 @@ constexpr int W_HEIGHT = 100;
 // Packet Type
 
 
+
+
 struct KineticState
 {
 	int isMobile;
@@ -48,6 +50,7 @@ enum class PACKET_TYPE : short
 	CS_READY,
 	CS_POWER,
 	CS_PARTICLE,
+	CS_MISSION,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -64,10 +67,31 @@ enum class PACKET_TYPE : short
 	SC_STATE,
 	SC_POWER,
 	SC_PARTICLE,
+	SC_MISSION,
 };
 
 // client to server packet
 #pragma pack (push, 1)
+struct CS_MISSION_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int number;
+	int progress;
+	int target;
+};
+struct SC_MISSION_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int number;
+	int progress;
+	int target;
+};
 
 struct CS_PARTICLE_PACKET
 {

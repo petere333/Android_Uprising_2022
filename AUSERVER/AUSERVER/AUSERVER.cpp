@@ -115,7 +115,7 @@ public:
 	void send_kinetic_change(int c_id, KineticState kState);
 	void send_bionic_change(int c_id, BionicState state);
 	void send_camera_change(int c_id, float, float);
-	void send_attack_info(int c_id, float x, float, float, int);
+	
 	void send_jump(int c_id);
 	void send_teleport(int c_id, float x, float y, float z);
 	void send_move(int c_id, float x, float y, float z, float a);
@@ -124,9 +124,21 @@ public:
 	void send_particle(int c_id, int count, float x, float y, float z, int type);
 
 	void send_damage(int c_id, int target, int damage, float stun);
+	void send_progress(int c_id, int num, int prog, int);
 };
 
  array<SESSION, MAXUSER> clients;
+ void SESSION::send_progress(int c_id, int num, int prog, int tg)
+ {
+	 SC_MISSION_PACKET p;
+	 p.id = c_id;
+	 p.type = PACKET_TYPE::SC_MISSION;
+	 p.size = sizeof(SC_MISSION_PACKET);
+	 p.target = tg;
+	 p.number = num;
+	 p.progress = prog;
+	 do_send(&p);
+ }
  void SESSION::send_particle(int c_id, int count, float x, float y, float z, int type)
  {
 	 SC_PARTICLE_PACKET p;
@@ -350,6 +362,20 @@ void process_packet(int c_id, char* packet)
 		break;
 	}
 
+	case PACKET_TYPE::CS_MISSION:
+	{
+		CS_MISSION_PACKET* p = reinterpret_cast<CS_MISSION_PACKET*>(packet);
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_progress(c_id, p->number, p->progress, p->target);
+
+			}
+		}
+		break;
+	}
+
 	case PACKET_TYPE::CS_PARTICLE:
 	{
 		CS_PARTICLE_PACKET* p = reinterpret_cast<CS_PARTICLE_PACKET*>(packet);
@@ -554,7 +580,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 210.0f, 0.0f, 190.0f);
+					pl.send_teleport(c_id, 197.0f, 0.0f, 190.0f);
 				}
 			}
 			break;
