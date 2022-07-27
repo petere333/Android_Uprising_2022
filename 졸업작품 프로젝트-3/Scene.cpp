@@ -3900,7 +3900,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 						SendPacket(&p);
 					}
 				}
-
+				
 
 			}
 
@@ -4052,7 +4052,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 				}
 
-				break;
+				
 			}
 
 

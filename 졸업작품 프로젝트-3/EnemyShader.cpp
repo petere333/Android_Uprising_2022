@@ -2711,7 +2711,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
 				float dt = (float)timeFromDeath.count();
 
-
+				objects[i]->SetPosition(-100.0f, -100.0f, -100.0f);
 				objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
 				objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
 

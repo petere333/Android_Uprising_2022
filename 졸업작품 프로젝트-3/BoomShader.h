@@ -93,7 +93,7 @@ public:
 									ap.type = PACKET_TYPE::CS_ATTACK;
 									ap.id = 1;
 									ap.target = k;
-									ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
+									ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
 									ap.stuntime = 1.0f;
 
 									SendPacket(&ap);
@@ -149,7 +149,7 @@ public:
 											ap.type = PACKET_TYPE::CS_ATTACK;
 											ap.id = 1;
 											ap.target = a;
-											ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
+											ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
 											ap.stuntime = 1.0f;
 
 											SendPacket(&ap);
@@ -204,7 +204,7 @@ public:
 								ap.type = PACKET_TYPE::CS_ATTACK;
 								ap.id = 1;
 								ap.target = k;
-								ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
 								ap.stuntime = 1.0f;
 
 								SendPacket(&ap);
@@ -267,7 +267,7 @@ public:
 											ap.type = PACKET_TYPE::CS_ATTACK;
 											ap.id = 1;
 											ap.target = a;
-											ap.damage = pl->objects[pid]->info->getMeleeDamage() * pl->objects[pid]->amp_melee;
+											ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
 											ap.stuntime = 1.0f;
 
 											SendPacket(&ap);
