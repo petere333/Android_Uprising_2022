@@ -38,7 +38,7 @@ public:
 
 	ResourceManager* rm;
 
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl, InterfaceShader* interShader)
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl, InterfaceShader* interShader, int pid)
 	{
 		for (int i = 0; i < objects.size(); ++i)
 		{
@@ -61,17 +61,20 @@ public:
 					//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
 					if (enemy->height11[ix][iz] >= objects[i]->origin.y)
 					{
-						CS_PARTICLE_PACKET p;
-						p.size = sizeof(CS_PARTICLE_PACKET);
-						p.type = PACKET_TYPE::CS_PARTICLE;
-						p.id = 1;
-						p.particleType = 1;
-						p.count = 100;
-						p.x = objects[i]->GetPosition().x;
-						p.y = objects[i]->GetPosition().y;
-						p.z = objects[i]->GetPosition().z;
+						if (objects[i]->owner == pid)
+						{
+							CS_PARTICLE_PACKET p;
+							p.size = sizeof(CS_PARTICLE_PACKET);
+							p.type = PACKET_TYPE::CS_PARTICLE;
+							p.id = pid;
+							p.particleType = 1;
+							p.count = 100;
+							p.x = objects[i]->GetPosition().x;
+							p.y = objects[i]->GetPosition().y;
+							p.z = objects[i]->GetPosition().z;
 
-						SendPacket(&p);
+							SendPacket(&p);
+						}
 						// 폭발 반경 인근의 적들에게 피해
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
@@ -83,15 +86,18 @@ public:
 
 
 								
-								CS_ATTACK_PACKET ap;
-								ap.size = sizeof(CS_ATTACK_PACKET);
-								ap.type = PACKET_TYPE::CS_ATTACK;
-								ap.id = 1;
-								ap.target = k;
-								ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
-								ap.stuntime = 1.0f;
+								if (objects[i]->owner == pid)
+								{
+									CS_ATTACK_PACKET ap;
+									ap.size = sizeof(CS_ATTACK_PACKET);
+									ap.type = PACKET_TYPE::CS_ATTACK;
+									ap.id = 1;
+									ap.target = i;
+									ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+									ap.stuntime = 1.0f;
 
-								SendPacket(&ap);
+									SendPacket(&ap);
+								}
 
 							}
 						}
@@ -104,17 +110,7 @@ public:
 					//물체랑은 충돌하지 않았지만 적과 박은 경우
 					else
 					{
-						CS_PARTICLE_PACKET p;
-						p.size = sizeof(CS_PARTICLE_PACKET);
-						p.type = PACKET_TYPE::CS_PARTICLE;
-						p.id = 1;
-						p.particleType = 1;
-						p.count = 100;
-						p.x = objects[i]->GetPosition().x;
-						p.y = objects[i]->GetPosition().y;
-						p.z = objects[i]->GetPosition().z;
 
-						SendPacket(&p);
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
 							XMFLOAT3 pos = objects[i]->GetPosition();
@@ -123,6 +119,20 @@ public:
 							XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
 							if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
 							{
+								if (objects[i]->owner == pid)
+								{
+									CS_PARTICLE_PACKET p;
+									p.size = sizeof(CS_PARTICLE_PACKET);
+									p.type = PACKET_TYPE::CS_PARTICLE;
+									p.id = pid;
+									p.particleType = 1;
+									p.count = 100;
+									p.x = objects[i]->GetPosition().x;
+									p.y = objects[i]->GetPosition().y;
+									p.z = objects[i]->GetPosition().z;
+
+									SendPacket(&p);
+								}
 								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
 								//또한 그 적들을 1초간 기절.
 								for (int a = 0; a < enemy->objects.size(); ++a)
@@ -132,16 +142,18 @@ public:
 									if (Vector3::Length(ds) <= 1.0f)
 									{
 
+										if (objects[i]->owner == pid)
+										{
+											CS_ATTACK_PACKET ap;
+											ap.size = sizeof(CS_ATTACK_PACKET);
+											ap.type = PACKET_TYPE::CS_ATTACK;
+											ap.id = 1;
+											ap.target = i;
+											ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+											ap.stuntime = 1.0f;
 
-										CS_ATTACK_PACKET ap;
-										ap.size = sizeof(CS_ATTACK_PACKET);
-										ap.type = PACKET_TYPE::CS_ATTACK;
-										ap.id = 1;
-										ap.target = i;
-										ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
-										ap.stuntime = 1.0f;
-
-										SendPacket(&ap);
+											SendPacket(&ap);
+										}
 									}
 								}
 
@@ -162,17 +174,20 @@ public:
 					if (enemy->height12[ix][iz] >= objects[i]->origin.y)
 					{
 					// 폭발 반경 인근의 적들에게 피해
-						CS_PARTICLE_PACKET p;
-						p.size = sizeof(CS_PARTICLE_PACKET);
-						p.type = PACKET_TYPE::CS_PARTICLE;
-						p.id = 1;
-						p.particleType = 1;
-						p.count = 100;
-						p.x = objects[i]->GetPosition().x;
-						p.y = objects[i]->GetPosition().y;
-						p.z = objects[i]->GetPosition().z;
+						if (objects[i]->owner == pid)
+						{
+							CS_PARTICLE_PACKET p;
+							p.size = sizeof(CS_PARTICLE_PACKET);
+							p.type = PACKET_TYPE::CS_PARTICLE;
+							p.id = pid;
+							p.particleType = 1;
+							p.count = 100;
+							p.x = objects[i]->GetPosition().x;
+							p.y = objects[i]->GetPosition().y;
+							p.z = objects[i]->GetPosition().z;
 
-						SendPacket(&p);
+							SendPacket(&p);
+						}
 					for (int k = 0; k < enemy->objects.size(); ++k)
 					{
 						XMFLOAT3 op = objects[i]->GetPosition();
@@ -182,16 +197,18 @@ public:
 						{
 
 
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = i;
+								ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+								ap.stuntime = 1.0f;
 
-							CS_ATTACK_PACKET ap;
-							ap.size = sizeof(CS_ATTACK_PACKET);
-							ap.type = PACKET_TYPE::CS_ATTACK;
-							ap.id = 1;
-							ap.target = k;
-							ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
-							ap.stuntime = 1.0f;
-
-							SendPacket(&ap);
+								SendPacket(&ap);
+							}
 
 						}
 
@@ -207,17 +224,7 @@ public:
 					//물체랑은 충돌하지 않았지만 적과 박은 경우
 					else
 					{
-						CS_PARTICLE_PACKET p;
-						p.size = sizeof(CS_PARTICLE_PACKET);
-						p.type = PACKET_TYPE::CS_PARTICLE;
-						p.id = 1;
-						p.particleType = 1;
-						p.count = 100;
-						p.x = objects[i]->GetPosition().x;
-						p.y = objects[i]->GetPosition().y;
-						p.z = objects[i]->GetPosition().z;
 
-						SendPacket(&p);
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
 							XMFLOAT3 pos = objects[i]->GetPosition();
@@ -229,6 +236,21 @@ public:
 							{
 								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
 								//또한 그 적들을 1초간 기절.
+
+								if (objects[i]->owner == pid)
+								{
+									CS_PARTICLE_PACKET p;
+									p.size = sizeof(CS_PARTICLE_PACKET);
+									p.type = PACKET_TYPE::CS_PARTICLE;
+									p.id = pid;
+									p.particleType = 1;
+									p.count = 100;
+									p.x = objects[i]->GetPosition().x;
+									p.y = objects[i]->GetPosition().y;
+									p.z = objects[i]->GetPosition().z;
+
+									SendPacket(&p);
+								}
 								for (int a = 0; a < enemy->objects.size(); ++a)
 								{
 									XMFLOAT3 enp = enemy->objects[a]->GetPosition();
@@ -238,15 +260,18 @@ public:
 										
 									
 
-										CS_ATTACK_PACKET ap;
-										ap.size = sizeof(CS_ATTACK_PACKET);
-										ap.type = PACKET_TYPE::CS_ATTACK;
-										ap.id = 1;
-										ap.target = a;
-										ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee / pl->objects.size();;
-										ap.stuntime = 1.0f;
+										if (objects[i]->owner == pid)
+										{
+											CS_ATTACK_PACKET ap;
+											ap.size = sizeof(CS_ATTACK_PACKET);
+											ap.type = PACKET_TYPE::CS_ATTACK;
+											ap.id = 1;
+											ap.target = i;
+											ap.damage = pl->objects[k]->info->getMeleeDamage() * pl->objects[k]->amp_melee;
+											ap.stuntime = 1.0f;
 
-										SendPacket(&ap);
+											SendPacket(&ap);
+										}
 
 
 									}

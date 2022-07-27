@@ -640,6 +640,8 @@ public:
 	XMFLOAT3 origin = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	chrono::time_point<chrono::system_clock> created;
 	chrono::time_point<chrono::system_clock> lastMove;
+
+	int owner;
 };
 
 class UIObject : public CGameObject

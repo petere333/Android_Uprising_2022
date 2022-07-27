@@ -1229,7 +1229,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		
 		if (boomShader)
-			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader, interShader);
+			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader, interShader, pID);
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -3776,18 +3776,20 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
 			// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
 			//partShader->createParticles(50, targetPos, device, list);
-			CS_PARTICLE_PACKET part;
-			part.size = sizeof(CS_PARTICLE_PACKET);
-			part.type = PACKET_TYPE::CS_PARTICLE;
-			part.id = pID;
+			if (idx == pID)
+			{
+				CS_PARTICLE_PACKET part;
+				part.size = sizeof(CS_PARTICLE_PACKET);
+				part.type = PACKET_TYPE::CS_PARTICLE;
+				part.id = pID;
 
-			part.count = 100;
-			part.x = targetPos.x;
-			part.y = targetPos.y;
-			part.z = targetPos.z;
-			part.particleType = 1;
-			SendPacket(&part);
-
+				part.count = 100;
+				part.x = targetPos.x;
+				part.y = targetPos.y;
+				part.z = targetPos.z;
+				part.particleType = 1;
+				SendPacket(&part);
+			}
 
 			// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
 		}
@@ -4024,29 +4026,31 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				
+				if (idx == pID)
+				{
+					CS_PARTICLE_PACKET p;
+					p.size = sizeof(CS_PARTICLE_PACKET);
+					p.type = PACKET_TYPE::CS_PARTICLE;
+					p.id = pID;
+					p.particleType = 1;
+					p.count = 100;
+					p.x = enemyShader->objects[i]->GetPosition().x;
+					p.y = enemyShader->objects[i]->GetPosition().y;
+					p.z = enemyShader->objects[i]->GetPosition().z;
 
-				CS_PARTICLE_PACKET p;
-				p.size = sizeof(CS_PARTICLE_PACKET);
-				p.type = PACKET_TYPE::CS_PARTICLE;
-				p.id = pID;
-				p.particleType = 1;
-				p.count = 100;
-				p.x = enemyShader->objects[i]->GetPosition().x;
-				p.y = enemyShader->objects[i]->GetPosition().y;
-				p.z = enemyShader->objects[i]->GetPosition().z;
+					SendPacket(&p);
 
-				SendPacket(&p);
+					CS_ATTACK_PACKET ap;
+					ap.size = sizeof(CS_ATTACK_PACKET);
+					ap.type = PACKET_TYPE::CS_ATTACK;
+					ap.id = pID;
+					ap.target = i;
+					ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+					ap.stuntime = 0.0f;
 
-				CS_ATTACK_PACKET ap;
-				ap.size = sizeof(CS_ATTACK_PACKET);
-				ap.type = PACKET_TYPE::CS_ATTACK;
-				ap.id = pID;
-				ap.target = i;
-				ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
-				ap.stuntime = 0.0f;
+					SendPacket(&ap);
 
-				SendPacket(&ap);
-				
+				}
 
 				break;
 			}
@@ -4251,6 +4255,7 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 
 		BoomObject* boom = new BoomObject(1, XMFLOAT3(ppos.x+dx+rx, ppos.y+1.5f, ppos.z+rz - dz), XMFLOAT3(dx, 0.0f, -dz), 10.0f, moment);
 		boom->lastMove = chrono::system_clock::now();
+		boom->owner = idx;
 		boom->SetMesh(boomMesh);
 		boom->SetMaterial(0, rm->materials[4]);
 		boomShader->objects.push_back(boom);
@@ -4311,16 +4316,18 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			XMFLOAT3 dp = XMFLOAT3(ep.x - ppos.x, ep.y - ppos.y, ep.z - ppos.z);
 			if (Vector3::Length(dp) <= 5.0f)
 			{
-				CS_ATTACK_PACKET pac;
-				pac.id = pID;
-				pac.size = sizeof(CS_ATTACK_PACKET);
-				pac.type = PACKET_TYPE::CS_ATTACK;
+				if (idx == pID)
+				{
+					CS_ATTACK_PACKET pac;
+					pac.id = pID;
+					pac.size = sizeof(CS_ATTACK_PACKET);
+					pac.type = PACKET_TYPE::CS_ATTACK;
 
-				pac.damage = 0;
-				pac.stuntime = 5.0f * playerShader->objects[idx]->amp_radio;
-				pac.target = p;
-				SendPacket(&pac);
-
+					pac.damage = 0;
+					pac.stuntime = 5.0f * playerShader->objects[idx]->amp_radio;
+					pac.target = p;
+					SendPacket(&pac);
+				}
 				if (interShader->mission == 2)
 				{
 					interShader->m2_stun += 1;
