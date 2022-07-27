@@ -120,7 +120,7 @@ public:
 	void send_teleport(int c_id, float x, float y, float z);
 	void send_move(int c_id, float x, float y, float z, float a);
 	void send_ready(int c_id, bool ready);
-	void send_stats(int c_id, Stats s, int,int);
+	void send_stats(int c_id, Stats s, int,int, int, int);
 	void send_particle(int c_id, int count, float x, float y, float z, int type);
 
 	void send_damage(int c_id, int target, int damage, float stun);
@@ -156,7 +156,7 @@ public:
 	 do_send(&p);
  }
 
- void SESSION::send_stats(int c_id, Stats s, int m, int r)
+ void SESSION::send_stats(int c_id, Stats s, int m, int r, int mw, int rw)
  {
 	 SC_POWER_PACKET pac;
 	 pac.c_id = c_id;
@@ -165,7 +165,8 @@ public:
 	 pac.stats = s;
 	 pac.m = m;
 	 pac.r = r;
-
+	 pac.mw = mw;
+	 pac.rw = rw;
 	 do_send(&pac);
  }
 
@@ -370,7 +371,7 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_stats(c_id, p->stats, p->mAttack, p->rAttack);
+				pl.send_stats(c_id, p->stats, p->mAttack, p->rAttack, p->mWeapon, p->rWeapon);
 			}
 		}
 		break;

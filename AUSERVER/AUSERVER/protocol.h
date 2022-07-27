@@ -114,6 +114,9 @@ struct CS_POWER_PACKET
 	Stats stats;
 	int mAttack;
 	int rAttack;
+
+	int mWeapon;
+	int rWeapon;
 };
 
 struct SC_POWER_PACKET
@@ -125,6 +128,8 @@ struct SC_POWER_PACKET
 	Stats stats;
 	int m;
 	int r;
+	int mw;
+	int rw;
 
 };
 
