@@ -1278,6 +1278,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									interShader->nextPos = false;
 									interShader->mission += 1;
+									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 									
 								}
@@ -1304,6 +1305,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									interShader->nextPos = false;
 									interShader->mission += 1;
+									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 								}
 							}
@@ -1329,6 +1331,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									interShader->nextPos = false;
 									interShader->mission += 1;
+									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 								}
 							}
@@ -1361,6 +1364,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									{
 										interShader->nextPos = false;
 										interShader->mission += 1;
+										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
@@ -1396,6 +1400,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									interShader->nextPos = false;
 									interShader->mission += 1;
+									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 								}
 
@@ -1426,6 +1431,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									interShader->nextPos = false;
 									interShader->mission += 1;
+									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 
 								}
@@ -1459,6 +1465,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									{
 										interShader->nextPos = false;
 										interShader->mission += 1;
+										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
@@ -1496,6 +1503,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									{
 										interShader->nextPos = false;
 										interShader->mission += 1;
+										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
@@ -1516,6 +1524,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							if (interShader->m9_stun == 0)
 							{
+								//if (interShader->m9_search >= 10)
 								if (interShader->m9_search >= 10)
 								{
 									if (interShader->nextPos == false)
@@ -1536,6 +1545,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									{
 										interShader->nextPos = false;
 										interShader->mission += 1;
+										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
@@ -1550,9 +1560,9 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
-							if (dt.count() < 20.0)
+							if (dt.count() < 30.0)
 							{
-								if (interShader->m10_gain >= 15)
+								if (interShader->m10_gain >= 13)
 								{
 									cleared = true;
 								}
@@ -1900,6 +1910,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
+						interShader->missionChangedTime = chrono::system_clock::now();
 						interShader->Animate(cam, playerShader->objects[pID]->info);
 					}
 				}
@@ -3066,9 +3077,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		else if (p.number == 9)
 		{
 			interShader->m9_search += p.progress;
-			terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
-			terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
-			terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+			
 		}
 		break;
 	}
@@ -3291,6 +3300,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 				interShader->m8_kill += 1;
 			}
 			else if (interShader->mission == 9)
+
 			{
 				interShader->m9_stun += 1;
 			}
@@ -3301,11 +3311,15 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		}
 		else
 		{
-			if (p.stuntime > 0.0f)
+			if (p.stuntime > 3.0f)
 			{
 				enemyShader->objects[p.target]->stunned = true;
 				enemyShader->objects[p.target]->stunDuration = p.stuntime;
 				enemyShader->objects[p.target]->lastStun = chrono::system_clock::now();
+				if (interShader->mission == 2 || interShader->mission == 8)
+				{
+					enemyShader->objects[p.target]->stunDuration = 300.0f;
+				}
 			}
 		}
 		
@@ -4852,11 +4866,11 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			{
 				if (terrain1_2->objects[p]->type == PotteryKlinOpen || terrain1_2->objects[p]->type == PotteryKlinClose || terrain1_2->objects[p]->type == PotteryWheel)
 				{
-					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
+					XMFLOAT3 pp = terrain1_2->objects[p]->GetPosition();
 					float dx = ppos.x - pp.x;
 					float dz = ppos.z - pp.z;
 					float dst = sqrt(dx * dx + dz * dz);
-					if (dst < 5.0f)
+					if (dst < 8.0f)
 					{
 						if (idx == pID)
 						{

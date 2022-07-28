@@ -34,6 +34,7 @@ public:
 
 	chrono::time_point<chrono::system_clock> missionChangedTime;
 	int mission = 1;
+	
 
 
 	int m1_kill = 0;
@@ -52,6 +53,6 @@ public:
 	bool missionFail = false;
 
 	bool nextPos = false;
-
+	bool missionShow = true;
 	chrono::time_point<chrono::system_clock> timeFailed;
 };

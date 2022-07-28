@@ -1217,9 +1217,58 @@ void ResourceManager::createTextures()
 	tex325->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/bazuka.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex325);
 	
+	//여기서부터 인게임 미션 인터페이스
+	tex326 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex326->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/fail.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex326);
 
+	tex327 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex327->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/progress.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex327);
 
+	tex328 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex328->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/time.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex328);
+
+	tex329 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex329->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex329);
 	
+	tex330 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex330->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex330);
+
+	tex331 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex331->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex331);
+
+	tex332 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex332->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex332);
+
+	tex333 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex333->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex333);
+
+	tex334 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex334->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m6.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex334);
+
+	tex335 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex335->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m7.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex335);
+
+	tex336 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex336->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m8.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex336);
+
+	tex337 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex337->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m9.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex337);
+
+	tex338 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex338->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/m1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex338);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

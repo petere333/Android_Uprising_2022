@@ -1515,7 +1515,12 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			case WM_KEYDOWN:
 				switch (wParam)
 				{
-
+				case 'P':
+				{
+					
+					m_pScene->interShader->missionShow = false;
+					break;
+				}
 				case VK_F12:
 				{
 					if (m_pScene->m_pLights[0].m_bEnable == false)
