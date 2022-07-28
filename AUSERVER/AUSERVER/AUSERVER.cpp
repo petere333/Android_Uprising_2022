@@ -365,6 +365,7 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_MISSION:
 	{
 		CS_MISSION_PACKET* p = reinterpret_cast<CS_MISSION_PACKET*>(packet);
+		printf("%d번 미션, %개의 목표물 %d 파괴\n", p->number, p->progress, p->target);
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
@@ -591,7 +592,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_move(c_id, 297.0f, 6.0f, 25.0f, 0.0f);
+					pl.send_teleport(c_id, 303.0f, 5.0f, 25.0f);
 					
 				}
 			}
@@ -603,12 +604,48 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_teleport(c_id, 850.0f, 0.0f, 550.0f);
+				pl.send_teleport(c_id, 350.0f, 0.0f, 104.0f);
 			}
 		}
 		break;
 		}
+		else if (p->key == VK_F5)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 402.0f, 0.0f, 198.0f);
+				}
+			}
+			break;
+		}
+		else if (p->key == VK_F6)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 472.0f, 0.0f, 100.0f);
+				}
+			}
 
+			break;
+		}
+		else if (p->key == VK_F7)
+		{
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f);
+			}
+		}
+
+		break;
+		}
+		
+		
 		if (ks.rotation >= 360.0f)
 		{
 			ks.rotation -= 360.0f;

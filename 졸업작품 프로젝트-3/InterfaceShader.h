@@ -48,4 +48,10 @@ public:
 	int m9_search = 0;
 	int m10_gain = 0;
 	int m10_miss = 0;
+
+	bool missionFail = false;
+
+	bool nextPos = false;
+
+	chrono::time_point<chrono::system_clock> timeFailed;
 };

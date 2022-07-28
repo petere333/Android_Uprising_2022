@@ -286,6 +286,248 @@ public:
 						}
 					}
 				}
+
+				else if (tx > 800.0f && tx < 900.0f && tz>363.0f && tz < 600.0f)
+				{
+				ix = (int)((tx - 800.0f) / 0.5f);
+				iz = (int)((tz-363.0f) / 0.5f);
+				//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+				if (enemy->height21[ix][iz] >= objects[i]->origin.y)
+				{
+					// 폭발 반경 인근의 적들에게 피해
+					if (objects[i]->owner == pid)
+					{
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pid;
+						p.particleType = 1;
+						p.count = 100;
+						p.x = objects[i]->GetPosition().x;
+						p.y = objects[i]->GetPosition().y;
+						p.z = objects[i]->GetPosition().z;
+
+						SendPacket(&p);
+					}
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 op = objects[i]->GetPosition();
+						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						{
+
+
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+								ap.stuntime = 1.0f;
+
+								SendPacket(&ap);
+							}
+
+						}
+
+
+					}
+
+
+					//delete objects[i];
+					objects.erase(objects.begin() + i);
+					erased = true;
+				}
+
+				//물체랑은 충돌하지 않았지만 적과 박은 경우
+				else
+				{
+
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 pos = objects[i]->GetPosition();
+						//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+						XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+						XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+
+						if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+						{
+							//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+							//또한 그 적들을 1초간 기절.
+
+							if (objects[i]->owner == pid)
+							{
+								CS_PARTICLE_PACKET p;
+								p.size = sizeof(CS_PARTICLE_PACKET);
+								p.type = PACKET_TYPE::CS_PARTICLE;
+								p.id = pid;
+								p.particleType = 1;
+								p.count = 100;
+								p.x = objects[i]->GetPosition().x;
+								p.y = objects[i]->GetPosition().y;
+								p.z = objects[i]->GetPosition().z;
+
+								SendPacket(&p);
+							}
+							for (int a = 0; a < enemy->objects.size(); ++a)
+							{
+								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+								XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+								if (Vector3::Length(ds) <= 1.0f)
+								{
+
+
+
+									if (objects[i]->owner == pid)
+									{
+										CS_ATTACK_PACKET ap;
+										ap.size = sizeof(CS_ATTACK_PACKET);
+										ap.type = PACKET_TYPE::CS_ATTACK;
+										ap.id = 1;
+										ap.target = a;
+										ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+										ap.stuntime = 1.0f;
+
+										SendPacket(&ap);
+									}
+
+
+								}
+							}
+
+							//	delete objects[i];
+							objects.erase(objects.begin() + i);
+
+							erased = true;
+							break;
+						}
+					}
+				}
+				}
+
+				else if (tx > 800.0f && tx < 900.0f && tz>60.0f && tz < 363.0f)
+				{
+				ix = (int)((tx - 800.0f) / 0.5f);
+				iz = (int)((tz - 60.0f) / 0.5f);
+				//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+				if (enemy->height22[ix][iz] >= objects[i]->origin.y)
+				{
+					// 폭발 반경 인근의 적들에게 피해
+					if (objects[i]->owner == pid)
+					{
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pid;
+						p.particleType = 1;
+						p.count = 100;
+						p.x = objects[i]->GetPosition().x;
+						p.y = objects[i]->GetPosition().y;
+						p.z = objects[i]->GetPosition().z;
+
+						SendPacket(&p);
+					}
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 op = objects[i]->GetPosition();
+						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						{
+
+
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+								ap.stuntime = 1.0f;
+
+								SendPacket(&ap);
+							}
+
+						}
+
+
+					}
+
+
+					//delete objects[i];
+					objects.erase(objects.begin() + i);
+					erased = true;
+				}
+
+				//물체랑은 충돌하지 않았지만 적과 박은 경우
+				else
+				{
+
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 pos = objects[i]->GetPosition();
+						//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+						XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+						XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+
+						if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+						{
+							//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+							//또한 그 적들을 1초간 기절.
+
+							if (objects[i]->owner == pid)
+							{
+								CS_PARTICLE_PACKET p;
+								p.size = sizeof(CS_PARTICLE_PACKET);
+								p.type = PACKET_TYPE::CS_PARTICLE;
+								p.id = pid;
+								p.particleType = 1;
+								p.count = 100;
+								p.x = objects[i]->GetPosition().x;
+								p.y = objects[i]->GetPosition().y;
+								p.z = objects[i]->GetPosition().z;
+
+								SendPacket(&p);
+							}
+							for (int a = 0; a < enemy->objects.size(); ++a)
+							{
+								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+								XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+								if (Vector3::Length(ds) <= 1.0f)
+								{
+
+
+
+									if (objects[i]->owner == pid)
+									{
+										CS_ATTACK_PACKET ap;
+										ap.size = sizeof(CS_ATTACK_PACKET);
+										ap.type = PACKET_TYPE::CS_ATTACK;
+										ap.id = 1;
+										ap.target = a;
+										ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+										ap.stuntime = 1.0f;
+
+										SendPacket(&ap);
+									}
+
+
+								}
+							}
+
+							//	delete objects[i];
+							objects.erase(objects.begin() + i);
+
+							erased = true;
+							break;
+						}
+					}
+				}
+				}
 			
 			if (erased == true)
 			{

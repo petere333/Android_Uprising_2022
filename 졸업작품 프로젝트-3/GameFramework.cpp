@@ -382,7 +382,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
-
+					m_pScene->interShader->missionFail = false;
 					m_pScene->interShader->m10_gain = 0;
 					m_pScene->interShader->m10_miss = 0;
 					m_pScene->interShader->m1_kill = 0;
@@ -430,7 +430,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
-
+					m_pScene->interShader->missionFail = false;
 					m_pScene->interShader->m10_gain = 0;
 					m_pScene->interShader->m10_miss = 0;
 					m_pScene->interShader->m1_kill = 0;
@@ -1661,6 +1661,19 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					packet.key = VK_F4;
 					SendPacket(&packet);
 					break;
+				case VK_F5:
+					packet.key = VK_F5;
+					SendPacket(&packet);
+					break;
+				case VK_F6:
+					packet.key = VK_F6;
+					SendPacket(&packet);
+					break;
+				case VK_F7:
+					packet.key = VK_F7;
+					SendPacket(&packet);
+					break;
+
 				}
 				break;
 			case WM_KEYUP:
