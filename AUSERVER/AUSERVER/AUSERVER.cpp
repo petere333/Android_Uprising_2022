@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "SNet.h"
 #include "protocol.h"
+
+
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
 constexpr int MAXUSER = 10; //최대 접속 유저
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
+chrono::time_point<chrono::system_clock> started;
 
 class OVER_EXP {
 public:
@@ -112,14 +115,72 @@ public:
 	void send_kinetic_change(int c_id, KineticState kState);
 	void send_bionic_change(int c_id, BionicState state);
 	void send_camera_change(int c_id, float, float);
-	void send_attack_info(int c_id, float x, float, float, int);
+	
 	void send_jump(int c_id);
 	void send_teleport(int c_id, float x, float y, float z);
 	void send_move(int c_id, float x, float y, float z, float a);
 	void send_ready(int c_id, bool ready);
+	void send_stats(int c_id, Stats s, int,int, int, int);
+	void send_particle(int c_id, int count, float x, float y, float z, int type);
+
+	void send_damage(int c_id, int target, int damage, float stun);
+	void send_progress(int c_id, int num, int prog, int);
 };
 
  array<SESSION, MAXUSER> clients;
+ void SESSION::send_progress(int c_id, int num, int prog, int tg)
+ {
+	 SC_MISSION_PACKET p;
+	 p.id = c_id;
+	 p.type = PACKET_TYPE::SC_MISSION;
+	 p.size = sizeof(SC_MISSION_PACKET);
+	 p.target = tg;
+	 p.number = num;
+	 p.progress = prog;
+	 do_send(&p);
+ }
+ void SESSION::send_particle(int c_id, int count, float x, float y, float z, int type)
+ {
+	 SC_PARTICLE_PACKET p;
+	 p.id = c_id;
+	 p.type = PACKET_TYPE::SC_PARTICLE;
+	 p.size = sizeof(SC_PARTICLE_PACKET);
+
+	 p.x = x;
+	 p.y = y;
+	 p.z = z;
+	 p.particleType = type;
+	 p.count = count;
+	 do_send(&p);
+
+ }
+
+ void SESSION::send_damage(int id, int target, int damage, float stun)
+ {
+	 SC_ATTACK_PACKET p;
+	 p.id = id;
+	 p.type = PACKET_TYPE::SC_ATTACK;
+	 p.size = sizeof(SC_ATTACK_PACKET);
+	 p.stuntime = stun;
+	 p.damage = damage;
+	 p.target = target;
+
+	 do_send(&p);
+ }
+
+ void SESSION::send_stats(int c_id, Stats s, int m, int r, int mw, int rw)
+ {
+	 SC_POWER_PACKET pac;
+	 pac.c_id = c_id;
+	 pac.type = PACKET_TYPE::SC_POWER;
+	 pac.size = sizeof(SC_POWER_PACKET);
+	 pac.stats = s;
+	 pac.m = m;
+	 pac.r = r;
+	 pac.mw = mw;
+	 pac.rw = rw;
+	 do_send(&pac);
+ }
 
  void SESSION::send_ready(int cid, bool rd)
  {
@@ -181,18 +242,7 @@ public:
 	 do_send(&p);
  }
 
- void SESSION::send_attack_info(int c_id, float x, float y, float z, int tg)
- {
-	 SC_ATTACK_PACKET p;
-	 p.size = sizeof(SC_ATTACK_PACKET);
-	 p.type = PACKET_TYPE::SC_ATTACK;
-	 p.target = tg;
-	 p.x = x;
-	 p.y = y;
-	 p.z = z;
 
-	 do_send(&p);
- }
 
  void SESSION::send_jump(int c_id)
  {
@@ -311,6 +361,50 @@ void process_packet(int c_id, char* packet)
 		}
 		break;
 	}
+
+	case PACKET_TYPE::CS_MISSION:
+	{
+		CS_MISSION_PACKET* p = reinterpret_cast<CS_MISSION_PACKET*>(packet);
+		printf("%d번 미션, %개의 목표물 %d 파괴\n", p->number, p->progress, p->target);
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_progress(c_id, p->number, p->progress, p->target);
+
+			}
+		}
+		break;
+	}
+
+	case PACKET_TYPE::CS_PARTICLE:
+	{
+		CS_PARTICLE_PACKET* p = reinterpret_cast<CS_PARTICLE_PACKET*>(packet);
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_particle(c_id, p->count, p->x,p->y,p->z, p->particleType);
+				
+			}
+		}
+		break;
+	}
+
+	case PACKET_TYPE::CS_POWER:
+	{
+		CS_POWER_PACKET* p = reinterpret_cast<CS_POWER_PACKET*>(packet);
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_stats(c_id, p->stats, p->mAttack, p->rAttack, p->mWeapon, p->rWeapon);
+			}
+		}
+		break;
+		
+	}
+
 	case PACKET_TYPE::CS_READY:
 	{
 		CS_READY_PACKET* p = reinterpret_cast<CS_READY_PACKET*>(packet);
@@ -487,7 +581,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 210.0f, 0.0f, 190.0f);
+					pl.send_teleport(c_id, 197.0f, 0.0f, 190.0f);
 				}
 			}
 			break;
@@ -498,7 +592,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_move(c_id, 297.0f, 6.0f, 25.0f, 0.0f);
+					pl.send_teleport(c_id, 303.0f, 5.0f, 25.0f);
 					
 				}
 			}
@@ -510,12 +604,48 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_teleport(c_id, 850.0f, 0.0f, 550.0f);
+				pl.send_teleport(c_id, 350.0f, 0.0f, 104.0f);
 			}
 		}
 		break;
 		}
+		else if (p->key == VK_F5)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 402.0f, 0.0f, 198.0f);
+				}
+			}
+			break;
+		}
+		else if (p->key == VK_F6)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 472.0f, 0.0f, 100.0f);
+				}
+			}
 
+			break;
+		}
+		else if (p->key == VK_F7)
+		{
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f);
+			}
+		}
+
+		break;
+		}
+		
+		
 		if (ks.rotation >= 360.0f)
 		{
 			ks.rotation -= 360.0f;
@@ -732,27 +862,18 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_ATTACK:
 	{
 		CS_ATTACK_PACKET* p = reinterpret_cast<CS_ATTACK_PACKET*>(packet);
-		cout << "attack order" << endl;
-		float tx = p->x;
-		float ty = p->y;
-		float tz = p->z;
-		int tg;
-		if (p->isAlive == false)
-		{
-			tg = -1;
-		}
-		else
-		{
-			tg = p->target;
-		}
+		chrono::duration<double> dt = chrono::system_clock::now() - started;
+		printf("%d번 적 : %d의 피해, %f초 기절 (%f 초)\n", p->target, p->damage, p->stuntime, dt.count());
+		
 		for (auto& pl : clients)
 		{
 			if (pl._use == true)
 			{
-				pl.send_attack_info(c_id, tx, ty, tz, tg);
+				pl.send_damage(c_id, p->target, p->damage, p->stuntime);
 			}
 		}
-		
+
+		break;
 	}
 
 	}
@@ -802,6 +923,7 @@ void disconnect(int c_id)
 
 int main(int argc, char* argv[])
 {
+	started = chrono::system_clock::now();
 	std::wcout.imbue(std::locale("korean")); //오류 출력을 한국어로
 
 	WSADATA WSAData;

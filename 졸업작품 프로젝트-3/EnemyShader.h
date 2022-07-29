@@ -25,7 +25,12 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
 public:
-	
+	int mhp = 20;
+	int rhp = 10;
+	float mdur = 0.833333f;
+	float mrange = 1.0f;
+	float rrange = 12.0f;
+	float rdur = 0.2f;
 	
 	float** height11, **height12, **height13, **height21, **height22, **height23;
 
@@ -43,6 +48,8 @@ public:
 	std::vector<int> getHealthRate();
 
 	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*, ID3D12RootSignature* sig);
+
+	void restart();
 };
 
 typedef struct Line

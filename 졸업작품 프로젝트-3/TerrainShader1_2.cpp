@@ -15,7 +15,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	{
 		productCreated[i] = chrono::system_clock::now();
 	}
-	goodsMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_vase1.txt", NULL);
+	goodsMesh = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_toolbox.txt", NULL);
 	CLoadedMesh* shield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_shield.txt", NULL);
 	CLoadedMesh* bigshield = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_bigshield.txt", NULL);
 	CLoadedMesh* longtank = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_longtank.txt", NULL);
@@ -160,6 +160,8 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* wheel = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_wheel.txt", NULL);
 	CLoadedMesh* banner = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_banner.txt", NULL);
 	CLoadedMesh* whitebd = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_whiteboard.txt", NULL);
+
+	CLoadedMesh* charging = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area1_2/vtx_charging.txt", NULL);
 
 	PillarMesh* woodPillar1 = new PillarMesh(pd3dDevice, pd3dCommandList, 60, 1, 10);
 	PillarMesh* woodPillar2 = new PillarMesh(pd3dDevice, pd3dCommandList, 1, 50, 10);
@@ -894,11 +896,9 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		}
 		else if (data[i].type == ChargingRobot)
 		{
-		obj = new (std::nothrow) CGameObject(pd3dDevice, pd3dCommandList, sig, rm->playerModels[20], 1);
-		obj->setRoot(rm->playerModels[20]->m_pModelRootObject, true);
-		obj->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[20]);
-		obj->SetTrackAnimationSet(0, 0);
-
+		obj = new (std::nothrow) CGameObject(1);
+		obj->SetMaterial(0, rm->materials[3]);
+		obj->SetMesh(charging);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
@@ -990,7 +990,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, h, w);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, dx);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[114]);
 		shd->SetMesh(shadow);
@@ -998,7 +998,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
 		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
-		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->SetPosition(data[i].position.x - 0.1f * dx - data[i].position.y, 0.0f, data[i].position.z);
 		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
 
 		shadows.push_back(shd);
@@ -1079,7 +1079,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		{
 		obj = new (std::nothrow) CGameObject(1);
 		obj->SetMaterial(0, rm->materials[67]);
-		obj->SetMesh(log1);
+		obj->SetMesh(NULL);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
@@ -1092,7 +1092,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[181]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -1106,7 +1106,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		{
 		obj = new (std::nothrow) CGameObject(1);
 		obj->SetMaterial(0, rm->materials[68]);
-		obj->SetMesh(log2);
+		obj->SetMesh(NULL);
 		obj->shadowHeight = 0.0f;
 		obj->shadowX = 0.0f;
 		obj->shadowZ = 0.0f;
@@ -1119,7 +1119,7 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[182]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -2027,15 +2027,15 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, h);
 		shd = new (std::nothrow) CGameObject(1);
-		shd->SetMaterial(0, rm->materials[179]);
+		shd->SetMaterial(0, rm->materials[114]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
 		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
-		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->SetPosition(data[i].position.x  - data[i].position.y, 0.0f, data[i].position.z);
 		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
 
 		shadows.push_back(shd);
@@ -2054,15 +2054,15 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
 		float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
 		//그림자의 가로 길이는, 원본 물체의 x너비의 절반
-		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, dx, h);
 		shd = new (std::nothrow) CGameObject(1);
-		shd->SetMaterial(0, rm->materials[180]);
+		shd->SetMaterial(0, rm->materials[114]);
 		shd->SetMesh(shadow);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
 		//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
-		shd->SetPosition(data[i].position.x - 0.5f * dx - data[i].position.y, 0.0f, data[i].position.z);
+		shd->SetPosition(data[i].position.x - data[i].position.y, 0.0f, data[i].position.z);
 		shd->Rotate(0.0f, data[i].rotation.y + 270.0f, 0.0f);
 
 		shadows.push_back(shd);
@@ -2171,7 +2171,10 @@ void TerrainShader1_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		obj->type = data[i].type;
 		obj->SetPosition(data[i].position);
 		obj->Rotate(data[i].rotation.x, data[i].rotation.y, data[i].rotation.z);
-		
+		if (data[i].type == ChargingRobot)
+		{
+			obj->Rotate(data[i].rotation.x, data[i].rotation.y-90.0f, data[i].rotation.z);
+		}
 		objects.push_back(obj);
 
 
@@ -2291,17 +2294,7 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			{
 				if (dist <= 10.0f)
 				{
-					if (objects[i]->type == ChargingRobot)
-					{
-
-						objects[i]->Animate(elapsed);
-						if (objects[i]->m_pSkinnedAnimationController)
-						{
-							objects[i]->UpdateTransform(NULL);
-						}
-						rm->materials[33]->UpdateShaderVariable(pd3dCommandList);
-
-					}
+					
 					if (m_pd3dCbvSrvDescriptorHeap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
@@ -2310,17 +2303,8 @@ void TerrainShader1_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 				}
 				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 55.0f))
 				{
-					if (objects[i]->type == ChargingRobot)
-					{
-
-						objects[i]->Animate(elapsed);
-						if (objects[i]->m_pSkinnedAnimationController)
-						{
-							objects[i]->UpdateTransform(NULL);
-						}
-						rm->materials[33]->UpdateShaderVariable(pd3dCommandList);
-
-					}
+					
+					
 					if (m_pd3dCbvSrvDescriptorHeap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
@@ -2430,6 +2414,7 @@ void TerrainShader1_2::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		{
 			CGameObject* goods = new CGameObject(1);
 			goods->SetMaterial(0, rm->materials[125]);
+			
 			goods->SetMesh(goodsMesh);
 			goods->shadowHeight = 0.0f;
 			goods->shadowX = 0.0f;

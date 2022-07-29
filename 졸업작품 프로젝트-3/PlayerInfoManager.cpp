@@ -15,6 +15,9 @@ PlayerInfoManager::PlayerInfoManager()
 PlayerInfoManager::~PlayerInfoManager()
 {
 }
+
+
+
 void PlayerInfoManager::initGrowth()
 {
 	growth.melee.level = 1;

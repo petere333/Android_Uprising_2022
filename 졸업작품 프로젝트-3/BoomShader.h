@@ -7,7 +7,8 @@
 #include "LevelLoader.h"
 #include "ParticleShader.h"
 #include "EnemyShader.h"
-
+#include "InterfaceShader.h"
+#include "CNet.h"
 class BoomShader : public CShader
 {
 public:
@@ -26,8 +27,18 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
+
 public:
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl)
+
+	CLoadedMesh* boomMesh = NULL;
+
+	ParticleShader* part;
+	EnemyShader* enemy;
+	std::vector<BoomObject*>	objects;
+
+	ResourceManager* rm;
+
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ParticleShader* part, PlayerShader* pl, InterfaceShader* interShader, int pid)
 	{
 		for (int i = 0; i < objects.size(); ++i)
 		{
@@ -37,16 +48,7 @@ public:
 
 			//생성된지 1초가 지났거나, 그사이에 물체 혹은 적에게 박힌 경우 객체 제거.
 
-			if ((float)dt.count() >= 1.0f)
-			{
-				part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				delete objects[i];
-				objects.erase(objects.begin() + i);
-				erased = true;
-
-			}
-			else
-			{
+			
 				float tx = objects[i]->origin.x + objects[i]->direction.x * objects[i]->speed * (float)dt.count();
 				float tz = objects[i]->origin.z + objects[i]->direction.z * objects[i]->speed * (float)dt.count();
 
@@ -59,6 +61,20 @@ public:
 					//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
 					if (enemy->height11[ix][iz] >= objects[i]->origin.y)
 					{
+						if (objects[i]->owner == pid)
+						{
+							CS_PARTICLE_PACKET p;
+							p.size = sizeof(CS_PARTICLE_PACKET);
+							p.type = PACKET_TYPE::CS_PARTICLE;
+							p.id = pid;
+							p.particleType = 1;
+							p.count = 100;
+							p.x = objects[i]->GetPosition().x;
+							p.y = objects[i]->GetPosition().y;
+							p.z = objects[i]->GetPosition().z;
+
+							SendPacket(&p);
+						}
 						// 폭발 반경 인근의 적들에게 피해
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
@@ -67,48 +83,26 @@ public:
 
 							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
 							{
-								enemy->objects[k]->bState.hp -= 10;
 
-								if (enemy->objects[k]->bState.hp <= 0)
+
+								
+								if (objects[i]->owner == pid)
 								{
-									if (enemy->objects[k]->expGiven == false)
-									{
-										for (int ii = 0; ii < pl->objects.size(); ++ii)
-										{
-											pl->objects[ii]->info->growth.ranged.exp += 50;
-											if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
-											{
-												pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
-												pl->objects[ii]->info->growth.ranged.level += 1;
-												pl->objects[ii]->info->stats.precision += 3;
-												pl->objects[ii]->info->stats.hardness += 2;
+									CS_ATTACK_PACKET ap;
+									ap.size = sizeof(CS_ATTACK_PACKET);
+									ap.type = PACKET_TYPE::CS_ATTACK;
+									ap.id = 1;
+									ap.target = k;
+									ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+									ap.stuntime = 1.0f;
 
-											}
-											pl->objects[ii]->info->growth.total.exp += 50;
-
-											if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
-											{
-												pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
-												pl->objects[ii]->info->growth.total.level += 1;
-												pl->objects[ii]->info->extraPoint += 3;
-											}
-
-
-										}
-										enemy->objects[k]->expGiven = true;
-									}
+									SendPacket(&ap);
 								}
-								else
-								{
 
-									enemy->objects[k]->stunned = true;
-									enemy->objects[k]->stunDuration = 1.0f;
-									enemy->objects[k]->lastStun = chrono::system_clock::now();
-								}
 							}
 						}
-						part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-						delete objects[i];
+
+						//delete objects[i];
 						objects.erase(objects.begin() + i);
 						erased = true;
 					}
@@ -116,6 +110,7 @@ public:
 					//물체랑은 충돌하지 않았지만 적과 박은 경우
 					else
 					{
+
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
 							XMFLOAT3 pos = objects[i]->GetPosition();
@@ -124,6 +119,20 @@ public:
 							XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
 							if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
 							{
+								if (objects[i]->owner == pid)
+								{
+									CS_PARTICLE_PACKET p;
+									p.size = sizeof(CS_PARTICLE_PACKET);
+									p.type = PACKET_TYPE::CS_PARTICLE;
+									p.id = pid;
+									p.particleType = 1;
+									p.count = 100;
+									p.x = objects[i]->GetPosition().x;
+									p.y = objects[i]->GetPosition().y;
+									p.z = objects[i]->GetPosition().z;
+
+									SendPacket(&p);
+								}
 								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
 								//또한 그 적들을 1초간 기절.
 								for (int a = 0; a < enemy->objects.size(); ++a)
@@ -132,50 +141,23 @@ public:
 									XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
 									if (Vector3::Length(ds) <= 1.0f)
 									{
-										enemy->objects[a]->bState.hp -= 10;
 
-										if (enemy->objects[a]->bState.hp <= 0)
+										if (objects[i]->owner == pid)
 										{
-											if (enemy->objects[a]->expGiven == false)
-											{
-												for (int ii = 0; ii < pl->objects.size(); ++ii)
-												{
-													pl->objects[ii]->info->growth.ranged.exp += 50;
-													if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
-													{
-														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
-														pl->objects[ii]->info->growth.ranged.level += 1;
-														pl->objects[ii]->info->stats.precision += 3;
-														pl->objects[ii]->info->stats.hardness += 2;
-													}
-													pl->objects[ii]->info->growth.total.exp += 50;
+											CS_ATTACK_PACKET ap;
+											ap.size = sizeof(CS_ATTACK_PACKET);
+											ap.type = PACKET_TYPE::CS_ATTACK;
+											ap.id = 1;
+											ap.target = a;
+											ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+											ap.stuntime = 1.0f;
 
-													if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
-													{								 
-														pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
-														pl->objects[ii]->info->growth.total.level += 1;
-														pl->objects[ii]->info->extraPoint += 3;
-													}
-
-
-												}
-												enemy->objects[a]->expGiven = true;
-											}
+											SendPacket(&ap);
 										}
-										/*
-										if (a == k)
-										{
-											enemy->objects[a]->bState.hp -= 10;
-
-										}
-										*/
-										enemy->objects[a]->stunDuration = 1.0f;
-										enemy->objects[a]->lastStun = chrono::system_clock::now();
-										enemy->objects[a]->stunned = true;
 									}
 								}
-								part->createParticles(100, pos, pd3dDevice, pd3dCommandList);
-								delete objects[i];
+
+							//	delete objects[i];
 								objects.erase(objects.begin() + i);
 
 								erased = true;
@@ -184,126 +166,118 @@ public:
 						}
 					}
 				}
-				else if(tx > 200.0f && tx < 600.0f && tz>0.0f && tz < 200.0f)
+				else if (tx > 200.0f && tx < 600.0f && tz>0.0f && tz < 200.0f)
 				{
-					ix = (int)((tx-200.0f) / 0.5f);
+					ix = (int)((tx - 200.0f) / 0.5f);
 					iz = (int)((tz) / 0.5f);
 					//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
 					if (enemy->height12[ix][iz] >= objects[i]->origin.y)
 					{
-						// 폭발 반경 인근의 적들에게 피해
-
-						for (int k = 0; k < enemy->objects.size(); ++k)
+					// 폭발 반경 인근의 적들에게 피해
+						if (objects[i]->owner == pid)
 						{
-							XMFLOAT3 op = objects[i]->GetPosition();
-							XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+							CS_PARTICLE_PACKET p;
+							p.size = sizeof(CS_PARTICLE_PACKET);
+							p.type = PACKET_TYPE::CS_PARTICLE;
+							p.id = pid;
+							p.particleType = 1;
+							p.count = 100;
+							p.x = objects[i]->GetPosition().x;
+							p.y = objects[i]->GetPosition().y;
+							p.z = objects[i]->GetPosition().z;
 
-							if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
-							{
-								enemy->objects[k]->bState.hp -= 10;
-
-								if (enemy->objects[k]->bState.hp <= 0)
-								{
-									if (enemy->objects[k]->expGiven == false)
-									{
-										for (int ii = 0; ii < pl->objects.size(); ++ii)
-										{
-											pl->objects[ii]->info->growth.ranged.exp += 50;
-											if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
-											{
-												pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
-												pl->objects[ii]->info->growth.ranged.level += 1;
-												pl->objects[ii]->info->stats.precision += 3;
-												pl->objects[ii]->info->stats.hardness += 2;
-											}
-											pl->objects[ii]->info->growth.total.exp += 50;
-
-											if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
-											{
-												pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
-												pl->objects[ii]->info->growth.total.level += 1;
-												pl->objects[ii]->info->extraPoint += 3;
-											}
-
-
-										}
-										enemy->objects[k]->expGiven = true;
-									}
-								}
-
-								enemy->objects[k]->stunned = true;
-								enemy->objects[k]->stunDuration = 1.0f;
-								enemy->objects[k]->lastStun = chrono::system_clock::now();
-							}
+							SendPacket(&p);
 						}
-						part->createParticles(100, objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-						delete objects[i];
-						objects.erase(objects.begin() + i);
-						erased = true;
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 op = objects[i]->GetPosition();
+						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						{
+
+
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+								ap.stuntime = 1.0f;
+
+								SendPacket(&ap);
+							}
+
+						}
+
+
 					}
+				
+
+				//delete objects[i];
+				objects.erase(objects.begin() + i);
+				erased = true;
+				}
+
 					//물체랑은 충돌하지 않았지만 적과 박은 경우
 					else
 					{
+
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
 							XMFLOAT3 pos = objects[i]->GetPosition();
 							//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
 							XMFLOAT3 ep = enemy->objects[k]->GetPosition();
 							XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+
 							if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
 							{
 								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
 								//또한 그 적들을 1초간 기절.
+
+								if (objects[i]->owner == pid)
+								{
+									CS_PARTICLE_PACKET p;
+									p.size = sizeof(CS_PARTICLE_PACKET);
+									p.type = PACKET_TYPE::CS_PARTICLE;
+									p.id = pid;
+									p.particleType = 1;
+									p.count = 100;
+									p.x = objects[i]->GetPosition().x;
+									p.y = objects[i]->GetPosition().y;
+									p.z = objects[i]->GetPosition().z;
+
+									SendPacket(&p);
+								}
 								for (int a = 0; a < enemy->objects.size(); ++a)
 								{
 									XMFLOAT3 enp = enemy->objects[a]->GetPosition();
 									XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
 									if (Vector3::Length(ds) <= 1.0f)
 									{
-										enemy->objects[a]->bState.hp -= 10;
+										
+									
 
-										if (enemy->objects[a]->bState.hp <= 0)
+										if (objects[i]->owner == pid)
 										{
-											if (enemy->objects[a]->expGiven == false)
-											{
-												for (int ii = 0; ii < pl->objects.size(); ++ii)
-												{
-													pl->objects[ii]->info->growth.ranged.exp += 50;
-													if (pl->objects[ii]->info->growth.ranged.exp >= expNeed[pl->objects[ii]->info->growth.ranged.level - 1])
-													{
-														pl->objects[ii]->info->growth.ranged.exp -= expNeed[pl->objects[ii]->info->growth.ranged.level - 1];
-														pl->objects[ii]->info->growth.ranged.level += 1;
-														pl->objects[ii]->info->stats.precision += 3;
-														pl->objects[ii]->info->stats.hardness += 2;
-													}
-													pl->objects[ii]->info->growth.total.exp += 50;
+											CS_ATTACK_PACKET ap;
+											ap.size = sizeof(CS_ATTACK_PACKET);
+											ap.type = PACKET_TYPE::CS_ATTACK;
+											ap.id = 1;
+											ap.target = a;
+											ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+											ap.stuntime = 1.0f;
 
-													if (pl->objects[ii]->info->growth.total.exp >= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1])
-													{
-														pl->objects[ii]->info->growth.total.exp -= totalExpNeed[pl->objects[ii]->info->growth.total.level - 1];
-														pl->objects[ii]->info->growth.total.level += 1;
-														pl->objects[ii]->info->extraPoint += 3;
-													}
-												}
-												enemy->objects[a]->expGiven = true;
-
-
-											}
+											SendPacket(&ap);
 										}
-										/*
-										if (a == k)
-										{
-											enemy->objects[a]->bState.hp -= 10;
 
-										}
-										*/
-										enemy->objects[a]->stunDuration = 1.0f;
-										enemy->objects[a]->lastStun = chrono::system_clock::now();
-										enemy->objects[a]->stunned = true;
+
 									}
 								}
-								part->createParticles(100, pos, pd3dDevice, pd3dCommandList);
-								delete objects[i];
+								
+							//	delete objects[i];
 								objects.erase(objects.begin() + i);
 
 								erased = true;
@@ -313,12 +287,248 @@ public:
 					}
 				}
 
-				
+				else if (tx > 800.0f && tx < 900.0f && tz>363.0f && tz < 600.0f)
+				{
+				ix = (int)((tx - 800.0f) / 0.5f);
+				iz = (int)((tz-363.0f) / 0.5f);
+				//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+				if (enemy->height21[ix][iz] >= objects[i]->origin.y)
+				{
+					// 폭발 반경 인근의 적들에게 피해
+					if (objects[i]->owner == pid)
+					{
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pid;
+						p.particleType = 1;
+						p.count = 100;
+						p.x = objects[i]->GetPosition().x;
+						p.y = objects[i]->GetPosition().y;
+						p.z = objects[i]->GetPosition().z;
 
-				
+						SendPacket(&p);
+					}
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 op = objects[i]->GetPosition();
+						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
 
-				
-			}
+						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						{
+
+
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+								ap.stuntime = 1.0f;
+
+								SendPacket(&ap);
+							}
+
+						}
+
+
+					}
+
+
+					//delete objects[i];
+					objects.erase(objects.begin() + i);
+					erased = true;
+				}
+
+				//물체랑은 충돌하지 않았지만 적과 박은 경우
+				else
+				{
+
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 pos = objects[i]->GetPosition();
+						//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+						XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+						XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+
+						if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+						{
+							//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+							//또한 그 적들을 1초간 기절.
+
+							if (objects[i]->owner == pid)
+							{
+								CS_PARTICLE_PACKET p;
+								p.size = sizeof(CS_PARTICLE_PACKET);
+								p.type = PACKET_TYPE::CS_PARTICLE;
+								p.id = pid;
+								p.particleType = 1;
+								p.count = 100;
+								p.x = objects[i]->GetPosition().x;
+								p.y = objects[i]->GetPosition().y;
+								p.z = objects[i]->GetPosition().z;
+
+								SendPacket(&p);
+							}
+							for (int a = 0; a < enemy->objects.size(); ++a)
+							{
+								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+								XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+								if (Vector3::Length(ds) <= 1.0f)
+								{
+
+
+
+									if (objects[i]->owner == pid)
+									{
+										CS_ATTACK_PACKET ap;
+										ap.size = sizeof(CS_ATTACK_PACKET);
+										ap.type = PACKET_TYPE::CS_ATTACK;
+										ap.id = 1;
+										ap.target = a;
+										ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+										ap.stuntime = 1.0f;
+
+										SendPacket(&ap);
+									}
+
+
+								}
+							}
+
+							//	delete objects[i];
+							objects.erase(objects.begin() + i);
+
+							erased = true;
+							break;
+						}
+					}
+				}
+				}
+
+				else if (tx > 800.0f && tx < 900.0f && tz>60.0f && tz < 363.0f)
+				{
+				ix = (int)((tx - 800.0f) / 0.5f);
+				iz = (int)((tz - 60.0f) / 0.5f);
+				//높이맵에서의 높이가 더 높은경우, 즉 물체 옆면에 충돌한 경우
+				if (enemy->height22[ix][iz] >= objects[i]->origin.y)
+				{
+					// 폭발 반경 인근의 적들에게 피해
+					if (objects[i]->owner == pid)
+					{
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pid;
+						p.particleType = 1;
+						p.count = 100;
+						p.x = objects[i]->GetPosition().x;
+						p.y = objects[i]->GetPosition().y;
+						p.z = objects[i]->GetPosition().z;
+
+						SendPacket(&p);
+					}
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 op = objects[i]->GetPosition();
+						XMFLOAT3 enp = enemy->objects[k]->GetPosition();
+
+						if (Vector3::Length(XMFLOAT3(op.x - enp.x, 0.0f, op.z - enp.z)) <= 1.0f)
+						{
+
+
+							if (objects[i]->owner == pid)
+							{
+								CS_ATTACK_PACKET ap;
+								ap.size = sizeof(CS_ATTACK_PACKET);
+								ap.type = PACKET_TYPE::CS_ATTACK;
+								ap.id = 1;
+								ap.target = k;
+								ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+								ap.stuntime = 1.0f;
+
+								SendPacket(&ap);
+							}
+
+						}
+
+
+					}
+
+
+					//delete objects[i];
+					objects.erase(objects.begin() + i);
+					erased = true;
+				}
+
+				//물체랑은 충돌하지 않았지만 적과 박은 경우
+				else
+				{
+
+					for (int k = 0; k < enemy->objects.size(); ++k)
+					{
+						XMFLOAT3 pos = objects[i]->GetPosition();
+						//적과의 거리가 xz평면에서 0.6미터 이내이고, y좌표도 적의 y범위 내에 있는 경우, 즉 적과 부딫친 경우
+						XMFLOAT3 ep = enemy->objects[k]->GetPosition();
+						XMFLOAT3 dst = XMFLOAT3(ep.x - pos.x, 0.0f, ep.z - pos.z);
+
+						if (Vector3::Length(dst) <= 0.6f && (pos.y > ep.y && pos.y < ep.y + 1.7f))
+						{
+							//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
+							//또한 그 적들을 1초간 기절.
+
+							if (objects[i]->owner == pid)
+							{
+								CS_PARTICLE_PACKET p;
+								p.size = sizeof(CS_PARTICLE_PACKET);
+								p.type = PACKET_TYPE::CS_PARTICLE;
+								p.id = pid;
+								p.particleType = 1;
+								p.count = 100;
+								p.x = objects[i]->GetPosition().x;
+								p.y = objects[i]->GetPosition().y;
+								p.z = objects[i]->GetPosition().z;
+
+								SendPacket(&p);
+							}
+							for (int a = 0; a < enemy->objects.size(); ++a)
+							{
+								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
+								XMFLOAT3 ds = XMFLOAT3(enp.x - pos.x, 0.0f, enp.z - pos.z);
+								if (Vector3::Length(ds) <= 1.0f)
+								{
+
+
+
+									if (objects[i]->owner == pid)
+									{
+										CS_ATTACK_PACKET ap;
+										ap.size = sizeof(CS_ATTACK_PACKET);
+										ap.type = PACKET_TYPE::CS_ATTACK;
+										ap.id = 1;
+										ap.target = a;
+										ap.damage = pl->objects[pid]->info->getRangedDamage() * pl->objects[pid]->amp_ranged;
+										ap.stuntime = 1.0f;
+
+										SendPacket(&ap);
+									}
+
+
+								}
+							}
+
+							//	delete objects[i];
+							objects.erase(objects.begin() + i);
+
+							erased = true;
+							break;
+						}
+					}
+				}
+				}
+			
 			if (erased == true)
 			{
 				continue;
@@ -342,13 +552,5 @@ public:
 		}
 	}
 
-public:
 
-	CLoadedMesh* boomMesh = NULL;
-
-	ParticleShader* part;
-	EnemyShader* enemy;
-	std::vector<BoomObject*>	objects;
-	
-	ResourceManager* rm;
 };

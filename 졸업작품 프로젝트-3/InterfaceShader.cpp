@@ -12,14 +12,14 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* mesh = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f/450.0f, 2.0f, 0.01f, 0.0f, 0.0f, false);
 	CubeMeshOffset* meshr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 2.0f, 0.01f, 0.0f, 0.0f, true);
 
-	CubeMeshOffset* melee = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* meleer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* melee = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* meleer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(50.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 	
-	CubeMeshOffset* range = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* ranger = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* range = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ranger = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(90.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* micro = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* micror = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* micro = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, (130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* micror = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 30.0f / 450.0f, 30.0f / 450.0f, 0.02f, -(130.0f - 600.0f) / 450.0f, -(50.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* succeed = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* succeedr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
@@ -131,6 +131,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 		revmeshes.push_back(hpr);
 	}
 
+	//324~338 임무 성공창
+
 	meshes.push_back(succeed);
 	meshes.push_back(retry);
 	meshes.push_back(back);
@@ -165,6 +167,65 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(gold2r);
 	revmeshes.push_back(gold3r);
 
+	//mission
+	CubeMeshOffset* mission = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(430.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* missionr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(430.0f - 450.0f) / 450.0f, true);
+
+	//임무 진척도
+
+	CubeMeshOffset* prog = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, (1030.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* progr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(1030.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, true);
+
+	//진척도 숫자
+
+	CubeMeshOffset* prog10 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1100.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* prog10r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1100.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* prog1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1120.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* prog1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1120.0f - 600.0f) / 450.0f, -(150.0f - 450.0f) / 450.0f, true);
+	//실패 조건 충족도
+	CubeMeshOffset* fprog = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, (1030.0f - 600.0f) / 450.0f, -(180.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* fprogr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(1030.0f - 600.0f) / 450.0f, -(180.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* fprog1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1100.0f - 600.0f) / 450.0f, -(180.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* fprog1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1100.0f - 600.0f) / 450.0f, -(180.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* time = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, (1030.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* timer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 120.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(1030.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* time100 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1100.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* time100r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1100.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* time10 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1120.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* time10r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1120.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
+
+	CubeMeshOffset* time1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* time1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
+
+	//339~348끝까지 구역별 미션 관련
+
+	meshes.push_back(mission);
+	meshes.push_back(prog);
+	meshes.push_back(prog10);
+	meshes.push_back(prog1);
+	meshes.push_back(fprog);
+	meshes.push_back(fprog1);
+	meshes.push_back(time);
+	meshes.push_back(time100);
+	meshes.push_back(time10);
+	meshes.push_back(time1);
+	
+	revmeshes.push_back(missionr);
+	revmeshes.push_back(progr);
+	revmeshes.push_back(prog10r);
+	revmeshes.push_back(prog1r);
+	revmeshes.push_back(fprogr);
+	revmeshes.push_back(fprog1r);
+	revmeshes.push_back(timer);
+	revmeshes.push_back(time100r);
+	revmeshes.push_back(time10r);
+	revmeshes.push_back(time1r);
+
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, -1, -1, -1, -1, 263);
 	UIObject* obj3 = new UIObject(1, -1, -1, -1, -1, 265);
@@ -197,7 +258,18 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, 273);
 
 
-
+	//mission
+	UIObject* obj24 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj25 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj26 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj27 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj28 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj29 = new UIObject(1, -1, -1, -1, -1, -1);
+	
+	UIObject* obj30 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj31 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj32 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj33 = new UIObject(1, -1, -1, -1, -1, -1);
 
 
 	obj->SetMesh(meshes[0]);
@@ -291,6 +363,40 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj23->SetMaterial(0, rm->materials[273]);
 	obj23->SetPosition(100.0f, 2.0f, 105.0f);
 
+	//mission
+	obj24->SetMesh(meshes[339]);
+	obj24->SetMaterial(0, rm->materials[328]);
+	obj24->SetPosition(0.0f, 0.0f, 0.0f);
+	obj25->SetMesh(meshes[340]);
+	obj25->SetMaterial(0, rm->materials[326]);
+	obj25->SetPosition(0.0f, 0.0f, 0.0f);
+	obj26->SetMesh(meshes[341]);
+	obj26->SetMaterial(0, rm->materials[273]);
+	obj26->SetPosition(0.0f, 0.0f, 0.0f);
+	obj27->SetMesh(meshes[342]);
+	obj27->SetMaterial(0, rm->materials[273]);
+	obj27->SetPosition(0.0f, 0.0f, 0.0f);
+	obj28->SetMesh(meshes[343]);
+	obj28->SetMaterial(0, rm->materials[325]);
+	obj28->SetPosition(0.0f, 0.0f, 0.0f);
+	obj29->SetMesh(meshes[344]);
+	obj29->SetMaterial(0, rm->materials[273]);
+	obj29->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj30->SetMesh(meshes[345]);
+	obj30->SetMaterial(0, rm->materials[327]);
+	obj30->SetPosition(0.0f, 0.0f, 0.0f);
+	obj31->SetMesh(meshes[346]);
+	obj31->SetMaterial(0, rm->materials[273]);
+	obj31->SetPosition(0.0f, 0.0f, 0.0f);
+	obj32->SetMesh(meshes[347]);
+	obj32->SetMaterial(0, rm->materials[273]);
+	obj32->SetPosition(0.0f, 0.0f, 0.0f);
+	obj33->SetMesh(meshes[348]);
+	obj33->SetMaterial(0, rm->materials[273]);
+	obj33->SetPosition(0.0f, 0.0f, 0.0f);
+
+
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -316,6 +422,17 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	objects.push_back(obj21);
 	objects.push_back(obj22);
 	objects.push_back(obj23);
+
+	objects.push_back(obj24);
+	objects.push_back(obj25);
+	objects.push_back(obj26);
+	objects.push_back(obj27);
+	objects.push_back(obj28);
+	objects.push_back(obj29);
+	objects.push_back(obj30);
+	objects.push_back(obj31);
+	objects.push_back(obj32);
+	objects.push_back(obj33);
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -542,15 +659,374 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 
 	if (stageClear == false)
 	{
-		for (int i = 8; i < objects.size(); ++i)
+		for (int i = 8; i < 23; ++i)
 		{
 			objects[i]->m_pMesh = NULL;
 		}
 
+
+		if (missionShow == false)
+		{
+			objects[23]->SetMesh(NULL);
+		}
+
+		else
+
+		{
+			if (cl.z < 0.0f)
+			{
+				objects[23]->SetMesh(revmeshes[339]);
+				objects[23]->m_ppMaterials[0] = rm->materials[mission + 327];
+			}
+			else
+			{
+				objects[23]->SetMesh(meshes[339]);
+				objects[23]->m_ppMaterials[0] = rm->materials[mission + 327];
+			}
+		}
+
+		if (cl.z < 0.0f)
+		{
+			objects[24]->SetMesh(revmeshes[340]);
+			objects[25]->SetMesh(revmeshes[341]);
+			objects[26]->SetMesh(revmeshes[342]);
+		}
+		else
+		{
+			objects[24]->SetMesh(meshes[340]);
+			objects[25]->SetMesh(meshes[341]);
+			objects[26]->SetMesh(meshes[342]);
+		}
+
+		if (mission == 1)
+		{
+			int n = (m1_kill %100)/ 10;
+			//진척도
+			objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = m1_kill % 10;
+			objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			//실패조건
+			objects[27]->SetMesh(NULL);
+			objects[28]->SetMesh(NULL);
+
+			//제한시간 관련
+			objects[29]->SetMesh(NULL);
+			objects[30]->SetMesh(NULL);
+			objects[31]->SetMesh(NULL);
+			objects[32]->SetMesh(NULL);
+		}
+		else if (mission==2)
+		{
+			int n = (m2_stun % 100) / 10;
+			//진척도
+			objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = m2_stun % 10;
+			objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			//실패조건
+			objects[27]->SetMesh(NULL);
+			objects[28]->SetMesh(NULL);
+
+			//제한시간 관련
+			objects[29]->SetMesh(NULL);
+			objects[30]->SetMesh(NULL);
+			objects[31]->SetMesh(NULL);
+			objects[32]->SetMesh(NULL);
+		}
+		else if (mission == 3)
+		{
+			int n = (m3_bother % 100) / 10;
+			//진척도
+			objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = m3_bother % 10;
+			objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			//실패조건
+			objects[27]->SetMesh(NULL);
+			objects[28]->SetMesh(NULL);
+
+			//제한시간 관련
+			objects[29]->SetMesh(NULL);
+			objects[30]->SetMesh(NULL);
+			objects[31]->SetMesh(NULL);
+			objects[32]->SetMesh(NULL);
+		}
+		else if (mission == 4)
+		{
+			int n = (m4_kill % 100) / 10;
+			//진척도
+			objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = m4_kill % 10;
+			objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			//실패조건
+			objects[27]->SetMesh(NULL);
+			objects[28]->SetMesh(NULL);
+
+			//제한시간 관련
+			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+			chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+			n = ((100 - s.count()) % 1000) / 100;
+			objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = ((100 - s.count()) % 100) / 10;
+			objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = (100 - s.count()) % 10;
+			objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+			
+			if (cl.z < 0.0f)
+			{
+				objects[29]->SetMesh(revmeshes[345]);
+				objects[30]->SetMesh(revmeshes[346]);
+				objects[31]->SetMesh(revmeshes[347]);
+				objects[32]->SetMesh(revmeshes[348]);
+			}
+			else
+			{
+				objects[29]->SetMesh(meshes[345]);
+				objects[30]->SetMesh(meshes[346]);
+				objects[31]->SetMesh(meshes[347]);
+				objects[32]->SetMesh(meshes[348]);
+			}
+		}
+		else if (mission == 5)
+		{
+			int n = (m5_broken % 100) / 10;
+			//진척도
+			objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = m5_broken % 10;
+			objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			//실패조건
+			objects[27]->SetMesh(NULL);
+			objects[28]->SetMesh(NULL);
+
+			//제한시간 관련
+			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+			chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+			n = ((30-s.count()) % 1000) / 100;
+			objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = ((30 - s.count()) % 100) / 10;
+			objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+			n = (30 - s.count()) % 10;
+			objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+
+			if (cl.z < 0.0f)
+			{
+				objects[29]->SetMesh(revmeshes[345]);
+				objects[30]->SetMesh(revmeshes[346]);
+				objects[31]->SetMesh(revmeshes[347]);
+				objects[32]->SetMesh(revmeshes[348]);
+			}
+			else
+			{
+				objects[29]->SetMesh(meshes[345]);
+				objects[30]->SetMesh(meshes[346]);
+				objects[31]->SetMesh(meshes[347]);
+				objects[32]->SetMesh(meshes[348]);
+			}
+		}
+		else if (mission == 6)
+		{
+		int n = (m6_broken % 100) / 10;
+		//진척도
+		objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = m6_broken % 10;
+		objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+		//실패조건
+		objects[27]->SetMesh(NULL);
+		objects[28]->SetMesh(NULL);
+
+		//제한시간 관련
+		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+		n = ((30 - s.count()) % 1000) / 100;
+		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = ((30 - s.count()) % 100) / 10;
+		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = (30-s.count()) % 10;
+		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+
+
+		if (cl.z < 0.0f)
+		{
+			objects[29]->SetMesh(revmeshes[345]);
+			objects[30]->SetMesh(revmeshes[346]);
+			objects[31]->SetMesh(revmeshes[347]);
+			objects[32]->SetMesh(revmeshes[348]);
+		}
+		else
+		{
+			objects[29]->SetMesh(meshes[345]);
+			objects[30]->SetMesh(meshes[346]);
+			objects[31]->SetMesh(meshes[347]);
+			objects[32]->SetMesh(meshes[348]);
+		}
+		}
+		else if (mission == 7)
+		{
+		int n = (m7_kill % 100) / 10;
+		//진척도
+		objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = m7_kill % 10;
+		objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+		//실패조건
+		objects[27]->SetMesh(NULL);
+		objects[28]->SetMesh(NULL);
+
+		//제한시간 관련
+		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+		n = ((80 - s.count()) % 1000) / 100;
+		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = ((80 - s.count()) % 100) / 10;
+		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = (80-s.count()) % 10;
+		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+
+
+		if (cl.z < 0.0f)
+		{
+			objects[29]->SetMesh(revmeshes[345]);
+			objects[30]->SetMesh(revmeshes[346]);
+			objects[31]->SetMesh(revmeshes[347]);
+			objects[32]->SetMesh(revmeshes[348]);
+		}
+		else
+		{
+			objects[29]->SetMesh(meshes[345]);
+			objects[30]->SetMesh(meshes[346]);
+			objects[31]->SetMesh(meshes[347]);
+			objects[32]->SetMesh(meshes[348]);
+		}
+		}
+
+		else if (mission == 8)
+		{
+		
+		
+		//진척도
+		objects[25]->m_ppMaterials[0] = rm->materials[273];
+		
+		objects[26]->m_ppMaterials[0] = rm->materials[273];
+		
+
+		
+		//실패조건
+
+		if (cl.z < 0.0f)
+		{
+			objects[27]->SetMesh(revmeshes[343]);
+			objects[28]->SetMesh(revmeshes[344]);
+		}
+		else
+		{
+			objects[27]->SetMesh(meshes[343]);
+			objects[28]->SetMesh(meshes[344]);
+		}
+		objects[28]->m_ppMaterials[0] = rm->materials[273 + m8_kill];
+
+		//제한시간 관련
+		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+		int n = ((60 - s.count()) % 1000) / 100;
+		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = ((60 - s.count()) % 100) / 10;
+		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = (60-s.count()) % 10;
+		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+
+
+		if (cl.z < 0.0f)
+		{
+			objects[29]->SetMesh(revmeshes[345]);
+			objects[30]->SetMesh(revmeshes[346]);
+			objects[31]->SetMesh(revmeshes[347]);
+			objects[32]->SetMesh(revmeshes[348]);
+		}
+		else
+		{
+			objects[29]->SetMesh(meshes[345]);
+			objects[30]->SetMesh(meshes[346]);
+			objects[31]->SetMesh(meshes[347]);
+			objects[32]->SetMesh(meshes[348]);
+		}
+		}
+
+		else if (mission == 9)
+		{
+		int n = (m9_search % 100) / 10;
+		//진척도
+		objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = m9_search % 10;
+		objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+		//실패조건
+
+		if (cl.z < 0.0f)
+		{
+			objects[27]->SetMesh(revmeshes[343]);
+			objects[28]->SetMesh(revmeshes[344]);
+		}
+		else
+		{
+			objects[27]->SetMesh(meshes[343]);
+			objects[28]->SetMesh(meshes[344]);
+		}
+		objects[28]->m_ppMaterials[0] = rm->materials[273 + m9_stun];
+
+
+		//제한시간 관련
+		objects[29]->SetMesh(NULL);
+		objects[30]->SetMesh(NULL);
+		objects[31]->SetMesh(NULL);
+		objects[32]->SetMesh(NULL);
+		}
+
+		else if (mission == 10)
+		{
+		int n = (m10_gain % 100) / 10;
+		//진척도
+		objects[25]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = m10_gain % 10;
+		objects[26]->m_ppMaterials[0] = rm->materials[273 + n];
+
+		//실패조건
+		objects[27]->SetMesh(NULL);
+		objects[28]->SetMesh(NULL);
+
+		//제한시간 관련
+		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
+		n = ((30-s.count()) % 1000) / 100;
+		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = ((30 - s.count()) % 100) / 10;
+		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
+		n = (30-s.count()) % 10;
+		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
+
+
+		if (cl.z < 0.0f)
+		{
+			objects[29]->SetMesh(revmeshes[345]);
+			objects[30]->SetMesh(revmeshes[346]);
+			objects[31]->SetMesh(revmeshes[347]);
+			objects[32]->SetMesh(revmeshes[348]);
+		}
+		else
+		{
+			objects[29]->SetMesh(meshes[345]);
+			objects[30]->SetMesh(meshes[346]);
+			objects[31]->SetMesh(meshes[347]);
+			objects[32]->SetMesh(meshes[348]);
+		}
+		}
 	}
 	else
 	{
-		for (int i = 8; i < objects.size(); ++i)
+		for (int i = 8; i < 23; ++i)
 		{
 			if (cl.z < 0.0f)
 			{
@@ -562,6 +1038,5 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 			}
 		}
 	}
-	//	XMFLOAT3 p = objects[1]->GetPosition();
-	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
+	
 }

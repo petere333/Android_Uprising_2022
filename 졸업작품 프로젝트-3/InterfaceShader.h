@@ -31,4 +31,28 @@ public:
 
 	bool stageClear = false;
 	chrono::time_point<chrono::system_clock> clearTime;
+
+	chrono::time_point<chrono::system_clock> missionChangedTime;
+	int mission = 1;
+	
+
+
+	int m1_kill = 0;
+	int m2_stun = 0;
+	int m3_bother=0;
+	int m4_kill = 0;
+	int m5_broken = 0;
+	int m6_broken = 0;
+	int m7_kill=0;
+	int m8_kill=0;
+	int m9_stun = 0;
+	int m9_search = 0;
+	int m10_gain = 0;
+	int m10_miss = 0;
+
+	bool missionFail = false;
+
+	bool nextPos = false;
+	bool missionShow = true;
+	chrono::time_point<chrono::system_clock> timeFailed;
 };

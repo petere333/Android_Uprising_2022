@@ -20,8 +20,8 @@ class CMaterial;
 class Item
 {
 public:
-	Item();
-	~Item();
+	Item() {};
+	~Item() {};
 public:
 	CMaterial* name = 0;
 	CMaterial* image= 0;
@@ -31,8 +31,8 @@ public:
 class EquipItem : Item
 {
 public:
-	EquipItem();
-	~EquipItem();
+	EquipItem() {};
+	~EquipItem() {};
 
 public:
 	Stats stats;

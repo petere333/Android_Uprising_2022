@@ -43,6 +43,7 @@ public:
 	void initGrowth();
 	void initStats();
 
+
 	float getAttackSpeed();
 	float getDamageReduction();
 

@@ -287,7 +287,11 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	std::vector<Obj> data = LoadObjects("res/map/objects.txt");
 
+	programStarted = chrono::system_clock::now();
+
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+
+
 }
 
 void CScene::ReleaseObjects()
@@ -1225,7 +1229,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		
 		if (boomShader)
-			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader);
+			boomShader->animate(pd3dDevice, pd3dCommandList, partShader, playerShader, interShader, pID);
 
 		std::vector<XMFLOAT3> ep = enemyShader->getEnemyPosition();
 		std::vector<int> ehp = enemyShader->getHealthRate();
@@ -1237,120 +1241,507 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 		XMFLOAT3 cp = cam->getPosition();
 
-		bool cleared = true;
-		if (interShader->stageClear == false)
+		bool cleared = false;
+
+
+
+		if (interShader->missionFail == false)
 		{
-			for (int i = 0; i < playerShader->objects.size(); ++i)
+			if (interShader->stageClear == false)
 			{
-				XMFLOAT3 pp = playerShader->objects[i]->GetPosition();
-
-				if (waitInter->selectedStage == 1)
-				{
-					if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
-					{
-						cleared = false;
-						break;
-					}
-				}
-				else if (waitInter->selectedStage == 2)
-				{
-					if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
-					{
-						cleared = false;
-						break;
-					}
-				}
-			}
-
-			//if (enemyShader->objects.size() > 10)
-			//{
-				//cleared = false;
-			//}
-			if (cleared == true)
-			{
-				interShader->stageClear = true;
-				interShader->clearTime = chrono::system_clock::now();
-
-				interShader->objects[11]->m_ppMaterials[0] = rm->materials[276];
-				interShader->objects[12]->m_ppMaterials[0] = rm->materials[273];
-				interShader->objects[13]->m_ppMaterials[0] = rm->materials[273];
-
-				interShader->objects[14]->m_ppMaterials[0] = rm->materials[276];
-				interShader->objects[15]->m_ppMaterials[0] = rm->materials[273];
-				interShader->objects[16]->m_ppMaterials[0] = rm->materials[273];
-
-				interShader->objects[17]->m_ppMaterials[0] = rm->materials[276];
-				interShader->objects[18]->m_ppMaterials[0] = rm->materials[273];
-				interShader->objects[19]->m_ppMaterials[0] = rm->materials[273];
-
-				interShader->objects[20]->m_ppMaterials[0] = rm->materials[278];
-				interShader->objects[21]->m_ppMaterials[0] = rm->materials[273];
-				interShader->objects[22]->m_ppMaterials[0] = rm->materials[273];
-
-				
-
-				//경험치 제공
 				for (int i = 0; i < playerShader->objects.size(); ++i)
 				{
-					playerShader->objects[i]->amp_melee = 1.0f;
-					playerShader->objects[i]->amp_ranged = 1.0f;
-					playerShader->objects[i]->amp_radio = 1.0f;
+					XMFLOAT3 pp = playerShader->objects[i]->GetPosition();
 
-					playerShader->objects[i]->info->growth.melee.exp += 300;
-					playerShader->objects[i]->info->growth.ranged.exp += 300;
-					playerShader->objects[i]->info->growth.radio.exp += 300;
-
-					playerShader->objects[i]->info->growth.total.exp += 300;
-
-					playerShader->objects[i]->info->gold += 500;
-
-					//경험치가 최대치를 넘어서면 레벨 업
-					while (playerShader->objects[i]->info->growth.melee.exp >= expNeed[playerShader->objects[i]->info->growth.melee.level - 1])
+					if (waitInter->selectedStage == 1)
 					{
-						playerShader->objects[i]->info->growth.melee.exp -= expNeed[playerShader->objects[i]->info->growth.melee.level - 1];
-						playerShader->objects[i]->info->growth.melee.level += 1;
-						playerShader->objects[i]->info->stats.maxhp += 3;
-						playerShader->objects[i]->info->stats.capacity += 3;
-						playerShader->objects[i]->info->stats.power += 2;
-					}
-					while (playerShader->objects[i]->info->growth.ranged.exp >= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1])
-					{
-						playerShader->objects[i]->info->growth.ranged.exp -= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1];
-						playerShader->objects[i]->info->growth.ranged.level += 1;
-						playerShader->objects[i]->info->stats.precision += 3;
-						playerShader->objects[i]->info->stats.hardness += 2;
-					}
-					while (playerShader->objects[i]->info->growth.radio.exp >= expNeed[playerShader->objects[i]->info->growth.radio.level - 1])
-					{
-						playerShader->objects[i]->info->growth.radio.exp -= expNeed[playerShader->objects[i]->info->growth.radio.level - 1];
-						playerShader->objects[i]->info->growth.radio.level += 1;
-						playerShader->objects[i]->info->stats.entrophy += 1;
-					}
-					while (playerShader->objects[i]->info->growth.total.exp >= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1])
-					{
-						playerShader->objects[i]->info->growth.total.exp -= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1];
-						playerShader->objects[i]->info->growth.total.level += 1;
-						playerShader->objects[i]->info->extraPoint += 3;
-					}
+						if (interShader->mission == 1)
+						{
+							if (interShader->m1_kill >= 3)
+							{
+								if (interShader->nextPos == false)
+								{
+									for (int p = 0; p < playerShader->objects.size(); ++p)
+									{
+										float px = playerShader->objects[p]->GetPosition().x;
+										float pz = playerShader->objects[p]->GetPosition().z;
+										if ((px >= 000.0f && px <= 100.0f && pz >= 0.0f && pz <= 100.0f)
+											|| (px >= 100.0f && px <= 200.0f && pz >= 0.0f && pz <= 50.0f))
 
-					//동료 지급
-					playerShader->objects[i]->info->co_melee += 5;
-					playerShader->objects[i]->info->co_ranged += 5;
-					playerShader->objects[i]->info->co_radio += 3;
+										{
+											interShader->nextPos = true;
+											break;
+										}
+									}
+								}
+								if (interShader->nextPos == true)
+								{
+									interShader->nextPos = false;
+									interShader->mission += 1;
+									interShader->missionShow = true;
+									interShader->missionChangedTime = chrono::system_clock::now();
+									
+								}
+							}
+						}
+						else if (interShader->mission == 2)
+						{
+							if (interShader->m2_stun >= 5)
+							{
+								if (interShader->nextPos == false)
+								{
+									for (int p = 0; p < playerShader->objects.size(); ++p)
+									{
+										float px = playerShader->objects[p]->GetPosition().x;
+										float pz = playerShader->objects[p]->GetPosition().z;
+										if (px >= 100.0f && px <= 200.0f && pz >= 150.0f && pz <= 200.0f)
+										{
+											interShader->nextPos = true;
+											break;
+										}
+									}
+								}
+								if (interShader->nextPos == true)
+								{
+									interShader->nextPos = false;
+									interShader->mission += 1;
+									interShader->missionShow = true;
+									interShader->missionChangedTime = chrono::system_clock::now();
+								}
+							}
+						}
+						else if (interShader->mission == 3)
+						{
+							if (interShader->m3_bother >= 10)
+							{
+								if (interShader->nextPos == false)
+								{
+									for (int p = 0; p < playerShader->objects.size(); ++p)
+									{
+										float px = playerShader->objects[p]->GetPosition().x;
+										float pz = playerShader->objects[p]->GetPosition().z;
+										if (px >= 200.0f && px <= 300.0f && pz >= 100.0f && pz <= 200.0f)
+										{
+											interShader->nextPos = true;
+											break;
+										}
+									}
+								}
+								if (interShader->nextPos == true)
+								{
+									interShader->nextPos = false;
+									interShader->mission += 1;
+									interShader->missionShow = true;
+									interShader->missionChangedTime = chrono::system_clock::now();
+								}
+							}
+						}
+						else if (interShader->mission == 4)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+
+							if (dt.count() < 100.0)
+							{
+								if (interShader->m4_kill >= 10)
+								{
+									//다음위치에 아군 단 한명이라도 도달할 경우
+									if (interShader->nextPos == false)
+									{
+										for (int p = 0; p < playerShader->objects.size(); ++p)
+										{
+											float px = playerShader->objects[p]->GetPosition().x;
+											float pz = playerShader->objects[p]->GetPosition().z;
+											if (px >= 200.0f && px <= 300.0f && pz >= 0.0f && pz <= 100.0f)
+											{
+												interShader->nextPos = true;
+												break;
+											}
+										}
+									}
+
+									if (interShader->nextPos == true)
+									{
+										interShader->nextPos = false;
+										interShader->mission += 1;
+										interShader->missionShow = true;
+										interShader->missionChangedTime = chrono::system_clock::now();
+									}
+								}
+							}
+							else
+							{
+								interShader->missionFail = true;
+								interShader->timeFailed = chrono::system_clock::now();
+							}
+						}
+						else if (interShader->mission == 5)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+
+							if (dt.count() > 30.0f)
+							{
+								if (interShader->nextPos == false)
+								{
+									for (int p = 0; p < playerShader->objects.size(); ++p)
+									{
+										float px = playerShader->objects[p]->GetPosition().x;
+										float pz = playerShader->objects[p]->GetPosition().z;
+										if (px >= 300.0f && px <= 400.0f && pz >= 0.0f && pz <= 100.0f)
+										{
+											interShader->nextPos = true;
+											break;
+										}
+									}
+								}
+
+								if (interShader->nextPos == true)
+								{
+									interShader->nextPos = false;
+									interShader->mission += 1;
+									interShader->missionShow = true;
+									interShader->missionChangedTime = chrono::system_clock::now();
+								}
+
+							}
+
+						}
+						else if (interShader->mission == 6)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+							if (dt.count() > 30.0f)
+							{
+								if (interShader->nextPos == false)
+								{
+									for (int p = 0; p < playerShader->objects.size(); ++p)
+									{
+										float px = playerShader->objects[p]->GetPosition().x;
+										float pz = playerShader->objects[p]->GetPosition().z;
+										if (px >= 300.0f && px <= 400.0f && pz >= 100.0f && pz <= 200.0f)
+										{
+											interShader->nextPos = true;
+											break;
+										}
+									}
+								}
+
+								if (interShader->nextPos == true)
+								{
+									interShader->nextPos = false;
+									interShader->mission += 1;
+									interShader->missionShow = true;
+									interShader->missionChangedTime = chrono::system_clock::now();
+
+								}
+
+							}
+						}
+						else if (interShader->mission == 7)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+							if (dt.count() < 80.0)
+							{
+								if (interShader->m7_kill >= 10)
+								{
+									//다음위치에 아군 단 한명이라도 도달할 경우
+									if (interShader->nextPos == false)
+									{
+										for (int p = 0; p < playerShader->objects.size(); ++p)
+										{
+											float px = playerShader->objects[p]->GetPosition().x;
+											float pz = playerShader->objects[p]->GetPosition().z;
+											if (px >= 400.0f && px <= 450.0f && pz >= 100.0f && pz <= 200.0f)
+											{
+												interShader->nextPos = true;
+												break;
+											}
+										}
+									}
+
+									if (interShader->nextPos == true)
+									{
+										interShader->nextPos = false;
+										interShader->mission += 1;
+										interShader->missionShow = true;
+										interShader->missionChangedTime = chrono::system_clock::now();
+									}
+								}
+							}
+							else
+							{
+								interShader->missionFail = true;
+								interShader->timeFailed = chrono::system_clock::now();
+							}
+
+						}
+						else if (interShader->mission == 8)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+							if (dt.count() < 80.0)
+							{
+								if (interShader->m8_kill <= 3)
+								{
+									if (interShader->nextPos == false)
+									{
+										for (int p = 0; p < playerShader->objects.size(); ++p)
+										{
+											float px = playerShader->objects[p]->GetPosition().x;
+											float pz = playerShader->objects[p]->GetPosition().z;
+											if (px >= 470.0f && px <= 540.0f && pz >= 60.0f && pz <= 150.0f)
+											{
+												interShader->nextPos = true;
+												break;
+											}
+
+										}
+									}
+									if (interShader->nextPos == true)
+									{
+										interShader->nextPos = false;
+										interShader->mission += 1;
+										interShader->missionShow = true;
+										interShader->missionChangedTime = chrono::system_clock::now();
+									}
+								}
+								else
+								{
+									interShader->missionFail = true;
+									interShader->timeFailed = chrono::system_clock::now();
+								}
+							}
+							else
+							{
+								interShader->missionFail = true;
+								interShader->timeFailed = chrono::system_clock::now();
+							}
+
+						}
+						else if (interShader->mission == 9)
+						{
+							if (interShader->m9_stun == 0)
+							{
+								//if (interShader->m9_search >= 10)
+								if (interShader->m9_search >= 10)
+								{
+									if (interShader->nextPos == false)
+									{
+										for (int p = 0; p < playerShader->objects.size(); ++p)
+										{
+											float px = playerShader->objects[p]->GetPosition().x;
+											float pz = playerShader->objects[p]->GetPosition().z;
+											if (px >= 470.0f && px <= 540.0f && pz >= 150.0f && pz <= 200.0f)
+											{
+												interShader->nextPos = true;
+												break;
+											}
+
+										}
+									}
+									if (interShader->nextPos == true)
+									{
+										interShader->nextPos = false;
+										interShader->mission += 1;
+										interShader->missionShow = true;
+										interShader->missionChangedTime = chrono::system_clock::now();
+									}
+								}
+							}
+							else
+							{
+								interShader->missionFail = true;
+								interShader->timeFailed = chrono::system_clock::now();
+							}
+						}
+						else if (interShader->mission == 10)
+						{
+							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+							chrono::duration<double> dt = mm - interShader->missionChangedTime;
+							if (dt.count() < 30.0)
+							{
+								if (interShader->m10_gain >= 13)
+								{
+									cleared = true;
+								}
+
+							}
+							else
+							{
+								interShader->missionFail = true;
+								interShader->timeFailed = chrono::system_clock::now();
+							}
+						}
+					}
+					else if (waitInter->selectedStage == 2)
+					{
+						if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
+						{
+							cleared = false;
+							break;
+						}
+					}
 				}
 
+				//if (enemyShader->objects.size() > 10)
+				//{
+					//cleared = false;
+				//}
+				if (cleared == true)
+				{
+					interShader->stageClear = true;
+					interShader->clearTime = chrono::system_clock::now();
+
+					interShader->objects[11]->m_ppMaterials[0] = rm->materials[276];
+					interShader->objects[12]->m_ppMaterials[0] = rm->materials[273];
+					interShader->objects[13]->m_ppMaterials[0] = rm->materials[273];
+
+					interShader->objects[14]->m_ppMaterials[0] = rm->materials[276];
+					interShader->objects[15]->m_ppMaterials[0] = rm->materials[273];
+					interShader->objects[16]->m_ppMaterials[0] = rm->materials[273];
+
+					interShader->objects[17]->m_ppMaterials[0] = rm->materials[276];
+					interShader->objects[18]->m_ppMaterials[0] = rm->materials[273];
+					interShader->objects[19]->m_ppMaterials[0] = rm->materials[273];
+
+					interShader->objects[20]->m_ppMaterials[0] = rm->materials[278];
+					interShader->objects[21]->m_ppMaterials[0] = rm->materials[273];
+					interShader->objects[22]->m_ppMaterials[0] = rm->materials[273];
+
+
+
+					//경험치 제공
+					for (int i = 0; i < playerShader->objects.size(); ++i)
+					{
+						playerShader->objects[i]->amp_melee = 1.0f;
+						playerShader->objects[i]->amp_ranged = 1.0f;
+						playerShader->objects[i]->amp_radio = 1.0f;
+
+						playerShader->objects[i]->info->growth.melee.exp += 300;
+						playerShader->objects[i]->info->growth.ranged.exp += 300;
+						playerShader->objects[i]->info->growth.radio.exp += 300;
+
+						playerShader->objects[i]->info->growth.total.exp += 300;
+
+						playerShader->objects[i]->info->gold += 500;
+
+						//경험치가 최대치를 넘어서면 레벨 업
+						while (playerShader->objects[i]->info->growth.melee.exp >= expNeed[playerShader->objects[i]->info->growth.melee.level - 1])
+						{
+							playerShader->objects[i]->info->growth.melee.exp -= expNeed[playerShader->objects[i]->info->growth.melee.level - 1];
+							playerShader->objects[i]->info->growth.melee.level += 1;
+							playerShader->objects[i]->info->stats.maxhp += 3;
+							playerShader->objects[i]->info->stats.capacity += 3;
+							playerShader->objects[i]->info->stats.power += 2;
+						}
+						while (playerShader->objects[i]->info->growth.ranged.exp >= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1])
+						{
+							playerShader->objects[i]->info->growth.ranged.exp -= expNeed[playerShader->objects[i]->info->growth.ranged.level - 1];
+							playerShader->objects[i]->info->growth.ranged.level += 1;
+							playerShader->objects[i]->info->stats.precision += 3;
+							playerShader->objects[i]->info->stats.hardness += 2;
+						}
+						while (playerShader->objects[i]->info->growth.radio.exp >= expNeed[playerShader->objects[i]->info->growth.radio.level - 1])
+						{
+							playerShader->objects[i]->info->growth.radio.exp -= expNeed[playerShader->objects[i]->info->growth.radio.level - 1];
+							playerShader->objects[i]->info->growth.radio.level += 1;
+							playerShader->objects[i]->info->stats.entrophy += 1;
+						}
+						while (playerShader->objects[i]->info->growth.total.exp >= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1])
+						{
+							playerShader->objects[i]->info->growth.total.exp -= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1];
+							playerShader->objects[i]->info->growth.total.level += 1;
+							playerShader->objects[i]->info->extraPoint += 3;
+						}
+
+						//동료 지급
+						playerShader->objects[i]->info->co_melee += 5;
+						playerShader->objects[i]->info->co_ranged += 5;
+						playerShader->objects[i]->info->co_radio += 3;
+					}
+
+				}
+
+
+			}
+
+
+			else if (interShader->stageClear == true)
+			{
+				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+				chrono::duration<double> dt = moment - interShader->clearTime;
+
+				if ((float)dt.count() > 15.0f)
+				{
+
+					//플레이어의 상태 초기화
+					for (int k = 0; k < playerShader->objects.size(); ++k)
+					{
+						playerShader->objects[k]->amp_melee = 1.0f;
+						playerShader->objects[k]->amp_ranged = 1.0f;
+						playerShader->objects[k]->amp_radio = 1.0f;
+						playerShader->objects[k]->bState.attacking = false;
+						playerShader->objects[k]->info->stats.capacity = playerShader->objects[k]->info->stats.maxhp;
+						playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+						playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+						playerShader->objects[k]->kState.isInAir = 0;
+						playerShader->objects[k]->kState.isMobile = 0;
+						playerShader->objects[k]->kState.rotation = 0.0f;
+						playerShader->objects[k]->kState.xzspeed = 0.0f;
+						playerShader->objects[k]->kState.yspeed = 0.0f;
+						playerShader->objects[k]->readyToGo = false;
+					}
+
+
+
+					//enemyShader->objects.clear();
+					//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+					enemyShader->restart();
+					//선택된 스테이지에 관한 정보 초기화.
+					interShader->stageClear = false;
+					interShader->missionFail = false;
+
+					interShader->m10_gain = 0;
+					interShader->m10_miss = 0;
+					interShader->m1_kill = 0;
+					interShader->m2_stun = 0;
+					interShader->m3_bother = 0;
+					interShader->m4_kill = 0;
+					interShader->m5_broken = 0;
+					interShader->m6_broken = 0;
+					interShader->m7_kill = 0;
+					interShader->m8_kill = 0;
+					interShader->m9_stun = 0;
+					interShader->m9_search = 0;
+					interShader->mission = 1;
+
+
+					waitInter->selectedStage = -1;
+
+					cam->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+					cam->lx = 0.0f;
+					cam->ly = 0.0f;
+					cam->lz = 1.0f;
+					cam->GenerateViewMatrix();
+					cam->UpdateShaderVariables(pd3dCommandList);
+
+					currentScreen = LOBBY_STATE;
+					//스테이지 클리어 완료
+
+					//플레이어 정보 서버로 전송하여 저장하도록 하기
+				}
 			}
 		}
-
-
-		else if (interShader->stageClear == true)
+		else if (interShader->missionFail == true)
 		{
-			chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-			chrono::duration<double> dt = moment - interShader->clearTime;
+			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+			chrono::duration<double> dt = mm - interShader->timeFailed;
 
-			if ((float)dt.count() > 15.0f)
+			if (dt.count() > 5.0)
 			{
-
 				//플레이어의 상태 초기화
 				for (int k = 0; k < playerShader->objects.size(); ++k)
 				{
@@ -1367,12 +1758,34 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[k]->kState.rotation = 0.0f;
 					playerShader->objects[k]->kState.xzspeed = 0.0f;
 					playerShader->objects[k]->kState.yspeed = 0.0f;
+					playerShader->objects[k]->readyToGo = false;
 				}
-				enemyShader->objects.clear();
-				enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
+
+
+				//enemyShader->objects.clear();
+				//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+				enemyShader->restart();
 				//선택된 스테이지에 관한 정보 초기화.
 				interShader->stageClear = false;
+				interShader->missionFail = false;
+
+				interShader->m10_gain = 0;
+				interShader->m10_miss = 0;
+				interShader->m1_kill = 0;
+				interShader->m2_stun = 0;
+				interShader->m3_bother = 0;
+				interShader->m4_kill = 0;
+				interShader->m5_broken = 0;
+				interShader->m6_broken = 0;
+				interShader->m7_kill = 0;
+				interShader->m8_kill = 0;
+				interShader->m9_stun = 0;
+				interShader->m9_search = 0;
+				interShader->mission = 1;
+
+
+
 				waitInter->selectedStage = -1;
 
 				cam->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -1383,13 +1796,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				cam->UpdateShaderVariables(pd3dCommandList);
 
 				currentScreen = LOBBY_STATE;
-				//스테이지 클리어 완료
-
-				//플레이어 정보 서버로 전송하여 저장하도록 하기
 			}
 		}
-
-		
 
 		m_pLights[1].m_xmf3Position = XMFLOAT3(cp.x, cp.y, cp.z);
 		m_pLights[1].m_xmf3Direction = Vector3::Normalize(XMFLOAT3(cl.x, cl.y, cl.z));
@@ -1463,6 +1871,28 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		{
 			currentScreen = IN_GAME_STATE;
 
+			CS_POWER_PACKET pac;
+			pac.size = sizeof(CS_POWER_PACKET);
+			pac.type = PACKET_TYPE::CS_POWER;
+			pac.c_id = pID;
+
+			
+			
+
+			pac.stats.capacity = playerShader->objects[pID]->info->getCapacity();
+			pac.stats.maxhp = playerShader->objects[pID]->info->getCapacity();
+			pac.stats.power = playerShader->objects[pID]->info->getPower();
+			pac.stats.hardness = playerShader->objects[pID]->info->getHardness();
+			pac.stats.precision = playerShader->objects[pID]->info->getPrecision();
+			pac.stats.entrophy = playerShader->objects[pID]->info->getEntrophy();
+			pac.rAttack = playerShader->objects[pID]->info->slot.rangedWeapon->stats.attack;
+			pac.mAttack = playerShader->objects[pID]->info->slot.meleeWeapon->stats.attack;
+
+			pac.mWeapon = playerShader->objects[pID]->info->slot.meleeWeapon->type;
+			pac.rWeapon = playerShader->objects[pID]->info->slot.rangedWeapon->type;
+
+			SendPacket(&pac);
+
 			for (int e = 0; e < enemyShader->objects.size(); ++e)
 			{
 				
@@ -1480,6 +1910,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
+						interShader->missionChangedTime = chrono::system_clock::now();
 						interShader->Animate(cam, playerShader->objects[pID]->info);
 					}
 				}
@@ -1853,7 +2284,7 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 				float dx = ep.x - tx;
 				float dz = ep.z - tz;
 				float de = sqrt(dx * dx + dz * dz);
-				if (de < 0.5f)
+				if (de < 0.5f && enemyShader->objects[i]->erased==false)
 				{
 					tx = ox;
 					ty = oy;
@@ -2617,6 +3048,63 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+	case PACKET_TYPE::SC_MISSION:
+	{
+		SC_MISSION_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		if (p.number == 3)
+		{
+			interShader->m3_bother += p.progress;
+			terrain1_1->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+			terrain1_1->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+			terrain1_1->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+		}
+		else if (p.number == 5)
+		{
+			interShader->m5_broken += p.progress;
+			terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+			terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+			terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+		}
+		else if (p.number == 6)
+		{
+			interShader->m6_broken += p.progress;
+			terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+			terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+			terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+		}
+		else if (p.number == 9)
+		{
+			interShader->m9_search += p.progress;
+			
+		}
+		break;
+	}
+
+	case PACKET_TYPE::SC_PARTICLE:
+	{
+		SC_PARTICLE_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		if (p.particleType == 1)
+		{
+			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
+		}
+		break;
+	}
+	case PACKET_TYPE::SC_POWER:
+	{
+		SC_POWER_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		playerShader->objects[p.c_id]->info->stats = p.stats;
+		playerShader->objects[p.c_id]->info->slot.meleeWeapon->stats.attack = p.m;
+		playerShader->objects[p.c_id]->info->slot.rangedWeapon->stats.attack = p.r;
+		playerShader->objects[p.c_id]->info->slot.meleeWeapon->type = p.mw;
+		playerShader->objects[p.c_id]->info->slot.rangedWeapon->type = p.rw;
+		break;
+	}
 
 	case PACKET_TYPE::SC_READY:
 	{
@@ -2789,12 +3277,53 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_ATTACK_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		cout << "attack to target" << endl;
-		partShader->createParticles(100, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
-		if (p.target != -1)
+		enemyShader->objects[p.target]->bState.hp -= p.damage;
+
+		if (enemyShader->objects[p.target]->bState.hp <= 0)
 		{
-			//enemyShader->objects[p.target]->bState.hp -= playerShader;
+			if (interShader->mission == 1)
+			{
+				interShader->m1_kill += 1;
+				
+			}
+			else if (interShader->mission == 4)
+			{
+				interShader->m4_kill += 1;
+			}
+			else if (interShader->mission == 7)
+			{
+				interShader->m7_kill += 1;
+				
+			}
+			else if (interShader->mission == 8)
+			{
+				interShader->m8_kill += 1;
+			}
+			else if (interShader->mission == 9)
+
+			{
+				interShader->m9_stun += 1;
+			}
+			else if (interShader->mission == 10)
+			{
+				interShader->m10_gain += 1;
+			}
 		}
+		else
+		{
+			if (p.stuntime > 3.0f)
+			{
+				enemyShader->objects[p.target]->stunned = true;
+				enemyShader->objects[p.target]->stunDuration = p.stuntime;
+				enemyShader->objects[p.target]->lastStun = chrono::system_clock::now();
+				if (interShader->mission == 2 || interShader->mission == 8)
+				{
+					enemyShader->objects[p.target]->stunDuration = 300.0f;
+				}
+			}
+		}
+		
+		break;
 	}
 	case PACKET_TYPE::SC_MOVE_PLAYER:
 		//수정중
@@ -3636,16 +4165,6 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 						dist = 3000.0f;
 					}
 				}
-				/*
-				if (dist != 3000.0f)
-				{
-					printf("%d번째 박스와 타격 지점 (%f, %f, %f)\n", i, temp.x, temp.y, temp.z);
-					printf("%d번째 박스와 거리 %f\n", i, dist);
-				}
-				*/
-				// 총알은 관통 기능이 없다. 즉,
-				// 충돌 지점의 거리가 기존에 계산했던 지점보다 짧은 경우 
-				// 그 지점이 새로운 충돌지점이다.
 
 				if (dist < minDist)
 				{
@@ -3656,94 +4175,117 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				}
 
 			}
-
-
-
-			// 모든 충돌 박스들에 대해 처리할 경우 가장 가까운 곳이 targetPos에 저장되므로 
-			// targetPos는 총알이 맞는 지점이 된다. target은 맞은 물체의 인덱스값이다.
-
-			// 이제, 서버는  총알의 충돌 지점을 나타내는 targetPos, 맞은 객체의 유형을 나타내는 type, 몇 번째 객체에 맞았는지 나타내는 target값을 전송해야 한다.
-
-			if (type == 1)
-			{
-
-
-				printf("Target position (%f, %f, %f) - object[%d] attacked.   ", targetPos.x, targetPos.y, targetPos.z, target);
-				/*
-				if (terrainShader->objects[target]->type == 21217)
-				{
-					float ox = terrainShader->objects[target]->GetPosition().x;
-					float oy = terrainShader->objects[target]->GetPosition().y;
-					float oz = terrainShader->objects[target]->GetPosition().z;
-
-					terrainShader->objects[target] = NULL;
-					terrainShader->boxesWorld[target].start=XMFLOAT3(-1.0f,-1.0f, -1.0f);
-					terrainShader->boxesWorld[target].end = XMFLOAT3(-1.0f, -1.0f, -1.0f);
-
-
-
-					for (float x = ox - 15.0f; x < ox + 15.0f; x += 1.5f)
-					{
-						for (float y = oy - 4.5f; y < oy + 5.0f; y += 1.5f)
-						{
-							for (float z = oz - 0.5f; z < oz + 1.0f; z += 0.6f)
-							{
-								XMFLOAT3 tmp = XMFLOAT3(x, y, z);
-								partShader->createParticles(10, tmp, device, list);
-							}
-						}
-					}
-				}
-				*/
-			}
-
-			CS_ATTACK_PACKET p;
-			p.type = PACKET_TYPE::CS_ATTACK;
-			p.size = sizeof(CS_ATTACK_PACKET);
-			p.target = target;
-			p.x = targetPos.x;
-			p.y = targetPos.y;
-			p.z = targetPos.z;
 			if (type == 2)
 			{
-				p.isAlive = true;
-				enemyShader->objects[target]->bState.hp -= playerShader->objects[idx]->info->getRangedDamage()*playerShader->objects[idx]->amp_ranged;
-				if (enemyShader->objects[target]->bState.hp <= 0)
+				if (idx == pID)
 				{
-					if (enemyShader->objects[target]->expGiven == false)
+					CS_ATTACK_PACKET p;
+					p.type = PACKET_TYPE::CS_ATTACK;
+					p.size = sizeof(CS_ATTACK_PACKET);
+					p.target = target;
+					p.id = pID;
+					p.stuntime = 0.0f;
+					p.damage = playerShader->objects[idx]->info->getRangedDamage() * playerShader->objects[idx]->amp_ranged;
+
+					SendPacket(&p);
+				}
+				
+			}
+			else
+			{
+				if (interShader->mission == 3)
+				{
+					//3번째 미션 도중 제어단말을 맞힐 경우
+					if (px >= 0.0f && px <= 200.0f && pz >= 0.0f && pz <= 200.0f)
 					{
-						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
+						if (terrain1_1->objects[target]->type == Controller1 || terrain1_1->objects[target]->type == Controller2 || terrain1_1->objects[target]->type == Controller4)
 						{
-							playerShader->objects[ii]->info->growth.ranged.exp += 50;
-							if (playerShader->objects[ii]->info->growth.ranged.exp >= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1])
+							if (idx == pID)
 							{
-								playerShader->objects[ii]->info->growth.ranged.exp -= expNeed[playerShader->objects[ii]->info->growth.ranged.level - 1];
-								playerShader->objects[ii]->info->growth.ranged.level += 1;
-								playerShader->objects[ii]->info->stats.hardness += 2;
-								playerShader->objects[ii]->info->stats.precision += 3;
+								CS_MISSION_PACKET pac;
+								pac.id = pID;
+								pac.size = sizeof(CS_MISSION_PACKET);
+								pac.type = PACKET_TYPE::CS_MISSION;
+
+								pac.number = 3;
+								pac.progress = 1;
+								pac.target = target;
+								SendPacket(&pac);
 							}
 
-							playerShader->objects[ii]->info->growth.total.exp += 50;
-							if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
+						}
+					}
+				}
+				//5번 미션 도중 충전실을 맞힌때
+				else if (interShader->mission == 5)
+				{
+					chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+					chrono::duration<double> dt = mm - interShader->missionChangedTime;
+
+
+					if (px >= 200.0f && px <= 300.0f && pz >= 0.0f && pz <= 100.0f && dt.count()<30.0)
+					{
+						if (terrain1_2->objects[target]->type == ChargeSlot)
+						{
+							if (idx == pID)
 							{
-								playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
-								playerShader->objects[ii]->info->growth.total.level += 1;
-								playerShader->objects[ii]->info->extraPoint += 3;
+								CS_MISSION_PACKET pac;
+								pac.id = pID;
+								pac.size = sizeof(CS_MISSION_PACKET);
+								pac.type = PACKET_TYPE::CS_MISSION;
+
+								pac.number = 5;
+								pac.progress = 1;
+								pac.target = target;
+								SendPacket(&pac);
 							}
 						}
-						enemyShader->objects[target]->expGiven = true;
+					}
+				}
+				else if (interShader->mission == 6)
+				{
+					chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+					chrono::duration<double> dt = mm - interShader->missionChangedTime;
+					if (px >= 300.0f && px <= 400.0f && pz >= 0.0f && pz <= 100.0f && dt.count()<30.0)
+					{
+						if (terrain1_2->objects[target]->type == ChargeSlot)
+						{
+							if (idx == pID)
+							{
+								CS_MISSION_PACKET pac;
+								pac.id = pID;
+								pac.size = sizeof(CS_MISSION_PACKET);
+								pac.type = PACKET_TYPE::CS_MISSION;
+
+								pac.number = 6;
+								pac.progress = 1;
+								pac.target = target;
+								SendPacket(&pac);
+							}
+						}
 					}
 				}
 			}
-			else if (type == 1)
-			{
-				p.isAlive = false;
-			}
-			SendPacket(&p);
+			
 
 			// type, target, targetPos 3개의 값이 전송되면, 클라는 그3개의 값을 받아서
 			// 해당 위치에 불꽃이 튀는 듯한 파티클을 생성한다. 
-			partShader->createParticles(50, targetPos, device, list);
+			//partShader->createParticles(50, targetPos, device, list);
+			if (idx == pID)
+			{
+				CS_PARTICLE_PACKET part;
+				part.size = sizeof(CS_PARTICLE_PACKET);
+				part.type = PACKET_TYPE::CS_PARTICLE;
+				part.id = pID;
+
+				part.count = 100;
+				part.x = targetPos.x;
+				part.y = targetPos.y;
+				part.z = targetPos.z;
+				part.particleType = 1;
+				SendPacket(&part);
+			}
+
 			// 그니까, partShader->createParticles 함수는 서버의 전담이 아니다.
 		}
 	
@@ -3781,26 +4323,18 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			{
 				if (playerShader->objects[idx]->m_pChild != rm->playerModels[3]->m_pModelRootObject)
 				{
-					
-					
-
 					playerShader->objects[idx]->setRoot(rm->playerModels[3]->m_pModelRootObject, true);
 					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[3]);
-					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-					
+					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);					
 				}
 			}
 			else
 			{
 				if (playerShader->objects[idx]->m_pChild != rm->playerModels[4]->m_pModelRootObject)
 				{
-					
-				
-
 					playerShader->objects[idx]->setRoot(rm->playerModels[4]->m_pModelRootObject, true);
 					playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[4]);
 					playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
-					
 				}
 			}
 		}
@@ -3816,8 +4350,6 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			float dx = sin(rad);
 			float dz = cos(rad);
 			XMFLOAT3 look = XMFLOAT3(dx, 0.0f, dz);
-
-
 
 			for (int i = 0; i < enemyShader->objects.size(); ++i)
 			{
@@ -3837,43 +4369,33 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 					soundEffect[4]->play();
 					soundEffect[4]->Update();
 					playerShader->objects[idx]->hammerHit = true;
-					partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-					enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
-
-					if (enemyShader->objects[i]->bState.hp <= 0)
+					
+					
+					if (idx == pID)
 					{
-						if (enemyShader->objects[i]->expGiven == false)
-						{
-							for (int ii = 0; ii < playerShader->objects.size(); ++ii)
-							{
-								playerShader->objects[ii]->info->growth.melee.exp += 50;
-								if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
-								{
-									playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
-									playerShader->objects[ii]->info->growth.melee.level += 1;
-									playerShader->objects[ii]->info->stats.maxhp += 3;
-									playerShader->objects[ii]->info->stats.capacity += 3;
-									playerShader->objects[ii]->info->stats.power += 2;
-								}
+						CS_ATTACK_PACKET ap;
+						ap.size = sizeof(CS_ATTACK_PACKET);
+						ap.type = PACKET_TYPE::CS_ATTACK;
+						ap.id = pID;
 
-								playerShader->objects[ii]->info->growth.total.exp += 50;
-								if (playerShader->objects[ii]->info->growth.total.exp >= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1])
-								{
-									playerShader->objects[ii]->info->growth.total.exp -= totalExpNeed[playerShader->objects[ii]->info->growth.total.level - 1];
-									playerShader->objects[ii]->info->growth.total.level += 1;
-									playerShader->objects[ii]->info->extraPoint += 3;
-								}
-							}
-							enemyShader->objects[i]->expGiven = true;
-						}
+						ap.target = i;
+						ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+						ap.stuntime = 0.2f;
+						SendPacket(&ap);
+
+						CS_PARTICLE_PACKET p;
+						p.size = sizeof(CS_PARTICLE_PACKET);
+						p.type = PACKET_TYPE::CS_PARTICLE;
+						p.id = pID;
+						p.count = 100;
+						p.x = enemyShader->objects[i]->GetPosition().x;
+						p.y = enemyShader->objects[i]->GetPosition().y;
+						p.z = enemyShader->objects[i]->GetPosition().z;
+						p.particleType = 1;
+						SendPacket(&p);
 					}
-					//피해 후 0.2초간 기절
-					enemyShader->objects[i]->stunDuration = 0.2f;
-					enemyShader->objects[i]->lastStun = chrono::system_clock::now();
-					enemyShader->objects[i]->stunned = true;
-					break;
 				}
-
+				
 
 			}
 
@@ -3998,30 +4520,34 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 				soundEffect[4]->play();
 				soundEffect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
-				partShader->createParticles(50, enemyShader->objects[i]->GetPosition(), pd3dDevice, pd3dCommandList);
-				enemyShader->objects[i]->bState.hp -= playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
-
-				if (enemyShader->objects[i]->bState.hp <= 0)
+				
+				if (idx == pID)
 				{
-					if (enemyShader->objects[i]->expGiven == false)
-					{
-						for (int ii = 0; ii < playerShader->objects.size(); ++ii)
-						{
-							playerShader->objects[ii]->info->growth.melee.exp += 50;
-							if (playerShader->objects[ii]->info->growth.melee.exp >= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1])
-							{
-								playerShader->objects[ii]->info->growth.melee.exp -= expNeed[playerShader->objects[ii]->info->growth.melee.level - 1];
-								playerShader->objects[ii]->info->growth.melee.level += 1;
-								playerShader->objects[ii]->info->stats.maxhp += 3;
-								playerShader->objects[ii]->info->stats.capacity += 3;
-								playerShader->objects[ii]->info->stats.power += 2;
-							}
-						}
-						enemyShader->objects[i]->expGiven = true;
-					}
+					CS_PARTICLE_PACKET p;
+					p.size = sizeof(CS_PARTICLE_PACKET);
+					p.type = PACKET_TYPE::CS_PARTICLE;
+					p.id = pID;
+					p.particleType = 1;
+					p.count = 100;
+					p.x = enemyShader->objects[i]->GetPosition().x;
+					p.y = enemyShader->objects[i]->GetPosition().y;
+					p.z = enemyShader->objects[i]->GetPosition().z;
+
+					SendPacket(&p);
+
+					CS_ATTACK_PACKET ap;
+					ap.size = sizeof(CS_ATTACK_PACKET);
+					ap.type = PACKET_TYPE::CS_ATTACK;
+					ap.id = pID;
+					ap.target = i;
+					ap.damage = playerShader->objects[idx]->info->getMeleeDamage() * playerShader->objects[idx]->amp_melee;
+					ap.stuntime = 0.0f;
+
+					SendPacket(&ap);
+
 				}
 
-				break;
+				
 			}
 
 
@@ -4224,6 +4750,7 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 
 		BoomObject* boom = new BoomObject(1, XMFLOAT3(ppos.x+dx+rx, ppos.y+1.5f, ppos.z+rz - dz), XMFLOAT3(dx, 0.0f, -dz), 10.0f, moment);
 		boom->lastMove = chrono::system_clock::now();
+		boom->owner = idx;
 		boom->SetMesh(boomMesh);
 		boom->SetMaterial(0, rm->materials[4]);
 		boomShader->objects.push_back(boom);
@@ -4245,10 +4772,6 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	{
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[9]->m_pModelRootObject)
 		{
-
-
-			
-
 			playerShader->objects[idx]->setRoot(rm->playerModels[9]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[9]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
@@ -4271,10 +4794,6 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 		//공격 애니메이션 전환
 		if (playerShader->objects[idx]->m_pChild != rm->playerModels[8]->m_pModelRootObject)
 		{
-
-
-		
-
 			playerShader->objects[idx]->setRoot(rm->playerModels[8]->m_pModelRootObject, true);
 			playerShader->objects[idx]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->playerModels[8]);
 			playerShader->objects[idx]->SetTrackAnimationSet(0, 0);
@@ -4292,11 +4811,83 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			XMFLOAT3 dp = XMFLOAT3(ep.x - ppos.x, ep.y - ppos.y, ep.z - ppos.z);
 			if (Vector3::Length(dp) <= 5.0f)
 			{
-				enemyShader->objects[p]->stunDuration = 5.0f*playerShader->objects[idx]->amp_radio;
-				enemyShader->objects[p]->lastStun = chrono::system_clock::now();
-				enemyShader->objects[p]->stunned = true;
+				if (idx == pID)
+				{
+					CS_ATTACK_PACKET pac;
+					pac.id = pID;
+					pac.size = sizeof(CS_ATTACK_PACKET);
+					pac.type = PACKET_TYPE::CS_ATTACK;
+
+					pac.damage = 0;
+					pac.stuntime = 5.0f * playerShader->objects[idx]->amp_radio;
+					pac.target = p;
+					SendPacket(&pac);
+				}
+				if (interShader->mission == 2)
+				{
+					interShader->m2_stun += 1;
+				}
+				else if (interShader->mission == 9)
+				{
+					interShader->m9_stun += 1;
+				}
 			}
 		}
+		if (interShader->mission == 3)
+		{
+			for (int p = 0; p < terrain1_1->objects.size(); ++p)
+			{
+				if (terrain1_1->objects[p]->type == Controller1 || terrain1_1->objects[p]->type == Controller2 || terrain1_1->objects[p]->type == Controller4)
+				{
+					XMFLOAT3 pp = terrain1_1->objects[p]->GetPosition();
+					float dx = ppos.x - pp.x;
+					float dz = ppos.z - pp.z;
+					float dst = sqrt(dx * dx + dz * dz);
+					if (dst < 5.0f)
+					{
+						if (idx == pID)
+						{
+							CS_MISSION_PACKET pac;
+							pac.id = pID;
+							pac.size = sizeof(CS_MISSION_PACKET);
+							pac.type = PACKET_TYPE::CS_MISSION;
+							pac.number = 3;
+							pac.progress = 1;
+							pac.target = p;
+							SendPacket(&pac);
+						}
+					}
+				}
+			}
+		}
+		else if (interShader->mission == 9)
+		{
+			for (int p = 0; p < terrain1_2->objects.size(); ++p)
+			{
+				if (terrain1_2->objects[p]->type == PotteryKlinOpen || terrain1_2->objects[p]->type == PotteryKlinClose || terrain1_2->objects[p]->type == PotteryWheel)
+				{
+					XMFLOAT3 pp = terrain1_2->objects[p]->GetPosition();
+					float dx = ppos.x - pp.x;
+					float dz = ppos.z - pp.z;
+					float dst = sqrt(dx * dx + dz * dz);
+					if (dst < 8.0f)
+					{
+						if (idx == pID)
+						{
+							CS_MISSION_PACKET pac;
+							pac.id = pID;
+							pac.size = sizeof(CS_MISSION_PACKET);
+							pac.type = PACKET_TYPE::CS_MISSION;
+							pac.number = 9;
+							pac.progress = 1;
+							pac.target = p;
+							SendPacket(&pac);
+						}
+					}
+				}
+			}
+		}
+	
 		playerShader->objects[idx]->lastWave = chrono::system_clock::now();
 	}
 }
