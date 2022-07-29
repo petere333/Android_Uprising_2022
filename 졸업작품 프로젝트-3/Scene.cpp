@@ -34,7 +34,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 	
 	m_pLights[3].m_bEnable = true;
 	m_pLights[3].m_nType = SPOT_LIGHT;
-	m_pLights[3].m_fRange = 200.0f;
+	m_pLights[3].m_fRange = 100.0f;
 	m_pLights[3].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
 	m_pLights[3].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
 	m_pLights[3].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
@@ -48,7 +48,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 
 	m_pLights[2].m_bEnable = true;
 	m_pLights[2].m_nType = SPOT_LIGHT;
-	m_pLights[2].m_fRange = 200.0f;
+	m_pLights[2].m_fRange = 100.0f;
 	m_pLights[2].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
 	m_pLights[2].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
 	m_pLights[2].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
@@ -62,7 +62,7 @@ void CScene::BuildDefaultLightsAndMaterials()
 
 	m_pLights[1].m_bEnable = true;
 	m_pLights[1].m_nType = SPOT_LIGHT;
-	m_pLights[1].m_fRange = 50.0f;
+	m_pLights[1].m_fRange = 30.0f;
 	m_pLights[1].m_xmf4Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
 	m_pLights[1].m_xmf4Diffuse = XMFLOAT4(0.3f, 0.2f, 0.1f, 1.0f);
 	m_pLights[1].m_xmf4Specular = XMFLOAT4(0.1f, 0.2f, 0.3f, 0.0f);
@@ -1846,7 +1846,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			}
 			else
 			{
-				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28*i+5]);
+				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28+i*5]);
 			}
 		}
 
@@ -1949,229 +1949,232 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	float alpha = 1.0f;
 	
-	XMFLOAT3 cp = playerShader->objects[pID]->GetPosition();
-
-	pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
-	if (currentScreen == IN_GAME_STATE)
+	if (pID < playerShader->objects.size())
 	{
+		XMFLOAT3 cp = playerShader->objects[pID]->GetPosition();
 
-		if (playerShader)
+		pd3dCommandList->SetGraphicsRoot32BitConstants(8, 1, &alpha, 0);
+		if (currentScreen == IN_GAME_STATE)
 		{
-			playerShader->OnPrepareRender(pd3dCommandList);
-			if (rm->m_pd3dCbvSrvDescriptorHeap)
+
+			if (playerShader)
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-			}
-			playerShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+				playerShader->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+				playerShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
 
-
-		}
-
-
-
-
-
-
-		//1-1
-		if (((cp.x >= 0.0f && cp.x <= 200.0f) && (cp.z >= 0.0f && cp.z <= 150.0f)) || ((cp.x >= 0.0f && cp.x <= 190.0f) && (cp.z >= 150.0f && cp.z <= 200.0f)))
-		{
-			if (terrain1_1)
-			{
-				terrain1_1->OnPrepareRender(pd3dCommandList);
-				terrain1_1->Render(pd3dCommandList, pCamera);
-			}
-		}
-		//1-1, 1-2 이어지는 문 사이
-		else if ((cp.x >= 190.0f && cp.x <= 230.0f) && (cp.z >= 150.0f && cp.z <= 200.0f))
-		{
-			if (terrain1_1)
-			{
-				terrain1_1->OnPrepareRender(pd3dCommandList);
-				terrain1_1->Render(pd3dCommandList, pCamera);
-			}
-			if (terrain1_2)
-			{
-				terrain1_2->OnPrepareRender(pd3dCommandList);
-				terrain1_2->Render(pd3dCommandList, pCamera, m_fElapsedTime);
-			}
-		}
-
-		//1-2
-		else if ((cp.x >= 200.0f && cp.x <= 600.0f) && cp.z >= 0.0f && cp.z <= 200.0f)
-		{
-			if (terrain1_2)
-			{
-				terrain1_2->OnPrepareRender(pd3dCommandList);
-				terrain1_2->Render(pd3dCommandList, pCamera, m_fElapsedTime);
 
 			}
 
-		}
 
-		//1-3
-		else if ((cp.x >= 400.0f && cp.x <= 600.0f) && cp.z >= 200.0f && cp.z <= 600.0f)
-		{
-			if (terrain1_3)
+
+
+
+
+			//1-1
+			if (((cp.x >= 0.0f && cp.x <= 200.0f) && (cp.z >= 0.0f && cp.z <= 150.0f)) || ((cp.x >= 0.0f && cp.x <= 190.0f) && (cp.z >= 150.0f && cp.z <= 200.0f)))
 			{
-				terrain1_3->OnPrepareRender(pd3dCommandList);
-				terrain1_3->Render(pd3dCommandList, pCamera);
+				if (terrain1_1)
+				{
+					terrain1_1->OnPrepareRender(pd3dCommandList);
+					terrain1_1->Render(pd3dCommandList, pCamera);
+				}
+			}
+			//1-1, 1-2 이어지는 문 사이
+			else if ((cp.x >= 190.0f && cp.x <= 230.0f) && (cp.z >= 150.0f && cp.z <= 200.0f))
+			{
+				if (terrain1_1)
+				{
+					terrain1_1->OnPrepareRender(pd3dCommandList);
+					terrain1_1->Render(pd3dCommandList, pCamera);
+				}
+				if (terrain1_2)
+				{
+					terrain1_2->OnPrepareRender(pd3dCommandList);
+					terrain1_2->Render(pd3dCommandList, pCamera, m_fElapsedTime);
+				}
+			}
+
+			//1-2
+			else if ((cp.x >= 200.0f && cp.x <= 600.0f) && cp.z >= 0.0f && cp.z <= 200.0f)
+			{
+				if (terrain1_2)
+				{
+					terrain1_2->OnPrepareRender(pd3dCommandList);
+					terrain1_2->Render(pd3dCommandList, pCamera, m_fElapsedTime);
+
+				}
+
+			}
+
+			//1-3
+			else if ((cp.x >= 400.0f && cp.x <= 600.0f) && cp.z >= 200.0f && cp.z <= 600.0f)
+			{
+				if (terrain1_3)
+				{
+					terrain1_3->OnPrepareRender(pd3dCommandList);
+					terrain1_3->Render(pd3dCommandList, pCamera);
+				}
+			}
+
+
+			//2-1
+			else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 375.0f && cp.z <= 600.0f)
+			{
+				if (terrain2_1)
+				{
+					terrain2_1->OnPrepareRender(pd3dCommandList);
+					terrain2_1->Render(pd3dCommandList, pCamera);
+				}
+			}
+
+			else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 213.0f && cp.z <= 375.0f)
+			{
+				if (terrain2_1)
+				{
+					terrain2_1->OnPrepareRender(pd3dCommandList);
+					terrain2_1->Render(pd3dCommandList, pCamera);
+				}
+				if (terrain2_2)
+				{
+					terrain2_2->OnPrepareRender(pd3dCommandList);
+					terrain2_2->Render(pd3dCommandList, pCamera);
+				}
+			}
+			//2-2
+			else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 213.0f)
+			{
+				if (terrain2_2)
+				{
+					terrain2_2->OnPrepareRender(pd3dCommandList);
+					terrain2_2->Render(pd3dCommandList, pCamera);
+				}
+			}
+
+			//2-3
+			else if ((cp.x >= 900.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
+			{
+				if (terrain2_3)
+				{
+					terrain2_3->OnPrepareRender(pd3dCommandList);
+					terrain2_3->Render(pd3dCommandList, pCamera);
+				}
+			}
+
+			if (enemyShader)
+			{
+				enemyShader->OnPrepareRender(pd3dCommandList);
+				enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
+			}
+
+			if (enemyDying)
+			{
+				enemyDying->OnPrepareRender(pd3dCommandList);
+				enemyDying->Render(pd3dCommandList, pCamera);
+			}
+
+			if (partShader)
+			{
+				partShader->OnPrepareRender(pd3dCommandList);
+				partShader->Render(pd3dCommandList, pCamera);
+			}
+			if (boomShader)
+			{
+				boomShader->OnPrepareRender(pd3dCommandList);
+				boomShader->Render(pd3dCommandList, pCamera);
+			}
+			if (sdwShader)
+			{
+				sdwShader->OnPrepareRender(pd3dCommandList);
+				sdwShader->Render(pd3dCommandList, pCamera);
+			}
+
+			if (barShader)
+			{
+				barShader->OnPrepareRender(pd3dCommandList);
+				barShader->Render(pd3dCommandList, pCamera);
+			}
+
+			//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
+			if (interShader)
+			{
+				interShader->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+				interShader->Render(pd3dCommandList, pCamera);
 			}
 		}
 
-
-		//2-1
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 375.0f && cp.z <= 600.0f)
+		else if (currentScreen == LOGIN_STATE)
 		{
-			if (terrain2_1)
+			if (lobbyInter)
 			{
-				terrain2_1->OnPrepareRender(pd3dCommandList);
-				terrain2_1->Render(pd3dCommandList, pCamera);
+				lobbyInter->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+
+				lobbyInter->Render(pd3dCommandList, pCamera);
 			}
 		}
+		else if (currentScreen == LOBBY_STATE)
+		{
+			if (mainInter)
+			{
+				mainInter->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
 
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 213.0f && cp.z <= 375.0f)
-		{
-			if (terrain2_1)
-			{
-				terrain2_1->OnPrepareRender(pd3dCommandList);
-				terrain2_1->Render(pd3dCommandList, pCamera);
-			}
-			if (terrain2_2)
-			{
-				terrain2_2->OnPrepareRender(pd3dCommandList);
-				terrain2_2->Render(pd3dCommandList, pCamera);
-			}
-		}
-		//2-2
-		else if ((cp.x >= 800.0f && cp.x <= 900.0f) && cp.z >= 60.0f && cp.z <= 213.0f)
-		{
-			if (terrain2_2)
-			{
-				terrain2_2->OnPrepareRender(pd3dCommandList);
-				terrain2_2->Render(pd3dCommandList, pCamera);
+				mainInter->Render(pd3dCommandList, pCamera);
 			}
 		}
-
-		//2-3
-		else if ((cp.x >= 900.0f && cp.x <= 1200.0f) && cp.z >= 60.0f && cp.z <= 150.0f)
+		else if (currentScreen == PROFILE_STATE)
 		{
-			if (terrain2_3)
+			if (profileInter)
 			{
-				terrain2_3->OnPrepareRender(pd3dCommandList);
-				terrain2_3->Render(pd3dCommandList, pCamera);
+				profileInter->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+
+				profileInter->Render(pd3dCommandList, pCamera);
 			}
 		}
-
-		if (enemyShader)
+		else if (currentScreen == STAGE_SELECT_STATE)
 		{
-			enemyShader->OnPrepareRender(pd3dCommandList);
-			enemyShader->Render(pd3dCommandList, pCamera, m_fElapsedTime, rm->m_pd3dCbvSrvDescriptorHeap);
-		}
-
-		if (enemyDying)
-		{
-			enemyDying->OnPrepareRender(pd3dCommandList);
-			enemyDying->Render(pd3dCommandList, pCamera);
-		}
-
-		if (partShader)
-		{
-			partShader->OnPrepareRender(pd3dCommandList);
-			partShader->Render(pd3dCommandList, pCamera);
-		}
-		if (boomShader)
-		{
-			boomShader->OnPrepareRender(pd3dCommandList);
-			boomShader->Render(pd3dCommandList, pCamera);
-		}
-		if (sdwShader)
-		{
-			sdwShader->OnPrepareRender(pd3dCommandList);
-			sdwShader->Render(pd3dCommandList, pCamera);
-		}
-
-		if (barShader)
-		{
-			barShader->OnPrepareRender(pd3dCommandList);
-			barShader->Render(pd3dCommandList, pCamera);
-		}
-
-		//UI는 무조건적으로 그려져야 하므로 깊이 검사를 해제하고 맨마지막에 그린다.
-		if (interShader)
-		{
-			interShader->OnPrepareRender(pd3dCommandList);
-			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			if (stageInter)
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				stageInter->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+
+				stageInter->Render(pd3dCommandList, pCamera);
 			}
-			interShader->Render(pd3dCommandList, pCamera);
 		}
-	}
-	
-	else if (currentScreen == LOGIN_STATE)
-	{
-		if (lobbyInter)
+		else if (currentScreen == WAIT_STATE)
 		{
-			lobbyInter->OnPrepareRender(pd3dCommandList);
-			if (rm->m_pd3dCbvSrvDescriptorHeap)
+			if (waitInter)
 			{
-				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				waitInter->OnPrepareRender(pd3dCommandList);
+				if (rm->m_pd3dCbvSrvDescriptorHeap)
+				{
+					pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
+				}
+
+				waitInter->Render(pd3dCommandList, pCamera);
 			}
-			
-			lobbyInter->Render(pd3dCommandList, pCamera);
 		}
-	}
-	else if (currentScreen == LOBBY_STATE)
-	{
-		if (mainInter)
-		{
-			mainInter->OnPrepareRender(pd3dCommandList);
-			if (rm->m_pd3dCbvSrvDescriptorHeap)
-			{
-				pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-			}
-
-			mainInter->Render(pd3dCommandList, pCamera);
-		}
-	}
-	else if (currentScreen == PROFILE_STATE)
-	{
-	if (profileInter)
-	{
-		profileInter->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
-		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-		}
-
-		profileInter->Render(pd3dCommandList, pCamera);
-	}
-	}
-	else if (currentScreen == STAGE_SELECT_STATE)
-	{
-	if (stageInter)
-	{
-		stageInter->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
-		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-		}
-
-		stageInter->Render(pd3dCommandList, pCamera);
-	}
-	}
-	else if (currentScreen == WAIT_STATE)
-	{
-	if (waitInter)
-	{
-		waitInter->OnPrepareRender(pd3dCommandList);
-		if (rm->m_pd3dCbvSrvDescriptorHeap)
-		{
-			pd3dCommandList->SetDescriptorHeaps(1, &rm->m_pd3dCbvSrvDescriptorHeap);
-		}
-
-		waitInter->Render(pd3dCommandList, pCamera);
-	}
 	}
 }
 
