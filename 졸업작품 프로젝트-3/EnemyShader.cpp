@@ -1431,6 +1431,15 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj153->attackRange = rrange;
 	obj153->attackDuration = rdur;
 
+	EnemyObject* obj154 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj154->SetPosition(802.0f, 0.0f, 597.0f);
+	obj154->origin = XMFLOAT3(802.0f, 0.0f,  597.0f);
+	obj154->bState.hp = rhp;
+	obj154->weapon = 1;
+	obj154->maxHP = rhp;
+	obj154->attackRange = rrange;
+	obj154->attackDuration = rdur;
+
 	objects.push_back(obj1);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -1595,6 +1604,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	objects.push_back(obj151);
 	objects.push_back(obj152);
 	objects.push_back(obj153);
+	objects.push_back(obj154);
 
 						  
 	for (int i = 0; i < objects.size(); ++i)
@@ -1691,6 +1701,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 			if (objects[i]->erased == false)
 			{
+				objects[i]->Animate(elapsed/2);
 				objects[i]->Animate(elapsed/2);
 				if (objects[i]->m_pSkinnedAnimationController)
 				{
