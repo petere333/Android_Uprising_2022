@@ -1849,6 +1849,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			else
 			{
 				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28+i*5]);
+				waitInter->objects[28 + i * 5]->m_ppMaterials[0] = rm->materials[339];
 			}
 		}
 
@@ -3105,9 +3106,13 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_PARTICLE_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 
+
+		
+
+
 		if (p.particleType == 1)
 		{
-			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList);
+			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList, p.xdir, p.zdir);
 		}
 		break;
 	}
@@ -4291,10 +4296,22 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			//partShader->createParticles(50, targetPos, device, list);
 			if (idx == pID)
 			{
+
+
+
+				
+
 				CS_PARTICLE_PACKET part;
 				part.size = sizeof(CS_PARTICLE_PACKET);
 				part.type = PACKET_TYPE::CS_PARTICLE;
 				part.id = pID;
+
+				//플레이어가 바라보는 방향과 정반대 방향
+				float rd = XMConvertToRadians(-playerShader->objects[idx]->kState.rotation);
+				XMFLOAT3 dir = XMFLOAT3(-cos(rd), 0.0f, -sin(rd));
+
+				part.xdir = dir.x;
+				part.zdir = dir.z;
 
 				part.count = 100;
 				part.x = targetPos.x;
@@ -4406,6 +4423,15 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 						p.type = PACKET_TYPE::CS_PARTICLE;
 						p.id = pID;
 						p.count = 100;
+
+
+						//플레이어가 바라보는 방향과 정반대 방향
+						float rd = XMConvertToRadians(-playerShader->objects[idx]->kState.rotation);
+						XMFLOAT3 dir = XMFLOAT3(-cos(rd), 0.0f, -sin(rd));
+
+						p.xdir = dir.x;
+						p.zdir = dir.z;
+
 						p.x = enemyShader->objects[i]->GetPosition().x;
 						p.y = enemyShader->objects[i]->GetPosition().y;
 						p.z = enemyShader->objects[i]->GetPosition().z;
@@ -4550,6 +4576,14 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 					p.x = enemyShader->objects[i]->GetPosition().x;
 					p.y = enemyShader->objects[i]->GetPosition().y;
 					p.z = enemyShader->objects[i]->GetPosition().z;
+
+
+					//플레이어가 바라보는 방향과 정반대 방향
+					float rd = XMConvertToRadians(-playerShader->objects[idx]->kState.rotation);
+					XMFLOAT3 dir = XMFLOAT3(-cos(rd), 0.0f, -sin(rd));
+
+					p.xdir = dir.x;
+					p.zdir = dir.z;
 
 					SendPacket(&p);
 

@@ -119,7 +119,7 @@ D3D12_SHADER_BYTECODE ParticleShader::CreatePixelShader()
 	return(CShader::CompileShaderFromFile(L"Particles.hlsl", "psParticle", "ps_5_1", &m_pd3dPixelShaderBlob));
 }
 
-void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list)
+void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list, float xd, float zd)
 {
 
 
@@ -132,13 +132,35 @@ void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device
 
 
 		XMFLOAT3 direct = XMFLOAT3(x, y, z);
+		XMFLOAT3 tp = XMFLOAT3(xd, 0.0f, zd);
 		direct = Vector3::Normalize(direct);
-
+		float da = Vector3::DotProduct(direct, tp);
+		/*
+		while (da > -0.8f && da <0.8f)
+		{
+			
+			float x = static_cast<float>(rand() % 10000) / 10000.0f - 0.5f;
+			float y = static_cast<float>(rand() % 10000) / 10000.0f - 0.5f;
+			float z = static_cast<float>(rand() % 10000) / 10000.0f - 0.5f;
+			direct = XMFLOAT3(x, y, z);
+			direct = Vector3::Normalize(direct);
+			da = Vector3::DotProduct(direct, tp);
+			
+		}
+		*/
+		/*
+		if (da < 0.0f)
+		{
+			direct.x *= -1.0f;
+			direct.y *= -1.0f;
+			direct.z *= -1.0f;
+		}
+		*/
 		ParticleObject* obj = new ParticleObject(1);
 		obj->type = type;
 		obj->timeCreated = std::chrono::system_clock::now();
 		obj->SetMaterial(0, rm->materials[4]);
-		obj->speed = 0.1f;
+		obj->speed = 0.03f;
 		obj->direction = direct;
 		obj->SetPosition(pos);
 		obj->SetMesh(partMesh);

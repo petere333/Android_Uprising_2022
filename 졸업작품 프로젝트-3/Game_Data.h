@@ -63,9 +63,9 @@
 
 //辑滚 IP 沥焊
 // #define SERVERIP "172.20.10.5" // 风橇归 林家
-#define SERVERIP "127.0.0.1" // 风橇归 林家
+//#define SERVERIP "127.0.0.1" // 风橇归 林家
 //#define SERVERIP "192.168.35.85" // 风橇归 林家
-//#define SERVERIP "192.168.35.197" // 风橇归 林家
+#define SERVERIP "192.168.35.197" // 风橇归 林家
 
 
 /*

@@ -38,6 +38,6 @@ float4 psParticle(ParticleOutput input) : SV_TARGET
 	float4 result = color * cLight;
 	//float4 result = color;
 	//result.a = result.a*alpha;
-
+	result.a = 0.8f;
 	return result;
 }

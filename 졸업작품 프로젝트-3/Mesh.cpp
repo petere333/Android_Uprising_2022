@@ -1223,30 +1223,30 @@ ParticleMesh::ParticleMesh(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* 
 	XMFLOAT3* pos = new XMFLOAT3[12];
 	XMFLOAT2* uv = new XMFLOAT2[12];
 
-	pos[0] = XMFLOAT3(-0.05f, -0.05f, -0.05f);
-	pos[1] = XMFLOAT3(0.0f, -0.05f, 0.05f);
-	pos[2] = XMFLOAT3(0.05f, -0.05f, -0.05f);
+	pos[0] = XMFLOAT3(-0.015, -0.015, -0.015);
+	pos[1] = XMFLOAT3(0.0f, -0.015, 0.015);
+	pos[2] = XMFLOAT3(0.015, -0.015, -0.015);
 	uv[0] = XMFLOAT2(0.0f, 0.0f);
 	uv[1] = XMFLOAT2(0.5f, 1.0f);
 	uv[2] = XMFLOAT2(1.0f, 0.0f);
 
-	pos[3] = XMFLOAT3(-0.05f, -0.05f, -0.05f);
-	pos[4] = XMFLOAT3(0.0f, 0.05f, 0.0f);
-	pos[5] = XMFLOAT3(0.0f, -0.05f, 0.05f);
+	pos[3] = XMFLOAT3(-0.015, -0.015, -0.015);
+	pos[4] = XMFLOAT3(0.0f, 0.015, 0.0f);
+	pos[5] = XMFLOAT3(0.0f, -0.015, 0.015);
 	uv[3] = XMFLOAT2(0.0f, 0.0f);
 	uv[4] = XMFLOAT2(0.5f, 1.0f);
 	uv[5] = XMFLOAT2(1.0f, 0.0f);
 
-	pos[6] = XMFLOAT3(0.0f, -0.05f, 0.05f);
-	pos[7] = XMFLOAT3(0.0f, 0.05f, 0.0f);
-	pos[8] = XMFLOAT3(0.05f, -0.05f, -0.05f);
+	pos[6] = XMFLOAT3(0.0f, -0.015, 0.015);
+	pos[7] = XMFLOAT3(0.0f, 0.015, 0.0f);
+	pos[8] = XMFLOAT3(0.015, -0.015, -0.015);
 	uv[6] = XMFLOAT2(0.0f, 0.0f);
 	uv[7] = XMFLOAT2(0.5f, 1.0f);
 	uv[8] = XMFLOAT2(1.0f, 0.0f);
 
-	pos[9] = XMFLOAT3(0.05f, -0.05f, -0.05f);
-	pos[10] = XMFLOAT3(0.0f, 0.05f, 0.0f);
-	pos[11] = XMFLOAT3(-0.05f, -0.05f, -0.05f);
+	pos[9] = XMFLOAT3(0.015, -0.015, -0.015);
+	pos[10] = XMFLOAT3(0.0f, 0.015, 0.0f);
+	pos[11] = XMFLOAT3(-0.015, -0.015, -0.015f);
 	uv[9] = XMFLOAT2(0.0f, 0.0f);
 	uv[10] = XMFLOAT2(0.5f, 1.0f);
 	uv[11] = XMFLOAT2(1.0f, 0.0f);
