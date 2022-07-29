@@ -58,6 +58,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* gold2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(507.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* gold3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(527.0f - 600.0f) / 450.0f, -(536.0f - 450.0f) / 450.0f, true);
 
+	
 
 	meshes.push_back(mesh);
 	revmeshes.push_back(meshr);
@@ -202,6 +203,11 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* time1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* time1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* fail = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* failr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+
+
+
 	//339~348场鳖瘤 备开喊 固记 包访
 
 	meshes.push_back(mission);
@@ -214,6 +220,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	meshes.push_back(time100);
 	meshes.push_back(time10);
 	meshes.push_back(time1);
+	meshes.push_back(fail);
 	
 	revmeshes.push_back(missionr);
 	revmeshes.push_back(progr);
@@ -225,6 +232,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(time100r);
 	revmeshes.push_back(time10r);
 	revmeshes.push_back(time1r);
+	revmeshes.push_back(failr);
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, -1, -1, -1, -1, 263);
@@ -270,6 +278,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	UIObject* obj31 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj32 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj33 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	UIObject* obj34 = new UIObject(1, -1, -1, -1, -1, -1);
 
 
 	obj->SetMesh(meshes[0]);
@@ -396,6 +406,9 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj33->SetMaterial(0, rm->materials[273]);
 	obj33->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj34->SetMesh(NULL);
+	obj34->SetMaterial(0, rm->materials[338]);
+	obj34->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
@@ -433,6 +446,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	objects.push_back(obj31);
 	objects.push_back(obj32);
 	objects.push_back(obj33);
+	objects.push_back(obj34);
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -1039,4 +1053,21 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		}
 	}
 	
+	if (missionFail == false)
+	{
+		objects[33]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[33]->m_ppMaterials[0] = rm->materials[338];
+		if (cl.z < 0.0f)
+		{
+			objects[33]->SetMesh(revmeshes[349]);
+		}
+		else
+		{
+			objects[33]->SetMesh(meshes[349]);
+		}
+
+	}
 }

@@ -36,7 +36,7 @@ void EnemyShader::restart()
 			objects[i]->attackDuration = rdur;
 		}
 		objects[i]->attackTarget = -1;
-		XMFLOAT3 op = objects[i]->GetPosition();
+		XMFLOAT3 op = objects[i]->origin;
 		objects[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
 		objects[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
 		objects[i]->type = -10;
@@ -167,68 +167,9 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj14->attackRange = mrange;
 	obj14->attackDuration = mdur;
 
-	EnemyObject* obj15 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj15->SetPosition(122.0f, 0.0f, 185.0f);
-	obj15->origin = XMFLOAT3(122.0f, 0.0f, 185.0f);
-	obj15->bState.hp = mhp;
-	obj15->weapon = 2;
-	obj15->maxHP = mhp;
-	obj15->attackRange = mrange;
-	obj15->attackDuration = mdur;
 
-	EnemyObject* obj16 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj16->SetPosition(122.0f, 0.0f, 175.0f);
-	obj16->origin = XMFLOAT3(122.0f, 0.0f, 175.0f);
-	obj16->bState.hp = mhp;
-	obj16->weapon = 2;
-	obj16->maxHP = mhp;
-	obj16->attackRange = mrange;
-	obj16->attackDuration = mdur;
 
-	EnemyObject* obj17 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj17->SetPosition(122.0f, 0.0f, 165.0f);
-	obj17->origin = XMFLOAT3(122.0f, 0.0f, 165.0f);
-	obj17->bState.hp = mhp;
-	obj17->weapon = 2;
-	obj17->maxHP = mhp;
-	obj17->attackRange = mrange;
-	obj17->attackDuration = mdur;
 
-	EnemyObject* obj18 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj18->SetPosition(122.0f, 0.0f, 155.0f);
-	obj18->origin = XMFLOAT3(122.0f, 0.0f, 155.0f);
-	obj18->bState.hp = mhp;
-	obj18->weapon = 2;
-	obj18->maxHP = mhp;
-	obj18->attackRange = mrange;
-	obj18->attackDuration = mdur;
-
-	EnemyObject* obj19 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj19->SetPosition(165.0f, 0.0f, 195.0f);
-	obj19->origin = XMFLOAT3(165.0f, 0.0f, 195.0f);
-	obj19->bState.hp = mhp;
-	obj19->weapon = 2;
-	obj19->maxHP = mhp;
-	obj19->attackRange = mrange;
-	obj19->attackDuration = mdur;
-
-	EnemyObject* obj20 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj20->SetPosition(165.0f, 0.0f, 174.0f);
-	obj20->origin = XMFLOAT3(165.0f, 0.0f, 174.0f);
-	obj20->bState.hp = mhp;
-	obj20->weapon = 2;
-	obj20->maxHP = mhp;
-	obj20->attackRange = mrange;
-	obj20->attackDuration = mdur;
-
-	EnemyObject* obj21 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj21->SetPosition(165.0f, 0.0f, 156.0f);
-	obj21->origin = XMFLOAT3(165.0f, 0.0f, 156.0f);
-	obj21->bState.hp = mhp;
-	obj21->weapon = 2;
-	obj21->maxHP = mhp;
-	obj21->attackRange = mrange;
-	obj21->attackDuration = mdur;
 
 	EnemyObject* obj2 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
 	obj2->SetPosition(185.0f, 0.0f, 16.0f);
@@ -392,59 +333,10 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj38->attackRange = rrange;
 	obj38->attackDuration = rdur;
 
-	EnemyObject* obj39 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj39->SetPosition(142.0f, 0.0f, 185.0f);
-	obj39->origin = XMFLOAT3(142.0f, 0.0f, 185.0f);
-	obj39->bState.hp = rhp;
-	obj39->weapon = 1;
-	obj39->maxHP = rhp;
-	obj39->attackRange = rrange;
-	obj39->attackDuration = rdur;
 
-	EnemyObject* obj40 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj40->SetPosition(142.0f, 0.0f, 175.0f);
-	obj40->origin = XMFLOAT3(142.0f, 0.0f, 175.0f);
-	obj40->bState.hp = rhp;
-	obj40->weapon = 1;
-	obj40->maxHP = rhp;
-	obj40->attackRange = rrange;
-	obj40->attackDuration = rdur;
 
-	EnemyObject* obj41 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj41->SetPosition(142.0f, 0.0f, 165.0f);
-	obj41->origin = XMFLOAT3(142.0f, 0.0f, 165.0f);
-	obj41->bState.hp = rhp;
-	obj41->weapon = 1;
-	obj41->maxHP = rhp;
-	obj41->attackRange = rrange;
-	obj41->attackDuration = rdur;
 
-	EnemyObject* obj42 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj42->SetPosition(142.0f, 0.0f, 155.0f);
-	obj42->origin = XMFLOAT3(142.0f, 0.0f, 155.0f);
-	obj42->bState.hp = rhp;
-	obj42->weapon = 1;
-	obj42->maxHP = rhp;
-	obj42->attackRange = rrange;
-	obj42->attackDuration = rdur;
 
-	EnemyObject* obj43 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj43->SetPosition(173.0f, 0.0f, 165.0f);
-	obj43->origin = XMFLOAT3(173.0f, 0.0f, 165.0f);
-	obj43->bState.hp = rhp;
-	obj43->weapon = 1;
-	obj43->maxHP = rhp;
-	obj43->attackRange = rrange;
-	obj43->attackDuration = rdur;
-
-	EnemyObject* obj44 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height11, 0.0f, 0.0f);
-	obj44->SetPosition(174.0f, 0.0f, 182.0f);
-	obj44->origin = XMFLOAT3(174.0f, 0.0f, 182.0f);
-	obj44->bState.hp = rhp;
-	obj44->weapon = 1;
-	obj44->maxHP = rhp;
-	obj44->attackRange = rrange;
-	obj44->attackDuration = rdur;
 
 
 	//여기서부터 1-2구역의 근접 적들
@@ -1445,13 +1337,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	objects.push_back(obj12);
 	objects.push_back(obj13);
 	objects.push_back(obj14);
-	objects.push_back(obj15);
-	objects.push_back(obj16);
-	objects.push_back(obj17);
-	objects.push_back(obj18);
-	objects.push_back(obj19);
-	objects.push_back(obj20);
-	objects.push_back(obj21);
+
 	objects.push_back(obj22);
 	objects.push_back(obj23);
 	objects.push_back(obj24);
@@ -1469,12 +1355,7 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	objects.push_back(obj36);
 	objects.push_back(obj37);
 	objects.push_back(obj38);
-	objects.push_back(obj39);
-	objects.push_back(obj40);
-	objects.push_back(obj41);
-	objects.push_back(obj42);
-	objects.push_back(obj43);
-	objects.push_back(obj44);
+
 	objects.push_back(obj45);
 	objects.push_back(obj46);
 	objects.push_back(obj47);

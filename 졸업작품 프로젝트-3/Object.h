@@ -415,7 +415,7 @@ public:
 
 public:
 	int type = 0;
-
+	int broke = 4;
 	bool							m_bActive = true;
 
 	char							m_pstrFrameName[64];
