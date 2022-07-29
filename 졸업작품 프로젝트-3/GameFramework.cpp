@@ -58,7 +58,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateDepthStencilView();
 	CoInitialize(NULL);
 	
-	 // CSound::Init();
+	CSound::Init();
 
 	SetCursorPos(500, 500);
 	prevX = 500;

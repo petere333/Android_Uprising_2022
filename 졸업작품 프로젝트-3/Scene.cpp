@@ -291,7 +291,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
-
+	rm->bgm[0]->play();
+	rm->bgm[0]->Update();
 }
 
 void CScene::ReleaseObjects()
@@ -1257,10 +1258,50 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					{
 						if (interShader->mission == 1)
 						{
+							//미션 조건 만족시
 							if (interShader->m1_kill >= 3)
 							{
+								//다음 미션 구역에 아직 못갔으면
 								if (interShader->nextPos == false)
 								{
+									if (rm->briefPlayed[4] == false)
+									{
+										rm->brief[0]->stop();
+										rm->brief[1]->stop();
+										rm->brief[2]->stop();
+										rm->brief[3]->stop();
+
+
+										rm->briefPlayed[4] = true;
+										rm->timePlayed[4] = chrono::system_clock::now();
+										rm->brief[4]->play();
+										rm->brief[4]->Update();
+
+									}
+									else if (rm->briefPlayed[5] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[4]);
+										if (dt.count() > 6.0)
+										{
+											rm->briefPlayed[5] = true;
+											rm->timePlayed[5] = chrono::system_clock::now();
+											rm->brief[5]->play();
+											rm->brief[5]->Update();
+
+										}
+									}
+									else if (rm->briefPlayed[6] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[5]);
+										if (dt.count() > 8.0)
+										{
+											rm->briefPlayed[6] = true;
+											rm->timePlayed[6] = chrono::system_clock::now();
+											rm->brief[6]->play();
+											rm->brief[6]->Update();
+
+										}
+									}
 									for (int p = 0; p < playerShader->objects.size(); ++p)
 									{
 										float px = playerShader->objects[p]->GetPosition().x;
@@ -1270,6 +1311,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 										{
 											interShader->nextPos = true;
+											
 											break;
 										}
 									}
@@ -1281,6 +1323,52 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 									
+								}
+							}
+							else
+							{
+								if (rm->briefPlayed[0] == false)
+								{
+									rm->briefPlayed[0] = true;
+									rm->timePlayed[0] = chrono::system_clock::now();
+									rm->brief[0]->play();
+									rm->brief[0]->Update();
+								}
+								else  if (rm->briefPlayed[1] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[0]);
+									if (dt.count() > 8.0)
+									{
+										rm->briefPlayed[1] = true;
+										rm->timePlayed[1] = chrono::system_clock::now();
+										rm->brief[1]->play();
+										rm->brief[1]->Update();
+
+									}
+								}
+								else  if (rm->briefPlayed[2] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[1]);
+									if (dt.count() > 5.0)
+									{
+										rm->briefPlayed[2] = true;
+										rm->timePlayed[2] = chrono::system_clock::now();
+										rm->brief[2]->play();
+										rm->brief[2]->Update();
+
+									}
+								}
+								else  if (rm->briefPlayed[3] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[2]);
+									if (dt.count() > 7.0)
+									{
+										rm->briefPlayed[3] = true;
+										rm->timePlayed[3] = chrono::system_clock::now();
+										rm->brief[3]->play();
+										rm->brief[3]->Update();
+
+									}
 								}
 							}
 						}
@@ -3388,8 +3476,8 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 		if (fTime >= 1.0f / 6.0f)
 		{
-			soundEffect[0]->play();
-			soundEffect[0]->Update();
+			rm->effect[0]->play();
+			rm->effect[0]->Update();
 			printf("time elapsed from last shot : %f\n", fTime);
 			setObjectLastAttack(idx);
 
@@ -4099,8 +4187,8 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 			//===============================================================================//
 
-			soundEffect[1]->play();
-			soundEffect[1]->Update();
+			rm->effect[1]->play();
+			rm->effect[1]->Update();
 			// 적한테 총알이 박혔나?
 			for (int i = 0; i < enemyShader->objects.size(); ++i)
 			{
@@ -4349,8 +4437,8 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			printf("Time elapsed from last swing : %f\n", fTime);
 			setObjectLastAttack(idx);
 			playerShader->objects[idx]->hammerHit = false;
-			soundEffect[3]->play();
-			soundEffect[3]->Update();
+			rm->effect[3]->play();
+			rm->effect[3]->Update();
 
 			int r = rand() % 2;
 
@@ -4401,8 +4489,8 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 				{
 					//사운드 및 파티클 이펙트 발생
 					printf("Enemy [%d] hit\n", i);
-					soundEffect[4]->play();
-					soundEffect[4]->Update();
+					rm->effect[4]->play();
+					rm->effect[4]->Update();
 					playerShader->objects[idx]->hammerHit = true;
 					
 					
@@ -4500,8 +4588,8 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
 		playerShader->objects[idx]->hammerHit = false;
-		soundEffect[3]->play();
-		soundEffect[3]->Update();
+		rm->effect[3]->play();
+		rm->effect[3]->Update();
 
 		int r = rand() % 2;
 
@@ -4561,8 +4649,8 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			{
 				//사운드 및 파티클 이펙트 발생
 				printf("Enemy [%d] hit\n", i);
-				soundEffect[4]->play();
-				soundEffect[4]->Update();
+				rm->effect[4]->play();
+				rm->effect[4]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				
 				if (idx == pID)
@@ -4653,36 +4741,11 @@ void CScene::createParticles(int n, XMFLOAT3 pos)
 
 void CScene::createSounds()
 {
-	bgm = new CSound * [nBGM];
-	bgm[0] = new CSound("res/sound/bgm/yugioh.mp3", true);
-	
-	soundEffect = new CSound * [nSoundEffect];
 
-	soundEffect[0] = new CSound("res/sound/effect/rifle_shot.mp3", false);
-	soundEffect[1] = new CSound("res/sound/effect/rifle_crash.ogg", false);
-	soundEffect[2] = new CSound("res/sound/effect/step_steel.mp3", true);
-	soundEffect[3] = new CSound("res/sound/effect/hammer_swing.mp3", false);
-	soundEffect[4] = new CSound("res/sound/effect/hammer_hit.mp3", false);
-	bgm[0]->setVolume(0.1f);
-	bgm[0]->play();
-	bgm[0]->Update();
-
-	for (int i = 0; i < nSoundEffect; ++i)
-	{
-		soundEffect[i]->setVolume(0.8f);
-		soundEffect[i]->Update();
-	}
 }
 void CScene::delSounds()
 {
-	for (int i = 0; i < nBGM; ++i)
-	{
-		delete bgm[i];
-	}
-	for (int i = 0; i < nSoundEffect; ++i)
-	{
-		delete soundEffect[i];
-	}
+
 }
 
 XMFLOAT3 getBoxOverlapPoint(BoundBox b1, BoundBox b2, float angle)
