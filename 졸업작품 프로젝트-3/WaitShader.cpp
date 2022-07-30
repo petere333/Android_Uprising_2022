@@ -50,7 +50,7 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	CubeMeshOffset* gold9 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.02f, (1040.0f - 600.0f) / 450.0f, -(132.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* gold10 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.02f, (1060.0f - 600.0f) / 450.0f, -(132.0f - 450.0f) / 450.0f, false);
 
-	CubeMeshOffset* stageText = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 297.0f / 450.0f, 24.0f / 450.0f, 0.02f, (657.0f - 600.0f) / 450.0f, -(273.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* stageText = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 297.0f / 450.0f, 24.0f / 450.0f, 0.02f, (657.0f - 600.0f) / 450.0f, -(253.0f - 450.0f) / 450.0f, false);
 
 	//인덱스 24~28 플레이어1 상태
 

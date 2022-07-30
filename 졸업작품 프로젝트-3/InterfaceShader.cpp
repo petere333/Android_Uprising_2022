@@ -206,6 +206,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* fail = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* failr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* narration = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* narrationr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, true);
 
 
 	//339~348场鳖瘤 备开喊 固记 包访
@@ -221,7 +223,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	meshes.push_back(time10);
 	meshes.push_back(time1);
 	meshes.push_back(fail);
-	
+	meshes.push_back(narration);
+
 	revmeshes.push_back(missionr);
 	revmeshes.push_back(progr);
 	revmeshes.push_back(prog10r);
@@ -233,6 +236,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(time10r);
 	revmeshes.push_back(time1r);
 	revmeshes.push_back(failr);
+	revmeshes.push_back(narrationr);
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, -1, -1, -1, -1, 263);
@@ -280,6 +284,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	UIObject* obj33 = new UIObject(1, -1, -1, -1, -1, -1);
 
 	UIObject* obj34 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj35 = new UIObject(1, -1, -1, -1, -1, -1);
 
 
 	obj->SetMesh(meshes[0]);
@@ -410,6 +415,9 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj34->SetMaterial(0, rm->materials[338]);
 	obj34->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj35->SetMesh(meshes[350]);
+	obj35->SetMaterial(0, rm->materials[338]);
+	obj35->SetPosition(0.0f, 0.0f, 0.0f);
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -447,6 +455,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	objects.push_back(obj32);
 	objects.push_back(obj33);
 	objects.push_back(obj34);
+	objects.push_back(obj35);
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -1070,4 +1079,38 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		}
 
 	}
+
+	chrono::time_point<chrono::system_clock> mmt = chrono::system_clock::now();
+
+	chrono::duration<double> ddt = mmt - lastNarrated;
+	if (ddt.count() > nDuration)
+	{
+		narrationShow = false;
+	}
+
+	if (narrationShow == true)
+	{
+		if (cl.z < 0.0f)
+		{
+			objects[34]->SetMesh(revmeshes[350]);
+
+		}
+		else
+		{
+			objects[34]->SetMesh(meshes[350]);
+		}
+	}
+	else
+	{
+		objects[34]->SetMesh(NULL);
+	}
+}
+
+void InterfaceShader::ShowNarration(int idx, double dur)
+{
+	nDuration = dur;
+	lastNarrated = chrono::system_clock::now();
+	narrationShow = true;
+	objects[34]->m_ppMaterials[0] = rm->materials[idx];
+	
 }

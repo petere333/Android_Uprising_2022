@@ -2303,20 +2303,158 @@ void ResourceManager::createSound()
 	CSound* mc1x2 = new CSound("res/sound/effect/stage1/mission1/m1c-2.mp3", false);
 	CSound* mc1x3 = new CSound("res/sound/effect/stage1/mission1/m1c-3.mp3", false);
 
+	CSound* m2x1 = new CSound("res/sound/effect/stage1/mission2/m2-1.mp3", false);
+	CSound* m2x2 = new CSound("res/sound/effect/stage1/mission2/m2-2.mp3", false);
+	CSound* m2x3 = new CSound("res/sound/effect/stage1/mission2/m2-3.mp3", false);
+
+	CSound* mc2x1 = new CSound("res/sound/effect/stage1/mission2/m2c-1.mp3", false);
+	CSound* mc2x2 = new CSound("res/sound/effect/stage1/mission2/m2c-2.mp3", false);
+	CSound* mc2x3 = new CSound("res/sound/effect/stage1/mission2/m2c-3.mp3", false);
+	CSound* mc2x4 = new CSound("res/sound/effect/stage1/mission2/m2c-4.mp3", false);
+	CSound* mc2x5 = new CSound("res/sound/effect/stage1/mission2/m2c-5.mp3", false);
+	CSound* mc2x6 = new CSound("res/sound/effect/stage1/mission2/m2c-6.mp3", false);
+
+	CSound* m3x1 = new CSound("res/sound/effect/stage1/mission3/m3-1.mp3", false);
+	CSound* m3x2 = new CSound("res/sound/effect/stage1/mission3/m3-2.mp3", false);
+	CSound* m3x3 = new CSound("res/sound/effect/stage1/mission3/m3-3.mp3", false);
+
+	CSound* mc3x1 = new CSound("res/sound/effect/stage1/mission3/m3c-1.mp3", false);
+	CSound* mc3x2 = new CSound("res/sound/effect/stage1/mission3/m3c-2.mp3", false);
+	CSound* mc3x3 = new CSound("res/sound/effect/stage1/mission3/m3c-3.mp3", false);
+
+	CSound* m4x1 = new CSound("res/sound/effect/stage1/mission4/m4-1.mp3", false);
+	CSound* m4x2 = new CSound("res/sound/effect/stage1/mission4/m4-2.mp3", false);
+	CSound* m4x3 = new CSound("res/sound/effect/stage1/mission4/m4-3.mp3", false);
+	CSound* m4x4 = new CSound("res/sound/effect/stage1/mission4/m4-4.mp3", false);
+
+	CSound* mc4x1 = new CSound("res/sound/effect/stage1/mission4/m4c-1.mp3", false);
+	CSound* mc4x2 = new CSound("res/sound/effect/stage1/mission4/m4c-2.mp3", false);
+
+	CSound* m5x1 = new CSound("res/sound/effect/stage1/mission5/m5-1.mp3", false);
+	CSound* m5x2 = new CSound("res/sound/effect/stage1/mission5/m5-2.mp3", false);
+	CSound* m5x3 = new CSound("res/sound/effect/stage1/mission5/m5-3.mp3", false);
+
+	CSound* mc5x1 = new CSound("res/sound/effect/stage1/mission5/m5c-1.mp3", false);
+	CSound* mc5x2 = new CSound("res/sound/effect/stage1/mission5/m5c-2.mp3", false);
+
+	CSound* m6x1 = new CSound("res/sound/effect/stage1/mission6/m6-1.mp3", false);
+
+	CSound* mc6x1 = new CSound("res/sound/effect/stage1/mission6/m6c-1.mp3", false);
+	CSound* mc6x2 = new CSound("res/sound/effect/stage1/mission6/m6c-2.mp3", false);
+
+	CSound* m7x1 = new CSound("res/sound/effect/stage1/mission7/m7-1.mp3", false);
+	CSound* m7x2 = new CSound("res/sound/effect/stage1/mission7/m7-2.mp3", false);
+
+	CSound* mc7x1 = new CSound("res/sound/effect/stage1/mission7/m7c-1.mp3", false);
+
+	CSound* m8x1 = new CSound("res/sound/effect/stage1/mission8/m8-1.mp3", false);
+	CSound* m8x2 = new CSound("res/sound/effect/stage1/mission8/m8-2.mp3", false);
+	CSound* m8x3 = new CSound("res/sound/effect/stage1/mission8/m8-3.mp3", false);
+
+	CSound* m9x1 = new CSound("res/sound/effect/stage1/mission9/m9-1.mp3", false);
+	CSound* m9x2 = new CSound("res/sound/effect/stage1/mission9/m9-2.mp3", false);
+	CSound* m9x3 = new CSound("res/sound/effect/stage1/mission9/m9-3.mp3", false);
+	CSound* m9x4 = new CSound("res/sound/effect/stage1/mission9/m9-4.mp3", false);
+
+	CSound* mc9x1 = new CSound("res/sound/effect/stage1/mission9/m9c-1.mp3", false);
+
+	CSound* m10x1 = new CSound("res/sound/effect/stage1/mission10/m10-1.mp3", false);
+	CSound* m10x2 = new CSound("res/sound/effect/stage1/mission10/m10-2.mp3", false);
+	CSound* m10x3 = new CSound("res/sound/effect/stage1/mission10/m10-3.mp3", false);
+
+	CSound* mc10x1 = new CSound("res/sound/effect/stage1/mission10/m10c-1.mp3", false);
+
+	//0~3 brief 1
 	brief.push_back(m1x1);
 	brief.push_back(m1x2);
 	brief.push_back(m1x3);
 	brief.push_back(m1x4);
-
+	//4~6 clear 1
 	brief.push_back(mc1x1);
 	brief.push_back(mc1x2);
 	brief.push_back(mc1x3);
+	//7~9 brief 2
+
+	brief.push_back(m2x1);
+	brief.push_back(m2x2);
+	brief.push_back(m2x3);
+
+	//10~15 clear 2
+	brief.push_back(mc2x1);
+	brief.push_back(mc2x2);
+	brief.push_back(mc2x3);
+	brief.push_back(mc2x4);
+	brief.push_back(mc2x5);
+	brief.push_back(mc2x6);
+
+	//16~18 brief 3
+	brief.push_back(m3x1);
+	brief.push_back(m3x2);
+	brief.push_back(m3x3);
+
+	//19~21 clear 3
+	brief.push_back(mc3x1);
+	brief.push_back(mc3x2);
+	brief.push_back(mc3x3);
+
+	//22~25 brief 4
+	brief.push_back(m4x1);
+	brief.push_back(m4x2);
+	brief.push_back(m4x3);
+	brief.push_back(m4x4);
+
+	//26~27 clear 4
+	brief.push_back(mc4x1);
+	brief.push_back(mc4x2);
+
+	//28~30 brief 5
+	brief.push_back(m5x1);
+	brief.push_back(m5x2);
+	brief.push_back(m5x3);
+
+	//31~32 clear 5
+	brief.push_back(mc5x1);
+	brief.push_back(mc5x2);
+
+	//33 brief 6
+	brief.push_back(m6x1);
+
+	//34~35 clear 6
+	brief.push_back(mc6x1);
+	brief.push_back(mc6x2);
+
+	//36~37 brief 7
+	brief.push_back(m7x1);
+	brief.push_back(m7x2);
+
+	//38 clear 7
+	brief.push_back(mc7x1);
+
+	//39~41 brief 8
+	brief.push_back(m8x1);
+	brief.push_back(m8x2);
+	brief.push_back(m8x3);
+
+	//42~45 brief 9
+	brief.push_back(m9x1);
+	brief.push_back(m9x2);
+	brief.push_back(m9x3);
+	brief.push_back(m9x4);
+
+	//46 clear 9
+	brief.push_back(mc9x1);
+
+	//47~49 brief 10
+	brief.push_back(m10x1);
+	brief.push_back(m10x2);
+	brief.push_back(m10x3);
+
+	//50 clear 10
+	brief.push_back(mc10x1);
 
 
-
-
-	bgm[0]->setVolume(0.6f);
-	
+	bgm[0]->setVolume(0.1f);
+	bgm[0]->Update();
 
 	for (int i = 0; i < effect.size(); ++i)
 	{

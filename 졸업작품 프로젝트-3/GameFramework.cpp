@@ -380,9 +380,22 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 					m_pScene->enemyShader->restart();
 					//선택된 스테이지에 관한 정보 초기화.
+
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
 					m_pScene->interShader->missionFail = false;
+					
+					for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+					{
+						m_pScene->rm->brief[i]->stop();
+						m_pScene->rm->brief[i]->Update();
+						m_pScene->rm->briefPlayed[i] = false;
+
+					}
+					m_pScene->interShader->narrationShow = false;
+					m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+					m_pScene->interShader->nDuration = 0.0;
+
 					m_pScene->interShader->m10_gain = 0;
 					m_pScene->interShader->m10_miss = 0;
 					m_pScene->interShader->m1_kill = 0;
@@ -431,6 +444,18 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->interShader->missionFail = false;
+
+					for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+					{
+						m_pScene->rm->brief[i]->stop();
+						m_pScene->rm->brief[i]->Update();
+						m_pScene->rm->briefPlayed[i] = false;
+
+					}
+					m_pScene->interShader->narrationShow = false;
+					m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+					m_pScene->interShader->nDuration = 0.0;
+
 					m_pScene->interShader->m10_gain = 0;
 					m_pScene->interShader->m10_miss = 0;
 					m_pScene->interShader->m1_kill = 0;

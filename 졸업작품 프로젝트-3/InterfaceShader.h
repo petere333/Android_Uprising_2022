@@ -22,6 +22,8 @@ public:
 	virtual D3D12_SHADER_BYTECODE CreateVertexShader();
 	virtual D3D12_SHADER_BYTECODE CreatePixelShader();
 
+	void ShowNarration(int index, double dur);
+
 public:
 	PlayerInfoManager* info;
 	std::vector<UIObject*>	objects;
@@ -33,7 +35,7 @@ public:
 	chrono::time_point<chrono::system_clock> clearTime;
 
 	chrono::time_point<chrono::system_clock> missionChangedTime;
-	int mission = 1;
+	int mission = 7;
 	
 	bool failed = false;
 
@@ -55,4 +57,8 @@ public:
 	bool nextPos = false;
 	bool missionShow = true;
 	chrono::time_point<chrono::system_clock> timeFailed;
+
+	bool narrationShow = false;
+	chrono::time_point<chrono::system_clock> lastNarrated;
+	double nDuration;
 };

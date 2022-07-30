@@ -291,8 +291,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
-	rm->bgm[0]->play();
-	rm->bgm[0]->Update();
+	//rm->bgm[0]->play();
+	//rm->bgm[0]->Update();
 }
 
 void CScene::ReleaseObjects()
@@ -1276,7 +1276,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										rm->timePlayed[4] = chrono::system_clock::now();
 										rm->brief[4]->play();
 										rm->brief[4]->Update();
-
+										interShader->ShowNarration(114, 6.0);
 									}
 									else if (rm->briefPlayed[5] == false)
 									{
@@ -1287,7 +1287,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 											rm->timePlayed[5] = chrono::system_clock::now();
 											rm->brief[5]->play();
 											rm->brief[5]->Update();
-
+											interShader->ShowNarration(114, 8.0);
 										}
 									}
 									else if (rm->briefPlayed[6] == false)
@@ -1299,7 +1299,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 											rm->timePlayed[6] = chrono::system_clock::now();
 											rm->brief[6]->play();
 											rm->brief[6]->Update();
-
+											interShader->ShowNarration(114, 10.0);
 										}
 									}
 									for (int p = 0; p < playerShader->objects.size(); ++p)
@@ -1333,6 +1333,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									rm->timePlayed[0] = chrono::system_clock::now();
 									rm->brief[0]->play();
 									rm->brief[0]->Update();
+									interShader->ShowNarration(114, 8.0);
 								}
 								else  if (rm->briefPlayed[1] == false)
 								{
@@ -1343,7 +1344,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										rm->timePlayed[1] = chrono::system_clock::now();
 										rm->brief[1]->play();
 										rm->brief[1]->Update();
-
+										interShader->ShowNarration(114, 5.0);
 									}
 								}
 								else  if (rm->briefPlayed[2] == false)
@@ -1355,7 +1356,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										rm->timePlayed[2] = chrono::system_clock::now();
 										rm->brief[2]->play();
 										rm->brief[2]->Update();
-
+										interShader->ShowNarration(114, 7.0);
 									}
 								}
 								else  if (rm->briefPlayed[3] == false)
@@ -1367,17 +1368,94 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										rm->timePlayed[3] = chrono::system_clock::now();
 										rm->brief[3]->play();
 										rm->brief[3]->Update();
-
+										interShader->ShowNarration(114, 8.0);
 									}
 								}
 							}
 						}
+
 						else if (interShader->mission == 2)
 						{
 							if (interShader->m2_stun >= 5)
 							{
 								if (interShader->nextPos == false)
 								{
+									if (rm->briefPlayed[10] == false)
+									{
+										rm->brief[7]->stop();
+										rm->brief[8]->stop();
+										rm->brief[9]->stop();
+										
+
+
+										rm->briefPlayed[10] = true;
+										rm->timePlayed[10] = chrono::system_clock::now();
+										rm->brief[10]->play();
+										rm->brief[10]->Update();
+										interShader->ShowNarration(114, 7.0);
+									}
+									else if (rm->briefPlayed[11] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[10]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[11] = true;
+											rm->timePlayed[11] = chrono::system_clock::now();
+											rm->brief[11]->play();
+											rm->brief[11]->Update();
+											interShader->ShowNarration(114, 7.0);
+										}
+									}
+									else if (rm->briefPlayed[12] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[11]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[12] = true;
+											rm->timePlayed[12] = chrono::system_clock::now();
+											rm->brief[12]->play();
+											rm->brief[12]->Update();
+											interShader->ShowNarration(114, 8.0);
+										}
+									}
+									else if (rm->briefPlayed[13] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[12]);
+										if (dt.count() > 8.0)
+										{
+											rm->briefPlayed[13] = true;
+											rm->timePlayed[13] = chrono::system_clock::now();
+											rm->brief[13]->play();
+											rm->brief[13]->Update();
+											interShader->ShowNarration(114, 7.0);
+										}
+									}
+									else if (rm->briefPlayed[14] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[13]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[14] = true;
+											rm->timePlayed[14] = chrono::system_clock::now();
+											rm->brief[14]->play();
+											rm->brief[14]->Update();
+											interShader->ShowNarration(114, 7.0);
+										}
+									}
+									else if (rm->briefPlayed[15] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[14]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[15] = true;
+											rm->timePlayed[15] = chrono::system_clock::now();
+											rm->brief[15]->play();
+											rm->brief[15]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+
+							
 									for (int p = 0; p < playerShader->objects.size(); ++p)
 									{
 										float px = playerShader->objects[p]->GetPosition().x;
@@ -1397,6 +1475,48 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->missionChangedTime = chrono::system_clock::now();
 								}
 							}
+
+
+							else
+							{
+								if (rm->briefPlayed[7] == false)
+								{
+									rm->brief[4]->stop();
+									rm->brief[5]->stop();
+									rm->brief[6]->stop();
+
+									rm->briefPlayed[7] = true;
+									rm->timePlayed[7] = chrono::system_clock::now();
+									rm->brief[7]->play();
+									rm->brief[7]->Update();
+
+									interShader->ShowNarration(114, 7.0);
+								}
+								else  if (rm->briefPlayed[8] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[7]);
+									if (dt.count() > 7.0)
+									{
+										rm->briefPlayed[8] = true;
+										rm->timePlayed[8] = chrono::system_clock::now();
+										rm->brief[8]->play();
+										rm->brief[8]->Update();
+										interShader->ShowNarration(114, 8.0);
+									}
+								}
+								else  if (rm->briefPlayed[9] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[8]);
+									if (dt.count() > 8.0)
+									{
+										rm->briefPlayed[9] = true;
+										rm->timePlayed[9] = chrono::system_clock::now();
+										rm->brief[9]->play();
+										rm->brief[9]->Update();
+										interShader->ShowNarration(114, 5.0);
+									}
+								}
+							}
 						}
 						else if (interShader->mission == 3)
 						{
@@ -1404,6 +1524,46 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							{
 								if (interShader->nextPos == false)
 								{
+									if (rm->briefPlayed[19] == false)
+									{
+										rm->brief[16]->stop();
+										rm->brief[17]->stop();
+										rm->brief[18]->stop();
+
+
+
+										rm->briefPlayed[19] = true;
+										rm->timePlayed[19] = chrono::system_clock::now();
+										rm->brief[19]->play();
+										rm->brief[19]->Update();
+										interShader->ShowNarration(114, 7.0);
+									}
+									else if (rm->briefPlayed[20] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[19]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[20] = true;
+											rm->timePlayed[20] = chrono::system_clock::now();
+											rm->brief[20]->play();
+											rm->brief[20]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+									else if (rm->briefPlayed[21] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[20]);
+										if (dt.count() > 6.0)
+										{
+											rm->briefPlayed[21] = true;
+											rm->timePlayed[21] = chrono::system_clock::now();
+											rm->brief[21]->play();
+											rm->brief[21]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+
+
 									for (int p = 0; p < playerShader->objects.size(); ++p)
 									{
 										float px = playerShader->objects[p]->GetPosition().x;
@@ -1423,6 +1583,52 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->missionChangedTime = chrono::system_clock::now();
 								}
 							}
+
+
+							else
+							{
+								if (rm->briefPlayed[16] == false)
+								{
+									rm->brief[10]->stop();
+									rm->brief[11]->stop();
+									rm->brief[12]->stop();
+									rm->brief[13]->stop();
+									rm->brief[14]->stop();
+									rm->brief[15]->stop();
+
+
+									rm->briefPlayed[16] = true;
+									rm->timePlayed[16] = chrono::system_clock::now();
+									rm->brief[16]->play();
+									rm->brief[16]->Update();
+
+									interShader->ShowNarration(114, 8.0);
+								}
+								else  if (rm->briefPlayed[17] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[16]);
+									if (dt.count() > 8.0)
+									{
+										rm->briefPlayed[17] = true;
+										rm->timePlayed[17] = chrono::system_clock::now();
+										rm->brief[17]->play();
+										rm->brief[17]->Update();
+										interShader->ShowNarration(114, 8.0);
+									}
+								}
+								else  if (rm->briefPlayed[18] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[17]);
+									if (dt.count() > 8.0)
+									{
+										rm->briefPlayed[18] = true;
+										rm->timePlayed[18] = chrono::system_clock::now();
+										rm->brief[18]->play();
+										rm->brief[18]->Update();
+										interShader->ShowNarration(114, 7.0);
+									}
+								}
+							}
 						}
 						else if (interShader->mission == 4)
 						{
@@ -1431,11 +1637,40 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 							if (dt.count() < 100.0)
 							{
+
 								if (interShader->m4_kill >= 10)
 								{
 									//다음위치에 아군 단 한명이라도 도달할 경우
 									if (interShader->nextPos == false)
 									{
+										if (rm->briefPlayed[26] == false)
+										{
+											rm->brief[22]->stop();
+											rm->brief[23]->stop();
+											rm->brief[24]->stop();
+											rm->brief[25]->stop();
+
+
+											rm->briefPlayed[26] = true;
+											rm->timePlayed[26] = chrono::system_clock::now();
+											rm->brief[26]->play();
+											rm->brief[26]->Update();
+											interShader->ShowNarration(114, 5.0);
+										}
+										else if (rm->briefPlayed[27] == false)
+										{
+											chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[26]);
+											if (dt.count() > 5.0)
+											{
+												rm->briefPlayed[27] = true;
+												rm->timePlayed[27] = chrono::system_clock::now();
+												rm->brief[27]->play();
+												rm->brief[27]->Update();
+												interShader->ShowNarration(114, 7.0);
+											}
+										}
+
+
 										for (int p = 0; p < playerShader->objects.size(); ++p)
 										{
 											float px = playerShader->objects[p]->GetPosition().x;
@@ -1456,6 +1691,57 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
+								else
+								{
+									if (rm->briefPlayed[22] == false)
+									{
+										rm->brief[19]->stop();
+										rm->brief[20]->stop();
+										rm->brief[21]->stop();
+
+										rm->briefPlayed[22] = true;
+										rm->timePlayed[22] = chrono::system_clock::now();
+										rm->brief[22]->play();
+										rm->brief[22]->Update();
+										interShader->ShowNarration(114, 7.0);
+									}
+									else  if (rm->briefPlayed[23] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[22]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[23] = true;
+											rm->timePlayed[23] = chrono::system_clock::now();
+											rm->brief[23]->play();
+											rm->brief[23]->Update();
+											interShader->ShowNarration(114, 8.0);
+										}
+									}
+									else  if (rm->briefPlayed[24] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[23]);
+										if (dt.count() > 8.0)
+										{
+											rm->briefPlayed[24] = true;
+											rm->timePlayed[24] = chrono::system_clock::now();
+											rm->brief[24]->play();
+											rm->brief[24]->Update();
+											interShader->ShowNarration(114, 7.0);
+										}
+									}
+									else  if (rm->briefPlayed[25] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[24]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[25] = true;
+											rm->timePlayed[25] = chrono::system_clock::now();
+											rm->brief[25]->play();
+											rm->brief[25]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+								}
 							}
 							else
 							{
@@ -1472,6 +1758,32 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							{
 								if (interShader->nextPos == false)
 								{
+									if (rm->briefPlayed[31] == false)
+									{
+										rm->brief[28]->stop();
+										rm->brief[29]->stop();
+										rm->brief[30]->stop();
+
+										rm->briefPlayed[31] = true;
+										rm->timePlayed[31] = chrono::system_clock::now();
+										rm->brief[31]->play();
+										rm->brief[31]->Update();
+										interShader->ShowNarration(114, 8.0);
+									}
+									else if (rm->briefPlayed[32] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[31]);
+										if (dt.count() > 8.0)
+										{
+											rm->briefPlayed[32] = true;
+											rm->timePlayed[32] = chrono::system_clock::now();
+											rm->brief[32]->play();
+											rm->brief[32]->Update();
+											interShader->ShowNarration(114, 10.0);
+										}
+									}
+
+
 									for (int p = 0; p < playerShader->objects.size(); ++p)
 									{
 										float px = playerShader->objects[p]->GetPosition().x;
@@ -1493,7 +1805,44 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								}
 
 							}
+							else
+							{
+								if (rm->briefPlayed[28] == false)
+								{
+									rm->brief[26]->stop();
+									rm->brief[27]->stop();
 
+									rm->briefPlayed[28] = true;
+									rm->timePlayed[28] = chrono::system_clock::now();
+									rm->brief[28]->play();
+									rm->brief[28]->Update();
+									interShader->ShowNarration(114, 8.0);
+								}
+								else  if (rm->briefPlayed[29] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[28]);
+									if (dt.count() > 8.0)
+									{
+										rm->briefPlayed[29] = true;
+										rm->timePlayed[29] = chrono::system_clock::now();
+										rm->brief[29]->play();
+										rm->brief[29]->Update();
+										interShader->ShowNarration(114, 6.0);
+									}
+								}
+								else  if (rm->briefPlayed[30] == false)
+								{
+									chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[29]);
+									if (dt.count() > 6.0)
+									{
+										rm->briefPlayed[30] = true;
+										rm->timePlayed[30] = chrono::system_clock::now();
+										rm->brief[30]->play();
+										rm->brief[30]->Update();
+										interShader->ShowNarration(114, 6.0);
+									}
+								}
+							}
 						}
 						else if (interShader->mission == 6)
 						{
@@ -1503,6 +1852,30 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							{
 								if (interShader->nextPos == false)
 								{
+
+									if (rm->briefPlayed[34] == false)
+									{
+										rm->brief[33]->stop();
+
+										rm->briefPlayed[34] = true;
+										rm->timePlayed[34] = chrono::system_clock::now();
+										rm->brief[34]->play();
+										rm->brief[34]->Update();
+										interShader->ShowNarration(114, 7.0);
+									}
+									else if (rm->briefPlayed[35] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[34]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[35] = true;
+											rm->timePlayed[35] = chrono::system_clock::now();
+											rm->brief[35]->play();
+											rm->brief[35]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+
 									for (int p = 0; p < playerShader->objects.size(); ++p)
 									{
 										float px = playerShader->objects[p]->GetPosition().x;
@@ -1525,6 +1898,20 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								}
 
 							}
+							else
+							{
+								if (rm->briefPlayed[33] == false)
+								{
+									rm->brief[31]->stop();
+									rm->brief[32]->stop();
+
+									rm->briefPlayed[33] = true;
+									rm->timePlayed[33] = chrono::system_clock::now();
+									rm->brief[33]->play();
+									rm->brief[33]->Update();
+									interShader->ShowNarration(114, 11.0);
+								}
+							}
 						}
 						else if (interShader->mission == 7)
 						{
@@ -1537,6 +1924,20 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									//다음위치에 아군 단 한명이라도 도달할 경우
 									if (interShader->nextPos == false)
 									{
+
+										if (rm->briefPlayed[38] == false)
+										{
+											rm->brief[36]->stop();
+											rm->brief[37]->stop();
+
+											rm->briefPlayed[38] = true;
+											rm->timePlayed[38] = chrono::system_clock::now();
+											rm->brief[38]->play();
+											rm->brief[38]->Update();
+											interShader->ShowNarration(114, 10.0);
+										}
+
+
 										for (int p = 0; p < playerShader->objects.size(); ++p)
 										{
 											float px = playerShader->objects[p]->GetPosition().x;
@@ -1557,6 +1958,32 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
+								else
+								{
+									if (rm->briefPlayed[36] == false)
+									{
+										rm->brief[34]->stop();
+										rm->brief[35]->stop();
+
+										rm->briefPlayed[36] = true;
+										rm->timePlayed[36] = chrono::system_clock::now();
+										rm->brief[36]->play();
+										rm->brief[36]->Update();
+										interShader->ShowNarration(114, 10.0);
+									}
+									else  if (rm->briefPlayed[37] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[36]);
+										if (dt.count() > 10.0)
+										{
+											rm->briefPlayed[37] = true;
+											rm->timePlayed[37] = chrono::system_clock::now();
+											rm->brief[37]->play();
+											rm->brief[37]->Update();
+											interShader->ShowNarration(114, 9.0);
+										}
+									}
+								}
 							}
 							else
 							{
@@ -1575,6 +2002,44 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									if (interShader->nextPos == false)
 									{
+
+										if (rm->briefPlayed[39] == false)
+										{
+											rm->brief[38]->stop();
+											
+
+											rm->briefPlayed[39] = true;
+											rm->timePlayed[39] = chrono::system_clock::now();
+											rm->brief[39]->play();
+											rm->brief[39]->Update();
+
+											interShader->ShowNarration(114, 8.0);
+										}
+										else  if (rm->briefPlayed[40] == false)
+										{
+											chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[39]);
+											if (dt.count() > 8.0)
+											{
+												rm->briefPlayed[40] = true;
+												rm->timePlayed[40] = chrono::system_clock::now();
+												rm->brief[40]->play();
+												rm->brief[40]->Update();
+												interShader->ShowNarration(114, 7.0);
+											}
+										}
+										else  if (rm->briefPlayed[41] == false)
+										{
+											chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[40]);
+											if (dt.count() > 7.0)
+											{
+												rm->briefPlayed[41] = true;
+												rm->timePlayed[41] = chrono::system_clock::now();
+												rm->brief[41]->play();
+												rm->brief[41]->Update();
+												interShader->ShowNarration(114, 7.0);
+											}
+										}
+
 										for (int p = 0; p < playerShader->objects.size(); ++p)
 										{
 											float px = playerShader->objects[p]->GetPosition().x;
@@ -1617,6 +2082,22 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 								{
 									if (interShader->nextPos == false)
 									{
+
+										if (rm->briefPlayed[46] == false)
+										{
+											rm->brief[42]->stop();
+											rm->brief[43]->stop();
+											rm->brief[44]->stop();
+											rm->brief[45]->stop();
+
+
+											rm->briefPlayed[46] = true;
+											rm->timePlayed[46] = chrono::system_clock::now();
+											rm->brief[46]->play();
+											rm->brief[46]->Update();
+											interShader->ShowNarration(114, 8.0);
+										}
+
 										for (int p = 0; p < playerShader->objects.size(); ++p)
 										{
 											float px = playerShader->objects[p]->GetPosition().x;
@@ -1637,6 +2118,60 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->missionChangedTime = chrono::system_clock::now();
 									}
 								}
+
+								else
+								{
+									if (rm->briefPlayed[42] == false)
+									{
+										rm->brief[39]->stop();
+										rm->brief[40]->stop();
+										rm->brief[41]->stop();
+
+
+										rm->briefPlayed[42] = true;
+										rm->timePlayed[42] = chrono::system_clock::now();
+										rm->brief[42]->play();
+										rm->brief[42]->Update();
+
+										interShader->ShowNarration(114, 5.0);
+									}
+									else  if (rm->briefPlayed[43] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[42]);
+										if (dt.count() > 5.0)
+										{
+											rm->briefPlayed[43] = true;
+											rm->timePlayed[43] = chrono::system_clock::now();
+											rm->brief[43]->play();
+											rm->brief[43]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+									else  if (rm->briefPlayed[44] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[43]);
+										if (dt.count() > 6.0)
+										{
+											rm->briefPlayed[44] = true;
+											rm->timePlayed[44] = chrono::system_clock::now();
+											rm->brief[44]->play();
+											rm->brief[44]->Update();
+											interShader->ShowNarration(114, 7.0);
+										}
+									}
+									else  if (rm->briefPlayed[45] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[44]);
+										if (dt.count() > 7.0)
+										{
+											rm->briefPlayed[45] = true;
+											rm->timePlayed[45] = chrono::system_clock::now();
+											rm->brief[45]->play();
+											rm->brief[45]->Update();
+											interShader->ShowNarration(114, 10.0);
+										}
+									}
+								}
 							}
 							else
 							{
@@ -1652,9 +2187,63 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							{
 								if (interShader->m10_gain >= 13)
 								{
-									cleared = true;
-								}
+									if (rm->briefPlayed[50] == false)
+									{
+										rm->brief[47]->stop();
+										rm->brief[48]->stop();
+										rm->brief[49]->stop();
+										
 
+
+										rm->briefPlayed[50] = true;
+										rm->timePlayed[50] = chrono::system_clock::now();
+										rm->brief[50]->play();
+										rm->brief[50]->Update();
+										interShader->ShowNarration(114, 8.0);
+									}
+
+									cleared = true;
+
+								}
+								else
+								{
+									if (rm->briefPlayed[47] == false)
+									{
+										rm->brief[46]->stop();
+
+
+										rm->briefPlayed[47] = true;
+										rm->timePlayed[47] = chrono::system_clock::now();
+										rm->brief[47]->play();
+										rm->brief[47]->Update();
+
+										interShader->ShowNarration(114, 5.0);
+									}
+									else  if (rm->briefPlayed[48] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[47]);
+										if (dt.count() > 5.0)
+										{
+											rm->briefPlayed[48] = true;
+											rm->timePlayed[48] = chrono::system_clock::now();
+											rm->brief[48]->play();
+											rm->brief[48]->Update();
+											interShader->ShowNarration(114, 6.0);
+										}
+									}
+									else  if (rm->briefPlayed[49] == false)
+									{
+										chrono::duration<double> dt = (chrono::system_clock::now() - rm->timePlayed[48]);
+										if (dt.count() > 6.0)
+										{
+											rm->briefPlayed[49] = true;
+											rm->timePlayed[49] = chrono::system_clock::now();
+											rm->brief[49]->play();
+											rm->brief[49]->Update();
+											interShader->ShowNarration(114, 5.0);
+										}
+									}
+								}
 							}
 							else
 							{
@@ -1792,6 +2381,17 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					interShader->stageClear = false;
 					interShader->missionFail = false;
 
+					for (int i = 0; i < rm->briefPlayed.size(); ++i)
+					{
+						rm->brief[i]->stop();
+						rm->brief[i]->Update();
+						rm->briefPlayed[i] = false;
+						
+					}
+					interShader->narrationShow = false;
+					interShader->lastNarrated = chrono::system_clock::now();
+					interShader->nDuration = 0.0;
+
 					interShader->m10_gain = 0;
 					interShader->m10_miss = 0;
 					interShader->m1_kill = 0;
@@ -1859,6 +2459,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				//선택된 스테이지에 관한 정보 초기화.
 				interShader->stageClear = false;
 				interShader->missionFail = false;
+				for (int i = 0; i < rm->briefPlayed.size(); ++i)
+				{
+					rm->brief[i]->stop();
+					rm->brief[i]->Update();
+					rm->briefPlayed[i] = false;
+
+				}
+				interShader->narrationShow = false;
+				interShader->lastNarrated = chrono::system_clock::now();
+				interShader->nDuration = 0.0;
 
 				interShader->m10_gain = 0;
 				interShader->m10_miss = 0;
