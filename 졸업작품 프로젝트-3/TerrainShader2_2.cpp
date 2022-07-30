@@ -126,7 +126,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[346]);
+			shd->SetMaterial(0, rm->materials[389]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -151,7 +151,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[345]);
+			shd->SetMaterial(0, rm->materials[388]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -176,7 +176,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[347]);
+			shd->SetMaterial(0, rm->materials[390]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -200,7 +200,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[348]);
+			shd->SetMaterial(0, rm->materials[391]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -237,7 +237,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[349]);
+			shd->SetMaterial(0, rm->materials[392]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
@@ -268,7 +268,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
 			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 			shd = new (std::nothrow) CGameObject(1);
-			shd->SetMaterial(0, rm->materials[350]);
+			shd->SetMaterial(0, rm->materials[393]);
 			shd->SetMesh(shadow);
 
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
