@@ -96,7 +96,8 @@ void ResourceManager::createTextures()
 	CTexture* tex311; CTexture* tex312; CTexture* tex313; CTexture* tex314; CTexture* tex315; CTexture* tex316; CTexture* tex317; CTexture* tex318; CTexture* tex319; CTexture* tex320;
 	CTexture* tex321; CTexture* tex322; CTexture* tex323; CTexture* tex324; CTexture* tex325; CTexture* tex326; CTexture* tex327; CTexture* tex328; CTexture* tex329; CTexture* tex330;
 	CTexture* tex331; CTexture* tex332; CTexture* tex333; CTexture* tex334; CTexture* tex335; CTexture* tex336; CTexture* tex337; CTexture* tex338; CTexture* tex339; CTexture* tex340;
-	CTexture* tex341;  CTexture* tex342;
+	CTexture* tex341;  CTexture* tex342;  CTexture* tex343; CTexture* tex344;  CTexture* tex345;  CTexture* tex346;  CTexture* tex347;  CTexture* tex348;  CTexture* tex349;  CTexture* tex350;
+	CTexture* tex351; CTexture* tex352;  CTexture* tex353;  CTexture* tex354;  CTexture* tex355;
 	
 	tex1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
@@ -1291,6 +1292,42 @@ void ResourceManager::createTextures()
 	tex342 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex342->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A1.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex342);
+
+	tex343 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex343->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_MetalChair.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex343);
+
+	tex344 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex344->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex344);
+
+	tex345 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex345->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_Cabinets.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex345);
+
+	tex346 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex346->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Couch.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex346);
+
+	tex347 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex347->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Table.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex347);
+
+	tex348 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex348->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Vending.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex348);
+
+	tex349 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex349->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Counters.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex349);
+
+	tex350 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex350->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Counters2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex350);
+
+	tex351 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex351->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Dongsang.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex351);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
