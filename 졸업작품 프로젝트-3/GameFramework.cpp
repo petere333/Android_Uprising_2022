@@ -380,7 +380,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 					m_pScene->enemyShader->restart();
 					//선택된 스테이지에 관한 정보 초기화.
-
+					m_pScene->rm->bgm[0]->stop();
+					m_pScene->rm->bgm[0]->Update();
+					m_pScene->rm->bgm[1]->play();
+					m_pScene->rm->bgm[1]->Update();
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
 					m_pScene->interShader->missionFail = false;
@@ -440,7 +443,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
 					m_pScene->enemyShader->restart();
-
+					m_pScene->rm->bgm[0]->stop();
+					m_pScene->rm->bgm[0]->Update();
+					m_pScene->rm->bgm[1]->play();
+					m_pScene->rm->bgm[1]->Update();
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->interShader->missionFail = false;
@@ -1601,6 +1607,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 2;
+
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1620,6 +1627,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 3;
+		
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1640,6 +1648,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 4;
+					
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1741,24 +1750,28 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 1;
+
 					break;
 				case 'S':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 2;
+				
 					break;
 				case 'A':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 3;
+	
 					break;
 				case 'D':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 4;
+			
 					break;
 				case '1':
 				{

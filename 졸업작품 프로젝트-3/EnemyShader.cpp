@@ -2172,7 +2172,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed / 2);
+						objects[i]->Animate(elapsed);
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2197,7 +2197,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed / 2);
+						objects[i]->Animate(elapsed);
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2222,7 +2222,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed / 2);
+						objects[i]->Animate(elapsed);
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2247,7 +2247,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed / 2);
+						objects[i]->Animate(elapsed);
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2272,7 +2272,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2297,7 +2297,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2322,7 +2322,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2347,7 +2347,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2371,7 +2371,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2400,7 +2400,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2425,7 +2425,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2451,7 +2451,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2477,7 +2477,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2504,7 +2504,7 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed / 2);
+					objects[i]->Animate(elapsed);
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -3631,7 +3631,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					chrono::duration<double> fromLastAttack = moment - objects[i]->lastAttack;
 
 					float dt = (float)fromLastAttack.count();
-					if (dt > objects[i]->attackDuration*2)
+					if (dt > objects[i]->attackDuration)
 					{
 						Line line;
 						line.start = objects[i]->GetPosition();
@@ -3687,6 +3687,18 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						XMFLOAT3 np = Vector3::Normalize(tp);
 						part->createParticles(1, 100, targetPos, pd3dDevice, pd3dCommandList, np.x,np.y);
 						ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
+
+						if (objects[i]->weapon == 1)
+						{
+							rm->effect[1]->play();
+							rm->effect[1]->Update();
+						}
+						else
+						{
+							rm->effect[4]->play();
+							rm->effect[4]->Update();
+						}
+
 						objects[i]->lastAttack = chrono::system_clock::now();
 					}
 				}
