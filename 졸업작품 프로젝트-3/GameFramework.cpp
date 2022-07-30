@@ -1607,6 +1607,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 2;
+
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1626,6 +1627,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 3;
+		
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1646,6 +1648,7 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				{
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = MOVE_STATE;
 					m_pScene->moving = 4;
+					
 					XMFLOAT3 lk = m_pCamera->getLook();
 					float ag = atan2f(lk.x, lk.z);
 					ag = ag / 3.141592f * 180.0f;
@@ -1747,24 +1750,28 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 1;
+
 					break;
 				case 'S':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 2;
+				
 					break;
 				case 'A':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 3;
+	
 					break;
 				case 'D':
 					m_pScene->playerShader->objects[m_pScene->pID]->bState.stateID = IDLE_STATE;
 					m_pScene->playerShader->objects[m_pScene->pID]->kState.xzspeed = 0.0f;
 					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
 					m_pScene->moving = 4;
+			
 					break;
 				case '1':
 				{

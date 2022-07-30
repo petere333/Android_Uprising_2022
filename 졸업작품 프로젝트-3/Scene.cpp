@@ -915,7 +915,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 			else if (playerShader->objects[i]->bState.stateID == MOVE_STATE)
 			{
-
+				
 				if (playerShader->objects[i]->bState.attacking == 0)
 				{
 					if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)
