@@ -69,6 +69,15 @@ public:
 							p.id = pid;
 							p.particleType = 1;
 							p.count = 100;
+
+
+							//플레이어가 바라보는 방향과 정반대 방향
+							
+							
+
+							p.xdir = objects[i]->direction.x;
+							p.zdir = objects[i]->direction.z;
+
 							p.x = objects[i]->GetPosition().x;
 							p.y = objects[i]->GetPosition().y;
 							p.z = objects[i]->GetPosition().z;

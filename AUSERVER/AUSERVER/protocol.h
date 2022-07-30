@@ -100,6 +100,8 @@ struct CS_PARTICLE_PACKET
 	short id;
 
 	int count;
+	float xdir;
+	float zdir;
 	float x;
 	float y;
 	float z;
@@ -116,6 +118,9 @@ struct SC_PARTICLE_PACKET
 	float x;
 	float y;
 	float z;
+
+	float xdir;
+	float zdir;
 
 	int particleType;
 };

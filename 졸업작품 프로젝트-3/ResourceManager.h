@@ -46,8 +46,13 @@ public:
 	std::vector<CMaterial*> uiMat;
 
 
-	std::vector<CSound*> bgms;
-	std::vector<CSound*> effects;
+	std::vector<CSound*> bgm;
+	std::vector<CSound*> effect;
+	std::vector<CSound*> brief;
+
+	std::vector<bool> briefPlayed;
+	std::vector<chrono::time_point<chrono::system_clock>> timePlayed;
+
 
 	std::vector<CLoadedModelInfo*> playerModels;
 	std::vector<CLoadedModelInfo*> enemyModels;

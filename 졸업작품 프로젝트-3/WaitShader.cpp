@@ -58,21 +58,21 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	CubeMeshOffset* melee1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (161.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* ranged1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (227.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* radio1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (293.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* ready1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 20.0f / 450.0f, 0.02f, (227.0f - 600.0f) / 450.0f, -(696.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ready1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 50.0f / 450.0f, 0.02f, (227.0f - 600.0f) / 450.0f, -(681.0f - 450.0f) / 450.0f, false);
 
 	//인덱스 29~33 플레이어2
 	CubeMeshOffset* preview2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 191.0f / 450.0f, 211.0f / 450.0f, 0.02f, (579.0f - 600.0f) / 450.0f, -(510.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* melee2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (512.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* ranged2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (578.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* radio2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (644.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* ready2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 20.0f / 450.0f, 0.02f, (578.0f - 600.0f) / 450.0f, -(696.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ready2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 50.0f / 450.0f, 0.02f, (578.0f - 600.0f) / 450.0f, -(681.0f - 450.0f) / 450.0f, false);
 
 	//인덱스 34~38 플레이어3
 	CubeMeshOffset* preview3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 191.0f / 450.0f, 211.0f / 450.0f, 0.02f, (930.0f - 600.0f) / 450.0f, -(510.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* melee3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (863.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* ranged3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (929.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* radio3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (995.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* ready3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 20.0f / 450.0f, 0.02f, (929.0f - 600.0f) / 450.0f, -(696.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ready3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 50.0f / 450.0f, 0.02f, (929.0f - 600.0f) / 450.0f, -(681.0f - 450.0f) / 450.0f, false);
 	meshes.push_back(inter);
 	meshesRev.push_back(inter2);
 

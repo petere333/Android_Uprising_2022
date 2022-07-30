@@ -203,11 +203,7 @@ public:
 	CMaterial* shadowMats[nShadows];
 
 public:
-#define nBGM 1
-#define nSoundEffect 5
 
-	CSound** bgm = NULL;
-	CSound** soundEffect = NULL;
 
 	bool isWalking = false;
 

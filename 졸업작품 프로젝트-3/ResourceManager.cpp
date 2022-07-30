@@ -1275,15 +1275,22 @@ void ResourceManager::createTextures()
 	tex339->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/failMsg.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex339);
 
+
+
+
 	tex340 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex340->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_Screen.dds", RESOURCE_TEXTURE2D, 0);
+	tex340->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/readytogo.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex340);
 
 
 	tex341 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex341->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A1.dds", RESOURCE_TEXTURE2D, 0);
+	tex341->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_Screen.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex341);
 
+
+	tex342 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex342->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex342);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
@@ -2265,7 +2272,66 @@ void ResourceManager::createTextures()
 
 }
 
-void ResourceManager::createSound(){}
+void ResourceManager::createSound()
+{
+	
+	CSound* bgm1 = new CSound("res/sound/bgm/electric1.mp3", true);
+	bgm.push_back(bgm1);
+
+	
+
+	CSound* ef1 = new CSound("res/sound/effect/rifle_shot.mp3", false);
+	CSound* ef2 = new CSound("res/sound/effect/rifle_crash.ogg", false);
+	CSound* ef3 = new CSound("res/sound/effect/step_steel.mp3", true);
+	CSound* ef4 = new CSound("res/sound/effect/hammer_swing.mp3", false);
+	CSound* ef5 = new CSound("res/sound/effect/hammer_hit.mp3", false);
+
+	effect.push_back(ef1);
+	effect.push_back(ef2);
+	effect.push_back(ef3);
+	effect.push_back(ef4);
+	effect.push_back(ef5);
+
+	//briefing
+
+	CSound* m1x1 = new CSound("res/sound/effect/stage1/mission1/m1-1.mp3", false);
+	CSound* m1x2 = new CSound("res/sound/effect/stage1/mission1/m1-2.mp3", false);
+	CSound* m1x3 = new CSound("res/sound/effect/stage1/mission1/m1-3.mp3", false);
+	CSound* m1x4 = new CSound("res/sound/effect/stage1/mission1/m1-4.mp3", false);
+
+	CSound* mc1x1 = new CSound("res/sound/effect/stage1/mission1/m1c-1.mp3", false);
+	CSound* mc1x2 = new CSound("res/sound/effect/stage1/mission1/m1c-2.mp3", false);
+	CSound* mc1x3 = new CSound("res/sound/effect/stage1/mission1/m1c-3.mp3", false);
+
+	brief.push_back(m1x1);
+	brief.push_back(m1x2);
+	brief.push_back(m1x3);
+	brief.push_back(m1x4);
+
+	brief.push_back(mc1x1);
+	brief.push_back(mc1x2);
+	brief.push_back(mc1x3);
+
+
+
+
+	bgm[0]->setVolume(0.6f);
+	
+
+	for (int i = 0; i < effect.size(); ++i)
+	{
+		effect[i]->setVolume(0.75f);
+		effect[i]->Update();
+	}
+
+	for (int i = 0; i < brief.size(); ++i)
+	{
+		brief[i]->setVolume(0.8f);
+		brief[i]->Update();
+		briefPlayed.push_back(false);
+		timePlayed.push_back(chrono::system_clock::now());
+	}
+}
 
 void ResourceManager::createModels(ID3D12RootSignature* m_pd3dGraphicsRootSignature)
 {

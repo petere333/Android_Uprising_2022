@@ -121,7 +121,7 @@ public:
 	void send_move(int c_id, float x, float y, float z, float a);
 	void send_ready(int c_id, bool ready);
 	void send_stats(int c_id, Stats s, int,int, int, int);
-	void send_particle(int c_id, int count, float x, float y, float z, int type);
+	void send_particle(int c_id, int count, float x, float y, float z, int type, float, float);
 
 	void send_damage(int c_id, int target, int damage, float stun);
 	void send_progress(int c_id, int num, int prog, int);
@@ -139,7 +139,7 @@ public:
 	 p.progress = prog;
 	 do_send(&p);
  }
- void SESSION::send_particle(int c_id, int count, float x, float y, float z, int type)
+ void SESSION::send_particle(int c_id, int count, float x, float y, float z, int type, float xd, float zd)
  {
 	 SC_PARTICLE_PACKET p;
 	 p.id = c_id;
@@ -149,6 +149,8 @@ public:
 	 p.x = x;
 	 p.y = y;
 	 p.z = z;
+	 p.xdir = xd;
+	 p.zdir = zd;
 	 p.particleType = type;
 	 p.count = count;
 	 do_send(&p);
@@ -384,7 +386,7 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_particle(c_id, p->count, p->x,p->y,p->z, p->particleType);
+				pl.send_particle(c_id, p->count, p->x,p->y,p->z, p->particleType, p->xdir, p->zdir);
 				
 			}
 		}
