@@ -364,6 +364,13 @@ void process_packet(int c_id, char* packet)
 		break;
 	}
 
+	case PACKET_TYPE::CS_LOCATION:
+	{
+		CS_LOCATION_PACKET* p = reinterpret_cast<CS_LOCATION_PACKET*>(packet);
+
+		printf("플레이어 %d 현위치 : (%f, %f)\n", p->id, p->x, p->z);
+		break;
+	}
 	case PACKET_TYPE::CS_MISSION:
 	{
 		CS_MISSION_PACKET* p = reinterpret_cast<CS_MISSION_PACKET*>(packet);

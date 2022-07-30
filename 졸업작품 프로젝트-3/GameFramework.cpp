@@ -1521,6 +1521,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					m_pScene->interShader->missionShow = false;
 					break;
 				}
+				case 'L':
+				{
+					CS_LOCATION_PACKET pc;
+					pc.size = sizeof(CS_LOCATION_PACKET);
+					pc.type = PACKET_TYPE::CS_LOCATION;
+					pc.id = m_pScene->pID;
+					pc.x = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().x;
+					pc.z = m_pScene->playerShader->objects[m_pScene->pID]->GetPosition().z;
+					SendPacket(&pc);
+					break;
+				}
+
 				case VK_F12:
 				{
 					if (m_pScene->m_pLights[0].m_bEnable == false)
