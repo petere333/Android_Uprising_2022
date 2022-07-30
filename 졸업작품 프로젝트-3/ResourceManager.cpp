@@ -2275,22 +2275,40 @@ void ResourceManager::createTextures()
 void ResourceManager::createSound()
 {
 	
-	CSound* bgm1 = new CSound("res/sound/bgm/electric1.mp3", true);
+	CSound* bgm1 = new CSound("res/sound/bgm/electric2.mp3", true);
 	bgm.push_back(bgm1);
-
+	CSound* bgm2 = new CSound("res/sound/bgm/electric1.mp3", true);
+	bgm.push_back(bgm2);
 	
 
 	CSound* ef1 = new CSound("res/sound/effect/rifle_shot.mp3", false);
 	CSound* ef2 = new CSound("res/sound/effect/rifle_crash.ogg", false);
 	CSound* ef3 = new CSound("res/sound/effect/step_steel.mp3", true);
-	CSound* ef4 = new CSound("res/sound/effect/hammer_swing.mp3", false);
-	CSound* ef5 = new CSound("res/sound/effect/hammer_hit.mp3", false);
+	CSound* ef4 = new CSound("res/sound/effect/hammer_swing2.mp3", false);
+	CSound* ef5 = new CSound("res/sound/effect/hammer_hit2.mp3", false);
 
+	CSound* ef6 = new CSound("res/sound/effect/blade_swing.mp3", false);
+	CSound* ef7 = new CSound("res/sound/effect/blade_hit.mp3", false);
+	CSound* ef8 = new CSound("res/sound/effect/bazuka_shot.mp3", false);
+	CSound* ef9 = new CSound("res/sound/effect/boom.mp3", false);
+	CSound* ef10 = new CSound("res/sound/effect/radio_attack.mp3", false);
+	CSound* ef11 = new CSound("res/sound/effect/die1.mp3", false);
+	CSound* ef12 = new CSound("res/sound/effect/die2.mp3", false);
+	
 	effect.push_back(ef1);
 	effect.push_back(ef2);
 	effect.push_back(ef3);
 	effect.push_back(ef4);
 	effect.push_back(ef5);
+
+	effect.push_back(ef6);
+	effect.push_back(ef7);
+	effect.push_back(ef8);
+	effect.push_back(ef9);
+	effect.push_back(ef10);
+
+	effect.push_back(ef11);
+	effect.push_back(ef12);
 
 	//briefing
 
@@ -2455,7 +2473,8 @@ void ResourceManager::createSound()
 
 	bgm[0]->setVolume(0.1f);
 	bgm[0]->Update();
-
+	bgm[1]->setVolume(0.1f);
+	bgm[1]->Update();
 	for (int i = 0; i < effect.size(); ++i)
 	{
 		effect[i]->setVolume(0.75f);

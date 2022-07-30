@@ -380,7 +380,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 					m_pScene->enemyShader->restart();
 					//선택된 스테이지에 관한 정보 초기화.
-
+					m_pScene->rm->bgm[0]->stop();
+					m_pScene->rm->bgm[0]->Update();
+					m_pScene->rm->bgm[1]->play();
+					m_pScene->rm->bgm[1]->Update();
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
 					m_pScene->interShader->missionFail = false;
@@ -440,7 +443,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
 					m_pScene->enemyShader->restart();
-
+					m_pScene->rm->bgm[0]->stop();
+					m_pScene->rm->bgm[0]->Update();
+					m_pScene->rm->bgm[1]->play();
+					m_pScene->rm->bgm[1]->Update();
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->interShader->stageClear = false;
 					m_pScene->interShader->missionFail = false;

@@ -291,8 +291,8 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 
-	//rm->bgm[0]->play();
-	//rm->bgm[0]->Update();
+	rm->bgm[1]->play();
+	rm->bgm[1]->Update();
 }
 
 void CScene::ReleaseObjects()
@@ -2377,6 +2377,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					//enemyShader->objects.clear();
 					//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 					enemyShader->restart();
+
+					rm->bgm[0]->stop();
+					rm->bgm[0]->Update();
+					rm->bgm[1]->play();
+					rm->bgm[1]->Update();
+
 					//선택된 스테이지에 관한 정보 초기화.
 					interShader->stageClear = false;
 					interShader->missionFail = false;
@@ -2593,6 +2599,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			pac.rWeapon = playerShader->objects[pID]->info->slot.rangedWeapon->type;
 
 			SendPacket(&pac);
+
+			rm->bgm[1]->stop();
+			rm->bgm[1]->Update();
+			rm->bgm[0]->play();
+			rm->bgm[0]->Update();
+
 
 			for (int e = 0; e < enemyShader->objects.size(); ++e)
 			{
@@ -4029,6 +4041,17 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			{
 				interShader->m10_gain += 1;
 			}
+			int rd = rand() % 2;
+			if (rd == 0)
+			{
+				rm->effect[10]->play();
+				rm->effect[10]->Update();
+			}
+			else
+			{
+				rm->effect[11]->play();
+				rm->effect[11]->Update();
+			}
 		}
 		else
 		{
@@ -5195,11 +5218,12 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			playerShader->objects[idx]->kState.xzspeed = 0.0f;
 		}
 
+
 		printf("Time elapsed from last swing : %f\n", fTime);
 		setObjectLastAttack(idx);
 		playerShader->objects[idx]->hammerHit = false;
-		rm->effect[3]->play();
-		rm->effect[3]->Update();
+		rm->effect[5]->play();
+		rm->effect[5]->Update();
 
 		int r = rand() % 2;
 
@@ -5259,8 +5283,8 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 			{
 				//사운드 및 파티클 이펙트 발생
 				printf("Enemy [%d] hit\n", i);
-				rm->effect[4]->play();
-				rm->effect[4]->Update();
+				rm->effect[6]->play();
+				rm->effect[6]->Update();
 				playerShader->objects[idx]->hammerHit = true;
 				
 				if (idx == pID)
@@ -5480,6 +5504,10 @@ void CScene::shootBazuka(int idx, ID3D12Device* device, ID3D12GraphicsCommandLis
 		boom->SetMaterial(0, rm->materials[4]);
 		boomShader->objects.push_back(boom);
 		setObjectLastAttack(idx);
+
+		rm->effect[7]->play();
+		rm->effect[7]->Update();
+
 	}
 }
 void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
@@ -5525,6 +5553,9 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 			
 
 		}
+
+		rm->effect[9]->play();
+		rm->effect[9]->Update();
 		playerShader->objects[idx]->kState.xzspeed = 0.0f;
 
 		XMFLOAT3 ppos = playerShader->objects[idx]->GetPosition();

@@ -84,6 +84,10 @@ public:
 
 							SendPacket(&p);
 						}
+
+						rm->effect[8]->play();
+						rm->effect[8]->Update();
+
 						// 폭발 반경 인근의 적들에게 피해
 						for (int k = 0; k < enemy->objects.size(); ++k)
 						{
@@ -142,6 +146,8 @@ public:
 
 									SendPacket(&p);
 								}
+								rm->effect[8]->play();
+								rm->effect[8]->Update();
 								//그 적을 포함한 충돌 반경 1미터 내의 적들에게 피해, 직격은 두 배
 								//또한 그 적들을 1초간 기절.
 								for (int a = 0; a < enemy->objects.size(); ++a)
@@ -196,6 +202,8 @@ public:
 							p.z = objects[i]->GetPosition().z;
 
 							SendPacket(&p);
+							rm->effect[8]->play();
+							rm->effect[8]->Update();
 						}
 					for (int k = 0; k < enemy->objects.size(); ++k)
 					{
@@ -260,6 +268,8 @@ public:
 
 									SendPacket(&p);
 								}
+								rm->effect[8]->play();
+								rm->effect[8]->Update();
 								for (int a = 0; a < enemy->objects.size(); ++a)
 								{
 									XMFLOAT3 enp = enemy->objects[a]->GetPosition();
@@ -318,6 +328,8 @@ public:
 
 						SendPacket(&p);
 					}
+					rm->effect[8]->play();
+					rm->effect[8]->Update();
 					for (int k = 0; k < enemy->objects.size(); ++k)
 					{
 						XMFLOAT3 op = objects[i]->GetPosition();
@@ -381,6 +393,8 @@ public:
 
 								SendPacket(&p);
 							}
+							rm->effect[8]->play();
+							rm->effect[8]->Update();
 							for (int a = 0; a < enemy->objects.size(); ++a)
 							{
 								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
@@ -403,7 +417,7 @@ public:
 										SendPacket(&ap);
 									}
 
-
+									
 								}
 							}
 
@@ -439,6 +453,8 @@ public:
 
 						SendPacket(&p);
 					}
+					rm->effect[8]->play();
+					rm->effect[8]->Update();
 					for (int k = 0; k < enemy->objects.size(); ++k)
 					{
 						XMFLOAT3 op = objects[i]->GetPosition();
@@ -502,6 +518,8 @@ public:
 
 								SendPacket(&p);
 							}
+							rm->effect[8]->play();
+							rm->effect[8]->Update();
 							for (int a = 0; a < enemy->objects.size(); ++a)
 							{
 								XMFLOAT3 enp = enemy->objects[a]->GetPosition();
