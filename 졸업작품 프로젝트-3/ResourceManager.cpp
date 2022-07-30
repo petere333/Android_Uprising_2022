@@ -96,7 +96,12 @@ void ResourceManager::createTextures()
 	CTexture* tex311; CTexture* tex312; CTexture* tex313; CTexture* tex314; CTexture* tex315; CTexture* tex316; CTexture* tex317; CTexture* tex318; CTexture* tex319; CTexture* tex320;
 	CTexture* tex321; CTexture* tex322; CTexture* tex323; CTexture* tex324; CTexture* tex325; CTexture* tex326; CTexture* tex327; CTexture* tex328; CTexture* tex329; CTexture* tex330;
 	CTexture* tex331; CTexture* tex332; CTexture* tex333; CTexture* tex334; CTexture* tex335; CTexture* tex336; CTexture* tex337; CTexture* tex338; CTexture* tex339; CTexture* tex340;
-	CTexture* tex341;  CTexture* tex342;
+
+	CTexture* tex341; CTexture* tex342; CTexture* tex343; CTexture* tex344; CTexture* tex345; CTexture* tex346; CTexture* tex347; CTexture* tex348; CTexture* tex349; CTexture* tex350;
+	CTexture* tex351; CTexture* tex352; CTexture* tex353; CTexture* tex354; CTexture* tex355; CTexture* tex356; CTexture* tex357; CTexture* tex358; CTexture* tex359; CTexture* tex360;
+	CTexture* tex361; CTexture* tex362; CTexture* tex363; CTexture* tex364; CTexture* tex365; CTexture* tex366; CTexture* tex367; CTexture* tex368; CTexture* tex369; CTexture* tex370;
+	CTexture* tex371; CTexture* tex372; CTexture* tex373; CTexture* tex374; CTexture* tex375; CTexture* tex376; CTexture* tex377; CTexture* tex378; CTexture* tex379; CTexture* tex380;
+	CTexture* tex381; CTexture* tex382; CTexture* tex383; CTexture* tex384; CTexture* tex385; CTexture* tex386; CTexture* tex387; CTexture* tex388; CTexture* tex389; CTexture* tex390;
 	
 	tex1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
@@ -1292,6 +1297,151 @@ void ResourceManager::createTextures()
 	tex342->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A1.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex342);
 
+	tex343 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex343->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex343);
+	tex344 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex344->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex344);
+	tex345 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex345->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex345);
+
+	tex346 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex346->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex346);
+	tex347 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex347->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1c-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex347);
+	tex348 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex348->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m1c-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex348);
+
+	tex349 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex349->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex349);
+
+	tex350 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex350->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex350);
+	tex351 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex351->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex351);
+
+	tex352 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex352->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex352);
+	tex353 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex353->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex353);
+	tex354 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex354->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex354);
+
+	tex355 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex355->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex355);
+	tex356 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex356->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex356);
+	tex357 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex357->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m2c-6.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex357);
+
+
+	tex358 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex358->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex358);
+	tex359 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex359->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex359);
+	tex360 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex360->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex360);
+
+	tex361 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex361->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex361);
+	tex362 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex362->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3c-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex362);
+	tex363 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex363->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m3c-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex363);
+
+	tex364 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex364->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex364);
+	tex365 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex365->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex365);
+	tex366 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex366->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex366);
+	tex367 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex367->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4-4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex367);
+	tex368 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex368->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex368);
+	tex369 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex369->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m4c-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex369);
+
+	tex370 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex370->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m5-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex370);
+	tex371 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex371->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m5-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex371);
+	tex372 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex372->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m5-3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex372);
+	
+	tex373 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex373->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m5c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex373);
+	tex374 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex374->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m5c-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex374);
+
+	tex375 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex375->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m6-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex375);
+	tex376 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex376->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m6c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex376);
+
+	tex377 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex377->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m7-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex377);
+	tex378 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex378->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m7c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex378);
+
+	tex379 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex379->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m8-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex379);
+	tex380 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex380->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m8-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex380);
+
+	tex381 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex381->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m9-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex381);
+	tex382 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex382->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m9-2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex382);
+
+	tex383 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex383->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m9c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex383);
+	tex384 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex384->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m10-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex384);
+	tex385 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex385->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/mission/narration/m10c-1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex385);
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;
