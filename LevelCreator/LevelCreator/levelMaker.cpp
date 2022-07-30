@@ -58,11 +58,11 @@ int main()
 	
 	writeHeight(hf, height2_1);*/
 
-	file = fopen("result/2_1/objects2-2.txt", "w");
-	FILE* bf = fopen("result/2_1/box2-2.txt", "w");
-	FILE* hf = fopen("result/2_1/height2-2.txt", "w");
+	file = fopen("result/2_1/objects2-1.txt", "w");
+	FILE* bf = fopen("result/2_1/box2-1.txt", "w");
+	FILE* hf = fopen("result/2_1/height2-1.txt", "w");
 
-	writeHeight(hf, height2_2);
+	writeHeight(hf, height2_1);
 
 	for (int i = 0; i < list.size(); ++i)
 	{
@@ -97,7 +97,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles2_2(list, blist);
+	createObstacles2_1(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -4840,6 +4840,26 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Gwangjae_wall0->end = f3(801.0f, 7.5f, 592.5f);
 	setAreaHeight(height2_1, x21, z21, 0.5f, 209.5f, 1.0f, 229.5f, 7.5f);
 
+	Object* Kwan_wall01 = (Object*)malloc(sizeof(Object));
+	Kwan_wall01->location = f3(800.1f, 3.75f, 562.5f);
+	Kwan_wall01->rotation = f3(0.0f, 0.0f, 0.0f);
+	Kwan_wall01->type = Gwanja_wall1;
+
+	BoundingBox* Gwangjae_wall01 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Gwangjae_wall01->start = f3(800.0f, 0.0f, 552.5f);
+	Gwangjae_wall01->end = f3(801.0f, 7.5f, 572.5f);
+	setAreaHeight(height2_1, x21, z21, 0.5f, 189.5f, 1.0f, 209.5f, 7.5f);
+
+	Object* Kwan_wall001 = (Object*)malloc(sizeof(Object));
+	Kwan_wall001->location = f3(800.1f, 3.75f, 542.5f);
+	Kwan_wall001->rotation = f3(0.0f, 0.0f, 0.0f);
+	Kwan_wall001->type = Gwanja_wall1;
+
+	BoundingBox* Gwangjae_wall001 = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Gwangjae_wall001->start = f3(800.0f, 0.0f, 532.5f);
+	Gwangjae_wall001->end = f3(801.0f, 7.5f, 552.5f);
+	setAreaHeight(height2_1, x21, z21, 0.5f, 169.5f, 1.0f, 189.5f, 7.5f);
+
 	///////////////////////////////
 	Object* Kwan_wall1 = (Object*)malloc(sizeof(Object));
 	Kwan_wall1->location = f3(812.1f, 3.75f, 535.0f);
@@ -5640,6 +5660,27 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Gwangjae_wall0e->start = f3(800.0f, 7.5f, 572.5f);
 	Gwangjae_wall0e->end = f3(800.0f, 12.5f, 592.5f);
 	setAreaHeight(height2_1, x21, z21, 0.0f, 209.5f, 0.0f, 229.5f, 12.5f);
+
+
+	Object* Kwan_wall01e = (Object*)malloc(sizeof(Object));
+	Kwan_wall01e->location = f3(799.6f, 10.0f, 562.5f);
+	Kwan_wall01e->rotation = f3(0.0f, 0.0f, 0.0f);
+	Kwan_wall01e->type = Gwanja_wall3;
+
+	BoundingBox* Gwangjae_wall01e = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Gwangjae_wall01e->start = f3(800.0f, 7.5f, 552.5f);
+	Gwangjae_wall01e->end = f3(800.0f, 12.5f, 572.5f);
+	setAreaHeight(height2_1, x21, z21, 0.0f, 189.5f, 0.0f, 209.5f, 12.5f);
+
+	Object* Kwan_wall001e = (Object*)malloc(sizeof(Object));
+	Kwan_wall001e->location = f3(799.6f, 10.0f, 542.5f);
+	Kwan_wall001e->rotation = f3(0.0f, 0.0f, 0.0f);
+	Kwan_wall001e->type = Gwanja_wall3;
+
+	BoundingBox* Gwangjae_wall001e = (BoundingBox*)malloc(sizeof(BoundingBox));
+	Gwangjae_wall001e->start = f3(800.0f, 7.5f, 532.5f);
+	Gwangjae_wall001e->end = f3(800.0f, 12.5f, 552.5f);
+	setAreaHeight(height2_1, x21, z21, 0.0f, 189.5f, 0.0f, 209.5f, 12.5f);
 
 	///////////////////////////////
 	Object* Kwan_wall1e = (Object*)malloc(sizeof(Object));
@@ -6593,6 +6634,12 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	list.push_back(*Kwan_wall0);
 	blist.push_back(*Gwangjae_wall0);
 
+	list.push_back(*Kwan_wall01);
+	blist.push_back(*Gwangjae_wall01);
+
+	list.push_back(*Kwan_wall001);
+	blist.push_back(*Gwangjae_wall001);
+
 	list.push_back(*Kwan_wall1);
 	blist.push_back(*Gwangjae_wall1);
 
@@ -6838,6 +6885,12 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 	list.push_back(*Kwan_wall0e);
 	blist.push_back(*Gwangjae_wall0e);
+
+	list.push_back(*Kwan_wall01e);
+	blist.push_back(*Gwangjae_wall01e);
+
+	list.push_back(*Kwan_wall001e);
+	blist.push_back(*Gwangjae_wall001e);
 
 	list.push_back(*Kwan_wall1e);
 	blist.push_back(*Gwangjae_wall1e);

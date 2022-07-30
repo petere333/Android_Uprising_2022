@@ -25,12 +25,14 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 	CLoadedMesh* Gwang_Table1 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A1.txt", NULL);
 	CLoadedMesh* Gwang_Table2 = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_desk-1A2.txt", NULL);
 	CLoadedMesh* Gwang_Chair = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_MetalChair.txt", NULL);
-	CCubeMeshTextured* Receps_Karo1 = new CCubeMeshTextured(pd3dDevice, pd3dCommandList, 20.0f, 3.0f, 3.0f);
+	PillarMesh* Receps_Karo1 = new PillarMesh(pd3dDevice, pd3dCommandList, 20, 1, 3);
 	CLoadedMesh* Gwang_Cabinet = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/area2_1/vtx_Cabinets.txt", NULL);
 
 	for (int i = 0; i < data.size(); ++i)
 	{
 		CGameObject* obj = NULL;
+		RectMesh* shadow = NULL;
+		CGameObject* shd = NULL;
 
 		if (data[i].type == Gwanja_wall1)
 		{
@@ -77,8 +79,27 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Gwanja_Screen)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[96]);
+			obj->SetMaterial(0, rm->materials[110]);
 			obj->SetMesh(Gwang_Screen1);
+
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[339]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.1f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 180.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Gwanja_Screen2)
 		{
@@ -89,14 +110,34 @@ void TerrainShader2_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		else if (data[i].type == Gwanja_Screen3)
 		{
 			obj = new CGameObject(1);
-			obj->SetMaterial(0, rm->materials[96]);
+			obj->SetMaterial(0, rm->materials[110]);
 			obj->SetMesh(Gwang_Screen3);
 		}
 		else if (data[i].type == Gwanja_tables)
 		{
-			obj = new CGameObject(1);
+			obj = new (std::nothrow) CGameObject(1);
 			obj->SetMaterial(0, rm->materials[97]);
 			obj->SetMesh(Gwang_Table1);
+			obj->shadowHeight = 1.3f;
+
+
+			//원본 물체 크기의 x,y 길이
+			float w = boxesWorld[i].end.z - boxesWorld[i].start.z;
+			float h = boxesWorld[i].end.y - boxesWorld[i].start.y;
+			float dx = boxesWorld[i].end.x - boxesWorld[i].start.x;
+			//그림자의 가로 길이는, 원본 물체의 x너비의 절반
+			shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
+			shd = new (std::nothrow) CGameObject(1);
+			shd->SetMaterial(0, rm->materials[340]);
+			shd->SetMesh(shadow);
+
+			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
+
+			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
+			shd->SetPosition(data[i].position.x - 0.8f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->Rotate(0.0f, data[i].rotation.y + 180.0f, 0.0f);
+
+			shadows.push_back(shd);
 		}
 		else if (data[i].type == Gwanja_tablesA)
 		{

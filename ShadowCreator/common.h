@@ -14,5 +14,7 @@ using namespace std;
 #include "opencv2/highgui.hpp"
 #include "opencv2/core.hpp"
 
+#pragma comment (lib, "opencv_world455.lib")
+
 using namespace cv;
 

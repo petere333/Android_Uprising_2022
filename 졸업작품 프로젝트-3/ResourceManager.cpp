@@ -96,6 +96,7 @@ void ResourceManager::createTextures()
 	CTexture* tex311; CTexture* tex312; CTexture* tex313; CTexture* tex314; CTexture* tex315; CTexture* tex316; CTexture* tex317; CTexture* tex318; CTexture* tex319; CTexture* tex320;
 	CTexture* tex321; CTexture* tex322; CTexture* tex323; CTexture* tex324; CTexture* tex325; CTexture* tex326; CTexture* tex327; CTexture* tex328; CTexture* tex329; CTexture* tex330;
 	CTexture* tex331; CTexture* tex332; CTexture* tex333; CTexture* tex334; CTexture* tex335; CTexture* tex336; CTexture* tex337; CTexture* tex338; CTexture* tex339; CTexture* tex340;
+	CTexture* tex341;  CTexture* tex342;
 	
 	tex1 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex1->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/sample2.dds", RESOURCE_TEXTURE2D, 0);
@@ -1273,6 +1274,16 @@ void ResourceManager::createTextures()
 	tex339 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex339->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/failMsg.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex339);
+
+	tex340 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex340->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_Screen.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex340);
+
+
+	tex341 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex341->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_desk-1A1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex341);
+
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

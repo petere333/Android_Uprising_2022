@@ -34,7 +34,7 @@ public:
 	int nStairs;
 	BoundBox* stairsWorld;
 	BoundBox* boxesWorld;
-
+	std::vector<CGameObject*> shadows;
 	std::vector<CGameObject*>	objects;
 
 	ResourceManager* rm;

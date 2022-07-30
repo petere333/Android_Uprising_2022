@@ -31,8 +31,9 @@ vector<Vec2*> LoadData(const char* file)
 	while (!feof(f))
 	{
 		fscanf(f, "(%f,  %f,  %f), (%f,  %f)\n", &f1, &f2, &f3, &f4, &f5);
-		//Vec2* v2 = new Vec2(f3, f2); //측면 그림자
-		Vec2* v2 = new Vec2(f1, f3); //위에서 본 그림자
+		Vec2* v2 = new Vec2(f3, f2); //측면 그림자
+		//Vec2* v2 = new Vec2(f1, f3); //위에서 본 그림자
+		//Vec2* v2 = new Vec2(f1, f2); //앞에서 본 그림자
 		result.push_back(v2);
 	}
 	fclose(f);
