@@ -3819,7 +3819,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		{
 			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 			chrono::duration<double> dt = mm - interShader->missionChangedTime;
-			if (dt <= 25.0)
+			if (dt.count() <= 25.0)
 			{
 				terrain1_2->objects[p.target]->broke -= 1;
 				if (terrain1_2->objects[p.target]->broke <= 0)
@@ -3835,7 +3835,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		{
 			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 			chrono::duration<double> dt = mm - interShader->missionChangedTime;
-			if (dt <= 25.0)
+			if (dt.count() <= 25.0)
 			{
 				terrain1_2->objects[p.target]->broke -= 1;
 				if (terrain1_2->objects[p.target]->broke <= 0)
