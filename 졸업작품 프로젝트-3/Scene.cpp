@@ -1323,6 +1323,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
 									
+									playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 								}
 							}
 							else
@@ -1472,6 +1473,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->mission += 1;
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
+									playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 								}
 							}
 
@@ -1580,6 +1582,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->mission += 1;
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
+									playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 								}
 							}
 
@@ -1688,6 +1691,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->mission += 1;
 										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
+										playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 									}
 								}
 								else
@@ -1801,6 +1805,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->mission += 1;
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
+									playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 								}
 
 							}
@@ -1893,6 +1898,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									interShader->mission += 1;
 									interShader->missionShow = true;
 									interShader->missionChangedTime = chrono::system_clock::now();
+									playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 
 								}
 
@@ -1955,6 +1961,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->mission += 1;
 										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
+										playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 									}
 								}
 								else
@@ -2057,6 +2064,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->mission += 1;
 										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
+										playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 									}
 								}
 								else
@@ -2115,6 +2123,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 										interShader->mission += 1;
 										interShader->missionShow = true;
 										interShader->missionChangedTime = chrono::system_clock::now();
+										playerShader->objects[pID]->info->stats.capacity = playerShader->objects[pID]->info->stats.maxhp;
 									}
 								}
 
