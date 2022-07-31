@@ -5601,7 +5601,7 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 				}
 				else if (interShader->mission == 9)
 				{
-					interShader->m9_stun += 1;
+				//	interShader->m9_stun += 1;
 				}
 			}
 		}
