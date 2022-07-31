@@ -579,7 +579,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 175.0f,0.0f,25.0f);
+					pl.send_teleport(c_id, 175.0f + c_id*2,0.0f,25.0f);
 				}
 			}
 			break;
@@ -590,7 +590,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 197.0f, 0.0f, 190.0f);
+					pl.send_teleport(c_id, 197.0f, 0.0f, 190.0f + c_id*2);
 				}
 			}
 			break;
@@ -601,7 +601,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 303.0f, 5.0f, 25.0f);
+					pl.send_teleport(c_id, 303.0f, 5.0f, 25.0f + c_id*2);
 					
 				}
 			}
@@ -613,7 +613,7 @@ void process_packet(int c_id, char* packet)
 		{
 			if (pl._use == true)
 			{
-				pl.send_teleport(c_id, 350.0f, 0.0f, 104.0f);
+				pl.send_teleport(c_id, 350.0f + c_id*2, 0.0f, 104.0f);
 			}
 		}
 		break;
@@ -624,7 +624,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 402.0f, 0.0f, 198.0f);
+					pl.send_teleport(c_id, 402.0f, 0.0f, 198.0f - c_id * 2);
 				}
 			}
 			break;
@@ -635,7 +635,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 472.0f, 0.0f, 100.0f);
+					pl.send_teleport(c_id, 472.0f + c_id * 2, 0.0f, 100.0f);
 				}
 			}
 
@@ -647,7 +647,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f);
+					pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f + c_id * 2);
 				}
 			}
 			break;
@@ -658,7 +658,7 @@ void process_packet(int c_id, char* packet)
 			{
 				if (pl._use == true)
 				{
-					pl.send_teleport(c_id, 850.0f, 0.0f, 220.0f);
+					pl.send_teleport(c_id, 850.0f, 0.0f, 220.0f + c_id * 2);
 				}
 			}
 		

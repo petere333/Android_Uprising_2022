@@ -164,6 +164,7 @@
     <ClInclude Include="..\AUSERVER\AUSERVER\protocol.h" />
     <ClInclude Include="BoomShader.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CharacterShadow.h" />
     <ClInclude Include="CNet.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="DDSTextureLoader12.h" />
@@ -211,6 +212,7 @@
   <ItemGroup>
     <ClCompile Include="BoomShader.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CharacterShadow.cpp" />
     <ClCompile Include="CNet.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="DDSTextureLoader12.cpp" />

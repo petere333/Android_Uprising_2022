@@ -135,7 +135,9 @@ private:
 
 public:
 	void AddRef() { m_nReferences++; }
-	void Release() { if (--m_nReferences <= 0) delete this; }
+	void Release() { 
+		if (--m_nReferences <= 0) delete this; 
+	}
 
 public:
 	CShader							*m_pShader = NULL;

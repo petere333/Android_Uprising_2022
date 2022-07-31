@@ -132,3 +132,4 @@ public:
 	CLoadedModelInfo** models;
 };
 
+char* getIP(FILE*);

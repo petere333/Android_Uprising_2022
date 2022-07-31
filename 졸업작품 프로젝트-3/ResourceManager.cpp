@@ -1488,6 +1488,10 @@ void ResourceManager::createTextures()
 	tex395->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/part2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex395);
 
+	tex396 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex396->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/player_shadow.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex396);
+
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;

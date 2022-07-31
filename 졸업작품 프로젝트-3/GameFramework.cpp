@@ -7,6 +7,7 @@
 #include "GameFramework.h"
 #include "CNet.h"
 
+
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
@@ -2475,6 +2476,9 @@ void CGameFramework::Connection()
 	ZeroMemory(&serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
 	//serveraddr.sin_addr.s_addr = inet_addr(SERVER_ROOP);
+	
+
+
 	serveraddr.sin_addr.S_un.S_addr = inet_addr(SERVERIP);
 	serveraddr.sin_port = htons(SERVERPORT);
 
@@ -2488,6 +2492,8 @@ void CGameFramework::Connection()
 	if (retval == SOCKET_ERROR) err_quit("WSAAsyncSelect()");
 
 	g_client.m_sock = m_socket;
+
+
 
 	if (retval == SOCKET_ERROR)
 	{
@@ -2503,7 +2509,7 @@ void CGameFramework::Connection()
 		cout << "서버 연결 성공\n";
 		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\n";
 	}
-
+	
 }
 
 void CGameFramework::LoginServer()
@@ -2517,4 +2523,22 @@ void CGameFramework::LoginServer()
 
 	
 
+}
+
+
+char* getIP(FILE* f)
+{
+	vector<char> v;
+	while (!feof(f))
+	{
+		v.push_back(fgetc(f));
+	}
+	char* ch = new char[v.size() + 1];
+	for (int i = 0; i < v.size(); ++i)
+	{
+		ch[i] = v[i];
+	}
+	ch[v.size()] = '\0';
+	
+	return ch;
 }

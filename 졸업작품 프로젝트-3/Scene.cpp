@@ -260,6 +260,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	sdwShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	sdwShader->BuildObjects(pd3dDevice,pd3dCommandList);
 
+	charShd = new CharShadow(rm);
+	charShd->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	charShd->BuildObjects(pd3dDevice, pd3dCommandList);
+
 	lobbyInter = new LobbyInterfaceShader(rm);
 	lobbyInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	lobbyInter->BuildObjects(pd3dDevice, pd3dCommandList);
@@ -633,6 +637,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		{
 			enemyDying->animate();
 		}
+
+		charShd->animate(playerShader, enemyShader);
 
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
@@ -2809,7 +2815,11 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				sdwShader->OnPrepareRender(pd3dCommandList);
 				sdwShader->Render(pd3dCommandList, pCamera);
 			}
-
+			if (charShd)
+			{
+				charShd->OnPrepareRender(pd3dCommandList);
+				charShd->Render(pd3dCommandList, pCamera);
+			}
 			if (barShader)
 			{
 				barShader->OnPrepareRender(pd3dCommandList);
@@ -3010,7 +3020,21 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 					tx = ox;
 					ty = oy;
 					tz = oz;
-					return false;
+					
+				}
+			}
+			for (int i = 0; i < playerShader->objects.size(); ++i)
+			{
+				XMFLOAT3 ep = playerShader->objects[i]->GetPosition();
+				float dx = ep.x - tx;
+				float dz = ep.z - tz;
+				float de = sqrt(dx * dx + dz * dz);
+				if (de < 0.8f && i!=pID)
+				{
+					tx = ox;
+					ty = oy;
+					tz = oz;
+					
 				}
 			}
 
