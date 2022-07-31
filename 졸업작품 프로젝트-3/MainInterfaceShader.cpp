@@ -162,7 +162,7 @@ D3D12_RASTERIZER_DESC MainInterfaceShader::CreateRasterizerState()
 	d3dRasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 	d3dRasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
 #ifdef _WITH_LEFT_HAND_COORDINATES
-	d3dRasterizerDesc.FrontCounterClockwise = FALSE;
+	d3dRasterizerDesc.FrontCounterockwise = FALSE;
 #else
 	d3dRasterizerDesc.FrontCounterClockwise = TRUE;
 #endif

@@ -2312,7 +2312,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						playerShader->objects[i]->info->growth.ranged.exp += 300;
 						playerShader->objects[i]->info->growth.radio.exp += 300;
 
-						playerShader->objects[i]->info->growth.total.exp += 300;
+						playerShader->objects[i]->info->growth.total.exp += 1500;
 
 						playerShader->objects[i]->info->gold += 500;
 
@@ -2342,7 +2342,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							playerShader->objects[i]->info->growth.total.exp -= totalExpNeed[playerShader->objects[i]->info->growth.total.level - 1];
 							playerShader->objects[i]->info->growth.total.level += 1;
-							playerShader->objects[i]->info->extraPoint += 3;
+							playerShader->objects[i]->info->extraPoint += 10;
 						}
 
 						//동료 지급
