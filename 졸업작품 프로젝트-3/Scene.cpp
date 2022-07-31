@@ -1259,7 +1259,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						if (interShader->mission == 1)
 						{
 							//미션 조건 만족시
-							if (interShader->m1_kill >= 3)
+							if (interShader->m1_kill >= 1)
 							{
 								//다음 미션 구역에 아직 못갔으면
 								if (interShader->nextPos == false)
@@ -1375,7 +1375,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						}
 						else if (interShader->mission == 2)
 						{
-							if (interShader->m2_stun >= 5)
+							if (interShader->m2_stun >= 1)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -1519,7 +1519,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						}
 						else if (interShader->mission == 3)
 						{
-							if (interShader->m3_bother >= 10)
+							if (interShader->m3_bother >= 1)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -1637,7 +1637,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							if (dt.count() < 100.0)
 							{
 
-								if (interShader->m4_kill >= 10)
+								if (interShader->m4_kill >= 1)
 								{
 									//다음위치에 아군 단 한명이라도 도달할 경우
 									if (interShader->nextPos == false)
@@ -1908,7 +1908,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 									rm->timePlayed[33] = chrono::system_clock::now();
 									rm->brief[33]->play();
 									rm->brief[33]->Update();
-									interShader->ShowNarration(375, 11.0);
+									interShader->ShowNarration(374, 11.0);
 								}
 							}
 						}
@@ -1918,7 +1918,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
 							if (dt.count() < 80.0)
 							{
-								if (interShader->m7_kill >= 10)
+								if (interShader->m7_kill >= 1)
 								{
 									//다음위치에 아군 단 한명이라도 도달할 경우
 									if (interShader->nextPos == false)
@@ -2077,7 +2077,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							if (interShader->m9_stun == 0)
 							{
 								//if (interShader->m9_search >= 10)
-								if (interShader->m9_search >= 10)
+								if (interShader->m9_search >= 1)
 								{
 									if (interShader->nextPos == false)
 									{
@@ -2184,7 +2184,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
 							if (dt.count() < 30.0)
 							{
-								if (interShader->m10_gain >= 13)
+								if (interShader->m10_gain >= 1)
 								{
 									if (rm->briefPlayed[50] == false)
 									{
@@ -3823,6 +3823,10 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		{
 			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList, p.xdir, p.zdir);
 		}
+		else
+		{
+			partShader->createParticles(p.particleType, p.count, XMFLOAT3(p.x, p.y, p.z), pd3dDevice, pd3dCommandList, p.xdir, p.zdir);
+		}
 		break;
 	}
 	case PACKET_TYPE::SC_POWER:
@@ -5037,7 +5041,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				part.x = targetPos.x;
 				part.y = targetPos.y;
 				part.z = targetPos.z;
-				part.particleType = 1;
+				if (type == 2)
+				{
+					part.particleType = 2;
+				}
+				else
+				{
+					part.particleType = 1;
+				}
 				SendPacket(&part);
 			}
 
@@ -5155,7 +5166,7 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 						p.x = enemyShader->objects[i]->GetPosition().x;
 						p.y = enemyShader->objects[i]->GetPosition().y;
 						p.z = enemyShader->objects[i]->GetPosition().z;
-						p.particleType = 1;
+						p.particleType = 2;
 						SendPacket(&p);
 					}
 				}
@@ -5292,7 +5303,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 					p.size = sizeof(CS_PARTICLE_PACKET);
 					p.type = PACKET_TYPE::CS_PARTICLE;
 					p.id = pID;
-					p.particleType = 1;
+					p.particleType = 2;
 					p.count = 100;
 					p.x = enemyShader->objects[i]->GetPosition().x;
 					p.y = enemyShader->objects[i]->GetPosition().y;

@@ -1484,7 +1484,9 @@ void ResourceManager::createTextures()
 	tex394->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_2/vtx_Dongsang.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex394);
 
-
+	tex395 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex395->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/effect/part2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex395);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

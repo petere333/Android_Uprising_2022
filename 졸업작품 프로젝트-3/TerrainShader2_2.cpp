@@ -373,7 +373,7 @@ void TerrainShader2_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			XMFLOAT3 dir = Vector3::Normalize(direction);
 			float cosAngle = Vector3::DotProduct(look, dir);
 			
-
+			/*
 			if (dist <= 20.0f)
 			{
 				if (m_pd3dCbvSrvDescriptorHeap)
@@ -390,7 +390,12 @@ void TerrainShader2_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 				}
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
-			
+			*/
+			if (m_pd3dCbvSrvDescriptorHeap)
+			{
+				pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
+			}
+			objects[i]->Render(pd3dCommandList, pCamera);
 		}
 	}
 	

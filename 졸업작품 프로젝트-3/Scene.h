@@ -167,7 +167,8 @@ public:
 	float** height22;
 	float** height23;
 
-	int x11 = 400;
+	//int x11 = 400; 
+	int x11 = 800;
 	int z11 = 400;
 	int x12 = 800;
 	int z12 = 400;
