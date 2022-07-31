@@ -833,15 +833,15 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 			//제한시간 관련
 			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 			chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
-			n = ((15-s.count()) % 1000) / 100;
+			n = ((25-s.count()) % 1000) / 100;
 			if (n < 0)
 				n = 0;
 			objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
-			n = ((15 - s.count()) % 100) / 10;
+			n = ((25 - s.count()) % 100) / 10;
 			if (n < 0)
 				n = 0;
 			objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
-			n = (15 - s.count()) % 10;
+			n = (25 - s.count()) % 10;
 			if (n < 0)
 				n = 0;
 			objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
@@ -876,16 +876,16 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		//제한시간 관련
 		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
-		n = ((15 - s.count()) % 1000) / 100;
+		n = ((25 - s.count()) % 1000) / 100;
 
 		if (n < 0)
 			n = 0;
 		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
-		n = ((15 - s.count()) % 100) / 10;
+		n = ((25 - s.count()) % 100) / 10;
 		if (n < 0)
 			n = 0;
 		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
-		n = (15-s.count()) % 10;
+		n = (25-s.count()) % 10;
 		if (n < 0)
 			n = 0;
 		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];

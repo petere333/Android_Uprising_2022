@@ -1763,7 +1763,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
 
-							if (dt.count() > 15.0f)
+							if (dt.count() > 25.0f)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -1858,7 +1858,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
-							if (dt.count() > 15.0f)
+							if (dt.count() > 25.0f)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -2647,6 +2647,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						cam->move(playerShader->objects[idx]->GetPosition());
 						interShader->Animate(cam, playerShader->objects[pID]->info);
 					}
+
+					enemyShader->objects.clear();
 				}
 				playerShader->objects[idx]->readyToGo = false;
 			}
