@@ -52,6 +52,8 @@ public:
 	int m10_gain = 0;
 	int m10_miss = 0;
 
+
+
 	bool missionFail = false;
 
 	bool nextPos = false;

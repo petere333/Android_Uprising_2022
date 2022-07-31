@@ -2262,10 +2262,14 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					}
 					else if (waitInter->selectedStage == 2)
 					{
-						if ((pp.x < 500.0f || pp.x>520.0f) || (pp.z < 180.0f || pp.z>200.0f))
+					
+					
+						if (interShader->mission == 1)
 						{
-							cleared = false;
-							break;
+							if (interShader->m1_kill >= 20)
+							{
+								cleared = true;
+							}
 						}
 					}
 				}
