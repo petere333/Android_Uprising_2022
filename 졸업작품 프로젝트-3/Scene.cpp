@@ -3817,24 +3817,34 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		}
 		else if (p.number == 5)
 		{
-			terrain1_2->objects[p.target]->broke -= 1;
-			if (terrain1_2->objects[p.target]->broke <= 0)
+			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+			chrono::duration<double> dt = mm - interShader->missionChangedTime;
+			if (dt <= 25.0)
 			{
-				interShader->m5_broken += p.progress;
-				terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
-				terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
-				terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+				terrain1_2->objects[p.target]->broke -= 1;
+				if (terrain1_2->objects[p.target]->broke <= 0)
+				{
+					interShader->m5_broken += p.progress;
+					terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+					terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+					terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+				}
 			}
 		}
 		else if (p.number == 6)
 		{
-			terrain1_2->objects[p.target]->broke -= 1;
-			if (terrain1_2->objects[p.target]->broke <= 0)
+			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
+			chrono::duration<double> dt = mm - interShader->missionChangedTime;
+			if (dt <= 25.0)
 			{
-				interShader->m6_broken += p.progress;
-				terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
-				terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
-				terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+				terrain1_2->objects[p.target]->broke -= 1;
+				if (terrain1_2->objects[p.target]->broke <= 0)
+				{
+					interShader->m6_broken += p.progress;
+					terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
+					terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
+					terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+				}
 			}
 		}
 		else if (p.number == 9)
