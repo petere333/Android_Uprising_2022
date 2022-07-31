@@ -2172,7 +2172,61 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed);
+						if (objects[i]->weapon == 1)
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (rangeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (rangeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (rangeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeAttackAnimated = true;
+								}
+							}
+						}
+						else
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (meleeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (meleeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (meleeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeAttackAnimated = true;
+								}
+							}
+						}
+						
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2197,7 +2251,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed);
+						if (objects[i]->weapon == 1)
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (rangeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (rangeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (rangeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeAttackAnimated = true;
+								}
+							}
+						}
+						else
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (meleeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (meleeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (meleeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeAttackAnimated = true;
+								}
+							}
+						}
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2222,7 +2329,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed);
+						if (objects[i]->weapon == 1)
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (rangeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (rangeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (rangeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeAttackAnimated = true;
+								}
+							}
+						}
+						else
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (meleeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (meleeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (meleeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeAttackAnimated = true;
+								}
+							}
+						}
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2247,7 +2407,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 					if (objects[i]->erased == false)
 					{
-						objects[i]->Animate(elapsed);
+						if (objects[i]->weapon == 1)
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (rangeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (rangeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (rangeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									rangeAttackAnimated = true;
+								}
+							}
+						}
+						else
+						{
+							if (objects[i]->bState.stateID == PATROL_STATE)
+							{
+								if (meleeWalkAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeWalkAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == CHASE_STATE)
+							{
+								if (meleeRunAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeRunAnimated = true;
+								}
+							}
+							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							{
+								if (meleeAttackAnimated == false)
+								{
+									objects[i]->Animate(elapsed);
+									meleeAttackAnimated = true;
+								}
+							}
+						}
 						if (objects[i]->m_pSkinnedAnimationController)
 						{
 							objects[i]->UpdateTransform(NULL);
@@ -2272,7 +2485,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2297,7 +2563,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2322,7 +2641,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2347,7 +2719,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2371,7 +2796,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2400,7 +2878,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2425,7 +2956,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2451,7 +3035,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2477,7 +3114,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2504,7 +3194,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 				if (objects[i]->erased == false)
 				{
-					objects[i]->Animate(elapsed);
+					if (objects[i]->weapon == 1)
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (rangeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (rangeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (rangeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								rangeAttackAnimated = true;
+							}
+						}
+					}
+					else
+					{
+						if (objects[i]->bState.stateID == PATROL_STATE)
+						{
+							if (meleeWalkAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeWalkAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == CHASE_STATE)
+						{
+							if (meleeRunAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeRunAnimated = true;
+							}
+						}
+						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						{
+							if (meleeAttackAnimated == false)
+							{
+								objects[i]->Animate(elapsed);
+								meleeAttackAnimated = true;
+							}
+						}
+					}
 					if (objects[i]->m_pSkinnedAnimationController)
 					{
 						objects[i]->UpdateTransform(NULL);
@@ -2527,7 +3270,60 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 
 			if (objects[i]->erased == false)
 			{
-				objects[i]->Animate(elapsed);
+				if (objects[i]->weapon == 1)
+				{
+					if (objects[i]->bState.stateID == PATROL_STATE)
+					{
+						if (rangeWalkAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							rangeWalkAnimated = true;
+						}
+					}
+					else if (objects[i]->bState.stateID == CHASE_STATE)
+					{
+						if (rangeRunAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							rangeRunAnimated = true;
+						}
+					}
+					else if (objects[i]->bState.stateID == BATTLE_STATE)
+					{
+						if (rangeAttackAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							rangeAttackAnimated = true;
+						}
+					}
+				}
+				else
+				{
+					if (objects[i]->bState.stateID == PATROL_STATE)
+					{
+						if (meleeWalkAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							meleeWalkAnimated = true;
+						}
+					}
+					else if (objects[i]->bState.stateID == CHASE_STATE)
+					{
+						if (meleeRunAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							meleeRunAnimated = true;
+						}
+					}
+					else if (objects[i]->bState.stateID == BATTLE_STATE)
+					{
+						if (meleeAttackAnimated == false)
+						{
+							objects[i]->Animate(elapsed);
+							meleeAttackAnimated = true;
+						}
+					}
+				}
 				if (objects[i]->m_pSkinnedAnimationController)
 				{
 					objects[i]->UpdateTransform(NULL);
@@ -2543,7 +3339,13 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			
 		}
 	}
+	meleeWalkAnimated = false;
+	meleeRunAnimated = false;
+	meleeAttackAnimated = false;
 
+	rangeWalkAnimated = false;
+	rangeRunAnimated = false;
+	rangeAttackAnimated = false;
 	
 }
 

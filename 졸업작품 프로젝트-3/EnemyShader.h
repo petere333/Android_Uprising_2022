@@ -34,6 +34,13 @@ public:
 	
 	float** height11, **height12, **height13, **height21, **height22, **height23;
 
+	bool meleeWalkAnimated = false;
+	bool meleeRunAnimated = false;
+	bool meleeAttackAnimated = false;
+
+	bool rangeWalkAnimated = false;
+	bool rangeRunAnimated = false;
+	bool rangeAttackAnimated = false;
 
 public:
 	std::vector<EnemyObject*>	objects;
