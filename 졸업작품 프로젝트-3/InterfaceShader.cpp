@@ -206,8 +206,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* fail = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1300.0f / 450.0f, 1000.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* failr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1300.0f / 450.0f, 1000.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* narration = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* narrationr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* narration = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, (465.0f - 600.0f) / 450.0f, -(100.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* narrationr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, -(465.0f - 600.0f) / 450.0f, -(100.0f - 450.0f) / 450.0f, true);
 
 
 	//339~348场鳖瘤 备开喊 固记 包访
