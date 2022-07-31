@@ -28,8 +28,8 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	CubeMeshOffset* info = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f-600.0f) / 450.0f, -(745.0f-450.0f) / 450.0f, false);
 	CubeMeshOffset* infor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (236.0f - 600.0f) / 450.0f, -(745.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* shop = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* shopr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(747.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* shop = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(2000.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* shopr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(2000.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, true);
