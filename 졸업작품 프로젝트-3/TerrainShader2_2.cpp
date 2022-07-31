@@ -243,7 +243,7 @@ void TerrainShader2_2::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 			//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
 			//x방향으로 높이만큼 이동. 즉, 해가 동쪽에서 수평면으로부터 약 45도 각도로 떠있음
-			shd->SetPosition(data[i].position.x +5.4f * h - data[i].position.y, 0.0f, data[i].position.z);
+			shd->SetPosition(data[i].position.x , 0.0f, data[i].position.z + 1.0f * h - data[i].position.y);
 			shd->Rotate(0.0f, data[i].rotation.y + 180.0f, 0.0f);
 
 			shadows.push_back(shd);
