@@ -372,7 +372,9 @@ void TerrainShader2_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 			float dist = Vector3::Length(direction);
 			XMFLOAT3 dir = Vector3::Normalize(direction);
 			float cosAngle = Vector3::DotProduct(look, dir);
-			if ((objects[i]->type >= 21008 && objects[i]->type <= 21018) || (objects[i]->type == 21999 || objects[i]->type== 21023))
+			
+
+			if (dist <= 20.0f)
 			{
 				if (m_pd3dCbvSrvDescriptorHeap)
 				{
@@ -380,58 +382,18 @@ void TerrainShader2_2::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamer
 				}
 				objects[i]->Render(pd3dCommandList, pCamera);
 			}
-			else
-			{
-				if (dist <= 20.0f)
-				{
-					if (m_pd3dCbvSrvDescriptorHeap)
-					{
-						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-					}
-					objects[i]->Render(pd3dCommandList, pCamera);
-				}
-				else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
-				{
-					if (m_pd3dCbvSrvDescriptorHeap)
-					{
-						pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-					}
-					objects[i]->Render(pd3dCommandList, pCamera);
-				}
-			}
-		}
-	}
-	/*
-	for (int i = 0; i < shadows.size(); ++i)
-	{
-		if (shadows[i])
-		{
-			XMFLOAT3 pos = shadows[i]->GetPosition();
-			XMFLOAT3 direction = XMFLOAT3(pos.x - cp.x, pos.y - cp.y, pos.z - cp.z);
-			float dist = Vector3::Length(direction);
-			XMFLOAT3 dir = Vector3::Normalize(direction);
-			float cosAngle = Vector3::DotProduct(look, dir);
-
-			//그림자의 위치가 카메라로부터 10미터 이내이거나, 카메라 방향으로부터 70도 이내에 있는 경우에만 그림
-			if (dist <= 20.0f)
-			{
-				if (m_pd3dCbvSrvDescriptorHeap)
-				{
-					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
-				}
-				shadows[i]->Render(pd3dCommandList, pCamera);
-			}
 			else if (cosAngle <= 1.0f && cosAngle >= cos(3.141592f / 180.0f * 70.0f))
 			{
 				if (m_pd3dCbvSrvDescriptorHeap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &m_pd3dCbvSrvDescriptorHeap);
 				}
-				shadows[i]->Render(pd3dCommandList, pCamera);
+				objects[i]->Render(pd3dCommandList, pCamera);
 			}
+			
 		}
 	}
-	*/
+	
 
 	for (int i = 0; i < shadows.size(); ++i)
 	{
