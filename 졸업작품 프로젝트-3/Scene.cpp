@@ -1757,7 +1757,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
 
-							if (dt.count() > 30.0f)
+							if (dt.count() > 15.0f)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -1852,7 +1852,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
-							if (dt.count() > 30.0f)
+							if (dt.count() > 15.0f)
 							{
 								if (interShader->nextPos == false)
 								{

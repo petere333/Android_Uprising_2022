@@ -203,8 +203,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* time1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* time1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, -(1140.0f - 600.0f) / 450.0f, -(210.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* fail = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* failr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* fail = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1300.0f / 450.0f, 1000.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* failr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1300.0f / 450.0f, 1000.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* narration = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* narrationr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 150.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(630.0f - 450.0f) / 450.0f, true);
@@ -833,15 +833,15 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 			//제한시간 관련
 			chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 			chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
-			n = ((30-s.count()) % 1000) / 100;
+			n = ((15-s.count()) % 1000) / 100;
 			if (n < 0)
 				n = 0;
 			objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
-			n = ((30 - s.count()) % 100) / 10;
+			n = ((15 - s.count()) % 100) / 10;
 			if (n < 0)
 				n = 0;
 			objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
-			n = (30 - s.count()) % 10;
+			n = (15 - s.count()) % 10;
 			if (n < 0)
 				n = 0;
 			objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
@@ -876,16 +876,16 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		//제한시간 관련
 		chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 		chrono::seconds s = chrono::duration_cast<chrono::seconds>(mm - missionChangedTime);
-		n = ((30 - s.count()) % 1000) / 100;
+		n = ((15 - s.count()) % 1000) / 100;
 
 		if (n < 0)
 			n = 0;
 		objects[30]->m_ppMaterials[0] = rm->materials[273 + n];
-		n = ((30 - s.count()) % 100) / 10;
+		n = ((15 - s.count()) % 100) / 10;
 		if (n < 0)
 			n = 0;
 		objects[31]->m_ppMaterials[0] = rm->materials[273 + n];
-		n = (30-s.count()) % 10;
+		n = (15-s.count()) % 10;
 		if (n < 0)
 			n = 0;
 		objects[32]->m_ppMaterials[0] = rm->materials[273 + n];
