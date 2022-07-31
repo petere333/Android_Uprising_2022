@@ -2642,6 +2642,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				{
 					//1-2스테이지인경우 2-1
 					playerShader->objects[idx]->SetPosition(830.0f, 0.0f, 580.0f - idx * 5.0f);
+
+					charShd->op.clear();
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());

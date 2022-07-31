@@ -143,7 +143,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es)
 			o->SetMaterial(0, rm->materials[395]);
 
 			o->SetPosition(pp[i].x, 0.0f, pp[i].z);
-			if (pp[i].x >= 350.0f && pp[i].x <= 450.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
+			if (pp[i].x >= 250.0f && pp[i].x <= 350.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
 			{
 				o->SetPosition(pp[i].x, 5.0f , pp[i].z);
 			}
@@ -155,7 +155,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es)
 		for (int i = 0; i < pp.size(); ++i)
 		{
 			op[i]->SetPosition(pp[i].x , 0.0f, pp[i].z);
-			if (pp[i].x >= 350.0f && pp[i].x <= 450.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
+			if (pp[i].x >= 250.0f && pp[i].x <= 350.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
 			{
 				op[i]->SetPosition(pp[i].x, 5.0f, pp[i].z);
 			}
