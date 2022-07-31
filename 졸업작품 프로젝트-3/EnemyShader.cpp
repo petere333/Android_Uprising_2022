@@ -3498,7 +3498,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					float nx = dx / dist;
 					float nz = dz / dist;
 					//30미터 너머의 적은 봐도 못본 것으로 처리
-					if (dist > 30.0f)
+					if (dist > 20.0f)
 					{
 						continue;
 					}
@@ -3528,6 +3528,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								{
 									int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
 									if (objects[i]->heightmap[ix][iz] >= 2.0f)
@@ -3625,6 +3649,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										break;
 									}
 								}
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
 								if (found == false)
 									break;
 
@@ -3668,7 +3716,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										break;
 									}
 								}
-
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
+								else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+								{
+									int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
+									//ix = (int)((x + 0.25f) / 0.5f);
+									//iz = (int)((z + 0.25f) / 0.5f);
+									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									{
+										found = false;
+										break;
+									}
+								}
 								if (found == false)
 									break;
 							}
@@ -3798,7 +3869,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						float nx = dx / dist;
 						float nz = dz / dist;
 						//30미터 너머의 적은 봐도 못본 것으로 처리
-						if (dist > 30.0f)
+						if (dist > 20.0f)
 						{
 							continue;
 						}
@@ -3828,6 +3899,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									{
 										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
 										if (objects[i]->heightmap[ix][iz] >= 2.0f)
@@ -3900,7 +3995,6 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								for (float z = ez; z < pz; z += 0.5f)
 								{
 									float x = ex + dx / dz * 0.5f * (z - ez) * 2.0f;
-
 									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 									{
 										int ix = (int)((x - 0.25f) / 0.5f) + 1;
@@ -3917,6 +4011,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									{
 										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
 										if (objects[i]->heightmap[ix][iz] >= 2.0f)
@@ -3943,7 +4061,6 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								for (float z = ez; z > pz; z -= 0.5f)
 								{
 									float x = ex + (dx / dz) * 0.5f * (z - ez) * 2.0f;
-
 									if (ex >= 0.0f && ex < 200.0f && ez >= 0.0f && ez < 200.0f)
 									{
 										int ix = (int)((x - 0.25f) / 0.5f) + 1;
@@ -3960,6 +4077,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									{
 										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
 										if (objects[i]->heightmap[ix][iz] >= 2.0f)
@@ -4111,7 +4252,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 				//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
-				if (dist >= 30.0f || objects[i]->routeIdx == objects[i]->route.size())
+				if (dist >= 20.0f || objects[i]->routeIdx == objects[i]->route.size())
 				{
 					int playerID = -1; // 발견한 적의 아이디
 					//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
@@ -4132,7 +4273,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						float nx = dx / dist;
 						float nz = dz / dist;
 						//15미터 너머의 적은 봐도 못본 것으로 처리
-						if (dist > 30.0f)
+						if (dist > 20.0f)
 						{
 							objects[i]->chaseTarget = -1;
 							objects[i]->attackTarget = -1;
@@ -4163,6 +4304,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									{
 										int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
 										if (objects[i]->heightmap[ix][iz] >= 2.0f)
@@ -4260,6 +4425,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 											break;
 										}
 									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
 									if (found == false)
 										break;
 
@@ -4303,7 +4492,30 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 											break;
 										}
 									}
-
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 363.0f && ez < 600.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
+									else if (ex >= 800.0f && ex < 900.0f && ez >= 60.0f && ez < 363.0f)
+									{
+										int ix = (int)((x - 800.0f - 0.25f) / 0.5f) + 1;
+										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
+										//ix = (int)((x + 0.25f) / 0.5f);
+										//iz = (int)((z + 0.25f) / 0.5f);
+										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										{
+											found = false;
+											break;
+										}
+									}
 									if (found == false)
 										break;
 								}

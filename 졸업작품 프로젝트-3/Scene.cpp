@@ -2521,10 +2521,6 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		m_pLights[1].m_xmf3Direction = Vector3::Normalize(XMFLOAT3(cl.x, cl.y, cl.z));
 		
 		UpdateShaderVariables(pd3dCommandList);
-
-
-
-
 	}
 	else if (currentScreen == LOGIN_STATE)
 	{
