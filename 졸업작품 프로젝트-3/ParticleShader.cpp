@@ -121,7 +121,7 @@ D3D12_SHADER_BYTECODE ParticleShader::CreatePixelShader()
 
 void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device* device, ID3D12GraphicsCommandList* list, float xd, float zd)
 {
-
+	
 
 	//랜덤한 방향으로 나아가는 조그마한 입자를 해당 위치에 n개 생성
 	for (int i = 0; i < n; ++i)
@@ -159,8 +159,15 @@ void ParticleShader::createParticles(int type, int n, XMFLOAT3 pos, ID3D12Device
 		ParticleObject* obj = new ParticleObject(1);
 		obj->type = type;
 		obj->timeCreated = std::chrono::system_clock::now();
-		obj->SetMaterial(0, rm->materials[4]);
-		obj->speed = 0.03f;
+		if (type == 1)
+		{
+			obj->SetMaterial(0, rm->materials[4]);
+		}
+		else
+		{
+			obj->SetMaterial(0, rm->materials[394]);
+		}
+		obj->speed = 0.1f;
 		obj->direction = direct;
 		obj->SetPosition(pos);
 		obj->SetMesh(partMesh);

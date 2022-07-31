@@ -62,11 +62,12 @@
 #define PLAYER_SPEED 23.55f
 
 //서버 IP 정보
-//#define SERVERIP "172.20.10.5" // 루프백 주소
-// #define SERVERIP "127.0.0.1" // 루프백 주소
-//#define SERVERIP "192.168.35.85" // 루프백 주소
-//#define SERVERIP "192.168.35.197" // 루프백 주소
-#define SERVERIP "172.30.1.56"
+
+
+//#define SERVERIP "127.0.0.1" // 셀프
+//#define SERVERIP "192.168.35.85" // 집 노트북
+//#define SERVERIP "192.168.35.197" // 집 데탑
+#define SERVERIP "172.30.1.56" // 스터디룸
 
 /*
 	플레이어 세부정보 자료구조.
