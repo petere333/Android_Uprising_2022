@@ -58,9 +58,9 @@ int main()
 	
 	writeHeight(hf, height2_1);*/
 
-	file = fopen("result/2_1/objects2-1.txt", "w");
-	FILE* bf = fopen("result/2_1/box2-1.txt", "w");
-	FILE* hf = fopen("result/2_1/height2-1.txt", "w");
+	file = fopen("result/2_1/objects1-1.txt", "w");
+	FILE* bf = fopen("result/2_1/box1-1.txt", "w");
+	FILE* hf = fopen("result/2_1/height1-1.txt", "w");
 
 	writeHeight(hf, height2_1);
 
@@ -97,7 +97,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles2_1(list, blist);
+	createObstacles1_1(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -411,7 +411,7 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 	
 	//건축폐기물 구간 양 사이드의 시멘트 포대 더미
 	{
-		for (float x = 4.5f; x <= 50.0f; x += 41.0f)
+		for (float x = 4.6f; x <= 49.9f; x += 40.8f)
 		{
 			for (float z = 125.0f; z <= 166.0f; z += 13.0f)
 			{
@@ -1219,25 +1219,25 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 			}
 		}
 
-		for (float z = 100.75f; z < 139.0f; z += 1.5f)
+		for (float z = 100.85f; z < 139.0f; z += 1.5f)
 		{
 			for (float y = 0.0f; y < 5.0f; y += 1.5f)
 			{
 				Object* fence = (Object*)malloc(sizeof(Object));
-				fence->location = f3(67.25, y, z);
+				fence->location = f3(67.35, y, z);
 				fence->rotation = f3(0.0f, 0.0f, 0.0f);
 				fence->type = RustyMetal_Box;
 
 				BoundingBox* boxFence = (BoundingBox*)malloc(sizeof(BoundingBox));
-				boxFence->start = f3(66.5f, y, z-0.75f);
-				boxFence->end = f3(68.0f, y+1.5f, z+0.75f);
+				boxFence->start = f3(66.6f, y, z-0.75f);
+				boxFence->end = f3(68.1f, y+1.5f, z+0.75f);
 
 				list.push_back(*fence);
 				blist.push_back(*boxFence);
 			}
 		}
 
-		for (float x = 50.75f; x < 66.0f; x += 1.5f)
+		for (float x = 50.85f; x < 66.0f; x += 1.5f)
 		{
 			for (float y = 0.0f; y < 5.0f; y += 1.5f)
 			{
@@ -1315,7 +1315,7 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 			}
 		}
 
-		for (float x = 50.75f; x < 66.0f; x += 1.5f)
+		for (float x = 50.85f; x < 66.0f; x += 1.5f)
 		{
 			for (float y = 0.0f; y < 5.0f; y += 2.25f)
 			{
@@ -1626,7 +1626,7 @@ void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
 
 		for (float x = 155.0f; x < 195.0f; x += 5.0f)
 		{
-			for (float z = 150.25f; z < 200.0f; z += 49.5f)
+			for (float z = 150.35f; z < 200.0f; z += 49.3f)
 			{
 				int r = rand() % 2;
 				for(float dx= -r; dx<r+0.1f;dx+=2.0f)

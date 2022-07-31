@@ -1724,6 +1724,10 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 					packet.key = VK_F7;
 					SendPacket(&packet);
 					break;
+				case VK_F8:
+					packet.key = VK_F8;
+					SendPacket(&packet);
+					break;
 
 				}
 				break;

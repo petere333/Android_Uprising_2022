@@ -355,6 +355,15 @@
     <Filter Include="Shader\mainlobby">
       <UniqueIdentifier>{0cd9aeb8-5c5f-4ef3-a7af-172a707acc3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\stageSelect">
+      <UniqueIdentifier>{bd70be4f-992f-4bc7-a5ef-8d5564a48ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Profile">
+      <UniqueIdentifier>{49592642-de03-498e-aea5-dcd50b59dbfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\wait">
+      <UniqueIdentifier>{49e0aae0-3846-4d0c-b3ef-0fe29964dc73}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Shader\in-game">
       <UniqueIdentifier>{cfc84828-06bd-4195-8357-339aa557f09a}</UniqueIdentifier>
     </Filter>
@@ -381,15 +390,6 @@
     </Filter>
     <Filter Include="Shader\in-game\global">
       <UniqueIdentifier>{7c6642eb-0309-4be7-a885-d0df293c1185}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\stageSelect">
-      <UniqueIdentifier>{bd70be4f-992f-4bc7-a5ef-8d5564a48ed3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\Profile">
-      <UniqueIdentifier>{49592642-de03-498e-aea5-dcd50b59dbfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shader\wait">
-      <UniqueIdentifier>{49e0aae0-3846-4d0c-b3ef-0fe29964dc73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -643,15 +643,26 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_F7)
 		{
-		for (auto& pl : clients)
-		{
-			if (pl._use == true)
+			for (auto& pl : clients)
 			{
-				pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f);
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f);
+				}
 			}
+			break;
 		}
-
-		break;
+		else if (p->key == VK_F8)
+		{
+			for (auto& pl : clients)
+			{
+				if (pl._use == true)
+				{
+					pl.send_teleport(c_id, 850.0f, 0.0f, 220.0f);
+				}
+			}
+		
+			break;
 		}
 		
 		
