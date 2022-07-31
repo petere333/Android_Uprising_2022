@@ -34,6 +34,8 @@
 #include "Game_Data.h"
 #include "CNet.h"
 #include "ResourceManager.h"
+#include "CharacterShadow.h"
+
 
 #define MAX_LIGHTS						16 
 
@@ -153,6 +155,8 @@ public:
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
 
+	CharShadow* charShd = NULL;
+	
 	MainInterfaceShader* mainInter = NULL;
 	ProfileShader* profileInter = NULL;
 	StageSelectShader* stageInter = NULL;

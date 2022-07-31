@@ -260,6 +260,10 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	sdwShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	sdwShader->BuildObjects(pd3dDevice,pd3dCommandList);
 
+	charShd = new CharShadow(rm);
+	charShd->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	charShd->BuildObjects(pd3dDevice, pd3dCommandList);
+
 	lobbyInter = new LobbyInterfaceShader(rm);
 	lobbyInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	lobbyInter->BuildObjects(pd3dDevice, pd3dCommandList);
@@ -633,6 +637,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		{
 			enemyDying->animate();
 		}
+
+		charShd->animate(playerShader, enemyShader);
 
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
@@ -1757,7 +1763,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
 
-							if (dt.count() > 15.0f)
+							if (dt.count() > 25.0f)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -1852,7 +1858,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						{
 							chrono::time_point<chrono::system_clock> mm = chrono::system_clock::now();
 							chrono::duration<double> dt = mm - interShader->missionChangedTime;
-							if (dt.count() > 15.0f)
+							if (dt.count() > 25.0f)
 							{
 								if (interShader->nextPos == false)
 								{
@@ -2636,11 +2642,15 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				{
 					//1-2스테이지인경우 2-1
 					playerShader->objects[idx]->SetPosition(830.0f, 0.0f, 580.0f - idx * 5.0f);
+
+					charShd->op.clear();
 					if (idx == pID)
 					{
 						cam->move(playerShader->objects[idx]->GetPosition());
 						interShader->Animate(cam, playerShader->objects[pID]->info);
 					}
+
+					enemyShader->objects.clear();
 				}
 				playerShader->objects[idx]->readyToGo = false;
 			}
@@ -2809,7 +2819,11 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				sdwShader->OnPrepareRender(pd3dCommandList);
 				sdwShader->Render(pd3dCommandList, pCamera);
 			}
-
+			if (charShd)
+			{
+				charShd->OnPrepareRender(pd3dCommandList);
+				charShd->Render(pd3dCommandList, pCamera);
+			}
 			if (barShader)
 			{
 				barShader->OnPrepareRender(pd3dCommandList);
@@ -3010,7 +3024,21 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 					tx = ox;
 					ty = oy;
 					tz = oz;
-					return false;
+					
+				}
+			}
+			for (int i = 0; i < playerShader->objects.size(); ++i)
+			{
+				XMFLOAT3 ep = playerShader->objects[i]->GetPosition();
+				float dx = ep.x - tx;
+				float dz = ep.z - tz;
+				float de = sqrt(dx * dx + dz * dz);
+				if (de < 0.8f && i!=pID)
+				{
+					tx = ox;
+					ty = oy;
+					tz = oz;
+					
 				}
 			}
 

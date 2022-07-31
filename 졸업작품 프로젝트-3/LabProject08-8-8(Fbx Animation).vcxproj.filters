@@ -147,6 +147,9 @@
     <ClCompile Include="DyingEnemyShader.cpp">
       <Filter>Shader\in-game\global</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterShadow.cpp">
+      <Filter>Shader\in-game\etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -284,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="DyingEnemyShader.h">
       <Filter>Shader\in-game\global</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterShadow.h">
+      <Filter>Shader\in-game\etc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
