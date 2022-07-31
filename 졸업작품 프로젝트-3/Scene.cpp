@@ -2456,6 +2456,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[k]->amp_melee = 1.0f;
 					playerShader->objects[k]->amp_ranged = 1.0f;
 					playerShader->objects[k]->amp_radio = 1.0f;
+
 					playerShader->objects[k]->bState.attacking = false;
 					playerShader->objects[k]->info->stats.capacity = playerShader->objects[k]->info->stats.maxhp;
 					playerShader->objects[k]->bState.attackID = TYPE_RANGED;
@@ -2466,17 +2467,17 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[k]->kState.rotation = 0.0f;
 					playerShader->objects[k]->kState.xzspeed = 0.0f;
 					playerShader->objects[k]->kState.yspeed = 0.0f;
-					playerShader->objects[k]->readyToGo = false;
 				}
-
-
-
-				//enemyShader->objects.clear();
-				//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 				enemyShader->restart();
 				//선택된 스테이지에 관한 정보 초기화.
+				rm->bgm[0]->stop();
+				rm->bgm[0]->Update();
+				rm->bgm[1]->play();
+				rm->bgm[1]->Update();
 				interShader->stageClear = false;
+				waitInter->selectedStage = -1;
 				interShader->missionFail = false;
+
 				for (int i = 0; i < rm->briefPlayed.size(); ++i)
 				{
 					rm->brief[i]->stop();
@@ -2502,17 +2503,13 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				interShader->m9_search = 0;
 				interShader->mission = 1;
 
-
-
-				waitInter->selectedStage = -1;
-
 				cam->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 				cam->lx = 0.0f;
 				cam->ly = 0.0f;
 				cam->lz = 1.0f;
 				cam->GenerateViewMatrix();
 				cam->UpdateShaderVariables(pd3dCommandList);
-
+			   
 				currentScreen = LOBBY_STATE;
 			}
 		}
