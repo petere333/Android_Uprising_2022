@@ -35,8 +35,8 @@ void PlayerInfoManager::initGrowth()
 
 void PlayerInfoManager::initStats()
 {
-	stats.maxhp = 90;
-	stats.capacity = 90;
+	stats.maxhp = 60;
+	stats.capacity = 60;
 	stats.hardness = 4;
 	stats.power = 4;
 	stats.precision = 4;
