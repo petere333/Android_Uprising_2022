@@ -12,39 +12,84 @@ EnemyShader::EnemyShader(ResourceManager* r, float** height, float** height2, fl
 }
 EnemyShader::~EnemyShader() {}
 
-void EnemyShader::restart()
+void EnemyShader::restart(int stage)
 {
-	for (int i = 0; i < objects.size(); ++i)
+	currentObject.clear();
+	if (stage == 1)
 	{
-		objects[i]->SetPosition(objects[i]->origin);
-
-		objects[i]->mbox->start = XMFLOAT3(objects[i]->origin.x - 0.4f, 0.0f, objects[i]->origin.z - 0.4f);
-		objects[i]->mbox->end = XMFLOAT3(objects[i]->origin.x + 0.4f, 1.7f, objects[i]->origin.z + 0.4f);
-		if (objects[i]->weapon == 2)
+		for (int i = 0; i < objects.size(); ++i)
 		{
-			objects[i]->maxHP = mhp;
-			objects[i]->bState.hp = mhp;
-			objects[i]->attackRange = mrange;
-			objects[i]->attackDuration = mdur;
+			objects[i]->SetPosition(objects[i]->origin);
 
+			objects[i]->mbox->start = XMFLOAT3(objects[i]->origin.x - 0.4f, 0.0f, objects[i]->origin.z - 0.4f);
+			objects[i]->mbox->end = XMFLOAT3(objects[i]->origin.x + 0.4f, 1.7f, objects[i]->origin.z + 0.4f);
+			if (objects[i]->weapon == 2)
+			{
+				objects[i]->maxHP = mhp;
+				objects[i]->bState.hp = mhp;
+				objects[i]->attackRange = mrange;
+				objects[i]->attackDuration = mdur;
+
+			}
+			else
+			{
+				objects[i]->maxHP = rhp;
+				objects[i]->bState.hp = rhp;
+				objects[i]->attackRange = rrange;
+				objects[i]->attackDuration = rdur;
+			}
+			objects[i]->attackTarget = -1;
+			XMFLOAT3 op = objects[i]->origin;
+			objects[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
+			objects[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
+			objects[i]->type = -10;
+			objects[i]->SetTrackAnimationSet(0, 0);
+			objects[i]->bState.stateID = PATROL_STATE;
+			objects[i]->lastAttack = chrono::system_clock::now();
+			objects[i]->erased = false;
+			currentObject.push_back(objects[i]);
 		}
-		else
-		{
-			objects[i]->maxHP = rhp;
-			objects[i]->bState.hp = rhp;
-			objects[i]->attackRange = rrange;
-			objects[i]->attackDuration = rdur;
-		}
-		objects[i]->attackTarget = -1;
-		XMFLOAT3 op = objects[i]->origin;
-		objects[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
-		objects[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
-		objects[i]->type = -10;
-		objects[i]->SetTrackAnimationSet(0, 0);
-		objects[i]->bState.stateID = PATROL_STATE;
-		objects[i]->lastAttack = chrono::system_clock::now();
-		objects[i]->erased = false;
 	}
+	else if (stage == 2)
+	{
+		for (int i = 0; i < objects2.size(); ++i)
+		{
+			objects2[i]->SetPosition(objects2[i]->origin);
+
+			objects2[i]->mbox->start = XMFLOAT3(objects2[i]->origin.x - 0.4f, 0.0f, objects2[i]->origin.z - 0.4f);
+			objects2[i]->mbox->end = XMFLOAT3(objects2[i]->origin.x + 0.4f, 1.7f, objects2[i]->origin.z + 0.4f);
+			if (objects2[i]->weapon == 2)
+			{
+				objects2[i]->maxHP = mhp;
+				objects2[i]->bState.hp = mhp;
+				objects2[i]->attackRange = mrange;
+				objects2[i]->attackDuration = mdur;
+
+			}
+			else
+			{
+				objects2[i]->maxHP = rhp;
+				objects2[i]->bState.hp = rhp;
+				objects2[i]->attackRange = rrange;
+				objects2[i]->attackDuration = rdur;
+			}
+			objects2[i]->attackTarget = -1;
+			XMFLOAT3 op = objects2[i]->origin;
+			objects2[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
+			objects2[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
+			objects2[i]->type = -10;
+			objects2[i]->SetTrackAnimationSet(0, 0);
+			objects2[i]->bState.stateID = PATROL_STATE;
+			objects2[i]->lastAttack = chrono::system_clock::now();
+			objects2[i]->erased = false;
+
+			currentObject.push_back(objects2[i]);
+		}
+
+		
+
+	}
+
 }
 
 void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* sig)
@@ -2001,76 +2046,77 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	objects.push_back(obj151);
 	objects.push_back(obj152);
 	objects.push_back(obj153);
-	objects.push_back(obj154);
-	
-	objects.push_back(obj155);
-	objects.push_back(obj156);
-	objects.push_back(obj157);
-	objects.push_back(obj158);
-	objects.push_back(obj159);
-	objects.push_back(obj160);
+	/////
 
-	objects.push_back(obj160);
-	objects.push_back(obj161);
-	objects.push_back(obj162);
-	objects.push_back(obj163);
-	objects.push_back(obj164);
-	objects.push_back(obj165);
-	objects.push_back(obj166);
-	objects.push_back(obj167);
-	objects.push_back(obj168);
-	objects.push_back(obj169);
-	objects.push_back(obj170);
+	objects2.push_back(obj154);
+	objects2.push_back(obj155);
+	objects2.push_back(obj156);
+	objects2.push_back(obj157);
+	objects2.push_back(obj158);
+	objects2.push_back(obj159);
+	objects2.push_back(obj160);
 
-	objects.push_back(obj170);
-	objects.push_back(obj171);
-	objects.push_back(obj172);
-	objects.push_back(obj173);
-	objects.push_back(obj174);
-	objects.push_back(obj175);
-	objects.push_back(obj176);
-	objects.push_back(obj177);
-	objects.push_back(obj178);
-	objects.push_back(obj179);
-	objects.push_back(obj180);
-
-	objects.push_back(obj180);
-	objects.push_back(obj181);
-	objects.push_back(obj182);
-	objects.push_back(obj183);
-	objects.push_back(obj184);
-	objects.push_back(obj185);
-	objects.push_back(obj186);
-	objects.push_back(obj187);
-	objects.push_back(obj188);
-	objects.push_back(obj189);
-	objects.push_back(obj190);
-
-	objects.push_back(obj190);
-	objects.push_back(obj191);
-	objects.push_back(obj192);
-	objects.push_back(obj193);
-	objects.push_back(obj194);
-	objects.push_back(obj195);
-	objects.push_back(obj196);
-	objects.push_back(obj197);
-	objects.push_back(obj198);
-	objects.push_back(obj199);
-	objects.push_back(obj200);
-
-	objects.push_back(obj200);
-	objects.push_back(obj201);
-	objects.push_back(obj202);
-	objects.push_back(obj203);
-	objects.push_back(obj204);
-	objects.push_back(obj205);
-	objects.push_back(obj206);
-	objects.push_back(obj207);
-	objects.push_back(obj208);
-	objects.push_back(obj209);
-	objects.push_back(obj210);
-
-	objects.push_back(obj211);
+	objects2.push_back(obj160);
+	objects2.push_back(obj161);
+	objects2.push_back(obj162);
+	objects2.push_back(obj163);
+	objects2.push_back(obj164);
+	objects2.push_back(obj165);
+	objects2.push_back(obj166);
+	objects2.push_back(obj167);
+	objects2.push_back(obj168);
+	objects2.push_back(obj169);
+	objects2.push_back(obj170);
+		   
+	objects2.push_back(obj170);
+	objects2.push_back(obj171);
+	objects2.push_back(obj172);
+	objects2.push_back(obj173);
+	objects2.push_back(obj174);
+	objects2.push_back(obj175);
+	objects2.push_back(obj176);
+	objects2.push_back(obj177);
+	objects2.push_back(obj178);
+	objects2.push_back(obj179);
+	objects2.push_back(obj180);
+		   
+	objects2.push_back(obj180);
+	objects2.push_back(obj181);
+	objects2.push_back(obj182);
+	objects2.push_back(obj183);
+	objects2.push_back(obj184);
+	objects2.push_back(obj185);
+	objects2.push_back(obj186);
+	objects2.push_back(obj187);
+	objects2.push_back(obj188);
+	objects2.push_back(obj189);
+	objects2.push_back(obj190);
+		   
+	objects2.push_back(obj190);
+	objects2.push_back(obj191);
+	objects2.push_back(obj192);
+	objects2.push_back(obj193);
+	objects2.push_back(obj194);
+	objects2.push_back(obj195);
+	objects2.push_back(obj196);
+	objects2.push_back(obj197);
+	objects2.push_back(obj198);
+	objects2.push_back(obj199);
+	objects2.push_back(obj200);
+		   
+	objects2.push_back(obj200);
+	objects2.push_back(obj201);
+	objects2.push_back(obj202);
+	objects2.push_back(obj203);
+	objects2.push_back(obj204);
+	objects2.push_back(obj205);
+	objects2.push_back(obj206);
+	objects2.push_back(obj207);
+	objects2.push_back(obj208);
+	objects2.push_back(obj209);
+	objects2.push_back(obj210);
+		   
+	objects2.push_back(obj211);
 	
 						  
 	for (int i = 0; i < objects.size(); ++i)
@@ -2085,7 +2131,17 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 
 	}
 
+	for (int i = 0; i < objects2.size(); ++i)
+	{
+		XMFLOAT3 op = objects2[i]->GetPosition();
+		objects2[i]->seekPoint.push_back(XMFLOAT2(op.x - 0.5f, op.z - 0.5f));
+		objects2[i]->seekPoint.push_back(XMFLOAT2(op.x + 0.5f, op.z + 0.5f));
+		objects2[i]->type = -10;
+		objects2[i]->SetTrackAnimationSet(0, 0);
+		objects2[i]->bState.stateID = IDLE_STATE;
+		objects2[i]->lastAttack = chrono::system_clock::now();
 
+	}
 
 
 	// 각 적들의 위치에 바운딩 박스 생성
@@ -2101,7 +2157,19 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 
 		objects[i]->mbox = box;
 	}
-	
+
+	for (int i = 0; i < objects2.size(); ++i)
+	{
+		//x,y=-0.25~0.25 z=0.0~1.7
+
+		XMFLOAT3 pos = objects2[i]->GetPosition();
+
+		BoundBox* box = new BoundBox;
+		box->start = XMFLOAT3(pos.x - 0.4f, pos.y, pos.z - 0.4f);
+		box->end = XMFLOAT3(pos.x + 0.4f, pos.y + 1.7f, pos.z + 0.4f);
+
+		objects2[i]->mbox = box;
+	}
 	
 }
 
@@ -2142,9 +2210,9 @@ void EnemyShader::ReleaseShaderVariables()
 void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, float elapsed, ID3D12DescriptorHeap* heap)
 {
 	
-	for (int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < currentObject.size(); ++i)
 	{
-		XMFLOAT3 pos = objects[i]->GetPosition();
+		XMFLOAT3 pos = currentObject[i]->GetPosition();
 		XMFLOAT3 camPos = pCamera->getPosition();
 
 		float px = camPos.x;
@@ -2170,73 +2238,73 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 				{
 
-					if (objects[i]->erased == false)
+					if (currentObject[i]->erased == false)
 					{
-						if (objects[i]->weapon == 1)
+						if (currentObject[i]->weapon == 1)
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (rangeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (rangeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (rangeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeAttackAnimated = true;
 								}
 							}
 						}
 						else
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (meleeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (meleeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (meleeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeAttackAnimated = true;
 								}
 							}
 						}
 						
-						if (objects[i]->m_pSkinnedAnimationController)
+						if (currentObject[i]->m_pSkinnedAnimationController)
 						{
-							objects[i]->UpdateTransform(NULL);
+							currentObject[i]->UpdateTransform(NULL);
 						}
 						if (heap)
 						{
 							pd3dCommandList->SetDescriptorHeaps(1, &heap);
 						}
 						rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-						objects[i]->Render(pd3dCommandList, pCamera);
+						currentObject[i]->Render(pd3dCommandList, pCamera);
 					}
 				}
 			}
@@ -2249,72 +2317,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 				{
 
-					if (objects[i]->erased == false)
+					if (currentObject[i]->erased == false)
 					{
-						if (objects[i]->weapon == 1)
+						if (currentObject[i]->weapon == 1)
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (rangeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (rangeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (rangeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeAttackAnimated = true;
 								}
 							}
 						}
 						else
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (meleeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (meleeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (meleeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeAttackAnimated = true;
 								}
 							}
 						}
-						if (objects[i]->m_pSkinnedAnimationController)
+						if (currentObject[i]->m_pSkinnedAnimationController)
 						{
-							objects[i]->UpdateTransform(NULL);
+							currentObject[i]->UpdateTransform(NULL);
 						}
 						if (heap)
 						{
 							pd3dCommandList->SetDescriptorHeaps(1, &heap);
 						}
 						rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-						objects[i]->Render(pd3dCommandList, pCamera);
+						currentObject[i]->Render(pd3dCommandList, pCamera);
 					}
 				}
 			}
@@ -2327,72 +2395,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 				{
 
-					if (objects[i]->erased == false)
+					if (currentObject[i]->erased == false)
 					{
-						if (objects[i]->weapon == 1)
+						if (currentObject[i]->weapon == 1)
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (rangeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (rangeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (rangeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeAttackAnimated = true;
 								}
 							}
 						}
 						else
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (meleeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (meleeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (meleeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeAttackAnimated = true;
 								}
 							}
 						}
-						if (objects[i]->m_pSkinnedAnimationController)
+						if (currentObject[i]->m_pSkinnedAnimationController)
 						{
-							objects[i]->UpdateTransform(NULL);
+							currentObject[i]->UpdateTransform(NULL);
 						}
 						if (heap)
 						{
 							pd3dCommandList->SetDescriptorHeaps(1, &heap);
 						}
 						rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-						objects[i]->Render(pd3dCommandList, pCamera);
+						currentObject[i]->Render(pd3dCommandList, pCamera);
 					}
 				}
 			}
@@ -2405,72 +2473,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 				if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 				{
 
-					if (objects[i]->erased == false)
+					if (currentObject[i]->erased == false)
 					{
-						if (objects[i]->weapon == 1)
+						if (currentObject[i]->weapon == 1)
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (rangeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (rangeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (rangeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									rangeAttackAnimated = true;
 								}
 							}
 						}
 						else
 						{
-							if (objects[i]->bState.stateID == PATROL_STATE)
+							if (currentObject[i]->bState.stateID == PATROL_STATE)
 							{
 								if (meleeWalkAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeWalkAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == CHASE_STATE)
+							else if (currentObject[i]->bState.stateID == CHASE_STATE)
 							{
 								if (meleeRunAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeRunAnimated = true;
 								}
 							}
-							else if (objects[i]->bState.stateID == BATTLE_STATE)
+							else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 							{
 								if (meleeAttackAnimated == false)
 								{
-									objects[i]->Animate(elapsed);
+									currentObject[i]->Animate(elapsed);
 									meleeAttackAnimated = true;
 								}
 							}
 						}
-						if (objects[i]->m_pSkinnedAnimationController)
+						if (currentObject[i]->m_pSkinnedAnimationController)
 						{
-							objects[i]->UpdateTransform(NULL);
+							currentObject[i]->UpdateTransform(NULL);
 						}
 						if (heap)
 						{
 							pd3dCommandList->SetDescriptorHeaps(1, &heap);
 						}
 						rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-						objects[i]->Render(pd3dCommandList, pCamera);
+						currentObject[i]->Render(pd3dCommandList, pCamera);
 					}
 				}
 			}
@@ -2483,72 +2551,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2561,72 +2629,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2639,72 +2707,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2717,72 +2785,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2794,72 +2862,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2876,72 +2944,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -2954,72 +3022,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -3033,72 +3101,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -3112,72 +3180,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -3192,72 +3260,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 			if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 			{
 
-				if (objects[i]->erased == false)
+				if (currentObject[i]->erased == false)
 				{
-					if (objects[i]->weapon == 1)
+					if (currentObject[i]->weapon == 1)
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (rangeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (rangeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (rangeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								rangeAttackAnimated = true;
 							}
 						}
 					}
 					else
 					{
-						if (objects[i]->bState.stateID == PATROL_STATE)
+						if (currentObject[i]->bState.stateID == PATROL_STATE)
 						{
 							if (meleeWalkAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeWalkAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == CHASE_STATE)
+						else if (currentObject[i]->bState.stateID == CHASE_STATE)
 						{
 							if (meleeRunAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeRunAnimated = true;
 							}
 						}
-						else if (objects[i]->bState.stateID == BATTLE_STATE)
+						else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 						{
 							if (meleeAttackAnimated == false)
 							{
-								objects[i]->Animate(elapsed);
+								currentObject[i]->Animate(elapsed);
 								meleeAttackAnimated = true;
 							}
 						}
 					}
-					if (objects[i]->m_pSkinnedAnimationController)
+					if (currentObject[i]->m_pSkinnedAnimationController)
 					{
-						objects[i]->UpdateTransform(NULL);
+						currentObject[i]->UpdateTransform(NULL);
 					}
 					if (heap)
 					{
 						pd3dCommandList->SetDescriptorHeaps(1, &heap);
 					}
 					rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-					objects[i]->Render(pd3dCommandList, pCamera);
+					currentObject[i]->Render(pd3dCommandList, pCamera);
 				}
 			}
 		}
@@ -3268,72 +3336,72 @@ void EnemyShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pC
 		if (cosAngle <= 1.0f && cosAngle >= cos(XMConvertToRadians(50.0f)) && dist <= 100.0f)
 		{
 
-			if (objects[i]->erased == false)
+			if (currentObject[i]->erased == false)
 			{
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
-					if (objects[i]->bState.stateID == PATROL_STATE)
+					if (currentObject[i]->bState.stateID == PATROL_STATE)
 					{
 						if (rangeWalkAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							rangeWalkAnimated = true;
 						}
 					}
-					else if (objects[i]->bState.stateID == CHASE_STATE)
+					else if (currentObject[i]->bState.stateID == CHASE_STATE)
 					{
 						if (rangeRunAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							rangeRunAnimated = true;
 						}
 					}
-					else if (objects[i]->bState.stateID == BATTLE_STATE)
+					else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 					{
 						if (rangeAttackAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							rangeAttackAnimated = true;
 						}
 					}
 				}
 				else
 				{
-					if (objects[i]->bState.stateID == PATROL_STATE)
+					if (currentObject[i]->bState.stateID == PATROL_STATE)
 					{
 						if (meleeWalkAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							meleeWalkAnimated = true;
 						}
 					}
-					else if (objects[i]->bState.stateID == CHASE_STATE)
+					else if (currentObject[i]->bState.stateID == CHASE_STATE)
 					{
 						if (meleeRunAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							meleeRunAnimated = true;
 						}
 					}
-					else if (objects[i]->bState.stateID == BATTLE_STATE)
+					else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 					{
 						if (meleeAttackAnimated == false)
 						{
-							objects[i]->Animate(elapsed);
+							currentObject[i]->Animate(elapsed);
 							meleeAttackAnimated = true;
 						}
 					}
 				}
-				if (objects[i]->m_pSkinnedAnimationController)
+				if (currentObject[i]->m_pSkinnedAnimationController)
 				{
-					objects[i]->UpdateTransform(NULL);
+					currentObject[i]->UpdateTransform(NULL);
 				}
 				if (heap)
 				{
 					pd3dCommandList->SetDescriptorHeaps(1, &heap);
 				}
 				rm->materials[2]->UpdateShaderVariable(pd3dCommandList);
-				objects[i]->Render(pd3dCommandList, pCamera);
+				currentObject[i]->Render(pd3dCommandList, pCamera);
 			}
 		}
 			
@@ -3402,9 +3470,9 @@ D3D12_SHADER_BYTECODE EnemyShader::CreatePixelShader()
 std::vector<XMFLOAT3> EnemyShader::getEnemyPosition()
 {
 	std::vector<XMFLOAT3> result;
-	for (int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < currentObject.size(); ++i)
 	{
-		XMFLOAT3 pos = objects[i]->GetPosition();
+		XMFLOAT3 pos = currentObject[i]->GetPosition();
 		result.push_back(pos);
 	}
 	return result;
@@ -3414,9 +3482,9 @@ std::vector<int> EnemyShader::getHealthRate()
 {
 	std::vector<int> result;
 
-	for (int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < currentObject.size(); ++i)
 	{
-		int hprate = (int)((float)objects[i]->bState.hp / (float)objects[i]->maxHP * 9.0f);
+		int hprate = (int)((float)currentObject[i]->bState.hp / (float)currentObject[i]->maxHP * 9.0f);
 		result.push_back(hprate);
 	}
 	return result;
@@ -3425,57 +3493,57 @@ std::vector<int> EnemyShader::getHealthRate()
 void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die, ID3D12RootSignature* sig)
 {
 
-	for (int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < currentObject.size(); ++i)
 	{
-		if (objects[i]->erased == false)
+		if (currentObject[i]->erased == false)
 		{
 
 			// 체력이 막 떨어진 시점에
-			if (objects[i]->bState.hp <= 0 && objects[i]->bState.stateID != DEAD_STATE)
+			if (currentObject[i]->bState.hp <= 0 && currentObject[i]->bState.stateID != DEAD_STATE)
 			{
 				//죽은 것으로 판정하고 죽은 시점 구하기
-				objects[i]->bState.stateID = DEAD_STATE;
-				objects[i]->stunned = false;
-				objects[i]->deathMoment = chrono::system_clock::now();
-				objects[i]->erased = true;
+				currentObject[i]->bState.stateID = DEAD_STATE;
+				currentObject[i]->stunned = false;
+				currentObject[i]->deathMoment = chrono::system_clock::now();
+				currentObject[i]->erased = true;
 
 
 			}
 
-			if (objects[i]->stunned == true)
+			if (currentObject[i]->stunned == true)
 			{
 				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-				chrono::duration<double> dt = moment - objects[i]->lastStun;
+				chrono::duration<double> dt = moment - currentObject[i]->lastStun;
 				//기절 애니메이션으로 변경
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[5]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5], true);
+						currentObject[i]->setRoot(rm->enemyModels[5]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[5], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[6]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6], true);
+						currentObject[i]->setRoot(rm->enemyModels[6]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[6], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 				//기절 지속시간이 끝난 경우
-				if ((float)dt.count() >= objects[i]->stunDuration)
+				if ((float)dt.count() >= currentObject[i]->stunDuration)
 				{
-					objects[i]->stunned = false;
-					objects[i]->stunDuration = 0.0f;
-					objects[i]->bState.stateID = PATROL_STATE;
+					currentObject[i]->stunned = false;
+					currentObject[i]->stunDuration = 0.0f;
+					currentObject[i]->bState.stateID = PATROL_STATE;
 				}
 
 				continue;
 			}
-			if (objects[i]->bState.stateID == PATROL_STATE)
+			if (currentObject[i]->bState.stateID == PATROL_STATE)
 			{
 				//플레이어 발견 여부 설정
 				float minDist = 9999.0f;
@@ -3484,7 +3552,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				for (int p = 0; p < ppos.size(); ++p)
 				{
 					bool found = true;
-					XMFLOAT3 ep = objects[i]->GetPosition();
+					XMFLOAT3 ep = currentObject[i]->GetPosition();
 
 
 					float ex = ep.x;
@@ -3518,7 +3586,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3530,7 +3598,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3542,7 +3610,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3554,7 +3622,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3585,7 +3653,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3597,7 +3665,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3631,7 +3699,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3643,7 +3711,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3655,7 +3723,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3667,7 +3735,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3698,7 +3766,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3710,7 +3778,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3722,7 +3790,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3734,7 +3802,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 									int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 									//ix = (int)((x + 0.25f) / 0.5f);
 									//iz = (int)((z + 0.25f) / 0.5f);
-									if (objects[i]->heightmap[ix][iz] >= 2.0f)
+									if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 									{
 										found = false;
 										break;
@@ -3760,93 +3828,93 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				if (playerID != -1)
 				{
 					printf("적이 플레이어 찾음\n");
-					objects[i]->bState.stateID = CHASE_STATE;
-					objects[i]->chaseTargetPos = ppos[playerID];
+					currentObject[i]->bState.stateID = CHASE_STATE;
+					currentObject[i]->chaseTargetPos = ppos[playerID];
 					float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
 					float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
-					objects[i]->chaseTarget = playerID;
-					objects[i]->route = objects[i]->NavigateMovement(xx, zz);
-					objects[i]->lastSearch = chrono::system_clock::now();
-					objects[i]->routeIdx = 0;
+					currentObject[i]->chaseTarget = playerID;
+					currentObject[i]->route = currentObject[i]->NavigateMovement(xx, zz);
+					currentObject[i]->lastSearch = chrono::system_clock::now();
+					currentObject[i]->routeIdx = 0;
 					continue;
 				}
-				else if (objects[i]->hitPlayerID != -1)
+				else if (currentObject[i]->hitPlayerID != -1)
 				{
 					printf("적이 플레이어 찾음\n");
-					objects[i]->bState.stateID = CHASE_STATE;
-					objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
-					objects[i]->chaseTarget = objects[i]->hitPlayerID;
-					objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
-					objects[i]->lastSearch = chrono::system_clock::now();
-					objects[i]->routeIdx = 0;
+					currentObject[i]->bState.stateID = CHASE_STATE;
+					currentObject[i]->chaseTargetPos = ppos[currentObject[i]->hitPlayerID];
+					currentObject[i]->chaseTarget = currentObject[i]->hitPlayerID;
+					currentObject[i]->route = currentObject[i]->NavigateMovement(currentObject[i]->chaseTargetPos.x, currentObject[i]->chaseTargetPos.z);
+					currentObject[i]->lastSearch = chrono::system_clock::now();
+					currentObject[i]->routeIdx = 0;
 					continue;
 				}
 
 				// 현재 가고자 하는 곳까지 경로 계산
-				if ((objects[i]->routeIdx == objects[i]->route.size()) || (objects[i]->route.size() == 0))
+				if ((currentObject[i]->routeIdx == currentObject[i]->route.size()) || (currentObject[i]->route.size() == 0))
 				{
-					objects[i]->currentPoint += 1;
-					if (objects[i]->seekPoint.size() != 0)
+					currentObject[i]->currentPoint += 1;
+					if (currentObject[i]->seekPoint.size() != 0)
 					{
-						if (objects[i]->currentPoint == objects[i]->seekPoint.size())
-							objects[i]->currentPoint = 0;
-						objects[i]->route = objects[i]->NavigateMovement(objects[i]->seekPoint[objects[i]->currentPoint].x, objects[i]->seekPoint[objects[i]->currentPoint].y);
-						objects[i]->routeIdx = 0;
+						if (currentObject[i]->currentPoint == currentObject[i]->seekPoint.size())
+							currentObject[i]->currentPoint = 0;
+						currentObject[i]->route = currentObject[i]->NavigateMovement(currentObject[i]->seekPoint[currentObject[i]->currentPoint].x, currentObject[i]->seekPoint[currentObject[i]->currentPoint].y);
+						currentObject[i]->routeIdx = 0;
 					}
 
 
 				}
-				objects[i]->moveByRoute(objects[i]->route, objects);
+				currentObject[i]->moveByRoute(currentObject[i]->route, currentObject);
 				//이동 애니메이션으로 변경
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[2]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2], true);
+						currentObject[i]->setRoot(rm->enemyModels[2]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[2], true);
 						
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[9]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9], true); 
+						currentObject[i]->setRoot(rm->enemyModels[9]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[9], true); 
 						
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 
 
 			}
 
-			else if (objects[i]->bState.stateID == CHASE_STATE)
+			else if (currentObject[i]->bState.stateID == CHASE_STATE)
 			{
 				//빠르게 이동하는 애니메이션으로 변경
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[3]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3], true);
+						currentObject[i]->setRoot(rm->enemyModels[3]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[3], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[11]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11], true);
+						currentObject[i]->setRoot(rm->enemyModels[11]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[11], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 
 				//2초에 한번 경로 재설정
 				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-				chrono::duration<double> dtm = moment - objects[i]->lastSearch;
+				chrono::duration<double> dtm = moment - currentObject[i]->lastSearch;
 				if ((float)dtm.count() >= 2.0f)
 				{
 					//플레이어 발견 여부 설정
@@ -3855,7 +3923,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					for (int p = 0; p < ppos.size(); ++p)
 					{
 						bool found = true;
-						XMFLOAT3 ep = objects[i]->GetPosition();
+						XMFLOAT3 ep = currentObject[i]->GetPosition();
 
 
 						float ex = ep.x;
@@ -3889,7 +3957,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -3901,7 +3969,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -3913,7 +3981,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -3925,7 +3993,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -3956,7 +4024,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -3968,7 +4036,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4001,7 +4069,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4013,7 +4081,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4025,7 +4093,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4037,7 +4105,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4067,7 +4135,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4079,7 +4147,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4091,7 +4159,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4103,7 +4171,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4130,48 +4198,48 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					if (playerID != -1)
 					{
 						printf("적이 플레이어 찾음\n");
-						objects[i]->bState.stateID = CHASE_STATE;
-						objects[i]->chaseTargetPos = ppos[playerID];
+						currentObject[i]->bState.stateID = CHASE_STATE;
+						currentObject[i]->chaseTargetPos = ppos[playerID];
 						float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
 						float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
-						objects[i]->chaseTarget = playerID;
-						objects[i]->route = objects[i]->NavigateMovement(xx, zz);
-						objects[i]->lastSearch = chrono::system_clock::now();
-						objects[i]->routeIdx = 0;
+						currentObject[i]->chaseTarget = playerID;
+						currentObject[i]->route = currentObject[i]->NavigateMovement(xx, zz);
+						currentObject[i]->lastSearch = chrono::system_clock::now();
+						currentObject[i]->routeIdx = 0;
 						continue;
 					}
-					else if (objects[i]->hitPlayerID != -1)
+					else if (currentObject[i]->hitPlayerID != -1)
 					{
 						printf("적이 플레이어 찾음\n");
-						objects[i]->bState.stateID = CHASE_STATE;
-						objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
-						objects[i]->chaseTarget = objects[i]->hitPlayerID;
-						objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
-						objects[i]->lastSearch = chrono::system_clock::now();
-						objects[i]->routeIdx = 0;
+						currentObject[i]->bState.stateID = CHASE_STATE;
+						currentObject[i]->chaseTargetPos = ppos[currentObject[i]->hitPlayerID];
+						currentObject[i]->chaseTarget = currentObject[i]->hitPlayerID;
+						currentObject[i]->route = currentObject[i]->NavigateMovement(currentObject[i]->chaseTargetPos.x, currentObject[i]->chaseTargetPos.z);
+						currentObject[i]->lastSearch = chrono::system_clock::now();
+						currentObject[i]->routeIdx = 0;
 						continue;
 					}
 				}
 
 				//플레이어의 위치를 향해 감.
-				if (objects[i]->routeIdx < objects[i]->route.size())
+				if (currentObject[i]->routeIdx < currentObject[i]->route.size())
 				{
-					objects[i]->moveByRoute(objects[i]->route, objects);
+					currentObject[i]->moveByRoute(currentObject[i]->route, currentObject);
 				}
 
 
-				float dist = Vector3::Length(Vector3::Subtract(ppos[objects[i]->chaseTarget], objects[i]->GetPosition()));
+				float dist = Vector3::Length(Vector3::Subtract(ppos[currentObject[i]->chaseTarget], currentObject[i]->GetPosition()));
 
 				float minDist = 9999.0f;
 				int attackTarget = -1;
 				//추적중인 플레이어와 거리가 공격 사거리보다 짧고, 그 사이에 높이맵이 모두 0인경우
-				if (dist <= objects[i]->attackRange)
+				if (dist <= currentObject[i]->attackRange)
 				{
 					bool found = true;
-					float ex = objects[i]->GetPosition().x;
-					float ez = objects[i]->GetPosition().z;
-					float px = ppos[objects[i]->chaseTarget].x;
-					float pz = ppos[objects[i]->chaseTarget].z;
+					float ex = currentObject[i]->GetPosition().x;
+					float ez = currentObject[i]->GetPosition().z;
+					float px = ppos[currentObject[i]->chaseTarget].x;
+					float pz = ppos[currentObject[i]->chaseTarget].z;
 					float dx = px - ex;
 					float dz = pz - ez;
 					float dist = sqrt(dx * dx + dz * dz);
@@ -4187,7 +4255,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								int ix = (int)((x - 0.25f) / 0.5f) + 1;
 								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 								{
 									found = false;
 									break;
@@ -4198,7 +4266,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 								int iz = (int)((z - 0.25f) / 0.5f) + 1;
 
-								if (objects[i]->heightmap[ix][iz] >= 2.0f)
+								if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 								{
 									found = false;
 									break;
@@ -4207,8 +4275,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						}
 						if (found == true)
 						{
-							objects[i]->bState.stateID = BATTLE_STATE;
-							objects[i]->attackTarget = objects[i]->chaseTarget;
+							currentObject[i]->bState.stateID = BATTLE_STATE;
+							currentObject[i]->attackTarget = currentObject[i]->chaseTarget;
 						}
 
 					}
@@ -4222,7 +4290,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							{
 								int ix = (int)((x - 0.25f) / 0.5f) + 1;
 								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								if (objects[i]->heightmap[ix][iz] >= 1.0f)
+								if (currentObject[i]->heightmap[ix][iz] >= 1.0f)
 								{
 									found = false;
 									break;
@@ -4232,7 +4300,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							{
 								int ix = (int)((x - 200.0f - 0.25f) / 0.5f) + 1;
 								int iz = (int)((z - 0.25f) / 0.5f) + 1;
-								if (objects[i]->heightmap[ix][iz] >= 1.0f)
+								if (currentObject[i]->heightmap[ix][iz] >= 1.0f)
 								{
 									found = false;
 									break;
@@ -4243,8 +4311,8 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						}
 						if (found == true)
 						{
-							objects[i]->bState.stateID = BATTLE_STATE;
-							objects[i]->attackTarget = objects[i]->chaseTarget;
+							currentObject[i]->bState.stateID = BATTLE_STATE;
+							currentObject[i]->attackTarget = currentObject[i]->chaseTarget;
 						}
 					}
 
@@ -4252,14 +4320,14 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 				//추적중인 플레이어와 거리가 너무 멀어지거나, 도착 완료한 경우
-				if (dist >= 20.0f || objects[i]->routeIdx == objects[i]->route.size())
+				if (dist >= 20.0f || currentObject[i]->routeIdx == currentObject[i]->route.size())
 				{
 					int playerID = -1; // 발견한 적의 아이디
 					//높이맵에서, 적과 플레이어 사이의 어느 위치에 높이가 1.0이상인 구간이 존재할 경우 그 플레이어는 발견되지 않았다는 뜻
 					for (int p = 0; p < ppos.size(); ++p)
 					{
 						bool found = true;
-						XMFLOAT3 ep = objects[i]->GetPosition();
+						XMFLOAT3 ep = currentObject[i]->GetPosition();
 
 
 						float ex = ep.x;
@@ -4275,9 +4343,9 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						//15미터 너머의 적은 봐도 못본 것으로 처리
 						if (dist > 20.0f)
 						{
-							objects[i]->chaseTarget = -1;
-							objects[i]->attackTarget = -1;
-							objects[i]->bState.stateID = PATROL_STATE;
+							currentObject[i]->chaseTarget = -1;
+							currentObject[i]->attackTarget = -1;
+							currentObject[i]->bState.stateID = PATROL_STATE;
 							continue;
 						}
 						if (abs(dx) > abs(dz))
@@ -4294,7 +4362,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4306,7 +4374,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4318,7 +4386,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4330,7 +4398,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4361,7 +4429,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4373,7 +4441,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4407,7 +4475,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4419,7 +4487,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4431,7 +4499,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4443,7 +4511,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4474,7 +4542,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4486,7 +4554,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4498,7 +4566,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 363.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4510,7 +4578,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 										int iz = (int)((z - 60.0f - 0.25f) / 0.5f) + 1;
 										//ix = (int)((x + 0.25f) / 0.5f);
 										//iz = (int)((z + 0.25f) / 0.5f);
-										if (objects[i]->heightmap[ix][iz] >= 2.0f)
+										if (currentObject[i]->heightmap[ix][iz] >= 2.0f)
 										{
 											found = false;
 											break;
@@ -4536,22 +4604,22 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					//적이 플레이어에게 타격받거나, 플레이어를 발견한 경우 추적 상태로 전환
 					if (playerID != -1)
 					{
-						objects[i]->bState.stateID = CHASE_STATE;
-						objects[i]->chaseTargetPos = ppos[playerID];
+						currentObject[i]->bState.stateID = CHASE_STATE;
+						currentObject[i]->chaseTargetPos = ppos[playerID];
 						float xx = (float)((int)((ppos[playerID].x - 0.25f) / 0.5f) + 1) * 0.5f;
 						float zz = (float)((int)((ppos[playerID].z - 0.25f) / 0.5f) + 1) * 0.5f;
-						objects[i]->chaseTarget = playerID;
-						objects[i]->route = objects[i]->NavigateMovement(xx, zz);
-						objects[i]->routeIdx = 0;
+						currentObject[i]->chaseTarget = playerID;
+						currentObject[i]->route = currentObject[i]->NavigateMovement(xx, zz);
+						currentObject[i]->routeIdx = 0;
 						continue;
 					}
-					else if (objects[i]->hitPlayerID != -1)
+					else if (currentObject[i]->hitPlayerID != -1)
 					{
-						objects[i]->bState.stateID = CHASE_STATE;
-						objects[i]->chaseTargetPos = ppos[objects[i]->hitPlayerID];
-						objects[i]->chaseTarget = objects[i]->hitPlayerID;
-						objects[i]->route = objects[i]->NavigateMovement(objects[i]->chaseTargetPos.x, objects[i]->chaseTargetPos.z);
-						objects[i]->routeIdx = 0;
+						currentObject[i]->bState.stateID = CHASE_STATE;
+						currentObject[i]->chaseTargetPos = ppos[currentObject[i]->hitPlayerID];
+						currentObject[i]->chaseTarget = currentObject[i]->hitPlayerID;
+						currentObject[i]->route = currentObject[i]->NavigateMovement(currentObject[i]->chaseTargetPos.x, currentObject[i]->chaseTargetPos.z);
+						currentObject[i]->routeIdx = 0;
 						continue;
 					}
 
@@ -4560,19 +4628,19 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 			}
 
-			else if (objects[i]->bState.stateID == DEAD_STATE)
+			else if (currentObject[i]->bState.stateID == DEAD_STATE)
 			{
 				//죽고난 후 시점까지의 경과시간 구하기.
-				chrono::duration<double> timeFromDeath = chrono::system_clock::now() - objects[i]->deathMoment;
+				chrono::duration<double> timeFromDeath = chrono::system_clock::now() - currentObject[i]->deathMoment;
 				float dt = (float)timeFromDeath.count();
 
 				
-				objects[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
-				objects[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
+				currentObject[i]->mbox->start = XMFLOAT3(-1.0f, -1.0f, -1.0f);
+				currentObject[i]->mbox->end = XMFLOAT3(-0.5f, -0.5f, -0.5f);
 
 				//i//f (dt > 2.0f)
 				//{
-				//	objects[i]->SetMesh(NULL);
+				//	currentObject[i]->SetMesh(NULL);
 				//}
 
 				//1초, 즉 죽는 애니메이션의 재생 시간이 지나면 해당 적 삭제.
@@ -4582,11 +4650,11 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 
-				tmp->SetPosition(objects[i]->GetPosition());
-				objects[i]->SetPosition(-100.0f, -100.0f, -100.0f);
-				if (objects[i]->attackTarget != -1)
+				tmp->SetPosition(currentObject[i]->GetPosition());
+				currentObject[i]->SetPosition(-100.0f, -100.0f, -100.0f);
+				if (currentObject[i]->attackTarget != -1)
 				{
-					XMFLOAT3 toPlayer = Vector3::Subtract(ps->objects[objects[i]->attackTarget]->GetPosition(), objects[i]->GetPosition());
+					XMFLOAT3 toPlayer = Vector3::Subtract(ps->objects[currentObject[i]->attackTarget]->GetPosition(), currentObject[i]->GetPosition());
 					XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
 					float angle = atan2f(ntp.x, ntp.z);
 					angle = angle / 3.141592f * 180.0f;
@@ -4601,12 +4669,12 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 
 				tmp->SetMaterial(0, rm->materials[2]);
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
 					die->type.push_back(1);
 					tmp->SetMesh(die->enemyGunDie[0]);
 				}
-				else if (objects[i]->weapon == 2)
+				else if (currentObject[i]->weapon == 2)
 				{
 					die->type.push_back(2);
 					tmp->SetMesh(die->enemyBluntDie[0]);
@@ -4617,40 +4685,40 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 			}
 
-			else if (objects[i]->bState.stateID == BATTLE_STATE)
+			else if (currentObject[i]->bState.stateID == BATTLE_STATE)
 			{
 				//공격하는 애니메이션으로 변경
-				if (objects[i]->weapon == 1)
+				if (currentObject[i]->weapon == 1)
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[4]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4], true);
+						currentObject[i]->setRoot(rm->enemyModels[4]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[4], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
 				else
 				{
-					if (objects[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
+					if (currentObject[i]->m_pChild != rm->enemyModels[7]->m_pModelRootObject)
 					{
-						objects[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
-						objects[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7], true);
+						currentObject[i]->setRoot(rm->enemyModels[7]->m_pModelRootObject, true);
+						currentObject[i]->m_pSkinnedAnimationController = new CAnimationController(pd3dDevice, pd3dCommandList, 1, rm->enemyModels[7], true);
 					}
-					objects[i]->SetTrackAnimationSet(0, 0);
+					currentObject[i]->SetTrackAnimationSet(0, 0);
 				}
-				XMFLOAT3 pp = XMFLOAT3(ppos[objects[i]->attackTarget].x, 0.0f, ppos[objects[i]->attackTarget].z);
-				XMFLOAT3 toPlayer = Vector3::Subtract(pp, objects[i]->GetPosition());
+				XMFLOAT3 pp = XMFLOAT3(ppos[currentObject[i]->attackTarget].x, 0.0f, ppos[currentObject[i]->attackTarget].z);
+				XMFLOAT3 toPlayer = Vector3::Subtract(pp, currentObject[i]->GetPosition());
 
 				XMFLOAT3 ntp = Vector3::Normalize(toPlayer);
 
 				float dist = Vector3::Length(toPlayer);
 				//공격 대상이 사거리 밖으로 벗어났을 경우
-				if (dist > objects[i]->attackRange)
+				if (dist > currentObject[i]->attackRange)
 				{
 					//다시 순찰모드
-					objects[i]->chaseTarget = -1;
-					objects[i]->attackTarget = -1;
-					objects[i]->bState.stateID = PATROL_STATE;
+					currentObject[i]->chaseTarget = -1;
+					currentObject[i]->attackTarget = -1;
+					currentObject[i]->bState.stateID = PATROL_STATE;
 				}
 				else
 				{
@@ -4658,16 +4726,16 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					angle = angle / 3.141592f * 180.0f;
 					if (angle >= 360.0f)
 						angle -= 360.0f;
-					objects[i]->Rotate(0.0f, angle, 0.0f);
+					currentObject[i]->Rotate(0.0f, angle, 0.0f);
 
 					chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
-					chrono::duration<double> fromLastAttack = moment - objects[i]->lastAttack;
+					chrono::duration<double> fromLastAttack = moment - currentObject[i]->lastAttack;
 
 					float dt = (float)fromLastAttack.count();
-					if (dt > objects[i]->attackDuration)
+					if (dt > currentObject[i]->attackDuration)
 					{
 						Line line;
-						line.start = objects[i]->GetPosition();
+						line.start = currentObject[i]->GetPosition();
 						line.end = pp;
 
 						std::vector<XYZPlane> checkList;
@@ -4676,19 +4744,19 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 						XYZPlane p2;
 						XYZPlane p3;
 						XYZPlane p4;
-						p1.pos = ppos[objects[i]->chaseTarget].x + 0.3f;
+						p1.pos = ppos[currentObject[i]->chaseTarget].x + 0.3f;
 						p1.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
 						checkList.push_back(p1);
 
-						p2.pos = ppos[objects[i]->chaseTarget].x - 0.3f;
+						p2.pos = ppos[currentObject[i]->chaseTarget].x - 0.3f;
 						p2.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
 						checkList.push_back(p2);
 
-						p3.pos = ppos[objects[i]->chaseTarget].z - 0.3f;
+						p3.pos = ppos[currentObject[i]->chaseTarget].z - 0.3f;
 						p3.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
 						checkList.push_back(p3);
 
-						p4.pos = ppos[objects[i]->chaseTarget].z + 0.3f;
+						p4.pos = ppos[currentObject[i]->chaseTarget].z + 0.3f;
 						p4.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
 						checkList.push_back(p4);
 
@@ -4701,7 +4769,7 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 							{
 
-								float d = Vector3::Length(Vector3::Subtract(temp, objects[i]->GetPosition()));
+								float d = Vector3::Length(Vector3::Subtract(temp, currentObject[i]->GetPosition()));
 
 								if (d < md)
 								{
@@ -4715,13 +4783,13 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							}
 						}
 
-						XMFLOAT3 tp = XMFLOAT3(targetPos.x - objects[i]->GetPosition().x, 0.0f, targetPos.z - objects[i]->GetPosition().z);
+						XMFLOAT3 tp = XMFLOAT3(targetPos.x - currentObject[i]->GetPosition().x, 0.0f, targetPos.z - currentObject[i]->GetPosition().z);
 
 						XMFLOAT3 np = Vector3::Normalize(tp);
 						part->createParticles(1, 100, targetPos, pd3dDevice, pd3dCommandList, np.x,np.y);
-						ps->objects[objects[i]->chaseTarget]->info->stats.capacity -= 1;
+						ps->objects[currentObject[i]->chaseTarget]->info->stats.capacity -= 1;
 
-						if (objects[i]->weapon == 1)
+						if (currentObject[i]->weapon == 1)
 						{
 							rm->effect[1]->play();
 							rm->effect[1]->Update();
@@ -4732,14 +4800,14 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 							rm->effect[4]->Update();
 						}
 
-						objects[i]->lastAttack = chrono::system_clock::now();
+						currentObject[i]->lastAttack = chrono::system_clock::now();
 					}
 				}
 			}
 		}
 
 
-		objects[i]->lastMove = chrono::system_clock::now();
+		currentObject[i]->lastMove = chrono::system_clock::now();
 	}
 
 

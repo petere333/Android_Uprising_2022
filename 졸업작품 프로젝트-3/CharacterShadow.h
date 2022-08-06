@@ -33,7 +33,7 @@ public:
 	std::vector<XMFLOAT3> pp;
 	std::vector<XMFLOAT3> ep;
 	
-	void animate(PlayerShader* ps, EnemyShader* es);
+	void animate(PlayerShader* ps, EnemyShader* es, int);
 	
 
 	std::vector<CGameObject*>	op;

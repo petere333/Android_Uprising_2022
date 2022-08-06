@@ -638,7 +638,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			enemyDying->animate();
 		}
 
-		charShd->animate(playerShader, enemyShader);
+		charShd->animate(playerShader, enemyShader, waitInter->selectedStage);
 
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
@@ -2394,7 +2394,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 					//enemyShader->objects.clear();
 					//enemyShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-					enemyShader->restart();
+					enemyShader->restart(waitInter->selectedStage);
 
 					rm->bgm[0]->stop();
 					rm->bgm[0]->Update();
@@ -2474,7 +2474,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					playerShader->objects[k]->kState.xzspeed = 0.0f;
 					playerShader->objects[k]->kState.yspeed = 0.0f;
 				}
-				enemyShader->restart();
+				enemyShader->restart(waitInter->selectedStage);
 				//선택된 스테이지에 관한 정보 초기화.
 				rm->bgm[0]->stop();
 				rm->bgm[0]->Update();
@@ -2617,12 +2617,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			rm->bgm[0]->Update();
 
 
-			for (int e = 0; e < enemyShader->objects.size(); ++e)
-			{
-				
-				enemyShader->objects[e]->maxHP *= waitInter->selectedMode;
-				enemyShader->objects[e]->bState.hp *= waitInter->selectedMode;
-			}
+
 
 			for (int idx = 0; idx < playerShader->objects.size(); ++idx)
 			{
@@ -2630,6 +2625,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				if (waitInter->selectedStage == 1)
 				{
 					playerShader->objects[idx]->SetPosition(20.0f + idx * 5.0f, 0.0f, 175.0f);
+
+					enemyShader->restart(1);
 					//playerShader->objects[idx]->SetPosition(198.0f + idx * 5.0f, 0.0f, 198.0f);
 					if (idx == pID)
 					{
@@ -2640,10 +2637,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				}
 				else if (waitInter->selectedStage == 2)
 				{
+					enemyShader->restart(2);
 					//1-2스테이지인경우 2-1
 					playerShader->objects[idx]->SetPosition(830.0f, 0.0f, 580.0f - idx * 5.0f);
 
-					charShd->oe.clear();
+					
 					
 					if (idx == pID)
 					{
@@ -2651,9 +2649,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 						interShader->Animate(cam, playerShader->objects[pID]->info);
 					}
 
-					enemyShader->objects.clear();
+					
 				}
 				playerShader->objects[idx]->readyToGo = false;
+			}
+
+			for (int e = 0; e < enemyShader->currentObject.size(); ++e)
+			{
+
+				enemyShader->currentObject[e]->maxHP *= waitInter->selectedMode;
+				enemyShader->currentObject[e]->bState.hp *= waitInter->selectedMode;
 			}
 		}
 		
@@ -3014,13 +3019,13 @@ bool CScene::moveObject(int idx,CCamera* pCamera)
 			float px = playerShader->objects[idx]->GetPosition().x;
 			float pz = playerShader->objects[idx]->GetPosition().z;
 
-			for (int i = 0; i < enemyShader->objects.size(); ++i)
+			for (int i = 0; i < enemyShader->currentObject.size(); ++i)
 			{
-				XMFLOAT3 ep = enemyShader->objects[i]->GetPosition();
+				XMFLOAT3 ep = enemyShader->currentObject[i]->GetPosition();
 				float dx = ep.x - tx;
 				float dz = ep.z - tz;
 				float de = sqrt(dx * dx + dz * dz);
-				if (de < 0.5f && enemyShader->objects[i]->erased==false)
+				if (de < 0.5f && enemyShader->currentObject[i]->erased==false)
 				{
 					tx = ox;
 					ty = oy;
@@ -4058,9 +4063,9 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_ATTACK_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		enemyShader->objects[p.target]->bState.hp -= p.damage;
+		enemyShader->currentObject[p.target]->bState.hp -= p.damage;
 
-		if (enemyShader->objects[p.target]->bState.hp <= 0)
+		if (enemyShader->currentObject[p.target]->bState.hp <= 0)
 		{
 			if (interShader->mission == 1)
 			{
@@ -4105,12 +4110,12 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		{
 			if (p.stuntime > 3.0f)
 			{
-				enemyShader->objects[p.target]->stunned = true;
-				enemyShader->objects[p.target]->stunDuration = p.stuntime;
-				enemyShader->objects[p.target]->lastStun = chrono::system_clock::now();
+				enemyShader->currentObject[p.target]->stunned = true;
+				enemyShader->currentObject[p.target]->stunDuration = p.stuntime;
+				enemyShader->currentObject[p.target]->lastStun = chrono::system_clock::now();
 				if (interShader->mission == 2 || interShader->mission == 8)
 				{
-					enemyShader->objects[p.target]->stunDuration = 300.0f;
+					enemyShader->currentObject[p.target]->stunDuration = 300.0f;
 				}
 			}
 		}
@@ -4871,7 +4876,7 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 			rm->effect[1]->play();
 			rm->effect[1]->Update();
 			// 적한테 총알이 박혔나?
-			for (int i = 0; i < enemyShader->objects.size(); ++i)
+			for (int i = 0; i < enemyShader->currentObject.size(); ++i)
 			{
 				// 사격 시 x,y,z 방향에 따라서 충돌 검사를 수행할 바운딩 박스의 평면들을 체크리스트에 작성. 1~3개까지 존재 가능.
 
@@ -4882,14 +4887,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-					p.pos = enemyShader->objects[i]->mbox->start.x;
+					p.pos = enemyShader->currentObject[i]->mbox->start.x;
 					checkList.push_back(p);
 				}
 				else if (n.x < 0.0f)
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(1.0f, 0.0f, 0.0f);
-					p.pos = enemyShader->objects[i]->mbox->end.x;
+					p.pos = enemyShader->currentObject[i]->mbox->end.x;
 					checkList.push_back(p);
 				}
 
@@ -4897,14 +4902,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-					p.pos = enemyShader->objects[i]->mbox->start.z;
+					p.pos = enemyShader->currentObject[i]->mbox->start.z;
 					checkList.push_back(p);
 				}
 				else if (n.z < 0.0f)
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(0.0f, 0.0f, 1.0f);
-					p.pos = enemyShader->objects[i]->mbox->end.z;
+					p.pos = enemyShader->currentObject[i]->mbox->end.z;
 					checkList.push_back(p);
 				}
 
@@ -4912,14 +4917,14 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-					p.pos = enemyShader->objects[i]->mbox->start.y;
+					p.pos = enemyShader->currentObject[i]->mbox->start.y;
 					checkList.push_back(p);
 				}
 				else if (n.y < 0.0f)
 				{
 					XYZPlane p;
 					p.normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
-					p.pos = enemyShader->objects[i]->mbox->end.y;
+					p.pos = enemyShader->currentObject[i]->mbox->end.y;
 					checkList.push_back(p);
 				}
 
@@ -4933,9 +4938,9 @@ void CScene::attack(int idx, ID3D12Device* device, ID3D12GraphicsCommandList* li
 
 
 					//충돌 지점이 바운딩 박스 내에 존재하는 경우 (사실은 테두리에 있다.)
-					if ((temp.x <= enemyShader->objects[i]->mbox->end.x + 0.001f && temp.x >= enemyShader->objects[i]->mbox->start.x - 0.001f) &&
-						(temp.y <= enemyShader->objects[i]->mbox->end.y + 0.001f && temp.y >= enemyShader->objects[i]->mbox->start.y - 0.001f) &&
-						(temp.z <= enemyShader->objects[i]->mbox->end.z + 0.001f && temp.z >= enemyShader->objects[i]->mbox->start.z - 0.001f))
+					if ((temp.x <= enemyShader->currentObject[i]->mbox->end.x + 0.001f && temp.x >= enemyShader->currentObject[i]->mbox->start.x - 0.001f) &&
+						(temp.y <= enemyShader->currentObject[i]->mbox->end.y + 0.001f && temp.y >= enemyShader->currentObject[i]->mbox->start.y - 0.001f) &&
+						(temp.z <= enemyShader->currentObject[i]->mbox->end.z + 0.001f && temp.z >= enemyShader->currentObject[i]->mbox->start.z - 0.001f))
 					{
 						if (temp.x != -9999.0f && temp.y != -9999.0f && temp.z != -9999.0f)
 						{
@@ -5162,10 +5167,10 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 			float dz = cos(rad);
 			XMFLOAT3 look = XMFLOAT3(dx, 0.0f, dz);
 
-			for (int i = 0; i < enemyShader->objects.size(); ++i)
+			for (int i = 0; i < enemyShader->currentObject.size(); ++i)
 			{
 
-				XMFLOAT3 es = enemyShader->objects[i]->GetPosition();
+				XMFLOAT3 es = enemyShader->currentObject[i]->GetPosition();
 
 				XMFLOAT3 vec = XMFLOAT3(es.x - ps.x, 0.0f, es.z - ps.z);
 
@@ -5208,9 +5213,9 @@ void CScene::swingHammer(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 						p.xdir = dir.x;
 						p.zdir = dir.z;
 
-						p.x = enemyShader->objects[i]->GetPosition().x;
-						p.y = enemyShader->objects[i]->GetPosition().y;
-						p.z = enemyShader->objects[i]->GetPosition().z;
+						p.x = enemyShader->currentObject[i]->GetPosition().x;
+						p.y = enemyShader->currentObject[i]->GetPosition().y;
+						p.z = enemyShader->currentObject[i]->GetPosition().z;
 						p.particleType = 2;
 						SendPacket(&p);
 					}
@@ -5323,10 +5328,10 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 
 
 
-		for (int i = 0; i < enemyShader->objects.size(); ++i)
+		for (int i = 0; i < enemyShader->currentObject.size(); ++i)
 		{
 
-			XMFLOAT3 es = enemyShader->objects[i]->GetPosition();
+			XMFLOAT3 es = enemyShader->currentObject[i]->GetPosition();
 
 			XMFLOAT3 vec = XMFLOAT3(es.x - ps.x, 0.0f, es.z - ps.z);
 
@@ -5350,9 +5355,9 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 					p.id = pID;
 					p.particleType = 2;
 					p.count = 100;
-					p.x = enemyShader->objects[i]->GetPosition().x;
-					p.y = enemyShader->objects[i]->GetPosition().y;
-					p.z = enemyShader->objects[i]->GetPosition().z;
+					p.x = enemyShader->currentObject[i]->GetPosition().x;
+					p.y = enemyShader->currentObject[i]->GetPosition().y;
+					p.z = enemyShader->currentObject[i]->GetPosition().z;
 
 
 					//플레이어가 바라보는 방향과 정반대 방향
@@ -5615,9 +5620,9 @@ void CScene::useRadio(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 
 		XMFLOAT3 ppos = playerShader->objects[idx]->GetPosition();
 
-		for (int p = 0; p < enemyShader->objects.size(); ++p)
+		for (int p = 0; p < enemyShader->currentObject.size(); ++p)
 		{
-			XMFLOAT3 ep = enemyShader->objects[p]->GetPosition();
+			XMFLOAT3 ep = enemyShader->currentObject[p]->GetPosition();
 
 			XMFLOAT3 dp = XMFLOAT3(ep.x - ppos.x, ep.y - ppos.y, ep.z - ppos.z);
 			if (Vector3::Length(dp) <= 5.0f)

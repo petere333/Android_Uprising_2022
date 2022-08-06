@@ -118,7 +118,7 @@ void CharShadow::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCa
 	
 }
 
-void CharShadow::animate(PlayerShader* ps, EnemyShader* es)
+void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 {
 	pp.clear();
 	ep.clear();
@@ -127,11 +127,14 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es)
 	{
 		pp.push_back(ps->objects[i]->GetPosition());
 	}
-	for (int i = 0; i < es->objects.size(); ++i)
+
+
+	for (int i = 0; i < es->currentObject.size(); ++i)
 	{
-		ep.push_back(es->objects[i]->GetPosition());
-		erased.push_back(es->objects[i]->erased);
+		ep.push_back(es->currentObject[i]->GetPosition());
+		erased.push_back(es->currentObject[i]->erased);
 	}
+	
 
 	if (op.size() == 0)
 	{

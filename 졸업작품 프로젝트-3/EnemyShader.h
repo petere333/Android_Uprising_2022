@@ -44,6 +44,9 @@ public:
 
 public:
 	std::vector<EnemyObject*>	objects;
+	std::vector<EnemyObject*>	objects2;
+
+	std::vector<EnemyObject*>	currentObject;
 	
 
 	ResourceManager* rm;
@@ -55,8 +58,8 @@ public:
 	std::vector<int> getHealthRate();
 
 	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*, ID3D12RootSignature* sig);
-
-	void restart();
+	
+	void restart(int);
 };
 
 typedef struct Line

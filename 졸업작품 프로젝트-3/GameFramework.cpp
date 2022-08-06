@@ -379,7 +379,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
-					m_pScene->enemyShader->restart();
+					m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
 					//선택된 스테이지에 관한 정보 초기화.
 					m_pScene->rm->bgm[0]->stop();
 					m_pScene->rm->bgm[0]->Update();
@@ -443,7 +443,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
-					m_pScene->enemyShader->restart();
+					m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
 					m_pScene->rm->bgm[0]->stop();
 					m_pScene->rm->bgm[0]->Update();
 					m_pScene->rm->bgm[1]->play();
