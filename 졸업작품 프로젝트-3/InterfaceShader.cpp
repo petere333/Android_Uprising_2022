@@ -24,11 +24,11 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* succeed = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* succeedr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 689.0f / 450.0f, 782.0f / 450.0f, 0.02f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* retry = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (721.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* retryr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(721.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* retry = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (714.0f - 600.0f) / 450.0f, -(590.8f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* retryr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(714.0f - 600.0f) / 450.0f, -(590.8f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* back = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (866.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* backr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(866.0f - 600.0f) / 450.0f, -(592.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* back = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, (846.6f - 600.0f) / 450.0f, -(590.8f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* backr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 130.0f / 450.0f, 65.0f / 450.0f, 0.03f, -(846.6f - 600.0f) / 450.0f, -(590.8f - 450.0f) / 450.0f, true);
 
 	CubeMeshOffset* exp_melee1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (487.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* exp_melee2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 15.0f / 450.0f, 20.0f / 450.0f, 0.03f, (507.0f - 600.0f) / 450.0f, -(416.0f - 450.0f) / 450.0f, false);
