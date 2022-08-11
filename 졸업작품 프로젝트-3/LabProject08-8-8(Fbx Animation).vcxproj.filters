@@ -150,6 +150,9 @@
     <ClCompile Include="CharacterShadow.cpp">
       <Filter>Shader\in-game\etc</Filter>
     </ClCompile>
+    <ClCompile Include="DropItemShader.cpp">
+      <Filter>Shader\in-game\global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -290,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="CharacterShadow.h">
       <Filter>Shader\in-game\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItemShader.h">
+      <Filter>Shader\in-game\global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3490,7 +3490,7 @@ std::vector<int> EnemyShader::getHealthRate()
 	return result;
 }
 
-void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die, ID3D12RootSignature* sig)
+void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3> ppos, PlayerShader* ps, ParticleShader* part, DyingEnemyShader* die, ID3D12RootSignature* sig, DropItemShader* drop)
 {
 
 	for (int i = 0; i < currentObject.size(); ++i)
@@ -4682,6 +4682,24 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				die->objects.push_back(tmp);
 				chrono::time_point<chrono::system_clock> m = chrono::system_clock::now();
 				die->created.push_back(m);
+
+
+				int rd = rand() % 100;
+
+				if (currentObject[i]->weapon == 1)
+				{
+					if (rd < 111)
+					{
+						drop->addItem(1, tmp->GetPosition());
+					}
+				}
+				else if (currentObject[i]->weapon == 2)
+				{
+					if (rd < 98)
+					{
+						drop->addItem(1, tmp->GetPosition());
+					}
+				}
 
 			}
 

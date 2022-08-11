@@ -28,6 +28,7 @@
 #include "ProfileShader.h"
 #include "StageSelectShader.h"
 #include "WaitShader.h"
+#include "DropItemShader.h"
 
 #include "LevelLoader.h"
 #include "stdafx.h"
@@ -154,7 +155,7 @@ public:
 	TerrainShader2_1* terrain2_1 = NULL;
 	TerrainShader2_2* terrain2_2 = NULL;
 	TerrainShader2_3* terrain2_3 = NULL;
-
+	DropItemShader* drop = NULL;
 	CharShadow* charShd = NULL;
 	
 	MainInterfaceShader* mainInter = NULL;

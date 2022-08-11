@@ -6,6 +6,8 @@
 #include "ParticleShader.h"
 #include "PlayerShader.h"
 #include "DyingEnemyShader.h"
+#include "DropItemShader.h"
+
 class EnemyShader : public CShader
 {
 public:
@@ -57,7 +59,7 @@ public:
 	std::vector<XMFLOAT3> getEnemyPosition();
 	std::vector<int> getHealthRate();
 
-	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*, ID3D12RootSignature* sig);
+	void animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, float elapsed, vector<XMFLOAT3>, PlayerShader*, ParticleShader*, DyingEnemyShader*, ID3D12RootSignature* sig, DropItemShader*);
 	
 	void restart(int);
 };

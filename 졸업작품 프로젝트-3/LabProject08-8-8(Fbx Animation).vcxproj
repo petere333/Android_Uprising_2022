@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -168,6 +168,7 @@
     <ClInclude Include="CNet.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="DDSTextureLoader12.h" />
+    <ClInclude Include="DropItemShader.h" />
     <ClInclude Include="DyingEnemyShader.h" />
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="EnemyInfoManager.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="CNet.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="DDSTextureLoader12.cpp" />
+    <ClCompile Include="DropItemShader.cpp" />
     <ClCompile Include="DyingEnemyShader.cpp" />
     <ClCompile Include="EnemyInfoManager.cpp" />
     <ClCompile Include="EnemyShader.cpp" />

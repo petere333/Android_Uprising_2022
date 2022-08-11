@@ -284,7 +284,9 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	waitInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	waitInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
-
+	drop = new DropItemShader(rm);
+	drop->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	drop->BuildObjects(pd3dDevice, pd3dCommandList);
 
 	BuildDefaultLightsAndMaterials();
 	//createenemyShader->objects(pd3dDevice, pd3dCommandList);
@@ -630,12 +632,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		if (enemyShader)
 		{
 			vector<XMFLOAT3> ppos = playerShader->getPlayerLocation();
-			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos, playerShader, partShader, enemyDying, m_pd3dGraphicsRootSignature);
+			enemyShader->animate(pd3dDevice, pd3dCommandList, fTimeElapsed,ppos, playerShader, partShader, enemyDying, m_pd3dGraphicsRootSignature, drop);
 		}
 
 		if (enemyDying)
 		{
 			enemyDying->animate();
+		}
+		if (drop)
+		{
+			drop->animate(playerShader);
 		}
 
 		charShd->animate(playerShader, enemyShader, waitInter->selectedStage);
@@ -2830,6 +2836,13 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 				charShd->OnPrepareRender(pd3dCommandList);
 				charShd->Render(pd3dCommandList, pCamera);
 			}
+			if (drop)
+			{
+				drop->OnPrepareRender(pd3dCommandList);
+				drop->Render(pd3dCommandList, pCamera);
+			}
+
+
 			if (barShader)
 			{
 				barShader->OnPrepareRender(pd3dCommandList);
