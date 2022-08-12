@@ -1892,7 +1892,240 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	obj211->attackRange = mrange;
 	obj211->attackDuration = mdur;
 
+	EnemyObject* obj212 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj212->SetPosition(852.0f, 0.0f, 529.0f);
+	obj212->origin = XMFLOAT3(852.0f, 0.0f, 529.0f);
+	obj212->bState.hp = mhp;
+	obj212->weapon = 2;
+	obj212->maxHP = mhp;
+	obj212->attackRange = mrange;
+	obj212->attackDuration = mdur;
+
+	EnemyObject* obj213 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj213->SetPosition(843.0f, 0.0f, 528.0f);
+	obj213->origin = XMFLOAT3(843.0f, 0.0f, 528.0f);
+	obj213->bState.hp = mhp;
+	obj213->weapon = 2;
+	obj213->maxHP = mhp;
+	obj213->attackRange = mrange;
+	obj213->attackDuration = mdur;
+
+	EnemyObject* obj214 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj214->SetPosition(833.0f, 0.0f, 528.0f);
+	obj214->origin = XMFLOAT3(833.0f, 0.0f, 528.0f);
+	obj214->bState.hp = mhp;
+	obj214->weapon = 2;
+	obj214->maxHP = mhp;
+	obj214->attackRange = mrange;
+	obj214->attackDuration = mdur;
+
+	EnemyObject* obj215 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj215->SetPosition(836.0f, 0.0f, 494.0f);
+	obj215->origin = XMFLOAT3(836.0f, 0.0f, 494.0f);
+	obj215->bState.hp = mhp;
+	obj215->weapon = 2;
+	obj215->maxHP = mhp;
+	obj215->attackRange = mrange;
+	obj215->attackDuration = mdur;
+
+	EnemyObject* obj216 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj216->SetPosition(852.0f, 0.0f, 487.0f);
+	obj216->origin = XMFLOAT3(852.0f, 0.0f, 487.0f);
+	obj216->bState.hp = mhp;
+	obj216->weapon = 2;
+	obj216->maxHP = mhp;
+	obj216->attackRange = mrange;
+	obj216->attackDuration = mdur;
+
+	EnemyObject* obj217 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj217->SetPosition(859.0f, 0.0f, 487.0f);
+	obj217->origin = XMFLOAT3(859.0f, 0.0f, 487.0f);
+	obj217->bState.hp = mhp;
+	obj217->weapon = 2;
+	obj217->maxHP = mhp;
+	obj217->attackRange = mrange;
+	obj217->attackDuration = mdur;
+
+	EnemyObject* obj218 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj218->SetPosition(853.0f, 0.0f, 468.0f);
+	obj218->origin = XMFLOAT3(853.0f, 0.0f, 468.0f);
+	obj218->bState.hp = mhp;
+	obj218->weapon = 2;
+	obj218->maxHP = mhp;
+	obj218->attackRange = mrange;
+	obj218->attackDuration = mdur;
+
+	EnemyObject* obj219 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj219->SetPosition(851.0f, 0.0f, 457.0f);
+	obj219->origin = XMFLOAT3(851.0f, 0.0f, 457.0f);
+	obj219->bState.hp = mhp;
+	obj219->weapon = 2;
+	obj219->maxHP = mhp;
+	obj219->attackRange = mrange;
+	obj219->attackDuration = mdur;
+
+	EnemyObject* obj220= new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj220->SetPosition(848.0f, 0.0f, 454.0f);
+	obj220->origin = XMFLOAT3(848.0f, 0.0f, 454.0f);
+	obj220->bState.hp = mhp;
+	obj220->weapon = 2;
+	obj220->maxHP = mhp;
+	obj220->attackRange = mrange;
+	obj220->attackDuration = mdur;
+
+	EnemyObject* obj221 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj221->SetPosition(845.0f, 0.0f, 450.0f);
+	obj221->origin = XMFLOAT3(845.0f, 0.0f, 450.0f);
+	obj221->bState.hp = mhp;
+	obj221->weapon = 2;
+	obj221->maxHP = mhp;
+	obj221->attackRange = mrange;
+	obj221->attackDuration = mdur;
+
+	EnemyObject* obj222 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj222->SetPosition(842.0f, 0.0f, 446.0f);
+	obj222->origin = XMFLOAT3(842.0f, 0.0f, 446.0f);
+	obj222->bState.hp = mhp;
+	obj222->weapon = 2;
+	obj222->maxHP = mhp;
+	obj222->attackRange = mrange;
+	obj222->attackDuration = mdur;
+
+	EnemyObject* obj223 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj223->SetPosition(836.0f, 0.0f, 445.0f);
+	obj223->origin = XMFLOAT3(836.0f, 0.0f, 445.0f);
+	obj223->bState.hp = mhp;
+	obj223->weapon = 2;
+	obj223->maxHP = mhp;
+	obj223->attackRange = mrange;
+	obj223->attackDuration = mdur;
 	
+	EnemyObject* obj224 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj224->SetPosition(828.0f, 0.0f, 442.0f);
+	obj224->origin = XMFLOAT3(828.0f, 0.0f, 442.0f);
+	obj224->bState.hp = mhp;
+	obj224->weapon = 2;
+	obj224->maxHP = mhp;
+	obj224->attackRange = mrange;
+	obj224->attackDuration = mdur;
+
+	EnemyObject* obj225 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj225->SetPosition(824.0f, 0.0f, 430.0f);
+	obj225->origin = XMFLOAT3(824.0f, 0.0f, 430.0f);
+	obj225->bState.hp = mhp;
+	obj225->weapon = 2;
+	obj225->maxHP = mhp;
+	obj225->attackRange = mrange;
+	obj225->attackDuration = mdur;
+
+	EnemyObject* obj226 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj226->SetPosition(835.0f, 0.0f, 429.0f);
+	obj226->origin = XMFLOAT3(835.0f, 0.0f, 429.0f);
+	obj226->bState.hp = mhp;
+	obj226->weapon = 2;
+	obj226->maxHP = mhp;
+	obj226->attackRange = mrange;
+	obj226->attackDuration = mdur;
+
+	EnemyObject* obj227 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj227->SetPosition(842.0f, 0.0f, 429.0f);
+	obj227->origin = XMFLOAT3(842.0f, 0.0f, 429.0f);
+	obj227->bState.hp = rhp;
+	obj227->weapon = 1;
+	obj227->maxHP = rhp;
+	obj227->attackRange = rrange;
+	obj227->attackDuration = rdur;
+
+	EnemyObject* obj228 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj228->SetPosition(860.0f, 0.0f, 399.0f);
+	obj228->origin = XMFLOAT3(860.0f, 0.0f, 399.0f);
+	obj228->bState.hp = mhp;
+	obj228->weapon = 2;
+	obj228->maxHP = mhp;
+	obj228->attackRange = mrange;
+	obj228->attackDuration = mdur;
+
+	EnemyObject* obj229 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj229->SetPosition(856.0f, 0.0f, 400.0f);
+	obj229->origin = XMFLOAT3(856.0f, 0.0f, 400.0f);
+	obj229->bState.hp = mhp;
+	obj229->weapon = 2;
+	obj229->maxHP = mhp;
+	obj229->attackRange = mrange;
+	obj229->attackDuration = mdur;
+
+	EnemyObject* obj230 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj230->SetPosition(848.0f, 0.0f, 395.0f);
+	obj230->origin = XMFLOAT3(848.0f, 0.0f, 395.0f);
+	obj230->bState.hp = mhp;
+	obj230->weapon = 2;
+	obj230->maxHP = mhp;
+	obj230->attackRange = mrange;
+	obj230->attackDuration = mdur;
+
+	EnemyObject* obj231 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj231->SetPosition(847.0f, 0.0f, 387.0f);
+	obj231->origin = XMFLOAT3(847.0f, 0.0f, 387.0f);
+	obj231->bState.hp = mhp;
+	obj231->weapon = 2;
+	obj231->maxHP = mhp;
+	obj231->attackRange = mrange;
+	obj231->attackDuration = mdur;
+
+	EnemyObject* obj232 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj232->SetPosition(847.0f, 0.0f, 381.0f);
+	obj232->origin = XMFLOAT3(847.0f, 0.0f, 381.0f);
+	obj232->bState.hp = mhp;
+	obj232->weapon = 2;
+	obj232->maxHP = mhp;
+	obj232->attackRange = mrange;
+	obj232->attackDuration = mdur;
+	
+	EnemyObject* obj233 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj233->SetPosition(837.0f, 0.0f, 383.0f);
+	obj233->origin = XMFLOAT3(837.0f, 0.0f, 383.0f);
+	obj233->bState.hp = mhp;
+	obj233->weapon = 2;
+	obj233->maxHP = mhp;
+	obj233->attackRange = mrange;
+	obj233->attackDuration = mdur;
+
+	EnemyObject* obj234 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj234->SetPosition(827.0f, 0.0f, 386.0f);
+	obj234->origin = XMFLOAT3(827.0f, 0.0f, 386.0f);
+	obj234->bState.hp = rhp;
+	obj234->weapon = 1;
+	obj234->maxHP = rhp;
+	obj234->attackRange = rrange;
+	obj234->attackDuration = rdur;
+
+	EnemyObject* obj235 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj235->SetPosition(821.0f, 0.0f, 387.0f);
+	obj235->origin = XMFLOAT3(821.0f, 0.0f, 387.0f);
+	obj235->bState.hp = rhp;
+	obj235->weapon = 1;
+	obj235->maxHP = rhp;
+	obj235->attackRange = rrange;
+	obj235->attackDuration = rdur;
+
+	EnemyObject* obj236 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj236->SetPosition(820.0f, 0.0f, 381.0f);
+	obj236->origin = XMFLOAT3(820.0f, 0.0f, 381.0f);
+	obj236->bState.hp = rhp;
+	obj236->weapon = 1;
+	obj236->maxHP = rhp;
+	obj236->attackRange = rrange;
+	obj236->attackDuration = rdur;
+
+	EnemyObject* obj237 = new EnemyObject(pd3dDevice, pd3dCommandList, sig, rm->enemyModels[0], 1, height21, 0.0f, 0.0f);
+	obj237->SetPosition(823.0f, 0.0f, 374.0f);
+	obj237->origin = XMFLOAT3(823.0f, 0.0f, 374.0f);
+	obj237->bState.hp = mhp;
+	obj237->weapon = 2;
+	obj237->maxHP = mhp;
+	obj237->attackRange = mrange;
+	obj237->attackDuration = mdur;
+
 	objects.push_back(obj1);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -2117,7 +2350,34 @@ void EnemyShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLi
 	objects2.push_back(obj210);
 		   
 	objects2.push_back(obj211);
-	
+	objects2.push_back(obj212);
+	objects2.push_back(obj213);
+	objects2.push_back(obj214);
+	objects2.push_back(obj215);
+	objects2.push_back(obj216);
+	objects2.push_back(obj217);
+	objects2.push_back(obj218);
+	objects2.push_back(obj219);
+	objects2.push_back(obj220);
+
+	objects2.push_back(obj221);
+	objects2.push_back(obj222);
+	objects2.push_back(obj223);
+	objects2.push_back(obj224);
+	objects2.push_back(obj225);
+	objects2.push_back(obj226);
+	objects2.push_back(obj227);
+	objects2.push_back(obj228);
+	objects2.push_back(obj229);
+	objects2.push_back(obj230);
+
+	objects2.push_back(obj231);
+	objects2.push_back(obj232);
+	objects2.push_back(obj233);
+	objects2.push_back(obj234);
+	objects2.push_back(obj235);
+	objects2.push_back(obj236);
+	objects2.push_back(obj237);
 						  
 	for (int i = 0; i < objects.size(); ++i)
 	{
