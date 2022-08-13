@@ -123,6 +123,12 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	pp.clear();
 	ep.clear();
 
+	op.clear();
+	oe.clear();
+
+	
+
+
 	for (int i = 0; i < ps->objects.size(); ++i)
 	{
 		pp.push_back(ps->objects[i]->GetPosition());
@@ -136,8 +142,9 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	}
 	
 
-	if (op.size() == 0)
+	if (op.size() != pp.size())
 	{
+		op.clear();
 		for (int i = 0; i < pp.size(); ++i)
 		{
 			CGameObject* o = new CGameObject(1);
@@ -164,8 +171,9 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			}
 		}
 	}
-	if (oe.size() == 0)
+	if (oe.size() != ep.size())
 	{
+		oe.clear();
 		for (int i = 0; i < ep.size(); ++i)
 		{
 			CGameObject* o = new CGameObject(1);
