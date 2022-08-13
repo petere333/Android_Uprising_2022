@@ -388,7 +388,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					m_pScene->interShader->stageClear = false;
 					m_pScene->waitInter->selectedStage = -1;
 					m_pScene->interShader->missionFail = false;
-					
+
+					m_pScene->drop->objects.clear();
+					m_pScene->drop->type.clear();
+					m_pScene->drop->rotation.clear();
 					for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
 					{
 						m_pScene->rm->brief[i]->stop();
@@ -444,6 +447,11 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
 					}
 					m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
+
+					m_pScene->drop->objects.clear();
+					m_pScene->drop->type.clear();
+					m_pScene->drop->rotation.clear();
+
 					m_pScene->rm->bgm[0]->stop();
 					m_pScene->rm->bgm[0]->Update();
 					m_pScene->rm->bgm[1]->play();

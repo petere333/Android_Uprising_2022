@@ -2436,6 +2436,10 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 					interShader->m9_search = 0;
 					interShader->mission = 1;
 
+					drop->objects.clear();
+					drop->type.clear();
+					drop->rotation.clear();
+
 
 					waitInter->selectedStage = -1;
 
