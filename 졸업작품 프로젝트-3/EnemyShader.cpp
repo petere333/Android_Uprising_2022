@@ -4948,46 +4948,46 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 
 				if (currentObject[i]->weapon == 1)
 				{
-					if (rd < 111)
+					if (rd < 192)
 					{
 						drop->addItem(1, tmp->GetPosition());
 					}
-					else if (rd <123 && rd>=111)
+					else if (rd <216 && rd>=192)
 					{
 						drop->addItem(2, tmp->GetPosition());
 					}
-					else if (rd >= 123 && rd<141)
+					else if (rd >= 216 && rd<252)
 					{
 						drop->addItem(3, tmp->GetPosition());
 					}
-					else if (rd >=141 && rd<153)
+					else if (rd >=252 && rd<276)
 					{
 						drop->addItem(4, tmp->GetPosition());
 					}
-					else if (rd >=153 && rd<158)
+					else if (rd >=276 && rd<388)
 					{
 						drop->addItem(5, tmp->GetPosition());
 					}
 				}
 				else if (currentObject[i]->weapon == 2)
 				{
-					if (rd < 98)
+					if (rd < 192)
 					{
 						drop->addItem(1, tmp->GetPosition());
 					}
-					else if (rd >= 98 && rd < 110)
+					else if (rd >= 192 && rd < 216)
 					{
 						drop->addItem(2, tmp->GetPosition());
 					}
-					else if (rd >= 110 && rd < 122)
+					else if (rd >= 216 && rd < 240)
 					{
 						drop->addItem(3, tmp->GetPosition());
 					}
-					else if (rd >= 122 && rd < 140)
+					else if (rd >= 240 && rd < 276)
 					{
 						drop->addItem(4, tmp->GetPosition());
 					}
-					else if (rd >= 140 && rd < 145)
+					else if (rd >= 276 && rd < 388)
 					{
 						drop->addItem(5, tmp->GetPosition());
 					}
