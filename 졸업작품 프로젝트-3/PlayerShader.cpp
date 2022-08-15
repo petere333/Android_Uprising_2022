@@ -8,7 +8,7 @@ PlayerShader::~PlayerShader() {}
 
 void PlayerShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-
+	
 }
 
 void PlayerShader::ReleaseObjects()
@@ -50,8 +50,16 @@ void PlayerShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* p
 {
 	for (int i = 0; i < objects.size(); ++i)
 	{
-		objects[i]->Animate(elapsed);
-
+		chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
+		chrono::duration<double> ddt = moment - objects[i]->lastBoost;
+		if (ddt.count() < 8.0&& objects[i]->notYetBoosted == false)
+		{
+			objects[i]->Animate(elapsed * 1.5f);
+		}
+		else
+		{
+			objects[i]->Animate(elapsed);
+		}
 		if (objects[i]->m_pSkinnedAnimationController)
 		{
 			objects[i]->UpdateTransform(NULL);
@@ -142,7 +150,7 @@ void PlayerShader::addPlayer(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 
 	obj->lastMove = chrono::system_clock::now();
 
-
+	obj->lastBoost = chrono::system_clock::now();
 
 	PlayerInfoManager* manager = new PlayerInfoManager();
 	

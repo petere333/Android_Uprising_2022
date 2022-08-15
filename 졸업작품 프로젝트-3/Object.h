@@ -559,6 +559,12 @@ public:
 	float amp_ranged = 1.0f;
 	float amp_radio = 1.0f;
 
+
+	chrono::time_point<chrono::system_clock> lastBoost;
+	bool notYetBoosted = true;
+	
+	
+
 public:
 	void jump() { if (kState.yspeed == 0.0f) { kState.yspeed = 15.0f; kState.isInAir = 1; bState.stateID = JUMP_STATE; } }
 

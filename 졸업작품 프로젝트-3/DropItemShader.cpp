@@ -16,6 +16,10 @@ DropItemShader::~DropItemShader() {}
 void DropItemShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
 	capacity = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/item/vtx_capacity.txt", NULL);
+	hard = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/item/vtx_hard.txt", NULL);
+	power = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/item/vtx_power.txt", NULL);
+	precision = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/item/vtx_precision.txt", NULL);
+	booster = new CLoadedMesh(pd3dDevice, pd3dCommandList, "res/vtx/item/vtx_fast.txt", NULL);
 }
 
 
@@ -160,6 +164,32 @@ void DropItemShader::addItem(int t, XMFLOAT3 pos)
 		obj->SetMesh(capacity);
 		type.push_back(1);
 	}
+	else if (t == 2)//hard
+	{
+		obj->SetMaterial(0, rm->materials[398]);
+		obj->SetMesh(hard);
+		type.push_back(2);
+	}
+	else if (t == 3)//power
+	{
+		obj->SetMaterial(0, rm->materials[399]);
+		obj->SetMesh(power);
+		type.push_back(3);
+	}
+
+	else if (t == 4)//precision
+	{
+		obj->SetMaterial(0, rm->materials[400]);
+		obj->SetMesh(precision);
+		type.push_back(4);
+	}
+	else if (t == 5)//precision
+	{
+		obj->SetMaterial(0, rm->materials[397]);
+		obj->SetMesh(booster);
+		type.push_back(5);
+	}
+
 	obj->SetPosition(pos);
 	obj->Rotate(0.0f, 0.0f, 0.0f);
 
@@ -201,6 +231,23 @@ void DropItemShader::animate(PlayerShader* ps)
 					{
 						ps->objects[p]->info->stats.capacity = ps->objects[p]->info->stats.maxhp;
 					}
+				}
+				else if (type[i] == 2)
+				{
+					ps->objects[p]->info->stats.hardness += ps->objects[p]->info->stats.hardness / 5;
+				}
+				else if (type[i] == 3)
+				{
+					ps->objects[p]->info->stats.power += ps->objects[p]->info->stats.power / 5;
+				}
+				else if (type[i] == 4)
+				{
+					ps->objects[p]->info->stats.precision += ps->objects[p]->info->stats.precision / 5;
+				}
+				else if (type[i] == 5)
+				{
+					ps->objects[p]->lastBoost = chrono::system_clock::now();
+					ps->objects[p]->notYetBoosted = false;
 				}
 				//아이템 제거
 				objects.erase(objects.begin() + i);

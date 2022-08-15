@@ -649,6 +649,18 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
 
+			chrono::duration<double> ddt = chrono::system_clock::now() - playerShader->objects[i]->lastBoost;
+
+			if (ddt.count() < 8.0 && playerShader->objects[i]->notYetBoosted == false)//부스터 아이템을 먹은 적이 있고, 그걸 먹은 뒤로 8초 이내인 경우
+			{
+				playerShader->objects[i]->kState.xzspeed = PLAYER_SPEED * 1.5f;
+			}
+			else
+			{
+				playerShader->objects[i]->kState.xzspeed = PLAYER_SPEED;
+			}
+
+
 			if (playerShader->objects[i]->bState.stateID == IDLE_STATE)
 			{
 				if (playerShader->objects[i]->bState.attackID == TYPE_RANGED)

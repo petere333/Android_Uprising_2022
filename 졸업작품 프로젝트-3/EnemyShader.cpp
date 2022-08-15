@@ -4944,13 +4944,29 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 				die->created.push_back(m);
 
 
-				int rd = rand() % 100;
+				int rd = rand() % 1000;
 
 				if (currentObject[i]->weapon == 1)
 				{
 					if (rd < 111)
 					{
 						drop->addItem(1, tmp->GetPosition());
+					}
+					else if (rd <123 && rd>=111)
+					{
+						drop->addItem(2, tmp->GetPosition());
+					}
+					else if (rd >= 123 && rd<141)
+					{
+						drop->addItem(3, tmp->GetPosition());
+					}
+					else if (rd >=141 && rd<153)
+					{
+						drop->addItem(4, tmp->GetPosition());
+					}
+					else if (rd >=153 && rd<158)
+					{
+						drop->addItem(5, tmp->GetPosition());
 					}
 				}
 				else if (currentObject[i]->weapon == 2)
@@ -4959,8 +4975,23 @@ void EnemyShader::animate(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* p
 					{
 						drop->addItem(1, tmp->GetPosition());
 					}
+					else if (rd >= 98 && rd < 110)
+					{
+						drop->addItem(2, tmp->GetPosition());
+					}
+					else if (rd >= 110 && rd < 122)
+					{
+						drop->addItem(3, tmp->GetPosition());
+					}
+					else if (rd >= 122 && rd < 140)
+					{
+						drop->addItem(4, tmp->GetPosition());
+					}
+					else if (rd >= 140 && rd < 145)
+					{
+						drop->addItem(5, tmp->GetPosition());
+					}
 				}
-
 			}
 
 			else if (currentObject[i]->bState.stateID == BATTLE_STATE)
