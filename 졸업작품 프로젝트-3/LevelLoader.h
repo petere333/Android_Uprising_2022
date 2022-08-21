@@ -524,6 +524,7 @@
 #define Gwanja_Screen2 21038
 #define Gwanja_Screen3 21039
 #define Gwanja_Cabinet 21040
+#define Gwanja_Chair2 21041
 
 //2-2
 
@@ -554,6 +555,7 @@
 #define Recep_Door1 21035
 #define Recep_DoorL 21036
 #define Recep_DoorR 21037
+
 
 #define Parking_floor1 23999
 #define Parking_Wall1 23998

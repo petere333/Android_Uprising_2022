@@ -58,9 +58,9 @@ int main()
 	
 	writeHeight(hf, height2_1);*/
 
-	file = fopen("result/2_1/objects1-1.txt", "w");
-	FILE* bf = fopen("result/2_1/box1-1.txt", "w");
-	FILE* hf = fopen("result/2_1/height1-1.txt", "w");
+	file = fopen("result/2_1/objects2-1.txt", "w");
+	FILE* bf = fopen("result/2_1/box2-1.txt", "w");
+	FILE* hf = fopen("result/2_1/height2-1.txt", "w");
 
 	writeHeight(hf, height2_1);
 
@@ -97,7 +97,7 @@ void createSpace(vector<Object>& list, vector<BoundingBox>& blist)
 }
 void createObjects(vector<Object>& list, vector<BoundingBox>& blist)
 {
-	createObstacles1_1(list, blist);
+	createObstacles2_1(list, blist);
 }
 
 void createObstacles1_1(vector<Object>& list, vector<BoundingBox>& blist)
@@ -6218,7 +6218,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair21 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair21->location = f3(829.0f, 0.0f, 466.0f); // 8 4 (4 8)
 	Kwan_Chair21->rotation = f3(0.0f, 0.0f, 0.0f);
-	Kwan_Chair21->type = Gwanja_Chair;
+	Kwan_Chair21->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair21 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair21->start = f3(828.0f, 0.0f, 464.2f);
@@ -6228,7 +6228,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair22 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair22->location = f3(835.0f, 0.0f, 466.0f); // 8 4 (4 8)
 	Kwan_Chair22->rotation = f3(0.0f, 0.0f, 0.0f);
-	Kwan_Chair22->type = Gwanja_Chair;
+	Kwan_Chair22->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair22 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair22->start = f3(834.0f, 0.0f, 464.2f);
@@ -6238,7 +6238,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair23 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair23->location = f3(841.0f, 0.0f, 466.0f); // 8 4 (4 8)
 	Kwan_Chair23->rotation = f3(0.0f, 0.0f, 0.0f);
-	Kwan_Chair23->type = Gwanja_Chair;
+	Kwan_Chair23->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair23 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair23->start = f3(840.0f, 0.0f, 464.2f);
@@ -6248,7 +6248,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair24 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair24->location = f3(847.0f, 0.0f, 466.0f); // 8 4 (4 8)
 	Kwan_Chair24->rotation = f3(0.0f, 0.0f, 0.0f);
-	Kwan_Chair24->type = Gwanja_Chair;
+	Kwan_Chair24->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair24 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair24->start = f3(846.0f, 0.0f, 464.2f);
@@ -6258,7 +6258,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair25 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair25->location = f3(853.0f, 0.0f, 466.0f); // 8 4 (4 8)
 	Kwan_Chair25->rotation = f3(0.0f, 0.0f, 0.0f);
-	Kwan_Chair25->type = Gwanja_Chair;
+	Kwan_Chair25->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair25 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair25->start = f3(852.0f, 0.0f, 464.2f);
@@ -6270,7 +6270,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair26 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair26->location = f3(829.0f, 0.0f, 434.8f); // 8 4 (4 8)
 	Kwan_Chair26->rotation = f3(0.0f, 180.0f, 0.0f);
-	Kwan_Chair26->type = Gwanja_Chair;
+	Kwan_Chair26->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair26 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair26->start = f3(828.0f, 0.0f, 433.0f);
@@ -6280,7 +6280,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair27 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair27->location = f3(835.0f, 0.0f, 434.8f); // 8 4 (4 8)
 	Kwan_Chair27->rotation = f3(0.0f, 180.0f, 0.0f);
-	Kwan_Chair27->type = Gwanja_Chair;
+	Kwan_Chair27->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair27 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair27->start = f3(834.0f, 0.0f, 433.0f);
@@ -6290,7 +6290,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair28 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair28->location = f3(841.0f, 0.0f, 434.8f); // 8 4 (4 8)
 	Kwan_Chair28->rotation = f3(0.0f, 180.0f, 0.0f);
-	Kwan_Chair28->type = Gwanja_Chair;
+	Kwan_Chair28->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair28 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair28->start = f3(840.0f, 0.0f, 433.0f);
@@ -6300,7 +6300,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair29 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair29->location = f3(847.0f, 0.0f, 434.8f); // 8 4 (4 8)
 	Kwan_Chair29->rotation = f3(0.0f, 180.0f, 0.0f);
-	Kwan_Chair29->type = Gwanja_Chair;
+	Kwan_Chair29->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair29 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair29->start = f3(846.0f, 0.0f, 433.0f);
@@ -6310,7 +6310,7 @@ void createObstacles2_1(vector<Object>& list, vector<BoundingBox>& blist)
 	Object* Kwan_Chair30 = (Object*)malloc(sizeof(Object));
 	Kwan_Chair30->location = f3(853.0f, 0.0f, 434.8f); // 8 4 (4 8)
 	Kwan_Chair30->rotation = f3(0.0f, 180.0f, 0.0f);
-	Kwan_Chair30->type = Gwanja_Chair;
+	Kwan_Chair30->type = Gwanja_Chair2;
 
 	BoundingBox* Gwangjae_Chair30 = (BoundingBox*)malloc(sizeof(BoundingBox));
 	Gwangjae_Chair30->start = f3(852.0f, 0.0f, 433.0f);
