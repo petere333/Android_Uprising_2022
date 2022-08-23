@@ -3856,12 +3856,39 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			if (dt.count() <= 25.0)
 			{
 				terrain1_2->objects[p.target]->broke -= 1;
+				//감옥이 부서진 경우
 				if (terrain1_2->objects[p.target]->broke <= 0)
 				{
+					//아이템 생성
+
+					int rd = rand() % 1000;
+
+					if (rd < 395)
+					{
+						drop->addItem(1, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 395 && rd < 427)
+					{
+						drop->addItem(2, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 427 && rd < 459)
+					{
+						drop->addItem(3, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 459 && rd < 491)
+					{
+						drop->addItem(4, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 491 && rd < 606)
+					{
+						drop->addItem(5, terrain1_2->objects[p.target]->GetPosition());
+					}
 					interShader->m5_broken += p.progress;
 					terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
 					terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
 					terrain1_2->boxesWorld[p.target].end = XMFLOAT3(-100.0f, -100.0f, -100.0f);
+
+					
 				}
 			}
 		}
@@ -3874,6 +3901,32 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 				terrain1_2->objects[p.target]->broke -= 1;
 				if (terrain1_2->objects[p.target]->broke <= 0)
 				{
+
+					//아이템 생성
+
+					int rd = rand() % 1000;
+
+					if (rd < 395)
+					{
+						drop->addItem(1, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 395 && rd < 427)
+					{
+						drop->addItem(2, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 427 && rd < 459)
+					{
+						drop->addItem(3, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 459 && rd < 491)
+					{
+						drop->addItem(4, terrain1_2->objects[p.target]->GetPosition());
+					}
+					else if (rd >= 491 && rd < 606)
+					{
+						drop->addItem(5, terrain1_2->objects[p.target]->GetPosition());
+					}
+
 					interShader->m6_broken += p.progress;
 					terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
 					terrain1_2->boxesWorld[p.target].start = XMFLOAT3(-1000.0f, -1000.0f, -1000.0f);
