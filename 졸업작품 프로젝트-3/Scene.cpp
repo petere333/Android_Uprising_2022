@@ -3863,25 +3863,35 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 					int rd = rand() % 1000;
 
+					XMFLOAT3 fp = terrain1_2->objects[p.target]->GetPosition();
+					XMFLOAT3 pp = playerShader->objects[pID]->GetPosition();
+
+					XMFLOAT2 dp = XMFLOAT2(pp.x - fp.x, pp.z - fp.z);
+					float nor = sqrt((dp.x * dp.x) + (dp.y * dp.y));
+					XMFLOAT2 np = XMFLOAT2(dp.x / nor*2.0f, dp.y / nor*2.0f);
+
+					XMFLOAT3 pos = XMFLOAT3(np.x + fp.x, 0.0f, np.y + fp.z);
+					//XMFLOAT3 pos = XMFLOAT3(fp.x, 0.0f, fp.z);
+
 					if (rd < 395)
 					{
-						drop->addItem(1, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(1, pos);
 					}
 					else if (rd >= 395 && rd < 427)
 					{
-						drop->addItem(2, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(2, pos);
 					}
 					else if (rd >= 427 && rd < 459)
 					{
-						drop->addItem(3, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(3, pos);
 					}
 					else if (rd >= 459 && rd < 491)
 					{
-						drop->addItem(4, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(4, pos);
 					}
 					else if (rd >= 491 && rd < 606)
 					{
-						drop->addItem(5, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(5, pos);
 					}
 					interShader->m5_broken += p.progress;
 					terrain1_2->objects[p.target]->SetPosition(-100.0f, -100.0f, -100.0f);
@@ -3906,25 +3916,33 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 					int rd = rand() % 1000;
 
+					XMFLOAT3 fp = terrain1_2->objects[p.target]->GetPosition();
+					XMFLOAT3 pp = playerShader->objects[pID]->GetPosition();
+
+					XMFLOAT2 dp = XMFLOAT2(pp.x - fp.x, pp.z - fp.z);
+					float nor = sqrt((dp.x * dp.x) + (dp.y * dp.y));
+					XMFLOAT2 np = XMFLOAT2(dp.x / nor * 2.0f, dp.y / nor * 2.0f);
+					XMFLOAT3 pos = XMFLOAT3(np.x + fp.x, 0.0f, np.y + fp.z);
+					//XMFLOAT3 pos = XMFLOAT3(fp.x, 0.0f, fp.z);
 					if (rd < 395)
 					{
-						drop->addItem(1, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(1, pos);
 					}
 					else if (rd >= 395 && rd < 427)
 					{
-						drop->addItem(2, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(2, pos);
 					}
 					else if (rd >= 427 && rd < 459)
 					{
-						drop->addItem(3, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(3, pos);
 					}
 					else if (rd >= 459 && rd < 491)
 					{
-						drop->addItem(4, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(4, pos);
 					}
 					else if (rd >= 491 && rd < 606)
 					{
-						drop->addItem(5, terrain1_2->objects[p.target]->GetPosition());
+						drop->addItem(5, pos);
 					}
 
 					interShader->m6_broken += p.progress;

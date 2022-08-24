@@ -221,9 +221,11 @@ void DropItemShader::animate(PlayerShader* ps)
 			float dz = pp.z - ip.z;
 			float dst = sqrt((dx * dx) + (dz * dz));
 			//플레이어와 아이템의 거리가 가까워진경우
-			if (dst < 0.5f && pp.y < 0.5f)
+			if (dst < 1.2f && pp.y < 1.2f)
 			{
 				//효과 적용
+
+				//체력포션
 				if (type[i] == 1)
 				{
 					ps->objects[p]->info->stats.capacity += ps->objects[p]->info->stats.maxhp / 5;
@@ -232,18 +234,23 @@ void DropItemShader::animate(PlayerShader* ps)
 						ps->objects[p]->info->stats.capacity = ps->objects[p]->info->stats.maxhp;
 					}
 				}
+
+				//경도포션
 				else if (type[i] == 2)
 				{
 					ps->objects[p]->info->stats.hardness += ps->objects[p]->info->stats.hardness / 5;
 				}
+				//출력포션
 				else if (type[i] == 3)
 				{
 					ps->objects[p]->info->stats.power += ps->objects[p]->info->stats.power / 5;
 				}
+				//정밀도포션
 				else if (type[i] == 4)
 				{
 					ps->objects[p]->info->stats.precision += ps->objects[p]->info->stats.precision / 5;
 				}
+				//이속버프
 				else if (type[i] == 5)
 				{
 					ps->objects[p]->lastBoost = chrono::system_clock::now();
