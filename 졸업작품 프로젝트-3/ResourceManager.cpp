@@ -1522,6 +1522,25 @@ void ResourceManager::createTextures()
 	tex402->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/area2_1/vtx_MetalChair2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex402);
 
+	tex403 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex403->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex403);
+
+	tex404 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex404->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex404);
+
+	tex405 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex405->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex405);
+
+	tex406 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex406->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex406);
+
+	tex407 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex407->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex407);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

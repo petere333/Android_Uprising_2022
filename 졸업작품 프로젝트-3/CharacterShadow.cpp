@@ -122,6 +122,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 {
 	pp.clear();
 	ep.clear();
+	pRot.clear();
+	pElapsed.clear();
 
 	op.clear();
 	oe.clear();
@@ -132,6 +134,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	for (int i = 0; i < ps->objects.size(); ++i)
 	{
 		pp.push_back(ps->objects[i]->GetPosition());
+		pRot.push_back(ps->objects[i]->kState.rotation);
+		
 	}
 
 
@@ -142,7 +146,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	}
 	
 
-	if (op.size() != pp.size())
+	if (op.size() != pp.size())//초기화가 안된경우 초기화
 	{
 		op.clear();
 		for (int i = 0; i < pp.size(); ++i)
@@ -150,17 +154,48 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			CGameObject* o = new CGameObject(1);
 
 			o->SetMesh(mesh);
-			o->SetMaterial(0, rm->materials[395]);
+			
 
 			o->SetPosition(pp[i].x, 0.0f, pp[i].z);
+			
 			if (pp[i].x >= 250.0f && pp[i].x <= 350.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
 			{
 				o->SetPosition(pp[i].x, 5.0f , pp[i].z);
 			}
+			o->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
+			if (ps->objects[i]->bState.stateID == MOVE_STATE && ps->objects[i]->info->slot.rangedWeapon->type == RIFLE && ps->objects[i]->bState.attackID == TYPE_RANGED)
+			{
+				int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 5;
+				if (f == 0)
+				{
+					o->m_ppMaterials[0] = rm->materials[402];
+				}
+				else if (f == 1)
+				{
+					o->m_ppMaterials[0] = rm->materials[403];
+				}
+				else if (f == 2)
+				{
+					o->m_ppMaterials[0] = rm->materials[404];
+				}
+				else if (f == 3)
+				{
+					o->m_ppMaterials[0] = rm->materials[405];
+				}
+				else if (f == 4)
+				{
+					o->m_ppMaterials[0] = rm->materials[406];
+				}
+			}
+			else
+			{
+				o->m_ppMaterials[0] = rm->materials[395];
+			}
+
 			op.push_back(o);
 		}
 	}
-	else
+	else//초기화 된경우 위치, 회전만 변경
 	{
 		for (int i = 0; i < pp.size(); ++i)
 		{
@@ -169,6 +204,37 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			{
 				op[i]->SetPosition(pp[i].x, 5.0f, pp[i].z);
 			}
+
+			op[i]->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
+			if (ps->objects[i]->bState.stateID == MOVE_STATE && ps->objects[i]->info->slot.rangedWeapon->type == RIFLE && ps->objects[i]->bState.attackID == TYPE_RANGED)
+			{
+				int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (4.0f / 30.0f)) % 20;
+				if (f >= 0 && f < 4)
+				{
+					op[i]->m_ppMaterials[0] = rm->materials[402];
+				}
+				else if (f >= 4 && f < 8)
+				{
+					op[i]->m_ppMaterials[0] = rm->materials[403];
+				}
+				else if (f >= 8 && f < 12)
+				{
+					op[i]->m_ppMaterials[0] = rm->materials[404];
+				}
+				else if (f >= 12 && f < 16)
+				{
+					op[i]->m_ppMaterials[0] = rm->materials[405];
+				}
+				else if (f >= 16 && f < 20)
+				{
+					op[i]->m_ppMaterials[0] = rm->materials[406];
+				}
+			}
+			else
+			{
+				op[i]->m_ppMaterials[0] = rm->materials[395];
+			}
+
 		}
 	}
 	if (oe.size() != ep.size())
