@@ -1523,24 +1523,77 @@ void ResourceManager::createTextures()
 	textures.push_back(tex402);
 
 	tex403 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex403->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_1.dds", RESOURCE_TEXTURE2D, 0);
+	tex403->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/0.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex403);
 
 	tex404 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex404->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_2.dds", RESOURCE_TEXTURE2D, 0);
+	tex404->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/1.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex404);
 
 	tex405 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex405->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_3.dds", RESOURCE_TEXTURE2D, 0);
+	tex405->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/2.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex405);
 
 	tex406 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex406->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_4.dds", RESOURCE_TEXTURE2D, 0);
+	tex406->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/3.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex406);
 
 	tex407 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex407->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/player_gun_run_5.dds", RESOURCE_TEXTURE2D, 0);
+	tex407->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/4.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex407);
+
+	tex408 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex408->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex408);
+
+	tex409 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex409->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/6.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex409);
+
+	tex410 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex410->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/7.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex410);
+
+	tex411 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex411->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/8.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex411);
+
+	tex412 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex412->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/9.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex412);
+
+	tex413 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex413->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/10.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex413);
+
+	tex414 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex414->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/11.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex414);
+	tex415 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex415->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/12.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex415);
+	tex416 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex416->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/13.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex416);
+	tex417 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex417->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/14.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex417);
+	tex418 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex418->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/15.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex418);
+	tex419 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex419->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/16.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex419);
+	tex420 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex420->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/17.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex420);
+	tex421 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex421->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/18.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex421);
+	tex422 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex422->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/player/gun/run/19.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex422);
+
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

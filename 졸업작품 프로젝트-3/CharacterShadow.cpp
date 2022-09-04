@@ -15,7 +15,7 @@ CharShadow::~CharShadow() {}
 
 void CharShadow::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	mesh = new RectMesh(pd3dDevice, pd3dCommandList, 0.8f, 0.8f);
+	mesh = new RectMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f);
 
 
 
@@ -163,28 +163,23 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				o->SetPosition(pp[i].x, 5.0f , pp[i].z);
 			}
 			o->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
-			if (ps->objects[i]->bState.stateID == MOVE_STATE && ps->objects[i]->info->slot.rangedWeapon->type == RIFLE && ps->objects[i]->bState.attackID == TYPE_RANGED)
+			if (ps->objects[i]->bState.stateID == MOVE_STATE)
 			{
-				int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 5;
-				if (f == 0)
+				if (ps->objects[i]->bState.attackID == TYPE_RANGED)
 				{
-					o->m_ppMaterials[0] = rm->materials[402];
+					if (ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
+					{
+						int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+						o->m_ppMaterials[0] = rm->materials[402+f];
+					}
+					else
+					{
+						o->m_ppMaterials[0] = rm->materials[395];
+					}
 				}
-				else if (f == 1)
+				else
 				{
-					o->m_ppMaterials[0] = rm->materials[403];
-				}
-				else if (f == 2)
-				{
-					o->m_ppMaterials[0] = rm->materials[404];
-				}
-				else if (f == 3)
-				{
-					o->m_ppMaterials[0] = rm->materials[405];
-				}
-				else if (f == 4)
-				{
-					o->m_ppMaterials[0] = rm->materials[406];
+					o->m_ppMaterials[0] = rm->materials[395];
 				}
 			}
 			else
