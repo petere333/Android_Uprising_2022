@@ -163,7 +163,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				o->SetPosition(pp[i].x, 5.0f , pp[i].z);
 			}
 			o->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
-			if (ps->objects[i]->bState.stateID == MOVE_STATE)
+			if (ps->objects[i]->bState.stateID == MOVE_STATE || ps->objects[i]->bState.stateID == JUMP_STATE)
 			{
 				if (ps->objects[i]->bState.attackID == TYPE_RANGED)
 				{
