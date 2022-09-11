@@ -15,11 +15,11 @@ CharShadow::~CharShadow() {}
 
 void CharShadow::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList)
 {
-	mesh = new RectMesh(pd3dDevice, pd3dCommandList, 1.0f, 1.0f);
+	mesh = new RectMesh(pd3dDevice, pd3dCommandList, 1.1f, 1.1f);
+	mBlunt = new RectMesh(pd3dDevice, pd3dCommandList, 1.2f, 1.6f);
+	mBazuka = new RectMesh(pd3dDevice, pd3dCommandList, 1.25f, 1.45f);
 
-
-
-	
+	mIdle= new RectMesh(pd3dDevice, pd3dCommandList, 0.95f, 0.95f);
 
 }
 
@@ -163,30 +163,97 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				o->SetPosition(pp[i].x, 5.0f , pp[i].z);
 			}
 			o->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
-			if (ps->objects[i]->bState.stateID == MOVE_STATE || ps->objects[i]->bState.stateID == JUMP_STATE)
-			{
-				if (ps->objects[i]->bState.attackID == TYPE_RANGED)
+			
+
+				if (ps->objects[i]->bState.stateID == MOVE_STATE || ps->objects[i]->bState.stateID == JUMP_STATE)
 				{
-					if (ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
+					if (ps->objects[i]->bState.attackID == TYPE_RANGED)
+					{
+						if (ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
+						{
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+							o->m_ppMaterials[0] = rm->materials[402 + f];
+						}
+						else if (ps->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
+						{
+							o->SetMesh(mBazuka);
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+							o->m_ppMaterials[0] = rm->materials[422 + f];
+						}
+					}
+					else if (ps->objects[i]->bState.attackID == TYPE_MELEE)
+					{
+						if (ps->objects[i]->info->slot.meleeWeapon->type == BLUNT)
+						{
+							o->SetMesh(mBlunt);
+
+							float rd = XMConvertToRadians(ps->objects[i]->kState.rotation - 45.0f);
+							XMFLOAT3 dir = XMFLOAT3(cos(rd), 0.0f, sin(rd));
+
+
+							o->SetPosition(pp[i].x - dir.x * 0.1f, 0.0f, pp[i].z - dir.z * 0.1f);
+
+							if (pp[i].x >= 250.0f && pp[i].x <= 350.0f && pp[i].z >= 0.0f && pp[i].z <= 50.0f)
+							{
+								o->SetPosition(pp[i].x - dir.x * 0.1f, 5.0f, pp[i].z - dir.z * 0.1f);
+							}
+
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+							o->m_ppMaterials[0] = rm->materials[462 + f];
+						}
+						else if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
+						{
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+							o->m_ppMaterials[0] = rm->materials[442 + f];
+						}
+					}
+					else if (ps->objects[i]->bState.attackID == TYPE_MICROWAVE)
 					{
 						int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
-						o->m_ppMaterials[0] = rm->materials[402+f];
-					}
-					else
-					{
-						o->m_ppMaterials[0] = rm->materials[395];
+						o->m_ppMaterials[0] = rm->materials[482 + f];
 					}
 				}
+
+				else if (ps->objects[i]->bState.stateID == IDLE_STATE)
+				{
+
+					if (ps->objects[i]->bState.attackID == TYPE_RANGED)
+					{
+						if (ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
+						{
+
+							o->m_ppMaterials[0] = rm->materials[395];
+						}
+						else if (ps->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
+						{
+							o->SetMesh(mIdle);
+							o->m_ppMaterials[0] = rm->materials[502];
+						}
+					}
+					else if (ps->objects[i]->bState.attackID == TYPE_MELEE)
+					{
+						if (ps->objects[i]->info->slot.meleeWeapon->type == BLUNT)
+						{
+							o->m_ppMaterials[0] = rm->materials[395];
+						}
+						else if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
+						{
+							o->SetMesh(mIdle);
+							o->m_ppMaterials[0] = rm->materials[503];
+						}
+					}
+					else if (ps->objects[i]->bState.attackID == TYPE_MICROWAVE)
+					{
+						o->SetMesh(mIdle);
+						o->m_ppMaterials[0] = rm->materials[504];
+					}
+				}
+
 				else
 				{
 					o->m_ppMaterials[0] = rm->materials[395];
 				}
-			}
-			else
-			{
-				o->m_ppMaterials[0] = rm->materials[395];
-			}
-
+			
 			op.push_back(o);
 		}
 	}
