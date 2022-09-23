@@ -31,7 +31,14 @@ float4 psShadow(ShadowOutput input) : SV_TARGET
 	
 	float4 result=color;
 	
-	if (color.x == 0.0f && color.y == 0.0f && color.z == 0.0f)
+	if (result.x < 1.0f)
+	{
+		result.x = 0.0f;
+		result.y = 0.0f;
+		result.z = 0.0f;
+	}
+
+	if (result.x == 0.0f && result.y == 0.0f && result.z == 0.0f)
 	{
 		result.a = 0.5f;
 	}
@@ -39,6 +46,7 @@ float4 psShadow(ShadowOutput input) : SV_TARGET
 	{
 		result.a = 0.0f;
 	}
+	
 
 	return result;
 }

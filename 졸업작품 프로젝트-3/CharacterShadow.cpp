@@ -165,6 +165,31 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			o->Rotate(0.0f, pRot[i]+270.0f, 0.0f);
 			
 
+			std::chrono::duration<double> dt = chrono::system_clock::now() - ps->objects[i]->lastAttack;
+
+
+			if (dt.count()<0.833333)
+			{
+				if (ps->objects[i]->bState.attackID == TYPE_MELEE)
+				{
+					if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
+					{
+						if (ps->objects[i]->atttype == 1)
+						{
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+							o->m_ppMaterials[0] = rm->materials[580+f];
+						}
+						else
+						{
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+							o->m_ppMaterials[0] = rm->materials[595 + f];
+						}
+					}
+					
+				}
+			}
+			else
+			{
 				if (ps->objects[i]->bState.stateID == MOVE_STATE || ps->objects[i]->bState.stateID == JUMP_STATE)
 				{
 					if (ps->objects[i]->bState.attackID == TYPE_RANGED)
@@ -203,7 +228,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 						}
 						else if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 						{
-							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 20;
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (2.0f / 30.0f)) % 20;
 							o->m_ppMaterials[0] = rm->materials[442 + f];
 						}
 					}
@@ -239,7 +264,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 						else if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 						{
 							o->SetMesh(mIdle);
-							o->m_ppMaterials[0] = rm->materials[503];
+							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (4.0f / 30.0f)) % 15;
+							o->m_ppMaterials[0] = rm->materials[f + 565];
 						}
 					}
 					else if (ps->objects[i]->bState.attackID == TYPE_MICROWAVE)
@@ -253,7 +279,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				{
 					o->m_ppMaterials[0] = rm->materials[395];
 				}
-			
+			}
 			op.push_back(o);
 		}
 	}

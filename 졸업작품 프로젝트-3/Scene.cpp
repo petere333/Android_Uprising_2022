@@ -5385,7 +5385,7 @@ void CScene::swingBlade(int idx, ID3D12Device* pd3dDevice, ID3D12GraphicsCommand
 		rm->effect[5]->Update();
 
 		int r = rand() % 2;
-
+		playerShader->objects[idx]->atttype = r+1;
 		if (r)
 		{
 			if (playerShader->objects[idx]->m_pChild != rm->playerModels[13]->m_pModelRootObject)
