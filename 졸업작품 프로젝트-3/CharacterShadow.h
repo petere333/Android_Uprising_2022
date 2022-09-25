@@ -33,6 +33,7 @@ public:
 	RectMesh* mBlunt = NULL;
 	RectMesh* mBazuka = NULL;
 	RectMesh* mIdle = NULL;
+	RectMesh* mRadioIdle = NULL;
 	std::vector<XMFLOAT3> pp;
 	std::vector<XMFLOAT3> ep;
 	

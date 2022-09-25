@@ -20,6 +20,7 @@ void CharShadow::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	mBazuka = new RectMesh(pd3dDevice, pd3dCommandList, 1.25f, 1.45f);
 
 	mIdle= new RectMesh(pd3dDevice, pd3dCommandList, 0.95f, 0.95f);
+	mRadioIdle = new RectMesh(pd3dDevice, pd3dCommandList, 0.95f, 0.35f);
 
 }
 
@@ -166,27 +167,32 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			
 
 			std::chrono::duration<double> dt = chrono::system_clock::now() - ps->objects[i]->lastAttack;
+			std::chrono::duration<double> dt2 = chrono::system_clock::now() - ps->objects[i]->lastWave;
 
-
-			if (dt.count()<0.833333)
+			if (dt.count()<0.833333 && ps->objects[i]->bState.attackID == TYPE_MELEE && ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
 			{
-				if (ps->objects[i]->bState.attackID == TYPE_MELEE)
+				if (ps->objects[i]->atttype == 1)
 				{
-					if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
-					{
-						if (ps->objects[i]->atttype == 1)
-						{
-							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
-							o->m_ppMaterials[0] = rm->materials[580+f];
-						}
-						else
-						{
-							int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
-							o->m_ppMaterials[0] = rm->materials[595 + f];
-						}
-					}
-					
+					o->SetMesh(mIdle);
+					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+					o->m_ppMaterials[0] = rm->materials[580+f];
 				}
+				else
+				{
+					o->SetMesh(mIdle);
+					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+					o->m_ppMaterials[0] = rm->materials[595 + f];
+				}
+			}
+			else if (dt.count() < 0.2 && ps->objects[i]->bState.attackID == TYPE_RANGED && ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
+			{
+				o->SetMesh(mIdle);
+				o->m_ppMaterials[0] = rm->materials[611];
+			}
+			else if (dt2.count() <= 1.0 && ps->objects[i]->bState.attackID == TYPE_MICROWAVE)
+			{
+				o->SetMesh(mRadioIdle);
+				o->m_ppMaterials[0] = rm->materials[627];
 			}
 			else
 			{
@@ -246,8 +252,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 					{
 						if (ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
 						{
-
-							o->m_ppMaterials[0] = rm->materials[395];
+							o->SetMesh(mIdle);
+							o->m_ppMaterials[0] = rm->materials[610];
 						}
 						else if (ps->objects[i]->info->slot.rangedWeapon->type == BAZUKA)
 						{
@@ -259,6 +265,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 					{
 						if (ps->objects[i]->info->slot.meleeWeapon->type == BLUNT)
 						{
+							o->SetMesh(mIdle);
 							o->m_ppMaterials[0] = rm->materials[395];
 						}
 						else if (ps->objects[i]->info->slot.meleeWeapon->type == DUALBLADE)
@@ -270,8 +277,9 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 					}
 					else if (ps->objects[i]->bState.attackID == TYPE_MICROWAVE)
 					{
-						o->SetMesh(mIdle);
-						o->m_ppMaterials[0] = rm->materials[504];
+						o->SetMesh(mRadioIdle);
+						int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (4.0f / 30.0f)) % 15;
+						o->m_ppMaterials[0] = rm->materials[f+612];
 					}
 				}
 
