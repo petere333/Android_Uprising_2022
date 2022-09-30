@@ -419,7 +419,7 @@ public:
 	int type = 0;
 	int broke = 4;
 	bool							m_bActive = true;
-
+	float rot = 0.0f;
 	char							m_pstrFrameName[64];
 
 	CMesh							*m_pMesh = NULL;

@@ -990,7 +990,7 @@ void CGameObject::Rotate(float fPitch, float fYaw, float fRoll)
 	mat._42 = GetPosition().y;
 	mat._43 = GetPosition().z;
 	m_xmf4x4ToParent = Matrix4x4::Multiply(mtxRotate, mat);
-
+	rot = fYaw;
 	UpdateTransform(NULL);
 }
 

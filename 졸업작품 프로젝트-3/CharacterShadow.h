@@ -42,6 +42,7 @@ public:
 
 	std::vector<CGameObject*>	op;
 	std::vector<float> pRot;
+	std::vector<float> eRot;
 	std::vector<float> pElapsed;
 	std::vector<CGameObject*>	oe;
 	std::vector<bool> erased;

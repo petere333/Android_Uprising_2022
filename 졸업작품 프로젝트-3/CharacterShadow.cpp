@@ -124,6 +124,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	pp.clear();
 	ep.clear();
 	pRot.clear();
+	eRot.clear();
+
 	pElapsed.clear();
 
 	op.clear();
@@ -143,6 +145,8 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 	for (int i = 0; i < es->currentObject.size(); ++i)
 	{
 		ep.push_back(es->currentObject[i]->GetPosition());
+
+		eRot.push_back(es->currentObject[i]->rot);
 		erased.push_back(es->currentObject[i]->erased);
 	}
 	
@@ -184,6 +188,21 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 					o->m_ppMaterials[0] = rm->materials[595 + f];
 				}
 			}
+			else if (dt.count() < 0.833333 && ps->objects[i]->bState.attackID == TYPE_MELEE && ps->objects[i]->info->slot.meleeWeapon->type == BLUNT)
+			{
+				if (ps->objects[i]->atttype == 1)
+				{
+					o->SetMesh(mIdle);
+					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+					o->m_ppMaterials[0] = rm->materials[580 + f];
+				}
+				else
+				{
+					o->SetMesh(mIdle);
+					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
+					o->m_ppMaterials[0] = rm->materials[595 + f];
+				}
+			}
 			else if (dt.count() < 0.2 && ps->objects[i]->bState.attackID == TYPE_RANGED && ps->objects[i]->info->slot.rangedWeapon->type == RIFLE)
 			{
 				o->SetMesh(mIdle);
@@ -194,6 +213,7 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				o->SetMesh(mRadioIdle);
 				o->m_ppMaterials[0] = rm->materials[627];
 			}
+
 			else
 			{
 				if (ps->objects[i]->bState.stateID == MOVE_STATE || ps->objects[i]->bState.stateID == JUMP_STATE)
@@ -343,7 +363,30 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 			o->SetMesh(mesh);
 			o->SetMaterial(0, rm->materials[395]);
 			o->SetPosition(ep[i].x , 0.0f, ep[i].z);
+			o->Rotate(0.0f, XMConvertToDegrees(eRot[i]), 0.0f);
+			if (es->currentObject[i]->bState.stateID == CHASE_STATE)
+			{
+				if (es->currentObject[i]->weapon == 2)
+				{
+					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (2.0f / 30.0f)) % 20;
+					o->m_ppMaterials[0] = rm->materials[f + 530];
+				}
+				
+			}
+			else if (es->currentObject[i]->bState.stateID == BATTLE_STATE)
+			{
+				if (es->currentObject[i]->weapon == 2)
+				{
+					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 24;
+					o->m_ppMaterials[0] = rm->materials[f + 505];
+				}
+			}
+
+
 			oe.push_back(o);
+
+
+
 		}
 	}
 	else
