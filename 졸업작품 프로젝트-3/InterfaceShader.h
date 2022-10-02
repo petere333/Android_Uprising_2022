@@ -35,7 +35,7 @@ public:
 	chrono::time_point<chrono::system_clock> clearTime;
 
 	chrono::time_point<chrono::system_clock> missionChangedTime;
-	int mission = 8;
+	int mission = 1;
 	
 	
 	bool failed = false;

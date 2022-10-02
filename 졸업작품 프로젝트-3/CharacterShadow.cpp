@@ -371,14 +371,31 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (2.0f / 30.0f)) % 20;
 					o->m_ppMaterials[0] = rm->materials[f + 530];
 				}
+				else
+				{
+					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 18;
+					o->m_ppMaterials[0] = rm->materials[f + 640];
+				}
 				
 			}
 			else if (es->currentObject[i]->bState.stateID == BATTLE_STATE)
 			{
+				XMFLOAT3 ppp = ps->objects[es->currentObject[i]->chaseTarget]->GetPosition();
+				XMFLOAT3 epp = es->currentObject[i]->GetPosition();
+				XMFLOAT2 dir = XMFLOAT2(ppp.x - epp.x, ppp.z - epp.z);
+				float angle = atan2f(dir.y, dir.x);
+				o->Rotate(0.0f, 270.0f - XMConvertToDegrees(angle), 0.0f);
+
 				if (es->currentObject[i]->weapon == 2)
 				{
+					
 					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 24;
 					o->m_ppMaterials[0] = rm->materials[f + 505];
+				}
+				else
+				{
+					int f = (int)(es->currentObject[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 12;
+					o->m_ppMaterials[0] = rm->materials[f + 628];
 				}
 			}
 
