@@ -1181,7 +1181,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, h, w);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[122]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -1207,7 +1207,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, h, w);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[123]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -1233,7 +1233,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, h, w);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[124]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -1260,7 +1260,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[133]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
@@ -1286,7 +1286,7 @@ void TerrainShader1_1::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComm
 		shadow = new (std::nothrow) RectMesh(pd3dDevice, pd3dCommandList, w, h);
 		shd = new (std::nothrow) CGameObject(1);
 		shd->SetMaterial(0, rm->materials[134]);
-		shd->SetMesh(shadow);
+		shd->SetMesh(NULL);
 
 		//그림자의 위치는 어지간해서는 땅. 그러나 컨테이너 등의 위에 있는 일부 예외 물체는 그 물체와 동일한 높이.
 
