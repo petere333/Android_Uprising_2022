@@ -179,13 +179,13 @@ void CharShadow::animate(PlayerShader* ps, EnemyShader* es, int stage)
 				{
 					o->SetMesh(mIdle);
 					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
-					o->m_ppMaterials[0] = rm->materials[580+f];
+					o->m_ppMaterials[0] = rm->materials[595+f];
 				}
 				else
 				{
 					o->SetMesh(mIdle);
 					int f = (int)(ps->objects[i]->m_pSkinnedAnimationController->m_fTime / (1.0f / 30.0f)) % 15;
-					o->m_ppMaterials[0] = rm->materials[595 + f];
+					o->m_ppMaterials[0] = rm->materials[580 + f];
 				}
 			}
 			else if (dt.count() < 0.833333 && ps->objects[i]->bState.attackID == TYPE_MELEE && ps->objects[i]->info->slot.meleeWeapon->type == BLUNT)

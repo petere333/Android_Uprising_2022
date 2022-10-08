@@ -45,6 +45,8 @@ public:
 	void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	LRESULT CALLBACK OnProcessingWindowMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 
+	bool fullscr = false;
+
 public: // to server
 	void OnSocketHandel(WPARAM wParam, LPARAM lParam);
 	void OnSocket(WPARAM wParam, LPARAM lParam);
