@@ -27,6 +27,7 @@ public:
 
 
 public:
+	
 	std::vector<PlayerObject*>	objects;
 	ResourceManager* rm;
 public:

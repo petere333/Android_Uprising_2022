@@ -751,17 +751,310 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			int mx = pnt.x;
 			int my = pnt.y;
 
+			if (fullscr == false)
+			{
+
+				if (m_pScene->profileInter->storageShow == false)
+				{
+
+					//메인으로 버튼
+					if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 167 + wy && my <= 213 + wy))
+					{
+						m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
+						m_pScene->currentScreen = LOBBY_STATE;
+					}
+					//storage
+					else if ((mx >= 100 + wx && mx <= 304 + wx) && (my >= 707 + wy && my <= 763 + wy))
+					{
+						m_pScene->profileInter->storageShow = true;
+					}
+					else
+					{
+						for (int i = 55; i < 73; i += 4)
+						{
+							int x1 = m_pScene->profileInter->objects[i]->x1;
+							int x2 = m_pScene->profileInter->objects[i]->x2;
+							int y1 = m_pScene->profileInter->objects[i]->y1;
+							int y2 = m_pScene->profileInter->objects[i]->y2;
+
+							int px1 = m_pScene->profileInter->objects[i + 1]->x1;
+							int px2 = m_pScene->profileInter->objects[i + 1]->x2;
+							int py1 = m_pScene->profileInter->objects[i + 1]->y1;
+							int py2 = m_pScene->profileInter->objects[i + 1]->y2;
+
+							//plus버튼
+							if ((mx >= x1 + wx && mx <= x2 + wx) && (my >= y1 + wy && my <= y2 + wy))
+							{
+								//잔여 포인트가 존재할 경우에만 스탯 추가.
+								if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint > 0)
+								{
+									if (i == 55)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp += 1;
+									}
+									else if (i == 59)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness += 1;
+									}
+									else if (i == 63)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power += 1;
+									}
+									else if (i == 67)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision += 1;
+									}
+									else if (i == 71)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint -= 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy += 1;
+									}
+								}
+							}
+							//마이너스 버튼 
+							else if ((mx >= px1 + wx && mx <= px2 + wx) && (my >= py1 + wy && my <= py2 + wy))
+							{
+								//현재 레벨까지 주어진 총 포인트보다 잔여포인트가 적을경우에만 스탯 회수.
+								if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint < (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1) * 5)
+								{
+									if (i == 55)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.maxhp -= 1;
+									}
+									else if (i == 59)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.hardness -= 1;
+									}
+									else if (i == 63)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.power -= 1;
+									}
+									else if (i == 67)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.precision -= 1;
+									}
+									else if (i == 71)
+									{
+										m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint += 1;
+										m_pScene->playerShader->objects[m_pScene->pID]->info->stats.entrophy -= 1;
+									}
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					if ((mx >= 854 + wx && mx <= 894 + wx) && (my >= 249 + wy && my <= 289 + wy))
+					{
+						m_pScene->profileInter->storageShow = false;
+					}
+					else if (mx >= 346 + wx && mx <= 464 + wx && my >= 330 + wy && my <= 412 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 1)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[0] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+
+					}
+					else if (mx >= 542 + wx && mx <= 660 + wx && my >= 330 + wy && my <= 412 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 2)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[1] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+					else if (mx >= 737 + wx && mx <= 855 + wx && my >= 330 + wy && my <= 412 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 3)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[2] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+
+					else if (mx >= 346 + wx && mx <= 464 + wx && my >= 446 + wy && my <= 528 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 4)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[3] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+					else if (mx >= 542 + wx && mx <= 660 + wx && my >= 446 + wy && my <= 528 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 5)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[4] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+					else if (mx >= 737 + wx && mx <= 855 + wx && my >= 446 + wy && my <= 528 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 6)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[5] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+
+					else if (mx >= 346 + wx && mx <= 464 + wx && my >= 562 + wy && my <= 644 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 7)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[6] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+					else if (mx >= 542 + wx && mx <= 660 + wx && my >= 562 + wy && my <= 644 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 8)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+					else if (mx >= 737 + wx && mx <= 855 + wx && my >= 562 + wy && my <= 644 + wy)
+					{
+						if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 9)
+						{
+							if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == BLUNT ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == DUALBLADE)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.meleeWeapon = t;
+							}
+							else if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[7].type == RIFLE ||
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8].type == BAZUKA)
+							{
+								EquipItem t = m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8];
+								m_pScene->playerShader->objects[m_pScene->pID]->info->inventory[8] = *m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon;
+								*m_pScene->playerShader->objects[m_pScene->pID]->info->slot.rangedWeapon = t;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
 			if (m_pScene->profileInter->storageShow == false)
 			{
 
 				//메인으로 버튼
-				if ((mx >= 92 + wx && mx <= 296 + wx) && (my >= 167 + wy && my <= 213 + wy))
+				if ((mx >= 92 + wx+42 && mx <= 296 + wx+42) && (my >= 167 + wy -55 && my <= 213 + wy-55))
 				{
 					m_pScene->profileInter->objects[2]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[2]->defaultMesh];
 					m_pScene->currentScreen = LOBBY_STATE;
 				}
 				//storage
-				else if ((mx >= 100 + wx && mx <= 304 + wx) && (my >= 707 + wy && my <= 763 + wy))
+				else if ((mx >= 100 + wx+42 && mx <= 304 + wx+42) && (my >= 707 + wy-120 && my <= 763 + wy-120))
 				{
 					m_pScene->profileInter->storageShow = true;
 				}
@@ -780,7 +1073,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						int py2 = m_pScene->profileInter->objects[i + 1]->y2;
 
 						//plus버튼
-						if ((mx >= x1 + wx && mx <= x2 + wx) && (my >= y1 + wy && my <= y2 + wy))
+						if ((mx >= x1 + wx+92 && mx <= x2 + wx+92) && (my >= y1 + wy-90 && my <= y2 + wy-90))
 						{
 							//잔여 포인트가 존재할 경우에만 스탯 추가.
 							if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint > 0)
@@ -812,7 +1105,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 								}
 							}
 						}
-						else if ((mx >= px1 + wx && mx <= px2 + wx) && (my >= py1 + wy && my <= py2 + wy))
+						//마이너스 버튼 
+						else if ((mx >= px1 + wx+85 && mx <= px2 + wx+85) && (my >= py1 + wy-90 && my <= py2 + wy-90))
 						{
 							//현재 레벨까지 주어진 총 포인트보다 잔여포인트가 적을경우에만 스탯 회수.
 							if (m_pScene->playerShader->objects[m_pScene->pID]->info->extraPoint < (m_pScene->playerShader->objects[m_pScene->pID]->info->growth.total.level - 1) * 5)
@@ -849,11 +1143,11 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			}
 			else
 			{
-				if ((mx >= 854 + wx && mx <= 894 + wx) && (my >= 249 + wy && my <= 289 + wy))
+				if ((mx >= 854 + wx+115 && mx <= 894 + wx+115) && (my >= 249 + wy-30 && my <= 289 + wy-30))
 				{
 					m_pScene->profileInter->storageShow = false;
 				}
-				else if (mx >= 346 + wx && mx <= 464 + wx && my >= 330 + wy && my <= 412 + wy)
+				else if (mx >= 346 + wx+80 && mx <= 464 + wx+80 && my >= 330 + wy -80&& my <= 412 + wy-80)
 				{
 					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 1)
 					{
@@ -874,7 +1168,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 
 				}
-				else if (mx >= 542 + wx && mx <= 660 + wx && my >= 330 + wy && my <= 412 + wy)
+				else if (mx >= 542 + wx +80&& mx <= 660 + wx+80 && my >= 330 + wy -80&& my <= 412 + wy-80)
 				{
 					if (m_pScene->playerShader->objects[m_pScene->pID]->info->inventory.size() >= 2)
 					{
@@ -1036,6 +1330,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						}
 					}
 				}
+			}
 			}
 			break;
 		}
@@ -2142,36 +2437,136 @@ void CGameFramework::ProcessInput()
 			if (m_pScene->profileInter->objects[i]->defaultMesh != -1)
 			{
 				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
-				if (i < 53)
+				if (fullscr == true)
 				{
-					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy+33 && pnt.y <= py2 + wy+33))
+					if (i < 53)
 					{
-						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
-						m_pScene->profileInter->objects[i]->mouseOn = true;
-						m_pScene->profileInter->objects[i]->meshChanged = false;
+						if (i == 2)
+						{
+							if ((pnt.x >= px1 + wx + 42 && pnt.x <= px2 + wx + 42) && (pnt.y >= py1 + wy + 33 - 55 && pnt.y <= py2 + wy + 33 - 55))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+
+							}
+						}
+						else if(i==1)
+						{
+							if ((pnt.x >= px1 + wx + 42 && pnt.x <= px2 + wx + 42) && (pnt.y >= py1 + wy + 33 - 120 && pnt.y <= py2 + wy + 33 - 120))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+
+							}
+						}
+						else
+						{
+
+						}
 					}
 					else
 					{
-						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
-						m_pScene->profileInter->objects[i]->mouseOn = false;
-						m_pScene->profileInter->objects[i]->meshChanged = false;
+						if (i >= 70 && i<=80)
+						{
+							if ((pnt.x >= px1 + wx + 85+30 && pnt.x <= px2 + wx + 85+30) && (pnt.y >= py1 + wy - 90+60 && pnt.y <= py2 + wy - 90+60))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
 
+							}
+						}
+						else
+						{
+
+							if ((pnt.x >= px1 + wx + 85 && pnt.x <= px2 + wx + 85) && (pnt.y >= py1 + wy - 90 && pnt.y <= py2 + wy - 90))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+
+							}
+						}
 					}
 				}
 				else
 				{
-					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					if (i < 53)
 					{
-						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
-						m_pScene->profileInter->objects[i]->mouseOn = true;
-						m_pScene->profileInter->objects[i]->meshChanged = false;
+						if (i == 2)
+						{
+							if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy + 33  && pnt.y <= py2 + wy + 33 ))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+
+							}
+						}
+						else
+						{
+							if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy + 33 && pnt.y <= py2 + wy + 33))
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+								m_pScene->profileInter->objects[i]->mouseOn = true;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+							}
+							else
+							{
+								m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+								m_pScene->profileInter->objects[i]->mouseOn = false;
+								m_pScene->profileInter->objects[i]->meshChanged = false;
+
+							}
+						}
 					}
 					else
 					{
-						m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
-						m_pScene->profileInter->objects[i]->mouseOn = false;
-						m_pScene->profileInter->objects[i]->meshChanged = false;
+						if ((pnt.x >= px1 + wx  && pnt.x <= px2 + wx ) && (pnt.y >= py1 + wy  && pnt.y <= py2 + wy ))
+						{
+							m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh + 1];
+							m_pScene->profileInter->objects[i]->mouseOn = true;
+							m_pScene->profileInter->objects[i]->meshChanged = false;
+						}
+						else
+						{
+							m_pScene->profileInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->profileInter->objects[i]->defaultMesh];
+							m_pScene->profileInter->objects[i]->mouseOn = false;
+							m_pScene->profileInter->objects[i]->meshChanged = false;
 
+						}
 					}
 				}
 			}

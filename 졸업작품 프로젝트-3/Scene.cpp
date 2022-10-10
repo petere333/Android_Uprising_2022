@@ -2608,6 +2608,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		}
 		if (ready == true)
 		{
+
+			
 			currentScreen = IN_GAME_STATE;
 
 			CS_POWER_PACKET pac;
