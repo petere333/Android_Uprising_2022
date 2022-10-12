@@ -5,7 +5,7 @@
 
 #include "../../졸업작품 프로젝트-3/Game_Data.h"
 
-constexpr int MAXUSER = 10; //최대 접속 유저
+constexpr int MAXUSER = 100; //최대 접속 유저
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 chrono::time_point<chrono::system_clock> started;
 
@@ -288,79 +288,75 @@ void process_packet(int c_id, char* packet)
 		strcpy_s(clients[c_id]._name, p->name);
 
 
-
-		if (c_id < 3)
+		//새로 접속한 플레이어에 현재 접속한 총 인원만큼 플레이어 객체 생성.
+		for (int i = 0; i <= c_id; ++i)
 		{
-			//새로 접속한 플레이어에 현재 접속한 총 인원만큼 플레이어 객체 생성.
-			for (int i = 0; i <= c_id; ++i)
-			{
-				clients[c_id].send_login_info(c_id, i);
-			}
-			cout << "client add order received" << endl;
-
-			//새로 접속한 플레이어에게만 기존 접속자들+본인의 로그인 패킷 전송
-			for (int i = 0; i <= c_id; ++i) // 모든 접속자의 정보 전달
-			{
-				if (clients[i]._use == false)
-				{
-					continue;
-				}
-				SC_ADD_PLAYER_PACKET pc;
-
-				pc.id = c_id;
-				strcpy_s(pc.name, p->name);
-				pc.size = sizeof(pc);
-				pc.type = PACKET_TYPE::SC_ADD_PLAYER;
-				pc.kState = clients[i].kState;
-				pc.bState = clients[i].bState;
-				pc.camAngle = clients[i].cameraAngle;
-				pc.camUp = clients[i].cameraUp;
-				pc.pos = XMFLOAT3(100.0f + 5.0f * i, 0.0f, 100.0f);
-
-				clients[c_id].do_send(&pc);
-			}
-
-
-			//기존 플레이어에게 새 플레이어 추가를 명령하는 패킷 전송,
-			for (int i = 0; i <= c_id - 1; ++i)
-			{
-
-				if (clients[i]._use == false)
-				{
-					continue;
-				}
-				clients[i].send_login_info(i, c_id);
-				SC_ADD_PLAYER_PACKET pc;
-				//pc.id = clients[i]._id;
-				pc.id = i;
-				strcpy_s(pc.name, p->name);
-				pc.size = sizeof(pc);
-				pc.type = PACKET_TYPE::SC_ADD_PLAYER;
-				clients[c_id].kState.xzspeed = 0.0f;
-				clients[c_id].kState.yspeed = 0.0f;
-				clients[c_id].kState.isMobile = true;
-				clients[c_id].kState.isInAir = false;
-				clients[c_id].kState.rotation = 0.0f;
-				clients[c_id].kState.lastMove = std::chrono::system_clock::now();
-
-				clients[c_id].bState.attackID = TYPE_RANGED;
-				clients[c_id].bState.hp = 10;
-				clients[c_id].bState.isIntelligent = true;
-				clients[c_id].bState.stateID = IDLE_STATE;
-				clients[c_id].bState.attacking = 0;
-				clients[c_id].cameraAngle = 270.0f;
-				clients[c_id].cameraUp = 0.0f;
-
-				pc.kState = clients[c_id].kState;
-				pc.bState = clients[c_id].bState;
-				pc.camAngle = clients[c_id].cameraAngle;
-				pc.camUp = clients[c_id].cameraUp;
-
-				pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
-				clients[i].do_send(&pc);
-			}
-
+			clients[c_id].send_login_info(c_id, i);
 		}
+		cout << "client add order received" << endl;
+
+		//새로 접속한 플레이어에게만 기존 접속자들+본인의 로그인 패킷 전송
+		for (int i = 0; i <= c_id; ++i) // 모든 접속자의 정보 전달
+		{
+			if (clients[i]._use == false)
+			{
+				continue;
+			}
+			SC_ADD_PLAYER_PACKET pc;
+
+			pc.id = c_id;
+			strcpy_s(pc.name, p->name);
+			pc.size = sizeof(pc);
+			pc.type = PACKET_TYPE::SC_ADD_PLAYER;
+			pc.kState = clients[i].kState;
+			pc.bState = clients[i].bState;
+			pc.camAngle = clients[i].cameraAngle;
+			pc.camUp = clients[i].cameraUp;
+			pc.pos = XMFLOAT3(100.0f + 5.0f * i, 0.0f, 100.0f);
+
+			clients[c_id].do_send(&pc);
+		}
+
+
+		//기존 플레이어에게 새 플레이어 추가를 명령하는 패킷 전송,
+		for (int i = 0; i <= c_id - 1; ++i)
+		{
+
+			if (clients[i]._use == false)
+			{
+				continue;
+			}
+			clients[i].send_login_info(i, c_id);
+			SC_ADD_PLAYER_PACKET pc;
+			//pc.id = clients[i]._id;
+			pc.id = i;
+			strcpy_s(pc.name, p->name);
+			pc.size = sizeof(pc);
+			pc.type = PACKET_TYPE::SC_ADD_PLAYER;
+			clients[c_id].kState.xzspeed = 0.0f;
+			clients[c_id].kState.yspeed = 0.0f;
+			clients[c_id].kState.isMobile = true;
+			clients[c_id].kState.isInAir = false;
+			clients[c_id].kState.rotation = 0.0f;
+			clients[c_id].kState.lastMove = std::chrono::system_clock::now();
+
+			clients[c_id].bState.attackID = TYPE_RANGED;
+			clients[c_id].bState.hp = 10;
+			clients[c_id].bState.isIntelligent = true;
+			clients[c_id].bState.stateID = IDLE_STATE;
+			clients[c_id].bState.attacking = 0;
+			clients[c_id].cameraAngle = 270.0f;
+			clients[c_id].cameraUp = 0.0f;
+
+			pc.kState = clients[c_id].kState;
+			pc.bState = clients[c_id].bState;
+			pc.camAngle = clients[c_id].cameraAngle;
+			pc.camUp = clients[c_id].cameraUp;
+
+			pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
+			clients[i].do_send(&pc);
+			}
+
 		break;
 	}
 
@@ -964,6 +960,7 @@ int main(int argc, char* argv[])
 	SOCKADDR_IN cl_addr; //클라이언트 주소
 	int addr_size = sizeof(cl_addr);
 	int client_id = 0; //클라이언트 아이디 초기화
+	int client_num = 0;
 
 	HANDLE h_iocp;
 	h_iocp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0); //IOCP 핸들 생성
@@ -978,6 +975,7 @@ int main(int argc, char* argv[])
 	while (true) {
 		DWORD num_bytes;
 		ULONG_PTR key;
+
 		WSAOVERLAPPED* over = nullptr;
 		BOOL ret = GetQueuedCompletionStatus(h_iocp, &num_bytes, &key, &over, INFINITE);
 		OVER_EXP* ex_over = reinterpret_cast<OVER_EXP*>(over);
@@ -993,7 +991,7 @@ int main(int argc, char* argv[])
 
 		switch (ex_over->_comp_type) {
 		case PL_ACCEPT: {
-			cout << "\nclient ID [" << key << "] connected.\n";
+			cout << "\nclient ID [" << client_num << "] connected.\n";
 			int client_id = get_new_player_id();
 			if (client_id != -1) {
 				clients[client_id]._use = true;
@@ -1008,7 +1006,7 @@ int main(int argc, char* argv[])
 					h_iocp, client_id, 0);
 				clients[client_id].do_recv();
 				cout << "ACCEPT SUCCESS.\n";
-
+				++client_num;
 				c_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 			}
