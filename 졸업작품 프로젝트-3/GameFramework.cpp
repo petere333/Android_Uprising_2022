@@ -677,22 +677,48 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					int py1 = m_pScene->waitInter->objects[i]->y1;
 					int py2 = m_pScene->waitInter->objects[i]->y2;
 
-					if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+					if (fullscr == false)
 					{
-						m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+
+						if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+							if (i == 1)
+							{
+								m_pScene->currentScreen = STAGE_SELECT_STATE;
+							}
+							else if (i == 2)
+							{
+								CS_READY_PACKET pac;
+								pac.size = sizeof(CS_READY_PACKET);
+								pac.type = PACKET_TYPE::CS_READY;
+								pac.id = m_pScene->pID;
+								pac.ready = true;
+								SendPacket(&pac);
+
+							}
+						}
+					}
+					else
+					{	
 						if (i == 1)
 						{
-							m_pScene->currentScreen = STAGE_SELECT_STATE;
+							if ((pnt.x >= px1 + wx+22 && pnt.x <= px2 + wx+22) && (pnt.y >= py1 + wy - 25 && pnt.y <= py2 + wy-25))
+							{
+								m_pScene->currentScreen = STAGE_SELECT_STATE;
+							}
 						}
 						else if (i == 2)
 						{
-							CS_READY_PACKET pac;
-							pac.size = sizeof(CS_READY_PACKET);
-							pac.type = PACKET_TYPE::CS_READY;
-							pac.id = m_pScene->pID;
-							pac.ready = true;
-							SendPacket(&pac);
-							
+							if ((pnt.x >= px1 + wx + 68 && pnt.x <= px2 + wx + 68) && (pnt.y >= py1 + wy - 72 && pnt.y <= py2 + wy - 72))
+							{
+								CS_READY_PACKET pac;
+								pac.size = sizeof(CS_READY_PACKET);
+								pac.type = PACKET_TYPE::CS_READY;
+								pac.id = m_pScene->pID;
+								pac.ready = true;
+								SendPacket(&pac);
+							}
 						}
 					}
 				}
@@ -2747,20 +2773,64 @@ void CGameFramework::ProcessInput()
 
 			if (m_pScene->waitInter->objects[i]->defaultMesh != -1)
 			{
-				//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
-				if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+				if (fullscr == false)
 				{
-					m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 1];
-					m_pScene->waitInter->objects[i]->mouseOn = true;
-					m_pScene->waitInter->objects[i]->meshChanged = false;
+
+						//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+						if ((pnt.x >= px1 + wx && pnt.x <= px2 + wx) && (pnt.y >= py1 + wy && pnt.y <= py2 + wy))
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 1];
+							m_pScene->waitInter->objects[i]->mouseOn = true;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
+						}
+						else
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+							m_pScene->waitInter->objects[i]->mouseOn = false;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
+
+
+						}
+					
 				}
 				else
 				{
-					m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
-					m_pScene->waitInter->objects[i]->mouseOn = false;
-					m_pScene->waitInter->objects[i]->meshChanged = false;
+					if (i == 1)
+					{
+						//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+						if ((pnt.x >= px1 + wx+22 && pnt.x <= px2 + wx+22) && (pnt.y >= py1 + wy-25 && pnt.y <= py2 + wy-25))
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 1];
+							m_pScene->waitInter->objects[i]->mouseOn = true;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
+						}
+						else
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+							m_pScene->waitInter->objects[i]->mouseOn = false;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
 
-					
+
+						}
+					}
+					else if (i == 2)
+					{
+						//클릭 범위 안에 마우스가 있는 경우 텍스처 변경
+						if ((pnt.x >= px1 + wx+68  && pnt.x <= px2 + wx+68) && (pnt.y >= py1 + wy-72 && pnt.y <= py2 + wy-72 ))
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh + 1];
+							m_pScene->waitInter->objects[i]->mouseOn = true;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
+						}
+						else
+						{
+							m_pScene->waitInter->objects[i]->m_ppMaterials[0] = m_pScene->rm->materials[m_pScene->waitInter->objects[i]->defaultMesh];
+							m_pScene->waitInter->objects[i]->mouseOn = false;
+							m_pScene->waitInter->objects[i]->meshChanged = false;
+
+
+						}
+					}
 				}
 			}
 		}
