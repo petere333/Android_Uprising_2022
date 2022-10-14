@@ -2577,15 +2577,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			waitInter->objects[28 + i * 5]->SetMesh(NULL);
 		}
 		for (int i = 0; i < playerShader->objects.size(); ++i)
+		
 		{
 			if (playerShader->objects[i]->readyToGo == false)
 			{
-				waitInter->objects[28+i*5]->SetMesh(NULL);
+				//waitInter->objects[28+i*5]->SetMesh(NULL);
 			}
 			else
 			{
-				waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28+i*5]);
-				waitInter->objects[28 + i * 5]->m_ppMaterials[0] = rm->materials[339];
+				//waitInter->objects[28+i*5]->SetMesh(waitInter->meshes[28+i*5]);
+				//waitInter->objects[28 + i * 5]->m_ppMaterials[0] = rm->materials[339];
 			}
 		}
 
