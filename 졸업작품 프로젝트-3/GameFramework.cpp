@@ -320,7 +320,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			if (mousedown == false)
 			{
 				CS_MOUSE_PACKET p;
-				p.c_id = GetPlayerid();
+				p.c_id = m_pScene->pID;
 				p.size = sizeof(CS_MOUSE_PACKET);
 				p.down = true;
 				p.type = PACKET_TYPE::CS_MOUSE;
@@ -1490,6 +1490,15 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 									{
 										m_pScene->currentScreen = WAIT_STATE;
 										//1-1스테이지 선택됨
+
+										//
+										CS_ROOM_PACKET p;
+										p.size = sizeof(p);
+										p.type = PACKET_TYPE::CS_ROOM;
+										p.id = m_pScene->pID;
+										p.room = m_pScene->pID / 2;
+
+										SendPacket(&p);
 										m_pScene->stageInter->coworkShow = false;
 										m_pScene->stageInter->together = false;
 										m_pScene->waitInter->selectedStage = 1;
@@ -2350,9 +2359,9 @@ void CGameFramework::ProcessInput()
 				prevX = pnt.x;
 				prevY = pnt.y;
 
-				SetCursorPos(500, 500);
-				prevX = 500;
-				prevY = 500;
+				//SetCursorPos(500, 500);
+				//prevX = 500;
+				//prevY = 500;
 		}
 		else
 		{

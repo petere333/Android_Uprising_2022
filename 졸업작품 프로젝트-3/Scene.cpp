@@ -605,6 +605,15 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		//for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->AnimateObjects(fTimeElapsed);
 		interShader->Animate(cam, playerShader->objects[pID]->info);
 
+		for (int i = 0; i < playerShader->objects.size(); ++i)
+		{
+			//내 클라이언트와 다른 방에 있는 객체는 맵 밖에 빼다박음
+			if (playerShader->room[pID] != playerShader->room[i])
+			{
+				playerShader->objects[i]->SetPosition(-999.0f, -999.0f, -999.0f);
+			}
+		}
+
 		if (playerShader->objects[pID]->bState.attackID == TYPE_RANGED)
 		{
 			interShader->objects[1]->m_ppMaterials[0] = rm->materials[interShader->objects[1]->defaultMesh];
@@ -2568,7 +2577,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 		waitInter->Animate(cam, playerShader->objects[pID]->info);
 		bool ready = true;
 
-		for (int i = playerShader->objects.size(); i < 3; ++i)
+		int cnt = 0;
+		for (int i = 0; i < playerShader->objects.size(); ++i)
+		{
+			if (playerShader->room[i] == playerShader->room[pID])
+			{
+				cnt += 1;
+			}
+		}
+
+		for (int i = cnt; i < 3; ++i)
 		{
 			waitInter->objects[24 + i * 5]->SetMesh(NULL);
 			waitInter->objects[25 + i * 5]->SetMesh(NULL);
@@ -2576,7 +2594,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			waitInter->objects[27 + i * 5]->SetMesh(NULL);
 			waitInter->objects[28 + i * 5]->SetMesh(NULL);
 		}
-		for (int i = 0; i < playerShader->objects.size(); ++i)
+		for (int i = 0; i < cnt; ++i)
 		
 		{
 			if (playerShader->objects[i]->readyToGo == false)
@@ -2602,9 +2620,12 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 		for (int i = 0; i < playerShader->objects.size(); ++i)
 		{
-			if (playerShader->objects[i]->readyToGo == false)
+			if (playerShader->room[pID] == playerShader->room[i])
 			{
-				ready = false;
+				if (playerShader->objects[i]->readyToGo == false)
+				{
+					ready = false;
+				}
 			}
 		}
 		if (ready == true)
@@ -3834,6 +3855,15 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+
+	case PACKET_TYPE::SC_ROOM:
+	{
+		SC_ROOM_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
+
+		playerShader->room[p.id] = p.room;
+		break;
+	}
 	case PACKET_TYPE::SC_MISSION:
 	{
 		SC_MISSION_PACKET p;

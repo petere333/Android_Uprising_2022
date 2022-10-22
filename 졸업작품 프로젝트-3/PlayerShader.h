@@ -32,4 +32,6 @@ public:
 	ResourceManager* rm;
 public:
 	std::vector<XMFLOAT3> getPlayerLocation();
+
+	std::vector<int> room;
 };

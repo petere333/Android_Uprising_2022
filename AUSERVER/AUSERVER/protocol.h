@@ -52,6 +52,7 @@ enum class PACKET_TYPE : short
 	CS_PARTICLE,
 	CS_MISSION,
 	CS_LOCATION,
+	CS_ROOM,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -70,10 +71,27 @@ enum class PACKET_TYPE : short
 	SC_PARTICLE,
 	SC_MISSION,
 	SC_LOCATION,
+	SC_ROOM,
 };
 
 // client to server packet
 #pragma pack (push, 1)
+struct CS_ROOM_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int room;
+};
+struct SC_ROOM_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+
+	int room;
+};
 
 struct CS_LOCATION_PACKET
 {

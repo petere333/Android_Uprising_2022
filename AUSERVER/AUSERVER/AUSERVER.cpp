@@ -9,6 +9,8 @@ constexpr int MAXUSER = 100; //최대 접속 유저
 enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 chrono::time_point<chrono::system_clock> started;
 
+std::vector<int> room;
+
 class OVER_EXP {
 public:
 	WSAOVERLAPPED _over;
@@ -125,6 +127,7 @@ public:
 
 	void send_damage(int c_id, int target, int damage, float stun);
 	void send_progress(int c_id, int num, int prog, int);
+	void send_room_info(int id, int room);
 };
 
  array<SESSION, MAXUSER> clients;
@@ -244,7 +247,15 @@ public:
 	 do_send(&p);
  }
 
-
+ void SESSION::send_room_info(int id, int room)
+ {
+	 SC_ROOM_PACKET p;
+	 p.id = id;
+	 p.size = sizeof(SC_ROOM_PACKET);
+	 p.type = PACKET_TYPE::SC_ROOM;
+	 p.room = room;
+	 do_send(&p);
+ }
 
  void SESSION::send_jump(int c_id)
  {
@@ -315,6 +326,17 @@ void process_packet(int c_id, char* packet)
 			pc.pos = XMFLOAT3(100.0f + 5.0f * i, 0.0f, 100.0f);
 
 			clients[c_id].do_send(&pc);
+
+			if (room[i] != -1)
+			{
+				SC_ROOM_PACKET p;
+				p.id = i;
+				p.size = sizeof(p);
+				p.type = PACKET_TYPE::SC_ROOM;
+				p.room = room[i];
+
+				clients[c_id].do_send(&p);
+			}
 		}
 
 
@@ -355,11 +377,35 @@ void process_packet(int c_id, char* packet)
 
 			pc.pos = XMFLOAT3(100.0f + 5.0f * c_id, 0.0f, 100.0f);
 			clients[i].do_send(&pc);
+			/*
+			SC_ROOM_PACKET p;
+			p.size = sizeof(p);
+			p.type = PACKET_TYPE::SC_ROOM;
+			p.id = c_id;
+			p.room = -1;
+
+			clients[i].do_send(&p);
+			*/
 			}
 
 		break;
 	}
 
+
+	case PACKET_TYPE::CS_ROOM:
+	{
+		CS_ROOM_PACKET* p = reinterpret_cast<CS_ROOM_PACKET*>(packet);
+
+		room[p->id] = p->room;
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				pl.send_room_info(p->id, p->room);
+			}
+		}
+		break;
+	}
 	case PACKET_TYPE::CS_LOCATION:
 	{
 		CS_LOCATION_PACKET* p = reinterpret_cast<CS_LOCATION_PACKET*>(packet);
@@ -370,12 +416,15 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_MISSION:
 	{
 		CS_MISSION_PACKET* p = reinterpret_cast<CS_MISSION_PACKET*>(packet);
+
+		
 		printf("%d번 미션, %개의 목표물 %d 파괴\n", p->number, p->progress, p->target);
-		for (auto& pl : clients)
+		for (int i=0;i<clients.size();++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_progress(c_id, p->number, p->progress, p->target);
+				if(room[i]==room[p->id])
+					clients[i].send_progress(c_id, p->number, p->progress, p->target);
 
 			}
 		}
@@ -385,11 +434,12 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_PARTICLE:
 	{
 		CS_PARTICLE_PACKET* p = reinterpret_cast<CS_PARTICLE_PACKET*>(packet);
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_particle(c_id, p->count, p->x,p->y,p->z, p->particleType, p->xdir, p->zdir);
+				if (room[i] == room[p->id])
+					clients[i].send_particle(c_id, p->count, p->x,p->y,p->z, p->particleType, p->xdir, p->zdir);
 				
 			}
 		}
@@ -399,11 +449,12 @@ void process_packet(int c_id, char* packet)
 	case PACKET_TYPE::CS_POWER:
 	{
 		CS_POWER_PACKET* p = reinterpret_cast<CS_POWER_PACKET*>(packet);
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_stats(c_id, p->stats, p->mAttack, p->rAttack, p->mWeapon, p->rWeapon);
+				if (room[i] == room[p->c_id])
+					clients[i].send_stats(c_id, p->stats, p->mAttack, p->rAttack, p->mWeapon, p->rWeapon);
 			}
 		}
 		break;
@@ -414,11 +465,12 @@ void process_packet(int c_id, char* packet)
 	{
 		CS_READY_PACKET* p = reinterpret_cast<CS_READY_PACKET*>(packet);
 		bool ready = p->ready;
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_ready(c_id, ready);
+				if (room[i] == room[p->id])
+				clients[i].send_ready(c_id, ready);
 			}
 		}
 		break;
@@ -435,11 +487,12 @@ void process_packet(int c_id, char* packet)
 		b.hp = -9999;
 		b.isIntelligent = -9999;
 
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
-			{	
-				pl.send_bionic_change(c_id, b);	
+			if (clients[i]._use == true)
+			{
+				if (room[i] == room[p->id])
+				clients[i].send_bionic_change(c_id, b);	
 			}
 		}
 		break;
@@ -452,11 +505,12 @@ void process_packet(int c_id, char* packet)
 		float py = p->y;
 		float pz = p->z;
 
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_move(c_id, px, py, pz, pa);
+				if (room[i] == room[p->c_id])
+				clients[i].send_move(c_id, px, py, pz, pa);
 
 			}
 		}
@@ -532,11 +586,12 @@ void process_packet(int c_id, char* packet)
 
 		else if (p->key == VK_SPACE)
 		{
-			for (auto& pl : clients)
+			for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_jump(c_id);
+					if (room[i] == room[p->c_id])
+					clients[i].send_jump(c_id);
 				}
 			}
 			break;
@@ -571,33 +626,36 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_F1)
 		{
-			for (auto& pl : clients)
+			for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 175.0f + c_id*2,0.0f,25.0f);
+					if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 175.0f + c_id*2,0.0f,25.0f);
 				}
 			}
 			break;
 		}
 		else if (p->key == VK_F2)
 		{
-			for (auto& pl : clients)
+			for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 197.0f, 0.0f, 190.0f + c_id*2);
+					if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 197.0f, 0.0f, 190.0f + c_id*2);
 				}
 			}
 			break;
 		}
 		else if (p->key == VK_F3)
 		{
-			for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 303.0f, 5.0f, 25.0f + c_id*2);
+					if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 303.0f, 5.0f, 25.0f + c_id*2);
 					
 				}
 			}
@@ -605,33 +663,36 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_F4)
 		{
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_teleport(c_id, 350.0f + c_id*2, 0.0f, 104.0f);
+				if (room[i] == room[p->c_id])
+				clients[i].send_teleport(c_id, 350.0f + c_id*2, 0.0f, 104.0f);
 			}
 		}
 		break;
 		}
 		else if (p->key == VK_F5)
 		{
-			for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+			if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 402.0f, 0.0f, 198.0f - c_id * 2);
+				if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 402.0f, 0.0f, 198.0f - c_id * 2);
 				}
 			}
 			break;
 		}
 		else if (p->key == VK_F6)
 		{
-			for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+			if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 472.0f + c_id * 2, 0.0f, 100.0f);
+				if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 472.0f + c_id * 2, 0.0f, 100.0f);
 				}
 			}
 
@@ -639,22 +700,24 @@ void process_packet(int c_id, char* packet)
 		}
 		else if (p->key == VK_F7)
 		{
-			for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 472.0f, 0.0f, 152.0f + c_id * 2);
+					if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 472.0f, 0.0f, 152.0f + c_id * 2);
 				}
 			}
 			break;
 		}
 		else if (p->key == VK_F8)
 		{
-			for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 			{
-				if (pl._use == true)
+				if (clients[i]._use == true)
 				{
-					pl.send_teleport(c_id, 850.0f, 0.0f, 220.0f + c_id * 2);
+					if (room[i] == room[p->c_id])
+					clients[i].send_teleport(c_id, 850.0f, 0.0f, 220.0f + c_id * 2);
 				}
 			}
 		
@@ -677,12 +740,15 @@ void process_packet(int c_id, char* packet)
 		KineticState ks2 = ks;
 		//ks2.isInAir = -9999;
 		//ks2.isMobile = -9999;
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_kinetic_change(c_id, ks2);
-				pl.send_bionic_change(c_id, bs);
+				if (room[i] == room[p->c_id])
+				{
+					clients[i].send_kinetic_change(c_id, ks2);
+					clients[i].send_bionic_change(c_id, bs);
+				}
 			}
 		}
 		break;
@@ -782,12 +848,15 @@ void process_packet(int c_id, char* packet)
 		clients[c_id].bState = bs;
 		
 
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_kinetic_change(c_id, ks);
-				pl.send_bionic_change(c_id, bs);
+				if (room[i] == room[p->c_id])
+				{
+					clients[i].send_kinetic_change(c_id, ks);
+					clients[i].send_bionic_change(c_id, bs);
+				}
 			}
 		}
 		break;
@@ -815,11 +884,12 @@ void process_packet(int c_id, char* packet)
 			bs.attacking = 0;
 		}
 		clients[c_id].bState = bs;
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_bionic_change(c_id, bs);
+				if (room[i] == room[p->c_id])
+					clients[i].send_bionic_change(c_id, bs);
 			}
 		}
 		break;
@@ -864,13 +934,16 @@ void process_packet(int c_id, char* packet)
 		ks2.isInAir = -9999;
 		ks2.isMobile = -9999;
 		
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_camera_change(c_id, clients[c_id].cameraAngle, clients[c_id].cameraUp);
-				ks2.rotation = -9999.0f;
-				pl.send_kinetic_change(c_id, ks2);
+				if (room[i] == room[p->c_id])
+				{
+					clients[i].send_camera_change(c_id, clients[c_id].cameraAngle, clients[c_id].cameraUp);
+					ks2.rotation = -9999.0f;
+					clients[i].send_kinetic_change(c_id, ks2);
+				}
 			}
 		}
 		break;
@@ -881,11 +954,12 @@ void process_packet(int c_id, char* packet)
 		chrono::duration<double> dt = chrono::system_clock::now() - started;
 		printf("%d번 적 : %d의 피해, %f초 기절 (%f 초)\n", p->target, p->damage, p->stuntime, dt.count());
 		
-		for (auto& pl : clients)
+		for (int i = 0; i < clients.size(); ++i)
 		{
-			if (pl._use == true)
+			if (clients[i]._use == true)
 			{
-				pl.send_damage(c_id, p->target, p->damage, p->stuntime);
+				if (room[i] == room[p->id])
+					clients[i].send_damage(c_id, p->target, p->damage, p->stuntime);
 			}
 		}
 
@@ -941,6 +1015,11 @@ int main(int argc, char* argv[])
 {
 	started = chrono::system_clock::now();
 	std::wcout.imbue(std::locale("korean")); //오류 출력을 한국어로
+
+	for (int i = 0; i < 30; ++i)
+	{
+		room.push_back(-1);
+	}
 
 	WSADATA WSAData;
 

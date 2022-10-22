@@ -3,6 +3,10 @@
 PlayerShader::PlayerShader(ResourceManager* r) 
 {
 	rm = r;
+	for (int i = 0; i < 30; ++i)
+	{
+		room.push_back(-1);
+	}
 }
 PlayerShader::~PlayerShader() {}
 
