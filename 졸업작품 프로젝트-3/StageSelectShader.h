@@ -4,11 +4,12 @@
 
 #include "Shader.h"
 #include "ResourceManager.h"
+#include "PlayerShader.h"
 
 class StageSelectShader : public CShader
 {
 public:
-	StageSelectShader(ResourceManager* r);
+	StageSelectShader(ResourceManager* r, PlayerShader* ps);
 	virtual ~StageSelectShader();
 
 	virtual void BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList);
@@ -30,16 +31,13 @@ public:
 	std::vector<CubeMeshOffset*> meshesRev;
 	ResourceManager* rm;
 
-	bool list1Show = false;
-	bool list2Show = false;
+	PlayerShader* ps;
 
-	int mode1 = 1;
-	int mode2 = 1;
 
 	bool coworkShow = false;
 	bool together = false;
 
-	int select=1;
+
 	
 
 };

@@ -2342,6 +2342,27 @@ void ResourceManager::createTextures()
 	tex658 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex658->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/shadow/char/enemy/gun/run/17.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex658);
+	tex659 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex659->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r1.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex659);
+	tex660 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex660->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r2.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex660);
+	tex661 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex661->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r3.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex661);
+	tex662 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex662->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r4.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex662);
+	tex663 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex663->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r5.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex663);
+	tex664 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex664->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/join_base.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex664);
+	tex665 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex665->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/join_press.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex665);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

@@ -1,9 +1,10 @@
 #include "StageSelectShader.h"
 
 
-StageSelectShader::StageSelectShader(ResourceManager* r)
+StageSelectShader::StageSelectShader(ResourceManager* r, PlayerShader* p)
 {
 	rm = r;
+	ps = p;
 }
 StageSelectShader::~StageSelectShader() {}
 
@@ -19,258 +20,201 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	//로그아웃 버튼 위치 184, 152 클릭 범위 = 111, 86
 	//즉 위치 = -(184-600)/450, -(152-450)/450
 	//범위 = (111*2)/450, 86/450
+
+	//메인으로 돌아가기 버튼
 	CubeMeshOffset* main = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 178.0f / 450.0f, 59.0f / 450.0f, 0.02f, (178.0f - 600.0f) / 450.0f, -(175.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* mainr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 178.0f / 450.0f, 59.0f / 450.0f, 0.02f, (178.0f - 600.0f) / 450.0f, -(175.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* join1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 153.0f / 450.0f, 56.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* join1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 153.0f / 450.0f, 56.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, true);
+	//채널 박스 1~5
+	CubeMeshOffset* ch1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (237.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ch1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (237.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* cowork1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (624.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* cowork1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (624.0f - 600.0f) / 450.0f, -(410.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* ch2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (608.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ch2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (608.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* cosend1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (847.0f - 600.0f) / 450.0f, -(409.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* cosend1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (847.0f - 600.0f) / 450.0f, -(409.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* ch3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (974.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ch3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (974.5f - 600.0f) / 450.0f, -(356.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* join2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 52.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(653.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* join2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 52.0f / 450.0f, 0.02f, (410.0f - 600.0f) / 450.0f, -(653.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* ch4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (402.5f - 600.0f) / 450.0f, -(626.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ch4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (402.5f - 600.0f) / 450.0f, -(626.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* cowork2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (625.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* cowork2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 145.0f / 450.0f, 54.0f / 450.0f, 0.02f, (625.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* ch5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (836.5f - 600.0f) / 450.0f, -(626.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* ch5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 276.0f / 450.0f, 216.0f / 450.0f, 0.02f, (836.5f - 600.0f) / 450.0f, -(626.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* cosend2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (848.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* cosend2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 150.0f / 450.0f, 53.0f / 450.0f, 0.02f, (848.0f - 600.0f) / 450.0f, -(654.0f - 450.0f) / 450.0f, true);
+	//인원수 표기 구간 1~5
 
-	CubeMeshOffset* select1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (934.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* select1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (934.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (288.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (288.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* select2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* select2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 33.0f / 450.0f, 39.0f / 450.0f, 0.02f, (936.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (659.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (659.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* mode1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (868.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* mode1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (868.0f - 600.0f) / 450.0f, -(334.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (1030.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (1030.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* mode2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (870.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* mode2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 39.0f / 450.0f, 0.02f, (870.0f - 600.0f) / 450.0f, -(579.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* list1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (868.0f - 600.0f) / 450.0f, -(432.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* list1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (868.0f - 600.0f) / 450.0f, -(432.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* list2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (870.0f - 600.0f) / 450.0f, -(677.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* list2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 100.0f / 450.0f, 156.0f / 450.0f, 0.03f, (870.0f - 600.0f) / 450.0f, -(677.0f - 450.0f) / 450.0f, true);
+	// 방 입장하기 버튼 1~5
 
-	CubeMeshOffset* cointer = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* cointerr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 677.0f / 450.0f, 291.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* join1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (305.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (305.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* co_melee_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (340.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_melee_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (397.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_melee_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (454.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (686.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (686.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* co_ranged_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (554.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_ranged_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (611.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_ranged_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (668.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (1057.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (1057.0f - 600.0f) / 450.0f, -(418.5f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* co_radio_1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (758.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_radio_2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (815.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* co_radio_3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 40.0f / 450.0f, 40.0f / 450.0f, 0.03f, (872.0f - 600.0f) / 450.0f, -(497.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (470.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (470.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* join5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (944.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (944.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, true);
+	/*
+	인덱스 0 : 배경
+	1=뒤로가기 버튼
+
+	2~6=채널 박스
+	7~11= 1~5채널의 인원수 표기 숫자
+	12~16= 1~5채널의 입장하기 버튼
+
+
+	*/
 
 
 	meshes.push_back(inter);
 	meshesRev.push_back(inter2);
 	meshes.push_back(main);
 	meshesRev.push_back(mainr);
+
+	meshes.push_back(ch1);
+	meshes.push_back(ch2);
+	meshes.push_back(ch3);
+	meshes.push_back(ch4);
+	meshes.push_back(ch5);
+	meshes.push_back(count1);
+	meshes.push_back(count2);
+	meshes.push_back(count3);
+	meshes.push_back(count4);
+	meshes.push_back(count5);
 	meshes.push_back(join1);
-	meshesRev.push_back(join1r);
-	meshes.push_back(cowork1);
-	meshesRev.push_back(cowork1r);
-	meshes.push_back(cosend1);
-	meshesRev.push_back(cosend1r);
-
 	meshes.push_back(join2);
+	meshes.push_back(join3);
+	meshes.push_back(join4);
+	meshes.push_back(join5);
+
+	meshesRev.push_back(ch1r);
+	meshesRev.push_back(ch2r);
+	meshesRev.push_back(ch3r);
+	meshesRev.push_back(ch4r);
+	meshesRev.push_back(ch5r);
+	meshesRev.push_back(count1r);
+	meshesRev.push_back(count2r);
+	meshesRev.push_back(count3r);
+	meshesRev.push_back(count4r);
+	meshesRev.push_back(count5r);
+	meshesRev.push_back(join1r);
 	meshesRev.push_back(join2r);
-	meshes.push_back(cowork2);
-	meshesRev.push_back(cowork2r);
-	meshes.push_back(cosend2);
-	meshesRev.push_back(cosend2r);
-
-	meshes.push_back(select1);
-	meshesRev.push_back(select1r);
-	meshes.push_back(select2);
-	meshesRev.push_back(select2r);
+	meshesRev.push_back(join3r);
+	meshesRev.push_back(join4r);
+	meshesRev.push_back(join5r);
 	
-	meshes.push_back(mode1);
-	meshesRev.push_back(mode1r);
-	meshes.push_back(mode2);
-	meshesRev.push_back(mode2r);
-
-	meshes.push_back(list1);
-	meshesRev.push_back(list1r);
-	meshes.push_back(list2);
-	meshesRev.push_back(list2r);
-
-	meshes.push_back(cointer);
-	meshesRev.push_back(cointerr);
-
-	meshes.push_back(co_melee_1);
-	meshes.push_back(co_melee_2);
-	meshes.push_back(co_melee_3);
-	meshes.push_back(co_ranged_1);
-	meshes.push_back(co_ranged_2);
-	meshes.push_back(co_ranged_3);
-	meshes.push_back(co_radio_1);
-	meshes.push_back(co_radio_2);
-	meshes.push_back(co_radio_3);
-
-	meshesRev.push_back(co_melee_1);
-	meshesRev.push_back(co_melee_2);
-	meshesRev.push_back(co_melee_3);
-	meshesRev.push_back(co_ranged_1);
-	meshesRev.push_back(co_ranged_2);
-	meshesRev.push_back(co_ranged_3);
-	meshesRev.push_back(co_radio_1);
-	meshesRev.push_back(co_radio_2);
-	meshesRev.push_back(co_radio_3);
 
 	
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, 81, 175, 259, 234, 239);
-	UIObject* obj3 = new UIObject(1, 333, 410, 487, 466, 248);
-	UIObject* obj4 = new UIObject(1, 551, 410, 697, 464, 245);
-	UIObject* obj5 = new UIObject(1, 772, 409, 922, 463, 242);
-
-	UIObject* obj6 = new UIObject(1, 335, 653, 485, 705, 248);
-	UIObject* obj7 = new UIObject(1, 552, 654, 698, 708, 245);
-	UIObject* obj8 = new UIObject(1, 773, 654, 923, 707, 242);
-
-	UIObject* obj9 = new UIObject(1, 917, 334, 951, 373, -1);
-	UIObject* obj10 = new UIObject(1, 919, 579, 953, 618, -1);
-
-	//mode
+	
+	//채널 박스
+	UIObject* obj3 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj4 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj5 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj7 = new UIObject(1, -1, -1, -1, -1, -1);
+	//인원수
+	UIObject* obj8 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj9 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj10 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj11 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj12 = new UIObject(1, -1, -1, -1, -1, -1);
-	//list
+	//입장버튼
 	UIObject* obj13 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj14 = new UIObject(1, -1, -1, -1, -1, -1);
-
-	//coworker
 	UIObject* obj15 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj16 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj17 = new UIObject(1, -1, -1, -1, -1, -1);
 
-	//melee
-	UIObject* obj16 = new UIObject(1, -1, -1, -1, -1, 315);
-	UIObject* obj17 = new UIObject(1, -1, -1, -1, -1, 317);
-	UIObject* obj18 = new UIObject(1, -1, -1, -1, -1, 319);
-	//ranged
-	UIObject* obj19 = new UIObject(1, -1, -1, -1, -1, 315);
-	UIObject* obj20 = new UIObject(1, -1, -1, -1, -1, 317);
-	UIObject* obj21 = new UIObject(1, -1, -1, -1, -1, 319);
-	//radio
-	UIObject* obj22 = new UIObject(1, -1, -1, -1, -1, 315);
-	UIObject* obj23 = new UIObject(1, -1, -1, -1, -1, 317);
-	UIObject* obj24 = new UIObject(1, -1, -1, -1, -1, 319);
-
-
+	//배경
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[238]);
 	obj->SetPosition(0.0f, 0.0f, 0.0f);
 
+	//돌아가기 버튼
 	obj2->SetMesh(meshes[1]);
 	obj2->SetMaterial(0, rm->materials[239]);
 	obj2->SetPosition(0.0f, 0.0f, 0.0f);
 
+	//채널 박스
 	obj3->SetMesh(meshes[2]);
-	obj3->SetMaterial(0, rm->materials[248]);
+	obj3->SetMaterial(0, rm->materials[658]);
 	obj3->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj4->SetMesh(meshes[3]);
-	obj4->SetMaterial(0, rm->materials[245]);
+	obj4->SetMaterial(0, rm->materials[659]);
 	obj4->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj5->SetMesh(meshes[4]);
-	obj5->SetMaterial(0, rm->materials[242]);
+	obj5->SetMaterial(0, rm->materials[660]);
 	obj5->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj6->SetMesh(meshes[5]);
-	obj6->SetMaterial(0, rm->materials[248]);
+	obj6->SetMaterial(0, rm->materials[661]);
 	obj6->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj7->SetMesh(meshes[6]);
-	obj7->SetMaterial(0, rm->materials[245]);
+	obj7->SetMaterial(0, rm->materials[662]);
 	obj7->SetPosition(0.0f, 0.0f, 0.0f);
 
+	//인원 숫자
 	obj8->SetMesh(meshes[7]);
-	obj8->SetMaterial(0, rm->materials[242]);
+	obj8->SetMaterial(0, rm->materials[273]);
 	obj8->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj9->SetMesh(meshes[8]);
-	obj9->SetMaterial(0, rm->materials[251]);
+	obj9->SetMaterial(0, rm->materials[273]);
 	obj9->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj10->SetMesh(meshes[9]);
-	obj10->SetMaterial(0, rm->materials[251]);
+	obj10->SetMaterial(0, rm->materials[273]);
 	obj10->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj11->SetMesh(meshes[10]);
-	obj11->SetMaterial(0, rm->materials[309]);
+	obj11->SetMaterial(0, rm->materials[273]);
 	obj11->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj12->SetMesh(meshes[11]);
-	obj12->SetMaterial(0, rm->materials[309]);
+	obj12->SetMaterial(0, rm->materials[273]);
 	obj12->SetPosition(0.0f, 0.0f, 0.0f);
 
+	//입장버튼
 	obj13->SetMesh(meshes[12]);
-	obj13->SetMaterial(0, rm->materials[313]);
+	obj13->SetMaterial(0, rm->materials[663]);
 	obj13->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj14->SetMesh(meshes[13]);
-	obj14->SetMaterial(0, rm->materials[313]);
+	obj14->SetMaterial(0, rm->materials[663]);
 	obj14->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj15->SetMesh(meshes[14]);
-	obj15->SetMaterial(0, rm->materials[314]);
+	obj15->SetMaterial(0, rm->materials[663]);
 	obj15->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj16->SetMesh(meshes[15]);
-	obj16->SetMaterial(0, rm->materials[315]);
+	obj16->SetMaterial(0, rm->materials[663]);
 	obj16->SetPosition(0.0f, 0.0f, 0.0f);
-
 	obj17->SetMesh(meshes[16]);
-	obj17->SetMaterial(0, rm->materials[317]);
+	obj17->SetMaterial(0, rm->materials[663]);
 	obj17->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj18->SetMesh(meshes[17]);
-	obj18->SetMaterial(0, rm->materials[319]);
-	obj18->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj19->SetMesh(meshes[18]);
-	obj19->SetMaterial(0, rm->materials[315]);
-	obj19->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj20->SetMesh(meshes[19]);
-	obj20->SetMaterial(0, rm->materials[317]);
-	obj20->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj21->SetMesh(meshes[20]);
-	obj21->SetMaterial(0, rm->materials[319]);
-	obj21->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj22->SetMesh(meshes[21]);
-	obj22->SetMaterial(0, rm->materials[315]);
-	obj22->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj23->SetMesh(meshes[22]);
-	obj23->SetMaterial(0, rm->materials[317]);
-	obj23->SetPosition(0.0f, 0.0f, 0.0f);
-
-	obj24->SetMesh(meshes[23]);
-	obj24->SetMaterial(0, rm->materials[319]);
-	obj24->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
 	objects.push_back(obj4);
 	objects.push_back(obj5);
+
 	objects.push_back(obj6);
 	objects.push_back(obj7);
 	objects.push_back(obj8);
@@ -282,16 +226,10 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	objects.push_back(obj13);
 	objects.push_back(obj14);
 	objects.push_back(obj15);
+
 	objects.push_back(obj16);
 	objects.push_back(obj17);
-	objects.push_back(obj18);
-	objects.push_back(obj19);
-	objects.push_back(obj20);
-
-	objects.push_back(obj21);
-	objects.push_back(obj22);
-	objects.push_back(obj23);
-	objects.push_back(obj24);
+	
 }
 
 void StageSelectShader::ReleaseObjects()
@@ -464,57 +402,22 @@ void StageSelectShader::Animate(CCamera* cam)
 		objects[i]->Rotate(-pitch, yaw, 0.0f);
 		objects[i]->SetPosition(cp.x + cl.x, cp.y + cl.y, cp.z + cl.z);
 	}
-	//	XMFLOAT3 p = objects[1]->GetPosition();
-	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
 
-	if (list1Show == false)
+	//각 상자의 현재 인원 숫자를 갱신함
+	for (int c = 1; c <= 5; ++c)
 	{
-		objects[12]->SetMesh(NULL);
-	}
-	else
-	{
-		objects[12]->SetMesh(meshes[12]);
-	}
-	
-	if (list2Show == false)
-	{
-		objects[13]->SetMesh(NULL);
-	}
-	else
-	{
-		objects[13]->SetMesh(meshes[13]);
+		int room_cnt = 0;
+		for (int i = 0; i < ps->room.size(); ++i)
+		{
+			if (ps->room[i] == c)
+			{
+				room_cnt += 1;
+			}
+		}
+		objects[6 + c]->m_ppMaterials[0] = rm->materials[273 + room_cnt];
 	}
 
 	
-	objects[10]->m_ppMaterials[0] = rm->materials[309 + mode1 - 1];
-	objects[11]->m_ppMaterials[0] = rm->materials[309 + mode2 - 1];
-	
-	if (coworkShow == false)
-	{
-		objects[14]->SetMesh(NULL);
-		objects[15]->SetMesh(NULL);
-		objects[16]->SetMesh(NULL);
-		objects[17]->SetMesh(NULL);
-		objects[18]->SetMesh(NULL);
-		objects[19]->SetMesh(NULL);
-		objects[20]->SetMesh(NULL);
-		objects[21]->SetMesh(NULL);
-		objects[22]->SetMesh(NULL);
-		objects[23]->SetMesh(NULL);
 
-	}
-	else
-	{
-		objects[14]->SetMesh(meshes[14]);
-		objects[15]->SetMesh(meshes[15]);
-		objects[16]->SetMesh(meshes[16]);
-		objects[17]->SetMesh(meshes[17]);
-		objects[18]->SetMesh(meshes[18]);
-		objects[19]->SetMesh(meshes[19]);
-		objects[20]->SetMesh(meshes[20]);
-		objects[21]->SetMesh(meshes[21]);
-		objects[22]->SetMesh(meshes[22]);
-		objects[23]->SetMesh(meshes[23]);
-	}
 
 }

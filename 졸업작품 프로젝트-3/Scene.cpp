@@ -276,7 +276,7 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 	profileInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	profileInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
-	stageInter = new StageSelectShader(rm);
+	stageInter = new StageSelectShader(rm, playerShader);
 	stageInter->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 	stageInter->BuildObjects(pd3dDevice, pd3dCommandList);
 
@@ -3862,6 +3862,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		memcpy(&p, p_buf, p_buf[0]);
 
 		playerShader->room[p.id] = p.room;
+		room = p.room;
 		break;
 	}
 	case PACKET_TYPE::SC_MISSION:

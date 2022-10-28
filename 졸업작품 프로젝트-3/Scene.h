@@ -88,6 +88,8 @@ public:
     CScene();
     ~CScene();
 
+	int room = -1;
+
 	chrono::time_point<chrono::system_clock> programStarted;
 
 	bool OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
