@@ -3862,7 +3862,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		memcpy(&p, p_buf, p_buf[0]);
 
 		playerShader->room[p.id] = p.room;
-		room = p.room;
+		
 		break;
 	}
 	case PACKET_TYPE::SC_MISSION:

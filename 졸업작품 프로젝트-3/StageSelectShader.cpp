@@ -55,8 +55,8 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	CubeMeshOffset* count4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* count4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, true);
 
 	// 방 입장하기 버튼 1~5
 
