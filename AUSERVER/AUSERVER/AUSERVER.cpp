@@ -10,6 +10,7 @@ enum COMP_TYPE { PL_ACCEPT, PL_RECV, PL_SEND };
 chrono::time_point<chrono::system_clock> started;
 
 std::vector<int> room;
+std::vector<bool> gstart;
 
 class OVER_EXP {
 public:
@@ -307,6 +308,17 @@ void process_packet(int c_id, char* packet)
 		cout << "client add order received" << endl;
 
 		//새로 접속한 플레이어에게만 기존 접속자들+본인의 로그인 패킷 전송
+		// 방의 게임 시작 여부 전송
+		for (int i = 0; i < 5; ++i)
+		{
+			SC_START_PACKET p;
+			p.size = sizeof(SC_START_PACKET);
+			p.type = PACKET_TYPE::SC_START;
+			p.room = i;
+			p.start = gstart[i];
+
+			clients[c_id].do_send(&p);
+		}
 		for (int i = 0; i <= c_id; ++i) // 모든 접속자의 정보 전달
 		{
 			if (clients[i]._use == false)
@@ -327,6 +339,7 @@ void process_packet(int c_id, char* packet)
 
 			clients[c_id].do_send(&pc);
 
+			//방정보
 			if (room[i] != -1)
 			{
 				SC_ROOM_PACKET p;
@@ -337,6 +350,7 @@ void process_packet(int c_id, char* packet)
 
 				clients[c_id].do_send(&p);
 			}
+			
 		}
 
 
@@ -391,7 +405,26 @@ void process_packet(int c_id, char* packet)
 		break;
 	}
 
+	case PACKET_TYPE::CS_START:
+	{
+		CS_START_PACKET* p = reinterpret_cast<CS_START_PACKET*>(packet);
 
+		gstart[p->room] = p->start;
+		for (auto& pl : clients)
+		{
+			if (pl._use == true)
+			{
+				SC_START_PACKET pc;
+				pc.size = sizeof(SC_START_PACKET);
+				pc.type = PACKET_TYPE::SC_START;
+				pc.room = p->room;
+				pc.start = p->start;
+
+				pl.do_send(&pc);
+			}
+		}
+		break;
+	}
 	case PACKET_TYPE::CS_ROOM:
 	{
 		CS_ROOM_PACKET* p = reinterpret_cast<CS_ROOM_PACKET*>(packet);
@@ -1019,6 +1052,10 @@ int main(int argc, char* argv[])
 	for (int i = 0; i < 30; ++i)
 	{
 		room.push_back(-1);
+	}
+	for (int i = 0; i < 5; ++i)
+	{
+		gstart.push_back(0);
 	}
 
 	WSADATA WSAData;

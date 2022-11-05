@@ -2628,8 +2628,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				}
 			}
 		}
-		if (ready == true)
+		if (ready == true && playerShader->room[pID]>0)
 		{
+
+			CS_START_PACKET p;
+			p.size = sizeof(CS_START_PACKET);
+			p.type = PACKET_TYPE::CS_START;
+			p.room = playerShader->room[pID]-1;
+			p.start = 1;
+
+			SendPacket(&p);
 
 			
 			currentScreen = IN_GAME_STATE;
@@ -2705,6 +2713,28 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				enemyShader->currentObject[e]->maxHP *= waitInter->selectedMode;
 				enemyShader->currentObject[e]->bState.hp *= waitInter->selectedMode;
 			}
+		}
+		
+	}
+
+	for (int i = 1; i <= 5; ++i)
+	{
+		int cnt = 0;
+		for (int j = 0; j < 30; ++j)
+		{
+			if (playerShader->room[j] == i)
+			{
+				cnt += 1;
+			}
+		}
+		if (cnt == 0)
+		{
+			CS_START_PACKET p;
+			p.size = sizeof(CS_START_PACKET);
+			p.type = PACKET_TYPE::CS_START;
+			p.room = i-1;
+			p.start = 0;
+			SendPacket(&p);
 		}
 		
 	}
@@ -3855,7 +3885,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 	switch (type)
 	{
+	case PACKET_TYPE::SC_START:
+	{
+		SC_START_PACKET p;
+		memcpy(&p, p_buf, p_buf[0]);
 
+		playerShader->started[p.room] = p.start;
+		break;
+	}
 	case PACKET_TYPE::SC_ROOM:
 	{
 		SC_ROOM_PACKET p;

@@ -134,6 +134,16 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 	//324~338 임무 성공창
 
+
+	//나가기창
+	CubeMeshOffset* exit = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* yes = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* no = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* exitr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* yesr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* nor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
+
 	meshes.push_back(succeed);
 	meshes.push_back(retry);
 	meshes.push_back(back);
@@ -167,6 +177,9 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(gold1r);
 	revmeshes.push_back(gold2r);
 	revmeshes.push_back(gold3r);
+
+
+
 
 	//mission
 	CubeMeshOffset* mission = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 500.0f / 450.0f, 210.0f / 450.0f, 0.03f, (600.0f - 600.0f) / 450.0f, -(430.0f - 450.0f) / 450.0f, false);
@@ -222,7 +235,11 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	meshes.push_back(time100);
 	meshes.push_back(time10);
 	meshes.push_back(time1);
+
+	//349 = 실패
 	meshes.push_back(fail);
+
+	//350 = 음성 자막
 	meshes.push_back(narration);
 
 	revmeshes.push_back(missionr);
@@ -237,6 +254,17 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(time1r);
 	revmeshes.push_back(failr);
 	revmeshes.push_back(narrationr);
+
+	//351~353 나가기창
+
+	meshes.push_back(exit);
+	meshes.push_back(yes);
+	meshes.push_back(no);
+
+	revmeshes.push_back(exitr);
+	revmeshes.push_back(yesr);
+	revmeshes.push_back(nor);
+
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, -1, -1, -1, -1, 263);
@@ -285,6 +313,10 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 	UIObject* obj34 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj35 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	UIObject* obj36 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj37 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj38 = new UIObject(1, -1, -1, -1, -1, -1);
 
 
 	obj->SetMesh(meshes[0]);
@@ -418,6 +450,21 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj35->SetMesh(meshes[350]);
 	obj35->SetMaterial(0, rm->materials[338]);
 	obj35->SetPosition(0.0f, 0.0f, 0.0f);
+
+	//35~37 나가기창
+
+	obj36->SetMesh(NULL);
+	obj36->SetMaterial(0, rm->materials[665]);
+	obj36->SetPosition(0.0f, 0.0f, 0.0f);
+	obj37->SetMesh(NULL);
+	obj37->SetMaterial(0, rm->materials[666]);
+	obj37->SetPosition(0.0f, 0.0f, 0.0f);
+	obj38->SetMesh(NULL);
+	obj38->SetMaterial(0, rm->materials[668]);
+	obj38->SetPosition(0.0f, 0.0f, 0.0f);
+
+
+
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
@@ -456,6 +503,10 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	objects.push_back(obj33);
 	objects.push_back(obj34);
 	objects.push_back(obj35);
+	objects.push_back(obj36);
+	objects.push_back(obj37);
+	objects.push_back(obj38);
+
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -1116,6 +1167,29 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		}
 
 	}
+
+	if (exiting == false)
+	{
+		objects[35]->SetMesh(NULL);
+		objects[36]->SetMesh(NULL);
+		objects[37]->SetMesh(NULL);
+	}
+	else
+	{
+		if (cl.z<0.0f)
+		{
+			objects[35]->SetMesh(revmeshes[351]);
+			objects[36]->SetMesh(revmeshes[352]);
+			objects[37]->SetMesh(revmeshes[353]);
+		}
+		else
+		{
+			objects[35]->SetMesh(meshes[351]);
+			objects[36]->SetMesh(meshes[353]);
+			objects[37]->SetMesh(meshes[352]);
+		}
+	}
+
 
 	chrono::time_point<chrono::system_clock> mmt = chrono::system_clock::now();
 

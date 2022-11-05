@@ -7,6 +7,10 @@ PlayerShader::PlayerShader(ResourceManager* r)
 	{
 		room.push_back(-1);
 	}
+	for (int i = 0; i < 5; ++i)
+	{
+		started.push_back(0);
+	}
 }
 PlayerShader::~PlayerShader() {}
 

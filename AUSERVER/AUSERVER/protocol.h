@@ -53,6 +53,7 @@ enum class PACKET_TYPE : short
 	CS_MISSION,
 	CS_LOCATION,
 	CS_ROOM,
+	CS_START,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -72,6 +73,7 @@ enum class PACKET_TYPE : short
 	SC_MISSION,
 	SC_LOCATION,
 	SC_ROOM,
+	SC_START
 };
 
 // client to server packet
@@ -84,6 +86,8 @@ struct CS_ROOM_PACKET
 
 	int room;
 };
+
+
 struct SC_ROOM_PACKET
 {
 	unsigned char size;
@@ -91,6 +95,22 @@ struct SC_ROOM_PACKET
 	short id;
 
 	int room;
+};
+struct CS_START_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	int room;
+
+	int start;
+};
+struct SC_START_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	int room;
+
+	int start;
 };
 
 struct CS_LOCATION_PACKET

@@ -340,166 +340,362 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			break;
 		case WM_LBUTTONUP:
 		{
-			if (m_pScene->interShader->stageClear == false)
+			if (m_pScene->interShader->exiting == false)
 			{
-				if (mousedown == true)
+				if (m_pScene->interShader->stageClear == false)
 				{
-					CS_MOUSE_PACKET p;
-					p.c_id = m_pScene->pID; //GetPlayerid();
-					p.size = sizeof(CS_MOUSE_PACKET);
-					p.down = false;
-					p.type = PACKET_TYPE::CS_MOUSE;
-					p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
-					SendPacket(&p);
-					m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
-					mousedown = false;
+					if (mousedown == true)
+					{
+						CS_MOUSE_PACKET p;
+						p.c_id = m_pScene->pID; //GetPlayerid();
+						p.size = sizeof(CS_MOUSE_PACKET);
+						p.down = false;
+						p.type = PACKET_TYPE::CS_MOUSE;
+						p.attackID = m_pScene->playerShader->objects[m_pScene->pID]->bState.attackID;
+						SendPacket(&p);
+						m_pScene->playerShader->objects[m_pScene->pID]->stateChanged = true;
+						mousedown = false;
+					}
+					//버튼 클릭 시 처리
 				}
-				//버튼 클릭 시 처리
+				else
+				{
+					POINT pnt;
+					GetCursorPos(&pnt);
+					RECT rect;
+					GetWindowRect(hWnd, &rect);
+					int wx = rect.left;
+					int wy = rect.top;
+					//retry
+					if ((pnt.x >= 656 + wx && pnt.x <= 786 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+					{
+						//플레이어의 상태 초기화
+						for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+						{
+							m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
+
+							m_pScene->playerShader->objects[k]->bState.attacking = false;
+							m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+							m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+							m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+							m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+							m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+							m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+						}
+						m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
+						//선택된 스테이지에 관한 정보 초기화.
+						m_pScene->rm->bgm[0]->stop();
+						m_pScene->rm->bgm[0]->Update();
+						m_pScene->rm->bgm[1]->play();
+						m_pScene->rm->bgm[1]->Update();
+						m_pScene->interShader->stageClear = false;
+						m_pScene->waitInter->selectedStage = -1;
+						m_pScene->interShader->missionFail = false;
+
+						m_pScene->drop->objects.clear();
+						m_pScene->drop->type.clear();
+						m_pScene->drop->rotation.clear();
+						for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+						{
+							m_pScene->rm->brief[i]->stop();
+							m_pScene->rm->brief[i]->Update();
+							m_pScene->rm->briefPlayed[i] = false;
+
+						}
+						m_pScene->interShader->narrationShow = false;
+						m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+						m_pScene->interShader->nDuration = 0.0;
+
+						m_pScene->interShader->m10_gain = 0;
+						m_pScene->interShader->m10_miss = 0;
+						m_pScene->interShader->m1_kill = 0;
+						m_pScene->interShader->m2_stun = 0;
+						m_pScene->interShader->m3_bother = 0;
+						m_pScene->interShader->m4_kill = 0;
+						m_pScene->interShader->m5_broken = 0;
+						m_pScene->interShader->m6_broken = 0;
+						m_pScene->interShader->m7_kill = 0;
+						m_pScene->interShader->m8_kill = 0;
+						m_pScene->interShader->m9_stun = 0;
+						m_pScene->interShader->m9_search = 0;
+						m_pScene->interShader->mission = 1;
+
+						m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+						m_pCamera->lx = 0.0f;
+						m_pCamera->ly = 0.0f;
+						m_pCamera->lz = 1.0f;
+						m_pCamera->GenerateViewMatrix();
+						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
+						m_pScene->currentScreen = STAGE_SELECT_STATE;
+
+
+					}
+					else if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+					{
+						//플레이어의 상태 초기화
+						for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+						{
+							m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
+							m_pScene->playerShader->objects[k]->bState.attacking = false;
+							m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+							m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+							m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+							m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+							m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+							m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+						}
+						m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
+
+						m_pScene->drop->objects.clear();
+						m_pScene->drop->type.clear();
+						m_pScene->drop->rotation.clear();
+
+						m_pScene->rm->bgm[0]->stop();
+						m_pScene->rm->bgm[0]->Update();
+						m_pScene->rm->bgm[1]->play();
+						m_pScene->rm->bgm[1]->Update();
+						//선택된 스테이지에 관한 정보 초기화.
+						m_pScene->interShader->stageClear = false;
+						m_pScene->interShader->missionFail = false;
+
+						for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+						{
+							m_pScene->rm->brief[i]->stop();
+							m_pScene->rm->brief[i]->Update();
+							m_pScene->rm->briefPlayed[i] = false;
+
+						}
+						m_pScene->interShader->narrationShow = false;
+						m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+						m_pScene->interShader->nDuration = 0.0;
+
+						m_pScene->interShader->m10_gain = 0;
+						m_pScene->interShader->m10_miss = 0;
+						m_pScene->interShader->m1_kill = 0;
+						m_pScene->interShader->m2_stun = 0;
+						m_pScene->interShader->m3_bother = 0;
+						m_pScene->interShader->m4_kill = 0;
+						m_pScene->interShader->m5_broken = 0;
+						m_pScene->interShader->m6_broken = 0;
+						m_pScene->interShader->m7_kill = 0;
+						m_pScene->interShader->m8_kill = 0;
+						m_pScene->interShader->m9_stun = 0;
+						m_pScene->interShader->m9_search = 0;
+						m_pScene->interShader->mission = 1;
+
+						m_pScene->waitInter->selectedStage = -1;
+
+						m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+						m_pCamera->lx = 0.0f;
+						m_pCamera->ly = 0.0f;
+						m_pCamera->lz = 1.0f;
+						m_pCamera->GenerateViewMatrix();
+						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
+						m_pScene->currentScreen = LOBBY_STATE;
+
+					}
+				}
 			}
 			else
 			{
 				POINT pnt;
 				GetCursorPos(&pnt);
 				RECT rect;
-				GetWindowRect(hWnd, &rect);
+				GetWindowRect(m_hWnd, &rect);
 				int wx = rect.left;
 				int wy = rect.top;
-				//retry
-				if ((pnt.x >= 656 + wx && pnt.x <= 786 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
-				{
-					//플레이어의 상태 초기화
-					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
-					{
-						m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
-						m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
-						m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
 
-						m_pScene->playerShader->objects[k]->bState.attacking = false;
-						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
-						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
-						m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+				int x = pnt.x;
+				int y = pnt.y;
+				if (fullscr == false)
+				{
+					//예 버튼 위
+					if (x >= 432 + wx && x <= 582 + wx && y >= 546 + wy && y <= 594 + wy)
+					{
+						//플레이어의 상태 초기화
+						for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+						{
+							m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
+
+							m_pScene->playerShader->objects[k]->bState.attacking = false;
+							m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+							m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+							m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+							m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+							m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+							m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+						}
+						m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
+						//선택된 스테이지에 관한 정보 초기화.
+						m_pScene->rm->bgm[0]->stop();
+						m_pScene->rm->bgm[0]->Update();
+						m_pScene->rm->bgm[1]->play();
+						m_pScene->rm->bgm[1]->Update();
+						m_pScene->interShader->stageClear = false;
+						m_pScene->waitInter->selectedStage = -1;
+						m_pScene->interShader->missionFail = false;
+
+						m_pScene->drop->objects.clear();
+						m_pScene->drop->type.clear();
+						m_pScene->drop->rotation.clear();
+						for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+						{
+							m_pScene->rm->brief[i]->stop();
+							m_pScene->rm->brief[i]->Update();
+							m_pScene->rm->briefPlayed[i] = false;
+
+						}
+						m_pScene->interShader->narrationShow = false;
+						m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+						m_pScene->interShader->nDuration = 0.0;
+
+						m_pScene->interShader->m10_gain = 0;
+						m_pScene->interShader->m10_miss = 0;
+						m_pScene->interShader->m1_kill = 0;
+						m_pScene->interShader->m2_stun = 0;
+						m_pScene->interShader->m3_bother = 0;
+						m_pScene->interShader->m4_kill = 0;
+						m_pScene->interShader->m5_broken = 0;
+						m_pScene->interShader->m6_broken = 0;
+						m_pScene->interShader->m7_kill = 0;
+						m_pScene->interShader->m8_kill = 0;
+						m_pScene->interShader->m9_stun = 0;
+						m_pScene->interShader->m9_search = 0;
+						m_pScene->interShader->mission = 1;
+
+						m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+						m_pCamera->lx = 0.0f;
+						m_pCamera->ly = 0.0f;
+						m_pCamera->lz = 1.0f;
+						m_pCamera->GenerateViewMatrix();
+						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 						
-						m_pScene->playerShader->objects[k]->kState.isInAir = 0;
-						m_pScene->playerShader->objects[k]->kState.isMobile = 0;
-						m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
-						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
-						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
-					}
-					m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
-					//선택된 스테이지에 관한 정보 초기화.
-					m_pScene->rm->bgm[0]->stop();
-					m_pScene->rm->bgm[0]->Update();
-					m_pScene->rm->bgm[1]->play();
-					m_pScene->rm->bgm[1]->Update();
-					m_pScene->interShader->stageClear = false;
-					m_pScene->waitInter->selectedStage = -1;
-					m_pScene->interShader->missionFail = false;
+						m_pScene->room = -1;
+						m_pScene->interShader->exiting = false;
+						m_pScene->currentScreen = LOBBY_STATE;
 
-					m_pScene->drop->objects.clear();
-					m_pScene->drop->type.clear();
-					m_pScene->drop->rotation.clear();
-					for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = -1;
+
+						SendPacket(&p);
+
+					
+					}
+					//아니오 버튼 위
+					else if (x >= 628 + wx && x <= 768 + wx && y >= 546 + wy && y <= 594 + wy)
 					{
-						m_pScene->rm->brief[i]->stop();
-						m_pScene->rm->brief[i]->Update();
-						m_pScene->rm->briefPlayed[i] = false;
-
+						m_pScene->interShader->exiting = false;
 					}
-					m_pScene->interShader->narrationShow = false;
-					m_pScene->interShader->lastNarrated = chrono::system_clock::now();
-					m_pScene->interShader->nDuration = 0.0;
-
-					m_pScene->interShader->m10_gain = 0;
-					m_pScene->interShader->m10_miss = 0;
-					m_pScene->interShader->m1_kill = 0;
-					m_pScene->interShader->m2_stun = 0;
-					m_pScene->interShader->m3_bother = 0;
-					m_pScene->interShader->m4_kill = 0;
-					m_pScene->interShader->m5_broken = 0;
-					m_pScene->interShader->m6_broken = 0;
-					m_pScene->interShader->m7_kill = 0;
-					m_pScene->interShader->m8_kill = 0;
-					m_pScene->interShader->m9_stun = 0;
-					m_pScene->interShader->m9_search = 0;
-					m_pScene->interShader->mission = 1;
-
-					m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
-					m_pCamera->lx = 0.0f;
-					m_pCamera->ly = 0.0f;
-					m_pCamera->lz = 1.0f;
-					m_pCamera->GenerateViewMatrix();
-					m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
-					m_pScene->currentScreen = STAGE_SELECT_STATE;
-
-
 				}
-				else if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+				else
 				{
-					//플레이어의 상태 초기화
-					for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+					//+15 -25 -24
+					//예 버튼 위
+					if (x >= 497 + wx && x <= 647 + wx && y >= 442 + wy && y <= 490 + wy)
 					{
-						m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
-						m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
-						m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
-						m_pScene->playerShader->objects[k]->bState.attacking = false;
-						m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
-						m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
-						m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
 
-						m_pScene->playerShader->objects[k]->kState.isInAir = 0;
-						m_pScene->playerShader->objects[k]->kState.isMobile = 0;
-						m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
-						m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
-						m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+						//플레이어의 상태 초기화
+						for (int k = 0; k < m_pScene->playerShader->objects.size(); ++k)
+						{
+							m_pScene->playerShader->objects[k]->amp_melee = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_ranged = 1.0f;
+							m_pScene->playerShader->objects[k]->amp_radio = 1.0f;
+
+							m_pScene->playerShader->objects[k]->bState.attacking = false;
+							m_pScene->playerShader->objects[k]->info->stats.capacity = m_pScene->playerShader->objects[k]->info->stats.maxhp;
+							m_pScene->playerShader->objects[k]->bState.attackID = TYPE_RANGED;
+							m_pScene->playerShader->objects[k]->bState.stateID = IDLE_STATE;
+
+							m_pScene->playerShader->objects[k]->kState.isInAir = 0;
+							m_pScene->playerShader->objects[k]->kState.isMobile = 0;
+							m_pScene->playerShader->objects[k]->kState.rotation = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.xzspeed = 0.0f;
+							m_pScene->playerShader->objects[k]->kState.yspeed = 0.0f;
+						}
+						m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
+						//선택된 스테이지에 관한 정보 초기화.
+						m_pScene->rm->bgm[0]->stop();
+						m_pScene->rm->bgm[0]->Update();
+						m_pScene->rm->bgm[1]->play();
+						m_pScene->rm->bgm[1]->Update();
+						m_pScene->interShader->stageClear = false;
+						m_pScene->waitInter->selectedStage = -1;
+						m_pScene->interShader->missionFail = false;
+
+						m_pScene->drop->objects.clear();
+						m_pScene->drop->type.clear();
+						m_pScene->drop->rotation.clear();
+						for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+						{
+							m_pScene->rm->brief[i]->stop();
+							m_pScene->rm->brief[i]->Update();
+							m_pScene->rm->briefPlayed[i] = false;
+
+						}
+						m_pScene->interShader->narrationShow = false;
+						m_pScene->interShader->lastNarrated = chrono::system_clock::now();
+						m_pScene->interShader->nDuration = 0.0;
+
+						m_pScene->interShader->m10_gain = 0;
+						m_pScene->interShader->m10_miss = 0;
+						m_pScene->interShader->m1_kill = 0;
+						m_pScene->interShader->m2_stun = 0;
+						m_pScene->interShader->m3_bother = 0;
+						m_pScene->interShader->m4_kill = 0;
+						m_pScene->interShader->m5_broken = 0;
+						m_pScene->interShader->m6_broken = 0;
+						m_pScene->interShader->m7_kill = 0;
+						m_pScene->interShader->m8_kill = 0;
+						m_pScene->interShader->m9_stun = 0;
+						m_pScene->interShader->m9_search = 0;
+						m_pScene->interShader->mission = 1;
+
+						m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
+						m_pCamera->lx = 0.0f;
+						m_pCamera->ly = 0.0f;
+						m_pCamera->lz = 1.0f;
+						m_pCamera->GenerateViewMatrix();
+						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
+
+						m_pScene->interShader->exiting = false;
+
+						m_pScene->currentScreen = LOBBY_STATE;
+
+						m_pScene->room = -1;
+
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = -1;
+
+						SendPacket(&p);
+
+						
 					}
-					m_pScene->enemyShader->restart(m_pScene->waitInter->selectedStage);
-
-					m_pScene->drop->objects.clear();
-					m_pScene->drop->type.clear();
-					m_pScene->drop->rotation.clear();
-
-					m_pScene->rm->bgm[0]->stop();
-					m_pScene->rm->bgm[0]->Update();
-					m_pScene->rm->bgm[1]->play();
-					m_pScene->rm->bgm[1]->Update();
-					//선택된 스테이지에 관한 정보 초기화.
-					m_pScene->interShader->stageClear = false;
-					m_pScene->interShader->missionFail = false;
-
-					for (int i = 0; i < m_pScene->rm->briefPlayed.size(); ++i)
+					//아니오 버튼 위
+					else if (x >= 703 + wx && x <= 843 + wx && y >= 442 + wy && y <= 490 + wy)
 					{
-						m_pScene->rm->brief[i]->stop();
-						m_pScene->rm->brief[i]->Update();
-						m_pScene->rm->briefPlayed[i] = false;
-
+						m_pScene->interShader->exiting = false;
 					}
-					m_pScene->interShader->narrationShow = false;
-					m_pScene->interShader->lastNarrated = chrono::system_clock::now();
-					m_pScene->interShader->nDuration = 0.0;
-
-					m_pScene->interShader->m10_gain = 0;
-					m_pScene->interShader->m10_miss = 0;
-					m_pScene->interShader->m1_kill = 0;
-					m_pScene->interShader->m2_stun = 0;
-					m_pScene->interShader->m3_bother = 0;
-					m_pScene->interShader->m4_kill = 0;
-					m_pScene->interShader->m5_broken = 0;
-					m_pScene->interShader->m6_broken = 0;
-					m_pScene->interShader->m7_kill = 0;
-					m_pScene->interShader->m8_kill = 0;
-					m_pScene->interShader->m9_stun = 0;
-					m_pScene->interShader->m9_search = 0;
-					m_pScene->interShader->mission = 1;
-
-					m_pScene->waitInter->selectedStage = -1;
-
-					m_pCamera->m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
-					m_pCamera->lx = 0.0f;
-					m_pCamera->ly = 0.0f;
-					m_pCamera->lz = 1.0f;
-					m_pCamera->GenerateViewMatrix();
-					m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
-					m_pScene->currentScreen = LOBBY_STATE;
 
 				}
 			}
@@ -1432,139 +1628,154 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				//1번방 참가 버튼
 				else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
 				{
-					int count = 0;
-					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					if (m_pScene->playerShader->started[0] == 0)
 					{
-						if (m_pScene->playerShader->room[i] == 1)
+						int count = 0;
+						for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
 						{
-							count += 1;
+							if (m_pScene->playerShader->room[i] == 1)
+							{
+								count += 1;
+							}
 						}
-					}
-					if (count < 3)
-					{
-						m_pScene->room = 1;
-						CS_ROOM_PACKET p;
-						p.id = m_pScene->pID;
-						p.size = sizeof(CS_ROOM_PACKET);
-						p.type = PACKET_TYPE::CS_ROOM;
-						p.room = 1;
+						if (count < 3)
+						{
+							m_pScene->room = 1;
+							CS_ROOM_PACKET p;
+							p.id = m_pScene->pID;
+							p.size = sizeof(CS_ROOM_PACKET);
+							p.type = PACKET_TYPE::CS_ROOM;
+							p.room = 1;
 
-						SendPacket(&p);
+							SendPacket(&p);
 
-						m_pScene->currentScreen = WAIT_STATE;
-						m_pScene->waitInter->selectedStage = 1;
-						m_pScene->waitInter->selectedMode = 1;
+							m_pScene->currentScreen = WAIT_STATE;
+							m_pScene->waitInter->selectedStage = 1;
+							m_pScene->waitInter->selectedMode = 1;
+						}
 					}
 				}
 				//2번방 참가 버튼
 				else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
 				{
-					int count = 0;
-					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					if (m_pScene->playerShader->started[1] == 0)
 					{
-						if (m_pScene->playerShader->room[i] == 2)
+						int count = 0;
+						for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
 						{
-							count += 1;
+							if (m_pScene->playerShader->room[i] == 2)
+							{
+								count += 1;
+							}
 						}
-					}
-					if (count < 3)
-					{
-						m_pScene->room = 2;
-						CS_ROOM_PACKET p;
-						p.id = m_pScene->pID;
-						p.size = sizeof(CS_ROOM_PACKET);
-						p.type = PACKET_TYPE::CS_ROOM;
-						p.room = 2;
+						if (count < 3)
+						{
+							m_pScene->room = 2;
+							CS_ROOM_PACKET p;
+							p.id = m_pScene->pID;
+							p.size = sizeof(CS_ROOM_PACKET);
+							p.type = PACKET_TYPE::CS_ROOM;
+							p.room = 2;
 
-						SendPacket(&p);
+							SendPacket(&p);
 
-						m_pScene->currentScreen = WAIT_STATE;
-						m_pScene->waitInter->selectedStage = 1;
-						m_pScene->waitInter->selectedMode = 1;
+							m_pScene->currentScreen = WAIT_STATE;
+							m_pScene->waitInter->selectedStage = 1;
+							m_pScene->waitInter->selectedMode = 1;
+						}
 					}
 				}
 				//3번방 참가 버튼
 				else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
 				{
-					int count = 0;
-					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					if (m_pScene->playerShader->started[2] == 0)
 					{
-						if (m_pScene->playerShader->room[i] == 3)
+						int count = 0;
+						for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
 						{
-							count += 1;
+							if (m_pScene->playerShader->room[i] == 3)
+							{
+								count += 1;
+							}
 						}
-					}
-					if (count < 3)
-					{
-						m_pScene->room = 3;
-						CS_ROOM_PACKET p;
-						p.id = m_pScene->pID;
-						p.size = sizeof(CS_ROOM_PACKET);
-						p.type = PACKET_TYPE::CS_ROOM;
-						p.room = 3;
+						if (count < 3)
+						{
+							m_pScene->room = 3;
+							CS_ROOM_PACKET p;
+							p.id = m_pScene->pID;
+							p.size = sizeof(CS_ROOM_PACKET);
+							p.type = PACKET_TYPE::CS_ROOM;
+							p.room = 3;
 
-						SendPacket(&p);
+							SendPacket(&p);
 
-						m_pScene->currentScreen = WAIT_STATE;
-						m_pScene->waitInter->selectedStage = 1;
-						m_pScene->waitInter->selectedMode = 1;
+							m_pScene->currentScreen = WAIT_STATE;
+							m_pScene->waitInter->selectedStage = 1;
+							m_pScene->waitInter->selectedMode = 1;
+						}
 					}
 				}
 				//4번방 참가 버튼
 				else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
 				{
-					int count = 0;
-					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					if (m_pScene->playerShader->started[3] == 0)
 					{
-						if (m_pScene->playerShader->room[i] == 4)
+						int count = 0;
+						for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
 						{
-							count += 1;
+							if (m_pScene->playerShader->room[i] == 4)
+							{
+								count += 1;
+							}
 						}
-					}
-					if (count < 3)
-					{
-						m_pScene->room = 4;
+						if (count < 3)
+						{
+							m_pScene->room = 4;
 
-						CS_ROOM_PACKET p;
-						p.id = m_pScene->pID;
-						p.size = sizeof(CS_ROOM_PACKET);
-						p.type = PACKET_TYPE::CS_ROOM;
-						p.room = 4;
+							CS_ROOM_PACKET p;
+							p.id = m_pScene->pID;
+							p.size = sizeof(CS_ROOM_PACKET);
+							p.type = PACKET_TYPE::CS_ROOM;
+							p.room = 4;
 
-						SendPacket(&p);
-						
+							SendPacket(&p);
 
-						m_pScene->currentScreen = WAIT_STATE;
-						m_pScene->waitInter->selectedStage = 1;
-						m_pScene->waitInter->selectedMode = 1;
+
+							m_pScene->currentScreen = WAIT_STATE;
+							m_pScene->waitInter->selectedStage = 1;
+							m_pScene->waitInter->selectedMode = 1;
+						}
 					}
 				}
 				//5번방 참가 버튼
 				else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
 				{
-				int count = 0;
-				for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
-				{
-					if (m_pScene->playerShader->room[i] == 5)
+					if (m_pScene->playerShader->started[4] == 0)
 					{
-						count += 1;
+						int count = 0;
+						for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+						{
+							if (m_pScene->playerShader->room[i] == 5)
+							{
+								count += 1;
+							}
+						}
+						if (count < 3)
+						{
+							m_pScene->room = 5;
+							CS_ROOM_PACKET p;
+							p.id = m_pScene->pID;
+							p.size = sizeof(CS_ROOM_PACKET);
+							p.type = PACKET_TYPE::CS_ROOM;
+							p.room = 5;
+
+							SendPacket(&p);
+
+							m_pScene->currentScreen = WAIT_STATE;
+							m_pScene->waitInter->selectedStage = 1;
+							m_pScene->waitInter->selectedMode = 1;
+						}
 					}
-				}
-				if (count < 3)
-				{
-					m_pScene->room = 5;
-					CS_ROOM_PACKET p;
-					p.id = m_pScene->pID;
-					p.size = sizeof(CS_ROOM_PACKET);
-					p.type = PACKET_TYPE::CS_ROOM;
-					p.room = 5;
-
-					SendPacket(&p);
-
-					m_pScene->currentScreen = WAIT_STATE;
-					m_pScene->waitInter->selectedStage = 1;
-					m_pScene->waitInter->selectedMode = 1;
-				}
 				}
 				//해당 없을 시 기본 이미지로
 				else
@@ -1880,8 +2091,18 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 				switch (wParam)
 				{
 				case VK_ESCAPE:
-					::PostQuitMessage(0);
+				{
+					if (m_pScene->interShader->exiting == false)
+					{
+						m_pScene->interShader->exiting = true;
+					}
+					else
+					{
+						m_pScene->interShader->exiting = false;
+					}
 					break;
+				}
+					
 				case VK_RETURN:
 					break;
 
@@ -2092,34 +2313,72 @@ void CGameFramework::ProcessInput()
 	//마우스 이동 시 플레이어의 위치 변경.
 	if (m_pScene->currentScreen == IN_GAME_STATE)
 	{
-		if (m_pScene->interShader->stageClear == false)
+		if (m_pScene->interShader->exiting == false)
 		{
-			POINT pnt;
-			GetCursorPos(&pnt);
-
-			XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
-			float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
-			float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
-			if (deltaX != 0.0f || deltaY != 0.0f)
+			if (m_pScene->interShader->stageClear == false)
 			{
-				CS_CAMERA_PACKET p;
-				p.size = sizeof(CS_CAMERA_PACKET);
-				p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
-				p.c_id = m_pScene->pID;
-				p.camAngle = deltaX;
-				p.camUp = deltaY;
+				POINT pnt;
+				GetCursorPos(&pnt);
 
-				SendPacket(&p);
-			}
+				XMFLOAT3 offset = m_pScene->getPos(m_pScene->pID);
+				float deltaX = static_cast<float>(pnt.x - prevX) / 5.0f;
+				float deltaY = static_cast<float>(pnt.y - prevY) / 100.0f;
+				if (deltaX != 0.0f || deltaY != 0.0f)
+				{
+					CS_CAMERA_PACKET p;
+					p.size = sizeof(CS_CAMERA_PACKET);
+					p.type = PACKET_TYPE::CS_CAMERA_CHANGE;
+					p.c_id = m_pScene->pID;
+					p.camAngle = deltaX;
+					p.camUp = deltaY;
 
-			
-			
+					SendPacket(&p);
+				}
+
+
+
 				prevX = pnt.x;
 				prevY = pnt.y;
 
+				
 				//SetCursorPos(500, 500);
 				//prevX = 500;
 				//prevY = 500;
+				
+			}
+			else
+			{
+				POINT pnt;
+				GetCursorPos(&pnt);
+				RECT rect;
+				GetWindowRect(m_hWnd, &rect);
+				int wx = rect.left;
+				int wy = rect.top;
+
+				//재도전 버튼 위에 있으면
+				if ((pnt.x >= 656 + wx && pnt.x <= 786 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+				{
+					m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[303];
+				}
+				else
+				{
+					m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[302];
+				}
+
+				//돌아가기 버튼 위에 있으면
+				if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
+				{
+					m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[305];
+					m_pScene->interShader->objects[10]->mouseOn = true;
+					m_pScene->interShader->objects[10]->meshChanged = false;
+				}
+				else
+				{
+					m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[304];
+					m_pScene->interShader->objects[10]->mouseOn = false;
+					m_pScene->interShader->objects[10]->meshChanged = false;
+				}
+			}
 		}
 		else
 		{
@@ -2130,31 +2389,52 @@ void CGameFramework::ProcessInput()
 			int wx = rect.left;
 			int wy = rect.top;
 
-			//재도전 버튼 위에 있으면
-			if ((pnt.x >= 656+wx && pnt.x <= 786+wx) && (pnt.y >= 559+wy && pnt.y <= 625+wy))
+			int x = pnt.x;
+			int y = pnt.y;
+			if (fullscr == false)
 			{
-				m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[303];
+				//예 버튼 위
+				if (x >= 432 + wx && x <= 582 + wx && y >= 546 + wy && y <= 594 + wy)
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[667];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[668];
+				}
+				//아니오 버튼 위
+				else if (x >= 628 + wx && x <= 768 + wx && y >= 546 + wy && y <= 594 + wy)
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[666];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[669];
+				}
+				//버튼 밖
+				else
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[666];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[668];
+				}
 			}
 			else
 			{
-				m_pScene->interShader->objects[9]->m_ppMaterials[0] = m_pScene->rm->materials[302];
-			}
-
-			//돌아가기 버튼 위에 있으면
-			if ((pnt.x >= 801+wx && pnt.x <= 931+wx) && (pnt.y >= 559+wy && pnt.y <= 625+wy))
-			{
-				m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[305];
-				m_pScene->interShader->objects[10]->mouseOn = true;
-				m_pScene->interShader->objects[10]->meshChanged = false;
-			}
-			else
-			{
-				m_pScene->interShader->objects[10]->m_ppMaterials[0] = m_pScene->rm->materials[304];
-				m_pScene->interShader->objects[10]->mouseOn = false;
-				m_pScene->interShader->objects[10]->meshChanged = false;
+				//+15 -25 -24
+				//예 버튼 위
+				if (x >= 497 + wx && x <= 647 + wx && y >= 442 + wy && y <= 490 + wy)
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[667];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[668];
+				}
+				//아니오 버튼 위
+				else if (x >= 703 + wx && x <= 843 + wx && y >= 442 + wy && y <= 490 + wy)
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[666];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[669];
+				}
+				//버튼 밖
+				else
+				{
+					m_pScene->interShader->objects[36]->m_ppMaterials[0] = m_pScene->rm->materials[666];
+					m_pScene->interShader->objects[37]->m_ppMaterials[0] = m_pScene->rm->materials[668];
+				}
 			}
 		}
-		
 	}
 	else if (m_pScene->currentScreen == LOBBY_STATE)
 	{
