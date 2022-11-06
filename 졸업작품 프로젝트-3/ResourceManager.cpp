@@ -2378,7 +2378,9 @@ void ResourceManager::createTextures()
 	tex670 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);					
 	tex670->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/no_press.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex670);
-
+	tex671 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex671->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/quit.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex671);
 
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;

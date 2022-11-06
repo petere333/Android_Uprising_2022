@@ -34,6 +34,15 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	CubeMeshOffset* stage = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* stager = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 274.0f / 450.0f, 86.0f / 450.0f, 0.02f, (972.0f - 600.0f) / 450.0f, -(750.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* exit = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* yes = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* no = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* exitr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* yesr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* nor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
+
+
 	
 	meshes.push_back(bg);
 	meshesRev.push_back(bg2);
@@ -52,6 +61,14 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	meshes.push_back(stage);
 	meshesRev.push_back(stager);
 
+	//6~8 나가기창
+	meshes.push_back(exit);
+	meshes.push_back(yes);
+	meshes.push_back(no);
+
+	meshesRev.push_back(exitr);
+	meshesRev.push_back(yesr);
+	meshesRev.push_back(nor);
 	
 	UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
@@ -60,6 +77,10 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	UIObject* obj4 = new UIObject(1, 467, 727, 741, 813, 218);
 	UIObject* obj5 = new UIObject(1, 835, 730, 1109, 816, 221);
 	
+	UIObject* obj7 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj8 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj9 = new UIObject(1, -1, -1, -1, -1, -1);
+
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[214]);
 	obj->SetPosition(0.0f, 0.0f, 0.0f);
@@ -84,12 +105,28 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	obj6->SetMaterial(0, rm->materials[322]);
 	obj6->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj7->SetMesh(meshes[6]);
+	obj7->SetMaterial(0, rm->materials[670]);
+	obj7->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj8->SetMesh(meshes[7]);
+	obj8->SetMaterial(0, rm->materials[666]);
+	obj8->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj9->SetMesh(meshes[8]);
+	obj9->SetMaterial(0, rm->materials[668]);
+	obj9->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objects.push_back(obj6);
 	objects.push_back(obj);
 	objects.push_back(obj2);
 	objects.push_back(obj3);
 	objects.push_back(obj4);
 	objects.push_back(obj5);
+
+	objects.push_back(obj7);
+	objects.push_back(obj9);
+	objects.push_back(obj8);
 	
 }
 
@@ -263,6 +300,29 @@ void MainInterfaceShader::Animate(CCamera* cam)
 		objects[i]->Rotate(-pitch, yaw, 0.0f);
 		objects[i]->SetPosition(cp.x + cl.x, cp.y + cl.y, cp.z + cl.z);
 	}
+
+	if (quit == false)
+	{
+		objects[6]->SetMesh(NULL);
+		objects[7]->SetMesh(NULL);
+		objects[8]->SetMesh(NULL);
+	}
+	else
+	{
+		if (cl.z < 0)
+		{
+			objects[6]->SetMesh(meshesRev[6]);
+			objects[7]->SetMesh(meshesRev[7]);
+			objects[8]->SetMesh(meshesRev[8]);
+		}
+		else
+		{
+			objects[6]->SetMesh(meshes[6]);
+			objects[7]->SetMesh(meshes[7]);
+			objects[8]->SetMesh(meshes[8]);
+		}
+	}
+
 	//	XMFLOAT3 p = objects[1]->GetPosition();
 	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
 }

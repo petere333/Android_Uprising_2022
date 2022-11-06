@@ -28,4 +28,6 @@ public:
 	std::vector<CubeMeshOffset*> meshes;
 	std::vector<CubeMeshOffset*> meshesRev;
 	ResourceManager* rm;
+
+	bool quit = false;
 };
