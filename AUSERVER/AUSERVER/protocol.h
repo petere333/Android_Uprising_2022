@@ -36,7 +36,7 @@ struct BionicState
 	//PlayerInfoManager* manager;
 };
 
-enum class PACKET_TYPE : short
+enum class PACKET_TYPE : int
 {
 	//client to server
 	CS_LOGIN = 0,
@@ -54,6 +54,10 @@ enum class PACKET_TYPE : short
 	CS_LOCATION,
 	CS_ROOM,
 	CS_START,
+	CS_CONNECT,
+	CS_DISCONNECT,
+	CS_JOIN,
+	CS_OUT,
 	//server to client
 	SC_LOGIN_INFO,
 	SC_ADD_PLAYER,
@@ -73,7 +77,11 @@ enum class PACKET_TYPE : short
 	SC_MISSION,
 	SC_LOCATION,
 	SC_ROOM,
-	SC_START
+	SC_START,
+	SC_CONNECT,
+	SC_DISCONNECT,
+	SC_JOIN,
+	SC_OUT,
 };
 
 // client to server packet
@@ -86,7 +94,58 @@ struct CS_ROOM_PACKET
 
 	int room;
 };
+struct CS_CONNECT_PACKET
+{
+	unsigned char size; 
+	PACKET_TYPE type;
+	short id;
+};
+struct SC_CONNECT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+};
 
+struct CS_DISCONNECT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+};
+struct SC_DISCONNECT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+};
+
+struct CS_JOIN_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+	int room;
+};
+struct SC_JOIN_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+};
+struct CS_OUT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+	int room;
+};
+struct SC_OUT_PACKET
+{
+	unsigned char size;
+	PACKET_TYPE type;
+	short id;
+};
 
 struct SC_ROOM_PACKET
 {

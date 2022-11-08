@@ -294,6 +294,62 @@ int get_new_player_id()
 void process_packet(int c_id, char* packet)
 {
 	switch ((PACKET_TYPE)packet[1]) {
+
+
+	case PACKET_TYPE::CS_JOIN:
+	{
+		CS_JOIN_PACKET* p = reinterpret_cast<CS_JOIN_PACKET*>(packet);
+
+		for (int i = 0; i < 30; ++i)
+		{
+			//들어간 방과 같은 방에 있는 클라들에만 전송
+			if (room[i] == p->room && i != p->id)
+			{
+				SC_JOIN_PACKET pc;
+				pc.size = sizeof(pc);
+				pc.type = PACKET_TYPE::SC_JOIN;
+				pc.id = p->id;
+
+				clients[i].do_send(&pc);
+			}
+		}
+		break;
+	}
+	case PACKET_TYPE::CS_OUT:
+	{
+		CS_OUT_PACKET* p = reinterpret_cast<CS_OUT_PACKET*>(packet);
+
+		for (int i = 0; i < 30; ++i)
+		{
+			//나가는 클라이언트와 같은 방에 있는 클라들에만 전송
+			if (room[i] == room[p->id] && i != p->id && room[i] != -1)
+			
+			{
+				SC_OUT_PACKET pc;
+				pc.size = sizeof(pc);
+				pc.type = PACKET_TYPE::SC_OUT;
+				pc.id = p->id;
+
+				clients[i].do_send(&pc);
+			}
+		}
+		
+		break;
+	}
+	case PACKET_TYPE::CS_CONNECT:
+	{
+		CS_CONNECT_PACKET* p = reinterpret_cast<CS_CONNECT_PACKET*>(packet);
+
+		SC_CONNECT_PACKET pc;
+		pc.size = sizeof(pc);
+		pc.type = PACKET_TYPE::SC_CONNECT;
+		pc.id = p->id;
+		for (auto& pl : clients)
+		{
+			pl.do_send(&pc);
+		}
+		break;
+	}
 	case PACKET_TYPE::CS_LOGIN:
 	{
 		CS_LOGIN_PACKET* p = reinterpret_cast<CS_LOGIN_PACKET*>(packet);
@@ -1101,7 +1157,18 @@ int main(int argc, char* argv[])
 				cout << "GQCS Error on clients[" << key << "]\n";
 				disconnect(key);
 				
+
 				if (ex_over->_comp_type == PL_SEND) delete ex_over;
+
+				SC_DISCONNECT_PACKET p;
+				p.size = sizeof(p);
+				p.type = PACKET_TYPE::SC_DISCONNECT;
+				p.id = key;
+
+				for (auto& pl : clients)
+				{
+					pl.do_send(&p);
+				}
 			}
 		}
 

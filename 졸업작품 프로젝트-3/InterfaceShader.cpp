@@ -4,6 +4,7 @@
 InterfaceShader::InterfaceShader(ResourceManager* r) 
 { 
 	rm = r; 
+	lastNotify = chrono::system_clock::now();
 }
 InterfaceShader::~InterfaceShader() {}
 
@@ -135,7 +136,7 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	//324~338 임무 성공창
 
 
-	//나가기창
+	//나가기창 351~353
 	CubeMeshOffset* exit = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* yes = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* no = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
@@ -143,6 +144,13 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	CubeMeshOffset* exitr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* yesr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* nor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
+
+	//354~355 탈주 알림
+	CubeMeshOffset* disconnect = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 399.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(604.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* playerNum = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(394.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
+
+	CubeMeshOffset* disconnectr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 399.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(604.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* playerNumr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(394.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, true);
 
 	meshes.push_back(succeed);
 	meshes.push_back(retry);
@@ -265,6 +273,11 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	revmeshes.push_back(yesr);
 	revmeshes.push_back(nor);
 
+	meshes.push_back(disconnect);
+	meshes.push_back(playerNum);
+
+	revmeshes.push_back(disconnectr);
+	revmeshes.push_back(playerNumr);
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, -1, -1, -1, -1, 263);
@@ -318,6 +331,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	UIObject* obj37 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj38 = new UIObject(1, -1, -1, -1, -1, -1);
 
+	UIObject* obj39 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj40 = new UIObject(1, -1, -1, -1, -1, -1);
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[262]);
@@ -463,7 +478,13 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	obj38->SetMaterial(0, rm->materials[668]);
 	obj38->SetPosition(0.0f, 0.0f, 0.0f);
 
-
+	//38-39 탈주알림창
+	obj39->SetMesh(NULL);
+	obj39->SetMaterial(0, rm->materials[674]);
+	obj39->SetPosition(0.0f, 0.0f, 0.0f);
+	obj40->SetMesh(NULL);
+	obj40->SetMaterial(0, rm->materials[252]);
+	obj40->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
@@ -506,7 +527,8 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	objects.push_back(obj36);
 	objects.push_back(obj37);
 	objects.push_back(obj38);
-
+	objects.push_back(obj39);
+	objects.push_back(obj40);
 }
 
 void InterfaceShader::ReleaseObjects()
@@ -1214,6 +1236,26 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 	else
 	{
 		objects[34]->SetMesh(NULL);
+	}
+
+	chrono::duration<double> dd = chrono::system_clock::now() - lastNarrated;
+	if (dd.count() > 4.0)
+	{
+		objects[38]->SetMesh(NULL);
+		objects[39]->SetMesh(NULL);
+	}
+	else
+	{
+		if (cl.z < 0.0f)
+		{
+			objects[38]->SetMesh(revmeshes[354]);
+			objects[39]->SetMesh(revmeshes[355]);
+		}
+		else
+		{
+			objects[38]->SetMesh(meshes[354]);
+			objects[39]->SetMesh(meshes[355]);
+		}
 	}
 }
 

@@ -926,7 +926,14 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							if (i == 1)
 							{
 								m_pScene->currentScreen = STAGE_SELECT_STATE;
-								m_pScene->room = -1;
+								int prv = m_pScene->room;
+								
+								CS_OUT_PACKET p2;
+								p2.id = m_pScene->pID;
+								p2.size = sizeof(CS_OUT_PACKET);
+								p2.type = PACKET_TYPE::CS_OUT;
+								p2.room = prv;
+								SendPacket(&p2);
 								
 								CS_ROOM_PACKET p;
 								p.id = m_pScene->pID;
@@ -935,6 +942,10 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 								p.room = -1;
 
 								SendPacket(&p);
+
+								
+
+								m_pScene->room = -1;
 							}
 							else if (i == 2)
 							{
@@ -955,13 +966,23 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							if ((pnt.x >= px1 + wx+22 && pnt.x <= px2 + wx+22) && (pnt.y >= py1 + wy - 25 && pnt.y <= py2 + wy-25))
 							{
 								m_pScene->currentScreen = STAGE_SELECT_STATE;
-								m_pScene->room = -1;
+								
+								CS_OUT_PACKET p2;
+								p2.id = m_pScene->pID;
+								p2.size = sizeof(CS_OUT_PACKET);
+								p2.type = PACKET_TYPE::CS_OUT;
+								p2.room = m_pScene->room;
+								SendPacket(&p2);
 
 								CS_ROOM_PACKET p;
 								p.id = m_pScene->pID;
 								p.size = sizeof(CS_ROOM_PACKET);
 								p.type = PACKET_TYPE::CS_ROOM;
 								p.room = -1;
+
+								
+
+								m_pScene->room = -1;
 
 								SendPacket(&p);
 							}
@@ -1693,6 +1714,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 							SendPacket(&p);
 
+							CS_JOIN_PACKET p2;
+							p2.id = m_pScene->pID;
+							p2.size = sizeof(p2);
+							p2.type = PACKET_TYPE::CS_JOIN;
+							p2.room = 1;
+							SendPacket(&p2);
+
 							m_pScene->currentScreen = WAIT_STATE;
 							m_pScene->waitInter->selectedStage = 1;
 							m_pScene->waitInter->selectedMode = 1;
@@ -1723,6 +1751,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 							SendPacket(&p);
 
+							CS_JOIN_PACKET p2;
+							p2.id = m_pScene->pID;
+							p2.size = sizeof(p2);
+							p2.type = PACKET_TYPE::CS_JOIN;
+							p2.room = 2;
+							SendPacket(&p2);
+
 							m_pScene->currentScreen = WAIT_STATE;
 							m_pScene->waitInter->selectedStage = 1;
 							m_pScene->waitInter->selectedMode = 1;
@@ -1752,6 +1787,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 							p.room = 3;
 
 							SendPacket(&p);
+
+							CS_JOIN_PACKET p2;
+							p2.id = m_pScene->pID;
+							p2.size = sizeof(p2);
+							p2.type = PACKET_TYPE::CS_JOIN;
+							p2.room = 3;
+							SendPacket(&p2);
 
 							m_pScene->currentScreen = WAIT_STATE;
 							m_pScene->waitInter->selectedStage = 1;
@@ -1784,6 +1826,12 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 							SendPacket(&p);
 
+							CS_JOIN_PACKET p2;
+							p2.id = m_pScene->pID;
+							p2.size = sizeof(p2);
+							p2.type = PACKET_TYPE::CS_JOIN;
+							p2.room = 4;
+							SendPacket(&p2);
 
 							m_pScene->currentScreen = WAIT_STATE;
 							m_pScene->waitInter->selectedStage = 1;
@@ -1815,6 +1863,13 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 							SendPacket(&p);
 
+							CS_JOIN_PACKET p2;
+							p2.id = m_pScene->pID;
+							p2.size = sizeof(p2);
+							p2.type = PACKET_TYPE::CS_JOIN;
+							p2.room = 5;
+							SendPacket(&p2);
+
 							m_pScene->currentScreen = WAIT_STATE;
 							m_pScene->waitInter->selectedStage = 1;
 							m_pScene->waitInter->selectedMode = 1;
@@ -1834,46 +1889,216 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			}
 			else
 			{
-				//돌아가기 버튼
-				if (x >= 100 + wx && x <= 278 + wx && y >= 175 + wy && y <= 235 + wy)
+			//돌아가기 버튼
+			if (x >= 100 + wx && x <= 278 + wx && y >= 175 + wy && y <= 235 + wy)
+			{
+				m_pScene->room = -1;
+				m_pScene->currentScreen = LOBBY_STATE;
+				CS_ROOM_PACKET p;
+				p.id = m_pScene->pID;
+				p.size = sizeof(CS_ROOM_PACKET);
+				p.type = PACKET_TYPE::CS_ROOM;
+				p.room = -1;
+
+				SendPacket(&p);
+
+			}
+			//1번방 참가 버튼
+			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+			{
+				if (m_pScene->playerShader->started[0] == 0)
 				{
-					m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[240];
+					int count = 0;
+					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					{
+						if (m_pScene->playerShader->room[i] == 1)
+						{
+							count += 1;
+						}
+					}
+					if (count < 3)
+					{
+						m_pScene->room = 1;
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = 1;
+
+						SendPacket(&p);
+
+						CS_JOIN_PACKET p2;
+						p2.id = m_pScene->pID;
+						p2.size = sizeof(p2);
+						p2.type = PACKET_TYPE::CS_JOIN;
+						p2.room = 1;
+						SendPacket(&p2);
+
+						m_pScene->currentScreen = WAIT_STATE;
+						m_pScene->waitInter->selectedStage = 1;
+						m_pScene->waitInter->selectedMode = 1;
+					}
 				}
-				//1번방 참가 버튼
-				else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+			}
+			//2번방 참가 버튼
+			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+			{
+				if (m_pScene->playerShader->started[1] == 0)
 				{
-					m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[664];
+					int count = 0;
+					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					{
+						if (m_pScene->playerShader->room[i] == 2)
+						{
+							count += 1;
+						}
+					}
+					if (count < 3)
+					{
+						m_pScene->room = 2;
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = 2;
+
+						SendPacket(&p);
+
+						CS_JOIN_PACKET p2;
+						p2.id = m_pScene->pID;
+						p2.size = sizeof(p2);
+						p2.type = PACKET_TYPE::CS_JOIN;
+						p2.room = 2;
+						SendPacket(&p2);
+
+						m_pScene->currentScreen = WAIT_STATE;
+						m_pScene->waitInter->selectedStage = 1;
+						m_pScene->waitInter->selectedMode = 1;
+					}
 				}
-				//2번방 참가 버튼
-				else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+			}
+			//3번방 참가 버튼
+			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+			{
+				if (m_pScene->playerShader->started[2] == 0)
 				{
-					m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[664];
+					int count = 0;
+					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					{
+						if (m_pScene->playerShader->room[i] == 3)
+						{
+							count += 1;
+						}
+					}
+					if (count < 3)
+					{
+						m_pScene->room = 3;
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = 3;
+
+						SendPacket(&p);
+
+						CS_JOIN_PACKET p2;
+						p2.id = m_pScene->pID;
+						p2.size = sizeof(p2);
+						p2.type = PACKET_TYPE::CS_JOIN;
+						p2.room = 3;
+						SendPacket(&p2);
+
+						m_pScene->currentScreen = WAIT_STATE;
+						m_pScene->waitInter->selectedStage = 1;
+						m_pScene->waitInter->selectedMode = 1;
+					}
 				}
-				//3번방 참가 버튼
-				else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+			}
+			//4번방 참가 버튼
+			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+			{
+				if (m_pScene->playerShader->started[3] == 0)
 				{
-					m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[664];
+					int count = 0;
+					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					{
+						if (m_pScene->playerShader->room[i] == 4)
+						{
+							count += 1;
+						}
+					}
+					if (count < 3)
+					{
+						m_pScene->room = 4;
+
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = 4;
+
+						SendPacket(&p);
+
+						CS_JOIN_PACKET p2;
+						p2.id = m_pScene->pID;
+						p2.size = sizeof(p2);
+						p2.type = PACKET_TYPE::CS_JOIN;
+						p2.room = 4;
+						SendPacket(&p2);
+
+						m_pScene->currentScreen = WAIT_STATE;
+						m_pScene->waitInter->selectedStage = 1;
+						m_pScene->waitInter->selectedMode = 1;
+					}
 				}
-				//4번방 참가 버튼
-				else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+			}
+			//5번방 참가 버튼
+			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
+			{
+				if (m_pScene->playerShader->started[4] == 0)
 				{
-					m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[664];
+					int count = 0;
+					for (int i = 0; i < m_pScene->playerShader->room.size(); ++i)
+					{
+						if (m_pScene->playerShader->room[i] == 5)
+						{
+							count += 1;
+						}
+					}
+					if (count < 3)
+					{
+						m_pScene->room = 5;
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = 5;
+
+						SendPacket(&p);
+
+						CS_JOIN_PACKET p2;
+						p2.id = m_pScene->pID;
+						p2.size = sizeof(p2);
+						p2.type = PACKET_TYPE::CS_JOIN;
+						p2.room = 5;
+						SendPacket(&p2);
+
+						m_pScene->currentScreen = WAIT_STATE;
+						m_pScene->waitInter->selectedStage = 1;
+						m_pScene->waitInter->selectedMode = 1;
+					}
 				}
-				//5번방 참가 버튼
-				else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
-				{
-					m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[664];
-				}
-				//해당 없을 시 기본 이미지로
-				else
-				{
-					m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[239];
-					m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[663];
-					m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[663];
-					m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[663];
-					m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[663];
-					m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[663];
-				}
+			}
+			//해당 없을 시 기본 이미지로
+			else
+			{
+				m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[239];
+				m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[663];
+				m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[663];
+				m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[663];
+				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[663];
+				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[663];
+			}
 			}
 
 

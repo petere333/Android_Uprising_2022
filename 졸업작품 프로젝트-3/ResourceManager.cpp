@@ -2382,6 +2382,21 @@ void ResourceManager::createTextures()
 	tex671->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/quit.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex671);
 
+	tex672 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex672->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/player_conn.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex672);
+	tex673 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex673->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/main/player_disc.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex673);
+	
+	tex674 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex674->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/room_join.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex674);
+	tex675 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
+	tex675->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/wait/room_exit.dds", RESOURCE_TEXTURE2D, 0);
+	textures.push_back(tex675);
+
+
 	CTexture* norm1; CTexture* norm2; CTexture* norm3; CTexture* norm4; CTexture* norm5; CTexture* norm6; CTexture* norm7; CTexture* norm8; CTexture* norm9; CTexture* norm10;
 	CTexture* norm11; CTexture* norm12; CTexture* norm13; CTexture* norm14; CTexture* norm15; CTexture* norm16; CTexture* norm17; CTexture* norm18; CTexture* norm19; CTexture* norm20;
 	CTexture* norm21; CTexture* norm22; CTexture* norm23; CTexture* norm24; CTexture* norm25; CTexture* norm26; CTexture* norm27; CTexture* norm28; CTexture* norm29; CTexture* norm30;

@@ -55,8 +55,8 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	CubeMeshOffset* count4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* count4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (927.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (887.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (887.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, true);
 
 	// 방 입장하기 버튼 1~5
 
@@ -72,8 +72,8 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	CubeMeshOffset* join4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (470.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* join4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (470.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* join5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (944.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* join5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (944.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* join5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (904.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* join5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 99.0f / 450.0f, 34.0f / 450.0f, 0.02f, (904.0f - 600.0f) / 450.0f, -(688.5f - 450.0f) / 450.0f, true);
 	/*
 	인덱스 0 : 배경
 	1=뒤로가기 버튼

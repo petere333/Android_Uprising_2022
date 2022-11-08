@@ -36,5 +36,5 @@ public:
 	float amp_melee = 1.0f;
 	float amp_ranged = 1.0f;
 	float amp_radio = 1.0f;
-
+	chrono::time_point<chrono::system_clock> lastNotify;
 };

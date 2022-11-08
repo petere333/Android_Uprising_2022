@@ -4,7 +4,7 @@
 WaitShader::WaitShader(ResourceManager* r)
 {
 	rm = r;
-	
+	lastNotify = chrono::system_clock::now();
 }
 WaitShader::~WaitShader() {}
 
@@ -73,6 +73,11 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	CubeMeshOffset* ranged3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (929.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* radio3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 58.0f / 450.0f, 36.0f / 450.0f, 0.02f, (995.0f - 600.0f) / 450.0f, -(643.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* ready3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 190.0f / 450.0f, 50.0f / 450.0f, 0.02f, (929.0f - 600.0f) / 450.0f, -(681.0f - 450.0f) / 450.0f, false);
+
+	//39~40 알림문구
+	CubeMeshOffset* notify = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 399.0f / 450.0f, 30.0f / 450.0f, 0.02f, (604.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* playerNum = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (394.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
+
 	meshes.push_back(inter);
 	meshesRev.push_back(inter2);
 
@@ -127,6 +132,10 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	meshes.push_back(radio3);
 	meshes.push_back(ready3);
 
+	//39 -40
+	meshes.push_back(notify);
+	meshes.push_back(playerNum);
+
 	meshesRev.push_back(total_lv1);
 	meshesRev.push_back(total_lv2);
 	meshesRev.push_back(total_exp1);
@@ -166,6 +175,9 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	meshesRev.push_back(ranged3);
 	meshesRev.push_back(radio3);
 	meshesRev.push_back(ready3);
+	
+	meshesRev.push_back(notify);
+	meshesRev.push_back(playerNum);
 
 	UIObject* obj = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj2 = new UIObject(1, 96, 116, 300, 162, 284);
@@ -216,6 +228,10 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	UIObject* obj37 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj38 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj39 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	//39~40 알림문구
+	UIObject* obj40 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj41 = new UIObject(1, -1, -1, -1, -1, -1);
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[283]);
@@ -269,6 +285,9 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	obj38->SetMesh(meshes[37]);
 	obj39->SetMesh(NULL);
 	
+	obj40->SetMesh(NULL);
+	obj41->SetMesh(NULL);
+
 	obj4->SetMaterial(0, rm->materials[273]);
 	obj5->SetMaterial(0, rm->materials[273]);
 	obj6->SetMaterial(0, rm->materials[273]);
@@ -311,6 +330,9 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	obj38->SetMaterial(0, rm->materials[298]);
 	obj39->SetMaterial(0, rm->materials[297]);
 
+	obj40->SetMaterial(0, NULL);
+	obj41->SetMaterial(0, NULL);
+
 	obj4->SetPosition(0.0f, 0.0f, 0.0f);
 	obj5->SetPosition(0.0f, 0.0f, 0.0f);
 	obj6->SetPosition(0.0f, 0.0f, 0.0f);
@@ -350,6 +372,9 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	obj37->SetPosition(0.0f, 0.0f, 0.0f);
 	obj38->SetPosition(0.0f, 0.0f, 0.0f);
 	obj39->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj40->SetPosition(0.0f, 0.0f, 0.0f);
+	obj41->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
 	objects.push_back(obj2);
@@ -395,6 +420,9 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	objects.push_back(obj37);
 	objects.push_back(obj38);
 	objects.push_back(obj39);
+
+	objects.push_back(obj40);
+	objects.push_back(obj41);
 }
 
 void WaitShader::ReleaseObjects()
@@ -618,6 +646,19 @@ void WaitShader::Animate(CCamera* cam, PlayerInfoManager* info)
 	objects[20]->m_ppMaterials[0] = rm->materials[273 + t8];
 	objects[21]->m_ppMaterials[0] = rm->materials[273 + t9];
 	objects[22]->m_ppMaterials[0] = rm->materials[273 + t10];
+
+
+	chrono::duration<double> dt = chrono::system_clock::now() - lastNotify;
+	if (dt.count() > 4.0)
+	{
+		objects[39]->SetMesh(NULL);
+		objects[40]->SetMesh(NULL);
+	}
+	else
+	{
+		objects[39]->SetMesh(meshes[39]);
+		objects[40]->SetMesh(meshes[40]);
+	}
 
 	
 

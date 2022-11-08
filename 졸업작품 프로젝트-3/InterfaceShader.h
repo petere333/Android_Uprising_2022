@@ -64,4 +64,6 @@ public:
 	bool narrationShow = false;
 	chrono::time_point<chrono::system_clock> lastNarrated;
 	double nDuration;
+
+	chrono::time_point<chrono::system_clock> lastNotify;
 };

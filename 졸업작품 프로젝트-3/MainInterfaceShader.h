@@ -30,4 +30,5 @@ public:
 	ResourceManager* rm;
 
 	bool quit = false;
+	chrono::time_point<chrono::system_clock> lastNotify;
 };

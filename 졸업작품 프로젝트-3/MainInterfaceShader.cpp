@@ -4,6 +4,7 @@
 MainInterfaceShader::MainInterfaceShader(ResourceManager* r)
 {
 	rm = r;
+	lastNotify = chrono::system_clock::now();
 }
 MainInterfaceShader::~MainInterfaceShader() {}
 
@@ -42,8 +43,12 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	CubeMeshOffset* yesr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* nor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
 
+	CubeMeshOffset* notify = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 399.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(604.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* playernum = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(814.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, false);
 
-	
+	CubeMeshOffset* notifyr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 399.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(604.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* playernumr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.03f, -(814.0f - 600.0f) / 450.0f, -(316.0f - 450.0f) / 450.0f, true);
+
 	meshes.push_back(bg);
 	meshesRev.push_back(bg2);
 
@@ -69,7 +74,14 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	meshesRev.push_back(exitr);
 	meshesRev.push_back(yesr);
 	meshesRev.push_back(nor);
+
+	//9~10 알림문구
+	meshes.push_back(notify);
+	meshes.push_back(playernum);
 	
+	meshesRev.push_back(notifyr);
+	meshesRev.push_back(playernumr);
+
 	UIObject* obj6 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj = new UIObject(1, -1,-1,-1,-1,-1);
 	UIObject* obj2 = new UIObject(1, 905, 132, 1127, 218, 215);
@@ -80,6 +92,10 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	UIObject* obj7 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj8 = new UIObject(1, -1, -1, -1, -1, -1);
 	UIObject* obj9 = new UIObject(1, -1, -1, -1, -1, -1);
+
+	UIObject* obj10 = new UIObject(1, -1, -1, -1, -1, -1);
+	UIObject* obj11 = new UIObject(1, -1, -1, -1, -1, -1);
+	
 
 	obj->SetMesh(meshes[0]);
 	obj->SetMaterial(0, rm->materials[214]);
@@ -117,6 +133,14 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	obj9->SetMaterial(0, rm->materials[668]);
 	obj9->SetPosition(0.0f, 0.0f, 0.0f);
 
+	obj10->SetMesh(meshes[9]);
+	obj10->SetMaterial(0, rm->materials[671]);
+	obj10->SetPosition(0.0f, 0.0f, 0.0f);
+
+	obj11->SetMesh(meshes[10]);
+	obj11->SetMaterial(0, rm->materials[252]);
+	obj11->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objects.push_back(obj6);
 	objects.push_back(obj);
 	objects.push_back(obj2);
@@ -127,6 +151,9 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	objects.push_back(obj7);
 	objects.push_back(obj9);
 	objects.push_back(obj8);
+
+	objects.push_back(obj10);
+	objects.push_back(obj11);
 	
 }
 
@@ -322,6 +349,31 @@ void MainInterfaceShader::Animate(CCamera* cam)
 			objects[8]->SetMesh(meshes[8]);
 		}
 	}
+
+	//접속/종료 알림 뜬 지 4초 경과 시 지우기
+	chrono::duration<double> elapsed = chrono::system_clock::now() - lastNotify;
+	if (elapsed.count() > 4.0)
+	{
+		objects[9]->SetMesh(NULL);
+		objects[10]->SetMesh(NULL);
+		
+	}
+	else
+	{
+		if (cl.z < 0.0f)
+		{
+			objects[9]->SetMesh(meshes[9]);
+			objects[10]->SetMesh(meshes[10]);
+			
+		}
+		else
+		{
+			objects[9]->SetMesh(meshes[9]);
+			objects[10]->SetMesh(meshes[10]);
+		
+		}
+	}
+	
 
 	//	XMFLOAT3 p = objects[1]->GetPosition();
 	//objects[1]->SetPosition(p.x+ cu.x, p.y+cu.y, p.z+cu.z);
