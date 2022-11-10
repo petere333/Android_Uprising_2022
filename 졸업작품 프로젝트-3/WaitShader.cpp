@@ -660,6 +660,12 @@ void WaitShader::Animate(CCamera* cam, PlayerInfoManager* info)
 		objects[40]->SetMesh(meshes[40]);
 	}
 
-	
-
+	{
+		objects[28]->m_ppMaterials[0] = NULL;
+		objects[33]->m_ppMaterials[0] = NULL;
+		objects[38]->m_ppMaterials[0] = NULL;
+		objects[28]->SetMesh(NULL);
+		objects[33]->SetMesh(NULL);
+		objects[38]->SetMesh(NULL);
+	}
 }

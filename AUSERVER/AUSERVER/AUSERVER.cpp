@@ -1157,9 +1157,6 @@ int main(int argc, char* argv[])
 				cout << "GQCS Error on clients[" << key << "]\n";
 				disconnect(key);
 				
-
-				if (ex_over->_comp_type == PL_SEND) delete ex_over;
-
 				SC_DISCONNECT_PACKET p;
 				p.size = sizeof(p);
 				p.type = PACKET_TYPE::SC_DISCONNECT;
@@ -1169,6 +1166,10 @@ int main(int argc, char* argv[])
 				{
 					pl.do_send(&p);
 				}
+
+				if (ex_over->_comp_type == PL_SEND) delete ex_over;
+
+
 			}
 		}
 

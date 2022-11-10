@@ -612,6 +612,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			{
 				playerShader->objects[i]->SetPosition(-999.0f, -999.0f, -999.0f);
 				playerShader->objects[i]->bState.stateID = IDLE_STATE;
+
+				interShader->lastNotify = chrono::system_clock::now();
+				interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
+				interShader->objects[39]->m_ppMaterials[0] = rm->materials[253+i];
+				
 			}
 		}
 
@@ -2571,6 +2576,27 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 	else if (currentScreen == STAGE_SELECT_STATE)
 	{
 		stageInter->Animate(cam);
+
+		if (playerShader->started[0] == 1)
+		{
+			stageInter->objects[12]->m_ppMaterials[0] = rm->materials[675];
+		}
+		if (playerShader->started[1] == 1)
+		{
+			stageInter->objects[13]->m_ppMaterials[0] = rm->materials[675];
+		}
+		if (playerShader->started[2] == 1)
+		{
+			stageInter->objects[14]->m_ppMaterials[0] = rm->materials[675];
+		}
+		if (playerShader->started[3] == 1)
+		{
+			stageInter->objects[15]->m_ppMaterials[0] = rm->materials[675];
+		}
+		if (playerShader->started[4] == 1)
+		{
+			stageInter->objects[16]->m_ppMaterials[0] = rm->materials[675];
+		}
 	}
 	else if (currentScreen == WAIT_STATE)
 	{
@@ -3891,38 +3917,45 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_CONNECT_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 
-		if (currentScreen == LOBBY_STATE)
+		if (p.id != pID)
 		{
-			mainInter->lastNotify = chrono::system_clock::now();
-			mainInter->objects[9]->m_ppMaterials[0] = rm->materials[671];
-			mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+			if (currentScreen == LOBBY_STATE)
+			{
+				mainInter->lastNotify = chrono::system_clock::now();
+				mainInter->objects[9]->m_ppMaterials[0] = rm->materials[671];
+				mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+			}
 		}
 		break;
 	}
-	case  PACKET_TYPE::SC_DISCONNECT:
+	case PACKET_TYPE::SC_DISCONNECT:
 	{
 		SC_DISCONNECT_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		if (currentScreen == LOBBY_STATE)
+		if (p.id != pID)
 		{
-			mainInter->lastNotify = chrono::system_clock::now();
-			mainInter->objects[9]->m_ppMaterials[0] = rm->materials[672];
-			mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
-		}
-		else if (currentScreen == IN_GAME_STATE)
-		{
-			playerShader->objects[p.id]->SetPosition(-100.0f, -100.0f, -100.0f);
-			playerShader->objects[p.id]->bState.stateID = IDLE_STATE;
+			if (currentScreen == LOBBY_STATE)
+			{
+				mainInter->lastNotify = chrono::system_clock::now();
+				mainInter->objects[9]->m_ppMaterials[0] = rm->materials[672];
+				mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+			}
+			else if (currentScreen == IN_GAME_STATE)
+			{
+				playerShader->objects[p.id]->SetPosition(-100.0f, -100.0f, -100.0f);
+				playerShader->objects[p.id]->bState.stateID = IDLE_STATE;
 
-			interShader->lastNotify = chrono::system_clock::now();
-			interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
-			interShader->objects[39]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
-		}
-		else if (currentScreen == WAIT_STATE)
-		{
-			waitInter->lastNotify = chrono::system_clock::now();
-			waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
-			waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+				interShader->lastNotify = chrono::system_clock::now();
+				interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
+				interShader->objects[39]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+			}
+			else if (currentScreen == WAIT_STATE)
+			{
+				waitInter->lastNotify = chrono::system_clock::now();
+				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
+				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+			}
+			playerShader->room[p.id] = -1;
 		}
 		break;
 	}
@@ -3931,11 +3964,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_JOIN_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		if (currentScreen == WAIT_STATE)
+		if (p.id != pID)
 		{
-			waitInter->lastNotify = chrono::system_clock::now();
-			waitInter->objects[39]->m_ppMaterials[0] = rm->materials[673];
-			waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+			if (currentScreen == WAIT_STATE)
+			{
+				waitInter->lastNotify = chrono::system_clock::now();
+				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[673];
+				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+			}
 		}
 		break;
 	}
@@ -3943,11 +3979,14 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 	{
 		SC_OUT_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
-		if (currentScreen == WAIT_STATE)
+		if (p.id != pID)
 		{
-			waitInter->lastNotify = chrono::system_clock::now();
-			waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
-			waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+			if (currentScreen == WAIT_STATE)
+			{
+				waitInter->lastNotify = chrono::system_clock::now();
+				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
+				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+			}
 		}
 		break;
 	}
@@ -3965,16 +4004,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 		SC_ROOM_PACKET p;
 		memcpy(&p, p_buf, p_buf[0]);
 		//그전에 같은방이었는데 나가는 경우
-		bool exiting = false;
-		bool joining = false;
-		if (playerShader->room[p.id] == room && p.room == -1)
-		{
-			exiting = true;
-		}
-		if (playerShader->room[p.id] == -1 && p.room == room)
-		{
-			joining = true;
-		}
+
 
 		playerShader->room[p.id] = p.room;
 

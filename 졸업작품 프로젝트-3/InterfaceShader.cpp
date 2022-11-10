@@ -1238,7 +1238,7 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		objects[34]->SetMesh(NULL);
 	}
 
-	chrono::duration<double> dd = chrono::system_clock::now() - lastNarrated;
+	chrono::duration<double> dd = chrono::system_clock::now() - lastNotify;
 	if (dd.count() > 4.0)
 	{
 		objects[38]->SetMesh(NULL);

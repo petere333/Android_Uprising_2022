@@ -3019,27 +3019,27 @@ void CGameFramework::ProcessInput()
 				m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[240];
 			}
 			//1번방 참가 버튼
-			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[0]==0)
 			{
 				m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//2번방 참가 버튼
-			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[1] == 0)
 			{
 				m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//3번방 참가 버튼
-			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[2] == 0)
 			{
 				m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//4번방 참가 버튼
-			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy && m_pScene->playerShader->started[3] == 0)
 			{
 				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//5번방 참가 버튼
-			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy && m_pScene->playerShader->started[4] == 0)
 			{
 				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
