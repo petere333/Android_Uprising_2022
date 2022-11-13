@@ -137,11 +137,11 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 
 	//나가기창 351~353
-	CubeMeshOffset* exit = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* exit = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 900.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* yes = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
 	CubeMeshOffset* no = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, false);
 
-	CubeMeshOffset* exitr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 600.0f / 450.0f, 450.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* exitr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 1200.0f / 450.0f, 900.0f / 450.0f, 0.03f, -(600.0f - 600.0f) / 450.0f, -(450.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* yesr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(512.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
 	CubeMeshOffset* nor = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 141.0f / 450.0f, 48.0f / 450.0f, 0.03f, -(698.0f - 600.0f) / 450.0f, -(546.0f - 450.0f) / 450.0f, true);
 

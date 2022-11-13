@@ -1691,7 +1691,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 				}
 				//1번방 참가 버튼
-				else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+				else if (x >= 265 + wx && x <= 365 + wx && y >= 435 + wy && y <= 469 + wy)
 				{
 					if (m_pScene->playerShader->started[0] == 0)
 					{
@@ -1728,7 +1728,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 				}
 				//2번방 참가 버튼
-				else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+				else if (x >= 641 + wx && x <= 741 + wx && y >= 435 + wy && y <= 469 + wy)
 				{
 					if (m_pScene->playerShader->started[1] == 0)
 					{
@@ -1765,7 +1765,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 				}
 				//3번방 참가 버튼
-				else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+				else if (x >= 1007 + wx && x <= 1107 + wx && y >= 435 + wy && y <= 469 + wy)
 				{
 					if (m_pScene->playerShader->started[2] == 0)
 					{
@@ -1802,7 +1802,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 				}
 				//4번방 참가 버튼
-				else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+				else if (x >= 420 + wx && x <= 520 + wx && y >= 705 + wy && y <= 739 + wy)
 				{
 					if (m_pScene->playerShader->started[3] == 0)
 					{
@@ -1840,7 +1840,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 					}
 				}
 				//5번방 참가 버튼
-				else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
+				else if (x >= 854 + wx && x <= 954 + wx && y >= 705 + wy && y <= 739 + wy)
 				{
 					if (m_pScene->playerShader->started[4] == 0)
 					{
@@ -1890,7 +1890,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 			else
 			{
 			//돌아가기 버튼
-			if (x >= 100 + wx && x <= 278 + wx && y >= 175 + wy && y <= 235 + wy)
+			if (x >= 120 + wx && x <= 298 + wx && y >= 115 + wy && y <= 175 + wy)
 			{
 				m_pScene->room = -1;
 				m_pScene->currentScreen = LOBBY_STATE;
@@ -1904,7 +1904,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 			}
 			//1번방 참가 버튼
-			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 305 + wx && x <= 405 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				if (m_pScene->playerShader->started[0] == 0)
 				{
@@ -1941,7 +1941,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				}
 			}
 			//2번방 참가 버튼
-			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 731 + wx && x <= 831 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				if (m_pScene->playerShader->started[1] == 0)
 				{
@@ -1978,7 +1978,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				}
 			}
 			//3번방 참가 버튼
-			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 1147 + wx && x <= 1247 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				if (m_pScene->playerShader->started[2] == 0)
 				{
@@ -2015,7 +2015,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				}
 			}
 			//4번방 참가 버튼
-			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 480 + wx && x <= 580 + wx && y >= 568 + wy && y <= 602 + wy)
 			{
 				if (m_pScene->playerShader->started[3] == 0)
 				{
@@ -2053,7 +2053,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 				}
 			}
 			//5번방 참가 버튼
-			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 969 + wx && x <= 1069 + wx && y >= 568 + wy && y <= 602 + wy)
 			{
 				if (m_pScene->playerShader->started[4] == 0)
 				{
@@ -2640,9 +2640,9 @@ void CGameFramework::ProcessInput()
 				prevY = pnt.y;
 
 				
-				//SetCursorPos(500, 500);
-				//prevX = 500;
-				//prevY = 500;
+				SetCursorPos(500, 500);
+				prevX = 500;
+				prevY = 500;
 				
 			}
 			else
@@ -3019,27 +3019,27 @@ void CGameFramework::ProcessInput()
 				m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[240];
 			}
 			//1번방 참가 버튼
-			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[0]==0)
+			else if (x >= 265 + wx && x <= 365 + wx && y >= 435 + wy && y <= 469 + wy && m_pScene->playerShader->started[0]==0)
 			{
 				m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//2번방 참가 버튼
-			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[1] == 0)
+			else if (x >= 641 + wx && x <= 741 + wx && y >= 435 + wy && y <= 469 + wy && m_pScene->playerShader->started[1] == 0)
 			{
 				m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//3번방 참가 버튼
-			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy && m_pScene->playerShader->started[2] == 0)
+			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 435 + wy && y <= 469 + wy && m_pScene->playerShader->started[2] == 0)
 			{
 				m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//4번방 참가 버튼
-			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy && m_pScene->playerShader->started[3] == 0)
+			else if (x >= 420 + wx && x <= 520 + wx && y >= 705 + wy && y <= 739 + wy && m_pScene->playerShader->started[3] == 0)
 			{
 				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//5번방 참가 버튼
-			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy && m_pScene->playerShader->started[4] == 0)
+			else if (x >= 854 + wx && x <= 954 + wx && y >= 705 + wy && y <= 739 + wy && m_pScene->playerShader->started[4] == 0)
 			{
 				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
@@ -3057,32 +3057,32 @@ void CGameFramework::ProcessInput()
 		else
 		{
 			//돌아가기 버튼
-			if (x >= 100 + wx && x <= 278 + wx && y >= 175 + wy && y <= 235 + wy)
+			if (x >= 120 + wx && x <= 298 + wx && y >= 115 + wy && y <= 175 + wy)
 			{
 				m_pScene->stageInter->objects[1]->m_ppMaterials[0] = m_pScene->rm->materials[240];
 			}
 			//1번방 참가 버튼
-			else if (x >= 265 + wx && x <= 365 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 305 + wx && x <= 405 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				m_pScene->stageInter->objects[12]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//2번방 참가 버튼
-			else if (x >= 641 + wx && x <= 741 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 731 + wx && x <= 831 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				m_pScene->stageInter->objects[13]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//3번방 참가 버튼
-			else if (x >= 1007 + wx && x <= 1107 + wx && y >= 418 + wy && y <= 452 + wy)
+			else if (x >= 1147 + wx && x <= 1247 + wx && y >= 341 + wy && y <= 375 + wy)
 			{
 				m_pScene->stageInter->objects[14]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//4번방 참가 버튼
-			else if (x >= 420 + wx && x <= 520 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 480 + wx && x <= 580 + wx && y >= 568 + wy && y <= 602 + wy)
 			{
 				m_pScene->stageInter->objects[15]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
 			//5번방 참가 버튼
-			else if (x >= 894 + wx && x <= 994 + wx && y >= 688 + wy && y <= 722 + wy)
+			else if (x >= 969 + wx && x <= 1069 + wx && y >= 568 + wy && y <= 602 + wy)
 			{
 				m_pScene->stageInter->objects[16]->m_ppMaterials[0] = m_pScene->rm->materials[664];
 			}
