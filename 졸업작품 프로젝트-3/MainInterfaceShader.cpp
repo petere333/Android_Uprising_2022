@@ -137,8 +137,8 @@ void MainInterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	obj10->SetMaterial(0, rm->materials[671]);
 	obj10->SetPosition(0.0f, 0.0f, 0.0f);
 
-	obj11->SetMesh(meshes[10]);
-	obj11->SetMaterial(0, rm->materials[252]);
+	obj11->SetMesh(NULL);
+	obj11->SetMaterial(0, NULL);
 	obj11->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj6);
@@ -363,13 +363,13 @@ void MainInterfaceShader::Animate(CCamera* cam)
 		if (cl.z < 0.0f)
 		{
 			objects[9]->SetMesh(meshes[9]);
-			objects[10]->SetMesh(meshes[10]);
+			objects[10]->SetMesh(NULL);
 			
 		}
 		else
 		{
 			objects[9]->SetMesh(meshes[9]);
-			objects[10]->SetMesh(meshes[10]);
+			objects[10]->SetMesh(NULL);
 		
 		}
 	}

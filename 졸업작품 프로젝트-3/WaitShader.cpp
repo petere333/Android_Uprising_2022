@@ -657,7 +657,7 @@ void WaitShader::Animate(CCamera* cam, PlayerInfoManager* info)
 	else
 	{
 		objects[39]->SetMesh(meshes[39]);
-		objects[40]->SetMesh(meshes[40]);
+		objects[40]->SetMesh(NULL);
 	}
 
 	{

@@ -1249,12 +1249,12 @@ void InterfaceShader::Animate(CCamera* cam, PlayerInfoManager* in)
 		if (cl.z < 0.0f)
 		{
 			objects[38]->SetMesh(revmeshes[354]);
-			objects[39]->SetMesh(revmeshes[355]);
+			objects[39]->SetMesh(NULL);
 		}
 		else
 		{
 			objects[38]->SetMesh(meshes[354]);
-			objects[39]->SetMesh(meshes[355]);
+			objects[39]->SetMesh(NULL);
 		}
 	}
 }

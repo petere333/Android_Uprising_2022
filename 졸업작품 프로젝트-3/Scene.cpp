@@ -615,7 +615,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 				interShader->lastNotify = chrono::system_clock::now();
 				interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
-				interShader->objects[39]->m_ppMaterials[0] = rm->materials[253+i];
+				interShader->objects[39]->m_ppMaterials[0] = NULL;
 				
 			}
 		}
@@ -3923,7 +3923,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			{
 				mainInter->lastNotify = chrono::system_clock::now();
 				mainInter->objects[9]->m_ppMaterials[0] = rm->materials[671];
-				mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+				mainInter->objects[10]->m_ppMaterials[0] = NULL;
 			}
 		}
 		break;
@@ -3938,7 +3938,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			{
 				mainInter->lastNotify = chrono::system_clock::now();
 				mainInter->objects[9]->m_ppMaterials[0] = rm->materials[672];
-				mainInter->objects[10]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+				mainInter->objects[10]->m_ppMaterials[0] = NULL;
 			}
 			else if (currentScreen == IN_GAME_STATE)
 			{
@@ -3947,13 +3947,13 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 
 				interShader->lastNotify = chrono::system_clock::now();
 				interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
-				interShader->objects[39]->m_ppMaterials[0] = rm->materials[252 + p.id + 1];
+				interShader->objects[39]->m_ppMaterials[0] = NULL;
 			}
 			else if (currentScreen == WAIT_STATE)
 			{
 				waitInter->lastNotify = chrono::system_clock::now();
 				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
-				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+				waitInter->objects[40]->m_ppMaterials[0] = NULL;
 			}
 			playerShader->room[p.id] = -1;
 		}
@@ -3970,7 +3970,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			{
 				waitInter->lastNotify = chrono::system_clock::now();
 				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[673];
-				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+				waitInter->objects[40]->m_ppMaterials[0] = NULL;
 			}
 		}
 		break;
@@ -3985,7 +3985,7 @@ void CScene::ProcessPacket(unsigned char* p_buf, ID3D12Device* pd3dDevice, ID3D1
 			{
 				waitInter->lastNotify = chrono::system_clock::now();
 				waitInter->objects[39]->m_ppMaterials[0] = rm->materials[674];
-				waitInter->objects[40]->m_ppMaterials[0] = rm->materials[253 + p.id];
+				waitInter->objects[40]->m_ppMaterials[0] = NULL;
 			}
 		}
 		break;
