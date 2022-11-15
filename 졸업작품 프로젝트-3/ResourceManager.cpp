@@ -1541,7 +1541,8 @@ void ResourceManager::createTextures()
 	textures.push_back(tex400);
 
 	tex401 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex401->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/item/precision.dds", RESOURCE_TEXTURE2D, 0);
+	//tex401->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/item/precision.dds", RESOURCE_TEXTURE2D, 0);
+	tex401->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/item/power.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex401);
 
 	tex402 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
@@ -2697,7 +2698,7 @@ void ResourceManager::createTextures()
 	norm103->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/boost.dds", RESOURCE_TEXTURE2D, 0);
 
 	norm104 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	norm104->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/stat.dds", RESOURCE_TEXTURE2D, 0);
+	norm104->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/boost.dds", RESOURCE_TEXTURE2D, 0);
 
 
 
@@ -3039,7 +3040,7 @@ void ResourceManager::createTextures()
 	spc101 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);					  
 	spc101->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/spec_boost.dds", RESOURCE_TEXTURE2D, 0);
 	spc102 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);					  
-	spc102->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/spec_stat.dds", RESOURCE_TEXTURE2D, 0);
+	spc102->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/normal/item/spec_boost.dds", RESOURCE_TEXTURE2D, 0);
 
 
 	specs.push_back(spc1);

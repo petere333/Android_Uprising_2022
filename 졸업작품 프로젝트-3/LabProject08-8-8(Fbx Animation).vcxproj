@@ -110,12 +110,12 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;D:\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x86;D:\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x86</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
