@@ -2482,7 +2482,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 
 					currentScreen = LOBBY_STATE;
 					//스테이지 클리어 완료
+					room = -1;
+					interShader->exiting = false;
 
+					CS_ROOM_PACKET p;
+					p.id = pID;
+					p.size = sizeof(CS_ROOM_PACKET);
+					p.type = PACKET_TYPE::CS_ROOM;
+					p.room = -1;
+
+					SendPacket(&p);
 					//플레이어 정보 서버로 전송하여 저장하도록 하기
 				}
 			}
