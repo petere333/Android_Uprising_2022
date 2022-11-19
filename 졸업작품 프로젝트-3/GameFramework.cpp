@@ -433,6 +433,9 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 						m_pScene->currentScreen = STAGE_SELECT_STATE;
 
+						m_pScene->room = -1;
+						m_pScene->interShader->exiting = false;
+
 						CS_ROOM_PACKET p;
 						p.id = m_pScene->pID;
 						p.size = sizeof(CS_ROOM_PACKET);
@@ -698,6 +701,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pScene->currentScreen = LOBBY_STATE;
 
 						m_pScene->room = -1;
+						m_pScene->interShader->exiting = false;
 
 						CS_ROOM_PACKET p;
 						p.id = m_pScene->pID;

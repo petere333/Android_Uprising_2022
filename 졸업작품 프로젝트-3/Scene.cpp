@@ -610,12 +610,16 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 			//내 클라이언트와 다른 방에 있는 객체는 맵 밖에 빼다박음
 			if (playerShader->room[pID] != playerShader->room[i])
 			{
-				playerShader->objects[i]->SetPosition(-999.0f, -999.0f, -999.0f);
-				playerShader->objects[i]->bState.stateID = IDLE_STATE;
+				if (playerShader->objects[i]->GetPosition().x != -999.0f)
+				{
+					playerShader->objects[i]->SetPosition(-999.0f, -999.0f, -999.0f);
+					playerShader->objects[i]->bState.stateID = IDLE_STATE;
 
-				interShader->lastNotify = chrono::system_clock::now();
-				interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
-				interShader->objects[39]->m_ppMaterials[0] = NULL;
+					interShader->lastNotify = chrono::system_clock::now();
+					interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
+					interShader->objects[39]->m_ppMaterials[0] = NULL;
+				
+				}
 				
 			}
 		}

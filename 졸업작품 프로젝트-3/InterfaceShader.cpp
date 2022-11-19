@@ -480,10 +480,10 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 
 	//38-39 Ż�־˸�â
 	obj39->SetMesh(NULL);
-	obj39->SetMaterial(0, rm->materials[674]);
+	obj39->SetMaterial(0, NULL);
 	obj39->SetPosition(0.0f, 0.0f, 0.0f);
 	obj40->SetMesh(NULL);
-	obj40->SetMaterial(0, rm->materials[252]);
+	obj40->SetMaterial(0, NULL);
 	obj40->SetPosition(0.0f, 0.0f, 0.0f);
 
 	objects.push_back(obj);
