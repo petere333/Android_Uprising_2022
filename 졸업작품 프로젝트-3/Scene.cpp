@@ -2404,7 +2404,7 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				chrono::time_point<chrono::system_clock> moment = chrono::system_clock::now();
 				chrono::duration<double> dt = moment - interShader->clearTime;
 
-				if ((float)dt.count() > 15.0f)
+				if ((float)dt.count() > 5.0f)
 				{
 
 					//플레이어의 상태 초기화
