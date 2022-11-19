@@ -433,6 +433,14 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 						m_pScene->currentScreen = STAGE_SELECT_STATE;
 
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = -1;
+
+						SendPacket(&p);
+
 
 					}
 					else if ((pnt.x >= 801 + wx && pnt.x <= 931 + wx) && (pnt.y >= 559 + wy && pnt.y <= 625 + wy))
@@ -502,6 +510,14 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pCamera->GenerateViewMatrix();
 						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 						m_pScene->currentScreen = LOBBY_STATE;
+
+						CS_ROOM_PACKET p;
+						p.id = m_pScene->pID;
+						p.size = sizeof(CS_ROOM_PACKET);
+						p.type = PACKET_TYPE::CS_ROOM;
+						p.room = -1;
+
+						SendPacket(&p);
 
 					}
 				}
