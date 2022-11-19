@@ -2553,6 +2553,8 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				cam->UpdateShaderVariables(pd3dCommandList);
 			   
 				currentScreen = LOBBY_STATE;
+				room = -1;
+				interShader->exiting = false;
 
 				CS_ROOM_PACKET p;
 				p.id = pID;

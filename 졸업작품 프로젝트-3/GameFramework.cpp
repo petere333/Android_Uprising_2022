@@ -510,6 +510,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 						m_pCamera->GenerateViewMatrix();
 						m_pCamera->UpdateShaderVariables(m_pd3dCommandList);
 						m_pScene->currentScreen = LOBBY_STATE;
+						m_pScene->room = -1;
+						m_pScene->interShader->exiting = false;
 
 						CS_ROOM_PACKET p;
 						p.id = m_pScene->pID;
