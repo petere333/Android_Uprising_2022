@@ -43,20 +43,20 @@ void StageSelectShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 
 	//인원수 표기 구간 1~5
 
-	CubeMeshOffset* count1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (288.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (288.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count1 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (278.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count1r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (278.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (659.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (659.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count2 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (649.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count2r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (649.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (1030.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (1030.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count3 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (1015.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count3r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (1015.0f - 600.0f) / 450.0f, -(361.7f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (453.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count4 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (443.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count4r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (443.0f - 600.0f) / 450.0f, -(631.0f - 450.0f) / 450.0f, true);
 
-	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (887.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, false);
-	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 12.0f / 450.0f, 32.5f / 450.0f, 0.02f, (887.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, true);
+	CubeMeshOffset* count5 = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (877.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, false);
+	CubeMeshOffset* count5r = new CubeMeshOffset(pd3dDevice, pd3dCommandList, 20.0f / 450.0f, 30.0f / 450.0f, 0.02f, (877.0f - 600.0f) / 450.0f, -(631.7f - 450.0f) / 450.0f, true);
 
 	// 방 입장하기 버튼 1~5
 

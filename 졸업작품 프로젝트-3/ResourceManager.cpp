@@ -2359,10 +2359,10 @@ void ResourceManager::createTextures()
 	tex663->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/r5.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex663);
 	tex664 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex664->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/join_base.dds", RESOURCE_TEXTURE2D, 0);
+	tex664->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/enter_base.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex664);
 	tex665 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
-	tex665->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/join_press.dds", RESOURCE_TEXTURE2D, 0);
+	tex665->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/stage/enter_on.dds", RESOURCE_TEXTURE2D, 0);
 	textures.push_back(tex665);
 	tex666 = new CTexture(1, RESOURCE_TEXTURE2D, 0, 1);
 	tex666->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"res/dds/UI/ingame/exit.dds", RESOURCE_TEXTURE2D, 0);

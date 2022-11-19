@@ -330,7 +330,7 @@ void WaitShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandLis
 	obj38->SetMaterial(0, rm->materials[298]);
 	obj39->SetMaterial(0, rm->materials[297]);
 
-	obj40->SetMaterial(0, NULL);
+	obj40->SetMaterial(0, rm->materials[673]);
 	obj41->SetMaterial(0, NULL);
 
 	obj4->SetPosition(0.0f, 0.0f, 0.0f);
