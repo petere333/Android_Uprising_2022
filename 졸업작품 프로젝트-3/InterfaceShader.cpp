@@ -78,13 +78,13 @@ void InterfaceShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComma
 	//플레이어 체력바
 	for (float i = 0.0f; i < 20.0f; i += 1.0f)
 	{
-		float nLength = 15.35f;
+		float nLength = 16.0f;
 		int totalN = 20;
 		float ox = 133.0f;
-		float oz = 781.7;
-		float z = 63.0f;
-		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength / 2.0f) * (totalN - i + 1.0f)) - 600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
-		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (totalN - i + 1.0f)) - 600.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
+		float oz = 804.0;
+		float z = 52.0f;
+		CubeMeshOffset* hp = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, ((ox + (nLength / 2.0f) * (i + 1.0f)) - 733.0f) / 450.0f, -(oz - 450.0f) / 450.0f, false);
+		CubeMeshOffset* hpr = new CubeMeshOffset(pd3dDevice, pd3dCommandList, nLength * (i + 1.0f) / 450.0f, z / 450.0f, 0.02f, -((ox + (nLength / 2.0f) * (i + 1.0f)) - 733.0f) / 450.0f, -(oz - 450.0f) / 450.0f, true);
 
 		meshes.push_back(hp);
 		revmeshes.push_back(hpr);
