@@ -614,11 +614,11 @@ void CScene::AnimateObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList*
 				{
 					playerShader->objects[i]->SetPosition(-999.0f, -999.0f, -999.0f);
 					playerShader->objects[i]->bState.stateID = IDLE_STATE;
-					/*
+					
 					interShader->lastNotify = chrono::system_clock::now();
 					interShader->objects[38]->m_ppMaterials[0] = rm->materials[674];
 					interShader->objects[39]->m_ppMaterials[0] = NULL;
-					*/
+					
 				}
 				
 			}

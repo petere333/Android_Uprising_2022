@@ -1132,7 +1132,7 @@ int main(int argc, char* argv[])
 	SOCKADDR_IN cl_addr; //클라이언트 주소
 	int addr_size = sizeof(cl_addr);
 	int client_id = 0; //클라이언트 아이디 초기화
-	int client_num = 0;
+	int client_num = 1;
 
 	HANDLE h_iocp;
 	h_iocp = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0); //IOCP 핸들 생성
@@ -1191,6 +1191,7 @@ int main(int argc, char* argv[])
 				clients[client_id].do_recv();
 				cout << "ACCEPT SUCCESS.\n";
 				++client_num;
+				if (client_num > 3) client_num == 0;
 				c_socket = WSASocket(AF_INET, SOCK_STREAM, 0, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 			}
