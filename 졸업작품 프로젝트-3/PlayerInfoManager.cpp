@@ -43,7 +43,7 @@ void PlayerInfoManager::initStats()
 	stats.entrophy = 4;
 	stats.attack = 0;
 
-	slot.meleeWeapon = manager->items[0];
+	slot.meleeWeapon = manager->items[1];
 	slot.rangedWeapon = manager->items[2];
 	slot.armor = manager->items[4];
 }
