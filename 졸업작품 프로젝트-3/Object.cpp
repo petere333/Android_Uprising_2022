@@ -2096,6 +2096,7 @@ BoomObject::BoomObject(int n, XMFLOAT3 ori, XMFLOAT3 dir, float spd, chrono::tim
 	speed = spd;
 	created = time;
 	SetPosition(origin);
+	m_serverip = 0;
 }
 BoomObject::~BoomObject()
 {

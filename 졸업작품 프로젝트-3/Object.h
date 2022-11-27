@@ -653,6 +653,7 @@ public:
 	chrono::time_point<chrono::system_clock> lastMove;
 
 	int owner;
+	int m_serverip;
 };
 
 class UIObject : public CGameObject

@@ -8,6 +8,7 @@
 
 
 #define MAX_LOADSTRING 100
+#define BUFSIZE		    50
 
 HINSTANCE						ghAppInstance;
 TCHAR							szTitle[MAX_LOADSTRING];
@@ -88,6 +89,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	return ::RegisterClassEx(&wcex);
 }
 
+BOOL CALLBACK DlgProc(HWND, UINT, WPARAM, LPARAM);
+HWND hIP, hConnect;
+char IP[BUFSIZE];
+
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	ghAppInstance = hInstance;
@@ -100,7 +105,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	if (!hMainWnd) return(FALSE);
 
-	gGameFramework.OnCreate(hInstance, hMainWnd);
+	DialogBox(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, DlgProc);
+	gGameFramework.OnCreate(hInstance, hMainWnd, IP);
 
 	::ShowWindow(hMainWnd, nCmdShow);
 	::UpdateWindow(hMainWnd);
@@ -174,4 +180,34 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	}
 	return((INT_PTR)FALSE);
+}
+
+BOOL CALLBACK DlgProc(HWND hDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	char ServerIP[BUFSIZE]{};
+	int j = 0;
+	switch (uMsg) {
+	case WM_INITDIALOG:
+		hIP = GetDlgItem(hDlg, IDC_EDIT1);
+		hConnect = GetDlgItem(hDlg, IDC_CONNECT);
+		SendMessage(hIP, EM_SETLIMITTEXT, 0, -1);
+		return true;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDC_CONNECT:
+			GetDlgItemTextW(hDlg, IDC_EDIT1, (LPWSTR)ServerIP, BUFSIZE-1);
+			for (int i = 0; i < BUFSIZE; ++i) {
+					IP[j] = ServerIP[i];
+					j++;
+				i++;
+			}
+			EndDialog(hDlg, IDCANCEL);
+			return true;
+		case IDCANCEL:
+			EndDialog(hDlg, IDCANCEL);
+			return true;
+		}
+		return false;
+	}
+	return false;
 }

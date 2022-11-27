@@ -17,7 +17,7 @@ public:
 	CGameFramework();
 	~CGameFramework();
 
-	bool OnCreate(HINSTANCE hInstance, HWND hMainWnd);
+	bool OnCreate(HINSTANCE hInstance, HWND hMainWnd, char* IP);
 	void OnDestroy();
 
 	void CreateSwapChain();
@@ -49,8 +49,9 @@ public:
 
 public: // to server
 	void OnSocketHandel(WPARAM wParam, LPARAM lParam);
+	void GetServerIP();
 	void OnSocket(WPARAM wParam, LPARAM lParam);
-	void Connection();
+	void Connection(char* IP);
 	void LoginServer();
 	//void Disconnection();
 	void ClientNet();
@@ -128,7 +129,6 @@ public:
 	bool mousedown = false;
 	float dx=0.0f, dy=0.0f, dz=0.0f;
 	int prevX=500, prevY=500;
-
 	int lastOrder = 0;
 	// 0 :up	 1 : down	 2 : left	3 : right
 	CLoadedModelInfo** models;

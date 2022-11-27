@@ -46,7 +46,7 @@ CGameFramework::~CGameFramework()
 
 
 
-bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
+bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd, char* IP)
 {
 	
 	m_hInstance = hInstance;
@@ -69,7 +69,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	BuildObjects();
 
 
-	Connection();
+	Connection(IP);
 	LoginServer();
 
 	//ChangeSwapChainState();
@@ -3376,13 +3376,21 @@ void CGameFramework::OnSocket(WPARAM wParam, LPARAM lParam)
 	}
 }
 
-void CGameFramework::Connection()
+void CGameFramework::GetServerIP()
+{
+
+}
+
+
+void CGameFramework::Connection(char* IP)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(0, 999);
 
 	int retval = 0;
+	int j = 0;
+	const int BUF_SIZE = 50;
 	//UINT c_id = dis(gen);
 	// 윈속 초기화
 	if (WSAStartup(MAKEWORD(2, 2), &m_WSA) != 0) err_quit((const char*)"connect()");
@@ -3391,11 +3399,8 @@ void CGameFramework::Connection()
 	SOCKADDR_IN serveraddr;
 	ZeroMemory(&serveraddr, sizeof(serveraddr));
 	serveraddr.sin_family = AF_INET;
-	//serveraddr.sin_addr.s_addr = inet_addr(SERVER_ROOP);
-	
-
-
-	serveraddr.sin_addr.S_un.S_addr = inet_addr(SERVERIP);
+	//cout << IP;
+	serveraddr.sin_addr.S_un.S_addr = inet_addr((const char*)IP);
 	serveraddr.sin_port = htons(SERVERPORT);
 
 	// socket()
@@ -3423,7 +3428,7 @@ void CGameFramework::Connection()
 
 	else {
 		cout << "서버 연결 성공\n";
-		cout << "Server IP : " << SERVERIP << "\nServer Port : " << SERVERPORT << "\n";
+		cout << "Server IP : " << IP << "\nServer Port : " << SERVERPORT << "\n";
 	}
 	
 }
